@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export const HeaderWrapper = styled.div`
+export const HeaderWrapper = styled.header`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -54,7 +54,7 @@ export const BottomWrapper = styled.ul`
 
 export const BottomLi = styled.li`
     display: flex;
-    // color: ${(props) => (props.active ? "red" : "blue")};
+    // color: ${props => (props.active ? 'red' : 'blue')};
     img {
         width: 28px;
     }
