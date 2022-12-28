@@ -20,6 +20,7 @@ const Header = () => {
                     <S.BottomImg src="../image/logo.png" />
                     <S.BottomWrapper>
                         <S.BottomLi active={true}><Link to='/lookbook/trending'>STYLE</Link></S.BottomLi>
+                        {/* <S.BottomLi active={true}><Link to="/lookbook/detail">STYLE</Link></S.BottomLi> */}
                         <S.BottomLi>SHOP</S.BottomLi>
                         <S.BottomLi>ABOUT</S.BottomLi>
                         <S.BottomLi>
