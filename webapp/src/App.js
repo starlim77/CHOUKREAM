@@ -3,6 +3,8 @@ import Layout from './component/Layout/Layout';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import UsedMain from './component/Used/UsedMain'
 import UsedWrite from './component/Used/UsedWrite';
+import UsedItem from './component/used/UsedItem';
+import UploadForm2 from './component/used/UploadForm2';
 
 function App() {
     return (
@@ -12,8 +14,11 @@ function App() {
                     <Route path="/" element="" />   
                     <Route path='/Used/usedMain' element= { <UsedMain/>}/>
                     <Route path='/Used/usedWrite' element = { <UsedWrite/>} />
+                    <Route path="used/useditem" element={<UsedItem></UsedItem>}></Route>
+                    <Route path="used/uploadform2" element={<UploadForm2></UploadForm2>}></Route>
                 </Route>
             </Routes>
+            
         </BrowserRouter>
     );
 }
