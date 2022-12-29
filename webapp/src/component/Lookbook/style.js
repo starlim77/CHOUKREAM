@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-
+ //Trending.js
 export const TrGridContainer = styled.div`
     width: 1200px;
     margin: 0px auto;
