@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../Header/Header';
+import Social from '../Lookbook/Social';
 import Card from '@mui/material/Card';
 import { CardActions, CardContent, CardHeader, CardMedia, Container, Grid, IconButton, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
@@ -13,6 +14,7 @@ const Trending = () => {
     return (
         <>
             <Header />
+            <Social />
             <div>인기/최신/팔로잉</div>
             <div>태그</div>
 
