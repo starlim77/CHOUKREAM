@@ -1,19 +1,17 @@
 import React from 'react';
 import * as S from './style';
 
-const MainItem = () => {
+const MainItem = ({data}) => {
     return (
         <>      
             <S.MainItem>
-                <S.ItemImg src='../image/used/black.png'/>
-                <S.ItemTitle>제목</S.ItemTitle>
-                <S.ItemSubTitle>아이템 이름</S.ItemSubTitle>
-                <S.ItemContent>한줄 내용asdasd
-                    asdasd  asdaasdasdasd
-                    sdasd</S.ItemContent>
-                <S.ItemPrice>50,000,000원</S.ItemPrice>
+                <S.ItemImg src={data.src}/>
+                <S.ItemTitle>{data.title}</S.ItemTitle>
+                <S.ItemSubTitle>{data.productName}</S.ItemSubTitle>
+                <S.ItemContent>{data.contents}</S.ItemContent>
+                <S.ItemPrice>{data.price}</S.ItemPrice>
                 <S.ItemLike>
-                    <S.ItemLikeImg src='../image/used/bookmark.svg'/><S.ItemLikeSpan>201</S.ItemLikeSpan>
+                    <S.ItemLikeImg src='../image/used/bookmark.svg'/><S.ItemLikeSpan>{data.like}</S.ItemLikeSpan>
                 </S.ItemLike>
             </S.MainItem>
             

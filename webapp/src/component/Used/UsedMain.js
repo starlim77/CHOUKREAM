@@ -15,9 +15,9 @@ import data from './imsiData'
 
 const UsedMain = () => {
 
-    axios.get('')
-         .then(res => setData(res))
-         .catch(error => console.log(error))
+    // axios.get('http://localhost:8080/used/getItem')
+    //      .then(res => setData(res))
+    //      .catch(error => console.log(error))
 
 
     const [data1,setData] = useState(data)
@@ -28,7 +28,7 @@ const UsedMain = () => {
     const navigate = useNavigate()
 
     const [id,setId] = useState('')
-    const [writeBtn,SetWriteBtn] = useState(true)
+    const [writeBtn,setWriteBtn] = useState(true)
 
 
     // useEffect(() => {

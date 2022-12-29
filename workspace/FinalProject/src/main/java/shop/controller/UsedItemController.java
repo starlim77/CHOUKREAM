@@ -29,14 +29,19 @@ public class UsedItemController {
 	UsedItemService usedItemService;
 	
 	@GetMapping(path="getItem")
-	public void getItem() {
-		
+	public List<UsedItemDTO> getItem() {
+		return null;
+	}
+	
+	@PostMapping(path="writeItem")
+	public void writeItem(@ModelAttribute UsedItemDTO usedItemDTO) {
+		System.out.println(usedItemDTO);
 	}
 	
 	
 	 @PostMapping(path="upload", produces="text/html;charset-UTF-8")
 	 @ResponseBody
-	 public void upload2(@RequestParam("formData") List<MultipartFile> img, HttpSession session, @ModelAttribute UsedItemDTO usedItemDTO) {
+	 public void upload2(@RequestBody MultipartFile img, HttpSession session, @ModelAttribute UsedItemDTO usedItemDTO) {
 
 //		 System.out.println(img);
 //		 System.out.println(usedItemDTO);
