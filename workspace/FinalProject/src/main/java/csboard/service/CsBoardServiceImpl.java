@@ -1,5 +1,7 @@
 package csboard.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,12 @@ public class CsBoardServiceImpl implements CsBoardService {
 		csBoardDAO.save(csBoardDTO);
 		
 		
+	}
+
+	@Override
+	public List<CsBoardDTO> getList() {
+		
+		return csBoardDAO.findAll();
 	}
 
 }

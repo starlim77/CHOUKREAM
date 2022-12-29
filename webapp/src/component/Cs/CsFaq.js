@@ -1,30 +1,17 @@
 import { TextField } from '@mui/material';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Header from '../Header/Header';
 import CsNav from './Csnav/CsNav';
 import { SearchInpt } from './style';
 import { Collapse } from '@mui/material';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import CsFaqWriteForm from './CsFaqWriteForm';
+import axios from 'axios';
 
-const keyword=[
-    {category : '1' ,name : '질문1' , content :'질문일입니다.'},
-    {category: '1' ,name : '질문1',content :'질문일입니다.'},
-    
-    {category: '2' ,name : '질문1',content :'질문일입니다.'},
-    {category : '2' ,name: '문2',content :'질문일이니다.'},
-    {category : '3' ,name: '문2',content :'질문일입123니다.'},
-    {category : '3' ,name: '문2',content :'질문일입니다.'},
-    {category : '4' ,name: '질문삼',content :'질문일입니다.'},
-    {category : '4' ,name: '질문4',content :'질문일입니다.'},
-    {category : '5' ,name: '3질문43',content :'질문일입니다.'},
-    {category : '5' ,name: '343',content :'질문일입니다.'}
-   
-    
-]
+
 
 const CsFaq = () => {
-    let [data, setData] =useState(keyword)
+    const [list, setList] =useState([])
     const [text ,setText]=useState('')
     const [search ,setSearch] =useState('')
     const [visible, setVisible] = useState(false);
@@ -33,18 +20,27 @@ const CsFaq = () => {
         setSearch(text)
     }
     const [category , setCategory] =useState('')
-    
+    useEffect(()=>{
+        axios.get('http://localhost:8080/cs/getList')//포트 다르니가 풀주소
+
+        .then((res) => {//주소가서 res 받아오기
+            setList(res.data)})//setList에 담기            
+        .catch((error) => console.log(error));
+
+    },[])
     const onClickCategory = (e) => {
         setCategory(e.target.value)
         console.log(category)
         navigate(`/cs/CsFaq?category=${category}`);
     }
-    data =useMemo(()=> {
-        return keyword.filter(item =>  item.name.toLowerCase().includes(text.toLowerCase())) //data값이 직접 받는 것이라서 return이 setDAta가 아니라 바로 ???
+ /*
+    list = useMemo(()=> {
+        return list.filter(item =>  item.name.toLowerCase().includes(text.toLowerCase())) //data값이 직접 받는 것이라서 return이 setDAta가 아니라 바로 ???
 
     },[search])
     
-   
+    search 다시 하기
+   */
 
     const handleClickItem = id => {
         setVisible({
@@ -86,18 +82,18 @@ const CsFaq = () => {
                
             </p>
             <table>
-                {data.map((item, index) => {
+                {list.map((item) => {
                     return (
-                        <table key={index}>
+                        <table key={item.seq}>
                             <tr
                                 style={{ cursor: 'pointer' }}
-                                onClick={() => handleClickItem(index)}
+                                onClick={() => handleClickItem(item.seq)}
                             >
                                 {/* {' '} */}
-                                <td width="30">{item.group}</td>
-                                <td width="70">{item.name}</td>
+                                <td width="50">{item.category}</td>
+                                <td width="200">{item.title}</td>
                             </tr>
-                            {visible[index] && (
+                            {visible[item.seq] && (
                                 <tr>
                                     <td colSpan="2">{item.content}</td>
                                 </tr>
