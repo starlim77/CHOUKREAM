@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../Header/Header';
 import Card from '@mui/material/Card';
-import { CardActions, CardContent, CardHeader, CardMedia, Container, Grid, IconButton, Typography } from '@mui/material';
+import { CardActions, CardContent, CardHeader, Container, Grid, IconButton, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';

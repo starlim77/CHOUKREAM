@@ -25,7 +25,6 @@ export const TrGridBoxImg = styled.img`
     border-radius: 20%; 
     object-fit: contain;
 `
-import styled from 'styled-components';
 
 
 //Detail.js 

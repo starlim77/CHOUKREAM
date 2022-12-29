@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../Header/Header';
 import Social from '../Lookbook/Social';
 import Card from '@mui/material/Card';
@@ -7,9 +7,19 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Container from '@mui/material/Container';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import * as S from './style';
+import axios from 'axios';
 
 const Detail = () => {
     const [commentOpen, setCommentOpen] = useState(false)
+
+    useEffect( ()=>{
+        axios.get('http://localhost:8080/lookbook/getStyleList')
+            .then()
+            .catch(error => console.log(error))
+
+    }, [])
+
+    
 
     return (
         <div>
@@ -19,7 +29,7 @@ const Detail = () => {
             <Container fixed>
                 <Card>
                     <CardHeader
-                        avatar={ <Avatar> 사진</Avatar> }
+                        avatar={ <Avatar> 프로필</Avatar> }
                         title="본인id"
                         subheader="날짜예정 September 14, 2016"
                     />
