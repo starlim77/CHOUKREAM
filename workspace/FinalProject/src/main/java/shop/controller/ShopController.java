@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import shop.bean.ShopDTO;
+import shop.bean.ProductDTO;
 import shop.service.ShopService;
 
 @CrossOrigin
@@ -21,14 +21,14 @@ public class ShopController {
 	private ShopService shopService;
 	
 	@GetMapping("getProductList")
-	public List<ShopDTO> getProductList() {
+	public List<ProductDTO> getProductList() {
 		
 		System.out.println("ㅎㅇㅎㅇ " + shopService.getProductList());
 		return shopService.getProductList();
 	}
 	
 	@GetMapping("sortGetProductList")
-	public List<ShopDTO> sortGetProductList() {
+	public List<ProductDTO> sortGetProductList() {
 		
 		System.out.println("sort 됨 " + shopService.sortGetProductList());
 		return shopService.sortGetProductList();

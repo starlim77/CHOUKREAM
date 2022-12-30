@@ -7,7 +7,7 @@ import org.springframework.data.domain.Sort;import org.springframework.data.doma
 import org.springframework.stereotype.Service;
 
 import shop.dao.ShopDAO;
-import shop.bean.ShopDTO;
+import shop.bean.ProductDTO;
 
 @Service
 public class ShopServiceImpl implements ShopService {
@@ -16,12 +16,12 @@ public class ShopServiceImpl implements ShopService {
 	private ShopDAO shopDAO;
 	
 	@Override
-	public List<ShopDTO> getProductList() {
+	public List<ProductDTO> getProductList() {
 		return shopDAO.findAll();
 	}
 
 	@Override
-	public List<ShopDTO> sortGetProductList() {
+	public List<ProductDTO> sortGetProductList() {
 		return shopDAO.findAll(Sort.by(Direction.DESC, "releaseDate"));
 	}
 	

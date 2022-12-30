@@ -2,12 +2,12 @@ package shop.service;
 
 import java.util.List;
 
-import shop.bean.ShopDTO;
+import shop.bean.ProductDTO;
 
 public interface ShopService {
 
-	List<ShopDTO> getProductList();
+	List<ProductDTO> getProductList();
 
-	List<ShopDTO> sortGetProductList();
+	List<ProductDTO> sortGetProductList();
 
 }

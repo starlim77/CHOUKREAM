@@ -164,51 +164,51 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                         <Co.SearchResultList>
                             {dummy.map(item => (
                                 <Co.ProductCard key={item.seq}>
-                                    <Co.ItemInner href="#">
-                                        <Co.Product>
-                                            <Co.ProductImg>
-                                                <Co.Source
-                                                    type="image/webp"
-                                                    srcSet={item.img_web}
-                                                ></Co.Source>
-                                                <Co.Source
-                                                    srcSet={item.img}
-                                                ></Co.Source>
-                                                <Co.Image
-                                                    alt={item.sub_title}
-                                                    src={item.img}
-                                                    loading="lazy"
-                                                ></Co.Image>
-                                            </Co.ProductImg>
-                                        </Co.Product>
-                                        <Co.ProductInfoArea>
-                                            <Co.Title>
-                                                <Co.ProductInfoBrand>
-                                                    {item.brand}
-                                                </Co.ProductInfoBrand>
-                                                <Co.ProductInfoName>
-                                                    <Co.Name>
-                                                        {item.title}
-                                                    </Co.Name>
-                                                    <Co.TranslatedName>
-                                                        {item.subTitle}
-                                                    </Co.TranslatedName>
-                                                </Co.ProductInfoName>
-                                            </Co.Title>
-                                            <Co.ProductExpress>
-                                                <FontAwesomeIcon
-                                                    icon={faBoltLightning}
-                                                />
-                                                빠른배송
-                                            </Co.ProductExpress>
-                                        </Co.ProductInfoArea>
-                                        <Co.PriceInfoArea>
-                                            <Co.Amount>
-                                                {addComma(item.releasePrice)}
-                                            </Co.Amount>
-                                            <Co.Desc>즉시 구매가</Co.Desc>
-                                        </Co.PriceInfoArea>
-                                    </Co.ItemInner>
+                                    <Link to={`/products/${item.seq}`}>
+                                        <Co.ItemInner href="#">
+                                            <Co.Product>
+                                                <Co.ProductImg>
+                                                    <Co.Source
+                                                        type="image/webp"
+                                                        srcSet={item.img_web}
+                                                    ></Co.Source>
+                                                    <Co.Source
+                                                        srcSet={item.img}
+                                                    ></Co.Source>
+                                                    <Co.Image
+                                                        alt={item.sub_title}
+                                                        src={item.img}
+                                                        loading="lazy"
+                                                    ></Co.Image>
+                                                </Co.ProductImg>
+                                            </Co.Product>
+                                            <Co.ProductInfoArea>
+                                                <Co.Title>
+                                                    <Co.ProductInfoBrand>
+                                                        {item.brand}
+                                                    </Co.ProductInfoBrand>
+                                                    <Co.ProductInfoName>
+                                                        <Co.Name>
+                                                            {item.title}
+                                                        </Co.Name>
+                                                        <Co.TranslatedName>
+                                                            {item.subTitle}
+                                                        </Co.TranslatedName>
+                                                    </Co.ProductInfoName>
+                                                </Co.Title>
+                                                <Co.ProductExpress>
+                                                    <FontAwesomeIcon
+                                                        icon={faBoltLightning}
+                                                    />
+                                                    빠른배송
+                                                </Co.ProductExpress>
+                                            </Co.ProductInfoArea>
+                                            <Co.PriceInfoArea>
+                                                <Co.Amount>{addComma(item.releasePrice)}</Co.Amount>
+                                                <Co.Desc>즉시 구매가</Co.Desc>
+                                            </Co.PriceInfoArea>
+                                        </Co.ItemInner>
+                                    </Link>
                                     <Co.ActionWishReview>
                                         <Co.WishFigure>
                                             <Co.BtnWish
