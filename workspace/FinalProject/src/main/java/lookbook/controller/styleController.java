@@ -2,6 +2,7 @@ package lookbook.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,39 +35,74 @@ public class styleController {
 		
 	@PostMapping(path="upload" , produces="text/html; charset=UTF-8")
 	@ResponseBody
-	public void upload(@RequestParam MultipartFile img, HttpSession session) {
+	public void upload(@RequestParam List<MultipartFile> img, @ModelAttribute StyleDTO styleDTO, HttpSession session) {
 	//public void upload(@RequestParam("img[]") List<MultipartFile> list, HttpSession session)  {
-	
+		System.out.println("DTO = " + styleDTO);
 		//String filePath = session.getServletContext().getRealPath("/webapp/public/storage");  //저장할경로설정
 		
 		 String path = System.getProperty("user.dir");
-	       System.out.println(path);
-	       int index = path.lastIndexOf("\\");
-	       System.out.println(index);
-	       String pathModified=path.substring(0, index);
-	       System.out.println(pathModified);
-	       index=pathModified.lastIndexOf("\\");
-	       System.out.println(index);
-	       pathModified = pathModified.substring(0,index);
-	       System.out.println("경로확인"+pathModified);
+	     System.out.println(path);
+	     int index = path.lastIndexOf("\\");
+	     System.out.println(index);
+	     String pathModified=path.substring(0, index);
+	     System.out.println(pathModified);
+	     index=pathModified.lastIndexOf("\\");
+	     System.out.println(index);
+	     pathModified = pathModified.substring(0,index);
+	     System.out.println("경로확인"+pathModified);
 	      
 	       
-	       //String filePath=session.getServletContext().getRealPath("/");
+	      //String filePath=session.getServletContext().getRealPath("/");
 	      
-	       String filePath=pathModified+"/webapp/public/storage";
-	        System.out.println("실제폴더 : " + filePath);
+	       
+	    // String filePath=pathModified+"/webapp/public/storage";
+	     //System.out.println("실제폴더 : " + filePath);
 		
-		
-		//for(MultipartFile img : list) {
-		String fileName = img.getOriginalFilename();
-		File file = new File(filePath, fileName);
-		
-		try {
-			img.transferTo(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	//}//for
+	     //파일첨부에 따라 로직 분리
+	     if(styleDTO.getImgList().isEmpty()) {
+	    	 //첨부파일 없음
+	    	 styleService.upload(styleDTO);
+	     }else {
+	    	 //첨부파일 있음
+	    	 
+	    	 MultipartFile styleFile = styleDTO.getImgList();
+	    	 String originalFileName = styleFile.getOriginalFilename(); //서버 저장용이름
+	    	 String storedFileName = System.currentTimeMillis() + "_" + originalFileName;
+	    	 String filePath = pathModified+"/webapp/public/storage"+ storedFileName;
+	    	 styleFile.transferTo(new File(filePath));//경로에 실제파일 저장
+	    	 
+	     }
+	    	 
+	       
+	       for(MultipartFile image : img) {   	   
+	       
+	    	   String fileName = image.getOriginalFilename();
+	    	   File file = new File(filePath, fileName);
+		       
+	    	   try {
+	    		   
+					image.transferTo(file);
+					styleDTO.setFilepath(filePath);
+					styleDTO.setFilename(fileName);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+	    	   styleService.upload(styleDTO);
+	    	   
+	    	   
+	       }//for
+	       
+	       
+	       //for(MultipartFile img : list) {
+//	       String fileName = img.getOriginalFilename();
+//	       File file = new File(filePath, fileName);
+//	       
+//	       try {
+//	    	   img.transferTo(file);
+//	       } catch (IOException e) {
+//	    	   e.printStackTrace();
+//	       }
+	     //}//for
 		
 		
 	}

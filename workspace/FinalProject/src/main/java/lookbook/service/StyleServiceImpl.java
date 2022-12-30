@@ -23,4 +23,10 @@ public class StyleServiceImpl implements StyleService {
 		return styleDAO.findAll();
 	}
 
+	@Override
+	public void upload(StyleDTO styleDTO) {
+		styleDAO.save(styleDTO);
+		
+	}
+
 }

@@ -8,7 +8,7 @@ import * as S from './style';
 const Mystyle = () => {
     const imgRef = useRef();
 
-    const [file, setFile] = useState('')
+    const [file, setFile] = useState([])
     const [showImgSrc,setShowImgSrc] = useState('');
     const [styleBoardWriteOpen, setStyleBoardWriteOpen] = useState(false);
     const onUploadFile = (e) =>{
@@ -34,13 +34,19 @@ const Mystyle = () => {
  
     const readURL = (input) => {
         var reader = new FileReader(); //생성
+    
         reader.readAsDataURL(input.files[0]) 
 
         reader.onload = () => {
             console.log(input.files[0])   //파일확인
             setShowImgSrc(reader.result)
-            setFile(input.files[0])
+            //setFile(input.files[0])
+            Array.from(input.files).map(items => file.push(items));
+            console.log(file)
+            
         }
+
+        
         
     }
 
@@ -49,20 +55,11 @@ const Mystyle = () => {
         formData.append('img', file)
 
         axios
-            .post("http://localhost:8080/lookbook/styleBoardWrite", formData, {params:form})
-            .then(
-                    axios
-                        .post("http://localhost:8080/lookbook/upload", formData, 
-                                        {
-                                            headers: {
-                                                'content-Type': `multipart/form-data`
-                                            }
-                                        }
-                        )
-                        .then(
+            .post("http://localhost:8080/lookbook/upload", formData, {params:form})
+           
+             .then(
                             alert("게시물 등록 완료"),
-                            setStyleBoardWriteOpen(false))
-                        .catch(error => console.log(error) )
+                            setStyleBoardWriteOpen(false)
             )
             .catch( error => console.log(error) )
 
@@ -140,7 +137,7 @@ const Mystyle = () => {
                                 />
 
                                 <Button onClick={ onUploadFile }>+</Button><br/>
-                                <input type='file' name='img' id='img' multiple  ref={imgRef}   style={ {visibility: 'hidden'}}
+                                <input type='file' name='img' id='img' accept="image/*" multiple  ref={imgRef}   style={ {visibility: 'hidden'}}
                                         onChange={ e=> readURL( e.target) }  
                                         //onChange={onInput}
                                 />
