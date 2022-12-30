@@ -2,6 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import * as S from './style';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     return (
@@ -12,7 +13,7 @@ const Header = () => {
                         <S.TopLi>고객센터</S.TopLi>
                         <S.TopLi>관심상품</S.TopLi>
                         <S.TopLi>마이페이지</S.TopLi>
-                        <S.TopLi>로그인</S.TopLi>
+                        <S.TopLi><Link to='/login'>로그인</Link></S.TopLi>
                     </S.TopWrapper>
                 </S.Top>
                 <S.Bottom>
