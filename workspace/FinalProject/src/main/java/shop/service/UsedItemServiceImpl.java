@@ -18,6 +18,12 @@ public class UsedItemServiceImpl implements UsedItemService {
 		
 	}
 
+	@Override
+	public void writeItem(UsedItemDTO usedItemDTO) {
+		usedItemDAO.save(usedItemDTO);
+		
+	}
+
 
 	
 }

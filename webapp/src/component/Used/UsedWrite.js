@@ -44,7 +44,7 @@ const UsedWrite = () => {
 
             setForm({
                 ...form,
-                hashTag: [...hashTag,'#'+hashTag2]})
+                hashTag: [...hashTag,hashTag2]})
         }      
         
         setHashTag2('')
@@ -78,7 +78,10 @@ const UsedWrite = () => {
         }
 
         if(sw == 1) {
-            axios.post('http://localhost:8080/used/writeItem',null,encodeURI({params:form}))
+            axios.post('http://localhost:8080/used/writeItem',null,({params:{
+               ...form,
+                hashTag : encodeURI(form.hashTag)
+            }}))
                  .then(() => {
                     alert('글작성 완료')
                  })
