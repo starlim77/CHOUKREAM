@@ -15,9 +15,9 @@ import data from './imsiData'
 
 const UsedMain = () => {
 
-    axios.get('')
-         .then(res => setData(res))
-         .catch(error => console.log(error))
+    // axios.get('')
+    //      .then(res => setData(res))
+    //      .catch(error => console.log(error))
 
 
     const [data1,setData] = useState(data)
