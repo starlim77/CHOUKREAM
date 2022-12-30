@@ -22,7 +22,11 @@ const Header = () => {
                         <S.BottomLi><Link to="/buy">구매 임시</Link></S.BottomLi>
                         <S.BottomLi><Link to="/sell">판매 임시</Link></S.BottomLi>
                         <S.BottomLi active={true}>STYLE</S.BottomLi>
-                        <S.BottomLi>SHOP</S.BottomLi>
+                        <S.BottomLi>
+                            <Link to={'/shop'}>
+                                shop
+                            </Link>
+                        </S.BottomLi>
                         <S.BottomLi>ABOUT</S.BottomLi>
                         <S.BottomLi>
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
