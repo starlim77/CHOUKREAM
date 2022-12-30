@@ -23,7 +23,7 @@ const UploadForm2 = () => {
         var reader = new FileReader();
         reader.readAsDataURL(e.target.files[0]);
         console.log(e.target.files);
-        Array.from(e.target.files).map(files=>file.push(files));
+        Array.from(e.target.files).map(items=>file.push(items));
         //file.push(e.target.files);
         //setFile(e.target.files);
         //setFile([...file, e.target.files]);
@@ -45,11 +45,12 @@ const UploadForm2 = () => {
     const onUploadSubmit=(e)=>{
         console.log(file);
         var formData=new FormData();
-        //file.map(files=>formData.append('img',file));
-        formData.append('img',file);
+        file.map(files=>formData.append('img',files));
+        //formData.append('img',file);
+       
         console.log(formData);
-        axios.post('http://localhost:8080/used/upload',null,
-        {headers:{'Content-Type':'multipart/form-data'},params:{form, formData}})
+        axios.post('http://localhost:8080/used/upload',formData,
+        {headers:{'Content-Type':'multipart/form-data'},params:form})
         .then(res=>console.log(res))
         .catch(error=>console.log(error));
     }
@@ -57,7 +58,7 @@ const UploadForm2 = () => {
         <div>
             <img src={ showImgSrc} width='300' height='300'></img>&emsp;
             <img src='../image/icon.png' width='50' height='50' onClick={onCamera} alt='카메라'></img>
-            <input type='file' name='img' ref={imgRef} onChange={e=>readUrl(e)} multiple></input>
+            <input type='file' name='img' accept="image/*" ref={imgRef} onChange={e=>readUrl(e)} multiple></input>
             <br></br>
             <button onClick={onUploadSubmit}>이미지 등록</button>
             <br/>
