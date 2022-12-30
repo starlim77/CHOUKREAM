@@ -1,7 +1,6 @@
 import './App.css';
 import Layout from './component/Layout/Layout';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Index from './component/main/Index';
 import Shop from './component/Shop/Shop';
 import UsedMain from './component/Used/UsedMain'
 import UsedWrite from './component/Used/UsedWrite';
@@ -13,7 +12,7 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route element={<Layout />}>
-                    <Route path="/" element={<Index/>} />
+                    <Route path="/" element="" />
                     <Route path="shop" element={<Shop/>} />  
                     <Route path='Used/usedMain' element= { <UsedMain/>}/>
                     <Route path='Used/usedWrite' element = { <UsedWrite/>} />
