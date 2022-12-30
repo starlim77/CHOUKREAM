@@ -280,7 +280,7 @@ export const ProductCard = styled.div`
     margin: 0;
     padding: 0;
 `;
-export const ItemInner = styled.a`
+export const ItemInner = styled.div`
     display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -290,7 +290,7 @@ export const ItemInner = styled.a`
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     cursor: pointer;
-    &::after {
+    /* &::after {
         content: '';
         position: absolute;
         top: 0;
@@ -300,7 +300,7 @@ export const ItemInner = styled.a`
         background: transparent;
         box-sizing: border-box;
         -webkit-tap-highlight-color: transparent;
-    }
+    } */
 `;
 export const Product = styled.div`
     background-color: #f4f4f4;

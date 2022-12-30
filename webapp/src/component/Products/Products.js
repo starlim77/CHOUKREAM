@@ -24,6 +24,8 @@ const Products = () => {
         price: '-'
     }]);
 
+    const [size ,setSize] = useState("모든 사이즈");
+
     const [dropdown, setDropdown] = useState(true);
     const OpenDrop = () => {  
         setDropdown(!dropdown);
@@ -71,41 +73,41 @@ const Products = () => {
                     <S.ColumnBind>
                         <S.ColumnIsFixed>
                             <S.ColumnBox>
-                                <div class="spread">
+                                <div className="spread">
                                     <img src={form.img}></img>
                                 </div>
-                                {/* <div class="column_box">
-                                    <div class="detail_banner_area">
-                                        <div class="banner_slide detail_slide slick-slider slick-initialized">
-                                            <button data-role="none" class="slick-arrow slick-prev slick-disabled" display="block">Previous</button>
-                                            <div class="slick-list">
+                                {/* <div className="column_box">
+                                    <div className="detail_banner_area">
+                                        <div className="banner_slide detail_slide slick-slider slick-initialized">
+                                            <button data-role="none" className="slick-arrow slick-prev slick-disabled" display="block">Previous</button>
+                                            <div className="slick-list">
                                             </div>
-                                            <button data-role="none" class="slick-arrow slick-prev slick-disabled" display="block">Next</button>
+                                            <button data-role="none" className="slick-arrow slick-prev slick-disabled" display="block">Next</button>
                                         </div>
                                     </div>
                                 </div> */}
                                 <S.BannerAlert>
                                     <S.BannerAlertContent onClick={e => setModalOpen(true)}>
-                                        <p>
+                                        <div>
                                             <S.AlertTitleCareMark>주의</S.AlertTitleCareMark>
                                             <S.AlertTitleAlertText>판매 거래 주의사항</S.AlertTitleAlertText>
-                                        </p>
+                                        </div>
                                         <S.AlertTitleAlertSubText>반드시 보유한 상품만 판매하세요</S.AlertTitleAlertSubText>
                                     </S.BannerAlertContent>
                                 </S.BannerAlert>
                             </S.ColumnBox>
-                            {modalOpen && <ModalBasic setModalOpen={setModalOpen}/>}
-                            {/* <div class="ico_arrow">
+                            {modalOpen && <ModalBasic setModalOpen={setModalOpen} seq={seq}/>}
+                            {/* <div className="ico_arrow">
                                 <svg>
                                     <use></use>
                                 </svg>
                             </div> */}                            
                         </S.ColumnIsFixed>
                         <S.Column>
-                            <div class="column_box">
-                                <div class="column_top">
-                                    <div class="detail_main_title">
-                                        <div class="main_title_box">
+                            <div className="column_box">
+                                <div className="column_top">
+                                    <div className="detail_main_title">
+                                        <div className="main_title_box">
                                             <div>
                                                 <S.MainTitleBoxBrand>{form.brand}</S.MainTitleBoxBrand>
                                             </div>
@@ -113,14 +115,14 @@ const Products = () => {
                                             <S.MainTitleBoxSubTitle>{form.subTitle}</S.MainTitleBoxSubTitle>
                                         </div>
                                     </div>
-                                    <div class="product_figure_wrap">
-                                        <S.DetailSize title="모든 사이즈" option-title="사이즈">
+                                    <div className="product_figure_wrap">
+                                        <S.DetailSize title={size} option-title="사이즈">
                                             <S.DetailSizeTitle>
                                                 <S.DetailSizeTitleText>사이즈</S.DetailSizeTitleText>
                                             </S.DetailSizeTitle>
                                             <S.DetailSizeSize>
                                                 <S.BtnSize>
-                                                    <S.BtnSizeBtnText>{form.size}</S.BtnSizeBtnText>
+                                                    <S.BtnSizeBtnText>{size}</S.BtnSizeBtnText>
                                                     {/* <svg>
                                                         <use></use>
                                                     </svg> */}
@@ -138,13 +140,13 @@ const Products = () => {
                                                     </S.DetailPriceNum>
                                                     <S.DetailPriceWon>원</S.DetailPriceWon>
                                                 </S.DetailPriceAmount>
-                                                <div class="fluctuation decrease">
+                                                <div className="fluctuation decrease">
                                                     <p></p>
                                                 </div>
                                             </S.DetailPricePrice>
                                         </S.DetailPrice>
                                     </div>
-                                    <div class="btn-wrap">
+                                    <div className="btn-wrap">
                                         <S.DivisionBtnBox>
                                             <S.DivisionBtnBoxBtnDivisionBuy>
                                                 <S.DivisionBtnBoxTitle>구매</S.DivisionBtnBoxTitle>
@@ -172,7 +174,7 @@ const Products = () => {
                                             </S.DivisionBtnBoxBtnDivisionSell>
                                         </S.DivisionBtnBox>
                                         <S.LargeBtnWish area-label="관심상품">
-                                            {/* <svg class="icon sprite-icons ico-wish-off">
+                                            {/* <svg className="icon sprite-icons ico-wish-off">
                                                 <use></use>
                                             </svg> */}
                                             <S.LargeBtnWishBtnText>관심상품</S.LargeBtnWishBtnText>
@@ -180,7 +182,7 @@ const Products = () => {
                                         </S.LargeBtnWish>
                                     </div>
                                 </div>
-                                <div class="product_info_wrap">
+                                <div className="product_info_wrap">
                                     <S.DetailTitleInfoTitle>상품 정보</S.DetailTitleInfoTitle>
                                     <S.DetailProductWrap>
                                         <S.DetailProduct>
@@ -203,103 +205,103 @@ const Products = () => {
                                         </S.DetailProduct>
                                     </S.DetailProductWrap>
                                 </div>                               
-                                {/* <div class="delivery_way_wrap"> 배송
-                                    <h3 class="detail_title">배송 정보</h3>
-                                    <div class="delivery_way">
-                                        <div class="way_info">
-                                            <div class="way_status_thumb">
+                                {/* <div className="delivery_way_wrap"> 배송
+                                    <h3 className="detail_title">배송 정보</h3>
+                                    <div className="delivery_way">
+                                        <div className="way_info">
+                                            <div className="way_status_thumb">
                                                 <img></img>
                                             </div>
-                                            <div class="way_desc">
-                                                <p class="company">
-                                                    <span class="badge_title">일반배송</span>
-                                                    <span class="title"></span>
+                                            <div className="way_desc">
+                                                <p className="company">
+                                                    <span className="badge_title">일반배송</span>
+                                                    <span className="title"></span>
                                                 </p>
-                                                <p class="sub_text">검수 후 배송 * 일 내 도착 예정</p>
+                                                <p className="sub_text">검수 후 배송 * 일 내 도착 예정</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div> */}
-                                <div class="banner_box"> {/*움직이는 배너박스, 차후 적용*/}
+                                <div className="banner_box"> {/*움직이는 배너박스, 차후 적용*/}
                                 </div>
-                                {/* <div class="detail_wrap">
-                                    <div class="product_sales_graph">
-                                        <div class="title">
-                                            <h3 class="detail_title">시세</h3>
-                                            <div class="sales_filter">
-                                                <div class="filter_unit">
-                                                    <button class="btn btn_select" slot="button">
-                                                        <span class="select_text layer_open">
+                                {/* <div className="detail_wrap">
+                                    <div className="product_sales_graph">
+                                        <div className="title">
+                                            <h3 className="detail_title">시세</h3>
+                                            <div className="sales_filter">
+                                                <div className="filter_unit">
+                                                    <button className="btn btn_select" slot="button">
+                                                        <span className="select_text layer_open">
                                                             "모든 사이즈"
                                                         </span>
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="wrap_sales">
-                                            <div class="tab_area">
-                                                <ul role="tablist" class="tab_list">
-                                                    <li role="tab" aria-selected="false" aria-controlls="sales_panel1" class="item">
-                                                        <a href="#" class="item_link">1개월</a>
+                                        <div className="wrap_sales">
+                                            <div className="tab_area">
+                                                <ul role="tablist" className="tab_list">
+                                                    <li role="tab" aria-selected="false" aria-controlls="sales_panel1" className="item">
+                                                        <a href="#" className="item_link">1개월</a>
                                                     </li>
-                                                    <li role="tab" aria-selected="false" aria-controlls="sales_panel2" class="item">
-                                                        <a href="#" class="item_link">3개월</a>
+                                                    <li role="tab" aria-selected="false" aria-controlls="sales_panel2" className="item">
+                                                        <a href="#" className="item_link">3개월</a>
                                                     </li>
-                                                    <li role="tab" aria-selected="false" aria-controlls="sales_panel3" class="item">
-                                                        <a href="#" class="item_link">6개월</a>
+                                                    <li role="tab" aria-selected="false" aria-controlls="sales_panel3" className="item">
+                                                        <a href="#" className="item_link">6개월</a>
                                                     </li>
-                                                    <li role="tab" aria-selected="false" aria-controlls="sales_panel4" class="item">
-                                                        <a href="#" class="item_link">1년</a>
+                                                    <li role="tab" aria-selected="false" aria-controlls="sales_panel4" className="item">
+                                                        <a href="#" className="item_link">1년</a>
                                                     </li>
-                                                    <li role="tab" aria-selected="true" aria-controlls="sales_panel5" class="item">
-                                                        <a href="#" class="item_link">전체</a>
+                                                    <li role="tab" aria-selected="true" aria-controlls="sales_panel5" className="item">
+                                                        <a href="#" className="item_link">전체</a>
                                                     </li>
                                                 </ul>
-                                                <div id="sales_panel1" role="tabpanel" class="tab_content show" span="1m">
-                                                    <div class="graph">
+                                                <div id="sales_panel1" role="tabpanel" className="tab_content show" span="1m">
+                                                    <div className="graph">
                                                         <canvas></canvas>
                                                     </div>
                                                 </div>
-                                                <div id="sales_panel2" role="tabpanel" class="tab_content" span="3m">
-                                                    <div class="graph">
+                                                <div id="sales_panel2" role="tabpanel" className="tab_content" span="3m">
+                                                    <div className="graph">
                                                         <canvas></canvas>
                                                     </div>
                                                 </div>
-                                                <div id="sales_panel3" role="tabpanel" class="tab_content" span="6m">
-                                                    <div class="graph">
+                                                <div id="sales_panel3" role="tabpanel" className="tab_content" span="6m">
+                                                    <div className="graph">
                                                         <canvas></canvas>
                                                     </div>
                                                 </div>
-                                                <div id="sales_panel4" role="tabpanel" class="tab_content" span="1y">
-                                                    <div class="graph">
+                                                <div id="sales_panel4" role="tabpanel" className="tab_content" span="1y">
+                                                    <div className="graph">
                                                         <canvas></canvas>
                                                     </div>
                                                 </div>
-                                                <div id="sales_panel5" role="tabpanel" class="tab_content" span="all">
-                                                    <div class="graph">
+                                                <div id="sales_panel5" role="tabpanel" className="tab_content" span="all">
+                                                    <div className="graph">
                                                         <canvas></canvas>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="wrap_bids">
-                                            <div class="tab_area">
-                                                <ul role="tablist" class="tab_list">
-                                                    <li role="tab" aria-selected="true" aria-controls="panel1" class="item on">
-                                                        <a href="#" class="item_link">체결 거래</a>
+                                        <div className="wrap_bids">
+                                            <div className="tab_area">
+                                                <ul role="tablist" className="tab_list">
+                                                    <li role="tab" aria-selected="true" aria-controls="panel1" className="item on">
+                                                        <a href="#" className="item_link">체결 거래</a>
                                                     </li>
-                                                    <li role="tab" aria-selected="false" aria-controls="panel2" class="item">
-                                                        <a href="#" class="item_link">판매 입찰</a>
+                                                    <li role="tab" aria-selected="false" aria-controls="panel2" className="item">
+                                                        <a href="#" className="item_link">판매 입찰</a>
                                                     </li>
-                                                    <li role="tab" aria-selected="false" aria-controls="panel3" class="item">
-                                                        <a href="#" class="item_link">구매 입찰</a>
+                                                    <li role="tab" aria-selected="false" aria-controls="panel3" className="item">
+                                                        <a href="#" className="item_link">구매 입찰</a>
                                                     </li>
                                                 </ul>
-                                                <div id="panel1" role="tabpanel" class="tab_content show" span="sales">
-                                                    <div class="table_wrap">
+                                                <div id="panel1" role="tabpanel" className="tab_content show" span="sales">
+                                                    <div className="table_wrap">
                                                         <table>
                                                             <caption>
-                                                                <span class="blind">데이터 테이블</span>
+                                                                <span className="blind">데이터 테이블</span>
                                                             </caption>
                                                             <colgroup> width 추후 추가 
                                                                 <col></col>
@@ -308,77 +310,77 @@ const Products = () => {
                                                             </colgroup>
                                                             <thead>
                                                                 <tr>
-                                                                    <th class="table_th">사이즈</th>
-                                                                    <th class="table_th align_right">거래가</th>
-                                                                    <th class="table_th align_right">거래일</th>
+                                                                    <th className="table_th">사이즈</th>
+                                                                    <th className="table_th align_right">거래가</th>
+                                                                    <th className="table_th align_right">거래일</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr>
-                                                                    <td class="table_td">
+                                                                    <td className="table_td">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td class="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="table_td">
+                                                                    <td className="table_td">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td class="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="table_td">
+                                                                    <td className="table_td">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
+                                                                        동적처리
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="table_td">
+                                                                        동적처리
+                                                                    </td>
+                                                                    <td className="table_td align_right">
+                                                                        동적처리
+                                                                    </td>
+                                                                    <td className="table_td align_right">
+                                                                        동적처리
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="table_td">
+                                                                        동적처리
+                                                                    </td>
+                                                                    <td className="table_td align_right">
+                                                                        동적처리
+                                                                    </td>
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                    <a href="#" class="btn outlinegrey fill medium">체결 내역 더보기</a>
+                                                    <a href="#" className="btn outlinegrey fill medium">체결 내역 더보기</a>
                                                 </div>
-                                                <div id="panel2" role="tabpanel" class="tab_content" span="asks">
-                                                <div class="table_wrap">
+                                                <div id="panel2" role="tabpanel" className="tab_content" span="asks">
+                                                <div className="table_wrap">
                                                         <table>
                                                             <caption>
-                                                                <span class="blind">데이터 테이블</span>
+                                                                <span className="blind">데이터 테이블</span>
                                                             </caption>
                                                             <colgroup>
                                                                 <col></col>
@@ -387,77 +389,77 @@ const Products = () => {
                                                             </colgroup>
                                                             <thead>
                                                                 <tr>
-                                                                    <th class="table_th">사이즈</th>
-                                                                    <th class="table_th align_right">판매 희망가</th>
-                                                                    <th class="table_th align_right">수량</th>
+                                                                    <th className="table_th">사이즈</th>
+                                                                    <th className="table_th align_right">판매 희망가</th>
+                                                                    <th className="table_th align_right">수량</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr>
-                                                                    <td class="table_td">
+                                                                    <td className="table_td">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td class="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="table_td">
+                                                                    <td className="table_td">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td class="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="table_td">
+                                                                    <td className="table_td">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
+                                                                        동적처리
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="table_td">
+                                                                        동적처리
+                                                                    </td>
+                                                                    <td className="table_td align_right">
+                                                                        동적처리
+                                                                    </td>
+                                                                    <td className="table_td align_right">
+                                                                        동적처리
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="table_td">
+                                                                        동적처리
+                                                                    </td>
+                                                                    <td className="table_td align_right">
+                                                                        동적처리
+                                                                    </td>
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                    <a href="#" class="btn outlinegrey fill medium">입찰 내역 더보기</a>
+                                                    <a href="#" className="btn outlinegrey fill medium">입찰 내역 더보기</a>
                                                 </div>
-                                                <div id="panel3" role="tabpanel" class="tab_content" span="asks">
-                                                <div class="table_wrap">
+                                                <div id="panel3" role="tabpanel" className="tab_content" span="asks">
+                                                <div className="table_wrap">
                                                         <table>
                                                             <caption>
-                                                                <span class="blind">데이터 테이블</span>
+                                                                <span className="blind">데이터 테이블</span>
                                                             </caption>
                                                             <colgroup>
                                                                 <col></col>
@@ -466,71 +468,71 @@ const Products = () => {
                                                             </colgroup>
                                                             <thead>
                                                                 <tr>
-                                                                    <th class="table_th">사이즈</th>
-                                                                    <th class="table_th align_right">구매 희망가</th>
-                                                                    <th class="table_th align_right">수량</th>
+                                                                    <th className="table_th">사이즈</th>
+                                                                    <th className="table_th align_right">구매 희망가</th>
+                                                                    <th className="table_th align_right">수량</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr>
-                                                                    <td class="table_td">
+                                                                    <td className="table_td">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td class="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="table_td">
+                                                                    <td className="table_td">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td class="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="table_td">
+                                                                    <td className="table_td">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
-                                                                    <td class="table_td align_right">
+                                                                    <td className="table_td align_right">
+                                                                        동적처리
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="table_td">
+                                                                        동적처리
+                                                                    </td>
+                                                                    <td className="table_td align_right">
+                                                                        동적처리
+                                                                    </td>
+                                                                    <td className="table_td align_right">
+                                                                        동적처리
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="table_td">
+                                                                        동적처리
+                                                                    </td>
+                                                                    <td className="table_td align_right">
+                                                                        동적처리
+                                                                    </td>
+                                                                    <td className="table_td align_right">
                                                                         동적처리
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                    <a href="#" class="btn outlinegrey fill medium">입찰 내역 더보기</a>
+                                                    <a href="#" className="btn outlinegrey fill medium">입찰 내역 더보기</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -540,9 +542,9 @@ const Products = () => {
                                     <S.ConfirmWrap>
                                         <S.ConfirmWrapConfirmTitle>구매 전 꼭 확인해주세요</S.ConfirmWrapConfirmTitle>
                                         <S.ConfirmWrapConfirmContemt>
-                                            <ul class="dropdown_list">
+                                            <ul className="dropdown_list">
                                                 <li>
-                                                    <div class="dropdown">
+                                                    <div className="dropdown">
                                                         <S.DropdownHead onClick={ OpenDrop }>
                                                             <S.DropdownHeadTitle>배송 기간 안내</S.DropdownHeadTitle>
                                                             {/* <svg>
@@ -551,23 +553,23 @@ const Products = () => {
                                                         </S.DropdownHead>
                                                         <S.DropdownContent hidden={dropdown}>
                                                             <S.DropdownContentContent>
-                                                                <div class="content_box">
-                                                                    <div class="emphasis_box">
+                                                                <div className="content_box">
+                                                                    <div className="emphasis_box">
                                                                         <S.Emphasis>
                                                                             "크림은 최대한 빠르게 불라불라 속도에 차이있음"
                                                                         </S.Emphasis>
                                                                     </div>
-                                                                    <ul class="content_list" style={{ marginTop: "20px" }}>
-                                                                        <li class="content_item">
-                                                                            <p class="title_txt"> [빠른배송 구매]</p>
+                                                                    <ul className="content_list" style={{ marginTop: "20px" }}>
+                                                                        <li className="content_item">
+                                                                            <p className="title_txt"> [빠른배송 구매]</p>
                                                                         </li>
-                                                                        <li class="content_item">
-                                                                            <p class="main_txt" style={{ marginTop: "20px" }}> "판매자가 어쩌구 구매 가능합니다" </p>
+                                                                        <li className="content_item">
+                                                                            <p className="main_txt" style={{ marginTop: "20px" }}> "판매자가 어쩌구 구매 가능합니다" </p>
                                                                         </li>
-                                                                        <li class="content_item">
-                                                                            <p class="main_txt"> 
+                                                                        <li className="content_item">
+                                                                            <p className="main_txt"> 
                                                                                 "오늘오후 어쩌구 출고일 변경"
-                                                                                <a href="#" class="txt_link">빠른배송 안내</a> 
+                                                                                <a href="#" className="txt_link">빠른배송 안내</a> 
                                                                             </p>
                                                                         </li>
                                                                     </ul>
@@ -577,7 +579,7 @@ const Products = () => {
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class="dropdown">
+                                                    <div className="dropdown">
                                                         <S.DropdownHead onClick={ OpenDrop1 }>
                                                             <S.DropdownHeadTitle>검수 안내</S.DropdownHeadTitle>
                                                             {/* <svg>
@@ -586,23 +588,23 @@ const Products = () => {
                                                         </S.DropdownHead>
                                                         <S.DropdownContent hidden={dropdown1}>
                                                             <S.DropdownContentContent>
-                                                                <div class="content_box">
-                                                                    <div class="emphasis_box">
+                                                                <div className="content_box">
+                                                                    <div className="emphasis_box">
                                                                         <S.Emphasis>
                                                                             "크림은 책임없음"
                                                                         </S.Emphasis>
                                                                     </div>
-                                                                    <ul class="content_list" style={{ marginTop: "20px" }}>
-                                                                        <li class="content_item">
-                                                                            <p class="title_txt"> [검수정책 알아보기]</p>
+                                                                    <ul className="content_list" style={{ marginTop: "20px" }}>
+                                                                        <li className="content_item">
+                                                                            <p className="title_txt"> [검수정책 알아보기]</p>
                                                                         </li>
-                                                                        <li class="content_item">
-                                                                            <p class="main_txt" style={{ marginTop: "20px" }}> "판매자가 어쩌구 구매 가능합니다" </p>
+                                                                        <li className="content_item">
+                                                                            <p className="main_txt" style={{ marginTop: "20px" }}> "판매자가 어쩌구 구매 가능합니다" </p>
                                                                         </li>
-                                                                        <li class="content_item">
-                                                                            <p class="main_txt"> 
+                                                                        <li className="content_item">
+                                                                            <p className="main_txt"> 
                                                                                 "오늘오후 어쩌구 출고일 변경"
-                                                                                <a href="#" class="txt_link">빠른배송 안내</a> 
+                                                                                <a href="#" className="txt_link">빠른배송 안내</a> 
                                                                             </p>
                                                                         </li>
                                                                     </ul>
@@ -612,7 +614,7 @@ const Products = () => {
                                                     </div>
                                                 </li>                                                               
                                                 <li>
-                                                    <div class="dropdown">
+                                                    <div className="dropdown">
                                                         <S.DropdownHead onClick={ OpenDrop2 }>
                                                             <S.DropdownHeadTitle>구매/환불/취소/교환 안내</S.DropdownHeadTitle>
                                                             {/* <svg>
@@ -621,23 +623,23 @@ const Products = () => {
                                                         </S.DropdownHead>
                                                         <S.DropdownContent hidden={dropdown2}>
                                                             <S.DropdownContentContent>
-                                                                <div class="content_box">
-                                                                    <div class="emphasis_box">
+                                                                <div className="content_box">
+                                                                    <div className="emphasis_box">
                                                                         <S.Emphasis>
                                                                             "크림은 책임없음"
                                                                         </S.Emphasis>
                                                                     </div>
-                                                                    <ul class="content_list" style={{ marginTop: "20px" }}>
-                                                                        <li class="content_item">
-                                                                            <p class="title_txt"> [검수정책 알아보기]</p>
+                                                                    <ul className="content_list" style={{ marginTop: "20px" }}>
+                                                                        <li className="content_item">
+                                                                            <p className="title_txt"> [검수정책 알아보기]</p>
                                                                         </li>
-                                                                        <li class="content_item">
-                                                                            <p class="main_txt" style={{ marginTop: "20px" }}> "판매자가 어쩌구 구매 가능합니다" </p>
+                                                                        <li className="content_item">
+                                                                            <p className="main_txt" style={{ marginTop: "20px" }}> "판매자가 어쩌구 구매 가능합니다" </p>
                                                                         </li>
-                                                                        <li class="content_item">
-                                                                            <p class="main_txt"> 
+                                                                        <li className="content_item">
+                                                                            <p className="main_txt"> 
                                                                                 "오늘오후 어쩌구 출고일 변경"
-                                                                                <a href="#" class="txt_link">빠른배송 안내</a> 
+                                                                                <a href="#" className="txt_link">빠른배송 안내</a> 
                                                                             </p>
                                                                         </li>
                                                                     </ul>
@@ -649,31 +651,31 @@ const Products = () => {
                                             </ul>
                                         </S.ConfirmWrapConfirmContemt>
                                     </S.ConfirmWrap>
-                                    <div class="point_guide" style={{paddingTop: "40px"}}>
-                                        <ul class="guide_list">
-                                            <li class="guide_item" style={{overflow: "hidden"}}>
+                                    <div className="point_guide" style={{paddingTop: "40px"}}>
+                                        <ul className="guide_list">
+                                            <li className="guide_item" style={{overflow: "hidden"}}>
                                                 <S.ThumbArea>
                                                     <S.ThumbAreaImg></S.ThumbAreaImg>
                                                 </S.ThumbArea>
-                                                <div class="text_area" style={{overflow: "hidden"}}>
+                                                <div className="text_area" style={{overflow: "hidden"}}>
                                                     <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
                                                     <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
                                                 </div>
                                             </li>
-                                            <li class="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
+                                            <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
                                                 <S.ThumbArea>
                                                     <S.ThumbAreaImg></S.ThumbAreaImg>
                                                 </S.ThumbArea>
-                                                <div class="text_area" style={{overflow: "hidden"}}>
+                                                <div className="text_area" style={{overflow: "hidden"}}>
                                                     <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
                                                     <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
                                                 </div>
                                             </li>
-                                            <li class="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
+                                            <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
                                                 <S.ThumbArea>
                                                     <S.ThumbAreaImg></S.ThumbAreaImg>
                                                 </S.ThumbArea>
-                                                <div class="text_area" style={{overflow: "hidden"}}>
+                                                <div className="text_area" style={{overflow: "hidden"}}>
                                                     <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
                                                     <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
                                                 </div>
@@ -688,95 +690,95 @@ const Products = () => {
                         </S.Column>
                     </S.ColumnBind>
                 </S.Content>
-                <S.Content div class="feed_area">
-                <div class="point_guide" style={{paddingTop: "40px"}}>
+                <S.Content div className="feed_area">
+                <div className="point_guide" style={{paddingTop: "40px"}}>
                     
-                                        <ul class="guide_list">
-                                            <li class="guide_item" style={{overflow: "hidden"}}>
+                                        <ul className="guide_list">
+                                            <li className="guide_item" style={{overflow: "hidden"}}>
                                                 <S.ThumbArea>
                                                     <S.ThumbAreaImg></S.ThumbAreaImg>
                                                 </S.ThumbArea>
-                                                <div class="text_area" style={{overflow: "hidden"}}>
+                                                <div className="text_area" style={{overflow: "hidden"}}>
                                                     <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
                                                     <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
                                                 </div>
                                             </li>
-                                            <li class="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
+                                            <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
                                                 <S.ThumbArea>
                                                     <S.ThumbAreaImg></S.ThumbAreaImg>
                                                 </S.ThumbArea>
-                                                <div class="text_area" style={{overflow: "hidden"}}>
+                                                <div className="text_area" style={{overflow: "hidden"}}>
                                                     <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
                                                     <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
                                                 </div>
                                             </li>
-                                            <li class="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
+                                            <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
                                                 <S.ThumbArea>
                                                     <S.ThumbAreaImg></S.ThumbAreaImg>
                                                 </S.ThumbArea>
-                                                <div class="text_area" style={{overflow: "hidden"}}>
-                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    {/* <div class="point_guide" style={{paddingTop: "40px"}}>
-                                        <ul class="guide_list">
-                                            <li class="guide_item" style={{overflow: "hidden"}}>
-                                                <S.ThumbArea>
-                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
-                                                </S.ThumbArea>
-                                                <div class="text_area" style={{overflow: "hidden"}}>
-                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
-                                                </div>
-                                            </li>
-                                            <li class="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
-                                                <S.ThumbArea>
-                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
-                                                </S.ThumbArea>
-                                                <div class="text_area" style={{overflow: "hidden"}}>
-                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
-                                                </div>
-                                            </li>
-                                            <li class="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
-                                                <S.ThumbArea>
-                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
-                                                </S.ThumbArea>
-                                                <div class="text_area" style={{overflow: "hidden"}}>
+                                                <div className="text_area" style={{overflow: "hidden"}}>
                                                     <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
                                                     <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
                                                 </div>
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="point_guide" style={{paddingTop: "40px"}}>
-                                        <ul class="guide_list">
-                                            <li class="guide_item" style={{overflow: "hidden"}}>
+                                    {/* <div className="point_guide" style={{paddingTop: "40px"}}>
+                                        <ul className="guide_list">
+                                            <li className="guide_item" style={{overflow: "hidden"}}>
                                                 <S.ThumbArea>
                                                     <S.ThumbAreaImg></S.ThumbAreaImg>
                                                 </S.ThumbArea>
-                                                <div class="text_area" style={{overflow: "hidden"}}>
+                                                <div className="text_area" style={{overflow: "hidden"}}>
                                                     <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
                                                     <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
                                                 </div>
                                             </li>
-                                            <li class="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
+                                            <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
                                                 <S.ThumbArea>
                                                     <S.ThumbAreaImg></S.ThumbAreaImg>
                                                 </S.ThumbArea>
-                                                <div class="text_area" style={{overflow: "hidden"}}>
+                                                <div className="text_area" style={{overflow: "hidden"}}>
                                                     <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
                                                     <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
                                                 </div>
                                             </li>
-                                            <li class="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
+                                            <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
                                                 <S.ThumbArea>
                                                     <S.ThumbAreaImg></S.ThumbAreaImg>
                                                 </S.ThumbArea>
-                                                <div class="text_area" style={{overflow: "hidden"}}>
+                                                <div className="text_area" style={{overflow: "hidden"}}>
+                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
+                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div className="point_guide" style={{paddingTop: "40px"}}>
+                                        <ul className="guide_list">
+                                            <li className="guide_item" style={{overflow: "hidden"}}>
+                                                <S.ThumbArea>
+                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
+                                                </S.ThumbArea>
+                                                <div className="text_area" style={{overflow: "hidden"}}>
+                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
+                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
+                                                </div>
+                                            </li>
+                                            <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
+                                                <S.ThumbArea>
+                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
+                                                </S.ThumbArea>
+                                                <div className="text_area" style={{overflow: "hidden"}}>
+                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
+                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
+                                                </div>
+                                            </li>
+                                            <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
+                                                <S.ThumbArea>
+                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
+                                                </S.ThumbArea>
+                                                <div className="text_area" style={{overflow: "hidden"}}>
                                                     <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
                                                     <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
                                                 </div>
@@ -784,11 +786,11 @@ const Products = () => {
                                         </ul>
                                     </div>                                                 */}
                 </S.Content>
-                <div class="other_product_area">
+                <div className="other_product_area">
 
                 </div>
             </S.ContainerDetail>
-            <div class="footer floation_price"> {/*나중에 위에 달라붙는 가격표 만들기*/}
+            <div className="footer floation_price"> {/*나중에 위에 달라붙는 가격표 만들기*/}
 
             </div>
         </S.ProductsWrapper>
