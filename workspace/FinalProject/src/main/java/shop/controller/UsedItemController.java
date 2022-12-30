@@ -24,7 +24,7 @@ import shop.bean.UsedItemDTO;
 import shop.service.UsedItemService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RequestMapping(path="used")
 public class UsedItemController {
 	
@@ -32,8 +32,14 @@ public class UsedItemController {
 	UsedItemService usedItemService;
 	
 	@GetMapping(path="getItem")
-	public void getItem() {
-		
+	public List<UsedItemDTO> getItem() {
+		return null;
+	}
+	
+	@PostMapping(path="writeItem")
+	public void writeItem(@ModelAttribute UsedItemDTO usedItemDTO) {
+		System.out.println(usedItemDTO);
+		usedItemService.writeItem(usedItemDTO);
 	}
 	
 	

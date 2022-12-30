@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as S from './styleWrite';
 import tagData from './TagItem';
@@ -6,7 +7,7 @@ const UsedWrite = () => {
 
     const[form,setForm] = useState({
         title : '',
-        subTitle : '',
+        productName : '',
         kind : '',
         size : '',
         price : '',
@@ -20,7 +21,7 @@ const UsedWrite = () => {
 
     const [count,setCount] = useState(0)
 
-    const {title , subTitle , kind , size , price , contents , hashTag} = form
+    const {title , productName , kind , size , price , contents , hashTag} = form
     
     const onInput = (e) => {
         const {name,value} = e.target
@@ -43,7 +44,7 @@ const UsedWrite = () => {
 
             setForm({
                 ...form,
-                hashTag: [...hashTag,'#'+hashTag2]})
+                hashTag: [...hashTag,hashTag2]})
         }      
         
         setHashTag2('')
@@ -74,6 +75,17 @@ const UsedWrite = () => {
             sw=0
         }else if(!price){
             sw=0
+        }
+
+        if(sw == 1) {
+            axios.post('http://localhost:8080/used/writeItem',null,({params:{
+               ...form,
+                hashTag : encodeURI(form.hashTag)
+            }}))
+                 .then(() => {
+                    alert('글작성 완료')
+                 })
+                 .catch(error => console.log(error))
         }
 
         console.log(form)
@@ -118,7 +130,7 @@ const UsedWrite = () => {
 
 
                     <S.Subject>* 상품 이름</S.Subject>
-                    <S.SubTitle type='text' name= 'subTitle' onChange={ onInput }/>
+                    <S.SubTitle type='text' name= 'productName' onChange={ onInput }/>
 
 
                     <S.Necessary>* 필수 입력</S.Necessary>
