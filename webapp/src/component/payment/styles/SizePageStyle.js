@@ -6,13 +6,13 @@ export const Container = styled.div`
     flex-wrap: wrap;
     margin: 1.7% 30%;
     padding: 2%;
+    width: 650px;
     box-shadow: 0px 4px 10px rgb(0 0 0  / 10%);
 `;
 export const Body = styled.div`
     width: 100%;
     height: 300px;
     border-top: 1px solid #ebebeb;
-    margin-top: 20px;
 `;
 export const BtnWrapper = styled.div`
     display: flex;
@@ -52,7 +52,6 @@ export const PriceText = styled.span`
     width: 100%;
     justify-content: center;
     font-size: 10px;
-    color: #f15746;
     background-color: white;
     border: 0;
 `;

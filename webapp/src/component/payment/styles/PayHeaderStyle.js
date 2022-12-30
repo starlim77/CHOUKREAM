@@ -2,23 +2,27 @@ import styled from "styled-components";
 
 export const PayHeaderWrapper = styled.div`
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0 10%;
+    width: 100%;
+    margin-bottom: 20px;
 `;
 export const PayHeader = styled.header`
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
+    width: 600px;
 `;
 export const PayTitleWrapper = styled.div`
     display: flex;
-    width: 508px;
-    margin: 16px;
+    width: 100%;
     font-size: 30px;
     font-weight: 900;
+    margin-bottom: 15px;
 `;
 export const PayTitle = styled.div`
     display: flex;
     width: 100%;
+    justify-content: flex-start;
 `;
 export const PayProductImgWrapper = styled.div`
     display: flex;

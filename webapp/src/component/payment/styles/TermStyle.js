@@ -6,13 +6,13 @@ export const TermWrapper = styled.div`
     flex-wrap: wrap;
     margin: 1.7% 30%;
     padding: 2%;
+    width: 650px;
     box-shadow: 0px 4px 10px rgb(0 0 0  / 10%);
 `;
 export const TermBottom = styled.div`
     display: flex;
     justify-content: center;
     border-top: 1px solid #ebebeb;
-    margin: 3% 0;
     padding: 1% 0;
     width: 100%;
 `;

@@ -1,3 +1,5 @@
+import axios from "axios"
+
 export default(
     {nameEng : "Nike x Sacai NRG Short Sleeve Top Black - Asia",
     nameKor : "나이키 x 사카이 NRG 숏슬리브 탑 블랙 - 아시아",
@@ -9,3 +11,5 @@ export default(
           {number: "XL", price: "140,000"},
           {number: "XXL", price: "150,000"}]}
 )
+
+// axios.get(`http://localhost:8080/user/getUser?id=${searchId}`)
