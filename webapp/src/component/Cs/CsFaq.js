@@ -12,14 +12,23 @@ import axios from 'axios';
 
 const CsFaq = () => {
     const [list, setList] =useState([])
-    const [text ,setText]=useState('')
+    const [keyword ,setKeyword]=useState('')
     const [search ,setSearch] =useState('')
     const [visible, setVisible] = useState(false);
     const navigate = useNavigate();
-    const onSearch =() => {
-        setSearch(text)
+    const onSearch =(e) => {
+        e.preventDefault()
+        axios.get('http://localhost:8080/cs/getKeywordSearchList',{
+            params : {
+                 
+                 keyword : keyword
+             }
+         })
+              .then(res => setList(res.data))
+              .catch(error=> console.log(error))
     }
     const [category , setCategory] =useState('')
+
     useEffect(()=>{
         axios.get('http://localhost:8080/cs/getList')//포트 다르니가 풀주소
 
@@ -29,9 +38,22 @@ const CsFaq = () => {
 
     },[])
     const onClickCategory = (e) => {
-        setCategory(e.target.value)
-        console.log(category)
-        navigate(`/cs/CsFaq?category=${category}`);
+       // e.preventDefault();
+       setCategory(e.target.value); 
+       console.log(e.target.value)
+      
+       
+        axios.get('http://localhost:8080/cs/getCategoryList',{
+            params : {
+             
+                category :  e.target.value
+             }
+        })
+             .then((res) => {//주소가서 res 받아오기
+                setList(res.data)})//setList에 담기   )
+             .catch((error) => console.log(error))
+        
+        
     }
  /*
     list = useMemo(()=> {
@@ -61,7 +83,7 @@ const CsFaq = () => {
             <hr/>
            
            
-            <input type ='text' value={text} onChange = { e=>setText(e.target.value)}/>
+            <input type ='text' value={keyword} onChange = { e=>setKeyword(e.target.value)}/>
             <button onClick={onSearch}>검색</button><br/>
            
             <table style={{border : '1px solid black'}}>
@@ -96,7 +118,10 @@ const CsFaq = () => {
                             {visible[item.seq] && (
                                 <tr>
                                     <td colSpan="2">{item.content}</td>
+                                    <button>수정</button>
+                                    <button>삭제</button>
                                 </tr>
+                               
                                 
                             )}
                         </table>

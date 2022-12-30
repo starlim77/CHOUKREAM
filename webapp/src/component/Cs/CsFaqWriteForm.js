@@ -33,6 +33,7 @@ const CsFaqWriteForm = () => {
              })
              .then(()=>{
                 alert(' 자주 묻는 질문 글 등록')
+                navigate("/cs/CsFaq")
 
              })
              .catch(error => console.log(error))
@@ -56,6 +57,7 @@ const CsFaqWriteForm = () => {
                 <tr>
                     <td >
                         <select name ='category' style={{width :'100px' }}  onChange={ onInput}>
+                            <option>선택</option>
                             <option value='common'> 공통</option>
                             <option value='policy'>정책</option>
                             <option value='buying'>구매</option>

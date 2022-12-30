@@ -13,15 +13,15 @@ import lombok.Data;
 @Data
 @Entity
 @SequenceGenerator(
-	      name = "csboard_SEQ"
-	       , sequenceName = "BOARD_SEQ"
+	      name = "csboard_SEQ_GENERATOR"
+	       , sequenceName = "csBoard_SEQ"
 	       , initialValue = 1
 	       , allocationSize = 1
 	   )
-@Table(name="csboard_table")
+@Table(name="csboard")
 public class CsBoardDTO {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "csboard_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "csboard_SEQ_GENERATOR")
 	@Column(name="seq")
 	private int seq;
 	@Column(name="category")

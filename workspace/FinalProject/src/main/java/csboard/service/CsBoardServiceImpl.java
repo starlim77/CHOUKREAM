@@ -1,6 +1,7 @@
 package csboard.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,4 +26,16 @@ public class CsBoardServiceImpl implements CsBoardService {
 		return csBoardDAO.findAll();
 	}
 
+	@Override
+	public List<CsBoardDTO> getCategory(String category) {
+		// TODO Auto-generated method stub
+		return csBoardDAO.findByCategory(category);
+	}
+
+	@Override
+	public List<CsBoardDTO> getKeywordSearch(String keyword) {
+		return csBoardDAO.findByContentContaining(keyword);
+	}
+
+	
 }
