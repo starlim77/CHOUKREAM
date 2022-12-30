@@ -81,9 +81,9 @@ public class UsedItemController {
 		}//복사
 		
 		 System.out.println(usedItemDTO);
-		 usedItemDTO.setImgPath(filePath +"/" + fileName);
+		 usedItemDTO.setImgName(filePath +"/" + fileName);
 		 
-		 System.out.println(usedItemDTO.getImgPath());
+		 System.out.println(usedItemDTO.getImgName());
 
 		 usedItemService.upload2(usedItemDTO);
 		 

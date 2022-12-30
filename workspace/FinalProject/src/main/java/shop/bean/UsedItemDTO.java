@@ -30,8 +30,8 @@ public class UsedItemDTO {
 	@Column(name="id",length=100)
 	private String id;
 	
-	@Column(name="imgPath")
-	private String imgPath;
+	@Column(name="imgName",length=3000)
+	private String imgName;
 	
 	@Column(name="title",length=400)
 	private String title;
