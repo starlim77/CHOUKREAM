@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faBoltLightning } from '@fortawesome/free-solid-svg-icons';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import * as Co from './ContentStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
 import Modal from './Modal';
+import { Link } from 'react-router-dom';
 
 const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
     
@@ -124,6 +124,18 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                     <Co.Text>브랜드배송</Co.Text>
                                 </Co.BrandBtn>
                             </Co.FilterBrand>
+                            <Co.FilterBrand>
+                                <Co.BrandBtn>
+                                    <Co.Text>
+                                        <Link to={'/Used/usedMain'}>중고 버튼</Link>
+                                    </Co.Text>
+                                </Co.BrandBtn>
+                            </Co.FilterBrand>
+                            <Co.FilterBrand>
+                                <Co.BrandBtn>
+                                    <Co.Text>현욱 managerPage</Co.Text>
+                                </Co.BrandBtn>
+                            </Co.FilterBrand>
                         </Co.FilterBtns>
                         <div>
                             <Co.FilterSorting>
@@ -133,7 +145,11 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                 >
                                     인기순
                                 </Co.SortingTitle>
-                                <Modal setDummy={setDummy} open={modalOpen} close={closeModal}>
+                                <Modal
+                                    setDummy={setDummy}
+                                    open={modalOpen}
+                                    close={closeModal}
+                                >
                                     {/* modalOpen 현재 state 상태  */}
                                 </Modal>
                             </Co.FilterSorting>
@@ -187,7 +203,9 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                             </Co.ProductExpress>
                                         </Co.ProductInfoArea>
                                         <Co.PriceInfoArea>
-                                            <Co.Amount>{addComma(item.releasePrice)}</Co.Amount>
+                                            <Co.Amount>
+                                                {addComma(item.releasePrice)}
+                                            </Co.Amount>
                                             <Co.Desc>즉시 구매가</Co.Desc>
                                         </Co.PriceInfoArea>
                                     </Co.ItemInner>
@@ -202,7 +220,9 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                                     icon={faBookmark}
                                                 />
                                             </Co.BtnWish>
-                                            <Co.Text>{ followCalc(item.interest) }</Co.Text>
+                                            <Co.Text>
+                                                {followCalc(item.interest)}
+                                            </Co.Text>
                                         </Co.WishFigure>
                                         <Co.ReviewFigure>
                                             <Co.ReviewLink
@@ -213,7 +233,9 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                                     icon={faHeart}
                                                 />
                                             </Co.ReviewLink>
-                                            <Co.Text>{ followCalc(item.follow) }</Co.Text>
+                                            <Co.Text>
+                                                {followCalc(item.follow)}
+                                            </Co.Text>
                                         </Co.ReviewFigure>
                                     </Co.ActionWishReview>
                                 </Co.ProductCard>

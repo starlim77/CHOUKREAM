@@ -11,9 +11,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan("shop.bean")
 @EnableJpaRepositories("shop.dao")
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.main","shop.*"})
-@EntityScan("shop.bean")
-@EnableJpaRepositories("shop.dao")
 public class FinalProjectApplication {
 
 	public static void main(String[] args) {
