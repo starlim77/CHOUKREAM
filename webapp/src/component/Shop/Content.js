@@ -12,7 +12,8 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
     
     // 3자리마다 콤마 넣어서 문자열로 변환
     const addComma = num => {
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+'원';
+        num = String(num);
+        return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',')+'원';
     };
     const followCalc = (num) => {
         if (num < 10000) {

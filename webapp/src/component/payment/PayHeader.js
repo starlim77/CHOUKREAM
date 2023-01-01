@@ -1,17 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import * as S from './styles/PayHeaderStyle';
-import ProductData from "./ProductData"
+// import ProductData from "./ProductData"
 import { useLocation, useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 
 const PayHeader = () => {
     const location = useLocation()
     const url = location.pathname
-    const [nameEng, setNameEng] = useState(ProductData.nameEng)
-    const [nameKor, setNameKor] = useState(ProductData.nameKor)
-    const [model, setModel] = useState(ProductData.model)
+    const [product, setProduct] = useState([])
+    const [productData, setProductData] = useState();
+    // const [nameEng, setNameEng] = useState()
+    // const [nameKor, setNameKor] = useState()
+    // const [model, setModel] = useState()
     const [searchParams, setSearchParams] = useSearchParams()
     const type = searchParams.get("type")
     const size = searchParams.get("size")
+
+    useMemo(() => {
+        axios
+            .post('http://localhost:8080/shop/getProductBySeq?seq=1')
+            .then(res => res.data !== null && console.log(res.data))
+            .catch(error => console.log(error));
+    }, []);
 
     return (
         <>
@@ -24,9 +34,9 @@ const PayHeader = () => {
                         <S.PayProductImg src='../../image/product/tombrownHoody.png' />
                     </S.PayProductImgWrapper>
                     <S.PayProductDescWrapper>
-                        <S.PayProductModel>{model}</S.PayProductModel>
-                        <S.PayProductKor>{nameKor}</S.PayProductKor>
-                        <S.PayProductEng>{nameEng}</S.PayProductEng>
+                        {/* <S.PayProductModel>{product.model_num}</S.PayProductModel> */}
+                        {/* <S.PayProductKor>{productData.sub_title}</S.PayProductKor> */}
+                        {/* <S.PayProductEng>{productData.title}</S.PayProductEng> */}
                         <S.PayProductSize>{size}</S.PayProductSize>
                     </S.PayProductDescWrapper>
                 </S.PayHeader>
