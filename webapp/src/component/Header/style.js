@@ -55,7 +55,7 @@ export const BottomWrapper = styled.ul`
 export const BottomLi = styled.li`
     display: flex;
     // color: ${props => (props.active ? 'red' : 'blue')};
-    img {
+    /* img {
         width: 28px;
-    }
+    } */
 `;
