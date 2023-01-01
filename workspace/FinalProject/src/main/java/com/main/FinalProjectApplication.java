@@ -6,11 +6,15 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication
-public class FinalProjectApplication {
 
-	public static void main(String[] args) {
+@ComponentScan( basePackages = {"com.main", "shop.*"})
+@SpringBootApplication
+@ComponentScan(basePackages = {"pay.*","my.*"})
+@EntityScan("*.bean")
+@EnableJpaRepositories("*.dao")
+public class FinalProjectApplication {
+	
+	public static void main(String[] args) {   
 		SpringApplication.run(FinalProjectApplication.class, args);
 	}
-
 }
