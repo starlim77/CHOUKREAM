@@ -8,8 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @ComponentScan( basePackages = {"com.main", "shop.*"})
-@EntityScan("shop.bean")
-@EnableJpaRepositories("shop.dao")
 @SpringBootApplication
 @ComponentScan(basePackages = {"pay.*","my.*"})
 @EntityScan("*.bean")
