@@ -1,5 +1,7 @@
+import React from 'react';
 import './App.css';
 import Layout from './component/Layout/Layout';
+
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PaymentTerms from './component/payment/PaymentTerms';
 import PayHeader from './component/payment/PayHeader';
@@ -18,6 +20,8 @@ import Trending from './component/Lookbook/Trending';
 import Detail from './component/Lookbook/Detail';
 import Mystyle from './component/Lookbook/Mystyle';
 import Social from './component/Lookbook/Social';
+import SearchForm from './component/Search/SearchForm';
+
 
 function App() {
     return (
@@ -54,7 +58,8 @@ function App() {
                 <Route path="/lookbook/social" element={<Social />} />
                 <Route path="/lookbook/mystyle" element={<Mystyle />} />
                 <Route path="/lookbook/detail" element={<Detail />} />
-            </Routes>
+                <Route path="/Search/SearchForm" element={<SearchForm/>} />                    
+
         </BrowserRouter>
     );
 }
