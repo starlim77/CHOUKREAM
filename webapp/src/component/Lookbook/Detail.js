@@ -12,12 +12,15 @@ import axios from 'axios';
 const Detail = () => {
     const [commentOpen, setCommentOpen] = useState(false)
 
-    useEffect( ()=>{
-        axios.get('http://localhost:8080/lookbook/getStyleList')
-            .then()
-            .catch(error => console.log(error))
+    //게시물 뿌리기
+    const [list, setList] = useState([]);
 
-    }, [])
+
+    useEffect( ()=> {
+        axios.get('http://localhost:8080/lookbook/getStyleBoardList')
+             .then(res => setList(res.data))
+             .catch(error => console.log(error))
+    }, []) 
 
     
 
@@ -27,51 +30,60 @@ const Detail = () => {
             <Social />
             <br/>
             <Container fixed>
-                <Card>
-                    <CardHeader
-                        avatar={ <Avatar> 프로필</Avatar> }
-                        title="본인id"
-                        subheader="날짜예정 September 14, 2016"
-                    />
-                    <CardMedia 
-                        component="img"
-                        height="500"
-                        image=""
-                        alt=""
-                    />
-                    <CardContent>
-                        내용작성
-                    </CardContent>
-                    <CardActions >
-                        <IconButton aria-label="add to favorites">
-                            <FavoriteIcon />
-                        </IconButton>
-                        <IconButton onClick={()=>{setCommentOpen(true)}}>
-                            <ChatBubbleOutlineIcon />
-                        </IconButton>                        
-                    </CardActions>
+                
+                {
+                    list.map(item => {
+                        return (
+                            <Card key={item.seq}>
+                                <CardHeader
+                                    avatar={ <Avatar> 프로필</Avatar> }
+                                    title="본인id"
+                                    subheader={item.logtime}
+                                />
+                                <CardMedia 
+                                    component="img"
+                                    height="500"
+                                    image=""
+                                    alt=""
+                                />
+                                <CardContent>
+                                    {item.content}
+                                </CardContent>
+                                <CardActions >
+                                    <IconButton aria-label="add to favorites">
+                                        <FavoriteIcon />
+                                    </IconButton>
+                                    <IconButton onClick={()=>{setCommentOpen(true)}}>
+                                        <ChatBubbleOutlineIcon />
+                                    </IconButton>                        
+                                </CardActions>
 
- 
-                    <Dialog open={commentOpen}> 
-                        <S.DeComment>
-                            <DialogTitle sx={{mt:5}}>댓글</DialogTitle>
-                            <DialogContent>
-                                <DialogContentText>
-                                    <TextField
-                                        multiline 
-                                        fullWidth
-                                    />
-                                </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button >등록</Button>
-                                <Button onClick={ ()=>{setCommentOpen(false)}}>취소</Button>
-                            </DialogActions>
-                        </S.DeComment>
-                    </Dialog>
+            
+                                <Dialog open={commentOpen}> 
+                                    <S.DeComment>
+                                        <DialogTitle sx={{mt:5}}>댓글</DialogTitle>
+                                        <DialogContent>
+                                            <DialogContentText>
+                                                <TextField
+                                                    multiline 
+                                                    fullWidth
+                                                />
+                                            </DialogContentText>
+                                        </DialogContent>
+                                        <DialogActions>
+                                            <Button >등록</Button>
+                                            <Button onClick={ ()=>{setCommentOpen(false)}}>취소</Button>
+                                        </DialogActions>
+                                    </S.DeComment>
+                                </Dialog>
 
 
-                </Card>
+                            </Card>
+
+                        )
+                    })
+                }
+                
             </Container>
         </div>
     );

@@ -77,3 +77,11 @@ export const MyLi = styled.li`
     font-weight: bolder;
 `;
 
+export const MyPhotoMini = styled.div`
+    width: 200px;
+    height: 220px;
+    display: inline-block;
+    padding: 20px;
+
+`
+

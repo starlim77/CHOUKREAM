@@ -13,14 +13,21 @@ public class StyleServiceImpl implements StyleService {
 	@Autowired
 	private StyleDAO styleDAO;
 
+	
 	@Override
-	public void styleBoardWrite(StyleDTO styleDTO)  {
+	public void upload(StyleDTO styleDTO)  {
 		styleDAO.save(styleDTO);	
 	}
 
 	@Override
-	public List<StyleDTO> getStyleList() {
+	public List<StyleDTO> getMyStyleBoardList() {
+		return styleDAO.findAll();
+	}
+	
+	@Override
+	public List<StyleDTO> getStyleBoardList() {
 		return styleDAO.findAll();
 	}
 
 }
+
