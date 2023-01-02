@@ -352,12 +352,12 @@ export const PayBtn = styled.button`
 `;
 
 export const ModalBackground = styled.div`
-    position: absolute;
+    /* position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100vh;
-    z-index: 2;
-    background-color: rgba(34, 34, 34, 0.5);
+    z-index: 9999;
+    background-color: rgba(34, 34, 34, 0.5); */
 `;
