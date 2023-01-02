@@ -269,6 +269,7 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                             </Co.BtnWish>
                                             <Co.Text>
                                                 {followCalc(item.interest)}
+                                                
                                             </Co.Text>
                                         </Co.WishFigure>
                                         <Co.ReviewFigure>
