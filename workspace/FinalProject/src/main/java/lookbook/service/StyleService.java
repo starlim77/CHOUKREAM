@@ -5,8 +5,10 @@ import lookbook.bean.StyleDTO;
 
 public interface StyleService {
 
-	public void styleBoardWrite(StyleDTO styleDTO);
+	public void upload(StyleDTO styleDTO);
 
-	public List<StyleDTO> getStyleList();
+	public List<StyleDTO> getMyStyleBoardList();
+	
+	public List<StyleDTO> getStyleBoardList();
 		
 }
