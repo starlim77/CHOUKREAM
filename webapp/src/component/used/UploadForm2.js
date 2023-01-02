@@ -22,23 +22,20 @@ const UploadForm2 = () => {
     const readUrl=(e)=>{
         var reader = new FileReader();
         reader.readAsDataURL(e.target.files[0]);
-        console.log(e.target.files);
+        console.log("e.target.files" + e.target.files);
+        
+        //Array.from 사용 이유. 
+        //e.target.files는 배열의 형태처럼 보이긴 하나 실제 배열이 아니라서 배열형태로 만들어서 map을 돌리는 것이다.
+        //https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/types%20%26%20grammar/ch2.md#array-likes
         Array.from(e.target.files).map(items=>file.push(items));
-        //file.push(e.target.files);
-        //setFile(e.target.files);
-        //setFile([...file, e.target.files]);
-        //setfile로 안되는 이유
+    
         console.log(file);
 
 
         reader.onload=()=>{
 
-       //console.log(e.target.files);
-        
-           
-             setShowImgSrc(reader.result);
-           
-            // console.log(file);
+            setShowImgSrc(reader.result);
+
         }
     }
 
