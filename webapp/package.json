@@ -5,6 +5,8 @@
     "dependencies": {
         "@emotion/react": "^11.10.5",
         "@emotion/style": "^0.8.0",
+        "@ckeditor/ckeditor5-build-classic": "^35.4.0",
+        "@ckeditor/ckeditor5-react": "^5.0.5",
         "@emotion/styled": "^11.10.5",
         "@fortawesome/fontawesome": "^1.1.8",
         "@fortawesome/fontawesome-svg-core": "^6.2.1",
@@ -27,6 +29,7 @@
         "react-daum-postcode": "^3.1.1",
         "react-dom": "^18.2.0",
         "react-native-webview": "^11.26.0",
+        "react-quill": "^2.0.0",
         "react-router-dom": "^6.6.1",
         "react-scripts": "5.0.1",
         "redux": "^4.2.0",

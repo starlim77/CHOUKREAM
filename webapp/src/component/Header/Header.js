@@ -3,24 +3,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import * as S from './style';
 import { Link } from 'react-router-dom';
-
 import SearchForm from '../Search/SearchForm';
 
 const Header = () => {
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
 
     const onOpen = () => {
-        setIsOpen(true)
-    }
+        setIsOpen(true);
+    };
     const onClose = () => {
-        setIsOpen(false)
-    }
+        setIsOpen(false);
+    };
     return (
         <>
             <S.HeaderWrapper>
                 <S.Top>
                     <S.TopWrapper>
-                        <S.TopLi>고객센터</S.TopLi>
+                        <Link to="/cs/CsNotice">
+                            x<S.TopLi>고객센터</S.TopLi>
+                        </Link>
                         <S.TopLi>관심상품</S.TopLi>
                         <S.TopLi>마이페이지</S.TopLi>
                         <S.TopLi>로그인</S.TopLi>
@@ -50,13 +51,8 @@ const Header = () => {
                                 <div onClick={onOpen}>
                                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                                 </div>
-                                {
-                                    isOpen && <SearchForm onClose={onClose}/>
-                                }
+                                {isOpen && <SearchForm onClose={onClose} />}
                             </div>
-                        
-                            
-
                         </S.BottomLi>
                     </S.BottomWrapper>
                 </S.Bottom>
