@@ -1,5 +1,6 @@
 import axios from 'axios';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useSyncExternalStore } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AgreementModal from './Modal/AgreementModal.js';
 import PrivacyModal from './Modal/PrivacyModal.js';
 import * as S from './styleWriteForm.js';
@@ -56,15 +57,19 @@ const WriteForm = () => {
         }
     }, [])
 
+    const navigate = useNavigate()
+
     //Modal
     const [isOpen1, setIsOpen1] = useState(false)
     const [isOpen2, setIsOpen2] = useState(false)
 
-    const onClickButton1 = () => {
+    const onClickButton1 = (e) => {
+        e.preventDefault();
         setIsOpen1(true);
     };
     
-    const onClickButton2 = () => {
+    const onClickButton2 = (e) => {
+        e.preventDefault();
         setIsOpen2(true);
     };
 
@@ -162,8 +167,25 @@ const WriteForm = () => {
                 headers: { "Content-Type": "application/json" },
                 data: { imp_uid: imp_uid }
             })
-            .then(alert('본인인증 성공')) //axios 추가해서 form값 insert해주면 끝
-            .catch()
+            .then(() => {
+                alert('본인인증 성공')
+                axios({
+                    url: 'http://localhost:8080/join',
+                    method: 'post',
+                    headers: { "Content-Type": "application/json" },
+                    data: { email: email, 
+                            password: password,
+                            phone: phone,
+                            eventItems: eventItems
+                          }
+                  })
+                  .then(() => {
+                    alert('회원가입 성공')
+                    navigate('/login')
+                  })
+                  .catch(error => console.log(error))
+            })
+            .catch(error => console.log(error))
         } else {
             alert(`본인인증 실패: ${error_msg}`)
         }

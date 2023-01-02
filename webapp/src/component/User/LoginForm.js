@@ -1,5 +1,6 @@
-import React, { useCallback, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import React, { useCallback, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import * as S from './styleLoginForm.js';
 
 const LoginForm = () => {
@@ -38,6 +39,39 @@ const LoginForm = () => {
         }
     }, [])
 
+    const navigate = useNavigate()
+
+    const onLogin = () => {
+        axios({
+            url: 'http://localhost:8080/login',
+            method: 'post',
+            headers: { "Content-Type": "application/json" },
+            data: { email: email, 
+                    password: password
+                  }
+          })
+          .then(() => {
+            alert('로그인 성공')
+            navigate('/')
+          })
+          .catch(error => console.log(error))
+        // axios
+        //     .post('http://localhost:8080/login', {
+        //         params : { 
+        //             email: email,
+        //             password: password
+        //         },
+        //         headers: {
+        //             'Content-Type': 'application/x-www-form-urlencoded'
+        //         }
+        //     })
+        //     .then(() => {
+        //         alert('로그인 성공')
+        //         navigate('/')
+        //     })
+        //     .catch(error => console.log(error))
+    }
+
     return (
         <S.Container>
             <S.LoginAreaDiv>
@@ -60,7 +94,7 @@ const LoginForm = () => {
                 </S.InputBox>
 
                 <S.LoginBtnBox>
-                    <S.LoginBtn type='button' disabled={!(isEmail && isPassword)}>로그인</S.LoginBtn>
+                    <S.LoginBtn type='button' onClick={onLogin} disabled={!(isEmail && isPassword)}>로그인</S.LoginBtn>
                 </S.LoginBtnBox>
 
                 <S.LookBox>
