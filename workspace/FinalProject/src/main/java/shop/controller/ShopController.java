@@ -43,7 +43,6 @@ public class ShopController {
 	
 	@PostMapping("getProductBySeq")
 	public Optional<ProductDTO> getProductBySeq(@RequestParam int seq) {
-		System.out.println("seq = " + seq);
 		
 		return shopService.getProductBySeq(seq);
 	}

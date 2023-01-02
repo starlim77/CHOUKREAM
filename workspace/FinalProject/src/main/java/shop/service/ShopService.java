@@ -11,7 +11,6 @@ public interface ShopService {
 
 	List<ProductDTO> sortGetProductList();
 
-	public Optional<ProductDTO> getProductBySeq(int seq);
-
+	Optional<ProductDTO> getProductBySeq(int seq);
 
 }

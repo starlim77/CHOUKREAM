@@ -9,17 +9,19 @@ const PayHeader = () => {
     const url = location.pathname
     const [product, setProduct] = useState([])
     const [productData, setProductData] = useState();
-    // const [nameEng, setNameEng] = useState()
-    // const [nameKor, setNameKor] = useState()
-    // const [model, setModel] = useState()
+    const [title, setTitle] = useState()
+    const [subTitle, setSubTitle] = useState()
+    const [modelNum, setModelNum] = useState("")
     const [searchParams, setSearchParams] = useSearchParams()
     const type = searchParams.get("type")
     const size = searchParams.get("size")
 
-    useMemo(() => {
+    useEffect(() => {
         axios
             .post('http://localhost:8080/shop/getProductBySeq?seq=1')
-            .then(res => res.data !== null && console.log(res.data))
+            .then(res => res.data !== null && (setModelNum(res.data.modelNum),
+                                               setTitle(res.data.title),
+                                               setSubTitle(res.data.subTitle)))
             .catch(error => console.log(error));
     }, []);
 
@@ -34,9 +36,9 @@ const PayHeader = () => {
                         <S.PayProductImg src='../../image/product/tombrownHoody.png' />
                     </S.PayProductImgWrapper>
                     <S.PayProductDescWrapper>
-                        {/* <S.PayProductModel>{product.model_num}</S.PayProductModel> */}
-                        {/* <S.PayProductKor>{productData.sub_title}</S.PayProductKor> */}
-                        {/* <S.PayProductEng>{productData.title}</S.PayProductEng> */}
+                        <S.PayProductModel>{modelNum}</S.PayProductModel>
+                        <S.PayProductKor>{subTitle}</S.PayProductKor>
+                        <S.PayProductEng>{title}</S.PayProductEng>
                         <S.PayProductSize>{size}</S.PayProductSize>
                     </S.PayProductDescWrapper>
                 </S.PayHeader>
