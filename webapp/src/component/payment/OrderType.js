@@ -10,6 +10,7 @@ const OrderType = () => {
     const [typeKor, setTypeKor] = useState(type === "/sell" ? "판매" : "구매")
     const [clickedBtn, setClickedBtn] = useState(`${typeKor}입찰`)
     
+    //order type 선택
     const onClick =(e) => {
           setClickedBtn(e.target.innerText)
     }
