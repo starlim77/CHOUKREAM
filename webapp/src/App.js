@@ -14,6 +14,10 @@ import UploadForm2 from './component/Used/UploadForm2';
 import Products from './component/Products/Products';
 import PayForm from './component/payment/PayForm';
 import CsFaq from './component/payment/CsFaq';
+import Trending from './component/Lookbook/Trending';
+import Detail from './component/Lookbook/Detail';
+import Mystyle from './component/Lookbook/Mystyle';
+import Social from './component/Lookbook/Social';
 
 function App() {
     return (
@@ -42,6 +46,14 @@ function App() {
                     ></Route>
                     <Route path="products/:seq" element={<Products />} />
                 </Route>
+                <Route path="/lookbook" element={<Trending />}>
+                    <Route path="/lookbook/trending" element="" />
+                    {/* <Route path='/detail' element='' /> */}
+                </Route>
+
+                <Route path="/lookbook/social" element={<Social />} />
+                <Route path="/lookbook/mystyle" element={<Mystyle />} />
+                <Route path="/lookbook/detail" element={<Detail />} />
             </Routes>
         </BrowserRouter>
     );
