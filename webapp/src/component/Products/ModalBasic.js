@@ -4,7 +4,7 @@ import * as S from './style';
 import * as B from './SizeBtnStyle';
 
 const ModalBasic = ({ setModalOpen, seq }) => {
-    
+    const [sizePrice, setSizePrice] = useState([{}])
     const [sizeForm, setSizeForm] = useState([{}])
 
     useEffect(() => {
@@ -12,18 +12,22 @@ const ModalBasic = ({ setModalOpen, seq }) => {
              .then(res => res.data !== null && setSizeForm(res.data))
              .catch(error => console.log(error))
     }, []);
-
     const asdf = (size, seq)=>{
-        axios.get("http://localhost:8080/getProductSizeMin?seq="+seq+"&size="+265).then((res)=>{
-            console.log(res.data)
-            if(res.data!==null){
-                return res.data;
-            }else{
-                return "없다";
-            }
-
-
-        })
+   
+        axios.get("http://localhost:8080/getProductSizeMin?seq="+seq+"&size="+size)
+             .then((res)=>{
+                res.data !== null ?
+                setSizePrice([
+                    ...sizePrice, {
+                        size: res.data
+                    }
+                ]) : setSizePrice([
+                    ...sizePrice, {
+                        size: ''
+                    }
+                ])
+                console.log(sizePrice)
+            }).catch(error => console.log(error))
     }
 
 
@@ -38,7 +42,7 @@ const ModalBasic = ({ setModalOpen, seq }) => {
             sizeForm.map((item, index) => (
             <B.SizeBtn key={index}>
                 <B.SizeText>{item.size}</B.SizeText>
-                <B.SizeText>{ asdf(item.size, seq ) }</B.SizeText>
+                {/* <B.SizeText>{asdf(item.size, seq)}{sizePrice.size[index]}{sizePrice}</B.SizeText> */}
             </B.SizeBtn>))
                                     }
         </S.Container>
