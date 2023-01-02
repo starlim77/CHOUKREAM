@@ -63,8 +63,6 @@ export const MainItem = styled.div`
 
    margin-left: 10px;
    margin-right: 10px;
-
-   border : 1px solid red;
 `;
 
 export const ItemImg = styled.img`
@@ -111,6 +109,7 @@ export const ItemLikeImg = styled.img`
 export const ItemLikeSpan = styled.span`
     margin-left: 5px;
 `;
+
 
 export const WriteBtn = styled.img`
     width: 50px;

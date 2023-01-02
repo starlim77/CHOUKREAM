@@ -101,9 +101,11 @@ const UsedWrite = () => {
         imgRef.current.click()
     }
 
+    
     const onImg = (file) => {
         const reader = new FileReader()
         reader.readAsDataURL(file)
+        
 
         setSubImg({...subImg, 'src' :file})
         console.log(subImg)

@@ -33,7 +33,11 @@ public class UsedItemController {
 	
 	@GetMapping(path="getItem")
 	public List<UsedItemDTO> getItem() {
-		return null;
+		
+		List<UsedItemDTO> asd = usedItemService.getItem();
+		System.out.println("asd = " + asd);
+		return asd;
+//		return usedItemService.getItem();
 	}
 	
 	@PostMapping(path="writeItem")
