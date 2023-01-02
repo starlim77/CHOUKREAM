@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@ComponentScan( basePackages = {"pay.*", "shop.*", "lookbook.*", "my.*", "csboard.*"})
+@ComponentScan( basePackages = {"pay.*", "shop.*", "lookbook.*", "my.*", "csboard.*", "member.*", "com.*"})
 @SpringBootApplication
 @EntityScan("*.bean")
 @EnableJpaRepositories("*.dao")

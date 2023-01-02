@@ -23,6 +23,10 @@ import SearchForm from './component/Search/SearchForm';
 import CsNotice from './component/Cs/CsNotice';
 import CsFaq from './component/Cs/CsFaq';
 import CsFaqWriteForm from './component/Cs/CsFaqWriteForm';
+import LoginForm from './component/User/LoginForm';
+import WriteForm from './component/User/WriteForm';
+import FindEmail from './component/User/FindEmail';
+import FindPassword from './component/User/FindPassword';
 
 function App() {
     return (
@@ -50,6 +54,13 @@ function App() {
                         element={<UploadForm2 />}
                     ></Route>
                     <Route path="products/:seq" element={<Products />} />
+                    <Route path="/login" element={<LoginForm />} />
+                    <Route path="/login/find_email" element={<FindEmail />} />
+                    <Route
+                        path="/login/find_password"
+                        element={<FindPassword />}
+                    />
+                    <Route path="/join" element={<WriteForm />} />
                 </Route>
                 <Route path="/lookbook" element={<Trending />}>
                     <Route path="/lookbook/trending" element="" />

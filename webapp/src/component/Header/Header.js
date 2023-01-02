@@ -24,7 +24,9 @@ const Header = () => {
                         </Link>
                         <S.TopLi>관심상품</S.TopLi>
                         <S.TopLi>마이페이지</S.TopLi>
-                        <S.TopLi>로그인</S.TopLi>
+                        <S.TopLi>
+                            <Link to="/login">로그인</Link>
+                        </S.TopLi>
                     </S.TopWrapper>
                 </S.Top>
                 <S.Bottom>
