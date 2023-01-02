@@ -1,13 +1,14 @@
+import axios from 'axios';
 import React, { useEffect, useState} from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import {useSearchParams } from 'react-router-dom';
 import * as U from './UsedItemStyle';
-const UsedItem = ({seq}) => {
+const UsedItem = () => {
 
-    const location = useLocation()
     // console.log("seq = " + location.seq +" seq = "+ {seq})
 
     const [searchParams,setSearchParams] = useSearchParams()
-    console.log(searchParams.get('seq'))
+
+    const seq = useState(searchParams.get('seq'))
 
     const [form,setForm]=useState({
         img:[],
@@ -15,10 +16,19 @@ const UsedItem = ({seq}) => {
         productName:'',
         size:'',
         price:'',
-        productDescription:''
+        contents:''
     });
-    const{img, title, productName, size, price, description} = form;
-    useEffect(()=>{},[])
+
+
+    const{img, title, productName, size, price, contents} = form;
+
+
+    useEffect(()=>{
+        console.log('seq = ' + seq)
+        axios.get('http://localhost:8080/used/viewItem?seq=' + searchParams.get('seq'))
+        .then(res => console.log(res))
+        .catch(error => console.log(error))
+    },[])
 
     return (
         <U.BaseWrapper>

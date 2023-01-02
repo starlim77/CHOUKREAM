@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +34,17 @@ public class UsedItemController {
 	
 	@GetMapping(path="getItem")
 	public List<UsedItemDTO> getItem() {
-		
-		List<UsedItemDTO> asd = usedItemService.getItem();
-		System.out.println("asd = " + asd);
-		return asd;
-//		return usedItemService.getItem();
+		return usedItemService.getItem();
 	}
+	
+	@GetMapping(path="viewItem")
+	public Optional<UsedItemDTO> viewItem(@RequestParam int seq) {
+		
+		Optional<UsedItemDTO> asd = usedItemService.viewItem(seq);
+		System.out.println(asd);
+		return asd;
+	}
+	
 	
 	@PostMapping(path="writeItem")
 	public void writeItem(@ModelAttribute UsedItemDTO usedItemDTO) {
