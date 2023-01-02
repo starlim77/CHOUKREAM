@@ -4,6 +4,10 @@ export const HeaderWrapper = styled.header`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    position: fixed;
+    top: 0;
+    z-index: 99;
+    background-color: #fff;
 `;
 
 export const Top = styled.div`
