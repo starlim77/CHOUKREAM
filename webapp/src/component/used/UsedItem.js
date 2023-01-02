@@ -1,6 +1,13 @@
 import React, { useEffect, useState} from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import * as U from './UsedItemStyle';
-const UsedItem = () => {
+const UsedItem = ({seq}) => {
+
+    const location = useLocation()
+    // console.log("seq = " + location.seq +" seq = "+ {seq})
+
+    const [searchParams,setSearchParams] = useSearchParams()
+    console.log(searchParams.get('seq'))
 
     const [form,setForm]=useState({
         img:[],
