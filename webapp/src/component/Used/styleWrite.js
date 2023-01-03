@@ -15,21 +15,21 @@ export const ImgBody = styled.div`
     width: 560px; 
     height: 820px;
     padding:  0 40px 0  0;
-
+    
     /* border: 1px solid black; */
 `;
 
 export const MainImgP=styled.p`
     width: 560px;
     height: 560px;
-    text-align: center;
     border: 1px solid black;
-    
-`
+    display: ${props=>props.sizing?"relative":"flex"};
+    align-items: center;
+    justify-content: center;
+`;
 export const MainImg = styled.img`
-    width: 50px;
-    height: 50px;
-    
+    width: ${props=>(props.sizing?"560px":"50px")};
+    height: ${props=>(props.sizing?"560px":"50px")};
     :hover{
         cursor: pointer;
     }
@@ -44,16 +44,29 @@ export const SubImgP=styled.p`
     width: 175px;
     height: 175px;
     border: 1px solid black;
-`
+    display: ${props=>props.sizing?"relative":"flex"};
+    align-items: center;
+    justify-content: center;
+`;
 export const SubImg = styled.img`
-    width: 50px;
-    height: 50px;
-
+    width: ${props=>props.sizing?"175px":"50px"};
+    height: ${props=>props.sizing?"175px":"50px"};
     :hover{
         cursor: pointer;
     }
 `;
 
+export const DeleteImg = styled.img.attrs({
+    //src:'/image/used/deleteIcon.png'
+    
+})`
+    
+    width:50px;
+    height:50px;
+    left:90%;
+    z-index:999;
+    display:${props=>props.isDisplay?'absolute':'none'};
+`;
 
 // ----------------------------------------------내용 부분
 export const Imformation = styled.div`

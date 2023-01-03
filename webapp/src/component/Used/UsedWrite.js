@@ -99,27 +99,31 @@ const UsedWrite = () => {
     const onSubImg = () => {
         imgRef.current.click();
     }
-  
-    const[forRender,setForRender]=useState();
+    const[forRendering,setForRendering]=useState('');
+    const[random,setRandom]=useState();
     const onImgRead = (e) => {
 
-        var reader= new FileReader();
         
+        // var temp1=reader.readAsDataURL(e.target.files[0]);
+        // console.log(reader.result);
         //Array.from 사용 이유. 
         //e.target.files는 배열의 형태처럼 보이긴 하나 실제 배열이 아니라서 배열형태로 만들어서 map을 돌리는 것이다.
         //https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/types%20%26%20grammar/ch2.md#array-likes
         Array.from(e.target.files).map((items,index)=>{
-            let urlTemp=URL.createObjectURL(items);
-            subImg.push({id:index, url:urlTemp});
-            //setSubImg([...subImg,{id:index, url:urlTemp}]);
-            file.push(items);
+            var urlTemp=window.URL.createObjectURL(items);
+           //var urlTemp=reader.readAsDataURL(items);
+           //var url=urlTemp.slice(5);
+           subImg.push({url:urlTemp});
            
-        })
-        //subImg가 set으로 설정을 할 수 없어서 push로 배열에 강제로 주입.
-        //push할 경우 rendering이 되지 않아 사진이 로딩되지 않음.
-        //따라서 강제 rendering을 통해 사진이 로딩될 수 있게 처리.
-        setForRender('');
-        console.log(subImg);
+           //setSubImg(urlTemp);
+            file.push(items);
+         })
+         //console.log(reader.result);
+       console.log(subImg);
+       setRandom(Math.random);
+       setForRendering(`${random}`); 
+       console.log(random);
+    
     }
  
 
@@ -140,38 +144,31 @@ const UsedWrite = () => {
     return (
         <>
             <S.WriteBody>
-                {
-                !subImg[0]?
-                    (
-                    <S.ImgBody>
-                        {/* 이미지 소스 이용방법 2가지 사용해봄 */}
-                        <S.MainImgP>
-                         <S.MainImg name='mainImg' src={`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg}></S.MainImg>
-                        </S.MainImgP>
-                        <S.SubImgBody>
-                            <S.SubImgP><S.SubImg name='subImg1' src='/image/used/plusIcon.png' onClick={onSubImg}/></S.SubImgP>
-                            <S.SubImgP><S.SubImg name='subImg2' src='/image/used/plusIcon.png' onClick={onSubImg}/></S.SubImgP>
-                            <S.SubImgP><S.SubImg name='subImg3' src='/image/used/plusIcon.png' onClick={onSubImg}/></S.SubImgP>
-                        </S.SubImgBody>
-                        <input type='file' name="img" style={{display: 'none'}} accept="image/*" onChange={ e=>onImgRead(e) } ref={imgRef} multiple></input>
-                        
-                    </S.ImgBody>
-                    ):(
-                    <S.ImgBody>
-                        {
-                        subImg.map((items,index)=>items.id===0? 
-                        <S.MainImg key={index} src={items.url} alt={items.id}></S.MainImg>:<S.SubImg key={index} src={items.url} alt={items.id}></S.SubImg>)
-                        }
-                    </S.ImgBody>
-                    )
-                    
-                }
+               
+                <S.ImgBody>
+                    {/* 이미지 소스 이용방법 2가지 사용해봄 */}
+                    <S.MainImgP sizing={false}>
+                        <S.MainImg name='mainImg' sizing={subImg[0]?true:false} src={subImg[0]?subImg[0].url:`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg} alt={subImg[0]?subImg[0].url:"nothing"}></S.MainImg>
+                        <S.DeleteImg isDisplay={subImg[0]?true:false} src='/image/used/deleteIcon.png'></S.DeleteImg>
+                    </S.MainImgP>
+                    <S.SubImgBody >
+                        <S.SubImgP sizing={false}>
+                            <S.SubImg sizing={subImg[1]?true:false} name='subImg1' src={subImg[1]?subImg[1].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
+                            <S.DeleteImg></S.DeleteImg>
+                        </S.SubImgP>
+                        <S.SubImgP sizing={false}>
+                            <S.SubImg sizing={subImg[2]?true:false} name='subImg2' src={subImg[2]?subImg[2].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
+                            <S.DeleteImg></S.DeleteImg>
+                        </S.SubImgP>
+                        <S.SubImgP sizing={false}>
+                            <S.SubImg sizing={subImg[3]?true:false} name='subImg3' src={subImg[3]?subImg[3].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
+                            <S.DeleteImg></S.DeleteImg>
+                        </S.SubImgP>
+                    </S.SubImgBody>
+                    <input type='file' name="img" style={{display: 'none'}} accept="image/*" onChange={ e=>onImgRead(e) } ref={imgRef} multiple></input>
 
-
-                
-                {/* <S.ImgBody>
-                    
-                </S.ImgBody> */}
+                </S.ImgBody>
+            
                 
                 <S.Imformation>
                     <S.Necessary>* 필수 입력</S.Necessary>

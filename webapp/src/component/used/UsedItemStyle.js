@@ -110,12 +110,12 @@ export const ItemSpan=styled.span`
     font-weight: bold;
 `;
 
-export const ItemDescription=styled.div`
+export const ItemContents=styled.pre`
     border:1px solid rgba(236,236,236);
     width:560px;
     height:250px;
     font-size: 20px;
-    white-space: pre-line;
+    white-space: pre-wrap;
     word-break: break-all;
     overflow: auto;
 `;

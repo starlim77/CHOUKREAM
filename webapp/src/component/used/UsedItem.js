@@ -61,9 +61,9 @@ const UsedItem = ({seq}) => {
 
             <U.ItemWrapper>
                 <U.ItemSpan>제품설명</U.ItemSpan><br/><br/>
-                <U.ItemDescription>
-                    새상품입니다.
-                </U.ItemDescription>
+                <U.ItemContents>
+                   새상품입니다.
+                </U.ItemContents>
             </U.ItemWrapper>
             <br></br>
 
