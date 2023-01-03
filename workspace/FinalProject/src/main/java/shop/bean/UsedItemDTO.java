@@ -1,9 +1,15 @@
 package shop.bean;
 
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.hibernate.annotations.ColumnDefault;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,39 +24,41 @@ public class UsedItemDTO {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="seq", nullable=false, length=30)
+	@Column(name="seq",length=30)
 	private int seq;
 	
-	@Column(name="id", nullable=false, length=100)
+	@Column(name="id",length=100)
 	private String id;
 	
-	@Column(name="imgPath")
-	private String imgPath;
+	@Column(name="imgName",length=3000)
+	private String imgName;
 	
-	@Column(name="title", nullable=false,length=400)
+	@Column(name="title",length=400)
 	private String title;
 	
-	@Column(name="productName", nullable=true, length=400)
+	@Column(name="productName", length=400)
 	private String productName;
 	
-	@Column(name="size", nullable=false, length=30)
+	@Column(name="size", length=30)
 	private String size;
 	
-	@Column(name="kind", nullable = false)
+	@Column(name="kind")
 	private String kind;
 	
-	@Column(name="price", nullable=false)
+	@Column(name="price")
 	private int price;
 	
 	@Column(name="contents", length=2000)
 	private String contents;
 	
-	@Column(name="likes",nullable=false)
+	@Column(name="likes")
 	private int likes;
 	
-	@Column(name="hashtag", length = 300)
-	@ColumnDefault("0")
-	private String hashtag;
+	@ElementCollection
+	@CollectionTable(name="usedItem_hashTag")
+	private Set<String> hashTag = new HashSet<String>();
+	
+	
 
 	
 	

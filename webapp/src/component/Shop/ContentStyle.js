@@ -136,6 +136,45 @@ export const IcoBox = styled.div`
     -webkit-tap-highlight-color: transparent;
     display: block;
 `;
+export const FilterMenu = styled.div`
+    padding-bottom: 24px;
+    margin: 0;
+    padding: 0;
+    display: block;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+`;
+export const MenuList = styled.ul`
+    max-height: 315px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+`;
+export const Menu = styled.li`
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    display: list-item;
+`;
+export const MenuLiText = styled.span`
+    max-width: 160px;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    font-size: 14px;
+    letter-spacing: -0.21px;
+    color: inherit;
+    cursor: pointer;
+    list-style: none;
+`;
+
 export const SearchContent = styled.div`
     -webkit-box-flex: 1;
     flex: 1;
@@ -187,6 +226,21 @@ export const ExpressBtn = styled.a`
     color: inherit;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
     cursor: pointer;
+`;
+export const ExpressBtn2 = styled.a`
+    background-color: #48b179;
+    color: #fff;
+    border-color: #48b179;
+    cursor: pointer;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 28px;
+    padding: 0 9px;
+    border: 1px solid #ebebeb;
+    border-radius: 17px;
+    text-decoration: none;
+    outline-offset: 1px;
 `;
 export const Text = styled.span`
     line-height: 20px;

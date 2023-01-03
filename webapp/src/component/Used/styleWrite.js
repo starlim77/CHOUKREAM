@@ -19,9 +19,17 @@ export const ImgBody = styled.div`
     /* border: 1px solid black; */
 `;
 
-export const MainImg = styled.img`
+export const MainImgP=styled.p`
     width: 560px;
     height: 560px;
+    text-align: center;
+    border: 1px solid black;
+    
+`
+export const MainImg = styled.img`
+    width: 50px;
+    height: 50px;
+    
     :hover{
         cursor: pointer;
     }
@@ -32,10 +40,14 @@ export const SubImgBody = styled.div`
     display: flex;
     justify-content: space-between;
 `;
-
-export const SubImg = styled.img`
+export const SubImgP=styled.p`
     width: 175px;
     height: 175px;
+    border: 1px solid black;
+`
+export const SubImg = styled.img`
+    width: 50px;
+    height: 50px;
 
     :hover{
         cursor: pointer;
