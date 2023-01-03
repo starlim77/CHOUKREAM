@@ -163,6 +163,8 @@ export const BtnSizeBtnText = styled.span`
     display: inline-block;
     vertical-align: top;
     margin-right: 5px;
+    font-size: 16px;
+    font-weight: 700;
 `;
 
 export const MainTitleBoxSubTitle = styled.p`
@@ -414,7 +416,6 @@ export const DropdownHeadTitle = styled.p`
     max-width: 320px;
     font-size: 15px;
     letter-spacing: -.15px;
-    font-weight: bold;
 `;
 
 export const DropdownContent = styled.div`

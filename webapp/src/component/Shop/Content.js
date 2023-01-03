@@ -26,10 +26,15 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
     // const [scrollHeight, setScrollHeight] = useState(window.scrollY);
     // console.log('유즈스테이트' + scrollHeight)
     const [heightTop, setHeightTop] = useState(0)
+    // const [scrollHeight, setScrollHeight] = useState(0)
+    // const [heightTop, setHeightTop] = useState(0)
 
     const handleScroll = () => {
         /// setHeightTop(window.scrollY);
         var heightTop = window.scrollY; // 화면의 Y축의 상단값
+        const setHeightTop = () => {
+            heightTop = heightTop + 838;
+        };
 
         const heightBottom = window.scrollY + window.innerHeight; // 화면의 Y축의 하단값
         const innerHeight = window.innerHeight;
@@ -99,6 +104,7 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
 
     // 3자리마다 콤마 넣어서 문자열로 변환
     const addComma = num => {
+        num = String(num);
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원';
     };
     const followCalc = num => {
@@ -301,6 +307,7 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                             </Co.BtnWish>
                                             <Co.Text>
                                                 {followCalc(item.interest)}
+                                                
                                             </Co.Text>
                                         </Co.WishFigure>
                                         <Co.ReviewFigure>

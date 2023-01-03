@@ -175,7 +175,6 @@ export const MenuLiText = styled.span`
     list-style: none;
 `;
 
-
 export const SearchContent = styled.div`
     -webkit-box-flex: 1;
     flex: 1;
@@ -345,6 +344,17 @@ export const ItemInner = styled.div`
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     cursor: pointer;
+    /* &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: transparent;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+    } */
 `;
 export const Product = styled.div`
     background-color: #f4f4f4;
