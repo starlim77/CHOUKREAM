@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import shop.bean.CompletedOrderDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
+import shop.bean.ProductSizeDTO;
 import shop.dao.CompletedOrderRepository;
 import shop.dao.OrderRepository;
+import shop.dao.ProductSizeRepository;
 import shop.dao.ShopDAO;
 
 @Service
@@ -21,6 +23,8 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	private OrderRepository orderRepository;	
 	@Autowired
 	private CompletedOrderRepository completedOrderRepository;
+	@Autowired
+	private ProductSizeRepository productSizeRepository; 
 	
 	@Override
 	public Optional<ProductDTO> getProduct(int seq) {
@@ -40,5 +44,15 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	@Override
 	public List<CompletedOrderDTO> getCompletedOrderList(int seq) {
 		return completedOrderRepository.findBySeqOrderByTradeDateDesc(seq);
+	}
+	
+	@Override
+	public List<ProductSizeDTO> getProductSize(int seq) {
+		return productSizeRepository.findBySeq(seq);
+	}
+	
+	@Override
+	public Optional<Integer> getProductSizeMin(int seq, String size) {
+		return orderRepository.getProductMin(seq, size);
 	}
 }

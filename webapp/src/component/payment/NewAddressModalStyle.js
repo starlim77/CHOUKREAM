@@ -1,14 +1,18 @@
 import styled from 'styled-components';
 
 export const NewAddress = styled.div`
-    display: flex;
-    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
     background-color: white;
     border-radius: 15px;
     box-sizing: border-box;
     width: 520px;
     padding: 20px 30px;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
 `;
+
 export const NewAddressTitle = styled.div`
     position: relative;
     display: flex;

@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 
-export const HeaderWrapper = styled.form`
+export const HeaderWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    position: fixed;
+    top: 0;
+    z-index: 99;
+    background-color: #fff;
 `;
 
 export const Top = styled.div`
