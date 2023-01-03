@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import shop.bean.ProductDTO;
+import shop.bean.ProductSizeDTO;
 
 public interface ShopService {
 
@@ -13,4 +14,6 @@ public interface ShopService {
 
 	Optional<ProductDTO> getProductBySeq(int seq);
 
+	List<ProductSizeDTO> getSizeList(int productType);
+	
 }

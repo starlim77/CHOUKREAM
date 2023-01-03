@@ -9,9 +9,9 @@ const SizeBtn = props => {
 
     return (
         <>
-            <S.SizeBtn id={size.number} onClick={onClick}>
-                <S.SizeText id={size.number}>{size.number} </S.SizeText>
-                <S.PriceText id={size.number} style={url==="/buy" ? {color: "#f15746"} : {color: "#31b46e"}}>{size.price}</S.PriceText>
+            <S.SizeBtn id={size} onClick={onClick}>
+                <S.SizeText id={size}>{size}</S.SizeText>
+                <S.PriceText id={size} style={url==="/buy" ? {color: "#f15746"} : {color: "#31b46e"}}>price</S.PriceText>
             </S.SizeBtn>
         </>
     );

@@ -1,5 +1,6 @@
 package shop.controller;
 
+import java.security.PublicKey;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import shop.bean.ProductDTO;
+import shop.bean.ProductSizeDTO;
 import shop.service.ShopDetailService;
 import shop.service.ShopService;
 
@@ -45,6 +47,14 @@ public class ShopController {
 	public Optional<ProductDTO> getProductBySeq(@RequestParam int seq) {
 		
 		return shopService.getProductBySeq(seq);
+	}
+	
+	@GetMapping("getSizeList")
+	public List<ProductSizeDTO> getSizeList(@RequestParam int productType) {
+		System.out.println("getSizeList");
+		System.out.println(productType);
+		
+		return shopService.getSizeList(productType);
 	}
 	
 }

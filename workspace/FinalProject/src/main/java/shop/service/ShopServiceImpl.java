@@ -8,14 +8,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import shop.dao.ProductSizeRepository;
 import shop.dao.ShopDAO;
 import shop.bean.ProductDTO;
+import shop.bean.ProductSizeDTO;
 
 @Service
 public class ShopServiceImpl implements ShopService {
 	
 	@Autowired
 	private ShopDAO shopDAO;
+	@Autowired
+	private ProductSizeRepository sizeRepository;
 	
 	@Override
 	public List<ProductDTO> getProductList() {
@@ -30,6 +34,11 @@ public class ShopServiceImpl implements ShopService {
 	@Override
 	public Optional<ProductDTO> getProductBySeq(int seq) {
 		return shopDAO.findById(seq);
+	}
+
+	@Override
+	public List<ProductSizeDTO> getSizeList(int productType) {
+		return sizeRepository.findAllByProductType(productType);
 	}
 
 	
