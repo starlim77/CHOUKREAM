@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Avatar, Button, Card, CardHeader, CardMedia, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { Container } from '@mui/system';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Header from '../Header/Header';
 import * as S from './style';
 
@@ -11,12 +11,17 @@ const Mystyle = () => {
     const [file, setFile] = useState([])
     const [showImgSrc,setShowImgSrc] = useState('');
     const [styleBoardWriteOpen, setStyleBoardWriteOpen] = useState(false);
+    
+    //등록한 게시물 확인
+    const [myList, setMyList] = useState([]);
+    //const [imgData, setImgData] = useState[imgData];
+    
     const onUploadFile = (e) =>{
         imgRef.current.click()
     }
 
     const [form, setForm] = useState({
-        id: '',
+        id: '테스트아이디',
         content: '',
     //    file: ''
     })
@@ -50,7 +55,7 @@ const Mystyle = () => {
         
     }
 
-    const onStyleBoardWrite = () => {
+    const onUpload = () => {
         var formData = new FormData()   //가지고가야할 데이터를 넣기
         file.map(files => formData.append('list',files))
 
@@ -85,6 +90,13 @@ const Mystyle = () => {
 
 
     }
+
+
+    useEffect( ()=> {
+        axios.get('http://localhost:8080/lookbook/getMyStyleBoardList')
+             .then(res => setMyList(res.data))
+             .catch(error => console.log(error))
+    }, []) 
 
 
     return (
@@ -130,11 +142,13 @@ const Mystyle = () => {
                                     name='id'
                                     onChange={onInput}
                                 />
+                                <Button onClick={ onUploadFile }>+</Button><br/>
+
                                 <CardMedia
                                     component="img"
                                     height="400"
                                     image={showImgSrc}
-                                    alt="업로드이미지"
+                                    
                                 />
 
                                 <Button onClick={ onUploadFile }>+</Button><br/>
@@ -151,7 +165,7 @@ const Mystyle = () => {
                                     style={{width:545, height:80, resize:'none'}}  />
                                 
                                 <DialogActions>
-                                    <Button onClick={ onStyleBoardWrite }>등록</Button>
+                                    <Button onClick={ onUpload }>등록</Button>
                                     <Button onClick={ ()=>{setStyleBoardWriteOpen(false)}}>취소</Button>
                                 </DialogActions>
                                 
@@ -161,6 +175,30 @@ const Mystyle = () => {
                     </DialogContent>
                 </Dialog> 
                 
+                <S.MyDiv>    {/* 등록한 게시물 간단히 보기 */}
+                {
+                    myList.map(item => {
+                        return (
+                                <S.MyPhotoMini key={item.seq}>  
+                                    <CardMedia
+                                        component="img"
+                                        height="200"
+                                        //image={item.filename}
+                                    />
+
+                                    <CardHeader
+                                        avatar={ <Avatar>프로필</Avatar> }
+                                        title={id}
+                                        value={id}
+                                        name='id'
+                                    />
+
+                                </S.MyPhotoMini> 
+                            )
+                    })
+                }
+
+                </S.MyDiv>
             </Container>
 
         </div>

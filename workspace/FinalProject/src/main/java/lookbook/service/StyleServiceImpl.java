@@ -37,6 +37,7 @@ public class StyleServiceImpl implements StyleService {
 //	}
 
 
+	
 	@Override
 	public List<StyleEntity> getMyStyleBoardList() {
 		return styleDAO.findAll();
