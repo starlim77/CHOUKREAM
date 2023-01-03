@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import shop.bean.UsedItemDTO;
+import shop.bean.UsedItemLikeDTO;
 
 public interface UsedItemService {
 
@@ -14,5 +15,7 @@ public interface UsedItemService {
 	public List<UsedItemDTO> getItem();
 
 	public Optional<UsedItemDTO> viewItem(int seq);
+
+	public List<UsedItemLikeDTO> itemLike(int seq);
 
 }

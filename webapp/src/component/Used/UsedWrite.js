@@ -174,17 +174,17 @@ const UsedWrite = () => {
                 </S.ImgBody> */}
                 
                 <S.Imformation>
-                    <S.Necessary>* 필수 입력</S.Necessary>
-                    <S.Subject>* 제목</S.Subject>
+                    <S.Necessary>* 필수</S.Necessary>
+                    <S.Subject> 제목</S.Subject>
                     <S.Title type='text' name= 'title' onChange={ onInput }/>
 
 
-                    <S.Subject>* 상품 이름</S.Subject>
+                    <S.Subject> 상품 이름</S.Subject>
                     <S.SubTitle type='text' name= 'productName' onChange={ onInput }/>
 
 
-                    <S.Necessary>* 필수 입력</S.Necessary>
-                    <S.Subject>* 상품 정보</S.Subject>
+                    <S.Necessary>* 필수</S.Necessary>
+                    <S.Subject> 상품 정보</S.Subject>
                     <S.ItemKindPriceDiv>
                         <S.ItemKind name= 'kind' onChange={ onInput }>
                             <S.ItemKindOption>상품 종류</S.ItemKindOption>
@@ -196,15 +196,15 @@ const UsedWrite = () => {
                     </S.ItemKindPriceDiv>
 
 
-                    <S.Necessary>* 필수 입력</S.Necessary>
-                    <S.Subject >* 가격</S.Subject>
+                    <S.Necessary>* 필수</S.Necessary>
+                    <S.Subject > 가격</S.Subject>
                     <S.PriceDiv><S.ItemPrice type='number' name= 'price' onChange={ onInput }/><S.ItemPriceSpan>원</S.ItemPriceSpan></S.PriceDiv>
 
-                    <S.Subject>* 상품 설명</S.Subject>
+                    <S.Subject> 제품 설명</S.Subject>
                     <S.ItemContent name= 'contents' onChange={ onInput }/>
 
 
-                    <S.Subject>* Hash Tag </S.Subject>
+                    <S.Subject> Hash Tag </S.Subject>
 
                     <S.HashTag>
                         {

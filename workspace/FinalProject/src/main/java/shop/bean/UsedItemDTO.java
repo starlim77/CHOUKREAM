@@ -59,7 +59,6 @@ public class UsedItemDTO {
 	private Set<String> hashTag = new HashSet<String>();
 	
 	
-
 	
 	
 	
