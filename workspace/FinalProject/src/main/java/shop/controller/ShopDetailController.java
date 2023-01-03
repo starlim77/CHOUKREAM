@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import shop.bean.CompletedOrderDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
+import shop.bean.ProductSizeDTO;
 import shop.service.ShopDetailService;
 
 @CrossOrigin
@@ -21,7 +22,7 @@ public class ShopDetailController {
 	private ShopDetailService shopDetailService;
 	
 	@GetMapping(path="getProduct")
-	public Optional<ProductDTO> getInventory(@RequestParam int seq) {
+	public Optional<ProductDTO> getProduct(@RequestParam int seq) {
 		return shopDetailService.getProduct(seq);
 	}
 	
@@ -39,5 +40,18 @@ public class ShopDetailController {
 	public List<CompletedOrderDTO> getCompletedOrderList(@RequestParam int seq) {
 		return shopDetailService.getCompletedOrderList(seq);
 	}
+	
+	@GetMapping(path="getProductSize")
+	public List<ProductSizeDTO> getProductSize(@RequestParam int seq) {
+		return shopDetailService.getProductSize(seq);
+	}
+	
+	@GetMapping(path="getProductSizeMin")
+	public Optional<Integer> getProductSizeMin(@RequestParam int seq,@RequestParam String size) {
+		System.out.println(shopDetailService.getProductSizeMin(seq, size));
+		return shopDetailService.getProductSizeMin(seq, size);
+	}
+	
+	
 	
 }
