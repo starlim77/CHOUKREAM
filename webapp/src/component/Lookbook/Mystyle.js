@@ -9,7 +9,10 @@ const Mystyle = () => {
     const imgRef = useRef();
 
     const [file, setFile] = useState([]);
-    const [showImgSrc,setShowImgSrc] = useState('');
+    //const [showImgSrc,setShowImgSrc] = useState('');
+    const [previewImg,setPreviewImg] = useState([]);
+    //const [showImgSrc,setShowImgSrc] = useState([]);
+    const [myImage, setMyImage] = useState([]);
     const [styleBoardWriteOpen, setStyleBoardWriteOpen] = useState(false);
     
     //등록한 게시물 확인
@@ -42,16 +45,56 @@ const Mystyle = () => {
     
         reader.readAsDataURL(input.files[0]) 
 
-        reader.onload = () => {
-            console.log(input.files[0])   //파일확인
-            setShowImgSrc(reader.result)
-            //setFile(input.files[0])
-            Array.from(input.files).map(items=>file.push(items))
-            console.log(file)
+    //     reader.onload = () => {
+    //         //console.log(input.files[0])   //파일확인
+    //         //console.log(input.files[1]) 
+
+    //         setShowImgSrc(reader.result)
+    //         //setFile(input.files[0])
+    //         Array.from(input.files).map(items=>file.push(items))
+
+    //         console.log(file)
+    //     }
+        
+    // }
+
+    const readURL = (e) => {
+        var reader = new FileReader(); //생성
+        console.log(e.files[0])
+
+        if(e.files[0]){
+            reader.readAsDataURL(e.files[0]) 
+
+            setFile([...file, e.files[0]])
         }
 
         
         
+        reader.onload = () => {
+            const previewImgUrl = reader.result
+            
+            if(previewImgUrl) {
+                setPreviewImg([...previewImg, previewImgUrl])
+            }
+        } 
+    }
+
+    const getPreviewImg = () => {
+        {
+            return file.map((el, index) => {
+                const {name} = el
+    
+                return (
+                    <div>
+                        <img src={getPreviewImg[index]} />
+                        {name}
+                    </div>
+                )
+               
+            }) 
+        }
+             
+
     }
 
     const onUpload = () => {
@@ -120,18 +163,24 @@ const Mystyle = () => {
                                 />
                                 <Button onClick={ onUploadFile }>+</Button><br/>
 
-                                <CardMedia
+                                {/* <CardMedia
                                     component="img"
                                     height="400"
                                     image={showImgSrc}
-                                    
-                                />
+                                /> */}
 
-                               
+                             
                                 <input type='file' name='img' id='img' multiple  ref={imgRef}   style={ {visibility: 'hidden'}}
                                         onChange={ e=> readURL( e.target) }  
                                         //onChange={onInput}
                                 />
+
+                                이미지 리스트 불러오기 
+                                {getPreviewImg()}
+                                
+                                
+                                
+                                
                                 <textarea 
                                     type='text-area'
                                     name='content'
