@@ -1,8 +1,6 @@
 package lookbook.controller;
 
-import java.io.File;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
 import lookbook.bean.StyleDTO;
-import lookbook.entity.StyleFileEntity;
+import lookbook.entity.StyleEntity;
 import lookbook.service.StyleService;
 
 @RestController
@@ -34,16 +32,30 @@ public class styleController {
 		System.out.println("list= " + list);	
 		
 		styleService.save(list, styleDTO);
-		
+
 		System.out.println("dto="+ styleDTO);
 	}
 	
+
+	
+
+
+	@GetMapping(path="getMyStyleBoardList")
+	public List<StyleEntity> getMyStyleBoardList() {
+		return styleService.getMyStyleBoardList();
+	}
 	
 	@GetMapping(path="getStyleList")
 	public List<StyleDTO> findAll() {
 		//DB에서 전체 게시글 데이터 를 가져온다				
-		return styleService.findAll();
+		return styleService.findAll();		
+
 	}
 	
+	@GetMapping(path="getStyleBoardList")
+	public List<StyleEntity> getStyleBoardList() {
+		return styleService.getStyleBoardList();
+	}
+
 	
 }
