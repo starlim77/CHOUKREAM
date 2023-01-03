@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 
-export const HeaderWrapper = styled.header`
+export const HeaderWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    position: fixed;
+    top: 0;
+    z-index: 99;
+    background-color: #fff;
 `;
 
 export const Top = styled.div`
@@ -55,7 +59,7 @@ export const BottomWrapper = styled.ul`
 export const BottomLi = styled.li`
     display: flex;
     // color: ${props => (props.active ? 'red' : 'blue')};
-    img {
+    /* img {
         width: 28px;
-    }
+    } */
 `;
