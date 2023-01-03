@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @ComponentScan(basePackages = {"com.main","lookbook.*"} )
-@EntityScan("lookbook.bean")
+@EntityScan("lookbook.entity")
 @EnableJpaRepositories("lookbook.dao")
 @SpringBootApplication
 public class FinalProjectApplication {

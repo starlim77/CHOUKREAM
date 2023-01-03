@@ -16,6 +16,7 @@ import lombok.Data;
 @Data
 @Table(name = "style_file_table")
 public class StyleFileEntity {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -27,16 +28,19 @@ public class StyleFileEntity {
 	private String storedFileName; 
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "style_seq")
-	private StyleEntity styleEntity;
+	@JoinColumn(name = "style_id")
+	private StyleEntity styleEntity; //부모 부르는데 알아서 id값만 들어감
 	
 	public static  StyleFileEntity toStyleFileEntity(StyleEntity styleEntity, String originalFileName, String storedFileName) {
 		StyleFileEntity styleFileEntity = new StyleFileEntity();
 		styleFileEntity.setOriginalFileName(originalFileName);
 		styleFileEntity.setStoredFileName(storedFileName);
-		styleFileEntity.setStyleEntity(styleEntity);
+		styleFileEntity.setStyleEntity(styleEntity); // 부모 entity 를 넘겨야 한다
 		
+		System.out.println("죠기"+styleFileEntity);
 		return styleFileEntity;
 	}
+	
+	
 	
 }

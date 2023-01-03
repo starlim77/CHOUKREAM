@@ -1,21 +1,28 @@
 package lookbook.entity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lookbook.bean.StyleDTO;
 
+
+//DB의 테이블 역할을 하는 클래스
 @Entity
 @Data
+@RequiredArgsConstructor
 @Table(name ="style_table")
 public class StyleEntity {
 	
@@ -27,11 +34,6 @@ public class StyleEntity {
 	@Column(name = "id", length=30)
 	private String id;
 	
-	@Column(name="filename", length=150)
-	private String filename;
-	
-	@Column(name="filepath", length=300)
-	private String filepath;
 	
 	@Column(name="content")
 	private String content;
@@ -45,17 +47,33 @@ public class StyleEntity {
 	@Column
 	private int fileAttached;// 1 or 0
 	
+	@OneToMany(mappedBy = "styleEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+	private List<StyleFileEntity> styleFileEntityList = new ArrayList<>();
+	//mappedBy = "styleEntity" -이름 파일엔티티에 매칭시킨 이름이랑 같은이름으로
+	 
 	
 	public static StyleEntity toSaveEntity(StyleDTO styleDTO) {
 		StyleEntity styleEntity = new StyleEntity();
-		styleEntity.setId(styleDTO.getId());
-		styleEntity.setFilename(styleDTO.getFilename());
-		styleEntity.setFilepath(styleDTO.getFilepath());
+		styleEntity.setId(styleDTO.getId());		
 		styleEntity.setContent(styleDTO.getContent());
 		styleEntity.setLogtime(styleDTO.getLogtime());
 		styleEntity.setHit(0);
 		styleEntity.setFileAttached(0);
 		
+		System.out.println("여기"+styleEntity);
+		return styleEntity;
+	}
+
+
+	public static StyleEntity toSaveFileEntity(StyleDTO styleDTO) {
+		StyleEntity styleEntity = new StyleEntity();
+		styleEntity.setId(styleDTO.getId());		
+		styleEntity.setContent(styleDTO.getContent());
+		styleEntity.setLogtime(styleDTO.getLogtime());
+		styleEntity.setHit(0);
+		styleEntity.setFileAttached(1);  // 파일 있음
+		
+		System.out.println("요기"+styleEntity);
 		return styleEntity;
 	}
 	

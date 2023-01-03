@@ -52,14 +52,15 @@ const Mystyle = () => {
 
     const onStyleBoardWrite = () => {
         var formData = new FormData()   //가지고가야할 데이터를 넣기
-        formData.append('img', file)
+        file.map(files => formData.append('list',files))
 
         axios
             .post("http://localhost:8080/lookbook/upload", formData, {params:form})
            
              .then(
                             alert("게시물 등록 완료"),
-                            setStyleBoardWriteOpen(false)
+                            setStyleBoardWriteOpen(false),
+                            console.log(formData)
             )
             .catch( error => console.log(error) )
 
@@ -137,7 +138,7 @@ const Mystyle = () => {
                                 />
 
                                 <Button onClick={ onUploadFile }>+</Button><br/>
-                                <input type='file' name='img' id='img' accept="image/*" multiple  ref={imgRef}   style={ {visibility: 'hidden'}}
+                                <input type='file' name='file' id='img' accept="image/*" multiple  ref={imgRef}   style={ {visibility: 'hidden'}}
                                         onChange={ e=> readURL( e.target) }  
                                         //onChange={onInput}
                                 />
