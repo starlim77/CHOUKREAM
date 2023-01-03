@@ -30,23 +30,26 @@ public class StyleServiceImpl implements StyleService {
 	@Autowired
 	private StyleFileDAO styleFileDAO;
 	
-
+//	
+//	@Override
+//	public void upload(StyleDTO styleDTO)  {
+//		styleDAO.save(styleDTO);	
+//	}
 
 
 	
 	@Override
-	public void upload(StyleDTO styleDTO)  {
-		styleDAO.save(styleDTO);	
-	}
-
-	@Override
-	public List<StyleDTO> getMyStyleBoardList() {
+	public List<StyleEntity> getMyStyleBoardList() {
 		return styleDAO.findAll();
 	}
 	
 	@Override
-	public List<StyleDTO> getStyleBoardList() {
+	public List<StyleEntity> getStyleBoardList() {
 		return styleDAO.findAll();
+	}
+	
+	
+
 	public void save(List<MultipartFile> list, StyleDTO styleDTO) {		
 			
 		styleDTO.setStyleFile(list);			
