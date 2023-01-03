@@ -9,12 +9,6 @@ import lookbook.entity.StyleEntity;
 
 public interface StyleService {
 
-	//public void upload(StyleDTO styleDTO);
-
-	public List<StyleEntity> getMyStyleBoardList();
-	
-	public List<StyleEntity> getStyleBoardList();
-
 	
 	public void save(List<MultipartFile> list,StyleDTO styleDTO);
 
