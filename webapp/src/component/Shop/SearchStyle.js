@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
 `;
 
 export const SearchTop = styled.div`

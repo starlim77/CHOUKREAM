@@ -3,10 +3,11 @@ import styled from 'styled-components';
 export const Banner = styled.div`
     max-width: 1280px;
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
-    display: block;
+    display: flex;
+    overflow-x: hidden;
 `;
 export const BannerBox = styled.div`
     position: relative;
@@ -58,7 +59,7 @@ export const SlickSlide = styled.div`
 `;
 
 export const DetailBanner = styled.div`
-    width: 100%;
+    width: 1280px;
     display: inline-block;
     position: relative;
     vertical-align: top;
@@ -66,8 +67,10 @@ export const DetailBanner = styled.div`
     padding: 0;
     -webkit-tap-highlight-color: transparent;
 `;
+
+// BannerLink 배경을 바꾸면 전부 바뀜 
 export const BannerLink = styled.a`
-    background-color: rgb(236, 241, 243);
+    // background-color: rgb(236, 241, 243);
     height: 100px;
     display: flex;
     -webkit-box-pack: center;
@@ -96,7 +99,7 @@ export const SlickPrev = styled.button`
     bottom: 11px;
     background: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNiA5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xIC41bDQgNC00IDQiIHN0cm9rZT0iI2ZmZiIvPjwvc3ZnPg==)
         no-repeat;
-    width: 6px;
+    width: 8px;
     height: 9px;
     font-size: 0;
     color: transparent;
@@ -115,7 +118,7 @@ export const SlickNext = styled.button`
     bottom: 11px;
     background: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNiA5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xIC41bDQgNC00IDQiIHN0cm9rZT0iI2ZmZiIvPjwvc3ZnPg==)
         no-repeat;
-    width: 6px;
+    width: 8px;
     height: 9px;
     font-size: 0;
     color: transparent;
