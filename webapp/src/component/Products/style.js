@@ -391,6 +391,164 @@ export const DetailBoxProductInfo = styled.dd`
     font-size: 14px;
 `;
 
+export const ProductSalesGraph = styled.div`
+    position: relative;
+`;
+
+export const ProductSalesGraphTitle = styled.div`
+    display: flex;
+`;
+
+export const ProductSalesGraphDetailTitle = styled.h3`
+    line-height: 22px;
+    padding: 40px 0 20px;
+    font-size: 18px;
+    letter-spacing: -.27px;
+    letter-spacing: -.15px;
+
+    font-weight: bold;
+    display: block;
+    font-size: 1.17em;
+`;
+
+export const ProductSalesGraphSalesFilter = styled.div`
+    position: relative;
+    margin-left: auto;
+    padding: 40px 0 20px;
+    font-size: 0;
+`;
+
+export const FilterUnit = styled.div`
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+`;
+
+export const BtnBtnSelect = styled.button`
+    font-size: 13px;
+    letter-spacing: -.07px;
+    color: rgba(34,34,34,.8);
+
+    display: -webkit-inline-box;
+    display: inline-flex;
+    cursor: pointer;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    vertical-align: middle;
+    text-align: center;
+    color: rgba(34,34,34,.8);
+    background-color: #fff;
+    border: none;
+`;
+
+export const SelectTextLayerOpen = styled.span`
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    line-height: 24px;
+    font-weight: 700;
+`;
+
+export const LayerSizeListLayer = styled.div`
+    top: 30px;
+    left: auto;
+    right: 0;
+    bottom: auto;
+    z-index: 1;
+
+    position: absolute;
+    background-color: #fff;
+`;
+
+export const LayerSizeListLayerContainer = styled.div`
+    position: relative;
+    top: auto;
+    left: auto;
+    -webkit-transform: none;
+    transform: none;
+    width: 176px;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+`;
+
+export const LayerSizeListLayercontent = styled.div`
+    border: 1px solid #d3d3d3;
+    border-radius: 10px;
+`;
+
+export const SizeList = styled.ul`
+    max-height: 280px;
+    overflow-x: hidden;
+    overflow-y: auto;
+`;
+
+export const SizeItem = styled.li`
+    max-height: 280px;
+    overflow-x: hidden;
+    overflow-y: auto;
+`;
+
+export const SizeLink = styled.a`
+    display: block;
+    position: relative;
+    padding: 10px 36px 12px 15px;
+    font-size: 14px;
+    color: rgba(34,34,34,.8);
+
+    font-weight: ${(props) => props.size === props.itemSize && "700"};
+    color: #222;
+`;
+
+export const WrapSales = styled.div`
+    position: relative;
+`;
+
+export const TabArea = styled.div`
+    position: relative;
+`;
+
+export const TabList = styled.ul`
+    display: -webkit-box;
+    display: flex;
+    border-radius: 10px;
+    background-color: #f4f4f4;
+`;
+
+export const TabAreaItem = styled.li`
+    -webkit-box-flex: 1;
+    flex: 1;
+    margin: 2px;
+`;
+
+export const TabAreaItemLink = styled.a`
+    background-color: #fff;
+    color: #222;
+    font-weight: ${(props) => props.open && '700'};
+    -webkit-box-shadow: 0 0 0 0.5px #ebebeb inset;
+    box-shadow: inset 0 0 0 0.5px #ebebeb;
+
+    display: block;
+    line-height: 16px;
+    padding: 7px 0 9px;
+    font-size: 13px;
+    letter-spacing: -.07px;
+    letter-spacing: -.05px;
+    text-align: center;
+    border-radius: 8px;
+    background-color: ${(props) => !props.open && '#f4f4f4'};
+    color: rgba(34,34,34,.8);
+
+    cursor: pointer;
+`;
+
+export const WrapBids = styled.div`
+    position: relative;
+`;
+
+
 export const ConfirmWrap = styled.div`
     padding-top: 39px;
 `;

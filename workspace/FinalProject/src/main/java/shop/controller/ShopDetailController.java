@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import shop.bean.BidsListDTO;
 import shop.bean.CompletedOrderDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
@@ -47,6 +48,11 @@ public class ShopDetailController {
 		return shopDetailService.getProductSize(seq);
 	}
 	
+	@GetMapping(path="getProductSizeSell")
+	public List<SizeMinDTO> getProductSizeSell(@RequestParam int seq) {
+		return shopDetailService.getProductSizeSell(seq);
+	}
+	
 	@GetMapping(path="getSellOrderListBySize")
 	public List<OrderDTO> getSellOrderListBySize(@RequestParam int seq,@RequestParam String size) {
 		return shopDetailService.getSellOrderListBySize(seq, size);  
@@ -61,6 +67,28 @@ public class ShopDetailController {
 	public List<CompletedOrderDTO> getCompletedOrderListBySize(@RequestParam int seq,@RequestParam String size) {
 		return shopDetailService.getCompletedOrderListBySize(seq, size);
 	}
+	
+	@GetMapping(path="getSellBidsList")
+	public List<BidsListDTO> getSellBidsList(@RequestParam int seq) {
+		return shopDetailService.getSellBidsList(seq);  
+	}
+	
+	@GetMapping(path="getSellBidsListBySize")
+	public List<BidsListDTO> getSellBidsListBySize(@RequestParam int seq,@RequestParam String size) {
+		return shopDetailService.getSellBidsListBySize(seq, size);  
+	}
+	
+	@GetMapping(path="getBuyBidsList")
+	public List<BidsListDTO> getBuyBidsList(@RequestParam int seq) {
+		return shopDetailService.getBuyBidsList(seq);  
+	}
+	
+	@GetMapping(path="getBuyBidsListBySize")
+	public List<BidsListDTO> getBuyBidsListBySize(@RequestParam int seq,@RequestParam String size) {
+		return shopDetailService.getBuyBidsListBySize(seq, size);  
+	}
+	
+	
 	
 //	@GetMapping(path="getProductSizeMin")
 //	public Optional<Integer> getProductSizeMin(@RequestParam int seq,@RequestParam String size) {

@@ -2,58 +2,17 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import * as S from './style';
 
-const ModalBasic = ({ setModalOpen, seq, setSellOrderForm, setBuyOrderForm, setCompletedOrderForm, setSize }) => {
-    const [sizeForm, setSizeForm] = useState([{}])
+const ModalBasic = ({ setModalOpen, seq, setSellOrderForm, setBuyOrderForm, setCompletedOrderForm, setSize, getSize, sizeForm, getAll }) => {
 
     const [allSize, setAllSize] = useState('-')
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/getProductSize?seq=${seq}`)
-             .then(res => res.data !== null && setSizeForm(res.data))
-             .catch(error => console.log(error))
-
         axios.get(`http://localhost:8080/getSellOrderList?seq=${seq}`)
              .then(res => res.data.length !== 0 && setAllSize(res.data[0].orderPrice))
              .catch(error => console.log(error)) 
     }, []);
 
-    const getSize = (seq, size) => {
-        setSize(size);
-
-        axios.get(`http://localhost:8080/getSellOrderListBySize?size=${size}&seq=${seq}`)
-             .then(res => res.data.length !== 0 ? setSellOrderForm(res.data) : setSellOrderForm([{orderPrice: '-'}]))
-             .catch(error => console.log(error))    
-
-        axios.get(`http://localhost:8080/getBuyOrderListBySize?size=${size}&seq=${seq}`)
-             .then(res => res.data.length !== 0 ? setBuyOrderForm(res.data) : setBuyOrderForm([{orderPrice: '-'}]))
-             .catch(error => console.log(error))
-
-        axios.get(`http://localhost:8080/getCompletedOrderListBySize?size=${size}&seq=${seq}`)
-             .then(res => res.data.length !== 0 ? setCompletedOrderForm(res.data) : setCompletedOrderForm([{price: '-'}]))
-             .catch(error => console.log(error));   
-        
-        setModalOpen(false)
-    }
-
-    const getAll = (seq) => {
-        setSize('모든 사이즈');
-
-        axios.get(`http://localhost:8080/getSellOrderList?seq=${seq}`)
-                .then(res => res.data.length !== 0 && setSellOrderForm(res.data))
-                .catch(error => console.log(error))    
-
-        axios.get(`http://localhost:8080/getBuyOrderList?seq=${seq}`)
-                .then(res => res.data.length !== 0 && setBuyOrderForm(res.data))
-                .catch(error => console.log(error))
-
-        axios.get(`http://localhost:8080/getCompletedOrderList?seq=${seq}`)
-                .then(res => res.data.length !== 0 && setCompletedOrderForm(res.data))
-                .catch(error => console.log(error));    
-        
-        setModalOpen(false)
-    }
-
-    return (
+    return (  
         <S.Container>
             <S.LayerContainer>
                 <S.Close onClick={ e => setModalOpen(false)}>
