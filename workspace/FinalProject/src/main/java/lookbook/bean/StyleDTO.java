@@ -25,10 +25,10 @@ public class StyleDTO {
 	@Column(name = "id", length=30)
 	private String id;
 	
-	@Column(name="filename", length=150)
+	@Column(name="filename", length=500)
 	private String filename;
 	
-	@Column(name="filepath", length=300)
+	@Column(name="filepath", length=500)
 	private String filepath;
 	
 	@Column(name="content")

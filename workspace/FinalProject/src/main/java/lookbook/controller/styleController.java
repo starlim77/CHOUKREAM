@@ -89,7 +89,6 @@ public class styleController {
 		styleDTO.setFilepath(filePath);
 		
 		styleService.upload(styleDTO);
-
 		
 	}
 	
