@@ -20,9 +20,10 @@ import lombok.Data;
 	   )
 @Table(name="csboard")
 public class CsBoardDTO {
-	@Id
+	
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "csboard_SEQ_GENERATOR")
 	@Column(name="seq")
+	@Id
 	private int seq;
 	@Column(name="category")
 	private String category;

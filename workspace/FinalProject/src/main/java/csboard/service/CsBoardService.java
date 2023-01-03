@@ -15,5 +15,11 @@ public interface CsBoardService {
 
 	public List<CsBoardDTO> getKeywordSearch(String keyword);
 
+	public Optional<CsBoardDTO> getBoard(int seq);
+
+	       void delete(int seq);
+
+		public void update(CsBoardDTO csBoardDTO);
+
 	
 }

@@ -71,6 +71,23 @@ const CsFaq = () => {
         });
     };
 
+    const onDelete =(e) =>{
+    const seq = e.target.value;
+    console.log(seq)
+    axios.get(`http://localhost:8080/cs/getBoard?seq=${seq}`)
+         .then(
+             axios.delete(`http://localhost:8080/cs/deleteBoard?seq=${seq}`)
+                        .then(() =>{
+                            alert("글 삭제");
+                            navigate("/cs/CsFaq");
+                        })
+                        .catch(error=> console.log(error))
+        
+    )
+        .catch(error=> console.log(error))
+    }
+
+   
 
 
     return (
@@ -118,8 +135,9 @@ const CsFaq = () => {
                             {visible[item.seq] && (
                                 <tr>
                                     <td colSpan="2">{item.content}</td>
-                                    <button>수정</button>
-                                    <button>삭제</button>
+                                    <Link to={'/cs/CsFaqUpdateForm/'+item.seq}><button  value ={item.seq}>수정</button></Link> {/*param 가져가기 */}
+                                    
+                                    <button  value ={item.seq} onClick={onDelete}>삭제</button>
                                 </tr>
                                
                                 
