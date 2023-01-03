@@ -39,6 +39,7 @@ const Mystyle = () => {
  
     const readURL = (input) => {
         var reader = new FileReader(); //생성
+    
         reader.readAsDataURL(input.files[0]) 
 
         reader.onload = () => {
@@ -48,6 +49,8 @@ const Mystyle = () => {
             Array.from(input.files).map(items=>file.push(items))
             console.log(file)
         }
+
+        
         
     }
 
