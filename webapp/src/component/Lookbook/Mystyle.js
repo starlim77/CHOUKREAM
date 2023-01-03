@@ -40,9 +40,10 @@ const Mystyle = () => {
         })
     }
  
-    // const readURL = (input) => {
-    //     var reader = new FileReader(); //생성
-    //     reader.readAsDataURL(input.files[0]) 
+    const readURL = (input) => {
+        var reader = new FileReader(); //생성
+    
+        reader.readAsDataURL(input.files[0]) 
 
     //     reader.onload = () => {
     //         //console.log(input.files[0])   //파일확인
@@ -66,6 +67,8 @@ const Mystyle = () => {
 
             setFile([...file, e.files[0]])
         }
+
+        
         
         reader.onload = () => {
             const previewImgUrl = reader.result

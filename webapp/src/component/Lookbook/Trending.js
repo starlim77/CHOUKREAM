@@ -55,7 +55,7 @@ const Trending = () => {
                                     </IconButton>                        
                                     <span>15</span>                                                                
 
-                                    <p>                                
+                                                                   
                                     상품리스트
                                         <ul>
                                             <li>1</li>
@@ -63,7 +63,7 @@ const Trending = () => {
                                             <li>1</li>
                                             <li>1</li>
                                         </ul>
-                                    </p>
+                                    
                                 </Typography>
                             </CardActions>
                         </Card>
@@ -104,7 +104,7 @@ const Trending = () => {
                                     </IconButton>                        
                                     <span>15</span>                                                                
 
-                                    <p>                                
+                                                                   
                                     상품리스트
                                         <ul>
                                             <li>2</li>
@@ -112,7 +112,7 @@ const Trending = () => {
                                             <li>2</li>
                                             <li>2</li>
                                         </ul>
-                                    </p>
+                                    
                                 </Typography>
                             </CardActions>
                         </Card>
@@ -153,7 +153,7 @@ const Trending = () => {
                                     </IconButton>                        
                                     <span>15</span>                                                                
 
-                                    <p>                                
+                                                                    
                                     상품리스트
                                         <ul>
                                             <li>3</li>
@@ -161,7 +161,7 @@ const Trending = () => {
                                             <li></li>
                                             <li></li>
                                         </ul>
-                                    </p>
+                                    
                                 </Typography>
                             </CardActions>
                         </Card>
@@ -202,12 +202,12 @@ const Trending = () => {
                                     </IconButton>                        
                                     <span>15</span>                                                                
 
-                                    <p>                                
+                                                                   
                                     상품리스트
                                         <ul>
                                             <li>4</li>
                                         </ul>
-                                    </p>
+                                    
                                 </Typography>
                             </CardActions>
                         </Card>
@@ -248,7 +248,7 @@ const Trending = () => {
                                     </IconButton>                        
                                     <span>15</span>                                                                
 
-                                    <p>                                
+                                                                   
                                     상품리스트
                                         <ul>
                                             <li>1</li>
@@ -256,7 +256,7 @@ const Trending = () => {
                                             <li>3</li>
                                             <li>4</li>
                                         </ul>
-                                    </p>
+                                    
                                 </Typography>
                             </CardActions>
                         </Card>
@@ -297,12 +297,12 @@ const Trending = () => {
                                     </IconButton>                        
                                     <span>15</span>                                                                
 
-                                    <p>                                
+                                                                    
                                     상품리스트
                                         <ul>
                                             <li></li>
                                         </ul>
-                                    </p>
+                                    
                                 </Typography>
                             </CardActions>
                         </Card>
@@ -343,12 +343,12 @@ const Trending = () => {
                                     </IconButton>                        
                                     <span>15</span>                                                                
 
-                                    <p>                                
+                                                                    
                                     상품리스트
                                         <ul>
                                             <li></li>
                                         </ul>
-                                    </p>
+                                    
                                 </Typography>
                             </CardActions>
                         </Card>

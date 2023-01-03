@@ -1,6 +1,9 @@
 package lookbook.service;
 
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import lookbook.bean.StyleDTO;
 
 public interface StyleService {
@@ -10,5 +13,9 @@ public interface StyleService {
 	public List<StyleDTO> getMyStyleBoardList();
 	
 	public List<StyleDTO> getStyleBoardList();
+	
+	public void save(List<MultipartFile> list,StyleDTO styleDTO);
+
+	public List<StyleDTO> findAll();
 		
 }
