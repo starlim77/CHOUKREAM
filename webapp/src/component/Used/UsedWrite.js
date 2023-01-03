@@ -1,3 +1,4 @@
+import { integerPropType } from '@mui/utils';
 import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as S from './styleWrite';
@@ -65,8 +66,12 @@ const UsedWrite = () => {
     const onWrite = (e) =>{
         e.preventDefault()
 
-        var sw = 1
+       
 
+        
+        var sw = 1
+        file[0]||--sw&&alert("이미지 파일을 등록해주세요");
+       
         if(!title){
             sw=0
         }else if(kind === '상품 종류' || !kind){
@@ -74,9 +79,13 @@ const UsedWrite = () => {
         }else if(!price){
             sw=0
         }
-
+    
+        var formData=new FormData();
+        file.map(files=>formData.append('img',files));
+        
         if(sw == 1) {
-            axios.post('http://localhost:8080/used/writeItem',null,({params:{
+           // axios.post('http://localhost:8080/used/writeItem',null,({params:{
+            axios.post('http://localhost:8080/used/upload',formData,({params:{
                ...form,
                 hashTag : encodeURI(form.hashTag)
             }}))
@@ -86,7 +95,8 @@ const UsedWrite = () => {
                  .catch(error => console.log(error))
         }
 
-        console.log(form)
+       
+        
     }
 
     // ---------------
@@ -99,13 +109,34 @@ const UsedWrite = () => {
     const onSubImg = () => {
         imgRef.current.click();
     }
-    const[forRendering,setForRendering]=useState('');
+    //const[forRendering,setForRendering]=useState('');
     const[random,setRandom]=useState();
-    const onImgRead = (e) => {
 
-        
-        // var temp1=reader.readAsDataURL(e.target.files[0]);
-        // console.log(reader.result);
+    const onImgRead = (e) => {
+       
+
+        //유효성 검사
+        //https://velog.io/@fxoco/image-input-%EC%9C%A0%ED%9A%A8%EC%84%B1-%EA%B2%80%EC%82%AC
+        let sw=0;
+        var fileForm = /(.*?)\.(jpg|jpeg|png|gif)$/;
+        Array.from(e.target.files).map(item=>item.name.match(fileForm)||++sw&&alert("'.jpeg, .jpg, .png, .gif ' 형식만 사용해주세요"));
+
+        if(sw===0){
+        //이미지 세팅 함수 호출
+        addFile(e);
+        }
+        //push로 넣어줬기 때문에 별도의 렌더링이 되지 않는다
+        //따라서 onImgRead함수가 종료될 때 강제로 렌더링이 될 수 있도록 한다.
+        //굳이 Math.random을 사용하여 렌더링을 하는 이유는 렌더링 값이 기존 값과 같다면 렌더링이 되지 않기 때문이다. 
+       setRandom(Math.random);
+       //setForRendering(`${random}`); 
+       
+      
+        //동일한 파일을 넣어주는 경우에 발생하는 버그 방지
+       e.target.value='';
+    }
+    
+    const addFile=(e)=>{
         //Array.from 사용 이유. 
         //e.target.files는 배열의 형태처럼 보이긴 하나 실제 배열이 아니라서 배열형태로 만들어서 map을 돌리는 것이다.
         //https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/types%20%26%20grammar/ch2.md#array-likes
@@ -118,14 +149,22 @@ const UsedWrite = () => {
            //setSubImg(urlTemp);
             file.push(items);
          })
-         //console.log(reader.result);
-       console.log(subImg);
-       setRandom(Math.random);
-       setForRendering(`${random}`); 
-       console.log(random);
-    
     }
- 
+
+
+    const deleteImg=(e)=>{
+        //console.log(e.target.getAttribute("id"));
+        var id=e.target.getAttribute("id");
+        
+        //https://forum.freecodecamp.org/t/how-to-filter-using-array-index-in-react/403524
+        //index값은 숫자인데 그냥 id값을 주면 id를 받아 문자열로 인식을 하기때문에 parseInt를 이용해 숫자로 바꿔준다. 
+        var imgTemp= subImg.filter((item,index)=>index!==parseInt(id));
+        var fileTemp = file.filter((item,index)=>index!==parseInt(id));
+        setSubImg([...imgTemp]);
+        setFile([...fileTemp]);
+        //console.log(file);
+       
+    }
 
     // const imgReading=(file)=>{
     //     const reader = new FileReader();
@@ -140,32 +179,37 @@ const UsedWrite = () => {
 
     // }
 
-
+//읽어볼 자료.https://velog.io/@eeeve/React-07
     return (
         <>
             <S.WriteBody>
                
                 <S.ImgBody>
                     {/* 이미지 소스 이용방법 2가지 사용해봄 */}
-                    <S.MainImgP sizing={false}>
+                    <S.MainImgP setPosition={subImg[0]?true:false}>
                         <S.MainImg name='mainImg' sizing={subImg[0]?true:false} src={subImg[0]?subImg[0].url:`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg} alt={subImg[0]?subImg[0].url:"nothing"}></S.MainImg>
-                        <S.DeleteImg isDisplay={subImg[0]?true:false} src='/image/used/deleteIcon.png'></S.DeleteImg>
+                        <S.DeleteMainImg setPosition={subImg[0]?true:false} id="0" onClick={e=>deleteImg(e)}></S.DeleteMainImg>
                     </S.MainImgP>
                     <S.SubImgBody >
-                        <S.SubImgP sizing={false}>
+                        <S.SubImgP setPosition={subImg[1]?true:false}>
                             <S.SubImg sizing={subImg[1]?true:false} name='subImg1' src={subImg[1]?subImg[1].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
-                            <S.DeleteImg></S.DeleteImg>
+                            <S.DeleteImg setPosition={subImg[1]?true:false} id="1" onClick={e=>deleteImg(e)}></S.DeleteImg>
                         </S.SubImgP>
-                        <S.SubImgP sizing={false}>
+                        <S.SubImgP setPosition={subImg[2]?true:false}>
                             <S.SubImg sizing={subImg[2]?true:false} name='subImg2' src={subImg[2]?subImg[2].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
-                            <S.DeleteImg></S.DeleteImg>
+                            <S.DeleteImg setPosition={subImg[2]?true:false} id="2"  onClick={e=>deleteImg(e)}></S.DeleteImg>
                         </S.SubImgP>
-                        <S.SubImgP sizing={false}>
+                        <S.SubImgP setPosition={subImg[3]?true:false}>
                             <S.SubImg sizing={subImg[3]?true:false} name='subImg3' src={subImg[3]?subImg[3].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
-                            <S.DeleteImg></S.DeleteImg>
+                            <S.DeleteImg setPosition={subImg[3]?true:false} id="3"  onClick={e=>deleteImg(e)}></S.DeleteImg>
                         </S.SubImgP>
                     </S.SubImgBody>
-                    <input type='file' name="img" style={{display: 'none'}} accept="image/*" onChange={ e=>onImgRead(e) } ref={imgRef} multiple></input>
+                    
+                    {/* https://blog.munilive.com/posts/input-file-type-accept-attribute.html
+                    파일 형식 제한은 accept이용.
+                    다만 업로드 하는 사람이 형식을 모든 파일로 받으면 다른 파일로 업로드가 가능해진다.
+                    유효성 검사 필요 */}
+                    <input type='file' name="img" style={{display: 'none'}} accept=".jpg,.png, .jpeg, .gif" onChange={ e=>onImgRead(e) } ref={imgRef} multiple></input>
 
                 </S.ImgBody>
             

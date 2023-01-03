@@ -23,13 +23,15 @@ export const MainImgP=styled.p`
     width: 560px;
     height: 560px;
     border: 1px solid black;
-    display: ${props=>props.sizing?"relative":"flex"};
+    display: ${props=>props.setPosition?"":"flex"};
+    position:${props=>props.setPosition?'relative':'none'};
     align-items: center;
     justify-content: center;
 `;
 export const MainImg = styled.img`
     width: ${props=>(props.sizing?"560px":"50px")};
     height: ${props=>(props.sizing?"560px":"50px")};
+    display:${props=>(props.sizing?"absolute":"")};
     :hover{
         cursor: pointer;
     }
@@ -44,28 +46,38 @@ export const SubImgP=styled.p`
     width: 175px;
     height: 175px;
     border: 1px solid black;
-    display: ${props=>props.sizing?"relative":"flex"};
     align-items: center;
     justify-content: center;
+    display: ${props=>props.setPosition?"":"flex"};
+    position:${props=>props.setPosition?'relative':'none'};
 `;
 export const SubImg = styled.img`
     width: ${props=>props.sizing?"175px":"50px"};
     height: ${props=>props.sizing?"175px":"50px"};
+    display:${props=>(props.sizing?"absolute":"")};
     :hover{
         cursor: pointer;
     }
 `;
 
-export const DeleteImg = styled.img.attrs({
-    //src:'/image/used/deleteIcon.png'
-    
+export const DeleteMainImg = styled.img.attrs({
+    src:'/image/used/deleteIcon.png' 
 })`
-    
     width:50px;
     height:50px;
+    display:${props=>props.setPosition?'':'none'};
+    position:${props=>props.setPosition?'absolute':'none'};
     left:90%;
-    z-index:999;
-    display:${props=>props.isDisplay?'absolute':'none'};
+`;
+
+export const DeleteImg = styled.img.attrs({
+    src:'/image/used/deleteIcon.png' 
+})`
+    width:50px;
+    height:50px;
+    display:${props=>props.setPosition?'':'none'};
+    position:${props=>props.setPosition?'absolute':'none'};
+    left:70%;
 `;
 
 // ----------------------------------------------내용 부분
