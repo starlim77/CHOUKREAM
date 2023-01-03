@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,13 +41,17 @@ public class styleController {
 	}
 	
 
-	
-
-
 	@GetMapping(path="getMyStyleBoardList")
-	public List<StyleEntity> getMyStyleBoardList() {
+	public List<StyleDTO> getMyStyleBoardList() {
 		return styleService.getMyStyleBoardList();
 	}
+	
+	//내 id를 들고가서 내 게시글만 뿌리기
+//	@GetMapping(path="getMyStyleBoardList/{id}")
+//	public List<StyleDTO> getMyStyleBoardList(@PathVariable String id) {
+//		return styleService.getMyStyleBoardList(id);
+//	}
+		
 	
 	@GetMapping(path="getStyleList")
 	public List<StyleDTO> findAll() {
@@ -56,7 +61,7 @@ public class styleController {
 	}
 	
 	@GetMapping(path="getStyleBoardList")
-	public List<StyleEntity> getStyleBoardList() {
+	public List<StyleDTO> getStyleBoardList() {
 		return styleService.getStyleBoardList();
 	}
 

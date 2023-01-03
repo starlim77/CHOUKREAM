@@ -51,6 +51,10 @@ export const SoWrapper = styled.div`
     
 `;
 
+export const SoTopDiv = styled.div`
+    padding-top: 90px;
+`
+
 //Mystyle.js 
 export const MyProfile = styled.div`
     text-align: center;
@@ -84,4 +88,10 @@ export const MyPhotoMini = styled.div`
     padding: 20px;
 
 `
+
+export const MyTopDiv = styled.div`
+    padding-top: 90px;
+`
+
+
 

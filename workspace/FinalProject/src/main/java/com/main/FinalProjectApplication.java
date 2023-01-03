@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @ComponentScan( basePackages = {"pay.*", "shop.*", "lookbook.*", "my.*", "csboard.*", "member.*", "com.*"})
 @SpringBootApplication
-@EntityScan("*.bean","lookbook.entity")
+@EntityScan({"*.bean","*.entity"})
 @EnableJpaRepositories("*.dao")
 public class FinalProjectApplication {
 	

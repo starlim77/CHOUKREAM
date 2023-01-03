@@ -11,13 +11,14 @@ public interface StyleService {
 
 	//public void upload(StyleDTO styleDTO);
 
-	public List<StyleEntity> getMyStyleBoardList();
+	//public List<StyleDTO> getMyStyleBoardList(String id);
+	public List<StyleDTO> getMyStyleBoardList();
 	
-	public List<StyleEntity> getStyleBoardList();
+	
+	public List<StyleDTO> findAll() ;		 
+	
+	public List<StyleDTO> getStyleBoardList();
 
-	
 	public void save(List<MultipartFile> list,StyleDTO styleDTO);
 
-	public List<StyleDTO> findAll();
-		
 }

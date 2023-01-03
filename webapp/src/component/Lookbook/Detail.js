@@ -15,7 +15,6 @@ const Detail = () => {
     //게시물 뿌리기
     const [list, setList] = useState([]);
 
-
     useEffect( ()=> {
         axios.get('http://localhost:8080/lookbook/getStyleBoardList')
              .then(res => setList(res.data))
@@ -37,7 +36,7 @@ const Detail = () => {
                             <Card key={item.seq}>
                                 <CardHeader
                                     avatar={ <Avatar> 프로필</Avatar> }
-                                    title="본인id"
+                                    title={item.id}
                                     subheader={item.logtime}
                                 />
                                 <CardMedia 
