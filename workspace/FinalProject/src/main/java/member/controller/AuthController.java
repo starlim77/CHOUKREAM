@@ -23,12 +23,12 @@ public class AuthController {
 	@PostMapping("/join")
 	public ResponseEntity<MemberResponseDto> join(@RequestBody MemberRequestDto memberRequestDto) {
 		System.out.println(memberRequestDto);
-
         return ResponseEntity.ok(authService.join(memberRequestDto));
     }
 	
 	@PostMapping("/login")
 	public ResponseEntity<TokenDto> login(@RequestBody MemberRequestDto memberRequestDto) {
+		System.out.println(memberRequestDto);
 		return ResponseEntity.ok(authService.login(memberRequestDto));
 	}
 

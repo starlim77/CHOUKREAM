@@ -41,14 +41,14 @@ public class AuthServiceImpl implements AuthService {
 	public TokenDto login(MemberRequestDto memberRequestDto) {
 		//1. login ID/PW 를 기반으로 AuthenticationToken 생성
     	UsernamePasswordAuthenticationToken authenticationToken = memberRequestDto.toAuthentication();
-    	System.out.println(authenticationToken);
+    	System.out.println("authenticationToken" + authenticationToken);
     	
     	//2. 실제로 검증이 이루어지는 부분
     	Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
     	
     	//3. 인증 정보를 기반으로 jwt 토큰 생성
     	TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
-    	System.out.println(tokenDto);
+    	System.out.println("tokenDto" + tokenDto);
     	
     	//4. RefreshToken 저장
     	RefreshToken refreshToken = RefreshToken.builder()

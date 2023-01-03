@@ -55,21 +55,6 @@ const LoginForm = () => {
             navigate('/')
           })
           .catch(error => console.log(error))
-        // axios
-        //     .post('http://localhost:8080/login', {
-        //         params : { 
-        //             email: email,
-        //             password: password
-        //         },
-        //         headers: {
-        //             'Content-Type': 'application/x-www-form-urlencoded'
-        //         }
-        //     })
-        //     .then(() => {
-        //         alert('로그인 성공')
-        //         navigate('/')
-        //     })
-        //     .catch(error => console.log(error))
     }
 
     return (
