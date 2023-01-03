@@ -4,6 +4,7 @@ import ModalBasic from './ModalBasic';
 import * as S from './style';
 import GlobalStyle from './GlobalStyle';
 import { useParams } from "react-router-dom";
+import ScrollToTop from "./ScrollToTop";
 
 const Products = () => {
     const {seq} = useParams();
@@ -25,6 +26,8 @@ const Products = () => {
     }]);
 
     const [size ,setSize] = useState("모든 사이즈");
+
+    const [isOneSize, setIsOneSize] = useState(true);
 
     const [dropdown, setDropdown] = useState(true);
     const OpenDrop = () => {  
@@ -58,13 +61,34 @@ const Products = () => {
         axios.get(`http://localhost:8080/getCompletedOrderList?seq=${seq}`)
              .then(res => res.data.length !== 0 && setCompletedOrderForm(res.data))
              .catch(error => console.log(error));   
-
+        
+        axios.get(`http://localhost:8080/getProductSize?seq=${seq}`)
+             .then(res => res.data.length === 1 ? setIsOneSize(true) : setIsOneSize(false))
+             .catch(error => console.log(error))
+        
     }, []);
+
+    const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장 
+    const [ScrollActive, setScrollActive] = useState(true); 
+    const handleScroll = () => { 
+        if(ScrollY < 390) {
+            setScrollY(window.pageYOffset);
+            setScrollActive(true);
+        } else {
+            setScrollY(window.pageYOffset);
+            setScrollActive(false);
+        }
+    }
+    useEffect(() => {
+        const scrollListener= () => {  window.addEventListener("scroll", handleScroll); } //  window 에서 스크롤을 감시 시작
+        scrollListener(); // window 에서 스크롤을 감시
+        return () => { window.removeEventListener("scroll", handleScroll); }; //  window 에서 스크롤을 감시를 종료
+    });
 
 
     return (
         <>
-        
+        <ScrollToTop/>
         <GlobalStyle/>
         <S.ProductsWrapper>
             <S.ContainerDetail>
@@ -72,7 +96,7 @@ const Products = () => {
                     <h2 hidden={true}>상품상세</h2>
                     <S.ColumnBind>
                         <S.ColumnIsFixed>
-                            <S.ColumnBox>
+                            <S.ColumnBox ScrollActive={ ScrollActive }>
                                 <div className="spread">
                                     <img src={form.img}></img>
                                 </div>
@@ -87,7 +111,7 @@ const Products = () => {
                                     </div>
                                 </div> */}
                                 <S.BannerAlert>
-                                    <S.BannerAlertContent onClick={e => setModalOpen(true)}>
+                                    <S.BannerAlertContent>
                                         <div>
                                             <S.AlertTitleCareMark>주의</S.AlertTitleCareMark>
                                             <S.AlertTitleAlertText>판매 거래 주의사항</S.AlertTitleAlertText>
@@ -96,7 +120,8 @@ const Products = () => {
                                     </S.BannerAlertContent>
                                 </S.BannerAlert>
                             </S.ColumnBox>
-                            {modalOpen && <ModalBasic setModalOpen={setModalOpen} seq={seq}/>}
+                            {modalOpen && <ModalBasic setModalOpen={setModalOpen} setSellOrderForm={setSellOrderForm} setSize={setSize}  
+                                                      setBuyOrderForm={setBuyOrderForm} setCompletedOrderForm={setCompletedOrderForm} seq={seq}/> }
                             {/* <div className="ico_arrow">
                                 <svg>
                                     <use></use>
@@ -122,7 +147,8 @@ const Products = () => {
                                             </S.DetailSizeTitle>
                                             <S.DetailSizeSize>
                                                 <S.BtnSize>
-                                                    <S.BtnSizeBtnText>{size}</S.BtnSizeBtnText>
+                                                    {isOneSize ? 'ONE SIZE' : <S.BtnSizeBtnText onClick={e => setModalOpen(true)}>{size}</S.BtnSizeBtnText> }
+                                                    {/* <S.BtnSizeBtnText onClick={e => setModalOpen(true)}>{size}</S.BtnSizeBtnText> */}
                                                     {/* <svg>
                                                         <use></use>
                                                     </svg> */}

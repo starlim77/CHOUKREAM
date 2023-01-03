@@ -10,6 +10,7 @@ import shop.bean.CompletedOrderDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
+import shop.bean.SizeMinDTO;
 import shop.dao.CompletedOrderRepository;
 import shop.dao.OrderRepository;
 import shop.dao.ProductSizeRepository;
@@ -47,12 +48,28 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	}
 	
 	@Override
-	public List<ProductSizeDTO> getProductSize(int seq) {
-		return productSizeRepository.findBySeq(seq);
+	public List<SizeMinDTO> getProductSize(int seq) {
+		return orderRepository.getProductSize(seq);
 	}
 	
 	@Override
-	public Optional<Integer> getProductSizeMin(int seq, String size) {
-		return orderRepository.getProductMin(seq, size);
+	public List<OrderDTO> getSellOrderListBySize(int seq, String size) {
+		return orderRepository.getSellOrderListBySize(seq, size);
 	}
+	
+	@Override
+	public List<OrderDTO> getBuyOrderListBySize(int seq, String size) {
+		return orderRepository.getBuyOrderListBySize(seq, size);
+	}
+	
+	@Override
+	public List<CompletedOrderDTO> getCompletedOrderListBySize(int seq, String size) {
+		// TODO Auto-generated method stub
+		return completedOrderRepository.findBySeqOrderByTradeDateDescBySize(seq, size);
+	}
+	
+//	@Override
+//	public Optional<Integer> getProductSizeMin(int seq, String size) {
+//		return orderRepository.getProductMin(seq, size);
+//	}
 }

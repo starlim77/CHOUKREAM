@@ -21,8 +21,7 @@ function App() {
                     <Route path="Used/uploadform2" element={<UploadForm2></UploadForm2>}></Route>
                     <Route path="products/:seq" element={ <Products/> } />
                 </Route>
-            </Routes>
-            
+            </Routes> 
         </BrowserRouter>
     );
 }

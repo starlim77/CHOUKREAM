@@ -41,8 +41,20 @@ export const ColumnIsFixed = styled.div`
 `;
 
 export const ColumnBox = styled.div`
+    position: ${(props) => props.ScrollActive ? "fixed" : "absolute"};
+    top: ${(props) => props.ScrollActive && "130px"};
+    bottom: ${(props) => props.ScrollActive || "0"};;
+`;
+
+export const ColumnBoxFixed = styled.div`
     position: fixed;
     top: 130px;
+    
+`;
+
+export const ColumnBoxAbsolute = styled.div`
+    position: absolute;
+    bottom: 0;
 `;
 
 export const Column = styled.div`
@@ -479,30 +491,148 @@ export const MeditationNoticeProduct = styled.p`
 
 /* 모달창을 화면 중앙. 최상단에 노출 */
 export const Container = styled.div`
-    /* 모달창 크기 */
-    width: 300px;
-    height: 200px;
-  
-    /* 최상단 위치 */
-    z-index: 999;
-    
-    /* 중앙 배치 */
-    /* top, bottom, left, right 는 브라우저 기준으로 작동한다. */
-    /* translate는 본인의 크기 기준으로 작동한다. */
     position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(34,34,34,.5);
+    z-index: 1010;
+`;
+
+export const LayerContainer = styled.div`
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    height: 514px;
+
+    overflow: hidden;
+    position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-  
-    /* 모달창 디자인 */
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 8px;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    background-color: #fff;
+    width: 448px;
+    border-radius: 16px;
+    -webkit-box-shadow: 0 4px 10px 0 rgb(0 0 0 / 10%);
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 10%);
 `;
 
 /* 모달창 내부 X버튼 */
 export const Close = styled.button`
     position: absolute;
-    right: 10px;
-    top: 10px;
+    top: 18px;
+    right: 20px;
+    cursor: pointer;
+
+    color: inherit;
+    -webkit-tap-highlight-color: rgba(0,0,0,.1);
+`;
+
+export const LayerHeader = styled.div`
+    -webkit-box-flex: 0;
+    flex: none;
+`;
+
+export const LayerHeaderTitle = styled.h2`
+    line-height: 22px;
+    padding: 18px 50px 20px;
+    min-height: 60px;
+    font-size: 18px;
+    letter-spacing: -.27px;
+    font-weight: 700;
+    letter-spacing: -.15px;
+    color: #000;
+    text-align: center;
+    background-color: #fff;
+
+    display: block;
+    font-size: 1.0em;
+    font-weight: bold;
+`;
+
+export const LayerContent = styled.div`
+    position: relative;
+    -webkit-box-flex: 1;
+    flex: 1;
+    margin-top: 10px;
+    margin-bottom: 32px;
+    overflow-x: hidden;
+    overflow-y: auto;
+`;
+
+export const SelectArea = styled.div`
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0 32px;
+
+    padding: 0 0;
+    min-height: 488px;
+`;
+
+export const SelectList = styled.ul`
+    line-height: 0;
+    font-size: 0;
+
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 10px;
+`;
+
+export const SelectItem = styled.li`
+    overflow: hidden;
+    margin: 4px;
+    display: inline-block;
+    vertical-align: top;
+    width: calc(33.33333% - 8px);
+    border: 1px solid #d3d3d3;
+    height: 52px;
+    border-radius: 10px;
+    background-color: #fff;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+`;
+
+export const SelectLinkBuy = styled.button`
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background-color: white;
+`;
+
+export const LinkInner = styled.div`
+    margin: 0 auto;
+`;
+
+export const Size = styled.span`
+    display: block;
+    line-height: 17px;
+    margin-top: -3px;
+    font-size: 14px;
+`;
+
+export const Price = styled.span`
+    color: #f15746;
+    display: block;
+    line-height: 14px;
+    margin-top: 1px;
+    font-size: 12px;
+`;
+
+export const PriceNull = styled.span`
+    color: black;
+    display: block;
+    line-height: 14px;
+    margin-top: 1px;
+    font-size: 12px;
 `;
