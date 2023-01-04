@@ -57,7 +57,7 @@ export const UsedMain = styled.div`
 `;
 
 export const MainItem = styled.div`
-   margin-bottom: 30px;
+   margin-bottom: 40px;
    width: 275px;
    height: 430px;
 
@@ -74,10 +74,12 @@ export const ItemImg = styled.img`
 export const ItemTitle = styled.h2`
     margin-top: 7px;
     font-weight: 700;
+    height: 20px;
 `;
 export const ItemSubTitle = styled.h2`
     margin-top: 5px;
     font-weight: 500;
+    height: 20px;
 `;
 
 export const ItemContent = styled.pre`

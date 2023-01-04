@@ -45,7 +45,7 @@ public class ShopDetailController {
 	public List<ProductSizeDTO> getProductSize(@RequestParam int seq) {
 		return shopDetailService.getProductSize(seq);
 	}
-	
+
 	@GetMapping(path="getProductSizeMin")
 	public Optional<Integer> getProductSizeMin(@RequestParam int seq,@RequestParam String size) {
 		System.out.println(shopDetailService.getProductSizeMin(seq, size));
