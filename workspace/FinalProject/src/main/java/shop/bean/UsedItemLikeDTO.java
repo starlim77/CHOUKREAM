@@ -17,4 +17,7 @@ public class UsedItemLikeDTO {
 	
 	@Column(name="userLike")
 	private Boolean userLike;
+	
+//	@Column(name="likes")
+//	private Boolean likes;
 }

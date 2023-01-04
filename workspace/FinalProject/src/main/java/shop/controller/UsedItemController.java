@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +27,7 @@ import shop.dao.UsedItemDAO;
 import shop.service.UsedItemService;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(path="used")
 public class UsedItemController {
 	
@@ -43,14 +44,14 @@ public class UsedItemController {
 		return usedItemService.viewItem(seq);
 	}
 	
-	@GetMapping(path="itemLike")
-	public List<UsedItemLikeDTO> itemLike(@RequestParam int seq){
-		
-		List<UsedItemLikeDTO> imsi = usedItemService.itemLike(seq);
-		System.out.println(imsi);
-		return null;
-		//return usedItemService.itemLike(seq);
-	}
+//	@GetMapping(path="itemLike")
+//	public List<UsedItemLikeDTO> itemLike(@RequestParam int seq){
+//		
+//		List<UsedItemLikeDTO> imsi = usedItemService.itemLike(seq);
+//		System.out.println(imsi);
+//		return null;
+//		//return usedItemService.itemLike(seq);
+//	}
 	
 	
 	@PostMapping(path="writeItem")

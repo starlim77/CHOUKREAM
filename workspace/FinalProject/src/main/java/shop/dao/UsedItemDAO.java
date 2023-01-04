@@ -13,6 +13,6 @@ import shop.bean.UsedItemLikeDTO;
 @Repository
 public interface UsedItemDAO extends JpaRepository<UsedItemDTO, Integer>{
 
-	@Query("select usedItemLike from UsedItemLike usedItemLike where usedItemLike.seq = :keyword")
-	public List<UsedItemLikeDTO> itemLike(@Param("keyword") int seq);
+//	@Query("select usedItemLike from UsedItemLike usedItemLike where usedItemLike.seq = :keyword")
+//	public List<UsedItemLikeDTO> itemLike(@Param("keyword") int seq);
 }

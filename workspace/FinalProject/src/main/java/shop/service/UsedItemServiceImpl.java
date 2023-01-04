@@ -42,10 +42,10 @@ public class UsedItemServiceImpl implements UsedItemService {
 	}
 
 
-	@Override
-	public List<UsedItemLikeDTO> itemLike(int seq) {
-		return usedItemDAO.itemLike(seq);
-	}
+//	@Override
+//	public List<UsedItemLikeDTO> itemLike(int seq) {
+//		return usedItemDAO.itemLike(seq);
+//	}
 	
 
 	
