@@ -6,8 +6,8 @@ export const Banner = styled.div`
     padding: 0;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
-    display: flex;
-    overflow-x: hidden;
+    // display: flex;
+    // overflow-x: hidden;
 `;
 export const BannerBox = styled.div`
     position: relative;
@@ -17,6 +17,9 @@ export const BannerBox = styled.div`
         -webkit-tap-highlight-color: transparent;
     }
 `;
+
+
+
 export const BannerSlide = styled.div`
     position: relative;
     box-sizing: border-box;
@@ -134,13 +137,12 @@ export const BannerCountBox = styled.div`
     width: 55px;
     height: 30px;
     position: absolute;
-    right: 8px;
+    // right: 36px; 원래 이거임
     bottom: 8px;
     padding: 4px 15px 5px;
     text-align: center;
     background-color: rgba(34, 34, 34, 0.8);
     border-radius: 12px;
-    display: -webkit-box;
     display: flex;
     -webkit-box-align: center;
     align-items: center;

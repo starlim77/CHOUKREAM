@@ -6,11 +6,6 @@ import axios from 'axios';
 const Modal = props => {
     // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
     const { setDummy, open, close } = props;
-    const [ dataId, setDataId ] = useState(1);
-    
-    const dataAdd = () => {
-        setDataId(dataId + 1)
-    }
     
     const favourSort = () => {
         console('인기 정렬')
@@ -37,10 +32,11 @@ const Modal = props => {
         else if(sort==="releaseDateSort"){
             axios
                 .get('http://localhost:8080/shop/sortGetProductList')
+               // .then(res => console.log(JSON.stringify(res.data)))
                 .then(res => setDummy(res.data))
                 .catch(error => console.log(error));    
         }
-    
+        
     };
     
     return (

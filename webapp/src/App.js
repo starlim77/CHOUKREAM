@@ -28,6 +28,7 @@ import LoginForm from './component/User/LoginForm';
 import WriteForm from './component/User/WriteForm';
 import FindEmail from './component/User/FindEmail';
 import FindPassword from './component/User/FindPassword';
+import ManagerPage from './component/Shop/ManagerPage';
 
 function App() {
     return (
@@ -42,11 +43,11 @@ function App() {
                     <Route path="Used/uploadform2" element={<UploadForm2></UploadForm2>}></Route>
                     <Route path="products/:seq" element={ <Products/> } />
                     <Route path='Shop/userWrite' element={ <UserWrite/>}/>
+                    <Route path='Shop/managerPage' element={ <ManagerPage/>}/>
                     <Route path="/sell" element={<SizePage />} />
                     <Route path="/buy" element={<SizePage />} />
                     <Route path="/payTerms/*" element={<PaymentTerms />} />
                     <Route path="/orderType/*" element={<OrderType />} />
-                    <Route path="shop" element={<Shop />} />
                     <Route
                         path="Used/useditem"
                         element={<UsedItem></UsedItem>}

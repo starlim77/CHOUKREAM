@@ -146,7 +146,7 @@ const UsedWrite = () => {
                     <S.ImgBody>
                         {/* 이미지 소스 이용방법 2가지 사용해봄 */}
                         <S.MainImgP>
-                         <S.MainImg name='mainImg' src={`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg}></S.MainImg>
+                        <S.MainImg name='mainImg' src={`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg}></S.MainImg>
                         </S.MainImgP>
                         <S.SubImgBody>
                             <S.SubImgP><S.SubImg name='subImg1' src='/image/used/plusIcon.png' onClick={onSubImg}/></S.SubImgP>

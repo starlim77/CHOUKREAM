@@ -36,8 +36,6 @@ public class ShopController {
 	
 	@GetMapping("sortGetProductList")
 	public List<ProductDTO> sortGetProductList() {
-		
-		System.out.println("sort 됨 " + shopService.sortGetProductList());
 		return shopService.sortGetProductList();
 	}
 	
@@ -47,4 +45,10 @@ public class ShopController {
 		return shopService.getProductBySeq(seq);
 	}
 	
+	@GetMapping("getShoesList")
+	public List<ProductDTO> getShoesList(@RequestParam String shoes)  {
+		System.out.println("슈즈 " + shoes);
+		return shopService.getShoesList(shoes);
+		
+	}
 }

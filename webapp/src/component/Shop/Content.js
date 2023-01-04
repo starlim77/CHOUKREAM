@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from './Modal';
 import { Link } from 'react-router-dom';
 import categoryData from './CategoryData';
+import MenuList from './MenuList';
 
 const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
     const [categoryData2, setCategoryData2] = useState(categoryData);
@@ -44,7 +45,9 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
 
         const scrollHeight = document.body.scrollHeight;
         console.log('scrollHeight 스크롤 전체길이 ' + scrollHeight); // 불변
-
+        
+        // const clientHeight = document.body.clientHeight;
+        // console.log('clientHeight 눈에 보이는 만큼 높이 ' + clientHeight); // 불변
         // 상단값과 + 현재 브라우저 높이 =
         // 현재 브라우저 높이는 불변
 
@@ -53,8 +56,14 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
 
         // 611 > 781-100
         // heightTop >= innerHeight - 170 && setF(f + 8);
+        
+        if (scrollHeight < 1000) {
+            setF(f => f + 8);
+            console.log('우구')
+        }
+        
         if (heightBottom >= scrollHeight - 110) {
-            console.log(heightBottom + ' , ' + (scrollHeight - 100));
+            console.log( '하단높이 '+ heightBottom + ' , ' + (scrollHeight - 100));
             setF(f => f + 8);
             // 상태변수f는 다시 리렌더링 하기 전까지는 안바뀐다 
             console.log('이게 8개 늘려줌');
@@ -76,9 +85,9 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
         // scrollHeight - 112 < heightBottom && setF(f + 8);
     };
 
-    const [isMenu, setIsMenu] = useState(true);
+    
     const [isActive, setIsActive] = useState(true);
-    var [displayIng, setDisplayIng] = useState([]);
+    
 
     const changeDisplay = id => {
         // console.log('id 는 ? ' + id)
@@ -127,7 +136,7 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                     </Co.FilterStatus>
 
                     {categoryData2.map(item => (
-                        <Co.FilterList 
+                        <Co.FilterList
                             key={item.id}
                             id={item.id}
                             onClick={e => changeDisplay(item.id)}
@@ -145,22 +154,10 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                             </Co.FilterTitle>
                             <Co.FilterMenu
                                 style={{
-                                    display: item.checked ? '' : 'none',
+                                    display: item.checked ? 'block' : 'none',
                                 }}
                             >
-                                <Co.MenuList>
-                                    {item.menuList.map((menu, index) => (
-                                        <Co.Menu key={index}>
-                                            <Co.MenuLiText>
-                                                <FontAwesomeIcon
-                                                    icon={faSquare}
-                                                />
-                                                &nbsp;
-                                                {menu}
-                                            </Co.MenuLiText>
-                                        </Co.Menu>
-                                    ))}
-                                </Co.MenuList>
+                                <MenuList item={item}  setDummy={setDummy} dummy={dummy} ></MenuList>
                             </Co.FilterMenu>
                         </Co.FilterList>
                     ))}
@@ -203,15 +200,6 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                     </Co.Text>
                                 </Co.BrandBtn>
                             </Co.FilterBrand>
-                            <Co.FilterBrand>
-                                <Co.BrandBtn>
-                                    <Co.Text>
-                                        <Link to ={'/Shop/userWrite'}>
-                                            현욱 managerPage
-                                        </Link> 
-                                    </Co.Text>
-                                </Co.BrandBtn>
-                            </Co.FilterBrand>
                         </Co.FilterBtns>
                         <div>
                             <Co.FilterSorting>
@@ -225,6 +213,7 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                     setDummy={setDummy}
                                     open={modalOpen}
                                     close={closeModal}
+                                    
                                 >
                                     {/* modalOpen 현재 state 상태  */}
                                 </Modal>
@@ -307,7 +296,6 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                             </Co.BtnWish>
                                             <Co.Text>
                                                 {followCalc(item.interest)}
-                                                
                                             </Co.Text>
                                         </Co.WishFigure>
                                         <Co.ReviewFigure>

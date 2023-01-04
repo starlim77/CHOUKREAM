@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import * as Ba from './BannerStyle';
 import * as Se from './SearchStyle';
 import data from './TrendData';
 import filterData from './FilterData';
 import Content from './Content';
 import Banner from './Banner';
 import axios from 'axios';
+
+
 
 const Shop = () => {
     const [dummy, setDummy] = useState([]);
@@ -19,6 +20,9 @@ const Shop = () => {
             .catch(error => console.log(error));
     }, []);
 
+   // console.log(JSON.stringify(dummy));
+    
+    
     // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
     const [modalOpen, setModalOpen] = useState(false);
 

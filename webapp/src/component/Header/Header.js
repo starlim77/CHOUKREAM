@@ -19,6 +19,9 @@ const Header = () => {
             <S.HeaderWrapper>
                 <S.Top>
                     <S.TopWrapper>
+                        <Link to={'/Shop/managerPage'}>
+                            <S.TopLi>관리자페이지</S.TopLi>
+                        </Link>
                         <Link to="/cs/CsNotice">
                             x<S.TopLi>고객센터</S.TopLi>
                         </Link>
