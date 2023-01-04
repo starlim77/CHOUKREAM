@@ -66,6 +66,27 @@ const Mystyle = () => {
                             console.log(formData)
             )
             .catch( error => console.log(error) )
+
+
+    //     var formData = new FormData()   //가지고가야할 데이터를 넣기
+    //     formData.append('file', file)
+    //    // formData.append('content', content)
+     
+    //     axios.post("http://localhost:8080/lookbook/styleBoardWrite", formData, 
+    //                 {
+    //                     headers: {
+    //                         'content-Type': `multipart/form-data`
+    //                     }
+    //                 }
+    //         )
+    //          .then( 
+    //             alert("게시물 등록 완료"),
+    //             setStyleBoardWriteOpen(false)
+    //          )
+    //          .catch( error => console.log(error) )
+        
+
+
     }
 
 
@@ -128,6 +149,7 @@ const Mystyle = () => {
                                     
                                 />
 
+                                <Button onClick={ onUploadFile }>+</Button><br/>
                                 <input type='file' name='file' id='img' accept="image/*" multiple  ref={imgRef}   style={ {visibility: 'hidden'}}
                                         onChange={ e=> readURL( e.target) }  
                                         //onChange={onInput}

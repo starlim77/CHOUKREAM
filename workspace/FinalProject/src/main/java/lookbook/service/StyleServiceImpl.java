@@ -32,11 +32,6 @@ public class StyleServiceImpl implements StyleService {
 	private StyleFileDAO styleFileDAO;
 
 	
-//	
-//	@Override
-//	public void upload(StyleDTO styleDTO)  {
-//		styleDAO.save(styleDTO);	
-//	}
 
 	//findbyid 불러오기 실패
 //	@Transactional

@@ -12,13 +12,12 @@ public interface StyleService {
 	//public void upload(StyleDTO styleDTO);
 
 	//public List<StyleDTO> getMyStyleBoardList(String id);
-	public List<StyleDTO> getMyStyleBoardList();
-	
-	
-	public List<StyleDTO> findAll() ;		 
+	public List<StyleDTO> getMyStyleBoardList(); 
 	
 	public List<StyleDTO> getStyleBoardList();
 
 	public void save(List<MultipartFile> list,StyleDTO styleDTO);
 
+	public List<StyleDTO> findAll();
+		
 }

@@ -22,18 +22,23 @@ const Trending = () => {
         originalFileName:'',
         storedFileName:''
     }])
+        originalFileName:[],        
+        storedFileName:[]
+    }])
+    
 
     useEffect(() => {
         axios
             .get('http://localhost:8080/lookbook/getStyleList')
             .then(  res => console.log(res.data)
                     // res => setList(res.data)
-            )
+            )               
             .catch(error => console.log(error));
     }, []);
 
 
     return (
+        
         <>
             <Header />
             <Social />
@@ -42,56 +47,63 @@ const Trending = () => {
 
             <Container fixed>            
             <S.TrGridContainer>
-            
-                <S.TrGridBox>
-                <div>피드 
-                    <Grid item xs="auto">
-                        <Card sx={{ width: 250 }}>
-                            <a>                             
-                            <S.TrGridBoxImg src="../image/logo.png"></S.TrGridBoxImg>
-                            
-                            <CardHeader 
-                                avatar={
-                                    <Avatar sx={{ bgcolor: grey }} >
-                                    
-                                    </Avatar>
-                                }
-                                title="아이디"                                
-                            />
-                            </a>  
-                            <CardContent>       
-                                <Typography variant="body2" color="text.secondary">
-                                내용                            
-                                </Typography>     
-                                            
-                            </CardContent>
-                            <CardActions disableSpacing>
-                                <Typography variant="body2" color="text.secondary">
-                                    <IconButton aria-label="add to favorites">
-                                    <FavoriteBorderOutlinedIcon />
-                                    <FavoriteIcon />                    
-                                    </IconButton>                        
-                                    <span>35 </span>                        
-                                    <IconButton aria-label="add to favorites">
-                                    <MessageOutlinedIcon />                 
-                                    </IconButton>                        
-                                    <span>15</span>                                                                
+                { list.map(item =>{ return(
+                    <S.TrGridBox key={item.seq}> 
+                       
 
-                                                                   
-                                    상품리스트
-                                        <ul>
-                                            <li>1</li>
-                                            <li>1</li>
-                                            <li>1</li>
-                                            <li>1</li>
-                                        </ul>
-                                    
-                                </Typography>
-                            </CardActions>
-                        </Card>
-                    </Grid>
-                </div>
-                </S.TrGridBox>                 
+                    <div className='item'>피드                         
+                        <Grid item xs="auto">
+                            <Card sx={{ width: 250 }}>
+                                <a>                                                       
+                                <S.TrGridBoxImg src={'../storage/'+item.storedFileName[0]}></S.TrGridBoxImg>                              
+                                <CardHeader 
+                                    avatar={
+                                        <Avatar sx={{ bgcolor: grey }} >
+                                        
+                                        </Avatar>
+                                    }
+                                    title= {item.id}                                
+                                />
+                                </a>  
+                                <CardContent>       
+                                    <Typography variant="body2" color="text.secondary">
+                                    {item.content}                        
+                                    </Typography>     
+                                                
+                                </CardContent>
+                                <CardActions disableSpacing>
+                                    <Typography variant="body2" color="text.secondary">
+                                        <IconButton aria-label="add to favorites">
+                                        <FavoriteBorderOutlinedIcon />
+                                        <FavoriteIcon />                    
+                                        </IconButton>                        
+                                        <span>35 </span>                        
+                                        <IconButton aria-label="add to favorites">
+                                        <MessageOutlinedIcon />                 
+                                        </IconButton>                        
+                                        <span>15</span>                                                                
+
+                                                                    
+                                        {/* 
+                                        상품리스트
+                                            <ul>
+                                                <li>1</li>
+                                                <li>1</li>
+                                                <li>1</li>
+                                                <li>1</li>
+                                            </ul> 
+                                            */}
+                                        
+                                    </Typography>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                    </div>
+                  
+                    </S.TrGridBox> 
+                    )
+                })
+            }                
             </S.TrGridContainer>      
             
             </Container>
