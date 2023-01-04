@@ -1,30 +1,50 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { useNavigate, useParams } from 'react-router';
 
 import Header from '../Header/Header';
 import CsNav from './Csnav/CsNav';
+import { useRef } from 'react';
 
+import { Editor,Viewer } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
+
+// npm install text-selection-react --force star
+
+// 리액트가 새 컴파일/ 랜더링 되어야지 수정 전 내용이 뜸  - 즉 리액트가 새로고침이 안되면 내용이 수정페이지에 안들어옴 (제목이랑 카테고리는들어옴.) 
 const CsFaqUpdateForm = () => {
     const [list, setList] =useState([])
 
     const[data ,setData] =useState([])
     const {seq} =useParams()
-    useEffect(()=>{
+   
+    const htmlString=useState('')
+    
+    const[form ,setForm] =useState({
+        category:'',
+         title :'',
+        content :''
+       
+                
+        
+     })
+     const {category,title ,content} = form 
+     const editorRef = useRef();
+     useEffect(()=>{
         axios.get(`http://localhost:8080/cs/getBoard?seq=${seq}`)//
 
         .then((res) => {//주소가서 res 받아오기
-            setForm(res.data)})//setList에 담기            
+
+            setForm(res.data)
+            editorRef.current?.getInstance().setHTML(content)
+          }
+          
+           
+            )        
         .catch((error) => console.log(error));
 
     },[])
-    const[form ,setForm] =useState({
-        category:'',
-         title : '',
-         content : ''
-     })
-     const {category,title ,content} = form 
 
     const onInput=(e)=> {
         const {name,value}=e.target
@@ -34,6 +54,7 @@ const CsFaqUpdateForm = () => {
             [name] : value
         })
     }
+
     const navigate = useNavigate()
     const onUpdate=(e) =>{
         axios.put('http://localhost:8080/cs/updateBoard',null,{
@@ -41,10 +62,11 @@ const CsFaqUpdateForm = () => {
                     seq : seq, // seq 필수로 들어가야 함 .그래야 insert가 아닌 update가  (seq가 pk) 
                     category : category,
                     title : title,
-                    content :content
+                    content :editorRef.current?.getInstance().getHTML()
                  }
              })
              .then(()=>{
+                
                 alert(' 수정 등록')
                 navigate("/cs/CsFaq")
 
@@ -66,7 +88,7 @@ const CsFaqUpdateForm = () => {
     }
     return (
         <>
-        <Header/>
+      
         <CsNav/>
          <form>
             <table  style={{border : '1px solid black'}} >
@@ -86,7 +108,25 @@ const CsFaqUpdateForm = () => {
                 </tr>
                 <tr>
                     <td colSpan='2'>
-                        <textarea name ='content' placeholder='내용' style={{width :'350px' , height:'350px' }} onChange={onInput} value={content}/>
+                    
+                    <Editor
+            ref={editorRef}         
+          
+          previewStyle="vertical" // 미리보기 스타일 지정
+          height="300px" // 에디터 창 높이
+          initialEditType="wysiwyg" // 초기 입력모드 설정(디폴트 markdown)
+            initialValue={content}
+          toolbarItems={[
+            // 툴바 옵션 설정
+            ['heading', 'bold', 'italic', 'strike'],
+            ['hr', 'quote'],
+            ['ul', 'ol', 'task', 'indent', 'outdent'],
+            ['table', 'image', 'link'],
+            ['code', 'codeblock']
+          ]} 
+       
+        ></Editor>
+                        {/* <textarea name ='content' placeholder='내용' style={{width :'350px' , height:'350px' }} onChange={onInput} value={content}/> */}
                     </td>
                 </tr>
             </table>
@@ -98,6 +138,8 @@ const CsFaqUpdateForm = () => {
                     <button  onClick={onReset}>취소</button>
                 </p>
              </div>
+
+             
             
         </>
     );
