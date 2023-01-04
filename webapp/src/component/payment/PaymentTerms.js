@@ -22,38 +22,42 @@ const sellDataList = [
 ]
 
 const PaymentTerms = () => {
-    const [data, setData] = useState(buyDataList)
-    const [countCheck, setCountCheck] = useState([])
     const [isInpectionOpen, setIsInpectionOpen] = useState(false)
     const [isPolicyOpen, setIsPolicyOpen] = useState(false)
-    const [isAllChecked, setIsAllChecked] = useState(false)
-    const [checkedItem, setCheckedItem] = useState([])
     const navigate = useNavigate()
     const location = useLocation()
     const [searchParams, setSearchParams] = useSearchParams()
     const sellOrbuy = location.pathname.split("/")[1] // sell or buy
     const selectSize = searchParams.get("size")
     const productNum = searchParams.get("productNum")
-    const type = searchParams.get("type")
-    const [count, setCount] = useState(1)
+    const type = searchParams.get("type") //리셀 & 새상품 & 중고
 
     useEffect(() => {
         sellOrbuy === "sell" ? setData(sellDataList) : setData(buyDataList)
     }, [])
 
+
+    //체크 박스
+    const [data, setData] = useState(buyDataList)
+    const [isAllChecked, setIsAllChecked] = useState(false)
+    const [checkedItem, setCheckedItem] = useState([])
+    useEffect(() => {
+        if(checkedItem.length === 5){
+            setIsAllChecked(true)
+        } else {
+            setIsAllChecked(false)
+        }
+    }, [checkedItem])
+
     const onCheck = (e) => {
-        const { name, checked } = e.target
+        const { name, checked } = e.currentTarget
         setData(data.map(item => item.name === name ? { ...item, isChk: checked } : item))
         if (checked) {
-            console.log(checked)
-            setCount(count+1)
             setCheckedItem([...checkedItem, name])
         } else {
-            console.log(checked)
-            setCount(count-1)
             setCheckedItem(checkedItem.filter(item => item !== name ))
         }
-        setIsAllChecked(count === 5)
+        console.log(checkedItem)
     }
 
     const onLink = (e) => {
