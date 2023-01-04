@@ -549,7 +549,7 @@ export const WrapBids = styled.div`
 `;
 
 export const TabContent = styled.div`
-    display: block;
+    display: ${(props) => props.open ? 'block' : 'none'};
     height: auto;
     overflow: hidden;
 `;
@@ -617,6 +617,54 @@ export const TableThAlignRight = styled.th`
     vertical-align: inherit;
 `;
 
+export const TableTd = styled.td`
+    line-height: 17px;
+    padding-top: 9px;
+    font-size: 14px;
+    font-weight: 500;
+
+    display: table-cell;
+    vertical-align: inherit;
+`;
+
+export const TableTdAlignRight = styled.td`
+    line-height: 17px;
+    padding-top: 9px;
+    font-size: 14px;
+    text-align: right;
+    font-weight: 500;
+
+    display: table-cell;
+    vertical-align: inherit;
+`;
+
+export const BtnOutLineGrey = styled.a`
+    font-weight: 400;
+
+    border: 1px solid #d3d3d3;
+    color: rgba(34,34,34,.8);
+
+    padding: 0 18px;
+    height: 42px;
+    border-radius: 12px;
+    font-size: 14px;
+    letter-spacing: -.14px;
+
+    width: 100%;
+
+    display: inline-flex;
+    cursor: pointer;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    vertical-align: middle;
+    text-align: center;
+
+    background-color: #fff;
+
+    cursor: pointer;
+`;
 
 
 export const ConfirmWrap = styled.div`

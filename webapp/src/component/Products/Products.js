@@ -8,6 +8,12 @@ import ScrollToTop from "./ScrollToTop";
 
 const Products = () => {
 
+    const time = (a) => {
+        var date = new Date(a)
+        var b = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate()
+        return b
+    }
+
     const [open1, setOpen1] = useState(true)
     const [open2, setOpen2] = useState(false)
     const [open3, setOpen3] = useState(false)
@@ -63,6 +69,8 @@ const Products = () => {
     const OpenDrop = () => {  
         setDropdown(!dropdown);
         console.log(completedOrderForm)
+        console.log(completedOrderForm[0].size)
+        
     }
     const [dropdown1, setDropdown1] = useState(true);
     const OpenDrop1 = () => {
@@ -424,7 +432,7 @@ const Products = () => {
                                                         <S.TabAreaItemLink onClick={ onOpen2 } open={ open8 } name='8'>구매 입찰</S.TabAreaItemLink>
                                                     </S.TabAreaItem>
                                                 </S.TabList>
-                                                <S.TabContent>
+                                                <S.TabContent open={ open6 }>
                                                     <S.TableWrap>
                                                         <S.Table>
                                                             <S.TableCaption>
@@ -444,181 +452,97 @@ const Products = () => {
                                                             </thead>
                                                             <tbody>
                                                             {[...Array(parseInt(5))].map((n, index) => {
-                                                                    return <tr>
-                                                                    <td className="table_td">
-                                                                        {completedOrderForm[index].size}
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        {completedOrderForm[index].size}
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        {completedOrderForm[index].size}
-                                                                    </td>
+                                                                    return <tr key={index}>
+                                                                    <S.TableTd>
+                                                                        {completedOrderForm.length > index ? completedOrderForm[index].size : '-'}
+                                                                    </S.TableTd>
+                                                                    <S.TableTdAlignRight>
+                                                                        {completedOrderForm.length > index ? completedOrderForm[index].price.toLocaleString('ko-KR')+'원' : '-'}
+                                                                    </S.TableTdAlignRight>
+                                                                    <S.TableTdAlignRight>
+                                                                        {completedOrderForm.length > index ? time(completedOrderForm[index].tradeDate) : '-'}
+                                                                    </S.TableTdAlignRight>
                                                                 </tr>
                                                             })}
                                                             </tbody>
                                                         </S.Table>
                                                     </S.TableWrap>
-                                                    <a href="#" className="btn outlinegrey fill medium">체결 내역 더보기</a>
+                                                    <S.BtnOutLineGrey>체결 내역 더보기</S.BtnOutLineGrey>
                                                 </S.TabContent>
-                                                <div id="panel2" role="tabpanel" className="tab_content" span="asks">
-                                                <div className="table_wrap">
-                                                        <table>
-                                                            <caption>
-                                                                <span className="blind">데이터 테이블</span>
-                                                            </caption>
-                                                            <colgroup>
-                                                                <col></col>
-                                                                <col></col>
-                                                                <col></col>
-                                                            </colgroup>
+                                                <S.TabContent open={ open7 }>
+                                                    <S.TableWrap>
+                                                        <S.Table>
+                                                            <S.TableCaption>
+                                                                <S.TableBlind>데이터 테이블</S.TableBlind>
+                                                            </S.TableCaption>
+                                                            <S.ColGroup>
+                                                                <col style={{width: "29.76%"}}/>
+                                                                <col style={{width: "36.52%"}}/>
+                                                                <col style={{width: "33.72%"}}/>
+                                                            </S.ColGroup>
                                                             <thead>
                                                                 <tr>
-                                                                    <th className="table_th">사이즈</th>
-                                                                    <th className="table_th align_right">판매 희망가</th>
-                                                                    <th className="table_th align_right">수량</th>
+                                                                    <S.TableTh>사이즈</S.TableTh>
+                                                                    <S.TableThAlignRight>판매 희망가</S.TableThAlignRight>
+                                                                    <S.TableThAlignRight>수량</S.TableThAlignRight>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
+                                                            {[...Array(parseInt(5))].map((n, index) => {
+                                                                    return <tr key={index}>
+                                                                    <S.TableTd>
+                                                                        {sellBidsListForm.length > index ? sellBidsListForm[index].size : '-'}
+                                                                    </S.TableTd>
+                                                                    <S.TableTdAlignRight>
+                                                                        {sellBidsListForm.length > index ? sellBidsListForm[index].price.toLocaleString('ko-KR')+'원' : '-'}
+                                                                    </S.TableTdAlignRight>
+                                                                    <S.TableTdAlignRight>
+                                                                        {sellBidsListForm.length > index ? sellBidsListForm[index].count : '-'}
+                                                                    </S.TableTdAlignRight>
                                                                 </tr>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
+                                                            })}
                                                             </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <a href="#" className="btn outlinegrey fill medium">입찰 내역 더보기</a>
-                                                </div>
-                                                <div id="panel3" role="tabpanel" className="tab_content" span="asks">
-                                                <div className="table_wrap">
-                                                        <table>
-                                                            <caption>
-                                                                <span className="blind">데이터 테이블</span>
-                                                            </caption>
-                                                            <colgroup>
-                                                                <col></col>
-                                                                <col></col>
-                                                                <col></col>
-                                                            </colgroup>
+                                                        </S.Table>
+                                                    </S.TableWrap>
+                                                    <S.BtnOutLineGrey>입찰 내역 더보기</S.BtnOutLineGrey>
+                                                </S.TabContent>
+                                                <S.TabContent open={ open8 }>
+                                                    <S.TableWrap>
+                                                        <S.Table>
+                                                            <S.TableCaption>
+                                                                <S.TableBlind>데이터 테이블</S.TableBlind>
+                                                            </S.TableCaption>
+                                                            <S.ColGroup>
+                                                                <col style={{width: "29.76%"}}/>
+                                                                <col style={{width: "36.52%"}}/>
+                                                                <col style={{width: "33.72%"}}/>
+                                                            </S.ColGroup>
                                                             <thead>
                                                                 <tr>
-                                                                    <th className="table_th">사이즈</th>
-                                                                    <th className="table_th align_right">구매 희망가</th>
-                                                                    <th className="table_th align_right">수량</th>
+                                                                    <S.TableTh>사이즈</S.TableTh>
+                                                                    <S.TableThAlignRight>구매 희망가</S.TableThAlignRight>
+                                                                    <S.TableThAlignRight>수량</S.TableThAlignRight>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
+                                                            {[...Array(parseInt(5))].map((n, index) => {
+                                                                    return <tr key={index}>
+                                                                    <S.TableTd>
+                                                                        {buyBidsListForm.length > index ? buyBidsListForm[index].size : '-'}
+                                                                    </S.TableTd>
+                                                                    <S.TableTdAlignRight>
+                                                                        {buyBidsListForm.length > index ? buyBidsListForm[index].price.toLocaleString('ko-KR')+'원' : '-'}
+                                                                    </S.TableTdAlignRight>
+                                                                    <S.TableTdAlignRight>
+                                                                        {buyBidsListForm.length > index ? buyBidsListForm[index].count : '-'}
+                                                                    </S.TableTdAlignRight>
                                                                 </tr>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
+                                                            })}
                                                             </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <a href="#" className="btn outlinegrey fill medium">입찰 내역 더보기</a>
-                                                </div>
+                                                        </S.Table>
+                                                    </S.TableWrap>
+                                                    <S.BtnOutLineGrey>입찰 내역 더보기</S.BtnOutLineGrey>
+                                                </S.TabContent>
                                             </S.TabArea>
                                         </S.WrapBids>
                                     </S.ProductSalesGraph>
