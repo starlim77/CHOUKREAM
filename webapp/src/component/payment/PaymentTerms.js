@@ -32,6 +32,8 @@ const PaymentTerms = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const sellOrbuy = location.pathname.split("/")[1] // sell or buy
     const selectSize = searchParams.get("size")
+    const productNum = searchParams.get("productNum")
+    const type = searchParams.get("type")
 
     useEffect(() => {
         sellOrbuy === "sell" ? setData(sellDataList) : setData(buyDataList)
@@ -61,7 +63,7 @@ const PaymentTerms = () => {
         setIsPolicyOpen(false)
     }
     const onOrderType = () => {
-        navigate(`/${sellOrbuy}/orderType?size=${selectSize}`)
+        navigate(`/${sellOrbuy}/orderType?type=${type}&productNum=${productNum}&size=${selectSize}`)
     }
 
     return (

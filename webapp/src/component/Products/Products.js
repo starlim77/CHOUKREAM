@@ -5,6 +5,7 @@ import * as S from './style';
 import GlobalStyle from './GlobalStyle';
 import { useNavigate, useParams } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
+import { noAuto } from "@fortawesome/fontawesome-svg-core";
 
 const Products = () => {
 
@@ -156,11 +157,11 @@ const Products = () => {
     });
 
     const buyNavigate = () => {
-        navigate(`/buy?seq=${seq}`)
+        navigate(`/buy?productNum=${seq}`)
     }
 
     const sellNavigate = () => {
-        navigate(`/sell?seq=${seq}`)
+        navigate(`/sell?productNum=${seq}`)
     }
 
 
@@ -443,7 +444,7 @@ const Products = () => {
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                            {[...Array(parseInt(5))].map((n, index) => {
+                                                            {/* {[...Array(parseInt(5))].map((n, index) => {
                                                                     return <tr>
                                                                     <td className="table_td">
                                                                         {completedOrderForm[index].size}
@@ -455,7 +456,7 @@ const Products = () => {
                                                                         {completedOrderForm[index].size}
                                                                     </td>
                                                                 </tr>
-                                                            })}
+                                                            })} */}
                                                             </tbody>
                                                         </S.Table>
                                                     </S.TableWrap>

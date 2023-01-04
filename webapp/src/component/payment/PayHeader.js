@@ -12,11 +12,13 @@ const PayHeader = () => {
     const [modelNum, setModelNum] = useState()
     const [img, setImg] = useState()
     const [searchParams, setSearchParams] = useSearchParams()
+    const [productNum, setProductNum]= useState(searchParams.get("seq") === null ? searchParams.get("productNum") : searchParams.get("seq"))
     const size = searchParams.get("size")
 
     useEffect(() => {
+        console.log(productNum)
         axios
-            .post('http://localhost:8080/shop/getProductBySeq?seq=2')
+            .post(`http://localhost:8080/shop/getProductBySeq?seq=${productNum}`)
             .then(res => res.data !== null && (setModelNum(res.data.modelNum),
                                                setTitle(res.data.title),
                                                setSubTitle(res.data.subTitle),

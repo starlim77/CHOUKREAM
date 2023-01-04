@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import BuyBid from './BuyBid';
@@ -10,12 +11,36 @@ const OrderType = () => {
     const sellOrBuy = location.pathname.split("/")[1]
     const [typeKor, setTypeKor] = useState(sellOrBuy === "sell" ? "판매" : "구매")
     const [clickedBtn, setClickedBtn] = useState(`${typeKor}입찰`)
-    
+    const productNum = searchParams.get("productNum")
+    const [sellBidsListForm, setSellBidsListForm] = useState([{price: "-"}])
+    const [buyBidsListForm, setBuyBidsListForm] = useState([{price: "-"}])
+
     //order type 선택
     const onClick =(e) => {
-          setClickedBtn(e.target.innerText)
+          setClickedBtn(e.target.innerText) 
     }
     
+    useEffect(() => {
+        axios.get(`http://localhost:8080/getSellBidsList?seq=${productNum}`)
+        .then(res => res.data.length !== 0 && setSellBidsListForm(res.data))
+        .catch(error => console.log(error))
+
+        axios.get(`http://localhost:8080/getBuyBidsList?seq=${productNum}`)
+        .then(res => res.data.length !== 0 && setBuyBidsListForm(res.data))
+        .catch(error => console.log(error))
+
+        console.log(sellBidsListForm)
+    }, [])
+    // useEffect(() => {
+    //     axios.get(`http://localhost:8080/getSellBidsList?seq=${seq}`)
+    //     .then(res => res.data.length !== 0 && setSellBidsListForm(res.data))
+    //     .catch(error => console.log(error))
+
+    //     axios.get(`http://localhost:8080/getBuyBidsList?seq=${seq}`)
+    //     .then(res => res.data.length !== 0 && setBuyBidsListForm(res.data))
+    //     .catch(error => console.log(error))
+    // }, [])
+
     return (
         <O.OrderWrapper>
             <PayHeader />
@@ -23,11 +48,11 @@ const OrderType = () => {
                 <O.Price>
                     <O.DirectPrice>
                         <O.DirectText>즉시 구매가</O.DirectText>
-                        <O.DirectPriceText>100,000</O.DirectPriceText>
+                        <O.DirectPriceText>{ sellBidsListForm[0].price }</O.DirectPriceText>
                     </O.DirectPrice>
                     <O.DirectPrice style={{borderRight: "0"}}>
                         <O.DirectText>즉시 판매가</O.DirectText>
-                        <O.DirectPriceText>100,000</O.DirectPriceText>
+                        <O.DirectPriceText>{ buyBidsListForm[0].price }</O.DirectPriceText>
                     </O.DirectPrice>
                     <O.TypeBtn>
                         {

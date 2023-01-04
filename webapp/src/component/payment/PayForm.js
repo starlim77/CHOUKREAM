@@ -17,9 +17,12 @@ const PayForm = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const [modals, setModals] = useState([false, false]);
+    const type = searchParams.get("type")
     const productNum = searchParams.get('productNum');
     const size = searchParams.get('size');
+    const price = searchParams.get("price")
 
+    
     const [shipInfo, setShipInfo] = useState({
         shipName: '',
         shipPhone: '',
@@ -38,7 +41,7 @@ const PayForm = () => {
             .catch(error => console.log(error));
     }, []);
 
-    const [productPrice] = useState(13000);
+    const [productPrice] = useState(price);
     const [payPrice, setPayPrice] = useState(productPrice);
 
     const addComma = num => {

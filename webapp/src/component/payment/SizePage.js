@@ -4,7 +4,7 @@ import * as S from './styles/SizePageStyle';
 import * as B from './styles/TermStyle';
 import SizeBtn from './SizeBtn';
 import ProductData from './ProductData';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
 const SizePage = () => {
@@ -14,21 +14,18 @@ const SizePage = () => {
     const [selectSize, setSelectSize] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
+    const [searchParams, setSearchParams] = useSearchParams()
     const sellOrBuy = location.pathname;
+    const productNum = searchParams.get("productNum")
+    const type = searchParams.get("type")
 
     //size 객체 DB에서 가져옴
     useEffect(() => {
         axios
-            .get('http://localhost:8080/getProductSize?seq=2')
+            .get(`http://localhost:8080/getProductSize?seq=${productNum}`)
             .then(res => setSizeList(res.data))
             .catch(error => console.log(error));
     }, []);
-
-    //size 객체중 'size'를 저장
-    // useEffect(() => {
-    //     sizeList.map(item => setSize([...size, item.size]));
-    //     console.log(size)
-    // }, [sizeList]);
 
     const onClick = e => {
         setIsBtnClick(true);
@@ -36,7 +33,7 @@ const SizePage = () => {
     };
 
     const onNext = () => {
-        navigate(`${sellOrBuy}/payTerms?size=${selectSize}`)
+        navigate(`${sellOrBuy}/payTerms?type=${type}&productNum=${productNum}&size=${selectSize}`)
     }
 
     return (

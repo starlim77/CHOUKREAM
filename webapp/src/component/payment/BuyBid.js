@@ -5,15 +5,18 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom/dist';
 
 const BuyBid = ({ clickedBtn }) => {
-    const [price, setPrice] = useState();
+    const [priceNum, setPriceNum] = useState();
     const [priceInput, setPriceInput] = useState();
     const navigate = useNavigate();
     const location = useLocation()
     const [searchParams, setSearchParams] = useSearchParams();
     const size = searchParams.get('size');
+    const productNum = searchParams.get("productNum")
+    const type = searchParams.get("type")
 
     //숫자만 입력, 세자리 마다 콤마 추가
     const inputPriceFormat = str => {
+        setPriceNum(str.replace(/,/g, ""))
         const comma = str => {
             str = String(str);
             return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
@@ -28,7 +31,7 @@ const BuyBid = ({ clickedBtn }) => {
 
     //payForm 페이지로 이동
     const onPayForm = () => {
-        navigate(`/pay/payForm?size=${size}`)
+        navigate(`/pay/payForm?type=${type}&productNum=${productNum}&size=${size}&price=${priceNum}`)
     };
 
     return (
@@ -46,8 +49,9 @@ const BuyBid = ({ clickedBtn }) => {
             </O.Text>
             <O.PriceInput
                 type="text"
-                value={price || ''}
-                onChange={e => setPrice(inputPriceFormat(e.target.value))}
+                value={priceInput || ''}
+                // onChange={e => priceSave(e.target.value)}
+                onChange={e => setPriceInput(inputPriceFormat(e.target.value))}
                 placeholder="희망가 입력"
             />
             <O.Text style={{ marginBottom: '30px' }}>
