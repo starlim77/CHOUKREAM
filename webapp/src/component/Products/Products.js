@@ -3,28 +3,61 @@ import React, { useEffect, useState } from 'react';
 import ModalBasic from './ModalBasic';
 import * as S from './style';
 import GlobalStyle from './GlobalStyle';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import ScrollToTop from "./ScrollToTop";
 
 const Products = () => {
+
+    const [open1, setOpen1] = useState(true)
+    const [open2, setOpen2] = useState(false)
+    const [open3, setOpen3] = useState(false)
+    const [open4, setOpen4] = useState(false)
+    const [open5, setOpen5] = useState(false)
+
+    const onOpen = (e) => {
+       if(e.target.name == 1) {setOpen1(true); setOpen2(false); setOpen3(false); setOpen4(false); setOpen5(false)}
+       else if(e.target.name == 2) {setOpen2(true); setOpen1(false); setOpen3(false); setOpen4(false); setOpen5(false)}
+       else if(e.target.name == 3) {setOpen3(true); setOpen1(false); setOpen2(false); setOpen4(false); setOpen5(false)}
+       else if(e.target.name == 4) {setOpen4(true); setOpen1(false); setOpen2(false); setOpen3(false); setOpen5(false)}
+       else if(e.target.name == 5) {setOpen5(true); setOpen1(false); setOpen2(false); setOpen3(false); setOpen4(false)}
+    }
+
+    const [open6, setOpen6] = useState(true)
+    const [open7, setOpen7] = useState(false)
+    const [open8, setOpen8] = useState(false)
+
+    const onOpen2 = (e) => {
+       if(e.target.name == 6) {setOpen6(true); setOpen7(false); setOpen8(false);}
+       else if(e.target.name == 7) {setOpen7(true); setOpen6(false); setOpen8(false);}
+       else if(e.target.name == 8) {setOpen8(true); setOpen6(false); setOpen7(false);}
+    }
+
     const {seq} = useParams();
+
+    const navigate = useNavigate();
 
     const [modalOpen, setModalOpen] = useState(false);
 
     const [form, setForm] = useState({});
 
-    const [sellOrderForm, setSellOrderForm] = useState([{
-        orderPrice: '-'
-    }]);
-
-    const [buyOrderForm, setBuyOrderForm] = useState([{
-        orderPrice: '-'
-    }]);
-
     const [completedOrderForm, setCompletedOrderForm] = useState([{
         price: '-'
     }]);
 
+    const [sellBidsListForm, setSellBidsListForm] = useState([{
+        price: '-'
+    }])
+    const [buyBidsListForm, setBuyBidsListForm] = useState([{
+        price: '-'
+    }])
+
+    const [sizeForm, setSizeForm] = useState([{}])
+
     const [size ,setSize] = useState("모든 사이즈");
+
+    const [openLayer, setOpenLayer] =useState(true)
+
+    const [isOneSize, setIsOneSize] = useState(true);
 
     const [dropdown, setDropdown] = useState(true);
     const OpenDrop = () => {  
@@ -34,37 +67,107 @@ const Products = () => {
     const [dropdown1, setDropdown1] = useState(true);
     const OpenDrop1 = () => {
         setDropdown1(!dropdown1);
-        console.log(sellOrderForm)
+        console.log(sellBidsListForm)
     }
     const [dropdown2, setDropdown2] = useState(true);
     const OpenDrop2 = () => {
         setDropdown2(!dropdown2);
-        console.log(buyOrderForm)
+        console.log(buyBidsListForm)
     }
 
     useEffect(() => {
         axios.get(`http://localhost:8080/getProduct?seq=${seq}`)
              .then(res => res.data !== null && setForm(res.data))
              .catch(error => console.log(error))
-
-        axios.get(`http://localhost:8080/getSellOrderList?seq=${seq}`)
-             .then(res => res.data.length !== 0 && setSellOrderForm(res.data))
-             .catch(error => console.log(error))    
-
-        axios.get(`http://localhost:8080/getBuyOrderList?seq=${seq}`)
-             .then(res => res.data.length !== 0 && setBuyOrderForm(res.data))
-             .catch(error => console.log(error))
-
+ 
         axios.get(`http://localhost:8080/getCompletedOrderList?seq=${seq}`)
              .then(res => res.data.length !== 0 && setCompletedOrderForm(res.data))
              .catch(error => console.log(error));   
+        
+        axios.get(`http://localhost:8080/getProductSize?seq=${seq}`)
+             .then(res => res.data.length === 1 ? setIsOneSize(true) : setIsOneSize(false))
+             .catch(error => console.log(error))
 
+        axios.get(`http://localhost:8080/getProductSize?seq=${seq}`)
+             .then(res => res.data !== null && setSizeForm(res.data))
+             .catch(error => console.log(error))
+        
+        axios.get(`http://localhost:8080/getSellBidsList?seq=${seq}`)
+             .then(res => res.data.length !== 0 && setSellBidsListForm(res.data))
+             .catch(error => console.log(error))
+
+        axios.get(`http://localhost:8080/getBuyBidsList?seq=${seq}`)
+             .then(res => res.data.length !== 0 && setBuyBidsListForm(res.data))
+             .catch(error => console.log(error))
+        
     }, []);
+
+    const getSize = (seq, size) => {
+        setSize(size);
+
+        axios.get(`http://localhost:8080/getSellBidsListBySize?size=${size}&seq=${seq}`)
+             .then(res => res.data.length !== 0 ? setSellBidsListForm(res.data) : setSellBidsListForm([{orderPrice: '-'}]))
+             .catch(error => console.log(error))    
+
+        axios.get(`http://localhost:8080/getBuyBidsListBySize?size=${size}&seq=${seq}`)
+             .then(res => res.data.length !== 0 ? setBuyBidsListForm(res.data) : setBuyBidsListForm([{orderPrice: '-'}]))
+             .catch(error => console.log(error))
+
+        axios.get(`http://localhost:8080/getCompletedOrderListBySize?size=${size}&seq=${seq}`)
+             .then(res => res.data.length !== 0 ? setCompletedOrderForm(res.data) : setCompletedOrderForm([{price: '-'}]))
+             .catch(error => console.log(error));   
+
+        setModalOpen(false)
+    }
+
+    const getAll = (seq) => {
+        setSize('모든 사이즈');
+
+        axios.get(`http://localhost:8080/getSellBidsList?seq=${seq}`)
+                .then(res => res.data.length !== 0 && setSellBidsListForm(res.data))
+                .catch(error => console.log(error))    
+
+        axios.get(`http://localhost:8080/getBuyBidsList?seq=${seq}`)
+                .then(res => res.data.length !== 0 && setBuyBidsListForm(res.data))
+                .catch(error => console.log(error))
+
+        axios.get(`http://localhost:8080/getCompletedOrderList?seq=${seq}`)
+                .then(res => res.data.length !== 0 && setCompletedOrderForm(res.data))
+                .catch(error => console.log(error));    
+        
+        setModalOpen(false)
+    }
+
+    const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장 
+    const [ScrollActive, setScrollActive] = useState(true); 
+    const handleScroll = () => { 
+        if(ScrollY < 390) {
+            setScrollY(window.pageYOffset);
+            setScrollActive(true);
+        } else {
+            setScrollY(window.pageYOffset);
+            setScrollActive(false);
+        }
+    }
+    useEffect(() => {
+        const scrollListener= () => {  window.addEventListener("scroll", handleScroll); } //  window 에서 스크롤을 감시 시작
+        scrollListener(); // window 에서 스크롤을 감시
+        return () => { window.removeEventListener("scroll", handleScroll); }; //  window 에서 스크롤을 감시를 종료
+    });
+
+    const buyNavigate = () => {
+        navigate(`/buy?seq=${seq}`)
+    }
+
+    const sellNavigate = () => {
+        navigate(`/sell?seq=${seq}`)
+    }
+
 
 
     return (
         <>
-        
+        <ScrollToTop/>
         <GlobalStyle/>
         <S.ProductsWrapper>
             <S.ContainerDetail>
@@ -72,7 +175,7 @@ const Products = () => {
                     <h2 hidden={true}>상품상세</h2>
                     <S.ColumnBind>
                         <S.ColumnIsFixed>
-                            <S.ColumnBox>
+                            <S.ColumnBox ScrollActive={ ScrollActive }>
                                 <div className="spread">
                                     <img src={form.img}></img>
                                 </div>
@@ -87,7 +190,7 @@ const Products = () => {
                                     </div>
                                 </div> */}
                                 <S.BannerAlert>
-                                    <S.BannerAlertContent onClick={e => setModalOpen(true)}>
+                                    <S.BannerAlertContent>
                                         <div>
                                             <S.AlertTitleCareMark>주의</S.AlertTitleCareMark>
                                             <S.AlertTitleAlertText>판매 거래 주의사항</S.AlertTitleAlertText>
@@ -96,7 +199,8 @@ const Products = () => {
                                     </S.BannerAlertContent>
                                 </S.BannerAlert>
                             </S.ColumnBox>
-                            {modalOpen && <ModalBasic setModalOpen={setModalOpen} seq={seq}/>}
+                            {modalOpen && <ModalBasic setModalOpen={setModalOpen} setSellBidsListForm={setSellBidsListForm} setSize={setSize} getSize={getSize} 
+                                                      setBuyBidsListForm={setBuyBidsListForm} setCompletedOrderForm={setCompletedOrderForm} sizeForm={sizeForm} seq={seq}/> }
                             {/* <div className="ico_arrow">
                                 <svg>
                                     <use></use>
@@ -122,7 +226,8 @@ const Products = () => {
                                             </S.DetailSizeTitle>
                                             <S.DetailSizeSize>
                                                 <S.BtnSize>
-                                                    <S.BtnSizeBtnText>{size}</S.BtnSizeBtnText>
+                                                    {isOneSize ? 'ONE SIZE' : <S.BtnSizeBtnText onClick={e => setModalOpen(true)}>{size}</S.BtnSizeBtnText> }
+                                                    {/* <S.BtnSizeBtnText onClick={e => setModalOpen(true)}>{size}</S.BtnSizeBtnText> */}
                                                     {/* <svg>
                                                         <use></use>
                                                     </svg> */}
@@ -148,24 +253,24 @@ const Products = () => {
                                     </div>
                                     <div className="btn-wrap">
                                         <S.DivisionBtnBox>
-                                            <S.DivisionBtnBoxBtnDivisionBuy>
+                                            <S.DivisionBtnBoxBtnDivisionBuy onClick={ buyNavigate }>
                                                 <S.DivisionBtnBoxTitle>구매</S.DivisionBtnBoxTitle>
                                                 <S.DivisionBtnBoxPrice>
                                                     <S.DivisionBtnBoxAmount>
                                                         <S.DivisionBtnBoxNum>
-                                                            { sellOrderForm[0].orderPrice }
+                                                            { sellBidsListForm[0].price }
                                                         </S.DivisionBtnBoxNum>
                                                         <S.DivisionBtnBoxWon>원</S.DivisionBtnBoxWon>
                                                     </S.DivisionBtnBoxAmount>
                                                     <S.DivisionBtnBoxDesc>즉시 구매가</S.DivisionBtnBoxDesc>
                                                 </S.DivisionBtnBoxPrice>
                                             </S.DivisionBtnBoxBtnDivisionBuy>
-                                            <S.DivisionBtnBoxBtnDivisionSell>
+                                            <S.DivisionBtnBoxBtnDivisionSell onClick={ sellNavigate }>
                                                 <S.DivisionBtnBoxTitle>판매</S.DivisionBtnBoxTitle>
                                                 <S.DivisionBtnBoxPrice>
                                                     <S.DivisionBtnBoxAmount>
                                                         <S.DivisionBtnBoxNum>   
-                                                            { buyOrderForm[0].orderPrice }
+                                                            { buyBidsListForm[0].price }
                                                         </S.DivisionBtnBoxNum>
                                                         <S.DivisionBtnBoxWon>원</S.DivisionBtnBoxWon>
                                                     </S.DivisionBtnBoxAmount>
@@ -224,40 +329,62 @@ const Products = () => {
                                 </div> */}
                                 <div className="banner_box"> {/*움직이는 배너박스, 차후 적용*/}
                                 </div>
-                                {/* <div className="detail_wrap">
-                                    <div className="product_sales_graph">
-                                        <div className="title">
-                                            <h3 className="detail_title">시세</h3>
-                                            <div className="sales_filter">
-                                                <div className="filter_unit">
-                                                    <button className="btn btn_select" slot="button">
-                                                        <span className="select_text layer_open">
-                                                            "모든 사이즈"
-                                                        </span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="wrap_sales">
-                                            <div className="tab_area">
-                                                <ul role="tablist" className="tab_list">
-                                                    <li role="tab" aria-selected="false" aria-controlls="sales_panel1" className="item">
-                                                        <a href="#" className="item_link">1개월</a>
-                                                    </li>
-                                                    <li role="tab" aria-selected="false" aria-controlls="sales_panel2" className="item">
-                                                        <a href="#" className="item_link">3개월</a>
-                                                    </li>
-                                                    <li role="tab" aria-selected="false" aria-controlls="sales_panel3" className="item">
-                                                        <a href="#" className="item_link">6개월</a>
-                                                    </li>
-                                                    <li role="tab" aria-selected="false" aria-controlls="sales_panel4" className="item">
-                                                        <a href="#" className="item_link">1년</a>
-                                                    </li>
-                                                    <li role="tab" aria-selected="true" aria-controlls="sales_panel5" className="item">
-                                                        <a href="#" className="item_link">전체</a>
-                                                    </li>
-                                                </ul>
-                                                <div id="sales_panel1" role="tabpanel" className="tab_content show" span="1m">
+                                <div className="detail_wrap">
+                                    <S.ProductSalesGraph>
+                                        <S.ProductSalesGraphTitle>
+                                            <S.ProductSalesGraphDetailTitle>시세</S.ProductSalesGraphDetailTitle>
+                                            <S.ProductSalesGraphSalesFilter>
+                                                <S.FilterUnit>
+                                                    <S.BtnBtnSelect slot="button" onClick={ e => setOpenLayer(!openLayer)}>
+                                                        <S.SelectTextLayerOpen>
+                                                            {isOneSize ? 'ONE SIZE' : size}
+                                                        </S.SelectTextLayerOpen>
+                                                    </S.BtnBtnSelect>
+                                                    <S.LayerSizeListLayer hidden={openLayer}>
+                                                        <S.LayerSizeListLayerContainer>
+                                                            <S.LayerSizeListLayercontent>
+                                                                <S.SizeList>
+                                                                    <S.SizeItem>
+                                                                        <S.SizeLink size={size} itemSize={'모든 사이즈'} onClick={(e) => {getAll(seq); setOpenLayer(true);}}>
+                                                                            {isOneSize ? 'ONE SIZE' : size}
+                                                                        </S.SizeLink>
+                                                                    </S.SizeItem>
+                                                                    {   
+                                                                        !isOneSize && 
+                                                                        sizeForm.map((item, index) => (
+                                                                        <S.SizeItem key={index}>
+                                                                            <S.SizeLink size={size} itemSize={item.size} onClick={(e) => {getSize(seq, item.size); setOpenLayer(true);}}>
+                                                                                {item.size}
+                                                                            </S.SizeLink>
+                                                                        </S.SizeItem>))
+                                                                    }
+                                                                </S.SizeList>
+                                                            </S.LayerSizeListLayercontent>
+                                                        </S.LayerSizeListLayerContainer>
+                                                    </S.LayerSizeListLayer>
+                                                </S.FilterUnit>
+                                            </S.ProductSalesGraphSalesFilter>
+                                        </S.ProductSalesGraphTitle>
+                                        <S.WrapSales>
+                                            <S.TabArea>
+                                                <S.TabList>
+                                                    <S.TabAreaItem>
+                                                        <S.TabAreaItemLink onClick={ onOpen } open={ open1 } name='1'>1개월</S.TabAreaItemLink>
+                                                    </S.TabAreaItem>
+                                                    <S.TabAreaItem>
+                                                        <S.TabAreaItemLink onClick={ onOpen } open={ open2 } name='2'>3개월 </S.TabAreaItemLink>
+                                                    </S.TabAreaItem>
+                                                    <S.TabAreaItem>
+                                                        <S.TabAreaItemLink onClick={ onOpen } open={ open3 } name='3'>6개월</S.TabAreaItemLink>
+                                                    </S.TabAreaItem>
+                                                    <S.TabAreaItem>
+                                                        <S.TabAreaItemLink onClick={ onOpen } open={ open4 } name='4'>1년</S.TabAreaItemLink>
+                                                    </S.TabAreaItem>
+                                                    <S.TabAreaItem>
+                                                        <S.TabAreaItemLink onClick={ onOpen } open={ open5 } name='5'>전체</S.TabAreaItemLink>
+                                                    </S.TabAreaItem>
+                                                </S.TabList>
+                                                {/* <div id="sales_panel1" role="tabpanel" className="tab_content show" span="1m">
                                                     <div className="graph">
                                                         <canvas></canvas>
                                                     </div>
@@ -281,101 +408,59 @@ const Products = () => {
                                                     <div className="graph">
                                                         <canvas></canvas>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="wrap_bids">
-                                            <div className="tab_area">
-                                                <ul role="tablist" className="tab_list">
-                                                    <li role="tab" aria-selected="true" aria-controls="panel1" className="item on">
-                                                        <a href="#" className="item_link">체결 거래</a>
-                                                    </li>
-                                                    <li role="tab" aria-selected="false" aria-controls="panel2" className="item">
-                                                        <a href="#" className="item_link">판매 입찰</a>
-                                                    </li>
-                                                    <li role="tab" aria-selected="false" aria-controls="panel3" className="item">
-                                                        <a href="#" className="item_link">구매 입찰</a>
-                                                    </li>
-                                                </ul>
-                                                <div id="panel1" role="tabpanel" className="tab_content show" span="sales">
-                                                    <div className="table_wrap">
-                                                        <table>
-                                                            <caption>
-                                                                <span className="blind">데이터 테이블</span>
-                                                            </caption>
-                                                            <colgroup> width 추후 추가 
-                                                                <col></col>
-                                                                <col></col>
-                                                                <col></col>
-                                                            </colgroup>
+                                                </div> */}
+                                            </S.TabArea>
+                                        </S.WrapSales>
+                                        <S.WrapBids>
+                                            <S.TabArea>
+                                                <S.TabList>
+                                                    <S.TabAreaItem>
+                                                        <S.TabAreaItemLink onClick={ onOpen2 } open={ open6 } name='6'>체결 거래</S.TabAreaItemLink>
+                                                    </S.TabAreaItem>
+                                                    <S.TabAreaItem>
+                                                        <S.TabAreaItemLink onClick={ onOpen2 } open={ open7 } name='7'>판매 입찰</S.TabAreaItemLink>
+                                                    </S.TabAreaItem>
+                                                    <S.TabAreaItem>
+                                                        <S.TabAreaItemLink onClick={ onOpen2 } open={ open8 } name='8'>구매 입찰</S.TabAreaItemLink>
+                                                    </S.TabAreaItem>
+                                                </S.TabList>
+                                                <S.TabContent>
+                                                    <S.TableWrap>
+                                                        <S.Table>
+                                                            <S.TableCaption>
+                                                                <S.TableBlind>데이터 테이블</S.TableBlind>
+                                                            </S.TableCaption>
+                                                            <S.ColGroup>
+                                                                <col style={{width: "29.76%"}}/>
+                                                                <col style={{width: "36.52%"}}/>
+                                                                <col style={{width: "33.72%"}}/>
+                                                            </S.ColGroup>
                                                             <thead>
                                                                 <tr>
-                                                                    <th className="table_th">사이즈</th>
-                                                                    <th className="table_th align_right">거래가</th>
-                                                                    <th className="table_th align_right">거래일</th>
+                                                                    <S.TableTh>사이즈</S.TableTh>
+                                                                    <S.TableThAlignRight>거래가</S.TableThAlignRight>
+                                                                    <S.TableThAlignRight>거래일</S.TableThAlignRight>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
+                                                            {[...Array(parseInt(5))].map((n, index) => {
+                                                                    return <tr>
                                                                     <td className="table_td">
-                                                                        동적처리
+                                                                        {completedOrderForm[index].size}
                                                                     </td>
                                                                     <td className="table_td align_right">
-                                                                        동적처리
+                                                                        {completedOrderForm[index].size}
                                                                     </td>
                                                                     <td className="table_td align_right">
-                                                                        동적처리
+                                                                        {completedOrderForm[index].size}
                                                                     </td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
+                                                            })}
                                                             </tbody>
-                                                        </table>
-                                                    </div>
+                                                        </S.Table>
+                                                    </S.TableWrap>
                                                     <a href="#" className="btn outlinegrey fill medium">체결 내역 더보기</a>
-                                                </div>
+                                                </S.TabContent>
                                                 <div id="panel2" role="tabpanel" className="tab_content" span="asks">
                                                 <div className="table_wrap">
                                                         <table>
@@ -534,10 +619,10 @@ const Products = () => {
                                                     </div>
                                                     <a href="#" className="btn outlinegrey fill medium">입찰 내역 더보기</a>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
+                                            </S.TabArea>
+                                        </S.WrapBids>
+                                    </S.ProductSalesGraph>
+                                </div>
                                 <div>
                                     <S.ConfirmWrap>
                                         <S.ConfirmWrapConfirmTitle>구매 전 꼭 확인해주세요</S.ConfirmWrapConfirmTitle>

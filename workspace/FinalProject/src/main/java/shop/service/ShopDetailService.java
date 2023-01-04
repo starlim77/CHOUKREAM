@@ -3,6 +3,7 @@ package shop.service;
 import java.util.List;
 import java.util.Optional;
 
+import shop.bean.BidsListDTO;
 import shop.bean.CompletedOrderDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
@@ -26,6 +27,16 @@ public interface ShopDetailService {
 	public List<OrderDTO> getBuyOrderListBySize(int seq, String size);
 
 	public List<CompletedOrderDTO> getCompletedOrderListBySize(int seq, String size);
+
+	public List<SizeMinDTO> getProductSizeSell(int seq);
+
+	public List<BidsListDTO> getSellBidsListBySize(int seq, String size);
+
+	public List<BidsListDTO> getSellBidsList(int seq);
+
+	public List<BidsListDTO> getBuyBidsList(int seq);
+
+	public List<BidsListDTO> getBuyBidsListBySize(int seq, String size);
 
 //	public Optional<Integer> getProductSizeMin(int seq, String size);
 }

@@ -33,12 +33,12 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
 
         const heightBottom = window.scrollY + window.innerHeight; // 화면의 Y축의 하단값
         const innerHeight = window.innerHeight;
-        console.log('window.scrollY 화면의 Y축의 상단값 ' + heightTop);
-        console.log('window.innerHeight 브라우저 화면의 높이' + innerHeight); // 현재 브라우저 화면의 높이
-        console.log('Y축의 하단값' + heightBottom); //window.scrollY + window.innerHeight 화면의 y축 하단값
+        // console.log('window.scrollY 화면의 Y축의 상단값 ' + heightTop);
+        // console.log('window.innerHeight 브라우저 화면의 높이' + innerHeight); // 현재 브라우저 화면의 높이
+        // console.log('Y축의 하단값' + heightBottom); //window.scrollY + window.innerHeight 화면의 y축 하단값
 
         const scrollHeight = document.body.scrollHeight;
-        console.log('scrollHeight 스크롤 전체길이 ' + scrollHeight); // 불변
+        //console.log('scrollHeight 스크롤 전체길이 ' + scrollHeight); 
 
         // 상단값과 + 현재 브라우저 높이 =
         // 현재 브라우저 높이는 불변
@@ -119,10 +119,10 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                 style={{ display: isMenu ? 'none' : '' }}
                             >
                                 <Co.MenuList>
-                                    {console.log('gdgd' + item.menuList)}
+                                    {/* {console.log('gdgd' + item.menuList)}
                                     {console.log(
                                         'ㅠㅠㅠ' + typeof item.menuList,
-                                    )}
+                                    )} */}
                                     {/* {item.menuList.map((menu) => { 
                                     return <h2>gdgd</h2>
                                 })} */}

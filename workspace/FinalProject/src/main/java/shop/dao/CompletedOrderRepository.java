@@ -15,5 +15,5 @@ public interface CompletedOrderRepository extends JpaRepository<CompletedOrderDT
 	public List<CompletedOrderDTO> findBySeqOrderByTradeDateDesc(int seq);
 
 	@Query("select completedOrderDTO from CompletedOrderDTO completedOrderDTO where completedOrderDTO.seq = :seq and completedOrderDTO.size = :size order by completedOrderDTO.tradeDate desc")
-	   public List<CompletedOrderDTO> findBySeqOrderByTradeDateDescBySize(@Param("seq") int seq, @Param("size") String size);
+	public List<CompletedOrderDTO> findBySeqOrderByTradeDateDescBySize(@Param("seq") int seq, @Param("size") String size);
 }

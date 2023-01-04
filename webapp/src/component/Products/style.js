@@ -41,8 +41,20 @@ export const ColumnIsFixed = styled.div`
 `;
 
 export const ColumnBox = styled.div`
+    position: ${(props) => props.ScrollActive ? "fixed" : "absolute"};
+    top: ${(props) => props.ScrollActive && "130px"};
+    bottom: ${(props) => props.ScrollActive || "0"};;
+`;
+
+export const ColumnBoxFixed = styled.div`
     position: fixed;
     top: 130px;
+    
+`;
+
+export const ColumnBoxAbsolute = styled.div`
+    position: absolute;
+    bottom: 0;
 `;
 
 export const Column = styled.div`
@@ -379,6 +391,234 @@ export const DetailBoxProductInfo = styled.dd`
     font-size: 14px;
 `;
 
+export const ProductSalesGraph = styled.div`
+    position: relative;
+`;
+
+export const ProductSalesGraphTitle = styled.div`
+    display: flex;
+`;
+
+export const ProductSalesGraphDetailTitle = styled.h3`
+    line-height: 22px;
+    padding: 40px 0 20px;
+    font-size: 18px;
+    letter-spacing: -.27px;
+    letter-spacing: -.15px;
+
+    font-weight: bold;
+    display: block;
+    font-size: 1.17em;
+`;
+
+export const ProductSalesGraphSalesFilter = styled.div`
+    position: relative;
+    margin-left: auto;
+    padding: 40px 0 20px;
+    font-size: 0;
+`;
+
+export const FilterUnit = styled.div`
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+`;
+
+export const BtnBtnSelect = styled.button`
+    font-size: 13px;
+    letter-spacing: -.07px;
+    color: rgba(34,34,34,.8);
+
+    display: -webkit-inline-box;
+    display: inline-flex;
+    cursor: pointer;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    vertical-align: middle;
+    text-align: center;
+    color: rgba(34,34,34,.8);
+    background-color: #fff;
+    border: none;
+`;
+
+export const SelectTextLayerOpen = styled.span`
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    line-height: 24px;
+    font-weight: 700;
+`;
+
+export const LayerSizeListLayer = styled.div`
+    top: 30px;
+    left: auto;
+    right: 0;
+    bottom: auto;
+    z-index: 1;
+
+    position: absolute;
+    background-color: #fff;
+`;
+
+export const LayerSizeListLayerContainer = styled.div`
+    position: relative;
+    top: auto;
+    left: auto;
+    -webkit-transform: none;
+    transform: none;
+    width: 176px;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+`;
+
+export const LayerSizeListLayercontent = styled.div`
+    border: 1px solid #d3d3d3;
+    border-radius: 10px;
+`;
+
+export const SizeList = styled.ul`
+    max-height: 280px;
+    overflow-x: hidden;
+    overflow-y: auto;
+`;
+
+export const SizeItem = styled.li`
+    max-height: 280px;
+    overflow-x: hidden;
+    overflow-y: auto;
+`;
+
+export const SizeLink = styled.a`
+    display: block;
+    position: relative;
+    padding: 10px 36px 12px 15px;
+    font-size: 14px;
+    color: rgba(34,34,34,.8);
+
+    font-weight: ${(props) => props.size === props.itemSize && "700"};
+    color: #222;
+`;
+
+export const WrapSales = styled.div`
+    position: relative;
+`;
+
+export const TabArea = styled.div`
+    position: relative;
+`;
+
+export const TabList = styled.ul`
+    display: -webkit-box;
+    display: flex;
+    border-radius: 10px;
+    background-color: #f4f4f4;
+`;
+
+export const TabAreaItem = styled.li`
+    -webkit-box-flex: 1;
+    flex: 1;
+    margin: 2px;
+`;
+
+export const TabAreaItemLink = styled.a`
+    background-color: #fff;
+    color: #222;
+    font-weight: ${(props) => props.open && '700'};
+    -webkit-box-shadow: 0 0 0 0.5px #ebebeb inset;
+    box-shadow: inset 0 0 0 0.5px #ebebeb;
+
+    display: block;
+    line-height: 16px;
+    padding: 7px 0 9px;
+    font-size: 13px;
+    letter-spacing: -.07px;
+    letter-spacing: -.05px;
+    text-align: center;
+    border-radius: 8px;
+    background-color: ${(props) => !props.open && '#f4f4f4'};
+    color: rgba(34,34,34,.8);
+
+    cursor: pointer;
+`;
+
+export const WrapBids = styled.div`
+    position: relative;
+`;
+
+export const TabContent = styled.div`
+    display: block;
+    height: auto;
+    overflow: hidden;
+`;
+
+export const TableWrap = styled.div`
+    padding: 21px 0 20px;
+`;
+
+export const Table = styled.div`
+    table-layout: fixed;
+    width: 100%;
+    border-spacing: 0;
+    border: 0;
+    border-collapse: collapse;
+
+    display: table;
+    text-indent: initial;
+`;
+
+export const TableCaption = styled.caption`
+    display: table-caption;
+    text-align: -webkit-center;
+    border-spacing: 0;
+    border-collapse: collapse;
+`;
+
+export const TableBlind = styled.span`
+    overflow: hidden!important;
+    position: absolute!important;
+    clip: rect(0,0,0,0)!important;
+    width: 1px!important;
+    height: 1px!important;
+    margin: -1px!important;
+`;
+
+export const ColGroup = styled.colgroup`
+    display: table-column-group;
+`;
+
+export const TableTh = styled.th`
+    line-height: 14px;
+    padding-bottom: 9px;
+    border-bottom: 1px solid #ebebeb;
+    font-size: 12px;
+    letter-spacing: -.06px;
+    color: rgba(34,34,34,.5);
+    font-weight: 400;
+    text-align: left;
+
+    display: table-cell;
+    vertical-align: inherit;
+`;
+
+export const TableThAlignRight = styled.th`
+    line-height: 14px;
+    padding-bottom: 9px;
+    border-bottom: 1px solid #ebebeb;
+    font-size: 12px;
+    letter-spacing: -.06px;
+    color: rgba(34,34,34,.5);
+    font-weight: 400;
+    text-align: right;
+
+    display: table-cell;
+    vertical-align: inherit;
+`;
+
+
+
 export const ConfirmWrap = styled.div`
     padding-top: 39px;
 `;
@@ -479,30 +719,148 @@ export const MeditationNoticeProduct = styled.p`
 
 /* 모달창을 화면 중앙. 최상단에 노출 */
 export const Container = styled.div`
-    /* 모달창 크기 */
-    width: 300px;
-    height: 200px;
-  
-    /* 최상단 위치 */
-    z-index: 999;
-    
-    /* 중앙 배치 */
-    /* top, bottom, left, right 는 브라우저 기준으로 작동한다. */
-    /* translate는 본인의 크기 기준으로 작동한다. */
     position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(34,34,34,.5);
+    z-index: 1010;
+`;
+
+export const LayerContainer = styled.div`
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    height: 514px;
+
+    overflow: hidden;
+    position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-  
-    /* 모달창 디자인 */
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 8px;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    background-color: #fff;
+    width: 448px;
+    border-radius: 16px;
+    -webkit-box-shadow: 0 4px 10px 0 rgb(0 0 0 / 10%);
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 10%);
 `;
 
 /* 모달창 내부 X버튼 */
 export const Close = styled.button`
     position: absolute;
-    right: 10px;
-    top: 10px;
+    top: 18px;
+    right: 20px;
+    cursor: pointer;
+
+    color: inherit;
+    -webkit-tap-highlight-color: rgba(0,0,0,.1);
+`;
+
+export const LayerHeader = styled.div`
+    -webkit-box-flex: 0;
+    flex: none;
+`;
+
+export const LayerHeaderTitle = styled.h2`
+    line-height: 22px;
+    padding: 18px 50px 20px;
+    min-height: 60px;
+    font-size: 18px;
+    letter-spacing: -.27px;
+    font-weight: 700;
+    letter-spacing: -.15px;
+    color: #000;
+    text-align: center;
+    background-color: #fff;
+
+    display: block;
+    font-size: 1.0em;
+    font-weight: bold;
+`;
+
+export const LayerContent = styled.div`
+    position: relative;
+    -webkit-box-flex: 1;
+    flex: 1;
+    margin-top: 10px;
+    margin-bottom: 32px;
+    overflow-x: hidden;
+    overflow-y: auto;
+`;
+
+export const SelectArea = styled.div`
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0 32px;
+
+    padding: 0 0;
+    min-height: 488px;
+`;
+
+export const SelectList = styled.ul`
+    line-height: 0;
+    font-size: 0;
+
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 10px;
+`;
+
+export const SelectItem = styled.li`
+    overflow: hidden;
+    margin: 4px;
+    display: inline-block;
+    vertical-align: top;
+    width: calc(33.33333% - 8px);
+    border: 1px solid #d3d3d3;
+    height: 52px;
+    border-radius: 10px;
+    background-color: #fff;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+`;
+
+export const SelectLinkBuy = styled.button`
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background-color: white;
+`;
+
+export const LinkInner = styled.div`
+    margin: 0 auto;
+`;
+
+export const Size = styled.span`
+    display: block;
+    line-height: 17px;
+    margin-top: -3px;
+    font-size: 14px;
+`;
+
+export const Price = styled.span`
+    color: #f15746;
+    display: block;
+    line-height: 14px;
+    margin-top: 1px;
+    font-size: 12px;
+`;
+
+export const PriceNull = styled.span`
+    color: black;
+    display: block;
+    line-height: 14px;
+    margin-top: 1px;
+    font-size: 12px;
 `;
