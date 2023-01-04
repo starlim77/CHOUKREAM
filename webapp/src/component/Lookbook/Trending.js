@@ -22,17 +22,12 @@ const Trending = () => {
         originalFileName:'',
         storedFileName:''
     }])
-        originalFileName:[],        
-        storedFileName:[]
-    }])
     
 
     useEffect(() => {
         axios
             .get('http://localhost:8080/lookbook/getStyleList')
-            .then(  res => console.log(res.data)
-                    // res => setList(res.data)
-            )               
+            .then( res => setList(res.data))               
             .catch(error => console.log(error));
     }, []);
 

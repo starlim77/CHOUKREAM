@@ -16,7 +16,7 @@ const Detail = () => {
     const [list, setList] = useState([]);
 
     useEffect( ()=> {
-        axios.get('http://localhost:8080/lookbook/getStyleBoardList')
+        axios.get('http://localhost:8080/lookbook/getStyleList')
              .then(res => setList(res.data))
              .catch(error => console.log(error))
     }, []) 

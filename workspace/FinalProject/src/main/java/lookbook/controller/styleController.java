@@ -1,6 +1,8 @@
 package lookbook.controller;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpSession;
 import lookbook.bean.StyleDTO;
+import lookbook.entity.StyleEntity;
 import lookbook.service.StyleService;
 
 @RestController
@@ -35,16 +38,19 @@ public class styleController {
 	}
 	
 
-	@GetMapping(path="getMyStyleBoardList")
-	public List<StyleDTO> getMyStyleBoardList() {
-		return styleService.getMyStyleBoardList();
-	}
+//	@GetMapping(path="findAllMyList")
+//	public List<StyleDTO> findAllMyList() {
+//		return styleService.findAllMyList();
+//	}
 	
 	//내 id를 들고가서 내 게시글만 뿌리기
-//	@GetMapping(path="getMyStyleBoardList/{id}")
-//	public List<StyleDTO> getMyStyleBoardList(@PathVariable String id) {
-//		return styleService.getMyStyleBoardList(id);
-//	}
+	@GetMapping(path="findAllMyList/{id}")
+	@ResponseBody
+	public List<StyleDTO> findAllMyList(@PathVariable String id) {
+		System.out.println("컨트롤러에 id가 넘어갓냥? "+ id);
+		return styleService.findAllMyList(id);
+		//return null;
+	}
 		
 	
 	@GetMapping(path="getStyleList")
@@ -53,12 +59,6 @@ public class styleController {
 		return styleService.findAll();		
 		
 	}
-	
-	@GetMapping(path="getStyleBoardList")
-	public List<StyleDTO> getStyleBoardList() {
-		return styleService.getStyleBoardList();
-	}
-	
 
 	
 }

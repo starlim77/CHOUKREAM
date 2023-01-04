@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,64 +32,45 @@ public class StyleServiceImpl implements StyleService {
 	@Autowired
 	private StyleFileDAO styleFileDAO;
 
-	
-
-	//findbyid 불러오기 실패
-//	@Transactional
-//	public List<StyleDTO> getMyStyleBoardList(String id) {
-//		
-//		//Optional<> : null도 체크해주는 클래스
-//		Optional<StyleEntity> optionalStyleEntity = styleDAO.findById(id);
-//		List<StyleDTO> styleDTOList = new ArrayList<>();
-//		
-//		Iterator<StyleEntity> iter = optionalStyleEntity.iterator();	
-//		
-//		if(optionalStyleEntity.isPresent()) {  //값이 있으면
-//			
-//		      while(iter.hasNext()) {
-//	    	  StyleEntity styleEntity = iter.next();
-//	    	  styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
-//		      }
-//
-////			for (StyleEntity styleEntity : optionalStyleEntity ) {
-////				styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));	
-////			}	
-//		} 
-//		return styleDTOList;
-//	}
-	
-	
-	//이터레이터로 반복문돌리기 성공
+	//내 글 list만 불러오기 실패. 
 	@Transactional
-	public List<StyleDTO> getMyStyleBoardList() {
-		  List<StyleEntity> styleEntityList = styleDAO.findAll();
-	      List<StyleDTO> styleDTOList = new ArrayList<>();
-	      
-	      Iterator<StyleEntity> iter = styleEntityList.iterator();	      
-	      
-	      while(iter.hasNext()) {
-	    	  StyleEntity styleEntity = iter.next();
-	    	  styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
-	      }
-
-	      return styleDTOList; 
-	}
-		
-	   
-	//전체리스트 뿌리기
-	@Transactional
-	public List<StyleDTO> getStyleBoardList() {
+	public List<StyleDTO> findAllMyList(String id) {
+		  System.out.println("서비스에 id가 넘어갓냥? "+id);
+		  	
 	      List<StyleEntity> styleEntityList = styleDAO.findAll();
+
+//		  List<StyleDTO> styleDTOList = styleEntityList.stream().map(StyleDTO::toStyleDTO).collect(Collectors.toList());		
+	        
+	      //List<StyleDTO> 일경우 
 	      List<StyleDTO> styleDTOList = new ArrayList<>();
 	      
 	      for (StyleEntity styleEntity: styleEntityList) {
-	         styleDTOList.add(StyleDTO.toStyleDTO(styleEntity)); 
+	         styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
 	      }
-
+	      
 	      return styleDTOList; 
+
 	}
-	
-	
+
+	//이터레이터로 반복문돌리기 . 전체글 불러오기까지
+//	@Transactional
+//	public List<StyleDTO> findAllMyList(String id) {
+//		  Optional<StyleEntity> styleEntityList = styleDAO.findById(id);
+//	      List<StyleDTO> styleDTOList = new ArrayList<>();
+//	      
+//	      for (StyleEntity styleEntity: styleEntityList) {
+//		         styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
+//		      }
+//	      
+////	      Iterator<StyleEntity> iter = styleEntityList.iterator();	      
+////	      
+////	      while(iter.hasNext()) {
+////	    	  StyleEntity styleEntity = iter.next();
+////	    	  styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
+////	      }
+//
+//	      return styleDTOList; 
+//	}
 
 	public void save(List<MultipartFile> list, StyleDTO styleDTO) {		
 			
@@ -170,7 +152,11 @@ public class StyleServiceImpl implements StyleService {
 	            return null;
 	        }
 	    }
-	 
+
+
+
+
+
 	
 	
 }
