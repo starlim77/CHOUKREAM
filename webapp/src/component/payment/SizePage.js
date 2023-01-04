@@ -6,12 +6,13 @@ import SizeBtn from './SizeBtn';
 import ProductData from './ProductData';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 const SizePage = () => {
     const [sizeList, setSizeList] = useState([]);
     // const [size, setSize] = useState([]);
     const [isBtnClick, setIsBtnClick] = useState(false);
-    const [selectSize, setSelectSize] = useState('');
+    const [selectedSize, setSelectedSize] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
     const [searchParams, setSearchParams] = useSearchParams()
@@ -25,16 +26,21 @@ const SizePage = () => {
             .get(`http://localhost:8080/getProductSize?seq=${productNum}`)
             .then(res => setSizeList(res.data))
             .catch(error => console.log(error));
+            console.log(sizeList)
     }, []);
 
     const onClick = e => {
         setIsBtnClick(true);
-        setSelectSize(e.target.id);
+        setSelectedSize(e.target.id);
     };
 
     const onNext = () => {
-        navigate(`${sellOrBuy}/payTerms?type=${type}&productNum=${productNum}&size=${selectSize}`)
+        navigate(`${sellOrBuy}/payTerms?type=${type}&productNum=${productNum}&size=${selectedSize}`)
     }
+
+    useEffect(() => {
+        // setSelectedSize(sizeList.filter(item => item.size === ))
+    }, [])
 
     return (
         <S.Container>
@@ -49,6 +55,7 @@ const SizePage = () => {
                                 location={location}
                                 price={item.price}
                                 onClick={onClick}
+                                selectedSize={selectedSize}
                             />
                         );
                     })}

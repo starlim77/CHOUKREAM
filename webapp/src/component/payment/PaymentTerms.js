@@ -23,6 +23,7 @@ const sellDataList = [
 
 const PaymentTerms = () => {
     const [data, setData] = useState(buyDataList)
+    const [countCheck, setCountCheck] = useState([])
     const [isInpectionOpen, setIsInpectionOpen] = useState(false)
     const [isPolicyOpen, setIsPolicyOpen] = useState(false)
     const [isAllChecked, setIsAllChecked] = useState(false)
@@ -34,6 +35,7 @@ const PaymentTerms = () => {
     const selectSize = searchParams.get("size")
     const productNum = searchParams.get("productNum")
     const type = searchParams.get("type")
+    const [count, setCount] = useState(1)
 
     useEffect(() => {
         sellOrbuy === "sell" ? setData(sellDataList) : setData(buyDataList)
@@ -42,13 +44,16 @@ const PaymentTerms = () => {
     const onCheck = (e) => {
         const { name, checked } = e.target
         setData(data.map(item => item.name === name ? { ...item, isChk: checked } : item))
-
         if (checked) {
+            console.log(checked)
+            setCount(count+1)
             setCheckedItem([...checkedItem, name])
         } else {
+            console.log(checked)
+            setCount(count-1)
             setCheckedItem(checkedItem.filter(item => item !== name ))
         }
-        setIsAllChecked(data.filter(item => item.isChk === true).length === 4)
+        setIsAllChecked(count === 5)
     }
 
     const onLink = (e) => {

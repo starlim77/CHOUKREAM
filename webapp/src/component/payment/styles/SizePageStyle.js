@@ -28,7 +28,8 @@ export const SizeBtn = styled.button`
     align-content: center;
     width: 30%;
     height: 55px;
-    border: 1px solid #ebebeb;
+    /* border: 1px solid #ebebeb; */
+    border: ${props => (props.selectedSize===props.id ? "1px solid black" : "1px solid #ebebeb")};
     border-radius: 10px;
     font-size: 13px;
     cursor: pointer;

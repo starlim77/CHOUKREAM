@@ -16,7 +16,6 @@ const PayHeader = () => {
     const size = searchParams.get("size")
 
     useEffect(() => {
-        console.log(productNum)
         axios
             .post(`http://localhost:8080/shop/getProductBySeq?seq=${productNum}`)
             .then(res => res.data !== null && (setModelNum(res.data.modelNum),
