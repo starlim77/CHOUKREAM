@@ -31,7 +31,7 @@ const Detail = () => {
             <Container fixed>
                 
                 {
-                    list.map(item => {
+                    list.map((item, index) => {
                         return (
                             <Card key={item.seq}>
                                 <CardHeader
@@ -42,7 +42,7 @@ const Detail = () => {
                                 <CardMedia 
                                     component="img"
                                     height="500"
-                                    image=""
+                                    image={'../storage/'+item.storedFileName[0]}  //여러장보이게해야함
                                     alt=""
                                 />
                                 <CardContent>

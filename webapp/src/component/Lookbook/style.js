@@ -93,5 +93,15 @@ export const MyTopDiv = styled.div`
     padding-top: 90px;
 `
 
+export const showImgSrcDiv = styled.div`
+    /* width: 500px;
+    height: 400px;    */
+`
+
+export const showImgSrcImg = styled.img`
+    width: 500px;
+    height: 400px;   
+`
+
 
 

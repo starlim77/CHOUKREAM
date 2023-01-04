@@ -139,16 +139,15 @@ const Mystyle = () => {
                                         onChange={readURL}
                                 />
 
-                                <div >                                   
+                                <S.showImgSrcDiv >                                   
                                     {showImgSrc.map((item, index) => (
-                                        <div  key={index}>
-                                            <img src={item}  />
-                                            <div>
-                                               <ClearIcon onClick={() => onImgRemove(index)}>삭제</ClearIcon>
-                                            </div>                                        
+                                        <div key={index}>
+                                            <S.showImgSrcImg src={item}  />
+                                            <ClearIcon onClick={() => onImgRemove(index)}>삭제</ClearIcon>
+                                                                                  
                                         </div>
                                     ))}
-                                </div>
+                                </S.showImgSrcDiv>
 
 
                                 <textarea 
@@ -157,7 +156,7 @@ const Mystyle = () => {
                                     value={content}
                                     placeholder='내용 입력'
                                     onChange={onInput}
-                                    style={{width:545, height:80, resize:'none'}}  />
+                                    style={{width:494, height:80, resize:'none'}}  />
                                 
                                 <DialogActions>
                                     <Button onClick={ onUpload }>등록</Button>
@@ -171,14 +170,16 @@ const Mystyle = () => {
                 
                 <S.MyDiv>    {/* 등록한 게시물 간단히 보기 */}
                 {
-                    myList.map(item => {
+                    myList.map((item, index) => {
                         return (
                                 <S.MyPhotoMini key={item.seq}>  
                                     <CardMedia
                                         component="img"
                                         height="200"
-                                        //image={item.filename}
+                                        image={'../storage/'+item.storedFileName[0]}  //입력된 대표사진1개만 보임
                                     />
+
+                                    
                                     <CardHeader
                                         avatar={ <Avatar>프로필</Avatar> }
                                         title={item.id}

@@ -38,7 +38,7 @@ public class StyleServiceImpl implements StyleService {
 		  System.out.println("서비스에 id가 넘어갓냥? "+id);
 		  	
 	      List<StyleEntity> styleEntityList = styleDAO.findAll();
-
+	      
 //		  List<StyleDTO> styleDTOList = styleEntityList.stream().map(StyleDTO::toStyleDTO).collect(Collectors.toList());		
 	        
 	      //List<StyleDTO> 일경우 
@@ -152,11 +152,6 @@ public class StyleServiceImpl implements StyleService {
 	            return null;
 	        }
 	    }
-
-
-
-
-
 	
 	
 }
