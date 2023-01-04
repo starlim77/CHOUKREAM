@@ -108,12 +108,15 @@ export const Information = styled.div`
 //필수 입력 
 export const Necessary = styled.div`
     margin-top: 30px;
+    font-size: 12px;
     color: red;
 `;
 
 //입력 사항
 export const Subject = styled.div`
-
+    font-size: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 `
 
 //제목
@@ -180,11 +183,16 @@ export const PriceDiv = styled.div`
 
 export const ItemPrice = styled.input`
     height: 40px;
-    width: 300px;
+    width: 200px;
 
     border-top: 0px;
     border-right: 0px;
     border-left: 0px;
+
+    ::-webkit-outer-spin-button,::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+    }
 `;
 
 export const ItemPriceSpan = styled.span`

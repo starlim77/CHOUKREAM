@@ -48,18 +48,12 @@ export const BottomDiv = styled.div`
 
 //imgsrc설정방법
 //https://velog.io/@shinwonse/React-styled-components%EC%97%90%EC%84%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80
-export const MainImg=styled.img.attrs({
-    src:"https://kream-phinf.pstatic.net/MjAyMjAyMThfMTQ3/MDAxNjQ1MTYwNTE0MDE4.1Ql511oqy-_vreGlE1CMTNSGWBQAl_zPWLiT8qvFdMUg.6fvpYoaxRM1dqtJO7jx_QsJ1rK6pEUSkDx3bJshoLGEg.JPEG/a_dac632a10a13407c9fc71a9e2189bd46.jpg?type=l_webp",
-    alt:"mainImage"
-})`
+export const MainImg=styled.img`
     width:560px;
     height:560px;
 `;
 
-export const SmallImg=styled.img.attrs({
-    src:"https://kream-phinf.pstatic.net/MjAyMjAyMThfMTQ3/MDAxNjQ1MTYwNTE0MDE4.1Ql511oqy-_vreGlE1CMTNSGWBQAl_zPWLiT8qvFdMUg.6fvpYoaxRM1dqtJO7jx_QsJ1rK6pEUSkDx3bJshoLGEg.JPEG/a_dac632a10a13407c9fc71a9e2189bd46.jpg?type=l_webp",
-    alt:"mainImage"
-})`
+export const SmallImg=styled.img`
     width:100px;
     height:100px;
     padding:25px;
@@ -112,13 +106,19 @@ export const InterestWrapper=styled.p`
     border:1px solid rgba(236,236,236);
     font-size:25px;
     padding: 15px 0 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+    :hover{
+        cursor: pointer;
+    }
 `;
 
-export const InterestInput=styled.input.attrs({
-    type:"radio"
-})`
-   
+export const InterestInput=styled.img`
+   margin-right: 10px;
+   width: 25px;
+   height: 25px;
 `;
 
 export const InterestSpan=styled.span`
@@ -151,6 +151,10 @@ export const ItemContents=styled.pre`
 export const ChatButton=styled.button`
     width:560px;
     font-size:50px;
+
+    :hover{
+        cursor: pointer;
+    }
 `;
 
 export const ProfileWrapper=styled.div`

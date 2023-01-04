@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
 import shop.bean.UsedItemDTO;
+import shop.bean.UsedItemLikeDTO;
+import shop.dao.UsedItemDAO;
 import shop.service.UsedItemService;
 
 @RestController
@@ -32,12 +35,23 @@ public class UsedItemController {
 	
 	@GetMapping(path="getItem")
 	public List<UsedItemDTO> getItem() {
-		
-		List<UsedItemDTO> asd = usedItemService.getItem();
-		System.out.println("asd = " + asd);
-		return asd;
-//		return usedItemService.getItem();
+		return usedItemService.getItem();
 	}
+	
+	@GetMapping(path="viewItem")
+	public Optional<UsedItemDTO> viewItem(@RequestParam int seq) {
+		return usedItemService.viewItem(seq);
+	}
+	
+	@GetMapping(path="itemLike")
+	public List<UsedItemLikeDTO> itemLike(@RequestParam int seq){
+		
+		List<UsedItemLikeDTO> imsi = usedItemService.itemLike(seq);
+		System.out.println(imsi);
+		return null;
+		//return usedItemService.itemLike(seq);
+	}
+	
 	
 	@PostMapping(path="writeItem")
 	public void writeItem(@ModelAttribute UsedItemDTO usedItemDTO) {
