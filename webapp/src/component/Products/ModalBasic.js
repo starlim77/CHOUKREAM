@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import * as S from './style';
 
-const ModalBasic = ({ setModalOpen, seq, setSellOrderForm, setBuyOrderForm, setCompletedOrderForm, setSize, getSize, sizeForm, getAll }) => {
+const ModalBasic = ({ setModalOpen, seq, setSellBidsListForm, setBuyBidsListForm, setCompletedOrderForm, setSize, getSize, sizeForm, getAll }) => {
 
     const [allSize, setAllSize] = useState('-')
 

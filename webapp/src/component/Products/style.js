@@ -548,6 +548,76 @@ export const WrapBids = styled.div`
     position: relative;
 `;
 
+export const TabContent = styled.div`
+    display: block;
+    height: auto;
+    overflow: hidden;
+`;
+
+export const TableWrap = styled.div`
+    padding: 21px 0 20px;
+`;
+
+export const Table = styled.div`
+    table-layout: fixed;
+    width: 100%;
+    border-spacing: 0;
+    border: 0;
+    border-collapse: collapse;
+
+    display: table;
+    text-indent: initial;
+`;
+
+export const TableCaption = styled.caption`
+    display: table-caption;
+    text-align: -webkit-center;
+    border-spacing: 0;
+    border-collapse: collapse;
+`;
+
+export const TableBlind = styled.span`
+    overflow: hidden!important;
+    position: absolute!important;
+    clip: rect(0,0,0,0)!important;
+    width: 1px!important;
+    height: 1px!important;
+    margin: -1px!important;
+`;
+
+export const ColGroup = styled.colgroup`
+    display: table-column-group;
+`;
+
+export const TableTh = styled.th`
+    line-height: 14px;
+    padding-bottom: 9px;
+    border-bottom: 1px solid #ebebeb;
+    font-size: 12px;
+    letter-spacing: -.06px;
+    color: rgba(34,34,34,.5);
+    font-weight: 400;
+    text-align: left;
+
+    display: table-cell;
+    vertical-align: inherit;
+`;
+
+export const TableThAlignRight = styled.th`
+    line-height: 14px;
+    padding-bottom: 9px;
+    border-bottom: 1px solid #ebebeb;
+    font-size: 12px;
+    letter-spacing: -.06px;
+    color: rgba(34,34,34,.5);
+    font-weight: 400;
+    text-align: right;
+
+    display: table-cell;
+    vertical-align: inherit;
+`;
+
+
 
 export const ConfirmWrap = styled.div`
     padding-top: 39px;

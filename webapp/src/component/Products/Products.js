@@ -40,14 +40,6 @@ const Products = () => {
 
     const [form, setForm] = useState({});
 
-    const [sellOrderForm, setSellOrderForm] = useState([{
-        orderPrice: '-'
-    }]);
-
-    const [buyOrderForm, setBuyOrderForm] = useState([{
-        orderPrice: '-'
-    }]);
-
     const [completedOrderForm, setCompletedOrderForm] = useState([{
         price: '-'
     }]);
@@ -87,15 +79,7 @@ const Products = () => {
         axios.get(`http://localhost:8080/getProduct?seq=${seq}`)
              .then(res => res.data !== null && setForm(res.data))
              .catch(error => console.log(error))
-
-        axios.get(`http://localhost:8080/getSellOrderList?seq=${seq}`)
-             .then(res => res.data.length !== 0 && setSellOrderForm(res.data))
-             .catch(error => console.log(error))    
-
-        axios.get(`http://localhost:8080/getBuyOrderList?seq=${seq}`)
-             .then(res => res.data.length !== 0 && setBuyOrderForm(res.data))
-             .catch(error => console.log(error))
-
+ 
         axios.get(`http://localhost:8080/getCompletedOrderList?seq=${seq}`)
              .then(res => res.data.length !== 0 && setCompletedOrderForm(res.data))
              .catch(error => console.log(error));   
@@ -121,25 +105,17 @@ const Products = () => {
     const getSize = (seq, size) => {
         setSize(size);
 
-        axios.get(`http://localhost:8080/getSellOrderListBySize?size=${size}&seq=${seq}`)
-             .then(res => res.data.length !== 0 ? setSellOrderForm(res.data) : setSellOrderForm([{orderPrice: '-'}]))
+        axios.get(`http://localhost:8080/getSellBidsListBySize?size=${size}&seq=${seq}`)
+             .then(res => res.data.length !== 0 ? setSellBidsListForm(res.data) : setSellBidsListForm([{orderPrice: '-'}]))
              .catch(error => console.log(error))    
 
-        axios.get(`http://localhost:8080/getBuyOrderListBySize?size=${size}&seq=${seq}`)
-             .then(res => res.data.length !== 0 ? setBuyOrderForm(res.data) : setBuyOrderForm([{orderPrice: '-'}]))
+        axios.get(`http://localhost:8080/getBuyBidsListBySize?size=${size}&seq=${seq}`)
+             .then(res => res.data.length !== 0 ? setBuyBidsListForm(res.data) : setBuyBidsListForm([{orderPrice: '-'}]))
              .catch(error => console.log(error))
 
         axios.get(`http://localhost:8080/getCompletedOrderListBySize?size=${size}&seq=${seq}`)
              .then(res => res.data.length !== 0 ? setCompletedOrderForm(res.data) : setCompletedOrderForm([{price: '-'}]))
              .catch(error => console.log(error));   
-        
-        axios.get(`http://localhost:8080/getSellBidsListBySize?size=${size}&seq=${seq}`)
-             .then(res => res.data.length !== 0 && setSellBidsListForm(res.data))
-             .catch(error => console.log(error))
-        
-        axios.get(`http://localhost:8080/getBuyBidsListBySize?size=${size}&seq=${seq}`)
-             .then(res => res.data.length !== 0 && setBuyBidsListForm(res.data))
-             .catch(error => console.log(error))
 
         setModalOpen(false)
     }
@@ -147,12 +123,12 @@ const Products = () => {
     const getAll = (seq) => {
         setSize('모든 사이즈');
 
-        axios.get(`http://localhost:8080/getSellOrderList?seq=${seq}`)
-                .then(res => res.data.length !== 0 && setSellOrderForm(res.data))
+        axios.get(`http://localhost:8080/getSellBidsList?seq=${seq}`)
+                .then(res => res.data.length !== 0 && setSellBidsListForm(res.data))
                 .catch(error => console.log(error))    
 
-        axios.get(`http://localhost:8080/getBuyOrderList?seq=${seq}`)
-                .then(res => res.data.length !== 0 && setBuyOrderForm(res.data))
+        axios.get(`http://localhost:8080/getBuyBidsList?seq=${seq}`)
+                .then(res => res.data.length !== 0 && setBuyBidsListForm(res.data))
                 .catch(error => console.log(error))
 
         axios.get(`http://localhost:8080/getCompletedOrderList?seq=${seq}`)
@@ -223,8 +199,8 @@ const Products = () => {
                                     </S.BannerAlertContent>
                                 </S.BannerAlert>
                             </S.ColumnBox>
-                            {modalOpen && <ModalBasic setModalOpen={setModalOpen} setSellOrderForm={setSellOrderForm} setSize={setSize} getSize={getSize} 
-                                                      setBuyOrderForm={setBuyOrderForm} setCompletedOrderForm={setCompletedOrderForm} sizeForm={sizeForm} seq={seq}/> }
+                            {modalOpen && <ModalBasic setModalOpen={setModalOpen} setSellBidsListForm={setSellBidsListForm} setSize={setSize} getSize={getSize} 
+                                                      setBuyBidsListForm={setBuyBidsListForm} setCompletedOrderForm={setCompletedOrderForm} sizeForm={sizeForm} seq={seq}/> }
                             {/* <div className="ico_arrow">
                                 <svg>
                                     <use></use>
@@ -282,7 +258,7 @@ const Products = () => {
                                                 <S.DivisionBtnBoxPrice>
                                                     <S.DivisionBtnBoxAmount>
                                                         <S.DivisionBtnBoxNum>
-                                                            { sellOrderForm[0].orderPrice }
+                                                            { sellBidsListForm[0].price }
                                                         </S.DivisionBtnBoxNum>
                                                         <S.DivisionBtnBoxWon>원</S.DivisionBtnBoxWon>
                                                     </S.DivisionBtnBoxAmount>
@@ -294,7 +270,7 @@ const Products = () => {
                                                 <S.DivisionBtnBoxPrice>
                                                     <S.DivisionBtnBoxAmount>
                                                         <S.DivisionBtnBoxNum>   
-                                                            { buyOrderForm[0].orderPrice }
+                                                            { buyBidsListForm[0].price }
                                                         </S.DivisionBtnBoxNum>
                                                         <S.DivisionBtnBoxWon>원</S.DivisionBtnBoxWon>
                                                     </S.DivisionBtnBoxAmount>
@@ -448,85 +424,43 @@ const Products = () => {
                                                         <S.TabAreaItemLink onClick={ onOpen2 } open={ open8 } name='8'>구매 입찰</S.TabAreaItemLink>
                                                     </S.TabAreaItem>
                                                 </S.TabList>
-                                                <div id="panel1" role="tabpanel" className="tab_content show" span="sales">
-                                                    <div className="table_wrap">
-                                                        <table>
-                                                            <caption>
-                                                                <span className="blind">데이터 테이블</span>
-                                                            </caption>
-                                                            <colgroup> width 추후 추가 
-                                                                <col></col>
-                                                                <col></col>
-                                                                <col></col>
-                                                            </colgroup>
+                                                <S.TabContent>
+                                                    <S.TableWrap>
+                                                        <S.Table>
+                                                            <S.TableCaption>
+                                                                <S.TableBlind>데이터 테이블</S.TableBlind>
+                                                            </S.TableCaption>
+                                                            <S.ColGroup>
+                                                                <col style={{width: "29.76%"}}/>
+                                                                <col style={{width: "36.52%"}}/>
+                                                                <col style={{width: "33.72%"}}/>
+                                                            </S.ColGroup>
                                                             <thead>
                                                                 <tr>
-                                                                    <th className="table_th">사이즈</th>
-                                                                    <th className="table_th align_right">거래가</th>
-                                                                    <th className="table_th align_right">거래일</th>
+                                                                    <S.TableTh>사이즈</S.TableTh>
+                                                                    <S.TableThAlignRight>거래가</S.TableThAlignRight>
+                                                                    <S.TableThAlignRight>거래일</S.TableThAlignRight>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
+                                                            {[...Array(parseInt(5))].map((n, index) => {
+                                                                    return <tr>
                                                                     <td className="table_td">
-                                                                        동적처리
+                                                                        {completedOrderForm[index].size}
                                                                     </td>
                                                                     <td className="table_td align_right">
-                                                                        동적처리
+                                                                        {completedOrderForm[index].size}
                                                                     </td>
                                                                     <td className="table_td align_right">
-                                                                        동적처리
+                                                                        {completedOrderForm[index].size}
                                                                     </td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="table_td">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        동적처리
-                                                                    </td>
-                                                                </tr>
+                                                            })}
                                                             </tbody>
-                                                        </table>
-                                                    </div>
+                                                        </S.Table>
+                                                    </S.TableWrap>
                                                     <a href="#" className="btn outlinegrey fill medium">체결 내역 더보기</a>
-                                                </div>
+                                                </S.TabContent>
                                                 <div id="panel2" role="tabpanel" className="tab_content" span="asks">
                                                 <div className="table_wrap">
                                                         <table>
