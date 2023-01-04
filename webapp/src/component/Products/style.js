@@ -169,6 +169,8 @@ export const BtnSize = styled.a`
     line-height: 24px;
     letter-spacing: -.21px;
     font-weight: 700;
+
+    cursor: pointer;
 `;
 
 export const BtnSizeBtnText = styled.span`
@@ -249,6 +251,8 @@ export const DivisionBtnBoxBtnDivisionBuy = styled.a`
     color: #fff;
     background-color: #ef6253;
     margin-right: 10px;
+
+    cursor: pointer;
 `;
 
 export const DivisionBtnBoxBtnDivisionSell = styled.a`
@@ -262,6 +266,8 @@ export const DivisionBtnBoxBtnDivisionSell = styled.a`
     border-radius: 10px;
     color: #fff;
     background-color: #41b979;
+
+    cursor: pointer;
 `;
 
 export const DivisionBtnBoxTitle = styled.strong`
@@ -317,6 +323,8 @@ export const LargeBtnWish = styled.a`
     border-radius: 10px;
     color: #333;
     margin-top: 12px;
+
+    cursor: pointer;
 `;
 
 export const LargeBtnWishBtnText = styled.span`
@@ -500,6 +508,8 @@ export const SizeLink = styled.a`
 
     font-weight: ${(props) => props.size === props.itemSize && "700"};
     color: #222;
+
+    cursor: pointer;
 `;
 
 export const WrapSales = styled.div`
@@ -558,7 +568,7 @@ export const TableWrap = styled.div`
     padding: 21px 0 20px;
 `;
 
-export const Table = styled.div`
+export const Table = styled.table`
     table-layout: fixed;
     width: 100%;
     border-spacing: 0;
@@ -666,6 +676,40 @@ export const BtnOutLineGrey = styled.a`
     cursor: pointer;
 `;
 
+export const EmptyContent = styled.div`
+    text-align: center;
+    padding: 42px 0 22px;
+
+    display: block;
+`;
+
+export const EmptyBg = styled.div`
+    display: inline-block;
+    vertical-align: top;
+    width: 58px;
+    height: 58px;
+    /* background-image: url(/_nuxt/img/detail_empty_img.106499f.png); */
+    background-repeat: no-repeat;
+    background-size: 58px 58px;
+`;
+
+export const Blind = styled.span`
+    overflow: hidden!important;
+    position: absolute!important;
+    clip: rect(0,0,0,0)!important;
+    width: 1px!important;
+    height: 1px!important;
+    margin: -1px!important;
+    display: hidden;
+`;
+
+export const EmptyText = styled.p`
+    margin-top: 8px;
+    font-size: 13px;
+    letter-spacing: -.07px;
+    color: rgba(34,34,34,.3);
+`;
+
 
 export const ConfirmWrap = styled.div`
     padding-top: 39px;
@@ -720,6 +764,197 @@ export const DropdownContentContent = styled.div`
 export const Emphasis = styled.strong`
     font-weight: bold;
 `;
+
+export const FloatingPrice = styled.div`
+    display: block;
+    top: 99px;
+
+    position: fixed;
+    left: 0;
+    right: 0;
+    padding: 0 40px 15px;
+    background-color: #fff;
+    box-shadow: 4px 0 10px 0 rgb(0 0 0 / 10%);
+    z-index: 1;
+`;
+
+export const FloatingPriceInnerBox = styled.div`
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+`;
+
+export const FloatingPriceProductArea = styled.div`
+    padding-right: 40px;
+
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+`;
+
+export const FloatingPriceProductThumb = styled.div`
+    overflow: hidden;
+    -webkit-box-flex: 0;
+    flex: none;
+    margin-right: 12px;
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+
+    display: block;
+`;
+
+export const PictureProductImg = styled.picture`
+    display: flex;
+`;
+
+export const Image = styled.img`
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    image-rendering: auto;
+`;
+
+export const FloatingProductInfo = styled.div`
+    -webkit-box-flex: 1;
+    flex: 1;
+
+    display: block;
+`;
+
+export const FloatingProductName = styled.p`
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    line-height: 18px;
+    font-size: 15px;
+`;
+
+export const FloatingProductTranslatedName = styled.p`
+    line-height: 14px;
+    margin-top: 4px;
+    font-size: 12px;
+    letter-spacing: -.06px;
+    color: rgba(34,34,34,.5);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`;
+
+export const FloatingProductBtnArea = styled.div`
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 560px;
+    height: 50px;
+`;
+
+export const FloatingBtnOutLineGrey = styled.div`
+    width: 160px;
+
+    -webkit-box-flex: 0;
+    flex: none;
+    height: inherit;
+    line-height: 48px;
+    margin-right: 8px;
+    border-radius: 10px;
+
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border: 1px solid #ebebeb;
+    color: #333;
+`;
+
+export const WishCountNum = styled.span`
+    margin-left: 4px;
+
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: normal;
+`;
+
+export const FloatingPriceDivisionBtnBox = styled.div`
+    -webkit-box-flex: 1;
+    flex: 1;
+    width: 100%;
+    height: inherit;
+    margin-top: 0;
+
+    display: flex;
+`;
+
+export const FloatingPriceDivisionBuy = styled.a`
+    border-radius: 10px;
+
+    background-color: #ef6253;
+
+    position: relative;
+    display: inline-flex;
+    -webkit-box-flex: 1;
+    flex: 1;
+    -webkit-box-align: center;
+    align-items: center;
+    color: #fff;
+
+    cursor: pointer;
+
+    width: 192px;
+    height: 50px;
+`;
+
+export const FloatingPriceTitle = styled.strong`
+    width: 44px;
+    font-size: 15px;
+    letter-spacing: -.15px;
+
+    text-align: center;
+
+    font-weight: bold;
+`;
+
+export const FloatingPriceBuyPrice = styled.div`
+    margin-left: 10px;
+    line-height: 15px;
+
+    color: #fff;
+`;
+
+export const FloatingPriceBtnDivisionSell = styled.a`
+    margin-left: 8px;
+
+    border-radius: 10px;
+
+    background-color: #41b979;
+
+    position: relative;
+    display: inline-flex;
+    -webkit-box-flex: 1;
+    flex: 1;
+    -webkit-box-align: center;
+    align-items: center;
+    color: #fff;
+
+    cursor: pointer;
+
+    width: 192px;
+    height: 50px;
+`;
+
+export const FloatingPriceSellPrice = styled.div`
+    margin-left: 10px;
+    line-height: 15px;
+
+    color: #fff;
+`;
+
 
 export const ThumbArea = styled.div`
     float: left;

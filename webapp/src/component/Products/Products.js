@@ -1,3 +1,4 @@
+import { ResponsiveLine } from '@nivo/line'
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
 import ModalBasic from './ModalBasic';
@@ -5,14 +6,13 @@ import * as S from './style';
 import GlobalStyle from './GlobalStyle';
 import { useNavigate, useParams } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
+import CompletedOrderTable from "./table/CompletedOrderTable";
+import SellBidsTable from "./table/SellBidsTable";
+import BuyBidsTable from "./table/BuyBidsTable";
+import EmptyTable from "./table/EmptyTable";
+import Graph from './Graph';
 
 const Products = () => {
-
-    const time = (a) => {
-        var date = new Date(a)
-        var b = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate()
-        return b
-    }
 
     const [open1, setOpen1] = useState(true)
     const [open2, setOpen2] = useState(false)
@@ -69,7 +69,7 @@ const Products = () => {
     const OpenDrop = () => {  
         setDropdown(!dropdown);
         console.log(completedOrderForm)
-        console.log(completedOrderForm[0].size)
+        console.log(completedOrderForm.length)
         
     }
     const [dropdown1, setDropdown1] = useState(true);
@@ -114,11 +114,11 @@ const Products = () => {
         setSize(size);
 
         axios.get(`http://localhost:8080/getSellBidsListBySize?size=${size}&seq=${seq}`)
-             .then(res => res.data.length !== 0 ? setSellBidsListForm(res.data) : setSellBidsListForm([{orderPrice: '-'}]))
+             .then(res => res.data.length !== 0 ? setSellBidsListForm(res.data) : setSellBidsListForm([{price: '-'}]))
              .catch(error => console.log(error))    
 
         axios.get(`http://localhost:8080/getBuyBidsListBySize?size=${size}&seq=${seq}`)
-             .then(res => res.data.length !== 0 ? setBuyBidsListForm(res.data) : setBuyBidsListForm([{orderPrice: '-'}]))
+             .then(res => res.data.length !== 0 ? setBuyBidsListForm(res.data) : setBuyBidsListForm([{price: '-'}]))
              .catch(error => console.log(error))
 
         axios.get(`http://localhost:8080/getCompletedOrderListBySize?size=${size}&seq=${seq}`)
@@ -132,15 +132,15 @@ const Products = () => {
         setSize('모든 사이즈');
 
         axios.get(`http://localhost:8080/getSellBidsList?seq=${seq}`)
-                .then(res => res.data.length !== 0 && setSellBidsListForm(res.data))
+                .then(res => res.data.length !== 0 ? setSellBidsListForm(res.data) : setSellBidsListForm([{price: '-'}]))
                 .catch(error => console.log(error))    
 
         axios.get(`http://localhost:8080/getBuyBidsList?seq=${seq}`)
-                .then(res => res.data.length !== 0 && setBuyBidsListForm(res.data))
+                .then(res => res.data.length !== 0 ? setBuyBidsListForm(res.data) : setBuyBidsListForm([{price: '-'}]))
                 .catch(error => console.log(error))
 
         axios.get(`http://localhost:8080/getCompletedOrderList?seq=${seq}`)
-                .then(res => res.data.length !== 0 && setCompletedOrderForm(res.data))
+                .then(res => res.data.length !== 0 ? setCompletedOrderForm(res.data) : setCompletedOrderForm([{price: '-'}]))
                 .catch(error => console.log(error));    
         
         setModalOpen(false)
@@ -207,8 +207,7 @@ const Products = () => {
                                     </S.BannerAlertContent>
                                 </S.BannerAlert>
                             </S.ColumnBox>
-                            {modalOpen && <ModalBasic setModalOpen={setModalOpen} setSellBidsListForm={setSellBidsListForm} setSize={setSize} getSize={getSize} 
-                                                      setBuyBidsListForm={setBuyBidsListForm} setCompletedOrderForm={setCompletedOrderForm} sizeForm={sizeForm} seq={seq}/> }
+                            {modalOpen && <ModalBasic setModalOpen={setModalOpen} getSize={getSize} getAll={getAll} sizeForm={sizeForm} seq={seq}/> }
                             {/* <div className="ico_arrow">
                                 <svg>
                                     <use></use>
@@ -354,7 +353,7 @@ const Products = () => {
                                                                 <S.SizeList>
                                                                     <S.SizeItem>
                                                                         <S.SizeLink size={size} itemSize={'모든 사이즈'} onClick={(e) => {getAll(seq); setOpenLayer(true);}}>
-                                                                            {isOneSize ? 'ONE SIZE' : size}
+                                                                            {isOneSize ? 'ONE SIZE' : '모든 사이즈'}
                                                                         </S.SizeLink>
                                                                     </S.SizeItem>
                                                                     {   
@@ -392,12 +391,13 @@ const Products = () => {
                                                         <S.TabAreaItemLink onClick={ onOpen } open={ open5 } name='5'>전체</S.TabAreaItemLink>
                                                     </S.TabAreaItem>
                                                 </S.TabList>
-                                                {/* <div id="sales_panel1" role="tabpanel" className="tab_content show" span="1m">
+    
+                                                <div id="sales_panel1" role="tabpanel" className="tab_content show" span="1m">
                                                     <div className="graph">
-                                                        <canvas></canvas>
+                                                        <Graph></Graph>
                                                     </div>
                                                 </div>
-                                                <div id="sales_panel2" role="tabpanel" className="tab_content" span="3m">
+                                                {/* <div id="sales_panel2" role="tabpanel" className="tab_content" span="3m">
                                                     <div className="graph">
                                                         <canvas></canvas>
                                                     </div>
@@ -434,267 +434,216 @@ const Products = () => {
                                                 </S.TabList>
                                                 <S.TabContent open={ open6 }>
                                                     <S.TableWrap>
-                                                        <S.Table>
-                                                            <S.TableCaption>
-                                                                <S.TableBlind>데이터 테이블</S.TableBlind>
-                                                            </S.TableCaption>
-                                                            <S.ColGroup>
-                                                                <col style={{width: "29.76%"}}/>
-                                                                <col style={{width: "36.52%"}}/>
-                                                                <col style={{width: "33.72%"}}/>
-                                                            </S.ColGroup>
-                                                            <thead>
-                                                                <tr>
-                                                                    <S.TableTh>사이즈</S.TableTh>
-                                                                    <S.TableThAlignRight>거래가</S.TableThAlignRight>
-                                                                    <S.TableThAlignRight>거래일</S.TableThAlignRight>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            {[...Array(parseInt(5))].map((n, index) => {
-                                                                    return <tr key={index}>
-                                                                    <S.TableTd>
-                                                                        {completedOrderForm.length > index ? completedOrderForm[index].size : '-'}
-                                                                    </S.TableTd>
-                                                                    <S.TableTdAlignRight>
-                                                                        {completedOrderForm.length > index ? completedOrderForm[index].price.toLocaleString('ko-KR')+'원' : '-'}
-                                                                    </S.TableTdAlignRight>
-                                                                    <S.TableTdAlignRight>
-                                                                        {completedOrderForm.length > index ? time(completedOrderForm[index].tradeDate) : '-'}
-                                                                    </S.TableTdAlignRight>
-                                                                </tr>
-                                                            })}
-                                                            </tbody>
-                                                        </S.Table>
+                                                        {completedOrderForm[0].price !== '-' ? <CompletedOrderTable completedOrderForm={completedOrderForm}/> : <EmptyTable word={'체결된 거래'}/>}
                                                     </S.TableWrap>
-                                                    <S.BtnOutLineGrey>체결 내역 더보기</S.BtnOutLineGrey>
+                                                    {completedOrderForm[0].price !== '-' && <S.BtnOutLineGrey>체결 내역 더보기</S.BtnOutLineGrey>}
                                                 </S.TabContent>
                                                 <S.TabContent open={ open7 }>
                                                     <S.TableWrap>
-                                                        <S.Table>
-                                                            <S.TableCaption>
-                                                                <S.TableBlind>데이터 테이블</S.TableBlind>
-                                                            </S.TableCaption>
-                                                            <S.ColGroup>
-                                                                <col style={{width: "29.76%"}}/>
-                                                                <col style={{width: "36.52%"}}/>
-                                                                <col style={{width: "33.72%"}}/>
-                                                            </S.ColGroup>
-                                                            <thead>
-                                                                <tr>
-                                                                    <S.TableTh>사이즈</S.TableTh>
-                                                                    <S.TableThAlignRight>판매 희망가</S.TableThAlignRight>
-                                                                    <S.TableThAlignRight>수량</S.TableThAlignRight>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            {[...Array(parseInt(5))].map((n, index) => {
-                                                                    return <tr key={index}>
-                                                                    <S.TableTd>
-                                                                        {sellBidsListForm.length > index ? sellBidsListForm[index].size : '-'}
-                                                                    </S.TableTd>
-                                                                    <S.TableTdAlignRight>
-                                                                        {sellBidsListForm.length > index ? sellBidsListForm[index].price.toLocaleString('ko-KR')+'원' : '-'}
-                                                                    </S.TableTdAlignRight>
-                                                                    <S.TableTdAlignRight>
-                                                                        {sellBidsListForm.length > index ? sellBidsListForm[index].count : '-'}
-                                                                    </S.TableTdAlignRight>
-                                                                </tr>
-                                                            })}
-                                                            </tbody>
-                                                        </S.Table>
+                                                        {sellBidsListForm[0].price !== '-' ? <SellBidsTable sellBidsListForm={sellBidsListForm}/> : <EmptyTable word={'판매 희망가'}/>}
                                                     </S.TableWrap>
-                                                    <S.BtnOutLineGrey>입찰 내역 더보기</S.BtnOutLineGrey>
+                                                    {sellBidsListForm[0].price !== '-' && <S.BtnOutLineGrey>입찰 내역 더보기</S.BtnOutLineGrey>}
                                                 </S.TabContent>
                                                 <S.TabContent open={ open8 }>
                                                     <S.TableWrap>
-                                                        <S.Table>
-                                                            <S.TableCaption>
-                                                                <S.TableBlind>데이터 테이블</S.TableBlind>
-                                                            </S.TableCaption>
-                                                            <S.ColGroup>
-                                                                <col style={{width: "29.76%"}}/>
-                                                                <col style={{width: "36.52%"}}/>
-                                                                <col style={{width: "33.72%"}}/>
-                                                            </S.ColGroup>
-                                                            <thead>
-                                                                <tr>
-                                                                    <S.TableTh>사이즈</S.TableTh>
-                                                                    <S.TableThAlignRight>구매 희망가</S.TableThAlignRight>
-                                                                    <S.TableThAlignRight>수량</S.TableThAlignRight>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            {[...Array(parseInt(5))].map((n, index) => {
-                                                                    return <tr key={index}>
-                                                                    <S.TableTd>
-                                                                        {buyBidsListForm.length > index ? buyBidsListForm[index].size : '-'}
-                                                                    </S.TableTd>
-                                                                    <S.TableTdAlignRight>
-                                                                        {buyBidsListForm.length > index ? buyBidsListForm[index].price.toLocaleString('ko-KR')+'원' : '-'}
-                                                                    </S.TableTdAlignRight>
-                                                                    <S.TableTdAlignRight>
-                                                                        {buyBidsListForm.length > index ? buyBidsListForm[index].count : '-'}
-                                                                    </S.TableTdAlignRight>
-                                                                </tr>
-                                                            })}
-                                                            </tbody>
-                                                        </S.Table>
+                                                        {buyBidsListForm[0].price !== '-' ? <BuyBidsTable buyBidsListForm={buyBidsListForm}/> : <EmptyTable word={'구매 희망가'}/>}   
                                                     </S.TableWrap>
-                                                    <S.BtnOutLineGrey>입찰 내역 더보기</S.BtnOutLineGrey>
+                                                    {buyBidsListForm[0].price !== '-' && <S.BtnOutLineGrey>입찰 내역 더보기</S.BtnOutLineGrey>}
                                                 </S.TabContent>
                                             </S.TabArea>
                                         </S.WrapBids>
                                     </S.ProductSalesGraph>
-                                </div>
-                                <div>
-                                    <S.ConfirmWrap>
-                                        <S.ConfirmWrapConfirmTitle>구매 전 꼭 확인해주세요</S.ConfirmWrapConfirmTitle>
-                                        <S.ConfirmWrapConfirmContemt>
-                                            <ul className="dropdown_list">
-                                                <li>
-                                                    <div className="dropdown">
-                                                        <S.DropdownHead onClick={ OpenDrop }>
-                                                            <S.DropdownHeadTitle>배송 기간 안내</S.DropdownHeadTitle>
-                                                            {/* <svg>
-                                                                <use></use>
-                                                            </svg> */}
-                                                        </S.DropdownHead>
-                                                        <S.DropdownContent hidden={dropdown}>
-                                                            <S.DropdownContentContent>
-                                                                <div className="content_box">
-                                                                    <div className="emphasis_box">
-                                                                        <S.Emphasis>
-                                                                            "크림은 최대한 빠르게 불라불라 속도에 차이있음"
-                                                                        </S.Emphasis>
+                                    <div>
+                                        <S.ConfirmWrap>
+                                            <S.ConfirmWrapConfirmTitle>구매 전 꼭 확인해주세요</S.ConfirmWrapConfirmTitle>
+                                            <S.ConfirmWrapConfirmContemt>
+                                                <ul className="dropdown_list">
+                                                    <li>
+                                                        <div className="dropdown">
+                                                            <S.DropdownHead onClick={ OpenDrop }>
+                                                                <S.DropdownHeadTitle>배송 기간 안내</S.DropdownHeadTitle>
+                                                                {/* <svg>
+                                                                    <use></use>
+                                                                </svg> */}
+                                                            </S.DropdownHead>
+                                                            <S.DropdownContent hidden={dropdown}>
+                                                                <S.DropdownContentContent>
+                                                                    <div className="content_box">
+                                                                        <div className="emphasis_box">
+                                                                            <S.Emphasis>
+                                                                                "크림은 최대한 빠르게 불라불라 속도에 차이있음"
+                                                                            </S.Emphasis>
+                                                                        </div>
+                                                                        <ul className="content_list" style={{ marginTop: "20px" }}>
+                                                                            <li className="content_item">
+                                                                                <p className="title_txt"> [빠른배송 구매]</p>
+                                                                            </li>
+                                                                            <li className="content_item">
+                                                                                <p className="main_txt" style={{ marginTop: "20px" }}> "판매자가 어쩌구 구매 가능합니다" </p>
+                                                                            </li>
+                                                                            <li className="content_item">
+                                                                                <p className="main_txt"> 
+                                                                                    "오늘오후 어쩌구 출고일 변경"
+                                                                                    <a href="#" className="txt_link">빠른배송 안내</a> 
+                                                                                </p>
+                                                                            </li>
+                                                                        </ul>
                                                                     </div>
-                                                                    <ul className="content_list" style={{ marginTop: "20px" }}>
-                                                                        <li className="content_item">
-                                                                            <p className="title_txt"> [빠른배송 구매]</p>
-                                                                        </li>
-                                                                        <li className="content_item">
-                                                                            <p className="main_txt" style={{ marginTop: "20px" }}> "판매자가 어쩌구 구매 가능합니다" </p>
-                                                                        </li>
-                                                                        <li className="content_item">
-                                                                            <p className="main_txt"> 
-                                                                                "오늘오후 어쩌구 출고일 변경"
-                                                                                <a href="#" className="txt_link">빠른배송 안내</a> 
-                                                                            </p>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </S.DropdownContentContent>
-                                                        </S.DropdownContent>
+                                                                </S.DropdownContentContent>
+                                                            </S.DropdownContent>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="dropdown">
+                                                            <S.DropdownHead onClick={ OpenDrop1 }>
+                                                                <S.DropdownHeadTitle>검수 안내</S.DropdownHeadTitle>
+                                                                {/* <svg>
+                                                                    <use></use>
+                                                                </svg> */}
+                                                            </S.DropdownHead>
+                                                            <S.DropdownContent hidden={dropdown1}>
+                                                                <S.DropdownContentContent>
+                                                                    <div className="content_box">
+                                                                        <div className="emphasis_box">
+                                                                            <S.Emphasis>
+                                                                                "크림은 책임없음"
+                                                                            </S.Emphasis>
+                                                                        </div>
+                                                                        <ul className="content_list" style={{ marginTop: "20px" }}>
+                                                                            <li className="content_item">
+                                                                                <p className="title_txt"> [검수정책 알아보기]</p>
+                                                                            </li>
+                                                                            <li className="content_item">
+                                                                                <p className="main_txt" style={{ marginTop: "20px" }}> "판매자가 어쩌구 구매 가능합니다" </p>
+                                                                            </li>
+                                                                            <li className="content_item">
+                                                                                <p className="main_txt"> 
+                                                                                    "오늘오후 어쩌구 출고일 변경"
+                                                                                    <a href="#" className="txt_link">빠른배송 안내</a> 
+                                                                                </p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </S.DropdownContentContent>
+                                                            </S.DropdownContent>
+                                                        </div>
+                                                    </li>                                                               
+                                                    <li>
+                                                        <div className="dropdown">
+                                                            <S.DropdownHead onClick={ OpenDrop2 }>
+                                                                <S.DropdownHeadTitle>구매/환불/취소/교환 안내</S.DropdownHeadTitle>
+                                                                {/* <svg>
+                                                                    <use></use>
+                                                                </svg> */}
+                                                            </S.DropdownHead>
+                                                            <S.DropdownContent hidden={dropdown2}>
+                                                                <S.DropdownContentContent>
+                                                                    <div className="content_box">
+                                                                        <div className="emphasis_box">
+                                                                            <S.Emphasis>
+                                                                                "크림은 책임없음"
+                                                                            </S.Emphasis>
+                                                                        </div>
+                                                                        <ul className="content_list" style={{ marginTop: "20px" }}>
+                                                                            <li className="content_item">
+                                                                                <p className="title_txt"> [검수정책 알아보기]</p>
+                                                                            </li>
+                                                                            <li className="content_item">
+                                                                                <p className="main_txt" style={{ marginTop: "20px" }}> "판매자가 어쩌구 구매 가능합니다" </p>
+                                                                            </li>
+                                                                            <li className="content_item">
+                                                                                <p className="main_txt"> 
+                                                                                    "오늘오후 어쩌구 출고일 변경"
+                                                                                    <a href="#" className="txt_link">빠른배송 안내</a> 
+                                                                                </p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </S.DropdownContentContent>
+                                                            </S.DropdownContent>
+                                                        </div>
+                                                    </li>                                                               
+                                                </ul>
+                                            </S.ConfirmWrapConfirmContemt>
+                                        </S.ConfirmWrap>
+                                        <div className="point_guide" style={{paddingTop: "40px"}}>
+                                            <ul className="guide_list">
+                                                <li className="guide_item" style={{overflow: "hidden"}}>
+                                                    <S.ThumbArea>
+                                                        <S.ThumbAreaImg></S.ThumbAreaImg>
+                                                    </S.ThumbArea>
+                                                    <div className="text_area" style={{overflow: "hidden"}}>
+                                                        <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
+                                                        <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
                                                     </div>
                                                 </li>
-                                                <li>
-                                                    <div className="dropdown">
-                                                        <S.DropdownHead onClick={ OpenDrop1 }>
-                                                            <S.DropdownHeadTitle>검수 안내</S.DropdownHeadTitle>
-                                                            {/* <svg>
-                                                                <use></use>
-                                                            </svg> */}
-                                                        </S.DropdownHead>
-                                                        <S.DropdownContent hidden={dropdown1}>
-                                                            <S.DropdownContentContent>
-                                                                <div className="content_box">
-                                                                    <div className="emphasis_box">
-                                                                        <S.Emphasis>
-                                                                            "크림은 책임없음"
-                                                                        </S.Emphasis>
-                                                                    </div>
-                                                                    <ul className="content_list" style={{ marginTop: "20px" }}>
-                                                                        <li className="content_item">
-                                                                            <p className="title_txt"> [검수정책 알아보기]</p>
-                                                                        </li>
-                                                                        <li className="content_item">
-                                                                            <p className="main_txt" style={{ marginTop: "20px" }}> "판매자가 어쩌구 구매 가능합니다" </p>
-                                                                        </li>
-                                                                        <li className="content_item">
-                                                                            <p className="main_txt"> 
-                                                                                "오늘오후 어쩌구 출고일 변경"
-                                                                                <a href="#" className="txt_link">빠른배송 안내</a> 
-                                                                            </p>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </S.DropdownContentContent>
-                                                        </S.DropdownContent>
+                                                <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
+                                                    <S.ThumbArea>
+                                                        <S.ThumbAreaImg></S.ThumbAreaImg>
+                                                    </S.ThumbArea>
+                                                    <div className="text_area" style={{overflow: "hidden"}}>
+                                                        <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
+                                                        <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
                                                     </div>
-                                                </li>                                                               
-                                                <li>
-                                                    <div className="dropdown">
-                                                        <S.DropdownHead onClick={ OpenDrop2 }>
-                                                            <S.DropdownHeadTitle>구매/환불/취소/교환 안내</S.DropdownHeadTitle>
-                                                            {/* <svg>
-                                                                <use></use>
-                                                            </svg> */}
-                                                        </S.DropdownHead>
-                                                        <S.DropdownContent hidden={dropdown2}>
-                                                            <S.DropdownContentContent>
-                                                                <div className="content_box">
-                                                                    <div className="emphasis_box">
-                                                                        <S.Emphasis>
-                                                                            "크림은 책임없음"
-                                                                        </S.Emphasis>
-                                                                    </div>
-                                                                    <ul className="content_list" style={{ marginTop: "20px" }}>
-                                                                        <li className="content_item">
-                                                                            <p className="title_txt"> [검수정책 알아보기]</p>
-                                                                        </li>
-                                                                        <li className="content_item">
-                                                                            <p className="main_txt" style={{ marginTop: "20px" }}> "판매자가 어쩌구 구매 가능합니다" </p>
-                                                                        </li>
-                                                                        <li className="content_item">
-                                                                            <p className="main_txt"> 
-                                                                                "오늘오후 어쩌구 출고일 변경"
-                                                                                <a href="#" className="txt_link">빠른배송 안내</a> 
-                                                                            </p>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </S.DropdownContentContent>
-                                                        </S.DropdownContent>
+                                                </li>
+                                                <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
+                                                    <S.ThumbArea>
+                                                        <S.ThumbAreaImg></S.ThumbAreaImg>
+                                                    </S.ThumbArea>
+                                                    <div className="text_area" style={{overflow: "hidden"}}>
+                                                        <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
+                                                        <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
                                                     </div>
-                                                </li>                                                               
+                                                </li>
                                             </ul>
-                                        </S.ConfirmWrapConfirmContemt>
-                                    </S.ConfirmWrap>
-                                    <div className="point_guide" style={{paddingTop: "40px"}}>
-                                        <ul className="guide_list">
-                                            <li className="guide_item" style={{overflow: "hidden"}}>
-                                                <S.ThumbArea>
-                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
-                                                </S.ThumbArea>
-                                                <div className="text_area" style={{overflow: "hidden"}}>
-                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
-                                                </div>
-                                            </li>
-                                            <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
-                                                <S.ThumbArea>
-                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
-                                                </S.ThumbArea>
-                                                <div className="text_area" style={{overflow: "hidden"}}>
-                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
-                                                </div>
-                                            </li>
-                                            <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
-                                                <S.ThumbArea>
-                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
-                                                </S.ThumbArea>
-                                                <div className="text_area" style={{overflow: "hidden"}}>
-                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                        </div>
+                                        <S.MeditationNoticeProduct>
+                                        크림(주)는 통신판매 중개자로서 통신판매의 당사자가 아닙니다. 본 상품은 개별판매자가 등록한 상품으로 상품, 상품정보, 거래에 관한 의무와 책임은 각 판매자에게 있습니다. 단, 거래과정에서 검수하고 보증하는 내용에 대한 책임은 크림(주)에 있습니다.
+                                        </S.MeditationNoticeProduct>
                                     </div>
-                                    <S.MeditationNoticeProduct>
-                                    크림(주)는 통신판매 중개자로서 통신판매의 당사자가 아닙니다. 본 상품은 개별판매자가 등록한 상품으로 상품, 상품정보, 거래에 관한 의무와 책임은 각 판매자에게 있습니다. 단, 거래과정에서 검수하고 보증하는 내용에 대한 책임은 크림(주)에 있습니다.
-                                    </S.MeditationNoticeProduct>
                                 </div>
+                                <S.FloatingPrice>
+                                    <S.FloatingPriceInnerBox>
+                                        <S.FloatingPriceProductArea>
+                                            <S.FloatingPriceProductThumb>
+                                                <S.PictureProductImg>
+                                                    <S.Image src={form.img} width="65px" height="65px"></S.Image>
+                                                </S.PictureProductImg>
+                                            </S.FloatingPriceProductThumb>
+                                            <S.FloatingProductInfo>
+                                                <S.FloatingProductName>{form.title}</S.FloatingProductName>
+                                                <S.FloatingProductTranslatedName>{form.subTitle}</S.FloatingProductTranslatedName>
+                                            </S.FloatingProductInfo>
+                                        </S.FloatingPriceProductArea>
+                                        <S.FloatingProductBtnArea>
+                                            <S.FloatingBtnOutLineGrey>
+                                                <S.WishCountNum>3.1만</S.WishCountNum>
+                                            </S.FloatingBtnOutLineGrey>
+                                            <S.FloatingPriceDivisionBtnBox>
+                                                <S.FloatingPriceDivisionBuy onClick={ buyNavigate }>
+                                                    <S.FloatingPriceTitle>구매</S.FloatingPriceTitle>
+                                                    <S.FloatingPriceBuyPrice>
+                                                        <S.DivisionBtnBoxAmount>
+                                                            <S.DivisionBtnBoxNum>{ sellBidsListForm[0].price.toLocaleString('ko-KR') }</S.DivisionBtnBoxNum>
+                                                            <S.DivisionBtnBoxWon>원</S.DivisionBtnBoxWon>
+                                                        </S.DivisionBtnBoxAmount>
+                                                        <S.DivisionBtnBoxDesc>즉시 구매가</S.DivisionBtnBoxDesc>
+                                                    </S.FloatingPriceBuyPrice>
+                                                </S.FloatingPriceDivisionBuy>
+                                                <S.FloatingPriceBtnDivisionSell onClick={ sellNavigate }>
+                                                    <S.FloatingPriceTitle>판매</S.FloatingPriceTitle>
+                                                        <S.FloatingPriceSellPrice>
+                                                            <S.DivisionBtnBoxAmount>
+                                                                <S.DivisionBtnBoxNum>{ buyBidsListForm[0].price.toLocaleString('ko-KR')}</S.DivisionBtnBoxNum>
+                                                                <S.DivisionBtnBoxWon>원</S.DivisionBtnBoxWon>
+                                                            </S.DivisionBtnBoxAmount>
+                                                            <S.DivisionBtnBoxDesc>즉시 판매가</S.DivisionBtnBoxDesc>
+                                                        </S.FloatingPriceSellPrice>
+                                                </S.FloatingPriceBtnDivisionSell>
+                                            </S.FloatingPriceDivisionBtnBox>
+                                        </S.FloatingProductBtnArea>
+                                    </S.FloatingPriceInnerBox>
+                                </S.FloatingPrice>
                             </div>                           
                         </S.Column>
                     </S.ColumnBind>
@@ -796,12 +745,8 @@ const Products = () => {
                                     </div>                                                 */}
                 </S.Content>
                 <div className="other_product_area">
-
                 </div>
             </S.ContainerDetail>
-            <div className="footer floation_price"> {/*나중에 위에 달라붙는 가격표 만들기*/}
-
-            </div>
         </S.ProductsWrapper>
         </>
     );

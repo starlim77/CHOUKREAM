@@ -2,13 +2,13 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import * as S from './style';
 
-const ModalBasic = ({ setModalOpen, seq, setSellBidsListForm, setBuyBidsListForm, setCompletedOrderForm, setSize, getSize, sizeForm, getAll }) => {
+const ModalBasic = ({ setModalOpen, seq, getSize, sizeForm, getAll }) => {
 
     const [allSize, setAllSize] = useState('-')
 
     useEffect(() => {
         axios.get(`http://localhost:8080/getSellOrderList?seq=${seq}`)
-             .then(res => res.data.length !== 0 && setAllSize(res.data[0].orderPrice))
+             .then(res => res.data.length !== 0 ? setAllSize(res.data[0].orderPrice) : setAllSize('구매 입찰'))
              .catch(error => console.log(error)) 
     }, []);
 
@@ -28,8 +28,8 @@ const ModalBasic = ({ setModalOpen, seq, setSellBidsListForm, setBuyBidsListForm
                     <S.SelectArea>
                         <S.SelectList>
                             <S.SelectItem>
-                                <S.SelectLinkBuy>
-                                    <S.LinkInner onClick={e => getAll(seq)}>
+                                <S.SelectLinkBuy onClick={e => getAll(seq)}>
+                                    <S.LinkInner>
                                         <S.Size>모든 사이즈</S.Size>
                                         <S.Price>{ allSize }</S.Price>
                                         {/* <S.PriceNull>{item.price === null && '구매 입찰'}</S.PriceNull> */}
