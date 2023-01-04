@@ -1,20 +1,48 @@
 import styled from "styled-components";
 
-export const BaseWrapper = styled.div`
-    
-    text-align: center;
+export const WholeWrapper=styled.div`
+   
 `
-export const BaseDiv = styled.div`
-    width:600px;
-    height:700px;
-    border-left:1px solid rgba(236,236,236);
-    border-right:1px solid rgba(236,236,236);
+export const BaseBody = styled.div`
+    display: flex;
+    width:1220px;
+    margin:40px auto 0px auto;
+   
+`
+
+export const ImgBody = styled.div`
+    width: 560px; 
+    height: 820px;
+    padding:  0 40px 0  0;
     text-align: center;
-    display: inline-block;
+    /* border: 1px solid black; */
+`;
+
+// export const BaseDiv = styled.div`
+//     width:600px;
+//     height:700px;
+//     border-left:1px solid rgba(236,236,236);
+//     border-right:1px solid rgba(236,236,236);
+//     text-align: center;
+//     display: inline-block;
+// `;
+
+export const BaseDiv = styled.div`
+     width: 560px;
+    height: 820px;
+    padding: 0 0 0 40px;
+
+    border-left: 1px solid black;
+
+    overflow-y: scroll;
+    ::-webkit-scrollbar{
+        display: none;
+    }
 `;
 
 export const BottomDiv = styled.div`
-    width:1200px;
+    width:1220px;
+    margin:auto;
     
 `
 
@@ -113,11 +141,11 @@ export const ItemSpan=styled.span`
 export const ItemContents=styled.pre`
     border:1px solid rgba(236,236,236);
     width:560px;
-    height:250px;
+    min-height:250px;
     font-size: 20px;
     white-space: pre-wrap;
     word-break: break-all;
-    overflow: auto;
+   // overflow: auto;
 `;
 
 export const ChatButton=styled.button`

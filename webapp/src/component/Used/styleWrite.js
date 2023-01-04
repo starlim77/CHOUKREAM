@@ -27,11 +27,16 @@ export const MainImgP=styled.p`
     position:${props=>props.setPosition?'relative':'none'};
     align-items: center;
     justify-content: center;
+    overflow:hidden;
 `;
 export const MainImg = styled.img`
-    width: ${props=>(props.sizing?"560px":"50px")};
-    height: ${props=>(props.sizing?"560px":"50px")};
+    width: ${props=>(props.sizing?"100%":"50px")};
+    height: ${props=>(props.sizing?"100%":"50px")};
     display:${props=>(props.sizing?"absolute":"")};
+    //1:1비율이 아닌 사진인 경우, 부분적으로만 나타내도록함.
+    //감싸고 있는 태그가 overflow:hidden이 있는 조건.
+    //https://liyang.tistory.com/64?category=965108
+    object-fit: cover;
     :hover{
         cursor: pointer;
     }
@@ -50,11 +55,16 @@ export const SubImgP=styled.p`
     justify-content: center;
     display: ${props=>props.setPosition?"":"flex"};
     position:${props=>props.setPosition?'relative':'none'};
+    overflow: hidden;
 `;
 export const SubImg = styled.img`
-    width: ${props=>props.sizing?"175px":"50px"};
-    height: ${props=>props.sizing?"175px":"50px"};
+    width: ${props=>props.sizing?"100%":"50px"};
+    height: ${props=>props.sizing?"100%":"50px"};
     display:${props=>(props.sizing?"absolute":"")};
+    //1:1비율이 아닌 사진인 경우, 부분적으로만 나타내도록함.
+    //감싸고 있는 태그가 overflow:hidden이 있는 조건.
+    //https://liyang.tistory.com/64?category=965108
+    object-fit: cover;
     :hover{
         cursor: pointer;
     }
@@ -81,7 +91,7 @@ export const DeleteImg = styled.img.attrs({
 `;
 
 // ----------------------------------------------내용 부분
-export const Imformation = styled.div`
+export const Information = styled.div`
     width: 560px;
     height: 820px;
     padding: 0 0 0 40px;

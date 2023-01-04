@@ -1,11 +1,13 @@
 import { integerPropType } from '@mui/utils';
 import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from './styleWrite';
 import tagData from './TagItem';
 
 const UsedWrite = () => {
 
+    const navigate = useNavigate();
     const[form,setForm] = useState({
         title : '',
         productName : '',
@@ -95,7 +97,7 @@ const UsedWrite = () => {
                  .catch(error => console.log(error))
         }
 
-       
+       navigate("/");
         
     }
 
@@ -214,7 +216,7 @@ const UsedWrite = () => {
                 </S.ImgBody>
             
                 
-                <S.Imformation>
+                <S.Information>
                     <S.Necessary>* 필수 입력</S.Necessary>
                     <S.Subject>* 제목</S.Subject>
                     <S.Title type='text' name= 'title' onChange={ onInput }/>
@@ -265,7 +267,7 @@ const UsedWrite = () => {
                     </S.HashTagWriteDiv>
                     
                     <S.WriteBtn onClick={onWrite}>작성 완료</S.WriteBtn>
-                </S.Imformation>
+                </S.Information>
             </S.WriteBody>
         </>
     );
