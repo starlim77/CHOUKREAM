@@ -2,12 +2,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 import * as O from './styles/OrderTypeStyle';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useNavigate, useSearchParams } from 'react-router-dom/dist';
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom/dist';
 
 const BuyBid = ({ clickedBtn }) => {
     const [price, setPrice] = useState();
     const [priceInput, setPriceInput] = useState();
     const navigate = useNavigate();
+    const location = useLocation()
     const [searchParams, setSearchParams] = useSearchParams();
     const size = searchParams.get('size');
 
@@ -33,7 +34,15 @@ const BuyBid = ({ clickedBtn }) => {
     return (
         <O.Bid>
             <O.Text>
-                {clickedBtn === '구매입찰' ? '구매 희망가' : '즉시 구매가'}
+                {clickedBtn === '구매입찰' 
+                    ? '구매 희망가'
+                    : clickedBtn === "즉시구매"
+                    ? '즉시구매가'
+                    :clickedBtn === "판매입찰"
+                    ? "판매희망가"
+                    : clickedBtn === "즉시 판매"
+                    || "즉시판매가"
+                }
             </O.Text>
             <O.PriceInput
                 type="text"

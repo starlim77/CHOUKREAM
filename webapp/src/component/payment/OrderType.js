@@ -6,8 +6,9 @@ import * as O from './styles/OrderTypeStyle';
 
 const OrderType = () => {
     const [searchParams, setSearchParams] = useSearchParams()
-    const type = searchParams.get("type")
-    const [typeKor, setTypeKor] = useState(type === "/sell" ? "판매" : "구매")
+    const location = useLocation();
+    const sellOrBuy = location.pathname.split("/")[1]
+    const [typeKor, setTypeKor] = useState(sellOrBuy === "sell" ? "판매" : "구매")
     const [clickedBtn, setClickedBtn] = useState(`${typeKor}입찰`)
     
     //order type 선택
@@ -30,21 +31,21 @@ const OrderType = () => {
                     </O.DirectPrice>
                     <O.TypeBtn>
                         {
-                            type === "/sell"
+                            sellOrBuy === "sell"
                                 ? clickedBtn === "판매입찰"
-                                    ? <O.AcctiveBtn onClick={onClick} style={{backgroundColor: "rgb(49, 180, 110)"}}>판매입찰</O.AcctiveBtn>
+                                    ? <O.AcctiveBtn onClick={onClick} style={{backgroundColor: "#41b979"}}>판매입찰</O.AcctiveBtn>
                                     : <O.DisabledBtn onClick={onClick} >판매입찰</O.DisabledBtn>
                                 : clickedBtn === "구매입찰"
-                                    ? <O.AcctiveBtn onClick={onClick} >구매입찰</O.AcctiveBtn>
+                                    ? <O.AcctiveBtn onClick={onClick} style={{backgroundColor: "#ef6253"}}>구매입찰</O.AcctiveBtn>
                                     : <O.DisabledBtn onClick={onClick} >구매입찰</O.DisabledBtn>
                         }
                         {
-                            type === "/sell"
+                            sellOrBuy === "sell"
                                 ? clickedBtn === "즉시판매"
-                                    ? <O.AcctiveBtn onClick={onClick} style={{backgroundColor: "rgb(49, 180, 110)"}}>즉시판매</O.AcctiveBtn>
+                                    ? <O.AcctiveBtn onClick={onClick} style={{backgroundColor: "#41b979"}}>즉시판매</O.AcctiveBtn>
                                     : <O.DisabledBtn onClick={onClick} >즉시판매</O.DisabledBtn>
                                 : clickedBtn === "즉시구매"
-                                    ? <O.AcctiveBtn onClick={onClick} >즉시구매</O.AcctiveBtn>
+                                    ? <O.AcctiveBtn onClick={onClick} style={{backgroundColor: "#ef6253)"}}>즉시구매</O.AcctiveBtn>
                                     : <O.DisabledBtn onClick={onClick} >즉시구매</O.DisabledBtn> 
                         }
                     </O.TypeBtn>

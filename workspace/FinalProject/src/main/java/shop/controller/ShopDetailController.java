@@ -13,6 +13,7 @@ import shop.bean.CompletedOrderDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
+import shop.bean.SizeMinDTO;
 import shop.service.ShopDetailService;
 
 @CrossOrigin
@@ -42,15 +43,30 @@ public class ShopDetailController {
 	}
 	
 	@GetMapping(path="getProductSize")
-	public List<ProductSizeDTO> getProductSize(@RequestParam int seq) {
+	public List<SizeMinDTO> getProductSize(@RequestParam int seq) {
 		return shopDetailService.getProductSize(seq);
 	}
 	
-	@GetMapping(path="getProductSizeMin")
-	public Optional<Integer> getProductSizeMin(@RequestParam int seq,@RequestParam String size) {
-		System.out.println(shopDetailService.getProductSizeMin(seq, size));
-		return shopDetailService.getProductSizeMin(seq, size);
+	@GetMapping(path="getSellOrderListBySize")
+	public List<OrderDTO> getSellOrderListBySize(@RequestParam int seq,@RequestParam String size) {
+		return shopDetailService.getSellOrderListBySize(seq, size);  
 	}
+	
+	@GetMapping(path="getBuyOrderListBySize")
+	public List<OrderDTO> getBuyOrderListBySize(@RequestParam int seq,@RequestParam String size) {
+		return shopDetailService.getBuyOrderListBySize(seq, size);
+	}
+	
+	@GetMapping(path="getCompletedOrderListBySize")
+	public List<CompletedOrderDTO> getCompletedOrderListBySize(@RequestParam int seq,@RequestParam String size) {
+		return shopDetailService.getCompletedOrderListBySize(seq, size);
+	}
+	
+//	@GetMapping(path="getProductSizeMin")
+//	public Optional<Integer> getProductSizeMin(@RequestParam int seq,@RequestParam String size) {
+//		System.out.println(shopDetailService.getProductSizeMin(seq, size));
+//		return shopDetailService.getProductSizeMin(seq, size);
+//	}
 	
 	
 	

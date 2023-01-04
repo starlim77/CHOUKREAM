@@ -14,6 +14,6 @@ public interface ShopService {
 
 	Optional<ProductDTO> getProductBySeq(int seq);
 
-	List<ProductSizeDTO> getSizeList(int productType);
+	List<ProductSizeDTO> findBySeq(int seq);
 	
 }

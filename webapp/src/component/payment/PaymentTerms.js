@@ -1,6 +1,6 @@
 import { faL } from '@fortawesome/free-solid-svg-icons';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, useSearchParams, Link } from 'react-router-dom';
 import Inspection from './Inspection';
 import PayHeader from './PayHeader';
 import Policy from './Policy';
@@ -28,12 +28,13 @@ const PaymentTerms = () => {
     const [isAllChecked, setIsAllChecked] = useState(false)
     const [checkedItem, setCheckedItem] = useState([])
     const navigate = useNavigate()
+    const location = useLocation()
     const [searchParams, setSearchParams] = useSearchParams()
-    const size = searchParams.get("size")
-    const type = searchParams.get("type")
+    const sellOrbuy = location.pathname.split("/")[1] // sell or buy
+    const selectSize = searchParams.get("size")
 
     useEffect(() => {
-        type === "sell" ? setData(sellDataList) : setData(buyDataList)
+        sellOrbuy === "sell" ? setData(sellDataList) : setData(buyDataList)
     }, [])
 
     const onCheck = (e) => {
@@ -60,7 +61,7 @@ const PaymentTerms = () => {
         setIsPolicyOpen(false)
     }
     const onOrderType = () => {
-        navigate(`/orderType?type=${type}&size=${size}`)
+        navigate(`/${sellOrbuy}/orderType?size=${selectSize}`)
     }
 
     return (
@@ -81,8 +82,15 @@ const PaymentTerms = () => {
                                 </S.TermsDiv>)
                         }
                         {
-                            isAllChecked ? <S.BuyBtn onClick={onOrderType}>{type === "/buy" ? "구매" : "판매" }계속</S.BuyBtn> : <S.BuyBtn style={{backgroundColor: "#ebebeb", cursor: 'default'}} disabled>구매 계속</S.BuyBtn>
-                        }
+                            sellOrbuy === "buy" ?
+                                isAllChecked ? 
+                                    <S.BuyBtn onClick={onOrderType}>구매 계속</S.BuyBtn>
+                                    : <S.BuyBtn style={{backgroundColor: "#ebebeb", cursor: 'default'}} disabled>구매 계속</S.BuyBtn>
+                            : sellOrbuy === "sell" &&
+                                isAllChecked ?
+                                    <S.BuyBtn onClick={onOrderType}>판매 계속</S.BuyBtn>
+                                    : <S.BuyBtn style={{backgroundColor: "#ebebeb", cursor: 'default'}} disabled>판매 계속</S.BuyBtn>
+                        }       
                         {isInpectionOpen && <Inspection onInspenctionClose={onInspenctionClose} />}
                         {isPolicyOpen && <Policy onPolicyClose={onPolicyClose}/>}
                     </S.TermBottomUl>

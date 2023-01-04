@@ -11,13 +11,13 @@ export const Container = styled.div`
 `;
 export const Body = styled.div`
     width: 100%;
-    height: 300px;
+    height: 100%;
     border-top: 1px solid #ebebeb;
 `;
 export const BtnWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
     gap: 10px;
     margin: 20px 0;
@@ -25,8 +25,6 @@ export const BtnWrapper = styled.div`
 export const SizeBtn = styled.button`
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
     align-content: center;
     width: 30%;
     height: 55px;

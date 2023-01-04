@@ -49,12 +49,4 @@ public class ShopController {
 		return shopService.getProductBySeq(seq);
 	}
 	
-	@GetMapping("getSizeList")
-	public List<ProductSizeDTO> getSizeList(@RequestParam int productType) {
-		System.out.println("getSizeList");
-		System.out.println(productType);
-		
-		return shopService.getSizeList(productType);
-	}
-	
 }

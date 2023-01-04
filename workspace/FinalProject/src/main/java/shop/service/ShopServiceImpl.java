@@ -37,8 +37,8 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public List<ProductSizeDTO> getSizeList(int productType) {
-		return sizeRepository.findAllByProductType(productType);
+	public List<ProductSizeDTO> findBySeq(int seq) {
+		return sizeRepository.findBySeq(seq);
 	}
 
 	
