@@ -62,11 +62,8 @@ function App() {
                     />
                     <Route path="/join" element={<WriteForm />} />
                 </Route>
-                <Route path="/lookbook" element={<Trending />}>
-                    <Route path="/lookbook/trending" element="" />
-                    {/* <Route path='/detail' element='' /> */}
-                </Route>
-
+                
+                <Route path="/lookbook/trending" element={<Trending />} /> 
                 <Route path="/lookbook/social" element={<Social />} />
                 <Route path="/lookbook/mystyle" element={<Mystyle />} />
                 <Route path="/lookbook/detail" element={<Detail />} />

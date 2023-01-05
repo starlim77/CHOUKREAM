@@ -11,6 +11,7 @@ import * as S from './style';
 import { grey } from '@mui/material/colors';
 import axios from 'axios';
 import Masonry from 'react-masonry-css'
+import { Link } from 'react-router-dom';
 
 const Trending = () => {  
     const[list, setList] =useState([{
@@ -60,7 +61,7 @@ const Trending = () => {
                     <S.TrGridBox key={item.seq}>                     
                         
                             <Card sx={{ width: 250 }}>
-                                <a>                                                       
+                                {/* <Link to = {'lookbook/detail'+item.seq}>                                                        */}
                                 <S.TrGridBoxImg src={'../storage/'+item.storedFileName[0]}></S.TrGridBoxImg>                              
                                 <CardHeader 
                                     avatar={
@@ -70,7 +71,7 @@ const Trending = () => {
                                     }
                                     title= {item.id}                                
                                 />
-                                </a>  
+                                {/* </Link>   */}
                                 <CardContent>       
                                     <Typography variant="body2" color="text.secondary" >
                                     <S.TrTypoDiv>

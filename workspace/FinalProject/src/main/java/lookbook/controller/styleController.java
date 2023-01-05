@@ -45,25 +45,20 @@ public class styleController {
 		
 	}
 	
+	
+
+	
 	//상세에서 댓글 등록기능
 	//@PostMapping("/uploadComment")
 	
-	
-	
 
-	
 
-//
 //	@GetMapping(path="getMyStyleBoardList")
 //	public List<StyleDTO> getMyStyleBoardList() {
 //		return styleService.getMyStyleBoardList();
 //	}
 //	
-//	
-//	@GetMapping(path="getStyleBoardList")
-//	public List<StyleEntity> getStyleBoardList() {
-//		return styleService.getStyleBoardList();
-//	}
-
+	
+	
 	
 }
