@@ -44,38 +44,35 @@ public class UsedItemController {
 		return usedItemService.viewItem(seq);
 	}
 	
-	@GetMapping(path="itemLike")
-	public List<UsedItemLikeDTO> itemLike(@RequestParam int seq){
-		//System.out.println("라이크 찍기"+seq);
-		//List<UsedItemLikeDTO> imsi = usedItemService.itemLike(seq);
-		//System.out.println(imsi);
-		return usedItemService.itemLike(seq);
-		//return usedItemService.itemLike(seq);
-	}
 	
-	@GetMapping(path="itemLike2")
-	public UsedItemLikeDTO itemLike2(@RequestParam int seq){
+	@GetMapping(path="itemLike")
+	public UsedItemLikeDTO itemLike(@RequestParam int seq, @RequestParam String id){
 		//System.out.println("라이크 찍기"+seq);
-		UsedItemLikeDTO imsi = usedItemService.itemLike2(seq);
+		UsedItemLikeDTO imsi = usedItemService.itemLike(seq,id);
 		//System.out.println("임시용 "+imsi);
 		return imsi;
 		//return usedItemService.itemLike(seq);
 	}
 	
-	@GetMapping(path="likeSet")
+	@PostMapping(path="likeSet")
 	public void likeSet(@ModelAttribute UsedItemLikeDTO usedItemLikeDTO){
 		//System.out.println(usedItemLikeDTO);
+		
+		if(usedItemLikeDTO.getUserLike() == null)usedItemLikeDTO.setUserLike(false);
+		
 		System.out.println("들어온 userLike"+usedItemLikeDTO.getUserLike());
 		usedItemLikeDTO.setUserLike(!usedItemLikeDTO.getUserLike());
 		System.out.println("바꾼 userLike"+usedItemLikeDTO.getUserLike());
 		usedItemService.likeSet(usedItemLikeDTO);
+		
+		
 	}
 	
-	@PostMapping(path="writeItem")
-	public void writeItem(@ModelAttribute UsedItemDTO usedItemDTO) {
-		System.out.println("찍어라"+usedItemDTO);
-		usedItemService.writeItem(usedItemDTO);
-	}
+//	@PostMapping(path="writeItem")
+//	public void writeItem(@ModelAttribute UsedItemDTO usedItemDTO) {
+//		System.out.println("찍어라"+usedItemDTO);
+//		usedItemService.writeItem(usedItemDTO);
+//	}
 	
 	
 	 @PostMapping(path="upload", produces="text/html;charset-UTF-8")

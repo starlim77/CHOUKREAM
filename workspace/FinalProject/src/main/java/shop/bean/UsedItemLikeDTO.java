@@ -9,6 +9,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+
 @Data
 //@Table(name = "userItemLike")//많이 아프셨나봐요 진영씨?ㅋㅋㅋㅋㅋㅋ DAO랑 DTO랑 테이블명이 다른데 안나올수 밖에
 @Table(name = "usedItemLike")

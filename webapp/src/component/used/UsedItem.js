@@ -18,24 +18,21 @@ const UsedItem = () => {
         contents:''
     });
 
-    const [likeForm,setLikeForm] = useState({
+    const [likeForm, setLikeForm] = useState({
         seq:'',
         id:'',
-        userLike:'',
+        userLike:false,
         registerNo:''
     })
 
     useEffect(()=>{
-        console.log(searchParams.get('seq'));
         axios.get('http://localhost:8080/used/viewItem?seq=' + searchParams.get('seq'))
         .then(res => setForm(res.data))
+        .then(axios.get('http://localhost:8080/used/itemLike?seq=' + searchParams.get('seq') + '&id=' + 'asd')
+                    .then(res => res.data ? setLikeForm(res.data) : '')
+                    .catch(error => console.log(error)))
         .catch(error => console.log(error))
 
-
-        axios.get('http://localhost:8080/used/itemLike2?seq=' + searchParams.get('seq'))
-        .then(respond => setLikeForm(respond.data))
-        .catch(error => console.log(error))
-        console.log(likeForm);
     },[])
 
     const [splitImg,setSplitImg] = useState([])
@@ -62,14 +59,22 @@ const UsedItem = () => {
 
     // 관심등록
 
-    const [interest,setInterest] = useState()
-
     const onInterest = () => {
+        // likeForm.userLike || setLikeForm({...likeForm, userLike:'false'})
+        
         setLikeForm({...likeForm, userLike:!likeForm.userLike})
-        axios.get('http://localhost:8080/used/likeSet',{params:likeForm})
-       // axios.get('http://localhost:8080/used/likeSet'+likeForm) 나중에 다시 해보기
+        
+        console.log(likeForm)
+    
+        // // 데이터가 없어서 강제 주입
+        // setLikeForm({...likeForm , seq:searchParams.get('seq'),id:'asd'})
+
+        axios.post(`http://localhost:8080/used/likeSet?seq=`+searchParams.get('seq') + '&id=' + 'asd' + '&userLike=' + likeForm.userLike)
+        // axios.post('http://localhost:8080/used/likeSet',null,{params:likeForm})
+        // axios.get('http://localhost:8080/used/likeSet'+   likeForm) 나중에 다시 해보기
         .then()
         .catch()
+        
     }
 
     return (

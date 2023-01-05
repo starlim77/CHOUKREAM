@@ -13,5 +13,5 @@ import shop.bean.UsedItemLikeDTO;
 @Repository
 public interface UsedItemDAO extends JpaRepository<UsedItemDTO, Integer>{
 
-
+	
 }
