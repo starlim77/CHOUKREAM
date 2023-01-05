@@ -1,8 +1,10 @@
 package shop.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import shop.bean.UsedItemDTO;
+import shop.bean.UsedItemLikeDTO;
 
 public interface UsedItemService {
 
@@ -11,5 +13,13 @@ public interface UsedItemService {
 	public void writeItem(UsedItemDTO usedItemDTO);
 
 	public List<UsedItemDTO> getItem();
+
+	public Optional<UsedItemDTO> viewItem(int seq);
+
+	public List<UsedItemLikeDTO> itemLike(int seq);
+
+	public UsedItemLikeDTO itemLike2(int seq);
+
+	public void likeSet(UsedItemLikeDTO usedItemLikeDTO);
 
 }

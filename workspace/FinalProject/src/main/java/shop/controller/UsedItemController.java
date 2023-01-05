@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +15,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
 import shop.bean.UsedItemDTO;
+import shop.bean.UsedItemLikeDTO;
+import shop.dao.UsedItemDAO;
 import shop.service.UsedItemService;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(path="used")
 public class UsedItemController {
 	
@@ -32,16 +36,44 @@ public class UsedItemController {
 	
 	@GetMapping(path="getItem")
 	public List<UsedItemDTO> getItem() {
-		
-		List<UsedItemDTO> asd = usedItemService.getItem();
-		System.out.println("asd = " + asd);
-		return asd;
-//		return usedItemService.getItem();
+		return usedItemService.getItem();
+	}
+	
+	@GetMapping(path="viewItem")
+	public Optional<UsedItemDTO> viewItem(@RequestParam int seq) {
+		return usedItemService.viewItem(seq);
+	}
+	
+	@GetMapping(path="itemLike")
+	public List<UsedItemLikeDTO> itemLike(@RequestParam int seq){
+		//System.out.println("라이크 찍기"+seq);
+		//List<UsedItemLikeDTO> imsi = usedItemService.itemLike(seq);
+		//System.out.println(imsi);
+		return usedItemService.itemLike(seq);
+		//return usedItemService.itemLike(seq);
+	}
+	
+	@GetMapping(path="itemLike2")
+	public UsedItemLikeDTO itemLike2(@RequestParam int seq){
+		//System.out.println("라이크 찍기"+seq);
+		UsedItemLikeDTO imsi = usedItemService.itemLike2(seq);
+		//System.out.println("임시용 "+imsi);
+		return imsi;
+		//return usedItemService.itemLike(seq);
+	}
+	
+	@GetMapping(path="likeSet")
+	public void likeSet(@ModelAttribute UsedItemLikeDTO usedItemLikeDTO){
+		//System.out.println(usedItemLikeDTO);
+		System.out.println("들어온 userLike"+usedItemLikeDTO.getUserLike());
+		usedItemLikeDTO.setUserLike(!usedItemLikeDTO.getUserLike());
+		System.out.println("바꾼 userLike"+usedItemLikeDTO.getUserLike());
+		usedItemService.likeSet(usedItemLikeDTO);
 	}
 	
 	@PostMapping(path="writeItem")
 	public void writeItem(@ModelAttribute UsedItemDTO usedItemDTO) {
-		System.out.println(usedItemDTO);
+		System.out.println("찍어라"+usedItemDTO);
 		usedItemService.writeItem(usedItemDTO);
 	}
 	
