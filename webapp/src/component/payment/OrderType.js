@@ -13,8 +13,8 @@ const OrderType = () => {
     const [clickedBtn, setClickedBtn] = useState(`${typeKor}입찰`)
     const productNum = searchParams.get("productNum")
     const size = searchParams.get("size")
-    const [sellBidsListForm, setSellBidsListForm] = useState([{price: "-"}])
-    const [buyBidsListForm, setBuyBidsListForm] = useState([{price: "-"}])
+    const [sellBids, setSellBids] = useState([{price: "-"}])
+    const [buyBids, setBuyBids] = useState([{price: "-"}])
 
     //order type 선택
     const onClick =(e) => {
@@ -23,18 +23,12 @@ const OrderType = () => {
     
     useEffect(() => {
         axios.get(`http://localhost:8080/pay/getSellBidsPriceMin?size=${size}&seq=${productNum}`)
-        .then(res => res.data.length !== 0 && setSellBidsListForm(res.data))
+        .then(res => res.data.length !== 0 && setSellBids(res.data))
         .catch(error => console.log(error))
-
-        // axios.get(`http://localhost:8080/getSellBidsList?seq=${productNum}`)
-        // .then(res => res.data.length !== 0 && setSellBidsListForm(res.data))
-        // .catch(error => console.log(error))
 
         axios.get(`http://localhost:8080/pay/getBuyBidsPriceMax?size=${size}&seq=${productNum}`)
-        .then(res => res.data.length !== 0 && setBuyBidsListForm(res.data))
+        .then(res => res.data.length !== 0 && setBuyBids(res.data))
         .catch(error => console.log(error))
-
-        console.log(sellBidsListForm)
     }, [])
 
     return (
@@ -44,11 +38,11 @@ const OrderType = () => {
                 <O.Price>
                     <O.DirectPrice>
                         <O.DirectText>즉시 구매가</O.DirectText>
-                        <O.DirectPriceText>{ sellBidsListForm.price === null ? "-" : sellBidsListForm.price }</O.DirectPriceText>
+                        <O.DirectPriceText>{ buyBids.price === null ? "-" : buyBids.price }</O.DirectPriceText>
                     </O.DirectPrice>
                     <O.DirectPrice style={{borderRight: "0"}}>
                         <O.DirectText>즉시 판매가</O.DirectText>
-                        <O.DirectPriceText>{ buyBidsListForm.price === null ? "-" : buyBidsListForm.price }</O.DirectPriceText>
+                        <O.DirectPriceText>{ sellBids.price === null ? "-" : sellBids.price }</O.DirectPriceText>
                     </O.DirectPrice>
                     <O.TypeBtn>
                         {
@@ -66,12 +60,12 @@ const OrderType = () => {
                                     ? <O.AcctiveBtn onClick={onClick} style={{backgroundColor: "#41b979"}}>즉시판매</O.AcctiveBtn>
                                     : <O.DisabledBtn onClick={onClick} >즉시판매</O.DisabledBtn>
                                 : clickedBtn === "즉시구매"
-                                    ? <O.AcctiveBtn onClick={onClick} style={{backgroundColor: "#ef6253)"}}>즉시구매</O.AcctiveBtn>
+                                    ? <O.AcctiveBtn onClick={onClick} style={{backgroundColor: "#ef6253)"}} >즉시구매</O.AcctiveBtn>
                                     : <O.DisabledBtn onClick={onClick} >즉시구매</O.DisabledBtn> 
                         }
                     </O.TypeBtn>
                 </O.Price>
-                <BuyBid clickedBtn={clickedBtn}/>
+                <BuyBid clickedBtn={clickedBtn} sellPrice={sellBids.price} buyPrice={buyBids.price} orderNum={sellOrBuy === "sell" ? sellBids.orderSeq : buyBids.orderSeq}/>
             </O.OrderBody>
         </O.OrderWrapper>
     );
