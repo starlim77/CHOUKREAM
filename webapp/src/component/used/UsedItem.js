@@ -19,20 +19,23 @@ const UsedItem = () => {
     });
 
     const [likeForm,setLikeForm] = useState({
+        seq:'',
         id:'',
-        userLike:''
+        userLike:'',
+        registerNo:''
     })
 
     useEffect(()=>{
+        console.log(searchParams.get('seq'));
         axios.get('http://localhost:8080/used/viewItem?seq=' + searchParams.get('seq'))
         .then(res => setForm(res.data))
         .catch(error => console.log(error))
 
 
-        axios.get('http://localhost:8080/used/itemLike?seq=' + searchParams.get('seq'))
-        // .then(res => setLikeForm(res.data))
-        .then()
+        axios.get('http://localhost:8080/used/itemLike2?seq=' + searchParams.get('seq'))
+        .then(respond => setLikeForm(respond.data))
         .catch(error => console.log(error))
+        console.log(likeForm);
     },[])
 
     const [splitImg,setSplitImg] = useState([])
@@ -62,7 +65,11 @@ const UsedItem = () => {
     const [interest,setInterest] = useState()
 
     const onInterest = () => {
-
+        setLikeForm({...likeForm, userLike:!likeForm.userLike})
+        axios.get('http://localhost:8080/used/likeSet',{params:likeForm})
+       // axios.get('http://localhost:8080/used/likeSet'+likeForm) 나중에 다시 해보기
+        .then()
+        .catch()
     }
 
     return (
@@ -99,7 +106,7 @@ const UsedItem = () => {
             </U.PriceWrapper>
 
             <U.InterestWrapper onClick={onInterest}>
-                <U.InterestInput src='../image/used/bookmark.svg'/>
+                <U.InterestInput src={likeForm.userLike?'/image/used/blackBookmark.png':'../image/used/bookmark.svg'}/>
                 <U.InterestSpan>관심 상품</U.InterestSpan>&nbsp;
                 <U.InterestCount>{form.likes}</U.InterestCount>
             </U.InterestWrapper>

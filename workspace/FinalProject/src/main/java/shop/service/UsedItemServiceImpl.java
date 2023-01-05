@@ -9,12 +9,16 @@ import org.springframework.stereotype.Service;
 import shop.bean.UsedItemDTO;
 import shop.bean.UsedItemLikeDTO;
 import shop.dao.UsedItemDAO;
+import shop.dao.UsedItemLikeDAO;
 
 @Service
 public class UsedItemServiceImpl implements UsedItemService {
 	
 	@Autowired
 	private UsedItemDAO usedItemDAO;
+	
+	@Autowired
+	private UsedItemLikeDAO usedItemLikeDAO;
 	
 	@Override
 	public void upload2(UsedItemDTO usedItemDTO) {
@@ -42,10 +46,31 @@ public class UsedItemServiceImpl implements UsedItemService {
 	}
 
 
-//	@Override
-//	public List<UsedItemLikeDTO> itemLike(int seq) {
+	//DAO는 테이블로 만들 DAO의 개수만큼 만들어줘야 한다.
+	@Override
+	public List<UsedItemLikeDTO> itemLike(int seq) {
+
+		//System.out.println("서비스에 있는 시퀀스"+seq);
+		return null;
 //		return usedItemDAO.itemLike(seq);
-//	}
+	}
+
+
+	@Override
+	public UsedItemLikeDTO itemLike2(int seq) {
+
+		//System.out.println("서비스에 있는 시퀀스"+seq);
+		//return null;
+
+		return usedItemLikeDAO.itemLike2(seq);
+	}
+
+
+	@Override
+	public void likeSet(UsedItemLikeDTO usedItemLikeDTO) {
+		// TODO Auto-generated method stub
+		usedItemLikeDAO.save(usedItemLikeDTO);
+	}
 	
 
 	

@@ -97,7 +97,7 @@ const UsedWrite = () => {
                  .catch(error => console.log(error))
         }
 
-       navigate("/");
+       navigate("/used/usedMain");
         
     }
 

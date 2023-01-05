@@ -16,6 +16,10 @@ public interface UsedItemService {
 
 	public Optional<UsedItemDTO> viewItem(int seq);
 
-//	public List<UsedItemLikeDTO> itemLike(int seq);
+	public List<UsedItemLikeDTO> itemLike(int seq);
+
+	public UsedItemLikeDTO itemLike2(int seq);
+
+	public void likeSet(UsedItemLikeDTO usedItemLikeDTO);
 
 }
