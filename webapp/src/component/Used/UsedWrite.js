@@ -9,6 +9,7 @@ const UsedWrite = () => {
 
     const navigate = useNavigate();
     const[form,setForm] = useState({
+        id:'홍헌',
         title : '',
         productName : '',
         kind : '',
