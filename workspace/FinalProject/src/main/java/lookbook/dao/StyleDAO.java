@@ -1,5 +1,6 @@
 package lookbook.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +14,7 @@ public interface StyleDAO extends JpaRepository<StyleEntity, String> {
 	Optional<StyleEntity> findBySeq(int seq);
 	
 	Optional<StyleEntity> findById(String id);
+	
+	List<StyleEntity> findAllById(String id); 
 	   
 }

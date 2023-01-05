@@ -51,6 +51,15 @@ public class styleController {
 		return styleService.findAllMyList(id);
 		//return null;
 	}
+	
+	//내 id중 글 1개만 보기
+	@GetMapping(path="findMyListDetail/{seq}")
+	@ResponseBody
+	public StyleDTO findMyListDetail(@PathVariable int seq) {
+		System.out.println("컨트롤러에 seq확인 : "+ seq);
+		return styleService.findMyListDetail(seq);
+	}
+	
 		
 	
 	@GetMapping(path="getStyleList")
@@ -59,6 +68,16 @@ public class styleController {
 		return styleService.findAll();		
 		
 	}
+	
+	
+//좋아요
+//    @PostMapping(path="likes")
+//    @ResponseBody
+//    public int likes(String boardId, String id) {
+//        int result = styleService.saveLike(boardId,id);
+//        return result;
+//    }
+		
 
 	
 }

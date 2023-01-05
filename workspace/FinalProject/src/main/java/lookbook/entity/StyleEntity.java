@@ -51,6 +51,8 @@ public class StyleEntity {
 	private List<StyleFileEntity> styleFileEntityList = new ArrayList<>();
 	//mappedBy = "styleEntity" -이름 파일엔티티에 매칭시킨 이름이랑 같은이름으로
 	 
+//	@OneToMany(mappedBy = "styleEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+//	private List<StyleLikesEntity> styleLikesEntity = new ArrayList<>();
 	
 	public static StyleEntity toSaveEntity(StyleDTO styleDTO) {
 		StyleEntity styleEntity = new StyleEntity();

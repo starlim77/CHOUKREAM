@@ -26,12 +26,23 @@ export const TrGridBoxImg = styled.img`
     object-fit: contain;
 `
 
-
 //Detail.js 
 export const DeComment = styled.div`
     width: 400px;
     height: 800px;
 `;
+
+export const DeTopDiv = styled.div`
+    position: relative;
+    width: 500px;
+`
+
+export const DeDiv = styled.div`
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 
 //Social.js 
 export const SoHeader = styled.div`

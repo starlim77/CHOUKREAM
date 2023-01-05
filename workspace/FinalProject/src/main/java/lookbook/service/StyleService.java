@@ -17,6 +17,10 @@ public interface StyleService {
 
 	public List<StyleDTO> findAll();
 
+	public StyleDTO findMyListDetail(int seq);
+
+//	public int saveLike(String boardId, String id);
+//	public int findLike(String boardId, String id);
 
 		
 }

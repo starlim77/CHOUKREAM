@@ -3,10 +3,8 @@ package lookbook.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +17,7 @@ import lookbook.dao.StyleDAO;
 import lookbook.dao.StyleFileDAO;
 import lookbook.entity.StyleEntity;
 import lookbook.entity.StyleFileEntity;
+import member.dao.MemberDAO;
 
 
 //DTO  -->  Entity
@@ -31,13 +30,15 @@ public class StyleServiceImpl implements StyleService {
 	private StyleDAO styleDAO;
 	@Autowired
 	private StyleFileDAO styleFileDAO;
+	@Autowired
+	private MemberDAO memberDAO;
 
-	//내 글 list만 불러오기 실패. 
+	//내 글 list 
 	@Transactional
 	public List<StyleDTO> findAllMyList(String id) {
 		  System.out.println("서비스에 id가 넘어갓냥? "+id);
 		  	
-	      List<StyleEntity> styleEntityList = styleDAO.findAll();
+	      List<StyleEntity> styleEntityList = styleDAO.findAllById(id);
 	      
 //		  List<StyleDTO> styleDTOList = styleEntityList.stream().map(StyleDTO::toStyleDTO).collect(Collectors.toList());		
 	        
@@ -49,29 +50,22 @@ public class StyleServiceImpl implements StyleService {
 	      }
 	      
 	      return styleDTOList; 
-
 	}
 
-	//이터레이터로 반복문돌리기 . 전체글 불러오기까지
-//	@Transactional
-//	public List<StyleDTO> findAllMyList(String id) {
-//		  Optional<StyleEntity> styleEntityList = styleDAO.findById(id);
-//	      List<StyleDTO> styleDTOList = new ArrayList<>();
-//	      
-//	      for (StyleEntity styleEntity: styleEntityList) {
-//		         styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
-//		      }
-//	      
-////	      Iterator<StyleEntity> iter = styleEntityList.iterator();	      
-////	      
-////	      while(iter.hasNext()) {
-////	    	  StyleEntity styleEntity = iter.next();
-////	    	  styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
-////	      }
-//
-//	      return styleDTOList; 
-//	}
-
+	
+	//내 글 1개만 보기
+	@Override
+	public StyleDTO findMyListDetail(int seq) {
+        Optional<StyleEntity> optionalStyleEntity = styleDAO.findBySeq(seq);
+        if (optionalStyleEntity.isPresent()) {
+            StyleEntity styleEntity = optionalStyleEntity.get();
+            StyleDTO styleDTO = StyleDTO.toStyleDTO(styleEntity);
+            return styleDTO;
+        } else {
+            return null;
+        }
+	}
+	
 	public void save(List<MultipartFile> list, StyleDTO styleDTO) {		
 			
 		styleDTO.setStyleFile(list);			
@@ -152,7 +146,72 @@ public class StyleServiceImpl implements StyleService {
 	            return null;
 	        }
 	    }
+
+
+	 
+	 
+/*	 
+	//좋아요 했는지 찾기
+		 @Override
+		    public int findLike(String boardId, String id) {
+		        
+			 // 저장된 DTO 가 없다면 0, 있다면 1
+		        Optional<StyleLikesEntity> findLike = likesDAO.findByStyleEntity_IdAndMemberDto_Id(boardId, id);
+		        if (findLike.isEmpty()){
+		            return 0;
+		        }else {
+		            return 1;
+		        }
+		    }
+
+	//좋아요 저장하기
+	//참고 : https://velog.io/@hellocdpa/220220-SpringBoot%EC%A2%8B%EC%95%84%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0
+			@Transactional
+		    @Override
+		    public int saveLike(String boardId, String id) {
+		        Optional<StyleLikesEntity> findLike = likesDAO.findByStyleEntity_IdAndMemberDto_Id(boardId, id);
+
+		        System.out.println(findLike.isEmpty());
+
+		        if (findLike.isEmpty()){
+		            MemberDto memberDto = memberDAO.findById(id).get();
+		            StyleEntity styleEntity = styleDAO.findById(boardId).get();
+
+		            StyleLikesEntity styleLikesEntity = LikesEntity.toLikeEntity(memberDto, styleEntity);
+		            likesDAO.save(likeEntity);
+		            //styleDAO.plusLike(boardId);
+		            return 1;
+		        }else {
+		        	likesDAO.deleteByStyleEntity_IdAndMemberDto_Id(boardId, id);
+		            //styleDAO.minusLike(boardId);
+		            return 0;
+
+		        }
+
+		    }
+		*/
 	
+	 
+		//이터레이터로 반복문돌리기 . 전체글 불러오기까지
+//		@Transactional
+//		public List<StyleDTO> findAllMyList(String id) {
+//			  Optional<StyleEntity> styleEntityList = styleDAO.findById(id);
+//		      List<StyleDTO> styleDTOList = new ArrayList<>();
+//		      
+//		      for (StyleEntity styleEntity: styleEntityList) {
+//			         styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
+//			      }
+//		      
+////		      Iterator<StyleEntity> iter = styleEntityList.iterator();	      
+////		      
+////		      while(iter.hasNext()) {
+////		    	  StyleEntity styleEntity = iter.next();
+////		    	  styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
+////		      }
+	//
+//		      return styleDTOList; 
+//		}
+
 	
 }
 

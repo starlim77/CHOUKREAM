@@ -27,6 +27,7 @@ import LoginForm from './component/User/LoginForm';
 import WriteForm from './component/User/WriteForm';
 import FindEmail from './component/User/FindEmail';
 import FindPassword from './component/User/FindPassword';
+import MystyleDetail from './component/Lookbook/MystyleDetail';
 
 function App() {
     return (
@@ -70,6 +71,7 @@ function App() {
                 <Route path="/lookbook/social" element={<Social />} />
                 <Route path="/lookbook/mystyle" element={<Mystyle />} />
                 <Route path="/lookbook/detail" element={<Detail />} />
+                <Route path="/lookbook/mystyledetail" element={<MystyleDetail />} />
                 <Route path="/Search/SearchForm" element={<SearchForm />} />
 
                 <Route path="/cs/csnotice" element={<CsNotice />} />
