@@ -1,8 +1,10 @@
+import { LineAxisOutlined } from '@mui/icons-material';
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as M from './UpdateBtnModalStyle';
 
-const UpdateBtnModal = ({writer}) => {
+const UpdateBtnModal = ({writer, seq}) => {
     const[buttonVisibility,setButtonVisibility]=useState(false);
     const modalVisibility=()=>{
         setButtonVisibility(!buttonVisibility);
@@ -11,10 +13,16 @@ const UpdateBtnModal = ({writer}) => {
     const moveToPage=()=>{
         navigate('/Used/usedUpdate');
     }
+    const deleteItem=()=>{
+        axios.delete(`http://localhost:8080/used/deleteItem?seq=${seq}`)
+       // axios.delete('http://localhost:8080/used/deleteItem',{params:{seq:seq}})
+            .then(console.log("성공"))
+            .catch(console.log("실패"))
+    }
     return (
         <>
         {
-            writer&&
+           ! writer&&
             <M.ModalWrapper>
                 <M.MainBtnDiv>
                     <M.UpdateBtn src="/image/used/pinBtn.png" onClick={modalVisibility}></M.UpdateBtn>
@@ -24,12 +32,12 @@ const UpdateBtnModal = ({writer}) => {
                 buttonVisibility&&
                     <M.SubBtnDiv>
                         <M.BtnDiv onClick={moveToPage}>수정하기</M.BtnDiv>
-                        <M.BtnDiv style={{color:"red"}}>삭제하기</M.BtnDiv>
+                        <M.BtnDiv style={{color:"red"}} onClick={deleteItem}>삭제하기</M.BtnDiv>
                     </M.SubBtnDiv>
                 }
             </M.ModalWrapper>
          }   
-
+{/* 
            {
             !writer&&
             <M.ModalWrapper>
@@ -44,7 +52,7 @@ const UpdateBtnModal = ({writer}) => {
                     </M.SubBtnDiv>
                 }
             </M.ModalWrapper>
-         }     
+         }      */}
         </>
     );
 };

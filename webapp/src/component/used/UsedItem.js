@@ -7,7 +7,7 @@ const UsedItem = () => {
 
     // console.log("seq = " + location.seq +" seq = "+ {seq})
 
-    const [searchParams,setSearchParams] = useSearchParams()
+    const [searchParams,setSearchParams] = useSearchParams();
 
     const [form,setForm]=useState({
         id:'',
@@ -85,7 +85,7 @@ const UsedItem = () => {
 
         <>
         <U.ModalDiv>
-            <UpdateBtnModal writer={isWriter}></UpdateBtnModal>
+            <UpdateBtnModal writer={isWriter} seq={searchParams.get('seq')}></UpdateBtnModal>
         </U.ModalDiv>
         <U.BaseBody>
             <U.ImgBody>
