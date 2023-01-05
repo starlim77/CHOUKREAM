@@ -41,13 +41,6 @@ public class styleController {
 	}
 	
 	
-	//trending 목록 가져오기
-
-//	@GetMapping(path="findAllMyList")
-//	public List<StyleDTO> findAllMyList() {
-//		return styleService.findAllMyList();
-//	}
-	
 	//내 id를 들고가서 내 게시글만 뿌리기
 	@GetMapping(path="findAllMyList/{id}")
 	@ResponseBody
@@ -57,17 +50,14 @@ public class styleController {
 		//return null;
 	}
 		
-	
+	//trending,detail 목록 가져오기
 	@GetMapping(path="getStyleList")
 	public List<StyleDTO> findAllByOrderBySeqDesc() {
 		//DB에서 전체 게시글 데이터 를 가져온다				
 		return styleService.findAllByOrderBySeqDesc();		
 		
 	}
-	
-	
 
-	
 	//상세에서 댓글 등록기능
 	//@PostMapping("/uploadComment")
 	
@@ -77,9 +67,5 @@ public class styleController {
 //	public List<StyleDTO> getMyStyleBoardList() {
 //		return styleService.getMyStyleBoardList();
 //	}
-//	
-	
-	
 
-	
 }

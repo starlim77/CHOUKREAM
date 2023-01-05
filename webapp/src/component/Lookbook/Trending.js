@@ -10,8 +10,8 @@ import MessageOutlinedIcon from '@mui/icons-material/MessageOutlined';
 import * as S from './style';
 import { grey } from '@mui/material/colors';
 import axios from 'axios';
-import Masonry from 'react-masonry-css'
 import { Link } from 'react-router-dom';
+
 
 const Trending = () => {  
     const[list, setList] =useState([{
@@ -20,8 +20,8 @@ const Trending = () => {
         content: '',
         logtime: '',
         styleFile: '',
-        originalFileName:'',
-        storedFileName:''
+        originalFileName:[],
+        storedFileName:[]
     }])
     
 
@@ -43,25 +43,21 @@ const Trending = () => {
         <>
             <Header />
             <Social />
-            
+            <br/>
+
             <div>태그</div>
 
             <Container fixed> 
                    
             <S.TrGridContainer>
-                {/* <Masonry
-                     breakpointCols={breakpoints}
-                     className="my-masonry-grid"
-                     columnClassName="my-masonry-grid_column"
-                
-                ></Masonry> */}
-
+          
+            {this.getSearchResultList()}
 
                 { list.map(item =>{ return(
                     <S.TrGridBox key={item.seq}>                     
                         
                             <Card sx={{ width: 250 }}>
-                                {/* <Link to = {'lookbook/detail'+item.seq}>                                                        */}
+                                <Link to = {'/lookbook/detail#'+ item.seq}>                                                                                
                                 <S.TrGridBoxImg src={'../storage/'+item.storedFileName[0]}></S.TrGridBoxImg>                              
                                 <CardHeader 
                                     avatar={
@@ -71,7 +67,8 @@ const Trending = () => {
                                     }
                                     title= {item.id}                                
                                 />
-                                {/* </Link>   */}
+                               
+                                </Link>
                                 <CardContent>       
                                     <Typography variant="body2" color="text.secondary" >
                                     <S.TrTypoDiv>
@@ -81,7 +78,8 @@ const Trending = () => {
                                     </S.TrTypoDiv>                      
                                     </Typography>     
                                                 
-                                </CardContent>
+                                </CardContent> 
+                                
                                 <CardActions disableSpacing>
                                     <Typography variant="body2" color="text.secondary">
                                         <IconButton aria-label="add to favorites">
@@ -103,7 +101,8 @@ const Trending = () => {
                     </S.TrGridBox> 
                     )
                 })
-            }                
+            }           
+           
             </S.TrGridContainer>      
             
             </Container>
