@@ -1,6 +1,8 @@
 import styled from "styled-components"
 
  //Trending.js
+
+
 export const TrGridContainer = styled.div`
     width: 1200px;
     margin: 0px auto;
@@ -25,7 +27,16 @@ export const TrGridBoxImg = styled.img`
     border-radius: 20%; 
     object-fit: contain;
 `
-
+export const TrTypoDiv = styled.div`
+    white-space: normal;
+    line-height: 1.2;
+    height: 3.6em;
+    text-align: left;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+`
 
 //Detail.js 
 export const DeComment = styled.div`

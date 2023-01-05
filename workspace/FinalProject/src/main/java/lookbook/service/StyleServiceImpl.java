@@ -89,8 +89,8 @@ public class StyleServiceImpl implements StyleService {
 	}
 
 	@Transactional
-	public List<StyleDTO> findAll(){
-		List<StyleEntity> styleEntityList = styleDAO.findAll();
+	public List<StyleDTO> findAllByOrderBySeqDesc(){
+		List<StyleEntity> styleEntityList = styleDAO.findAllByOrderBySeqDesc();
 		List<StyleDTO> styleDTOList = new ArrayList<>();
 		for (StyleEntity styleEntity: styleEntityList) {
 			styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
@@ -110,7 +110,8 @@ public class StyleServiceImpl implements StyleService {
 	            return null;
 	        }
 	    }
-	 
+
+
 	
 	
 }

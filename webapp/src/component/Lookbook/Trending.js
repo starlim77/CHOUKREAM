@@ -10,7 +10,7 @@ import MessageOutlinedIcon from '@mui/icons-material/MessageOutlined';
 import * as S from './style';
 import { grey } from '@mui/material/colors';
 import axios from 'axios';
-
+import Masonry from 'react-masonry-css'
 
 const Trending = () => {  
     const[list, setList] =useState([{
@@ -31,7 +31,12 @@ const Trending = () => {
             .catch(error => console.log(error));
     }, []);
 
-
+    // const breakpoints = {
+    //     default: 3,
+    //     1100: 2,
+    //     700: 1
+    // }
+    
     return (
         
         <>
@@ -40,14 +45,20 @@ const Trending = () => {
             
             <div>태그</div>
 
-            <Container fixed>            
+            <Container fixed> 
+                   
             <S.TrGridContainer>
-                { list.map(item =>{ return(
-                    <S.TrGridBox key={item.seq}> 
-                       
+                {/* <Masonry
+                     breakpointCols={breakpoints}
+                     className="my-masonry-grid"
+                     columnClassName="my-masonry-grid_column"
+                
+                ></Masonry> */}
 
-                    <div className='item'>피드                         
-                        <Grid item xs="auto">
+
+                { list.map(item =>{ return(
+                    <S.TrGridBox key={item.seq}>                     
+                        
                             <Card sx={{ width: 250 }}>
                                 <a>                                                       
                                 <S.TrGridBoxImg src={'../storage/'+item.storedFileName[0]}></S.TrGridBoxImg>                              
@@ -61,8 +72,12 @@ const Trending = () => {
                                 />
                                 </a>  
                                 <CardContent>       
-                                    <Typography variant="body2" color="text.secondary">
-                                    {item.content}                        
+                                    <Typography variant="body2" color="text.secondary" >
+                                    <S.TrTypoDiv>
+                                    {item.content}
+                                    <br/>
+                                    seq={item.seq}
+                                    </S.TrTypoDiv>                      
                                     </Typography>     
                                                 
                                 </CardContent>
@@ -78,22 +93,11 @@ const Trending = () => {
                                         </IconButton>                        
                                         <span>15</span>                                                                
 
-                                                                    
-                                        {/* 
-                                        상품리스트
-                                            <ul>
-                                                <li>1</li>
-                                                <li>1</li>
-                                                <li>1</li>
-                                                <li>1</li>
-                                            </ul> 
-                                            */}
-                                        
+                                       
                                     </Typography>
                                 </CardActions>
                             </Card>
-                        </Grid>
-                    </div>
+                                         
                   
                     </S.TrGridBox> 
                     )

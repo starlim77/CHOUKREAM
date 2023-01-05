@@ -12,6 +12,6 @@ public interface StyleService {
 	
 	public void save(List<MultipartFile> list,StyleDTO styleDTO);
 
-	public List<StyleDTO> findAll();
+	public List<StyleDTO> findAllByOrderBySeqDesc();
 		
 }

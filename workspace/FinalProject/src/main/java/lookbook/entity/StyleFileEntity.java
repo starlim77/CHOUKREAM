@@ -28,7 +28,7 @@ public class StyleFileEntity {
 	private String storedFileName; 
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "style_id")
+	@JoinColumn(name = "style_seq")
 	private StyleEntity styleEntity; //부모 부르는데 알아서 id값만 들어감
 	
 	public static  StyleFileEntity toStyleFileEntity(StyleEntity styleEntity, String originalFileName, String storedFileName) {

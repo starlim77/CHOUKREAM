@@ -16,4 +16,7 @@ public interface StyleDAO extends JpaRepository<StyleEntity, String> {
 	
 	Optional<StyleEntity> findBySeq(int seq);
 	
+	
+	public List<StyleEntity> findAllByOrderBySeqDesc();
+	
 }

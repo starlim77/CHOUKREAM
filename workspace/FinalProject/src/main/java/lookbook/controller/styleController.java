@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpSession;
 import lookbook.bean.StyleDTO;
+import lookbook.service.StyleCommentService;
 import lookbook.service.StyleService;
 
 @RestController
@@ -21,8 +22,10 @@ import lookbook.service.StyleService;
 public class styleController {
 	@Autowired
 	private StyleService styleService;
+	@Autowired
+	private StyleCommentService styleCommentService;
 	
-		
+	//스타일 게시물 입력	
 	@PostMapping(path="upload" , produces="text/html; charset=UTF-8")
 	@ResponseBody
 	public void upload(@RequestBody List<MultipartFile> list, @ModelAttribute StyleDTO styleDTO, HttpSession session) {
@@ -32,12 +35,19 @@ public class styleController {
 
 		System.out.println("dto="+ styleDTO);
 	}
+	
+	
+	//trending 목록 가져오기
 	@GetMapping(path="getStyleList")
-	public List<StyleDTO> findAll() {
+	public List<StyleDTO> findAllByOrderBySeqDesc() {
 		//DB에서 전체 게시글 데이터 를 가져온다				
-		return styleService.findAll();		
+		return styleService.findAllByOrderBySeqDesc();		
 		
 	}
+	
+	//상세에서 댓글 등록기능
+	//@PostMapping("/uploadComment")
+	
 	
 	
 

@@ -8390,6 +8390,11 @@
     "masonry-layout" "^4.2.0"
     "prop-types" "^15.5.8"
 
+"react-masonry-css@^1.0.16":
+  "integrity" "sha512-KSW0hR2VQmltt/qAa3eXOctQDyOu7+ZBevtKgpNDSzT7k5LA/0XntNa9z9HKCdz3QlxmJHglTZ18e4sX4V8zZQ=="
+  "resolved" "https://registry.npmjs.org/react-masonry-css/-/react-masonry-css-1.0.16.tgz"
+  "version" "1.0.16"
+
 "react-native-webview@^11.26.0":
   "integrity" "sha512-4T4CKRm8xlaQDz9h/bCMPGAvtkesrhkRWqCX9FDJEzBToaVUIsV0ZOqtC4w/JSnCtFKKYiaC1ReJtCGv+4mFeQ=="
   "resolved" "https://registry.npmjs.org/react-native-webview/-/react-native-webview-11.26.0.tgz"
