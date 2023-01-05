@@ -74,8 +74,9 @@ export const BannerAlert = styled.div`
 export const BannerAlertContent = styled.div`
     display: -webkit-box;
     display: flex;
+    flex-direction: column;
     -webkit-box-align: center;
-    align-items: center;
+    align-items: flex-start;
     padding: 11px 12px 12px 11px;
     background-color: #fafafa;
     border: 1px solid rgba(34,34,34,.05);
@@ -766,7 +767,7 @@ export const Emphasis = styled.strong`
 `;
 
 export const FloatingPrice = styled.div`
-    display: block;
+    display: ${(props) => props.ScrollActive2 ? "none" : "block"};
     top: 99px;
 
     position: fixed;

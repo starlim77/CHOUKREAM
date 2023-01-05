@@ -14,6 +14,8 @@ import Graph from './Graph';
 
 const Products = () => {
 
+    const id = "hong@gmail.com";
+
     const [open1, setOpen1] = useState(true)
     const [open2, setOpen2] = useState(false)
     const [open3, setOpen3] = useState(false)
@@ -151,14 +153,34 @@ const Products = () => {
     const handleScroll = () => { 
         if(ScrollY < 390) {
             setScrollY(window.pageYOffset);
-            setScrollActive(true);
+            if(!ScrollActive) setScrollActive(true);
         } else {
             setScrollY(window.pageYOffset);
-            setScrollActive(false);
+            if(ScrollActive) setScrollActive(false);
+            
+        }
+    }
+
+    const [ScrollActive2, setScrollActive2] = useState(true); 
+    const handleScroll2 = () => { 
+        if(ScrollY < 400) {
+            setScrollY(window.pageYOffset);
+            //if(!ScrollActive2) 
+            setScrollActive2(true);
+        } else {
+            setScrollY(window.pageYOffset);
+           // if(ScrollActive2) 
+            setScrollActive2(false);
         }
     }
     useEffect(() => {
         const scrollListener= () => {  window.addEventListener("scroll", handleScroll); } //  window 에서 스크롤을 감시 시작
+        scrollListener(); // window 에서 스크롤을 감시
+        return () => { window.removeEventListener("scroll", handleScroll); }; //  window 에서 스크롤을 감시를 종료
+    });
+
+    useEffect(() => {
+        const scrollListener= () => {  window.addEventListener("scroll", handleScroll2); } //  window 에서 스크롤을 감시 시작
         scrollListener(); // window 에서 스크롤을 감시
         return () => { window.removeEventListener("scroll", handleScroll); }; //  window 에서 스크롤을 감시를 종료
     });
@@ -602,7 +624,7 @@ const Products = () => {
                                         </S.MeditationNoticeProduct>
                                     </div>
                                 </div>
-                                <S.FloatingPrice>
+                                <S.FloatingPrice ScrollActive2={ ScrollActive2 }>
                                     <S.FloatingPriceInnerBox>
                                         <S.FloatingPriceProductArea>
                                             <S.FloatingPriceProductThumb>
