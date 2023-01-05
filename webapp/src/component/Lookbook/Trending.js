@@ -20,15 +20,15 @@ const Trending = () => {
         content: '',
         logtime: '',
         styleFile: '',
-        originalFileName:[],        
-        storedFileName:[]
+        originalFileName:'',
+        storedFileName:''
     }])
     
 
     useEffect(() => {
         axios
             .get('http://localhost:8080/lookbook/getStyleList')
-            .then(   res => setList(res.data) )                 
+            .then( res => setList(res.data))               
             .catch(error => console.log(error));
     }, []);
 

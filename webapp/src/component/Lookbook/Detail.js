@@ -15,9 +15,8 @@ const Detail = () => {
     //게시물 뿌리기
     const [list, setList] = useState([]);
 
-
     useEffect( ()=> {
-        axios.get('http://localhost:8080/lookbook/getStyleBoardList')
+        axios.get('http://localhost:8080/lookbook/getStyleList')
              .then(res => setList(res.data))
              .catch(error => console.log(error))
     }, []) 
@@ -32,18 +31,18 @@ const Detail = () => {
             <Container fixed>
                 
                 {
-                    list.map(item => {
+                    list.map((item, index) => {
                         return (
                             <Card key={item.seq}>
                                 <CardHeader
                                     avatar={ <Avatar> 프로필</Avatar> }
-                                    title="본인id"
+                                    title={item.id}
                                     subheader={item.logtime}
                                 />
                                 <CardMedia 
                                     component="img"
                                     height="500"
-                                    image=""
+                                    image={'../storage/'+item.storedFileName[0]}  //여러장보이게해야함
                                     alt=""
                                 />
                                 <CardContent>
