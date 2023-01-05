@@ -1,4 +1,4 @@
-import { ResponsiveLine } from '@nivo/line'
+// import { ResponsiveLine } from '@nivo/line'
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
 import ModalBasic from './ModalBasic';
@@ -10,9 +10,11 @@ import CompletedOrderTable from "./table/CompletedOrderTable";
 import SellBidsTable from "./table/SellBidsTable";
 import BuyBidsTable from "./table/BuyBidsTable";
 import EmptyTable from "./table/EmptyTable";
-import Graph from './Graph';
+// import Graph from './Graph';
 
 const Products = () => {
+
+    const date = new Date();
 
     const id = "hong@gmail.com";
 
@@ -151,7 +153,7 @@ const Products = () => {
     const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장 
     const [ScrollActive, setScrollActive] = useState(true); 
     const handleScroll = () => { 
-        if(ScrollY < 390) {
+        if(ScrollY < 1100) {
             setScrollY(window.pageYOffset);
             if(!ScrollActive) setScrollActive(true);
         } else {
@@ -339,23 +341,25 @@ const Products = () => {
                                         </S.DetailProduct>
                                     </S.DetailProductWrap>
                                 </div>                               
-                                {/* <div className="delivery_way_wrap"> 배송
-                                    <h3 className="detail_title">배송 정보</h3>
-                                    <div className="delivery_way">
-                                        <div className="way_info">
-                                            <div className="way_status_thumb">
-                                                <img></img>
-                                            </div>
-                                            <div className="way_desc">
-                                                <p className="company">
-                                                    <span className="badge_title">일반배송</span>
-                                                    <span className="title"></span>
-                                                </p>
-                                                <p className="sub_text">검수 후 배송 * 일 내 도착 예정</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
+                                <S.DeliveryWayWrap>
+                                    <S.DeliveryWayWrapDetailTitle>배송 정보</S.DeliveryWayWrapDetailTitle>
+                                    <S.DeliveryWay>
+                                        <S.WayInfo>
+                                            <S.WayStatusThumb>
+                                                <img src="https://kream-phinf.pstatic.net/MjAyMTExMjFfMjU5/MDAxNjM3NDczNzU0MjA1.ON3pvFYAq_xSSaNWDgUWe1YfIx-C0fm91PDtcsUn3AEg.Q4EbbNWl_ua916jg0NQ0dWOS3h7W9eiiI2kK9YPWlgwg.PNG/a_120a84f036724d0d97a2343aafff4ecf.png" width="40px" height="40px"/>
+                                            </S.WayStatusThumb>
+                                            <S.WayDesc>
+                                                <S.Company>
+                                                    <S.CompanyBadgeTitle>빠른배송</S.CompanyBadgeTitle>
+                                                </S.Company>
+                                                <S.SubText>
+                                                    지금 결제시 
+                                                    <em style={{color: "#297dcb"}}>&nbsp; 모레 {(date.getMonth()+1) + "/" + (date.getDate()+2)}일 도착 예정</em>
+                                                </S.SubText>
+                                            </S.WayDesc>
+                                        </S.WayInfo>
+                                    </S.DeliveryWay>
+                                </S.DeliveryWayWrap>
                                 <div className="banner_box"> {/*움직이는 배너박스, 차후 적용*/}
                                 </div>
                                 <div className="detail_wrap">
@@ -416,7 +420,7 @@ const Products = () => {
     
                                                 <div id="sales_panel1" role="tabpanel" className="tab_content show" span="1m">
                                                     <div className="graph">
-                                                        <Graph></Graph>
+                                                        {/* <Graph></Graph> */}
                                                     </div>
                                                 </div>
                                                 {/* <div id="sales_panel2" role="tabpanel" className="tab_content" span="3m">
@@ -592,7 +596,8 @@ const Products = () => {
                                             <ul className="guide_list">
                                                 <li className="guide_item" style={{overflow: "hidden"}}>
                                                     <S.ThumbArea>
-                                                        <S.ThumbAreaImg></S.ThumbAreaImg>
+                                                        <S.ThumbAreaImg>  
+                                                        </S.ThumbAreaImg>
                                                     </S.ThumbArea>
                                                     <div className="text_area" style={{overflow: "hidden"}}>
                                                         <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
@@ -604,8 +609,8 @@ const Products = () => {
                                                         <S.ThumbAreaImg></S.ThumbAreaImg>
                                                     </S.ThumbArea>
                                                     <div className="text_area" style={{overflow: "hidden"}}>
-                                                        <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                        <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
+                                                        <S.TextAreaTitle>엄격한 다중검수</S.TextAreaTitle>
+                                                        <S.TextAreaDesc>모든 상품은 검수센터에 도착한 후, 상품별 전문가 그룹의 체계적인 시스템을 거쳐 검수를 진행합니다.</S.TextAreaDesc>
                                                     </div>
                                                 </li>
                                                 <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
@@ -613,8 +618,8 @@ const Products = () => {
                                                         <S.ThumbAreaImg></S.ThumbAreaImg>
                                                     </S.ThumbArea>
                                                     <div className="text_area" style={{overflow: "hidden"}}>
-                                                        <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                        <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
+                                                        <S.TextAreaTitle>정품 인증 패키지</S.TextAreaTitle>
+                                                        <S.TextAreaDesc>검수에 합격한 경우에 한하여 KREAM의 정품 인증 패키지가 포함된 상품이 배송됩니다.</S.TextAreaDesc>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -670,103 +675,52 @@ const Products = () => {
                         </S.Column>
                     </S.ColumnBind>
                 </S.Content>
-                <S.Content div className="feed_area">
-                <div className="point_guide" style={{paddingTop: "40px"}}>
-                    
-                                        <ul className="guide_list">
-                                            <li className="guide_item" style={{overflow: "hidden"}}>
-                                                <S.ThumbArea>
-                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
-                                                </S.ThumbArea>
-                                                <div className="text_area" style={{overflow: "hidden"}}>
-                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
-                                                </div>
-                                            </li>
-                                            <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
-                                                <S.ThumbArea>
-                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
-                                                </S.ThumbArea>
-                                                <div className="text_area" style={{overflow: "hidden"}}>
-                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
-                                                </div>
-                                            </li>
-                                            <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
-                                                <S.ThumbArea>
-                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
-                                                </S.ThumbArea>
-                                                <div className="text_area" style={{overflow: "hidden"}}>
-                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
-                                                </div>
-                                            </li>
-                                        </ul>
+                <div>
+                    <S.FeedArea>
+                        <S.FeedTitle>
+                            <S.FeedTitleTitle>스타일</S.FeedTitleTitle>
+                            {/* 스타일 카운트 */}
+                            <S.FeedTitleNum>1234</S.FeedTitleNum> 
+                        </S.FeedTitle>
+                        <S.SocialFeeds>
+                            <S.MoreBtnBox>
+                                <S.ButtonOutlineGreyMedium>
+                                    더보기
+                                </S.ButtonOutlineGreyMedium>
+                            </S.MoreBtnBox>
+                        </S.SocialFeeds>
+                    </S.FeedArea>
+                    <S.BrandArea>
+                        <S.BrandTitle>
+                            <S.BrandTitleBrand>{form.brand}</S.BrandTitleBrand>
+                            <S.BrandTitleText>의 다른 상품</S.BrandTitleText>
+                            <S.BtnMore>
+                                <S.BtnText>더 보기</S.BtnText>
+                                {/* <svg></svg> */}
+                            </S.BtnMore>
+                        </S.BrandTitle>
+                        <S.BrandProducts>
+                            <S.BrandProductList>
+                                <S.ProductItem>
+                                    <div className='thumb_box'>
+                                        <S.Product>
+                                            <S.PictureBrandProductImg>
+                                                <S.BrandProductImg src={form.img}/>
+                                            </S.PictureBrandProductImg>
+                                        </S.Product>
                                     </div>
-                                    {/* <div className="point_guide" style={{paddingTop: "40px"}}>
-                                        <ul className="guide_list">
-                                            <li className="guide_item" style={{overflow: "hidden"}}>
-                                                <S.ThumbArea>
-                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
-                                                </S.ThumbArea>
-                                                <div className="text_area" style={{overflow: "hidden"}}>
-                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
-                                                </div>
-                                            </li>
-                                            <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
-                                                <S.ThumbArea>
-                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
-                                                </S.ThumbArea>
-                                                <div className="text_area" style={{overflow: "hidden"}}>
-                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
-                                                </div>
-                                            </li>
-                                            <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
-                                                <S.ThumbArea>
-                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
-                                                </S.ThumbArea>
-                                                <div className="text_area" style={{overflow: "hidden"}}>
-                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="point_guide" style={{paddingTop: "40px"}}>
-                                        <ul className="guide_list">
-                                            <li className="guide_item" style={{overflow: "hidden"}}>
-                                                <S.ThumbArea>
-                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
-                                                </S.ThumbArea>
-                                                <div className="text_area" style={{overflow: "hidden"}}>
-                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
-                                                </div>
-                                            </li>
-                                            <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
-                                                <S.ThumbArea>
-                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
-                                                </S.ThumbArea>
-                                                <div className="text_area" style={{overflow: "hidden"}}>
-                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
-                                                </div>
-                                            </li>
-                                            <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
-                                                <S.ThumbArea>
-                                                    <S.ThumbAreaImg></S.ThumbAreaImg>
-                                                </S.ThumbArea>
-                                                <div className="text_area" style={{overflow: "hidden"}}>
-                                                    <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                    <S.TextAreaDesc>크림사에서 검수한 상품이 정품 아니면 3배 보상</S.TextAreaDesc>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>                                                 */}
-                </S.Content>
-                <div className="other_product_area">
+                                    <S.ProductItemInfoBox>
+                                        <div className='info_box'>
+                                            <div className='brand'>
+                                                <S.BrandTextWithOutWish>{form.brand}</S.BrandTextWithOutWish>
+                                            </div>
+                                            <S.BrnadProductInfoBoxName>{form.title}</S.BrnadProductInfoBoxName>
+                                        </div>
+                                    </S.ProductItemInfoBox>
+                                </S.ProductItem>
+                            </S.BrandProductList>
+                        </S.BrandProducts>
+                    </S.BrandArea>
                 </div>
             </S.ContainerDetail>
         </S.ProductsWrapper>

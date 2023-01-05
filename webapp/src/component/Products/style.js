@@ -328,6 +328,7 @@ export const LargeBtnWish = styled.a`
     cursor: pointer;
 `;
 
+
 export const LargeBtnWishBtnText = styled.span`
     font-size: 15px;
     letter-spacing: -.15px;
@@ -341,7 +342,79 @@ export const LargeBtnWishCountNum = styled.span`
     font-weight: 600;
     font-weight: semibold;
     letter-spacing: normal;
+    `;
+
+export const DeliveryWayWrap = styled.div`
+    display: block;
 `;
+
+export const DeliveryWayWrapDetailTitle = styled.h3`
+    line-height: 17px;
+    padding-bottom: 0;
+    font-size: 14px;
+    letter-spacing: -.21px;
+    font-weight: 400;
+    color: rgba(34,34,34,.8);
+
+    padding: 40px 0 0 0;
+
+    display: block;
+`;
+
+export const DeliveryWay = styled.div`
+    padding-top: 12px;
+
+    padding: 18px 0;
+
+    display: block;
+`;
+
+export const WayInfo = styled.div`
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+`;
+
+export const WayStatusThumb = styled.div`
+    width: 40px;
+    height: 40px;
+
+    -webkit-box-flex: 0;
+    flex: none;
+    margin-right: 14px;
+
+    display: block;
+`;
+
+export const WayDesc = styled.div`
+    -webkit-box-flex: 1;
+    flex: 1;
+    display: block;
+`;
+
+export const Company = styled.p`
+    font-size: 14px;
+    letter-spacing: -.21px;
+    line-height: 17px;
+    display: block;
+`;
+
+export const CompanyBadgeTitle = styled.span`
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: -.21px;
+`;
+
+export const SubText = styled.p`
+    line-height: 16px;
+    margin-top: 3px;
+    font-size: 14px;
+    color: rgba(34,34,34,.5);
+    display: block;
+`;
+
+
 
 export const DetailTitleInfoTitle = styled.h3`
     margin-left: 4px;
@@ -1147,4 +1220,216 @@ export const PriceNull = styled.span`
     line-height: 14px;
     margin-top: 1px;
     font-size: 12px;
+`;
+
+export const FeedArea = styled.div`
+    margin: 0 auto;
+    padding-bottom: 60px;
+    max-width: 1280px;
+
+    display: block;
+
+    border: 1px blue dotted;
+`;
+
+export const FeedTitle = styled.h2`
+    display: flex;
+    padding-top: 40px;
+    margin: 0 40px;
+    -webkit-box-align: center;
+    align-items: center;
+    border-top: 1px solid #ebebeb;
+
+    font-size: 1.5em;
+    font-weight: bold;
+`;
+
+export const FeedTitleTitle = styled.span`
+    font-size: 20px;
+    letter-spacing: -.3px;
+    font-weight: 700;
+`;
+
+export const FeedTitleNum = styled.span`
+    padding-left: 4px;
+    font-size: 20px;
+    letter-spacing: -.1px;
+    font-weight: 700;
+`;
+
+export const SocialFeeds = styled.div`
+    padding: 24px 0 0;
+    margin: 0 40px;
+    display: block;
+`;
+
+export const MoreBtnBox = styled.div`
+    padding-top: 40px;
+    text-align: center;
+    display: block;
+`;
+
+export const ButtonOutlineGreyMedium = styled.button`
+    padding: 0 30px;
+    border: 1px solid #d3d3d3;
+    color: rgba(34,34,34,.8);
+    height: 42px;
+    border-radius: 12px;
+    font-size: 14px;
+    letter-spacing: -.14px;
+    display: inline-flex;
+    cursor: pointer;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    vertical-align: middle;
+    text-align: center;
+    background-color: #fff;
+`;
+
+export const BrandArea = styled.div`
+    margin: 0 auto;
+    padding-bottom: 40px;
+    max-width: 1280px;
+
+    display: block;
+`;
+
+export const BrandTitle = styled.h3`
+    margin: 0 40px;
+    padding-top: 40px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    max-width: 100%;
+    line-height: 24px;
+    font-size: 20px;
+    letter-spacing: -.15px;
+    border-top: 1px solid #ebebeb;
+
+    font-weight: bold;
+`;
+
+export const BrandTitleBrand = styled.span`
+    flex-shrink: 0;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 24px;
+    font-size: 20px;
+    letter-spacing: -.15px;
+`;
+
+export const BrandTitleText = styled.span`
+    margin-right: 50px;
+    flex-shrink: 0;
+    font-weight: 400;
+    line-height: 24px;
+    font-size: 20px;
+    letter-spacing: -.15px;
+`;
+
+export const BtnMore = styled.a`
+    margin-top: -2px;
+    margin-left: auto;
+    padding: 3px 0 3px 5px;
+    display: inline-flex;
+    flex-shrink: 0;
+    cursor: pointer;
+`;
+
+export const BtnText = styled.span`
+    line-height: 20px;
+    font-size: 13px;
+    letter-spacing: -.07px;
+    font-weight: 400;
+    color: rgba(34,34,34,.5);
+`;
+
+export const BrandProducts = styled.div`
+    display: block;
+`;
+
+export const BrandProductList = styled.div`
+    padding: 0 30px;
+    display: block;
+`;
+
+export const ProductItem = styled.div`
+    margin: 24px 0 20px;
+    padding: 0 10px;
+    width: 20%;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+`;
+
+export const ItemInner = styled.a`
+    display: block;
+    background-color: #fff;
+    border-radius: 12px;
+    cursor: pointer;
+`;
+
+export const Product = styled.div`
+    overflow: hidden;
+    position: relative;
+    padding-top: 100%;
+    border-radius: 8px;
+`;
+
+export const PictureBrandProductImg = styled.picture`
+    display: flex;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+`;
+
+export const BrandProductImg = styled.img`
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    image-rendering: auto;
+`;
+
+export const ProductItemInfoBox = styled.div`
+    padding-top: 9px;
+    display: block;
+`;
+
+export const BrandTextWithOutWish = styled.p`
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
+    height: 17px;
+    line-height: 17px;
+    padding-bottom: 2px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-bottom: 1px solid #222;
+    width: fit-content;
+    max-width: 100%;
+`;
+
+export const BrnadProductInfoBoxName = styled.p`
+    max-height: 44px;
+    margin-bottom: 2px;
+    line-height: 17px;
+    margin-top: 8.5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    font-size: 14px;
+    color: #222;
 `;
