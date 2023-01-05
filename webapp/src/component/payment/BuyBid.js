@@ -5,8 +5,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom/dist';
 
 const BuyBid = ({ clickedBtn }) => {
-    const [priceNum, setPriceNum] = useState();
-    const [priceInput, setPriceInput] = useState();
+    const [priceInput, setPriceInput] = useState(); //출력되는 price (,)있음
+    const [priceNum, setPriceNum] = useState(); // 입력되는 price(,) 없음
     const navigate = useNavigate();
     const location = useLocation()
     const [searchParams, setSearchParams] = useSearchParams();

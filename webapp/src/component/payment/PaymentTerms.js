@@ -22,8 +22,6 @@ const sellDataList = [
 ]
 
 const PaymentTerms = () => {
-    const [isInpectionOpen, setIsInpectionOpen] = useState(false)
-    const [isPolicyOpen, setIsPolicyOpen] = useState(false)
     const navigate = useNavigate()
     const location = useLocation()
     const [searchParams, setSearchParams] = useSearchParams()
@@ -32,13 +30,13 @@ const PaymentTerms = () => {
     const productNum = searchParams.get("productNum")
     const type = searchParams.get("type") //리셀 & 새상품 & 중고
 
+    const [data, setData] = useState(buyDataList)
     useEffect(() => {
         sellOrbuy === "sell" ? setData(sellDataList) : setData(buyDataList)
     }, [])
 
 
     //체크 박스
-    const [data, setData] = useState(buyDataList)
     const [isAllChecked, setIsAllChecked] = useState(false)
     const [checkedItem, setCheckedItem] = useState([])
     useEffect(() => {
@@ -60,6 +58,9 @@ const PaymentTerms = () => {
         console.log(checkedItem)
     }
 
+    //모달
+    const [isInpectionOpen, setIsInpectionOpen] = useState(false)
+    const [isPolicyOpen, setIsPolicyOpen] = useState(false)
     const onLink = (e) => {
         const { innerHTML } = e.target
         innerHTML === " 검수 기준 보기" && setIsInpectionOpen(true)
