@@ -55,7 +55,6 @@ const PaymentTerms = () => {
         } else {
             setCheckedItem(checkedItem.filter(item => item !== name ))
         }
-        console.log(checkedItem)
     }
 
     //모달

@@ -12,6 +12,7 @@ const BuyBid = ({ clickedBtn, buyPrice, sellPrice, orderNum  }) => {
     const productNum = searchParams.get("productNum")
     const type = searchParams.get("type")
 
+    //결제 방식 선택
     useEffect(() => {
         clickedBtn === "즉시판매"
             ? setPriceInput(sellPrice)
@@ -22,6 +23,12 @@ const BuyBid = ({ clickedBtn, buyPrice, sellPrice, orderNum  }) => {
             : clickedBtn === "구매입찰"
             && setPriceInput()
     }, [clickedBtn])
+
+    // comma 삽입
+    const addComma = num => {
+        let str = String(num)
+        return (str.replace(/\B(?=(\d{3})+(?!\d))/g, ','))
+    };
 
     //숫자만 입력, 세자리 마다 콤마 추가
     const inputPriceFormat = str => {
@@ -60,14 +67,16 @@ const BuyBid = ({ clickedBtn, buyPrice, sellPrice, orderNum  }) => {
                 clickedBtn === "즉시구매"
                     ?<O.PriceInput
                     type="text"
-                    value={buyPrice}
+                    value={addComma(priceInput) === "null" ? "" : addComma(priceInput)}
                     readOnly
+                    placeholder='구매 입찰해 주세요'
                     />
                     :clickedBtn === "즉시판매"
                     ?<O.PriceInput
                     type="text"
-                    value={priceInput || ''}
+                    value={addComma(priceInput) === "null" ? "" : addComma(priceInput)}
                     readOnly
+                    placeholder='판매 입찰해 주세요'
                     />
                     :clickedBtn === "구매입찰"
                     ?<O.PriceInput
@@ -83,11 +92,6 @@ const BuyBid = ({ clickedBtn, buyPrice, sellPrice, orderNum  }) => {
                     placeholder="희망가 입력"/>
                     
             }
-            {/* <O.PriceInput
-                type="text"
-                value={priceInput || ''}
-                onChange={e => setPriceInput(inputPriceFormat(e.target.value))}
-                placeholder="희망가 입력"/> */}
             <O.Text style={{ marginBottom: '30px' }}>
                 총 결제금액은 다음 화면에서 계산됩니다.
             </O.Text>
