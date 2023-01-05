@@ -44,11 +44,11 @@ const OrderType = () => {
                 <O.Price>
                     <O.DirectPrice>
                         <O.DirectText>즉시 구매가</O.DirectText>
-                        <O.DirectPriceText>{ sellBidsListForm.price }</O.DirectPriceText>
+                        <O.DirectPriceText>{ sellBidsListForm.price === null ? "-" : sellBidsListForm.price }</O.DirectPriceText>
                     </O.DirectPrice>
                     <O.DirectPrice style={{borderRight: "0"}}>
                         <O.DirectText>즉시 판매가</O.DirectText>
-                        <O.DirectPriceText>{ buyBidsListForm.price }</O.DirectPriceText>
+                        <O.DirectPriceText>{ buyBidsListForm.price === null ? "-" : buyBidsListForm.price }</O.DirectPriceText>
                     </O.DirectPrice>
                     <O.TypeBtn>
                         {
