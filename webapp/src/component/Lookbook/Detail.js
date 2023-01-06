@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Header from '../Header/Header';
 import Social from '../Lookbook/Social';
@@ -7,16 +8,10 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Container from '@mui/material/Container';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import * as S from './style';
-import axios from 'axios';
 
 
 const Detail = () => {
     const [commentOpen, setCommentOpen] = useState(false)
-   const [likes, setLikes] = useState(false)
-
-    const toggleLikes = () => {
-        setLikes(likes => !likes )
-    }
 
     //게시물 뿌리기
     const [list, setList] = useState([]);
@@ -25,38 +20,27 @@ const Detail = () => {
         axios.get('http://localhost:8080/lookbook/getStyleList')
              .then(res => setList(res.data))
              .catch(error => console.log(error))
-    }, []) 
-
-    // useEffect( () => {
-    //     const fetchData = async () => {
-    //         const res = await axios.get()
-    //         if (res.data.type === 'liked') setLikes(true)
-    //     }
-    //     fetchData()
-    // }, []
-    //     axios.get('http://localhost:8080/lookbook/likes')
-//                .then(res => setLikes(res.data))
-//                .catch(error => console.log(error))
-//                }, [])
-    
+    }, [])     
 
     return (
         <div>
-            <Header />
             <Social />
             <br/>
             <Container fixed>
-                <S.DeTopDiv> {/* div */}
+                <S.DeTopDiv> 
                 {
                     list.map((item, index) => {
                         return (
-                             <S.DeDiv> {/* div */}
+                             <S.DeDiv> 
                                 <Card key={item.seq}>
                                     <CardHeader
                                         avatar={ <Avatar> 프로필</Avatar> }
                                         title={item.id}
                                         subheader={item.logtime}
                                     />
+
+                                
+                                    
                                     <CardMedia 
                                         component="img"
                                         width="500"
@@ -68,11 +52,8 @@ const Detail = () => {
                                         {item.content}
                                     </CardContent>
                                     <CardActions >
-                                        <button onClick={()=>toggleLikes()}>좋아요</button>
-
                                         <IconButton aria-label="add to favorites">
                                             <FavoriteIcon />  
-                                            
                                         </IconButton>
                                         <IconButton onClick={()=>{setCommentOpen(true)}}>
                                             <ChatBubbleOutlineIcon />
@@ -84,11 +65,16 @@ const Detail = () => {
                                         <S.DeComment>
                                             <DialogTitle sx={{mt:5}}>댓글</DialogTitle>
                                             <DialogContent>
+
+                                            
                                                 <DialogContentText>
                                                     <TextField
                                                         multiline 
                                                         fullWidth
                                                     />
+
+
+                                                <textarea >{item.seq}</textarea>
                                                 </DialogContentText>
                                             </DialogContent>
                                             <DialogActions>

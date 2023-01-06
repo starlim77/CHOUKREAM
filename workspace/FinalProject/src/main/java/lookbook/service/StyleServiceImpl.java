@@ -36,20 +36,14 @@ public class StyleServiceImpl implements StyleService {
 	//내 글 list 
 	@Transactional
 	public List<StyleDTO> findAllMyList(String id) {
-		  System.out.println("서비스에 id가 넘어갓냥? "+id);
-		  	
-	      List<StyleEntity> styleEntityList = styleDAO.findAllById(id);
-	      
-//		  List<StyleDTO> styleDTOList = styleEntityList.stream().map(StyleDTO::toStyleDTO).collect(Collectors.toList());		
-	        
-	      //List<StyleDTO> 일경우 
-	      List<StyleDTO> styleDTOList = new ArrayList<>();
-	      
-	      for (StyleEntity styleEntity: styleEntityList) {
-	         styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
-	      }
-	      
-	      return styleDTOList; 
+      List<StyleEntity> styleEntityList = styleDAO.findAllByIdOrderBySeqDesc(id);
+      List<StyleDTO> styleDTOList = new ArrayList<>();
+     
+      for (StyleEntity styleEntity: styleEntityList) {
+         styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
+      }
+      
+      return styleDTOList; 
 	}
 
 	
@@ -191,26 +185,7 @@ public class StyleServiceImpl implements StyleService {
 		    }
 		*/
 	
-	 
-		//이터레이터로 반복문돌리기 . 전체글 불러오기까지
-//		@Transactional
-//		public List<StyleDTO> findAllMyList(String id) {
-//			  Optional<StyleEntity> styleEntityList = styleDAO.findById(id);
-//		      List<StyleDTO> styleDTOList = new ArrayList<>();
-//		      
-//		      for (StyleEntity styleEntity: styleEntityList) {
-//			         styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
-//			      }
-//		      
-////		      Iterator<StyleEntity> iter = styleEntityList.iterator();	      
-////		      
-////		      while(iter.hasNext()) {
-////		    	  StyleEntity styleEntity = iter.next();
-////		    	  styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
-////		      }
-	//
-//		      return styleDTOList; 
-//		}
+
 
 	
 }

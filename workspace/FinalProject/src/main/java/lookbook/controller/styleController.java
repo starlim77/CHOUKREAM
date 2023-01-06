@@ -37,22 +37,14 @@ public class styleController {
 		System.out.println("dto="+ styleDTO);
 	}
 	
-
-//	@GetMapping(path="findAllMyList")
-//	public List<StyleDTO> findAllMyList() {
-//		return styleService.findAllMyList();
-//	}
 	
 	//내 id를 들고가서 내 게시글만 뿌리기
 	@GetMapping(path="findAllMyList/{id}")
-	@ResponseBody
 	public List<StyleDTO> findAllMyList(@PathVariable String id) {
-		System.out.println("컨트롤러에 id가 넘어갓냥? "+ id);
 		return styleService.findAllMyList(id);
-		//return null;
 	}
 	
-	//내 id중 글 1개만 보기
+	//내 id 글 1개만 보기
 	@GetMapping(path="findMyListDetail/{seq}")
 	@ResponseBody
 	public StyleDTO findMyListDetail(@PathVariable int seq) {

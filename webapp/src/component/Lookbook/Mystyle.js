@@ -3,16 +3,17 @@ import { Avatar, Button, Card, CardHeader, CardMedia, Dialog, DialogActions, Dia
 import ClearIcon from '@mui/icons-material/Clear';
 import { Container } from '@mui/system';
 import React, { useEffect, useRef, useState } from 'react';
-import Header from '../Header/Header';
 import * as S from './style';
 import { Link } from 'react-router-dom';
+
+
+
 const Mystyle = () => {
     const imgRef = useRef();
     const [file, setFile] = useState([])
     const [showImgSrc,setShowImgSrc] = useState([]);
     const [styleBoardWriteOpen, setStyleBoardWriteOpen] = useState(false);
     
-
     //등록한 게시물 확인
     const [myList, setMyList] = useState([]);
     
@@ -20,10 +21,11 @@ const Mystyle = () => {
         imgRef.current.click()
     }
     const [form, setForm] = useState({
-        id: '아아이디',
+        id: 'testid',
         content: '',
     })
     const {id, content} = form  
+
 
     const onInput = (e) => {
         const { name, value} = e.target
@@ -74,11 +76,13 @@ const Mystyle = () => {
              .then(
                             alert("게시물 등록 완료"),
                             setStyleBoardWriteOpen(false),
+                            window.location.replace("/lookbook/mystyle"),  //새로고침
                             console.log(formData)
             )
             .catch( error => console.log(error) )
     }
 
+    //완료후 다시 랜더링
     useEffect( ()=> {
         axios.get(`http://localhost:8080/lookbook/findAllMyList/${id}`)
              .then( //res => console.log(res.data)
@@ -89,118 +93,114 @@ const Mystyle = () => {
 
 
     return (
-        <S.SoTopDiv>
-            <Header />
-            <br />
-            <Container fixed>
-                <S.MyDiv>
-                    <div>
-                        <img name='myProfile' width='130px' src='../image/myProfile.png' alt='마이프로필' 
-                        style={{ borderRadius:"70%" }} />               
-                    </div>
-                    <div name='id' value='id'>{id}</div>  
-                    <S.MyDivText>프로필 정보는 마이페이지에서 수정해주세요.</S.MyDivText>            
-                </S.MyDiv>
-                <S.MyDiv>
-                    <ul>
-                        <S.MyLi>게시물<span>0</span></S.MyLi>
-                        <S.MyLi>팔로워<span>0</span></S.MyLi>
-                        <S.MyLi>팔로잉<span>0</span></S.MyLi>
-                    </ul>
-                </S.MyDiv>
-                <hr />
-                <S.MyDiv>
-                    <button onClick={()=>{setStyleBoardWriteOpen(true)} }>게시물등록</button>
-                </S.MyDiv> 
-                
-                
-                <Dialog open={ styleBoardWriteOpen }>
-                    <DialogTitle>게시물 등록</DialogTitle>  
-                    <DialogContent>  
-                        <form>
-                            <Card>
+        <Container fixed>
+            <S.MyDiv>
+                <div>
+                    <img name='myProfile' width='130px' src='../image/myProfile.png' alt='마이프로필' 
+                    style={{ borderRadius:"70%" }} />               
+                </div>
+                <div name='id' value='id'>{id}</div>  
+                <S.MyDivText>프로필 정보는 마이페이지에서 수정해주세요.</S.MyDivText>            
+            </S.MyDiv>
+            <S.MyDiv>
+                <ul>
+                    <S.MyLi>게시물<span>0</span></S.MyLi>
+                    <S.MyLi>팔로워<span>0</span></S.MyLi>
+                    <S.MyLi>팔로잉<span>0</span></S.MyLi>
+                </ul>
+            </S.MyDiv>
+            <hr />
+            <S.MyDiv>
+                <button onClick={()=>{setStyleBoardWriteOpen(true)} }>게시물등록</button>
+            </S.MyDiv> 
+            
+            
+            <Dialog open={ styleBoardWriteOpen }>
+                <DialogTitle>게시물 등록</DialogTitle>  
+                <DialogContent>  
+                    <form>
+                        <Card>
+                            <CardHeader
+                                avatar={ <Avatar>프로필</Avatar> }
+                                title={id}
+                                value={id}
+                                name='id'
+                                onChange={onInput}
+                            />
+                            <Button onClick={ onUploadFile }> 사진등록 +</Button><br/>
+                            
+                            {/* <CardMedia
+                                component="img"
+                                height="400"
+                                image={showImgSrc}
+                            /> */}
+
+
+                            <input type='file' name='file' id='file' accept="image/*" multiple  ref={imgRef}   style={ {visibility: 'hidden'}}
+                                    //onChange={ e=> readURL( e.target) }  
+                                    onChange={readURL}
+                            />
+                            <S.Container>
+                            <S.showImgSrcDiv>  {/*  가로로정렬   */}
+                                {showImgSrc.map((item, index) => (
+                                    <div key={index}>
+                                        <S.showImgSrcImg src={item}  />
+                                        <ClearIcon onClick={() => onImgRemove(index)}>삭제</ClearIcon>
+                                                                                
+                                    </div>
+                                ))}
+
+                            </S.showImgSrcDiv>
+                            <S.Button>이전</S.Button>
+                            <S.Button>다음</S.Button>
+                            </S.Container>
+
+
+                            <textarea 
+                                type='text-area'
+                                name='content'
+                                value={content}
+                                placeholder='내용 입력'
+                                onChange={onInput}
+                                style={{width:494, height:80, resize:'none'}}  />
+                            
+                            <DialogActions>
+                                <Button onClick={ onUpload }>등록</Button>
+                                <Button onClick={ ()=>{setStyleBoardWriteOpen(false)}}>취소</Button>
+                            </DialogActions>
+                            
+                        </Card>
+                    </form>
+                </DialogContent>
+            </Dialog> 
+            
+            <S.MyDiv>    {/* 등록한 게시물 간단히 보기 */}
+            {
+                myList.map((item, index) => {
+                    return (
+                            <S.MyPhotoMini key={item.seq}> 
+
+                                <Link to={`/lookbook/mystyledetail/${item.seq}/${item.id}`}>
+                                <CardMedia
+                                    component="img"
+                                    height="200"
+                                    image={'../storage/'+item.storedFileName[0]}  //입력된 대표사진1개만 보임 
+                                />
+                                </Link>
+
+                                
                                 <CardHeader
                                     avatar={ <Avatar>프로필</Avatar> }
-                                    title={id}
+                                    title={item.id}
                                     value={id}
                                     name='id'
-                                    onChange={onInput}
                                 />
-                                <Button onClick={ onUploadFile }> 사진등록 +</Button><br/>
-                               
-                                {/* <CardMedia
-                                    component="img"
-                                    height="400"
-                                    image={showImgSrc}
-                                /> */}
-
-
-                                <input type='file' name='file' id='file' accept="image/*" multiple  ref={imgRef}   style={ {visibility: 'hidden'}}
-                                        //onChange={ e=> readURL( e.target) }  
-                                        onChange={readURL}
-                                />
-
-                                <S.showImgSrcDiv >                                   
-                                    {showImgSrc.map((item, index) => (
-                                        <div key={index}>
-                                            <S.showImgSrcImg src={item}  />
-                                            <ClearIcon onClick={() => onImgRemove(index)}>삭제</ClearIcon>
-                                                                                  
-                                        </div>
-                                    ))}
-                                </S.showImgSrcDiv>
-
-
-                                <textarea 
-                                    type='text-area'
-                                    name='content'
-                                    value={content}
-                                    placeholder='내용 입력'
-                                    onChange={onInput}
-                                    style={{width:494, height:80, resize:'none'}}  />
-                                
-                                <DialogActions>
-                                    <Button onClick={ onUpload }>등록</Button>
-                                    <Button onClick={ ()=>{setStyleBoardWriteOpen(false)}}>취소</Button>
-                                </DialogActions>
-                                
-                            </Card>
-                        </form>
-                    </DialogContent>
-                </Dialog> 
-                
-                <S.MyDiv>    {/* 등록한 게시물 간단히 보기 */}
-                {
-                    myList.map((item, index) => {
-                        return (
-                                <S.MyPhotoMini key={item.seq}>  
-                                    <Link to={'/lookbook/mystyledetail#'+item.seq}>
-
-                                    {/* <Link to={{
-                                                pathname: `/lookbook/mystyledetail/${item.seq}`,
-                                    }}> */}
-
-                                    <CardMedia
-                                        component="img"
-                                        height="200"
-                                        image={'../storage/'+item.storedFileName[0]}  //입력된 대표사진1개만 보임 
-                                    />
-                                    </Link>
-
-                                    
-                                    <CardHeader
-                                        avatar={ <Avatar>프로필</Avatar> }
-                                        title={item.id}
-                                        value={id}
-                                        name='id'
-                                    />
-                                </S.MyPhotoMini> 
-                            )
-                    })
-                }
-                </S.MyDiv>
-            </Container>
-        </S.SoTopDiv>
+                            </S.MyPhotoMini> 
+                        )
+                })
+            }
+            </S.MyDiv>
+        </Container>
     );
 };
 export default Mystyle;

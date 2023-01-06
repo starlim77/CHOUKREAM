@@ -28,22 +28,43 @@ export const TrGridBoxImg = styled.img`
 
 //Detail.js 
 export const DeComment = styled.div`
-    width: 400px;
-    height: 800px;
+    width: 700px;
+    height: 700px;
 `;
 
 export const DeTopDiv = styled.div`
-    position: relative;
+    margin: 0 auto;
     width: 500px;
 `
 
 export const DeDiv = styled.div`
     width: 500px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: inline-block;
+    padding-top: 50px;
+    padding-bottom: 50px;
 `
 
+//MyStyleDetail.js
+export const MyDeContainer = styled.div`
+    width: 100%;
+    text-align: center;
+
+`
+
+export const MyDeheadercontainer = styled.div`
+    display: inline;
+`
+export const MyDeprofile = styled.div`
+    float:left;
+    width: 450px;
+
+`
+export const MyDeIcon = styled.div`
+    width: 47px;
+    float: left;
+    padding-top: 16px;
+
+`
 //Social.js 
 export const SoHeader = styled.div`
     padding: 20px 0 20px 0;
@@ -100,19 +121,39 @@ export const MyPhotoMini = styled.div`
 
 `
 
-export const MyTopDiv = styled.div`
-    padding-top: 90px;
-`
 
 export const showImgSrcDiv = styled.div`
-    /* width: 500px;
-    height: 400px;    */
+    // width: 500px;
+    // height: 400px;   
+    // Overflow: hidden;        
+    display: flex;   //사진 가로로 정렬
+    width: 100vw;
 `
+export const Container = styled.div`
+    width: 500px;
+    height: 400px; 
+    overflow: hidden; // 선을 넘어간 이미지들은 보이지 않도록 처리합니다.
+`;
 
 export const showImgSrcImg = styled.img`
     width: 500px;
-    height: 400px;   
+    height: 400px; 
+    
+    
 `
+
+export const Button = styled.button`
+    all: unset;
+    border: 1px solid coral;
+    padding: 0.5em 2em;
+    color: coral;
+    border-radius: 10px;
+    &:hover {
+        transition: all 0.3s ease-in-out;
+        background-color: coral;
+        color: #fff;
+    }
+`;
 
 
 
