@@ -77,7 +77,6 @@ public class UsedItemServiceImpl implements UsedItemService {
 	public void deleteItem(int seq) {
 		usedItemDAO.deleteItem(seq);
 		//usedItemDAO.deleteById(seq);
-		
 	}
 	
 

@@ -11,7 +11,8 @@ const UpdateBtnModal = ({writer, seq}) => {
     }
     const navigate = useNavigate();
     const moveToPage=()=>{
-        navigate('/Used/usedUpdate');
+        //참고자료 https://curryyou.tistory.com/477
+        navigate('/Used/usedUpdate',{state:{writer:writer,seq:seq}});
     }
     const deleteItem=()=>{
         axios.delete(`http://localhost:8080/used/deleteItem?seq=${seq}`)
@@ -22,7 +23,7 @@ const UpdateBtnModal = ({writer, seq}) => {
     return (
         <>
         {
-           ! writer&&
+            writer&&
             <M.ModalWrapper>
                 <M.MainBtnDiv>
                     <M.UpdateBtn src="/image/used/pinBtn.png" onClick={modalVisibility}></M.UpdateBtn>
@@ -37,7 +38,7 @@ const UpdateBtnModal = ({writer, seq}) => {
                 }
             </M.ModalWrapper>
          }   
-{/* 
+
            {
             !writer&&
             <M.ModalWrapper>
@@ -52,7 +53,7 @@ const UpdateBtnModal = ({writer, seq}) => {
                     </M.SubBtnDiv>
                 }
             </M.ModalWrapper>
-         }      */}
+         }     
         </>
     );
 };

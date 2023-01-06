@@ -1,11 +1,20 @@
 import { integerPropType } from '@mui/utils';
 import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import * as S from './styleWrite';
 import tagData from './TagItem';
 
 const UsedUpdate = () => {
+        //참고자료 https://curryyou.tistory.com/477
+        // 1. useLocation 훅 취득
+        const location = useLocation();
+
+        // 2. location.state 에서 파라미터 취득
+        const seq = location.state.seq;
+        const writer = location.state.writer;
+
+
 
         const navigate = useNavigate();
         const[form,setForm] = useState({
@@ -30,7 +39,7 @@ const UsedUpdate = () => {
         
         const onInput = (e) => {
             const {name,value} = e.target
-    
+       
             setForm({
                 ...form,
                 [name] : value
@@ -119,7 +128,6 @@ const UsedUpdate = () => {
         const[random,setRandom]=useState();
     
         const onImgRead = (e) => {
-           
     
             //유효성 검사
             //https://velog.io/@fxoco/image-input-%EC%9C%A0%ED%9A%A8%EC%84%B1-%EA%B2%80%EC%82%AC
@@ -188,6 +196,7 @@ const UsedUpdate = () => {
     //읽어볼 자료.https://velog.io/@eeeve/React-07
         return (
             <>
+                
                 <S.WriteBody>
                    
                     <S.ImgBody>
@@ -209,6 +218,7 @@ const UsedUpdate = () => {
                                 <S.SubImg sizing={subImg[3]?true:false} name='subImg3' src={subImg[3]?subImg[3].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
                                 <S.DeleteImg setPosition={subImg[3]?true:false} id="3"  onClick={e=>deleteImg(e)}></S.DeleteImg>
                             </S.SubImgP>
+                            
                         </S.SubImgBody>
                         
                         {/* https://blog.munilive.com/posts/input-file-type-accept-attribute.html
@@ -216,9 +226,10 @@ const UsedUpdate = () => {
                         다만 업로드 하는 사람이 형식을 모든 파일로 받으면 다른 파일로 업로드가 가능해진다.
                         유효성 검사 필요 */}
                         <input type='file' name="img" style={{display: 'none'}} accept=".jpg,.png, .jpeg, .gif" onChange={ e=>onImgRead(e) } ref={imgRef} multiple></input>
-    
+        
                     </S.ImgBody>
-                
+                  
+          
                     
                     <S.Information>
                         <S.Necessary>* 필수 입력</S.Necessary>
