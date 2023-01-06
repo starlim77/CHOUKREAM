@@ -16,7 +16,7 @@ public interface UsedItemService {
 
 	public Optional<UsedItemDTO> viewItem(int seq);
 
-	public UsedItemLikeDTO itemLike(int seq, String id,String shopKind);
+	public UsedItemLikeDTO itemLike(UsedItemLikeDTO usedItemLikeDTO);
 
 	public void likeSet(UsedItemLikeDTO usedItemLikeDTO);
 

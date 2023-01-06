@@ -47,10 +47,8 @@ public class UsedItemServiceImpl implements UsedItemService {
 
 
 	@Override
-	public UsedItemLikeDTO itemLike(int seq, String id,String shopKind) {
-		System.out.println("---------------------------");
-		System.out.println(shopKind);
-		return usedItemLikeDAO.itemLike(seq,id,shopKind);
+	public UsedItemLikeDTO itemLike(UsedItemLikeDTO usedItemLikeDTO) {
+		return usedItemLikeDAO.itemLike(usedItemLikeDTO.getSeq(),usedItemLikeDTO.getId(),usedItemLikeDTO.getShopKind());
 	}
 
 
