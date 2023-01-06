@@ -16,7 +16,7 @@ const Products = () => {
 
     const date = new Date();
 
-    const id = "hong@gmail.com";
+    const id = "asd";
 
     const shopKind = 'resell'
 

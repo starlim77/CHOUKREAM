@@ -57,7 +57,7 @@ public class UsedItemController {
 	
 	@PostMapping(path="likeSet")
 	public void likeSet(@ModelAttribute UsedItemLikeDTO usedItemLikeDTO){
-		//System.out.println(usedItemLikeDTO);
+		System.out.println(usedItemLikeDTO);
 		
 		if(usedItemLikeDTO.getUserLike() == null)usedItemLikeDTO.setUserLike(false);
 		
