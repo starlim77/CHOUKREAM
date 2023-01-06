@@ -5,8 +5,7 @@ import CsNav from '../Csnav/CsNav';
 const CsNotice = () => {
     return (
         <>
-        <Header/>
-        <CsNav/>
+     
 
         공지사항
         

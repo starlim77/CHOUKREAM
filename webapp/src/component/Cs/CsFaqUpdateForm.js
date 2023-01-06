@@ -37,7 +37,7 @@ const CsFaqUpdateForm = () => {
         .then((res) => {//주소가서 res 받아오기
 
             setForm(res.data)
-            editorRef.current?.getInstance().setHTML(content)
+           // editorRef.current?.getInstance().setHTML(content)
           }
           
            
@@ -45,6 +45,9 @@ const CsFaqUpdateForm = () => {
         .catch((error) => console.log(error));
 
     },[])
+    useEffect(() => {
+        editorRef.current?.getInstance().setHTML(content)
+    }, [form]) 
 
     const onInput=(e)=> {
         const {name,value}=e.target

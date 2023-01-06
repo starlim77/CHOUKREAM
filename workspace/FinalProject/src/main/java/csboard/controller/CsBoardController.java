@@ -1,9 +1,14 @@
 package csboard.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
+import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,12 +16,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import csboard.bean.CsBoardDTO;
 import csboard.service.CsBoardService;
+import jakarta.servlet.http.HttpSession;
+import lookbook.bean.StyleDTO;
 
 
 
@@ -32,8 +42,85 @@ public class CsBoardController {
 	@Autowired
 	private CsBoardService csBoardService;
 	
-	@PostMapping(path="write")	
-	public void write(@ModelAttribute CsBoardDTO csBoardDTO) {
+	
+	@PostMapping(path="write" , produces="text/html; charset=UTF-8")
+	@ResponseBody
+	public void write(@RequestBody List<MultipartFile> list,@ModelAttribute CsBoardDTO csBoardDTO, HttpSession session) {
+		String path = System.getProperty("user.dir");
+		 
+		 //위 예시의 주소에서 뒤에서부터 처음에 있는 '\'가 앖에서 몇 번째 문자열에 위치하고 있는지 알려줌
+		 //"\\"라고 작성한 이유는 '\'는 기호들을 문자로 인식하게 하는 것이라서 '\'를 기호로 인식하라는 의미로 "\\"이렇게 작성
+		 //ex)workspace뒤에 있는 "\"의 위치를 찾음
+		 int index = path.lastIndexOf("\\");
+		 System.out.println(index +"index" + "list"+list);
+		 
+		 //	\FinalProject를 자르고 앞부분만 남김. ex)F:\project\finalProject\final\final1zo\workspace
+		 String pathModified=path.substring(0, index);
+		 System.out.println("pathModified"+ pathModified);
+		 
+		 //반복
+		 index=pathModified.lastIndexOf("\\");
+		 pathModified = pathModified.substring(0,index);
+		 System.out.println("경로확인"+pathModified);
+		
+		 //실제 저장될 경로 지정
+		 //ex) pathModified	= F:\project\finalProject\final\final1zo 뒤에 webapp경로 지정
+		 String filePath=pathModified+"/webapp/public/storage";
+	 	 System.out.println("실제폴더 : " + filePath +"DTO"+csBoardDTO);
+	 	
+	
+		 
+		 try {
+			
+			 
+			 
+			 String fileName=null;
+			 
+			 //원래는 img가 list형태라서 iterator를 사용하는 것이 더 올바른 방법이긴 함.
+			 for(MultipartFile sendImg:list) {
+				
+				//사진을 webapp쪽에 실제로 등록할 때 사용할 이름을 위한 변수
+				String sendName=null;
+				
+				//사진에 고유 값을 만들어 주는 기능.
+				//사용 이유. 룩북파트 혹은 중고매물 파트는 고객들이 사진을 등록하는데 고객들이 사진의 명칭을 똑같이 해놓은 경우가 존재할 수 있음.
+				//사진명이 중복되면 사진이 사라질 수 있기때문에 고유값을 만들어 사진이 삭제되는 경우를 방지
+				//https://dev-gorany.tistory.com/123
+				String uuid= UUID.randomUUID().toString();
+				sendName=uuid + "_" +sendImg.getOriginalFilename();
+				
+				
+				File file = new File(filePath, sendName);
+				
+				//db에 저장할 때 컬럼에 사진명을 배열로 저장할 수 없기 때문에 한줄로 저장후 ","를 사용하여 사진명을 분리할 예정
+				fileName=fileName+sendName+",";
+				sendImg.transferTo(file);
+				System.out.println(fileName +"sendImg Transferto");
+			 }
+			 
+			 //DTO에 사진명 수정 후 DTO에 세팅
+			 String imgName;
+			 imgName=fileName.substring(4, fileName.length()-1);
+			 System.out.println(imgName +"이미지네임");
+			 csBoardDTO.setFilename(imgName);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//복사
+		 
+//		String fileNameListString = StringUtils.join(fileNameList);
+//		System.out.println("여러 파일네임 합친거:"+fileNameListString);  //여러개파일네임 합친거 찍어보기
+//		
+//
+//		
+//		
+//
+//		csBoardDTO.setFilename(fileNameListString);
+//		csBoardDTO.setFilepath(filePath);
+//		
+//		
+		
+		
 		System.out.println(csBoardDTO);
 		csBoardService.write(csBoardDTO);		
 	}
@@ -46,11 +133,12 @@ public class CsBoardController {
 		return list;
 		
 	}
-	//카테고리 버튼 클릭 시 클릭한 카테고리만 보이게 어떻게 해???ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+	//카테고리 버튼 클릭 시 클릭한 카테고리만 보이게 
 	@GetMapping(path="getCategoryList")	
 	public List<CsBoardDTO>  getCategoryList(@RequestParam String category) {
 		return csBoardService.getCategory(category);
 	}
+	//content 검색 
 	@GetMapping(value="getKeywordSearchList")	
 	public List<CsBoardDTO> getKeywordSearchList(@RequestParam String keyword) {//searchOption, keyword
 		System.out.println(keyword);
