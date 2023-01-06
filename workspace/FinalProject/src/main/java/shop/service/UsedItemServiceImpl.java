@@ -71,6 +71,13 @@ public class UsedItemServiceImpl implements UsedItemService {
 		// TODO Auto-generated method stub
 		usedItemLikeDAO.save(usedItemLikeDTO);
 	}
+
+
+	@Override
+	public void deleteItem(int seq) {
+		usedItemDAO.deleteItem(seq);
+		//usedItemDAO.deleteById(seq);
+	}
 	
 
 	

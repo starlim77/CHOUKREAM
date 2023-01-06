@@ -28,6 +28,7 @@ import WriteForm from './component/User/WriteForm';
 import FindEmail from './component/User/FindEmail';
 import FindPassword from './component/User/FindPassword';
 import NewProducts from './component/Products/NewProducts';
+import UsedUpdate from './component/Used/UsedUpdate';
 
 function App() {
     return (
@@ -50,6 +51,7 @@ function App() {
                     <Route path="Used/usedItem" element={<UsedItem />} />
                     <Route path="Used/usedWrite" element={<UsedWrite />} />
                     <Route path="Used/useditem" element={<UsedItem />}></Route>
+                    <Route path="Used/usedUpdate" element={<UsedUpdate />}></Route>
                     <Route
                         path="Used/uploadform2"
                         element={<UploadForm2 />}

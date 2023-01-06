@@ -175,6 +175,19 @@ export const ProfileImg=styled.img.attrs({
 `;
 
 export const ProfileSpan=styled.span`
-    font-size:25px;
+    font-size:15px;
     
 `;
+
+export const ModalDiv=styled.div`   
+
+    width:300px;
+    height:200px;
+    float: right;
+    position: fixed;
+    top:20%;
+    right: 5%;
+
+`
+
+

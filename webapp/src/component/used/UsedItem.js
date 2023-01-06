@@ -1,14 +1,16 @@
 import axios from 'axios';
 import React, { useEffect, useState} from 'react';
 import {useParams, useSearchParams } from 'react-router-dom';
+import UpdateBtnModal from './UpdateBtnModal';
 import * as U from './UsedItemStyle';
 const UsedItem = () => {
 
     // console.log("seq = " + location.seq +" seq = "+ {seq})
 
-    const [searchParams,setSearchParams] = useSearchParams()
+    const [searchParams,setSearchParams] = useSearchParams();
 
     const [form,setForm]=useState({
+        id:'',
         imgName:'',
         title:'',
         productName:'',
@@ -25,18 +27,25 @@ const UsedItem = () => {
         registerNo:''
     })
 
+    
     useEffect(()=>{
         console.log(searchParams.get('seq'));
         axios.get('http://localhost:8080/used/viewItem?seq=' + searchParams.get('seq'))
         .then(res => setForm(res.data))
-        .catch(error => console.log(error))
+        .then(axios.get('http://localhost:8080/used/itemLike2?seq=' + searchParams.get('seq'))
+                .then(respond => setLikeForm(respond.data))
+                .catch(error => console.log(error))
+        ).catch(error => console.log(error))
 
-
-        axios.get('http://localhost:8080/used/itemLike2?seq=' + searchParams.get('seq'))
-        .then(respond => setLikeForm(respond.data))
-        .catch(error => console.log(error))
-        console.log(likeForm);
     },[])
+
+    //나중에 세션값 들어오는 거랑 글 작성자랑 맞는지 확인하는 과정
+    const[isWriter,setIsWriter]=useState(false);
+    useEffect(()=>{
+        //여기서 글로 써놓은 게 나중에 세션을 적어줄 공간
+        setIsWriter(form.id==='홍헌')
+
+    },[form.id])
 
     const [splitImg,setSplitImg] = useState([])
 
@@ -75,6 +84,9 @@ const UsedItem = () => {
     return (
 
         <>
+        <U.ModalDiv>
+            <UpdateBtnModal writer={isWriter} seq={searchParams.get('seq')}></UpdateBtnModal>
+        </U.ModalDiv>
         <U.BaseBody>
             <U.ImgBody>
                 <U.MainImg src={`/storage/${mainImg}`}></U.MainImg>
@@ -131,6 +143,8 @@ const UsedItem = () => {
                 <U.ProfileSpan>아이디/거래수/거래이슈</U.ProfileSpan>
             </U.ProfileWrapper>
         </U.BottomDiv>
+
+        
     </>
          
         
