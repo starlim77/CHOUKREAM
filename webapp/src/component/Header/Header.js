@@ -30,9 +30,7 @@ const Header = () => {
                     </S.TopWrapper>
                 </S.Top>
                 <S.Bottom>
-                    <Link to={'/'}>
-                        <S.BottomImg src="../image/logo.png" />
-                    </Link>
+                    <S.BottomImg src="../image/logo.png" />
                     <S.BottomWrapper>
                         <S.BottomLi active={true}>STYLE</S.BottomLi>
                         <S.BottomLi>
