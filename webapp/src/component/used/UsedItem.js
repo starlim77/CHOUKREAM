@@ -6,6 +6,7 @@ import * as U from './UsedItemStyle';
 const UsedItem = () => {
 
     // console.log("seq = " + location.seq +" seq = "+ {seq})
+    const shopKind = 'used'
 
     const [searchParams,setSearchParams] = useSearchParams();
 
@@ -31,7 +32,7 @@ const UsedItem = () => {
     useEffect(()=>{
         axios.get('http://localhost:8080/used/viewItem?seq=' + searchParams.get('seq'))
         .then(res => setForm(res.data))
-        .then(axios.get('http://localhost:8080/used/itemLike?seq=' + searchParams.get('seq') + '&id=' + 'asd')
+        .then(axios.get('http://localhost:8080/used/itemLike?seq=' + searchParams.get('seq') + '&id=' + 'asd' + '&shopKind=' + shopKind)
                     .then(res => res.data ? setLikeForm(res.data) : '')
                     .catch(error => console.log(error)))
         .catch(error => console.log(error))
@@ -84,7 +85,7 @@ const UsedItem = () => {
         // // 데이터가 없어서 강제 주입
         // setLikeForm({...likeForm , seq:searchParams.get('seq'),id:'asd'})
 
-        axios.post(`http://localhost:8080/used/likeSet?seq=`+searchParams.get('seq') + '&id=' + 'asd' + '&userLike=' + likeForm.userLike)
+        axios.post(`http://localhost:8080/used/likeSet?seq=`+searchParams.get('seq') + '&id=' + 'asd' + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
         // axios.post('http://localhost:8080/used/likeSet',null,{params:likeForm})
         // axios.get('http://localhost:8080/used/likeSet'+   likeForm) 나중에 다시 해보기
         .then()

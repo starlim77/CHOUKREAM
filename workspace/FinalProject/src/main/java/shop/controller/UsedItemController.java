@@ -47,9 +47,9 @@ public class UsedItemController {
 	
 	
 	@GetMapping(path="itemLike")
-	public UsedItemLikeDTO itemLike(@RequestParam int seq, @RequestParam String id){
+	public UsedItemLikeDTO itemLike(@ModelAttribute UsedItemLikeDTO usedItemLikeDTO){
 		//System.out.println("라이크 찍기"+seq);
-		UsedItemLikeDTO imsi = usedItemService.itemLike(seq,id);
+		UsedItemLikeDTO imsi = usedItemService.itemLike(usedItemLikeDTO);
 		//System.out.println("임시용 "+imsi);
 		return imsi;
 		//return usedItemService.itemLike(seq);
