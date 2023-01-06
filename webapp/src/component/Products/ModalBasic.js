@@ -7,8 +7,8 @@ const ModalBasic = ({ setModalOpen, seq, getSize, sizeForm, getAll }) => {
     const [allSize, setAllSize] = useState('-')
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/getSellOrderList?seq=${seq}`)
-             .then(res => res.data.length !== 0 ? setAllSize(res.data[0].orderPrice) : setAllSize('구매 입찰'))
+        axios.get(`http://localhost:8080/getSellBidsList?seq=${seq}`)
+             .then(res => res.data.length !== 0 ? setAllSize(res.data[0].price) : setAllSize('구매 입찰'))
              .catch(error => console.log(error)) 
     }, []);
 

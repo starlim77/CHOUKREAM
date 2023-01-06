@@ -1,16 +1,16 @@
-// import { ResponsiveLine } from '@nivo/line'
+import { ResponsiveLine } from '@nivo/line'
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
 import ModalBasic from './ModalBasic';
 import * as S from './style';
 import GlobalStyle from './GlobalStyle';
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 import CompletedOrderTable from "./table/CompletedOrderTable";
 import SellBidsTable from "./table/SellBidsTable";
 import BuyBidsTable from "./table/BuyBidsTable";
-import EmptyTable from "./table/EmptyTable";
-// import Graph from './Graph';
+import EmptyTable from "./table/EmptyTable"
+import Graph from './Graph';
 
 const Products = () => {
 
@@ -61,9 +61,13 @@ const Products = () => {
         price: '-'
     }])
 
+    const [brandListForm, setBrandListForm] = useState([])
+
     const [sizeForm, setSizeForm] = useState([{}])
 
     const [size ,setSize] = useState("모든 사이즈");
+
+    const [brand, setBrand] = useState('');
 
     const [openLayer, setOpenLayer] =useState(true)
 
@@ -73,7 +77,8 @@ const Products = () => {
     const OpenDrop = () => {  
         setDropdown(!dropdown);
         console.log(completedOrderForm)
-        console.log(completedOrderForm.length)
+        console.log(form.brand)
+        console.log(brandListForm)
         
     }
     const [dropdown1, setDropdown1] = useState(true);
@@ -113,6 +118,12 @@ const Products = () => {
              .catch(error => console.log(error))
         
     }, []);
+
+    useEffect(() => {
+        axios.get(`http://localhost:8080/getBrandList?seq=${seq}&brand=${form.brand}`)
+             .then(res => res.data.length !== 0 && setBrandListForm(res.data))
+             .catch(error => console.log(error))
+    }, [form])
 
     const getSize = (seq, size) => {
         setSize(size);
@@ -184,7 +195,7 @@ const Products = () => {
     useEffect(() => {
         const scrollListener= () => {  window.addEventListener("scroll", handleScroll2); } //  window 에서 스크롤을 감시 시작
         scrollListener(); // window 에서 스크롤을 감시
-        return () => { window.removeEventListener("scroll", handleScroll); }; //  window 에서 스크롤을 감시를 종료
+        return () => { window.removeEventListener("scroll", handleScroll2); }; //  window 에서 스크롤을 감시를 종료
     });
 
     const buyNavigate = () => {
@@ -193,6 +204,11 @@ const Products = () => {
 
     const sellNavigate = () => {
         navigate(`/sell?seq=${seq}`)
+    }
+
+    const brandNavigate = (seq) => {
+        navigate(`/products/${seq}`)
+        window.location.reload()
     }
 
 
@@ -209,7 +225,7 @@ const Products = () => {
                         <S.ColumnIsFixed>
                             <S.ColumnBox ScrollActive={ ScrollActive }>
                                 <div className="spread">
-                                    <img src={form.img}></img>
+                                    <S.Image src={form.img} ></S.Image>
                                 </div>
                                 {/* <div className="column_box">
                                     <div className="detail_banner_area">
@@ -420,7 +436,7 @@ const Products = () => {
     
                                                 <div id="sales_panel1" role="tabpanel" className="tab_content show" span="1m">
                                                     <div className="graph">
-                                                        {/* <Graph></Graph> */}
+                                                        <Graph></Graph>
                                                     </div>
                                                 </div>
                                                 {/* <div id="sales_panel2" role="tabpanel" className="tab_content" span="3m">
@@ -701,23 +717,34 @@ const Products = () => {
                         </S.BrandTitle>
                         <S.BrandProducts>
                             <S.BrandProductList>
-                                <S.ProductItem>
-                                    <div className='thumb_box'>
-                                        <S.Product>
-                                            <S.PictureBrandProductImg>
-                                                <S.BrandProductImg src={form.img}/>
-                                            </S.PictureBrandProductImg>
-                                        </S.Product>
-                                    </div>
-                                    <S.ProductItemInfoBox>
-                                        <div className='info_box'>
-                                            <div className='brand'>
-                                                <S.BrandTextWithOutWish>{form.brand}</S.BrandTextWithOutWish>
+                            {
+                                brandListForm.map((item, index) => (
+                                    <S.ProductItem key={index}>
+                                        <S.ItemInner onClick={() => brandNavigate(item.seq)}>
+                                            <div className='thumb_box'>
+                                                <S.Product>
+                                                    <S.PictureBrandProductImg>
+                                                        <S.BrandProductImg src={item.img}/>
+                                                    </S.PictureBrandProductImg>
+                                                </S.Product>
                                             </div>
-                                            <S.BrnadProductInfoBoxName>{form.title}</S.BrnadProductInfoBoxName>
-                                        </div>
-                                    </S.ProductItemInfoBox>
-                                </S.ProductItem>
+                                            <S.ProductItemInfoBox>
+                                            <div className='info_box'>
+                                                <div className='brand'>
+                                                    <S.BrandTextWithOutWish>{item.brand}</S.BrandTextWithOutWish>
+                                                </div>
+                                                <S.BrandProductInfoBoxName>{item.title}</S.BrandProductInfoBoxName>
+                                                <S.BrandProductInfoBoxPrice>
+                                                    <S.BrandProductInfoBoxPriceAmount>
+                                                        <S.BrandProductInfoBoxPriceAmountNum>{item.price}</S.BrandProductInfoBoxPriceAmountNum>
+                                                    </S.BrandProductInfoBoxPriceAmount>
+                                                    <S.BrandProductInfoBoxPriceDesc>즉시 구매가</S.BrandProductInfoBoxPriceDesc>
+                                                </S.BrandProductInfoBoxPrice>
+                                            </div>
+                                        </S.ProductItemInfoBox>
+                                        </S.ItemInner>
+                                    </S.ProductItem>))
+                            }
                             </S.BrandProductList>
                         </S.BrandProducts>
                     </S.BrandArea>

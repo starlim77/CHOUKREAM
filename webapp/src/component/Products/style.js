@@ -23,21 +23,24 @@ export const Content = styled.div`
     padding: 30px 40px 120px;
     max-width: 1280px;
     border: 1px blue dotted;
+
+    display: block;
 `;
 export const ColumnBind = styled.div`
     display: flex;
     border: 1px green dotted;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-content: center; 
     position: relative;
-    width: 1080px;
+    /* width: 1100px;
+    margin: auto; */
 `;
 
 export const ColumnIsFixed = styled.div`
-    display: flex;
-    flex-direction: column;
-    border: 1px black dotted;
-    overflow: auto;
+    float: left;
+    padding-right: 3.334%;
     width: 50%;
+    display: block;
 `;
 
 export const ColumnBox = styled.div`
@@ -58,13 +61,11 @@ export const ColumnBoxAbsolute = styled.div`
 `;
 
 export const Column = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    border: 1px orange dotted;
     position: relative;
     float: right;
     padding-left: 3.334%;
     width: 50%;
+    display: block;
 `;
 
 export const BannerAlert = styled.div`
@@ -143,7 +144,6 @@ export const DetailSize = styled.div`
     padding-bottom: 12px;
     border-bottom: 1px solid #ebebeb;
     border: 1px red dotted;
-    margin-top: 15px;
     min-height: 50px;
 `;
 
@@ -1193,6 +1193,7 @@ export const SelectLinkBuy = styled.button`
     height: 100%;
     cursor: pointer;
     background-color: white;
+    border: 0;
 `;
 
 export const LinkInner = styled.div`
@@ -1366,7 +1367,7 @@ export const ProductItem = styled.div`
     vertical-align: top;
 `;
 
-export const ItemInner = styled.a`
+export const ItemInner = styled.div`
     display: block;
     background-color: #fff;
     border-radius: 12px;
@@ -1419,7 +1420,7 @@ export const BrandTextWithOutWish = styled.p`
     max-width: 100%;
 `;
 
-export const BrnadProductInfoBoxName = styled.p`
+export const BrandProductInfoBoxName = styled.p`
     max-height: 44px;
     margin-bottom: 2px;
     line-height: 17px;
@@ -1433,3 +1434,278 @@ export const BrnadProductInfoBoxName = styled.p`
     font-size: 14px;
     color: #222;
 `;
+
+export const BrandProductInfoBoxPrice = styled.div`
+    padding-top: 7px;
+    display: block;
+`;
+
+export const BrandProductInfoBoxPriceAmount = styled.div`
+    font-size: 0;
+    line-height: 0;
+    display: block;
+`;
+
+export const BrandProductInfoBoxPriceAmountNum = styled.div`
+    display: inline-block;
+    vertical-align: top;
+    line-height: 17px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -.04px;
+    font-style: normal;
+`;
+
+export const BrandProductInfoBoxPriceDesc = styled.div`
+    line-height: 13px;
+    font-size: 11px;
+    color: rgba(34,34,34,.5);
+    display: block;
+`;
+
+export const Wrap = styled.div`
+    position: relative;
+    overflow-anchor: none;
+    display: block;
+`;
+
+export const ColumnIsAbsolute = styled.div`
+    float: left;
+    padding-right: 3.334%;
+    width: 50%;
+    display: block;
+`;
+
+export const Spread = styled.div`
+    position: static;
+    display: block;
+    height: 560px;
+    background-color: transparent;
+`;
+
+export const NewColumnBox = styled.div`
+    width: 560px;
+    position: absolute;
+    bottom: 0;
+    display: block;
+`;
+
+export const SlideItem = styled.div`
+    background-color: #f4f4f4;
+    position: relative;
+    display: block;
+`;
+
+export const NewPictureProductImg = styled.picture`
+    display: flex;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 1000%;
+    left: 50%;
+    transform:
+     translate(-50%,-50%);
+`;
+
+export const NewColumn = styled.div`
+    position: relative;
+    float: right;
+    padding-left: 3.334%;
+
+    width: 50%;
+    display: block;
+`;
+
+export const NewProductBuyBtn = styled.button`
+    background-color: rgb(239, 98, 83);
+    color: rgb(255, 255, 255);
+    margin-bottom: 12px;
+    width: 100%;
+    font-size: 18px;
+    letter-spacing: -.09px;
+    font-weight: 700;
+    height: 60px;
+    cursor: pointer;
+    border-radius: 10px;
+    min-width: fit-content;
+    padding: 0;
+    border: 0;
+    outline: none;
+`;
+
+export const ProductDetailItemContent = styled.div`
+    margin-top: 60px;
+    display: block;
+`;
+
+export const ProductDetailTabWrap = styled.div`
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #ebebeb;
+    margin: 0 0 80px;
+    padding: 21.5px 0;
+    display: block;
+`;
+
+export const ProductDetailTab = styled.div`
+    width: fit-content;
+    margin: 0 auto;
+    display: block;
+`;
+
+export const TabActive = styled.a`
+    color: #333;
+    font-size: 14px;
+    width: 120px;
+    cursor: pointer;
+`;
+
+export const Tab = styled.a`
+    margin-left: 120px;
+    color: rgba(34,34,34,.5);
+    font-size: 14px;
+    width: 120px;
+    cursor: pointer;
+`;
+
+export const DetailTitleHeaderImages = styled.div`
+    padding: 0 100px;
+    text-align: center;
+    display: block;
+`;
+
+export const DetailHeaderImgWrap = styled.div`
+    margin-top: 40px;
+    display: block;
+`;
+
+export const CoverImg = styled.img`
+    width: -webkit-fill-available;
+`;
+
+export const DetailHeaderTitleWrap = styled.div`
+    text-align: left;
+    border-top: 1px solid #ebebeb;
+    padding: 57px 0 0;
+    margin-top: 40px;
+`;
+
+export const DetailHeaderProductNo = styled.p`
+    font-size: 14px;
+    color: rgba(34,34,34,.5);
+`;
+
+export const DetailHeaderTitle = styled.p`
+    margin-top: 24px;
+    font-size: 32px;
+    letter-spacing: -.48px;
+    font-weight: 700;
+    text-transform: capitalize;
+    padding: 0;
+`;
+
+export const DetailHeaderSubTitle = styled.p`
+    margin-top: 4px;
+    font-size: 28px;
+    letter-spacing: -.015em;
+    text-transform: capitalize;
+    color: rgba(34,34,34,.8);
+`;
+
+export const DetailHeaderDescription = styled.p`
+    font-size: 17px;
+    margin: 24px 0 0;
+    padding: 0;
+    border: 0;
+    line-height: 24px;
+    color: rgba(34,34,34,.5);
+`;
+
+export const DetailImgWrap = styled.div`
+    margin-top: 27px;
+`;
+
+export const DetailContentImages = styled.div`
+    max-height: unset!important;
+    position: relative;
+    overflow: hidden;
+`;
+
+export const DetailTitlePreviewWrap = styled.div`
+    padding: 42px 100px 0;
+`;
+
+export const DetailLinkPreviewItemTitleDetailItemTitle = styled.div`
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+`;
+
+export const ProductDetailItemTitleUndefined = styled.p`
+    margin-bottom: 17px;
+    font-size: 17px;
+    font-weight: 700;
+`;
+
+export const DetailLinkPreviewItemWrap = styled.div`
+    margin: 17px 0 40px;
+    width: 100%;
+    font-size: 13px;
+`;
+
+export const DetailLinkPreviewItems = styled.ul`
+    border-top: 1px solid #ebebeb;
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+`;
+
+export const DetailLinkPreviewItem = styled.li`
+    border-bottom: 1px solid #ebebeb;
+    display: flex;
+
+    text-align: -webkit-match-parent;
+`;
+
+export const ItemTitleWrap = styled.div`
+    display: table;
+`;
+
+export const ItemTitle = styled.span`
+    width: 240px;
+    background: #fafafa;
+    padding: 16px 20px;
+    display: table-cell;
+    vertical-align: middle;
+`;
+
+export const ItemDescription = styled.ul`
+    padding: 16px 20px;
+    width: 100%;
+`;
+
+export const ItemDescriptionLi = styled.li`
+    margin-top: 8px;
+`;
+
+export const NewFloatingLargeBtn = styled.button`
+    background-color: #EF6253;
+    color: #FFFFFF;
+    font-size: 15px;
+    letter-spacing: -.15px;
+    font-weight: 700;
+    height: 100%;
+    width: 100%;
+    padding: 13px 0;
+    cursor: pointer;
+    border-radius: 10px;
+    min-width: fit-content;
+    border: 0;
+`;
+
+
+
+
+
+
+
+
+
