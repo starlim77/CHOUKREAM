@@ -47,9 +47,10 @@ public class UsedItemServiceImpl implements UsedItemService {
 
 
 	@Override
-	public UsedItemLikeDTO itemLike(int seq, String id) {
-
-		return usedItemLikeDAO.itemLike(seq,id);
+	public UsedItemLikeDTO itemLike(int seq, String id,String shopKind) {
+		System.out.println("---------------------------");
+		System.out.println(shopKind);
+		return usedItemLikeDAO.itemLike(seq,id,shopKind);
 	}
 
 
@@ -64,11 +65,10 @@ public class UsedItemServiceImpl implements UsedItemService {
 			
 		}else {
 			System.out.println("좋아요 --");
-			usedItemLikeDAO.deleteBySeqAndId(usedItemLikeDTO.getSeq(),usedItemLikeDTO.getId());
+			usedItemLikeDAO.deleteBySeqAndIdAndShopKind(usedItemLikeDTO.getSeq(),usedItemLikeDTO.getId(),usedItemLikeDTO.getShopKind());
 			usedItemDAO.likeDown(usedItemLikeDTO.getSeq());
 		}
 		
-		System.out.println("오긴왔나");
 	}
 
 

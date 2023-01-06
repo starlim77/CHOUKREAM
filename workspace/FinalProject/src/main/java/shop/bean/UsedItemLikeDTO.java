@@ -39,4 +39,7 @@ public class UsedItemLikeDTO {
 	@Column(name="userLike")
 	private Boolean userLike;
 	
+	@Column(name="shopKind")
+	private String shopKind;
+	
 }
