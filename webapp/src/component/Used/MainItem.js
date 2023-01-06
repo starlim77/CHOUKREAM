@@ -19,7 +19,7 @@ const MainItem = ({data,onItem}) => {
                     <S.ItemContent>{data.contents}</S.ItemContent>
                     <S.ItemPrice>{data.price}</S.ItemPrice>
                     <S.ItemLike>
-                        <S.ItemLikeImg src='../image/used/bookmark.svg'/><S.ItemLikeSpan>{data.like}</S.ItemLikeSpan>
+                        <S.ItemLikeImg src='../image/used/bookmark.svg'/><S.ItemLikeSpan>{data.likes}</S.ItemLikeSpan>
                     </S.ItemLike>
             </S.MainItem>
             

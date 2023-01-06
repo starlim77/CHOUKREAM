@@ -63,8 +63,12 @@ const UsedItem = () => {
         // likeForm.userLike || setLikeForm({...likeForm, userLike:'false'})
         
         setLikeForm({...likeForm, userLike:!likeForm.userLike})
-        
-        console.log(likeForm)
+        if(likeForm.userLike){
+            setForm({...form,likes:form.likes-1})
+        }else{
+            setForm({...form,likes:form.likes+1})
+        }
+        // console.log(likeForm)
     
         // // 데이터가 없어서 강제 주입
         // setLikeForm({...likeForm , seq:searchParams.get('seq'),id:'asd'})

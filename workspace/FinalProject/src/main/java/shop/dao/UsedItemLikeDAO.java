@@ -22,6 +22,12 @@ public interface UsedItemLikeDAO extends JpaRepository<UsedItemLikeDTO, Integer>
 	@Transactional
 	public void deleteBySeqAndId(int seq, String id);
 
+	
+	
+	
+	
+	
+	
 //	@Query("delete from UsedItemLikeDTO usedItemLikeDTO where usedItemLikeDTO.id = :id")
 //	public void itemLikeCheckOut(@Param("usedItemLikeDTO") UsedItemLikeDTO usedItemLikeDTO);
 //	

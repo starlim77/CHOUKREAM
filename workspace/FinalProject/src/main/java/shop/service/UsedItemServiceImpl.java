@@ -60,12 +60,12 @@ public class UsedItemServiceImpl implements UsedItemService {
 		if(usedItemLikeDTO.getUserLike()) {
 			System.out.println("좋아요 ++");
 			usedItemLikeDAO.save(usedItemLikeDTO);
+			usedItemDAO.likeUp(usedItemLikeDTO.getSeq());
 			
 		}else {
 			System.out.println("좋아요 --");
-		
-//			usedItemLikeDAO.itemLikeCheckOut(usedItemLikeDTO.getSeq(),usedItemLikeDTO.getId());
 			usedItemLikeDAO.deleteBySeqAndId(usedItemLikeDTO.getSeq(),usedItemLikeDTO.getId());
+			usedItemDAO.likeDown(usedItemLikeDTO.getSeq());
 		}
 		
 		System.out.println("오긴왔나");
