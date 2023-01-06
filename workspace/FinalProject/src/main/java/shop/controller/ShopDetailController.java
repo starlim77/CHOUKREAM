@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import shop.bean.BidsListDTO;
+import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
+import shop.bean.SizeMinDTO;
 import shop.service.ShopDetailService;
 
 @CrossOrigin
@@ -26,31 +29,58 @@ public class ShopDetailController {
 		return shopDetailService.getProduct(seq);
 	}
 	
-	@GetMapping(path="getSellOrderList")
-	public List<OrderDTO> getSellOrderList(@RequestParam int seq) {
-		return shopDetailService.getSellOrderList(seq);  
-	}
-	
-	@GetMapping(path="getBuyOrderList")
-	public List<OrderDTO> getBuyOrderList(@RequestParam int seq) {
-		return shopDetailService.getBuyOrderList(seq);
-	}
-	
 	@GetMapping(path="getCompletedOrderList")
 	public List<CompletedOrderDTO> getCompletedOrderList(@RequestParam int seq) {
 		return shopDetailService.getCompletedOrderList(seq);
 	}
 	
 	@GetMapping(path="getProductSize")
-	public List<ProductSizeDTO> getProductSize(@RequestParam int seq) {
+	public List<SizeMinDTO> getProductSize(@RequestParam int seq) {
 		return shopDetailService.getProductSize(seq);
 	}
-
-	@GetMapping(path="getProductSizeMin")
-	public Optional<Integer> getProductSizeMin(@RequestParam int seq,@RequestParam String size) {
-		System.out.println(shopDetailService.getProductSizeMin(seq, size));
-		return shopDetailService.getProductSizeMin(seq, size);
+	
+	@GetMapping(path="getProductSizeSell")
+	public List<SizeMinDTO> getProductSizeSell(@RequestParam int seq) {
+		return shopDetailService.getProductSizeSell(seq);
 	}
+	
+	@GetMapping(path="getCompletedOrderListBySize")
+	public List<CompletedOrderDTO> getCompletedOrderListBySize(@RequestParam int seq,@RequestParam String size) {
+		return shopDetailService.getCompletedOrderListBySize(seq, size);
+	}
+	
+	@GetMapping(path="getSellBidsList")
+	public List<BidsListDTO> getSellBidsList(@RequestParam int seq) {
+		return shopDetailService.getSellBidsList(seq);  
+	}
+	
+	@GetMapping(path="getSellBidsListBySize")
+	public List<BidsListDTO> getSellBidsListBySize(@RequestParam int seq,@RequestParam String size) {
+		return shopDetailService.getSellBidsListBySize(seq, size);  
+	}
+	
+	@GetMapping(path="getBuyBidsList")
+	public List<BidsListDTO> getBuyBidsList(@RequestParam int seq) {
+		return shopDetailService.getBuyBidsList(seq);  
+	}
+	
+	@GetMapping(path="getBuyBidsListBySize")
+	public List<BidsListDTO> getBuyBidsListBySize(@RequestParam int seq,@RequestParam String size) {
+		return shopDetailService.getBuyBidsListBySize(seq, size);  
+	}
+	
+	@GetMapping(path="getBrandList")
+	public List<BrandListDTO> getBrandList(@RequestParam int seq,@RequestParam String brand) {
+		return shopDetailService.getBrandList(seq, brand);  
+	}
+	
+	
+	
+//	@GetMapping(path="getProductSizeMin")
+//	public Optional<Integer> getProductSizeMin(@RequestParam int seq,@RequestParam String size) {
+//		System.out.println(shopDetailService.getProductSizeMin(seq, size));
+//		return shopDetailService.getProductSizeMin(seq, size);
+//	}
 	
 	
 	

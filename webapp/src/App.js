@@ -27,6 +27,7 @@ import LoginForm from './component/User/LoginForm';
 import WriteForm from './component/User/WriteForm';
 import FindEmail from './component/User/FindEmail';
 import FindPassword from './component/User/FindPassword';
+import NewProducts from './component/Products/NewProducts';
 import UsedUpdate from './component/Used/UsedUpdate';
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
                         element={<UploadForm2 />}
                     ></Route>
                     <Route path="products/:seq" element={<Products />} />
+                    <Route path="newProducts/:seq" element={<NewProducts />} />
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/login/find_email" element={<FindEmail />} />
                     <Route
