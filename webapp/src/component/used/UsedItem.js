@@ -6,6 +6,7 @@ import * as U from './UsedItemStyle';
 const UsedItem = () => {
 
     // console.log("seq = " + location.seq +" seq = "+ {seq})
+    const shopKind = useState('used')
 
     const [searchParams,setSearchParams] = useSearchParams();
 
