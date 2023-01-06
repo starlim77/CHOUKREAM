@@ -12,5 +12,7 @@ public interface ShopService {
 	List<ProductDTO> sortGetProductList();
 
 	Optional<ProductDTO> getProductBySeq(int seq);
+	
+	List<ProductDTO> getShoesList(String shoes);
 
 }

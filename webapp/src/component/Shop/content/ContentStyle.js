@@ -156,6 +156,9 @@ export const MenuList = styled.ul`
     margin-inline-end: 0px;
     padding-inline-start: 40px;
 `;
+export const CheckBox = styled.input`
+    
+`;
 export const Menu = styled.li`
     list-style: none;
     margin: 0;
@@ -613,9 +616,6 @@ export const ReviewLink = styled.a`
     box-sizing: border-box;
     cursor: pointer;
 `;
-// export const  = styled.div`
-
-// `;
 // export const  = styled.div`
 
 // `;
