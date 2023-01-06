@@ -1,4 +1,4 @@
-import { sliderClasses } from '@mui/material';
+
 import React, { useEffect } from 'react';
 import * as Ban from './BannerStyle';
 

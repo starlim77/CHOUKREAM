@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import * as Se from './SearchStyle';
-import data from './TrendData';
-import filterData from './FilterData';
-import Content from './Content';
-import Banner from './Banner';
+import * as Se from './content/SearchStyle';
+import data from './content/TrendData';
+import filterData from './content/FilterData';
+import Content from './content/Content';
+import Banner from './banner/Banner';
 import axios from 'axios';
 
 

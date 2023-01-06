@@ -3,10 +3,9 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faBoltLightning } from '@fortawesome/free-solid-svg-icons';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
-import { faSquare } from '@fortawesome/free-regular-svg-icons';
 import * as Co from './ContentStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Modal from './Modal';
+import Modal from '../modal/Modal';
 import { Link } from 'react-router-dom';
 import categoryData from './CategoryData';
 import MenuList from './MenuList';
@@ -17,13 +16,12 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
         window.addEventListener('scroll', handleScroll);
         return () => {
             // 여기서 return 은 무슨 뜻 ?? 다른페이지로 이동하거나 할때 발동됨
-            // console.log('end') 처음에 1번나오고 이후에 나옴 
+            // console.log( addEventListener 추가한 스크롤 이벤트 종료 시키기 'end') //처음에 1번나오고 이후에 나옴 
             window.removeEventListener('scroll', handleScroll); //clean up
         };
     }, []);
-
-    const [i, setI] = useState(1); // 한번에 보여줄 페이지 ? 개수
-    const [f, setF] = useState(8); // 사진 개수
+    
+    const [pictures, setPictures] = useState(8); // 사진 개수
     // const [scrollHeight, setScrollHeight] = useState(window.scrollY);
     // console.log('유즈스테이트' + scrollHeight)
     const [heightTop, setHeightTop] = useState(0)
@@ -33,9 +31,6 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
     const handleScroll = () => {
         /// setHeightTop(window.scrollY);
         var heightTop = window.scrollY; // 화면의 Y축의 상단값
-        const setHeightTop = () => {
-            heightTop = heightTop + 838;
-        };
 
         const heightBottom = window.scrollY + window.innerHeight; // 화면의 Y축의 하단값
         const innerHeight = window.innerHeight;
@@ -57,14 +52,14 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
         // 611 > 781-100
         // heightTop >= innerHeight - 170 && setF(f + 8);
         
-        if (scrollHeight < 1000) {
-            setF(f => f + 8);
-            console.log('우구')
-        }
+        // if (scrollHeight < 1000) {
+        //     setF(f => f + 8);
+        //     console.log('우구')
+        // }
         
         if (heightBottom >= scrollHeight - 110) {
             console.log( '하단높이 '+ heightBottom + ' , ' + (scrollHeight - 100));
-            setF(f => f + 8);
+            setPictures(pictures => pictures + 8);
             // 상태변수f는 다시 리렌더링 하기 전까지는 안바뀐다 
             console.log('이게 8개 늘려줌');
         }
@@ -85,9 +80,7 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
         // scrollHeight - 112 < heightBottom && setF(f + 8);
     };
 
-    
     const [isActive, setIsActive] = useState(true);
-    
 
     const changeDisplay = id => {
         // console.log('id 는 ? ' + id)
@@ -157,7 +150,7 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                     display: item.checked ? 'block' : 'none',
                                 }}
                             >
-                                <MenuList item={item}  setDummy={setDummy} dummy={dummy} ></MenuList>
+                                <MenuList item={item} setDummy={setDummy} setPictures={setPictures} ></MenuList>
                             </Co.FilterMenu>
                         </Co.FilterList>
                     ))}
@@ -166,7 +159,7 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                     <Co.SearchOption>
                         <Co.FilterBtns>
                             <Co.FilterExpress
-                                style={{ display: isActive ? '' : 'none' }}
+                                style={{ display: isActive ? 'none' : '' }}
                             >
                                 <Co.ExpressBtn
                                     onClick={() => setIsActive(!isActive)}
@@ -176,7 +169,7 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                 </Co.ExpressBtn>
                             </Co.FilterExpress>
                             <Co.FilterExpress
-                                style={{ display: isActive ? 'none' : '' }}
+                                style={{ display: isActive ? '' : 'none' }}
                             >
                                 <Co.ExpressBtn2
                                     onClick={() => setIsActive(!isActive)}
@@ -185,12 +178,11 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                     <Co.Text>빠른배송</Co.Text>
                                 </Co.ExpressBtn2>
                             </Co.FilterExpress>
-
-                            <Co.FilterBrand>
+                            {/* <Co.FilterBrand>
                                 <Co.BrandBtn>
-                                    <Co.Text>브랜드배송</Co.Text>
+                                    <Co.Text>새상품 버튼</Co.Text>
                                 </Co.BrandBtn>
-                            </Co.FilterBrand>
+                            </Co.FilterBrand> */}
                             <Co.FilterBrand>
                                 <Co.BrandBtn>
                                     <Co.Text>
@@ -213,7 +205,7 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                     setDummy={setDummy}
                                     open={modalOpen}
                                     close={closeModal}
-                                    
+                                    setPictures={setPictures}
                                 >
                                     {/* modalOpen 현재 state 상태  */}
                                 </Modal>
@@ -227,12 +219,14 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                     </div>
                     <Co.SearchResult>
                         <Co.SearchResultList>
-                            {dummy.map(item => (
+                            {/* {console.log('더미더미 ' + f)} */}
+                            {dummy.map((item,index) => (
                                 <Co.ProductCard
                                     key={item.seq}
                                     style={{
-                                        display: f >= item.seq ? '' : 'none',
-                                    }}
+                                        display: pictures > index ? 'block' : 'none',
+                                    }} 
+                                    // 사진 8개씩 출력 idx는 0부터 시작
                                 >
                                     <Link to={`/products/${item.seq}`}>
                                         <Co.ItemInner href="#">

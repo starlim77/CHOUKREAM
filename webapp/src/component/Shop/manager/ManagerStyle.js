@@ -48,10 +48,10 @@ export const MenuLi = styled.li`
     margin: 0;
     padding: 0;
 `;
-export const MenuP = styled.p`
+export const MenuBtn = styled.button`
     color: lightgray;
-    margin: auto;
-    padding: 10px;
+    margin: 5px;
+    //padding: 10px;
     font-size: 20px;
     align-items: center;
     text-decoration: none;
@@ -64,9 +64,34 @@ export const Icon = styled.div`
     align-items: center;
     text-decoration: none;
 `;
-// export const = styled.div`
-    
-// `;
+export const Btndiv = styled.div`
+    margin-left: 6px;
+    margin-top: 1px;
+    display: block;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+`;
+export const Btn = styled.div`
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0 9px;
+    border: 1px solid #ebebeb;
+    border-radius: 17px;
+    text-decoration: none;
+    color: inherit;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+`;
+export const Text = styled.span`
+    line-height: 20px;
+    margin-left: 3px;
+    letter-spacing: -0.07px;
+    letter-spacing: normal;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    color: black;
+    cursor: pointer;
+`;
 // export const = styled.div`
     
 // `;

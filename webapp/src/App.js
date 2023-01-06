@@ -9,12 +9,12 @@ import SizePage from './component/payment/SizePage';
 import OrderType from './component/payment/OrderType';
 
 import Shop from './component/Shop/Shop';
+import UserWrite from './component/Shop/register/NewWrite';
 import UsedMain from './component/Used/UsedMain';
 import UsedWrite from './component/Used/UsedWrite';
 import UsedItem from './component/Used/UsedItem';
 import UploadForm2 from './component/Used/UploadForm2';
 import Products from './component/Products/Products';
-import UserWrite from './component/Shop/UserWrite';
 import PayForm from './component/payment/PayForm';
 import Trending from './component/Lookbook/Trending';
 import Detail from './component/Lookbook/Detail';
@@ -28,22 +28,40 @@ import LoginForm from './component/User/LoginForm';
 import WriteForm from './component/User/WriteForm';
 import FindEmail from './component/User/FindEmail';
 import FindPassword from './component/User/FindPassword';
-import ManagerPage from './component/Shop/ManagerPage';
+import ManagerPage from './component/Shop/manager/ManagerPage';
+import List from './component/Shop/manager/NewList';
+import AdminWrite from './component/Shop/register/NewWrite';
+import NewList from './component/Shop/manager/NewList';
+import NewSearch from './component/Shop/manager/NewSearch';
 
 function App() {
+    
     return (
         <BrowserRouter>
             <Routes>
                 <Route element={<Layout />}>
                     <Route path="/" element="" />
-                    <Route path="shop" element={<Shop/>} />  
-                    <Route path='Used/usedMain' element= { <UsedMain/>}/>
-                    <Route path='Used/usedWrite' element = { <UsedWrite/>} />
-                    <Route path="Used/useditem" element={<UsedItem></UsedItem>}></Route>
-                    <Route path="Used/uploadform2" element={<UploadForm2></UploadForm2>}></Route>
-                    <Route path="products/:seq" element={ <Products/> } />
-                    <Route path='Shop/userWrite' element={ <UserWrite/>}/>
-                    <Route path='Shop/managerPage' element={ <ManagerPage/>}/>
+
+                    {/* shop */}
+                    <Route path="shop" element={<Shop />} />
+                    
+                    <Route path="admin" element={<ManagerPage />} />
+                    <Route path="admin/newWrite" element={<><ManagerPage/><AdminWrite /></>} />
+                    <Route path="admin/newList" element={<><ManagerPage/><NewList /></>} />
+                    <Route path="admin/newSearch" element={<><ManagerPage/><NewSearch/></>} />
+                    
+        
+                    <Route path="Used/usedMain" element={<UsedMain />} />
+                    <Route path="Used/usedWrite" element={<UsedWrite />} />
+                    <Route
+                        path="Used/useditem"
+                        element={<UsedItem></UsedItem>}
+                    ></Route>
+                    <Route
+                        path="Used/uploadform2"
+                        element={<UploadForm2></UploadForm2>}
+                    ></Route>
+                    <Route path="products/:seq" element={<Products />} />
                     <Route path="/sell" element={<SizePage />} />
                     <Route path="/buy" element={<SizePage />} />
                     <Route path="/payTerms/*" element={<PaymentTerms />} />
