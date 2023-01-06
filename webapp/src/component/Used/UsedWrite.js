@@ -9,6 +9,7 @@ const UsedWrite = () => {
 
     const navigate = useNavigate();
     const[form,setForm] = useState({
+        id:'홍헌',
         title : '',
         productName : '',
         kind : '',
@@ -16,6 +17,9 @@ const UsedWrite = () => {
         price : '',
         contents : '',
         hashTag : []
+        //지훈씨한테 들은 내용(홍헌)
+        //배열은 데이터 보낼 때 배열로 안보내고 리액트 내에서 Stringify하면 문자열로 보낼 수 있다.
+        //데이터를 받아오고 나서는 parse로 데이터를 풀어주면 된다.
     })
 
     const [hashTag2,setHashTag2] = useState()

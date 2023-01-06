@@ -70,6 +70,13 @@ public class UsedItemServiceImpl implements UsedItemService {
 		
 		System.out.println("오긴왔나");
 	}
+
+
+	@Override
+	public void deleteItem(int seq) {
+		usedItemDAO.deleteItem(seq);
+		//usedItemDAO.deleteById(seq);
+	}
 	
 
 	

@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -155,10 +156,12 @@ public class UsedItemController {
 				 
 		 usedItemService.upload2(usedItemDTO);
 		 
+	 }
+	 
+	 @DeleteMapping(path="deleteItem")
+	 public void deleteItem(@RequestParam int seq) {
+		 System.out.println(seq);
+		 usedItemService.deleteItem(seq);
 		 
-		 
-
-	
-	
 	 }
 }
