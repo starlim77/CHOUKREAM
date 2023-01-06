@@ -14,10 +14,15 @@ import shop.bean.UsedItemLikeDTO;
 
 @Repository
 public interface UsedItemDAO extends JpaRepository<UsedItemDTO, Integer>{
-	
-	@Modifying
+
 	@Transactional
-	@Query(value="delete from used_item where seq = ?1", nativeQuery=true)
-	public void deleteItem(@Param("seq") int seq);
-	//https://stackoverflow.com/questions/62778719/spring-data-jpa-delete-query
+	@Modifying
+	@Query("update UsedItemDTO usedItemDTO set usedItemDTO.likes = usedItemDTO.likes + 1 where usedItemDTO.seq = :seq")
+	public void likeUp(int seq);
+
+	@Transactional
+	@Modifying
+	@Query("update UsedItemDTO usedItemDTO set usedItemDTO.likes = usedItemDTO.likes - 1 where usedItemDTO.seq = :seq")
+	public void likeDown(int seq);
+	
 }

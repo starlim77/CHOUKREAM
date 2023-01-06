@@ -27,11 +27,11 @@ public class UsedItemServiceImpl implements UsedItemService {
 	}
 
 
-	@Override
-	public void writeItem(UsedItemDTO usedItemDTO) {
-		usedItemDAO.save(usedItemDTO);
-		
-	}
+//	@Override
+//	public void writeItem(UsedItemDTO usedItemDTO) {
+//		usedItemDAO.save(usedItemDTO);
+//		
+//	}
 
 	
 	@Override
@@ -46,30 +46,29 @@ public class UsedItemServiceImpl implements UsedItemService {
 	}
 
 
-	//DAO는 테이블로 만들 DAO의 개수만큼 만들어줘야 한다.
 	@Override
-	public List<UsedItemLikeDTO> itemLike(int seq) {
+	public UsedItemLikeDTO itemLike(int seq, String id) {
 
-		//System.out.println("서비스에 있는 시퀀스"+seq);
-		return null;
-//		return usedItemDAO.itemLike(seq);
-	}
-
-
-	@Override
-	public UsedItemLikeDTO itemLike2(int seq) {
-
-		//System.out.println("서비스에 있는 시퀀스"+seq);
-		//return null;
-
-		return usedItemLikeDAO.itemLike2(seq);
+		return usedItemLikeDAO.itemLike(seq,id);
 	}
 
 
 	@Override
 	public void likeSet(UsedItemLikeDTO usedItemLikeDTO) {
-		// TODO Auto-generated method stub
-		usedItemLikeDAO.save(usedItemLikeDTO);
+		
+		System.out.println(usedItemLikeDTO);
+		if(usedItemLikeDTO.getUserLike()) {
+			System.out.println("좋아요 ++");
+			usedItemLikeDAO.save(usedItemLikeDTO);
+			usedItemDAO.likeUp(usedItemLikeDTO.getSeq());
+			
+		}else {
+			System.out.println("좋아요 --");
+			usedItemLikeDAO.deleteBySeqAndId(usedItemLikeDTO.getSeq(),usedItemLikeDTO.getId());
+			usedItemDAO.likeDown(usedItemLikeDTO.getSeq());
+		}
+		
+		System.out.println("오긴왔나");
 	}
 
 

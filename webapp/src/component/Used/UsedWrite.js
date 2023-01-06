@@ -64,6 +64,7 @@ const UsedWrite = () => {
             ...form
         })
 
+        setCount(count-1)
         console.log(form)
     }
 
@@ -71,12 +72,10 @@ const UsedWrite = () => {
 
     const onWrite = (e) =>{
         e.preventDefault()
-
-       
-
         
         var sw = 1
-        file[0]||--sw&&alert("이미지 파일을 등록해주세요");
+       
+        //file[0]||--sw&&alert("이미지 파일을 등록해주세요");
        
         if(!title){
             sw=0
@@ -90,18 +89,19 @@ const UsedWrite = () => {
         file.map(files=>formData.append('img',files));
         
         if(sw == 1) {
+
+            alert('글작성 성공')
            // axios.post('http://localhost:8080/used/writeItem',null,({params:{
             axios.post('http://localhost:8080/used/upload',formData,({params:{
                ...form,
                 hashTag : encodeURI(form.hashTag)
             }}))
                  .then(() => {
-                    alert('글작성 완료')
+                    navigate("/used/usedMain");
                  })
                  .catch(error => console.log(error))
         }
-
-       navigate("/used/usedMain");
+       
         
     }
 
