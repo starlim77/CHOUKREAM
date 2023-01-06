@@ -29,6 +29,7 @@ import WriteForm from './component/User/WriteForm';
 import FindEmail from './component/User/FindEmail';
 import FindPassword from './component/User/FindPassword';
 import CsFaqUpdateForm from './component/Cs/CsFaqUpdateForm';
+import CsMain from './component/Cs/CsMain';
 
 function App() {
     return (
@@ -66,10 +67,12 @@ function App() {
                         element={<FindPassword />}
                     />
                     <Route path="/join" element={<WriteForm />} />
-                </Route>
+
+                    <Route path="/cs/*" element={<CsMain />} />
                 <Route path="/lookbook" element={<Trending />}>
                     <Route path="/lookbook/trending" element="" />
                     {/* <Route path='/detail' element='' /> */}
+                </Route>
                 </Route>
 
                 <Route path="/lookbook/social" element={<Social />} />
@@ -77,10 +80,6 @@ function App() {
                 <Route path="/lookbook/detail" element={<Detail />} />
                 <Route path="/Search/SearchForm" element={<SearchForm />} />
 
-                <Route path="/cs/csnotice" element={<CsNotice />} />
-                <Route path="/cs/CsFaq" element={<CsFaq />} />
-                <Route path="/cs/CsFaqWriteForm" element={<CsFaqWriteForm />} />
-                <Route path={"/cs/CsFaqUpdateForm/:seq"}  element= {<CsFaqUpdateForm/>}/>
             </Routes>
         </BrowserRouter>
     );

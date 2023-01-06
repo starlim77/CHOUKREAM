@@ -13,7 +13,6 @@ import { grey } from '@mui/material/colors';
 const Trending = () => {    
     return (
         <>
-            <Header />
             <Social />
             <div>인기/최신/팔로잉</div>
             <div>태그</div>

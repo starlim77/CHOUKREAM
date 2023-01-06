@@ -6,9 +6,6 @@ const CsInspection = () => {
   
     return (
         <>
-            <Header/>
-            <CsNav/>
-            
             검수기준
         </>
     );
