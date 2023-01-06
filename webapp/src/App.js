@@ -33,6 +33,8 @@ import List from './component/Shop/manager/NewList';
 import AdminWrite from './component/Shop/register/NewWrite';
 import NewList from './component/Shop/manager/NewList';
 import NewSearch from './component/Shop/manager/NewSearch';
+import NewProducts from './component/Products/NewProducts';
+import UsedUpdate from './component/Used/UsedUpdate';
 
 function App() {
     
@@ -76,11 +78,13 @@ function App() {
                     <Route path="Used/usedItem" element={<UsedItem />} />
                     <Route path="Used/usedWrite" element={<UsedWrite />} />
                     <Route path="Used/useditem" element={<UsedItem />}></Route>
+                    <Route path="Used/usedUpdate" element={<UsedUpdate />}></Route>
                     <Route
                         path="Used/uploadform2"
                         element={<UploadForm2 />}
                     ></Route>
                     <Route path="products/:seq" element={<Products />} />
+                    <Route path="newProducts/:seq" element={<NewProducts />} />
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/login/find_email" element={<FindEmail />} />
                     <Route

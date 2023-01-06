@@ -60,8 +60,8 @@ public class UsedItemDTO {
 	
 	
 	
-	
-	
+	//jpa관련 기본 개념
+	//https://data-make.tistory.com/610
 	
 	
 	

@@ -10,12 +10,16 @@ public interface UsedItemService {
 
 	public void upload2(UsedItemDTO usedItemDTO);
 
-	public void writeItem(UsedItemDTO usedItemDTO);
+//	public void writeItem(UsedItemDTO usedItemDTO);
 
 	public List<UsedItemDTO> getItem();
 
 	public Optional<UsedItemDTO> viewItem(int seq);
 
-//	public List<UsedItemLikeDTO> itemLike(int seq);
+	public UsedItemLikeDTO itemLike(int seq, String id);
+
+	public void likeSet(UsedItemLikeDTO usedItemLikeDTO);
+
+	public void deleteItem(int seq);
 
 }

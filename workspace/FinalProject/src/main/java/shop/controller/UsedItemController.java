@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,21 +45,35 @@ public class UsedItemController {
 		return usedItemService.viewItem(seq);
 	}
 	
-//	@GetMapping(path="itemLike")
-//	public List<UsedItemLikeDTO> itemLike(@RequestParam int seq){
-//		
-//		List<UsedItemLikeDTO> imsi = usedItemService.itemLike(seq);
-//		System.out.println(imsi);
-//		return null;
-//		//return usedItemService.itemLike(seq);
-//	}
 	
-	
-	@PostMapping(path="writeItem")
-	public void writeItem(@ModelAttribute UsedItemDTO usedItemDTO) {
-		System.out.println(usedItemDTO);
-		usedItemService.writeItem(usedItemDTO);
+	@GetMapping(path="itemLike")
+	public UsedItemLikeDTO itemLike(@RequestParam int seq, @RequestParam String id){
+		//System.out.println("라이크 찍기"+seq);
+		UsedItemLikeDTO imsi = usedItemService.itemLike(seq,id);
+		//System.out.println("임시용 "+imsi);
+		return imsi;
+		//return usedItemService.itemLike(seq);
 	}
+	
+	@PostMapping(path="likeSet")
+	public void likeSet(@ModelAttribute UsedItemLikeDTO usedItemLikeDTO){
+		//System.out.println(usedItemLikeDTO);
+		
+		if(usedItemLikeDTO.getUserLike() == null)usedItemLikeDTO.setUserLike(false);
+		
+		System.out.println("들어온 userLike"+usedItemLikeDTO.getUserLike());
+		usedItemLikeDTO.setUserLike(!usedItemLikeDTO.getUserLike());
+		System.out.println("바꾼 userLike"+usedItemLikeDTO.getUserLike());
+		usedItemService.likeSet(usedItemLikeDTO);
+		
+		
+	}
+	
+//	@PostMapping(path="writeItem")
+//	public void writeItem(@ModelAttribute UsedItemDTO usedItemDTO) {
+//		System.out.println("찍어라"+usedItemDTO);
+//		usedItemService.writeItem(usedItemDTO);
+//	}
 	
 	
 	 @PostMapping(path="upload", produces="text/html;charset-UTF-8")
@@ -141,10 +156,12 @@ public class UsedItemController {
 				 
 		 usedItemService.upload2(usedItemDTO);
 		 
+	 }
+	 
+	 @DeleteMapping(path="deleteItem")
+	 public void deleteItem(@RequestParam int seq) {
+		 System.out.println(seq);
+		 usedItemService.deleteItem(seq);
 		 
-		 
-
-	
-	
 	 }
 }

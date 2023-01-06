@@ -9,6 +9,7 @@ const UsedWrite = () => {
 
     const navigate = useNavigate();
     const[form,setForm] = useState({
+        id:'홍헌',
         title : '',
         productName : '',
         kind : '',
@@ -16,6 +17,9 @@ const UsedWrite = () => {
         price : '',
         contents : '',
         hashTag : []
+        //지훈씨한테 들은 내용(홍헌)
+        //배열은 데이터 보낼 때 배열로 안보내고 리액트 내에서 Stringify하면 문자열로 보낼 수 있다.
+        //데이터를 받아오고 나서는 parse로 데이터를 풀어주면 된다.
     })
 
     const [hashTag2,setHashTag2] = useState()
@@ -60,6 +64,7 @@ const UsedWrite = () => {
             ...form
         })
 
+        setCount(count-1)
         console.log(form)
     }
 
@@ -67,12 +72,10 @@ const UsedWrite = () => {
 
     const onWrite = (e) =>{
         e.preventDefault()
-
-       
-
         
         var sw = 1
-        file[0]||--sw&&alert("이미지 파일을 등록해주세요");
+       
+        //file[0]||--sw&&alert("이미지 파일을 등록해주세요");
        
         if(!title){
             sw=0
@@ -86,18 +89,19 @@ const UsedWrite = () => {
         file.map(files=>formData.append('img',files));
         
         if(sw == 1) {
+
+            alert('글작성 성공')
            // axios.post('http://localhost:8080/used/writeItem',null,({params:{
             axios.post('http://localhost:8080/used/upload',formData,({params:{
                ...form,
                 hashTag : encodeURI(form.hashTag)
             }}))
                  .then(() => {
-                    alert('글작성 완료')
+                    navigate("/used/usedMain");
                  })
                  .catch(error => console.log(error))
         }
-
-       navigate("/");
+       
         
     }
 

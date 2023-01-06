@@ -68,7 +68,7 @@ const UsedMain = () => {
                     data.map(item => <MainItem key={item.seq} data = {item} onItem={onItem} />)
                 }
             </S.UsedMain>
-            { writeBtn ? <S.WriteBtn src='../image/used/plus.svg' onClick={ onWrite }/> : '' }
+            { writeBtn ? <S.WriteBtn src='/image/used/plus.svg' onClick={ onWrite } alt="writeBtn"/> : '' }
         </>
     );
 };
