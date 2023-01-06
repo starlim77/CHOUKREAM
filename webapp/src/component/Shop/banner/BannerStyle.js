@@ -3,10 +3,11 @@ import styled from 'styled-components';
 export const Banner = styled.div`
     max-width: 1280px;
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
-    display: block;
+    // display: flex;
+    // overflow-x: hidden;
 `;
 export const BannerBox = styled.div`
     position: relative;
@@ -16,6 +17,9 @@ export const BannerBox = styled.div`
         -webkit-tap-highlight-color: transparent;
     }
 `;
+
+
+
 export const BannerSlide = styled.div`
     position: relative;
     box-sizing: border-box;
@@ -58,7 +62,7 @@ export const SlickSlide = styled.div`
 `;
 
 export const DetailBanner = styled.div`
-    width: 100%;
+    width: 1280px;
     display: inline-block;
     position: relative;
     vertical-align: top;
@@ -66,8 +70,10 @@ export const DetailBanner = styled.div`
     padding: 0;
     -webkit-tap-highlight-color: transparent;
 `;
+
+// BannerLink 배경을 바꾸면 전부 바뀜 
 export const BannerLink = styled.a`
-    background-color: rgb(236, 241, 243);
+    // background-color: rgb(236, 241, 243);
     height: 100px;
     display: flex;
     -webkit-box-pack: center;
@@ -96,7 +102,7 @@ export const SlickPrev = styled.button`
     bottom: 11px;
     background: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNiA5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xIC41bDQgNC00IDQiIHN0cm9rZT0iI2ZmZiIvPjwvc3ZnPg==)
         no-repeat;
-    width: 6px;
+    width: 8px;
     height: 9px;
     font-size: 0;
     color: transparent;
@@ -115,7 +121,7 @@ export const SlickNext = styled.button`
     bottom: 11px;
     background: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNiA5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xIC41bDQgNC00IDQiIHN0cm9rZT0iI2ZmZiIvPjwvc3ZnPg==)
         no-repeat;
-    width: 6px;
+    width: 8px;
     height: 9px;
     font-size: 0;
     color: transparent;
@@ -131,13 +137,12 @@ export const BannerCountBox = styled.div`
     width: 55px;
     height: 30px;
     position: absolute;
-    right: 8px;
+    // right: 36px; 원래 이거임
     bottom: 8px;
     padding: 4px 15px 5px;
     text-align: center;
     background-color: rgba(34, 34, 34, 0.8);
     border-radius: 12px;
-    display: -webkit-box;
     display: flex;
     -webkit-box-align: center;
     align-items: center;

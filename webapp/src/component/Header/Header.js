@@ -19,6 +19,9 @@ const Header = () => {
             <S.HeaderWrapper>
                 <S.Top>
                     <S.TopWrapper>
+                        <Link to="/admin">
+                            <S.TopLi>관리자페이지</S.TopLi>
+                        </Link>
                         <Link to="/cs/CsNotice">
                             x<S.TopLi>고객센터</S.TopLi>
                         </Link>
@@ -40,7 +43,7 @@ const Header = () => {
                         </S.BottomLi>
                         <S.BottomLi active={true}>STYLE</S.BottomLi>
                         <S.BottomLi>
-                            <Link to={'/shop'}>shop</Link>
+                            <Link to="/shop">shop</Link>
                         </S.BottomLi>
                         <S.BottomLi active={true}>
                             <Link to="/lookbook/trending">STYLE</Link>

@@ -32,6 +32,11 @@ public class ShopServiceImpl implements ShopService {
 		return shopDAO.findById(seq);
 	}
 
+	@Override
+	public List<ProductDTO> getShoesList(String shoes) {
+		return shopDAO.findProductDTOsByCategory(shoes);
+	}
+
 	
 }
 
