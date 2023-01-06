@@ -9,7 +9,7 @@ import ScrollToTop from "./ScrollToTop";
 import CompletedOrderTable from "./table/CompletedOrderTable";
 import SellBidsTable from "./table/SellBidsTable";
 import BuyBidsTable from "./table/BuyBidsTable";
-import EmptyTable from "./table/EmptyTable"
+import EmptyTable from "./table/EmptyTable";
 import Graph from './Graph';
 
 const Products = () => {
