@@ -42,7 +42,10 @@ public class SecurityConfig {
                 .accessDeniedHandler(jwtAccessDeniedHandler)
 
                 //페이지 권한 추후 설정
-
+                .and()
+                .authorizeHttpRequests()
+                .requestMatchers("/", "/**").permitAll()
+                
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
 

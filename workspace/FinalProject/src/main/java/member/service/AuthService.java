@@ -1,5 +1,6 @@
 package member.service;
 
+import jakarta.servlet.http.HttpServletResponse;
 import member.bean.MemberRequestDto;
 import member.bean.MemberResponseDto;
 import member.bean.TokenDto;

@@ -27,6 +27,9 @@ import LoginForm from './component/User/LoginForm';
 import WriteForm from './component/User/WriteForm';
 import FindEmail from './component/User/FindEmail';
 import FindPassword from './component/User/FindPassword';
+import FindEmailResult from './component/User/FindEmailResult';
+import FindPasswordResult from './component/User/FindPasswordResult';
+import Logout from './component/User/Logout';
 
 function App() {
     return (
@@ -56,10 +59,10 @@ function App() {
                     <Route path="products/:seq" element={<Products />} />
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/login/find_email" element={<FindEmail />} />
-                    <Route
-                        path="/login/find_password"
-                        element={<FindPassword />}
-                    />
+                    <Route path="/login/find_email/result" element={<FindEmailResult />} />
+                    <Route path="/login/find_password" element={<FindPassword />}/>
+                    <Route path="/login/find_password/result" element={<FindPasswordResult />} />
+                    <Route path="/logout" element={<Logout />} />
                     <Route path="/join" element={<WriteForm />} />
                 </Route>
                 <Route path="/lookbook" element={<Trending />}>

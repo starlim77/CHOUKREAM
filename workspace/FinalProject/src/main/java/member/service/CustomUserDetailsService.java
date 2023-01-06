@@ -18,7 +18,7 @@ import member.dao.MemberDAO;
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
-	private MemberDAO memberDAO;
+	private final MemberDAO memberDAO;
 
 	@Override
 	@Transactional

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.config.SecurityUtil;
 
 import lombok.RequiredArgsConstructor;
+import member.bean.MemberDto;
 import member.bean.MemberResponseDto;
 import member.dao.MemberDAO;
 
@@ -27,6 +28,17 @@ public class MemberServiceImpl implements MemberService {
         return memberDAO.findByEmail(email)
                 .map(MemberResponseDto::of)
                 .orElseThrow(() -> new RuntimeException("유저 정보가 없습니다."));
-    } 
+    }
+
+	@Override
+	public Optional<MemberDto> findEmailByPhone(String phone) {
+		return memberDAO.findEmailByPhone(phone);
+	}
+
+	@Override
+	public Optional<MemberDto> findPWByPhoneEmail(String phone, String email) {
+		return memberDAO.findPWByPhoneEmail(phone, email);
+		
+	} 
 
 }

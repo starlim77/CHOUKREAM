@@ -1,6 +1,9 @@
 import axios from 'axios';
 import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { setRefreshToken } from './storage/Cookie.js';
+import { SET_TOKEN } from './store/Auth.js';
 import * as S from './styleLoginForm.js';
 
 const LoginForm = () => {
@@ -39,6 +42,7 @@ const LoginForm = () => {
         }
     }, [])
 
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const onLogin = () => {
@@ -50,7 +54,11 @@ const LoginForm = () => {
                     password: password
                   }
           })
-          .then(() => {
+          .then((res) => {
+            console.log(res.data)
+            dispatch(SET_TOKEN(res.data.accessToken))
+            setRefreshToken(res.data.refreshToken)
+            
             alert('로그인 성공')
             navigate('/')
           })
