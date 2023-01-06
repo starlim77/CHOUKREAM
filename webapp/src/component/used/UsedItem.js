@@ -18,7 +18,8 @@ const UsedItem = () => {
         size:'',
         price:'',
         likes:'',
-        contents:''
+        contents:'',
+        hashtag:[]
     });
 
     const [likeForm, setLikeForm] = useState({
@@ -89,7 +90,7 @@ const UsedItem = () => {
         // axios.post('http://localhost:8080/used/likeSet',null,{params:likeForm})
         // axios.get('http://localhost:8080/used/likeSet'+   likeForm) 나중에 다시 해보기
         .then()
-        .catch()
+        .catch(error => console.log(error))
         
     }
 

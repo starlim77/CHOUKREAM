@@ -15,7 +15,7 @@ const MainItem = ({data,onItem}) => {
 
 
     if(!arr[1]){
-        // console.log(str.length)
+        // console.log(str.length`)
         // console.log(str)
         var str2 = str.slice(0,str.length-1)
         // console.log(str2)

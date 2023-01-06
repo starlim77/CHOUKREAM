@@ -59,12 +59,9 @@ public class UsedItemServiceImpl implements UsedItemService {
 		if(usedItemLikeDTO.getUserLike()) {
 			System.out.println("좋아요 ++");
 			usedItemLikeDAO.save(usedItemLikeDTO);
-			usedItemDAO.likeUp(usedItemLikeDTO.getSeq());
-			
 		}else {
 			System.out.println("좋아요 --");
 			usedItemLikeDAO.deleteBySeqAndIdAndShopKind(usedItemLikeDTO.getSeq(),usedItemLikeDTO.getId(),usedItemLikeDTO.getShopKind());
-			usedItemDAO.likeDown(usedItemLikeDTO.getSeq());
 		}
 		
 	}
@@ -74,6 +71,16 @@ public class UsedItemServiceImpl implements UsedItemService {
 	public void deleteItem(int seq) {
 		usedItemDAO.deleteItem(seq);
 		//usedItemDAO.deleteById(seq);
+	}
+
+
+	@Override
+	public void usedlike(UsedItemLikeDTO usedItemLikeDTO) {
+		if(usedItemLikeDTO.getUserLike()) {
+			usedItemDAO.likeUp(usedItemLikeDTO.getSeq());
+		}else {
+			usedItemDAO.likeDown(usedItemLikeDTO.getSeq());
+		}
 	}
 	
 

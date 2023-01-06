@@ -22,4 +22,6 @@ public interface UsedItemService {
 
 	public void deleteItem(int seq);
 
+	public void usedlike(UsedItemLikeDTO usedItemLikeDTO);
+
 }
