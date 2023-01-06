@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../Header/Header';
-import CsNav from './Csnav/CsNav';
+import Header from '../../Header/Header';
+import CsNav from '../Csnav/CsNav';
 
 const CsNotice = () => {
     return (
@@ -9,6 +9,7 @@ const CsNotice = () => {
         <CsNav/>
 
         공지사항
+        
             
         </>
     );

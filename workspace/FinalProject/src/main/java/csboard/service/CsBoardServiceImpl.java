@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import csboard.bean.CsBoardDTO;
 import csboard.dao.CsBoardDAO;
+import jakarta.transaction.Transactional;
 @Service
 public class CsBoardServiceImpl implements CsBoardService {
 	@Autowired
@@ -36,6 +37,24 @@ public class CsBoardServiceImpl implements CsBoardService {
 	public List<CsBoardDTO> getKeywordSearch(String keyword) {
 		return csBoardDAO.findByContentContaining(keyword);
 	}
+
+	@Override
+	public Optional<CsBoardDTO> getBoard(int seq) {
+		
+		return csBoardDAO.findBySeq(seq);
+		}
+	@Transactional
+	@Override
+	public void delete(int seq) {
+		csBoardDAO.deleteBySeq(seq);
+	}
+
+	@Override
+	public void update(CsBoardDTO csBoardDTO) {
+		csBoardDAO.save(csBoardDTO);
+		
+	}
+	
 
 	
 }

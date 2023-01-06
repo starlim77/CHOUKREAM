@@ -2,18 +2,23 @@ package csboard.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import csboard.bean.CsBoardDTO;
 import csboard.service.CsBoardService;
+
+
 
 
 
@@ -51,4 +56,17 @@ public class CsBoardController {
 		System.out.println(keyword);
 		return csBoardService.getKeywordSearch(keyword);
 	}
+	@GetMapping(value="getBoard")
+	public Optional<CsBoardDTO>  getUser(@RequestParam int seq) {
+		return csBoardService.getBoard(seq);
+	}
+	@DeleteMapping(path="deleteBoard")	
+	public void deleteBoard(@RequestParam int seq) {
+		csBoardService.delete(seq);		
+	}
+	@PutMapping(path="updateBoard")	
+	public void update(@ModelAttribute CsBoardDTO csBoardDTO) {
+		csBoardService.update(csBoardDTO);		
+	}
+	
 }
