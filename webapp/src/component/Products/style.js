@@ -328,6 +328,10 @@ export const LargeBtnWish = styled.a`
     cursor: pointer;
 `;
 
+export const LargeBtnWishBtnImg = styled.img`
+    width: 20px;
+    height: 20px;
+`;
 
 export const LargeBtnWishBtnText = styled.span`
     font-size: 15px;

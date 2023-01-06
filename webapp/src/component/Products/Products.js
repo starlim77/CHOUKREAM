@@ -18,6 +18,8 @@ const Products = () => {
 
     const id = "hong@gmail.com";
 
+    const shopKind = 'resell'
+
     const [open1, setOpen1] = useState(true)
     const [open2, setOpen2] = useState(false)
     const [open3, setOpen3] = useState(false)
@@ -60,6 +62,13 @@ const Products = () => {
     const [buyBidsListForm, setBuyBidsListForm] = useState([{
         price: '-'
     }])
+
+    const [likeForm, setLikeForm] = useState({
+        seq:'',
+        id:'',
+        userLike:false,
+        registerNo:''
+    })
 
     const [brandListForm, setBrandListForm] = useState([])
 
@@ -117,6 +126,10 @@ const Products = () => {
              .then(res => res.data.length !== 0 && setBuyBidsListForm(res.data))
              .catch(error => console.log(error))
         
+        axios.get('http://localhost:8080/used/itemLike?seq=' + seq + '&id=' + id + '&shopKind=' + shopKind)
+             .then(res => res.data ? setLikeForm(res.data) : '')
+             .catch(error => console.log(error))
+
     }, []);
 
     useEffect(() => {
@@ -209,6 +222,28 @@ const Products = () => {
     const brandNavigate = (seq) => {
         navigate(`/products/${seq}`)
         window.location.reload()
+    }
+
+    const onInterest = () => {
+        // likeForm.userLike || setLikeForm({...likeForm, userLike:'false'})
+        
+        setLikeForm({...likeForm, userLike:!likeForm.userLike})
+        if(likeForm.userLike){
+            setForm({...form,likes:form.likes-1})
+        }else{
+            setForm({...form,likes:form.likes+1})
+        }
+        // console.log(likeForm)
+    
+        // // 데이터가 없어서 강제 주입
+        // setLikeForm({...likeForm , seq:searchParams.get('seq'),id:'asd'})
+
+        axios.post(`http://localhost:8080/used/likeSet?seq=`+seq + '&id=' + id + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
+        // axios.post('http://localhost:8080/used/likeSet',null,{params:likeForm})
+        // axios.get('http://localhost:8080/used/likeSet'+   likeForm) 나중에 다시 해보기
+        .then()
+        .catch()
+        
     }
 
 
@@ -325,10 +360,9 @@ const Products = () => {
                                                 </S.DivisionBtnBoxPrice>
                                             </S.DivisionBtnBoxBtnDivisionSell>
                                         </S.DivisionBtnBox>
-                                        <S.LargeBtnWish area-label="관심상품">
-                                            {/* <svg className="icon sprite-icons ico-wish-off">
-                                                <use></use>
-                                            </svg> */}
+                                        <S.LargeBtnWish area-label="관심상품" onClick={onInterest} >
+                                            {/* <U.InterestInput src={likeForm.userLike?'/image/used/blackBookmark.png':'../image/used/bookmark.svg'}/> */}
+                                            <S.LargeBtnWishBtnImg src={likeForm.userLike?'/image/used/blackBookmark.png':'../image/used/bookmark.svg'}/>
                                             <S.LargeBtnWishBtnText>관심상품</S.LargeBtnWishBtnText>
                                             <S.LargeBtnWishCountNum>100</S.LargeBtnWishCountNum>
                                         </S.LargeBtnWish>
@@ -659,7 +693,8 @@ const Products = () => {
                                             </S.FloatingProductInfo>
                                         </S.FloatingPriceProductArea>
                                         <S.FloatingProductBtnArea>
-                                            <S.FloatingBtnOutLineGrey>
+                                            <S.FloatingBtnOutLineGrey onClick={onInterest}>
+                                            <S.LargeBtnWishBtnImg src={likeForm.userLike?'/image/used/blackBookmark.png':'../image/used/bookmark.svg'}/>
                                                 <S.WishCountNum>3.1만</S.WishCountNum>
                                             </S.FloatingBtnOutLineGrey>
                                             <S.FloatingPriceDivisionBtnBox>
