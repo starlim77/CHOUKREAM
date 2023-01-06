@@ -67,7 +67,7 @@ public class UsedItemController {
 		usedItemService.likeSet(usedItemLikeDTO);
 		usedItemService.usedlike(usedItemLikeDTO);
 		
-	}
+	}// 차후 수정
 	
 //	@PostMapping(path="writeItem")
 //	public void writeItem(@ModelAttribute UsedItemDTO usedItemDTO) {
