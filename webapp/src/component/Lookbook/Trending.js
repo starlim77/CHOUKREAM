@@ -41,24 +41,29 @@ const Trending = () => {
     return (
         
         <>
-            <Header />
+            
             <Social />
-            <br/>
+            
 
             <div>태그</div>
 
             <Container fixed> 
                    
-            <S.TrGridContainer>
-          
-            {this.getSearchResultList()}
+            <S.TrGridContainer>   
 
                 { list.map(item =>{ return(
                     <S.TrGridBox key={item.seq}>                     
                         
                             <Card sx={{ width: 250 }}>
-                                <Link to = {'/lookbook/detail#'+ item.seq}>                                                                                
-                                <S.TrGridBoxImg src={'../storage/'+item.storedFileName[0]}></S.TrGridBoxImg>                              
+                                <Link to = {'/lookbook/detail'+ item.seq}>                                                                                
+                                <S.TrGridBoxImg src={'../storage/'+item.storedFileName[0]}></S.TrGridBoxImg>    
+                                 
+                                {
+                                item.storedFileName.map((index,item) => {
+                                    return(<img src={'../storage/'+item}/>)
+                                })
+                                }                        
+                                
                                 <CardHeader 
                                     avatar={
                                         <Avatar sx={{ bgcolor: grey }} >
@@ -100,8 +105,8 @@ const Trending = () => {
                   
                     </S.TrGridBox> 
                     )
-                })
-            }           
+                    })
+                }           
            
             </S.TrGridContainer>      
             

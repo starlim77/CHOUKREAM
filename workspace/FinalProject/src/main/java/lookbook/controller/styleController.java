@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.StreamingHttpOutputMessage.Body;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,8 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpSession;
+import lookbook.bean.StyleCommentDTO;
 import lookbook.bean.StyleDTO;
 import lookbook.service.StyleCommentService;
+import lookbook.entity.StyleCommentEntity;
 import lookbook.entity.StyleEntity;
 import lookbook.service.StyleService;
 
@@ -59,7 +64,22 @@ public class styleController {
 	}
 
 	//상세에서 댓글 등록기능
-	//@PostMapping("/uploadComment")
+	@PostMapping("/commentSave")
+	@ResponseBody
+	public ResponseEntity commentSave(@ModelAttribute StyleCommentDTO styleCommentDTO) {
+		System.out.println("commentDTO"+ styleCommentDTO);
+		Long saveResult = styleCommentService.save(styleCommentDTO);//댓글저장
+		if(saveResult != null) {
+			//작성 성공하면 댓글 목록을 가져와서 리턴
+			//댓글목록: 해당 게시글의 댓글 전체 (게시글 아이디 필요)			
+			List<StyleCommentDTO> styleCommentDTOList = styleCommentService.findAll(styleCommentDTO.getStyleSeq());
+			return new ResponseEntity<>(styleCommentDTOList, HttpStatus.OK);//내가 전달하려는 바디값(styleCommentDTOList)과 상태값(HttpStatus.OK)
+		} else {
+			return new ResponseEntity<>("해당 게시글이 존재하지 않습니다.", HttpStatus.NOT_FOUND);//내가 전달하려는 바디값("해당 게시글이 존재하지 않습니다.")
+		}
+	}
+	
+	
 	
 
 

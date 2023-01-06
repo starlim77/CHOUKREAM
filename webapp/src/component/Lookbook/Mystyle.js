@@ -88,8 +88,7 @@ const Mystyle = () => {
 
 
     return (
-        <S.SoTopDiv>
-            <Header />
+        <S.SoTopDiv>            
             <br />
             <Container fixed>
                 <S.MyDiv>

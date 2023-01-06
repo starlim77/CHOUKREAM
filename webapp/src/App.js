@@ -61,13 +61,15 @@ function App() {
                         element={<FindPassword />}
                     />
                     <Route path="/join" element={<WriteForm />} />
+
+                    <Route path="/lookbook/trending" element={<Trending />} /> 
+                    <Route path="/lookbook/social" element={<Social />} />
+                    <Route path="/lookbook/mystyle" element={<Mystyle />} />
+                    <Route path="/lookbook/detail" element={<Detail />} />
+                    <Route path="/Search/SearchForm" element={<SearchForm />} />
                 </Route>
                 
-                <Route path="/lookbook/trending" element={<Trending />} /> 
-                <Route path="/lookbook/social" element={<Social />} />
-                <Route path="/lookbook/mystyle" element={<Mystyle />} />
-                <Route path="/lookbook/detail" element={<Detail />} />
-                <Route path="/Search/SearchForm" element={<SearchForm />} />
+                
 
                 <Route path="/cs/csnotice" element={<CsNotice />} />
                 <Route path="/cs/CsFaq" element={<CsFaq />} />

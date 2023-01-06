@@ -11,7 +11,7 @@ import axios from 'axios';
 
 const Detail = () => {
     const [commentOpen, setCommentOpen] = useState(false)
-
+   
     //게시물 뿌리기
     const [list, setList] = useState([]);
 
@@ -19,13 +19,43 @@ const Detail = () => {
         axios.get('http://localhost:8080/lookbook/getStyleList')
              .then(res => setList(res.data))
              .catch(error => console.log(error))
+             console.log("list",list) 
     }, []) 
+
+// 댓글
+
+const onInput = (e) =>{
+    const { name, value } = e.target
+    setForm({
+        ...form,
+        [name] : value
+    })
+}
+
+const [form, setForm] = useState({
+    commentMember: '댓글입력자', //댓글입력아이디
+    commentContents: '',
+    seq: ''//게시글 번호
+})
+const {commentMember, commentContents, seq} = form
+
+const onUpload = (e) => {    
+    //setForm(e.target.value)
+    //e.preventdefault()
+    console.log(e.target.value)
+    axios
+        .post("http://localhost:8080/lookbook/commentSave", {params:form})
+        .then(
+                alert("댓글등록 성공"),
+                setCommentOpen(false),
+        )
+        .catch()
+}
 
     
 
     return (
-        <div>
-            <Header />
+        <div>            
             <Social />
             <br/>
             <Container fixed>
@@ -33,12 +63,14 @@ const Detail = () => {
                 {
                     list.map((item, index) => {
                         return (
+                            <div>
                             <Card key={item.seq}>
                                 <CardHeader
                                     avatar={ <Avatar> 프로필</Avatar> }
                                     title={item.id}
                                     subheader={item.logtime}
                                 />
+                                {item.seq}
                                 <CardMedia 
                                     component="img"
                                     height="500"
@@ -59,26 +91,31 @@ const Detail = () => {
 
             
                                 <Dialog open={commentOpen}> 
-                                    <S.DeComment>
-                                        <DialogTitle sx={{mt:5}}>댓글</DialogTitle>
-                                        <DialogContent>
-                                            <DialogContentText>
-                                                <TextField
-                                                    multiline 
-                                                    fullWidth
-                                                />
-                                            </DialogContentText>
-                                        </DialogContent>
-                                        <DialogActions>
-                                            <Button >등록</Button>
-                                            <Button onClick={ ()=>{setCommentOpen(false)}}>취소</Button>
-                                        </DialogActions>
-                                    </S.DeComment>
-                                </Dialog>
+                                        <S.DeComment>
+                                            <DialogTitle sx={{mt:5}}>댓글</DialogTitle>
+                                            <DialogContent>
+
+                                            
+                                                <DialogContentText>
+                                                    <TextField
+                                                        multiline 
+                                                        fullWidth
+                                                    />
+
+
+                                                <textarea >{item.seq}</textarea>
+                                                </DialogContentText>
+                                            </DialogContent>
+                                            <DialogActions>
+                                                <Button >등록</Button>
+                                                <Button onClick={ ()=>{setCommentOpen(false)}}>취소</Button>
+                                            </DialogActions>
+                                        </S.DeComment>
+                                    </Dialog>
 
 
                             </Card>
-
+                        </div>
                         )
                     })
                 }
