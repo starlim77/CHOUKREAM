@@ -65,7 +65,7 @@ public class UsedItemController {
 		usedItemLikeDTO.setUserLike(!usedItemLikeDTO.getUserLike());
 		System.out.println("바꾼 userLike"+usedItemLikeDTO.getUserLike());
 		usedItemService.likeSet(usedItemLikeDTO);
-		
+		usedItemService.usedlike(usedItemLikeDTO);
 		
 	}
 	

@@ -9,18 +9,20 @@ import { useNavigate } from 'react-router-dom';
 const UsedMain = () => {
 
     const [data,setData] = useState([])
+    const [dataFilter,setDataFilter] = useState()   
+
 
     useEffect(()=> {
         axios.get('http://localhost:8080/used/getItem')
          .then(res => setData(res.data))
+         .then(setDataFilter(data))
          .catch(error => console.log(error))
-
     },[])
 
 
     // console.log(data[0])
 
-    const [dataFilter,setDataFilter] = useState()
+    
 
     const [hash,setHash] = useState()
 
@@ -29,15 +31,16 @@ const UsedMain = () => {
     const [id,setId] = useState('')
     const [writeBtn,setWriteBtn] = useState(true)
 
+    const[tag,setTag] = useState()
 
     // useEffect(() => {
-    //     axios
-    //         .get()
-    //         .then(res => setId(res))
-    //         .catch(error => console.log(error))
-
         
     // },[])
+
+    const onTag = (title) => {
+        alert(title)
+        console.log(dataFilter)
+    }
 
     const onItem = (seq) => {
         // console.log(seq)
@@ -49,6 +52,9 @@ const UsedMain = () => {
             navigate('/Used/usedWrite')
     }
 
+
+
+
     return (
 
         <>
@@ -56,7 +62,7 @@ const UsedMain = () => {
                 
             <S.TagImg>
                 {
-                    tagData.map(item => <S.TagImgLi key={item.id}><S.TagImgItem src={item.img}/><S.TagImgSpan>{item.title}</S.TagImgSpan></S.TagImgLi>)
+                    tagData.map(item => <S.TagImgLi key={item.id} onClick={ e => onTag(item.title)}><S.TagImgItem src={item.img}/><S.TagImgSpan>{item.title}</S.TagImgSpan></S.TagImgLi>)
                 }
                    
             </S.TagImg>
@@ -68,7 +74,7 @@ const UsedMain = () => {
                     data.map(item => <MainItem key={item.seq} data = {item} onItem={onItem} />)
                 }
             </S.UsedMain>
-            { writeBtn ? <S.WriteBtn src='/image/used/plus.svg' onClick={ onWrite } alt="writeBtn"/> : '' }
+            { writeBtn ? <S.WriteBtn src='../image/used/plus.svg' onClick={ onWrite }/> : '' }
         </>
     );
 };
