@@ -42,6 +42,7 @@ public class UsedItemController {
 	
 	@GetMapping(path="viewItem")
 	public Optional<UsedItemDTO> viewItem(@RequestParam int seq) {
+		System.out.println(seq+"오냐?");
 		return usedItemService.viewItem(seq);
 	}
 	

@@ -69,6 +69,7 @@ export const ItemImg = styled.img`
     width: 275px;
     height: 275px;
     border-radius: 15px;
+    object-fit: cover;
 `;
 
 export const ItemTitle = styled.h2`

@@ -6,20 +6,16 @@ import * as S from './styleWrite';
 import tagData from './TagItem';
 
 const UsedUpdate = () => {
+        const navigate = useNavigate();
         //참고자료 https://curryyou.tistory.com/477
         // 1. useLocation 훅 취득
+        //UsedItem내에 있는 UpdateBtnModal에서 navigate로 보낸 데이터들 받는 작업
         const location = useLocation();
 
-        // 2. location.state 에서 파라미터 취득
-        const seq = location.state.seq;
-        const writer = location.state.writer;
-
-
-
-        const navigate = useNavigate();
         const[form,setForm] = useState({
             id:'홍헌',
             title : '',
+            imgName:'',
             productName : '',
             kind : '',
             size : '',
@@ -30,12 +26,55 @@ const UsedUpdate = () => {
             //배열은 데이터 보낼 때 배열로 안보내고 리액트 내에서 Stringify하면 문자열로 보낼 수 있다.
             //데이터를 받아오고 나서는 parse로 데이터를 풀어주면 된다.
         })
-    
+        const {title , imgName, productName , kind , size , price , contents , hashTag} = form
+        const [subImg,setSubImg] = useState([]);
+
+        useEffect(()=>{
+            // 2. location.state 에서 파라미터 취득
+            const seq = location.state.seq;
+            const writer = location.state.writer;
+
+            axios.get("http://localhost:8080/used/viewItem",{params:{seq:seq}})
+                .then(res=>setForm(res.data))
+                .catch(err=>console.log(err))
+
+            var img = (imgName).split(',');
+            var img2=img.map(item=>"/storage/"+item);
+            setSubImg(img2); 
+        },[])
+
+       
+        var[num,setNum]=useState(1);
+
+        // useEffect(()=>{
+           
+        //     var img = (imgName).split(',');
+        //     var img2=img.map(item=>"/storage/"+item);
+        //     setSubImg(img2); 
+        //     console.log(subImg);
+        //     // img.map((item,index)=>firstImg[index]?setFirstImg():'');
+        //     // setFirstImg(img);
+        //     // console.log(firstImg);  
+            
+        // },[])
+       
+        
+
+
+        const [mainImg,setMainImg] = useState('')
+        const [subImg1,setSubImg1] = useState('')
+        const [subImg2,setSubImg2] = useState('')
+        const [subImg3,setSubImg3] = useState('')
+
+        
+        
+         
+
         const [hashTag2,setHashTag2] = useState()
     
         const [count,setCount] = useState(0)
     
-        const {title , productName , kind , size , price , contents , hashTag} = form
+        
         
         const onInput = (e) => {
             const {name,value} = e.target
@@ -44,7 +83,6 @@ const UsedUpdate = () => {
                 ...form,
                 [name] : value
             })
-    
         }
     
         const onHash = () => {
@@ -73,7 +111,7 @@ const UsedUpdate = () => {
                 ...form
             })
     
-            console.log(form)
+            console.log("해쉬부르기"+form)
         }
     
     
@@ -115,7 +153,7 @@ const UsedUpdate = () => {
         }
     
         // ---------------
-        const [subImg,setSubImg] = useState([]);
+        
     
         const imgRef = useRef();
     
@@ -173,9 +211,9 @@ const UsedUpdate = () => {
             //https://forum.freecodecamp.org/t/how-to-filter-using-array-index-in-react/403524
             //index값은 숫자인데 그냥 id값을 주면 id를 받아 문자열로 인식을 하기때문에 parseInt를 이용해 숫자로 바꿔준다. 
             var imgTemp= subImg.filter((item,index)=>index!==parseInt(id));
-            var fileTemp = file.filter((item,index)=>index!==parseInt(id));
+            // var fileTemp = file.filter((item,index)=>index!==parseInt(id));
             setSubImg([...imgTemp]);
-            setFile([...fileTemp]);
+            // setFile([...fileTemp]);
             //console.log(file);
            
         }
@@ -201,24 +239,25 @@ const UsedUpdate = () => {
                    
                     <S.ImgBody>
                         {/* 이미지 소스 이용방법 2가지 사용해봄 */}
+                        {/* <S.MainImgP setPosition={subImg[0]?true:false}> */}
                         <S.MainImgP setPosition={subImg[0]?true:false}>
-                            <S.MainImg name='mainImg' sizing={subImg[0]?true:false} src={subImg[0]?subImg[0].url:`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg} alt={subImg[0]?subImg[0].url:"nothing"}></S.MainImg>
+                            <S.MainImg name='mainImg' sizing={subImg[0]?true:false} src={subImg[0]?subImg[0]:`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg} alt={subImg[0]?subImg[0]:"nothing"}></S.MainImg>
                             <S.DeleteMainImg setPosition={subImg[0]?true:false} id="0" onClick={e=>deleteImg(e)}></S.DeleteMainImg>
                         </S.MainImgP>
                         <S.SubImgBody >
-                            <S.SubImgP setPosition={subImg[1]?true:false}>
-                                <S.SubImg sizing={subImg[1]?true:false} name='subImg1' src={subImg[1]?subImg[1].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
-                                <S.DeleteImg setPosition={subImg[1]?true:false} id="1" onClick={e=>deleteImg(e)}></S.DeleteImg>
-                            </S.SubImgP>
-                            <S.SubImgP setPosition={subImg[2]?true:false}>
-                                <S.SubImg sizing={subImg[2]?true:false} name='subImg2' src={subImg[2]?subImg[2].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
-                                <S.DeleteImg setPosition={subImg[2]?true:false} id="2"  onClick={e=>deleteImg(e)}></S.DeleteImg>
-                            </S.SubImgP>
-                            <S.SubImgP setPosition={subImg[3]?true:false}>
-                                <S.SubImg sizing={subImg[3]?true:false} name='subImg3' src={subImg[3]?subImg[3].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
-                                <S.DeleteImg setPosition={subImg[3]?true:false} id="3"  onClick={e=>deleteImg(e)}></S.DeleteImg>
-                            </S.SubImgP>
-                            
+                                <S.SubImgP setPosition={subImg[1]?true:false}>
+                                    <S.SubImg sizing={subImg[1]?true:false} name='subImg1'  src={subImg[1]?subImg[1]:`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg} alt={subImg[1]?subImg[1]:"nothing"} onClick={onSubImg} />
+                                    <S.DeleteImg setPosition={subImg[1]?true:false} id="1" onClick={e=>deleteImg(e)}></S.DeleteImg>
+                                </S.SubImgP>
+                                <S.SubImgP setPosition={subImg[2]?true:false}>
+                                    <S.SubImg sizing={subImg[2]?true:false} name='subImg2'  src={subImg[2]?subImg[2]:`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg} alt={subImg[2]?subImg[2]:"nothing"} onClick={onSubImg} />
+                                    <S.DeleteImg setPosition={subImg[2]?true:false} id="2" onClick={e=>deleteImg(e)}></S.DeleteImg>
+                                </S.SubImgP>
+                                <S.SubImgP setPosition={subImg[3]?true:false}>
+                                    <S.SubImg sizing={subImg[3]?true:false} name='subImg3' src={subImg[3]?subImg[3]:`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg} alt={subImg[3]?subImg[3]:"nothing"} onClick={onSubImg} />
+                                    <S.DeleteImg setPosition={subImg[3]?true:false} id="3" onClick={e=>deleteImg(e)}></S.DeleteImg>
+                                </S.SubImgP>
+                                
                         </S.SubImgBody>
                         
                         {/* https://blog.munilive.com/posts/input-file-type-accept-attribute.html
@@ -234,11 +273,11 @@ const UsedUpdate = () => {
                     <S.Information>
                         <S.Necessary>* 필수 입력</S.Necessary>
                         <S.Subject>* 제목</S.Subject>
-                        <S.Title type='text' name= 'title' onChange={ onInput }/>
+                        <S.Title type='text' name= 'title' value={title} onChange={ onInput }></S.Title>
     
     
                         <S.Subject> 상품 이름</S.Subject>
-                        <S.SubTitle type='text' name= 'productName' onChange={ onInput }/>
+                        <S.SubTitle type='text' name= 'productName' value={productName} onChange={ onInput }/>
     
     
                         <S.Necessary>* 필수</S.Necessary>
@@ -250,16 +289,16 @@ const UsedUpdate = () => {
                                     tagData.map(item => <S.ItemKindOption key={item.id}>{item.title}</S.ItemKindOption>)
                                 }
                             </S.ItemKind>
-                            <div><S.ItemSizeSpan>Size :</S.ItemSizeSpan><S.ItemSize type='text' name= 'size' onChange={ onInput } /></div>
+                            <div><S.ItemSizeSpan>Size :</S.ItemSizeSpan><S.ItemSize type='text' name= 'size' value={size} onChange={ onInput } /></div>
                         </S.ItemKindPriceDiv>
     
     
                         <S.Necessary>* 필수</S.Necessary>
                         <S.Subject > 가격</S.Subject>
-                        <S.PriceDiv><S.ItemPrice type='number' name= 'price' onChange={ onInput }/><S.ItemPriceSpan>원</S.ItemPriceSpan></S.PriceDiv>
+                        <S.PriceDiv><S.ItemPrice type='number' name= 'price' value={price} onChange={ onInput }/><S.ItemPriceSpan>원</S.ItemPriceSpan></S.PriceDiv>
     
                         <S.Subject> 제품 설명</S.Subject>
-                        <S.ItemContent name= 'contents' onChange={ onInput }/>
+                        <S.ItemContent name= 'contents' value={contents} onChange={ onInput }/>
     
     
                         <S.Subject> Hash Tag </S.Subject>
