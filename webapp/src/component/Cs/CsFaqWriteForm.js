@@ -25,7 +25,7 @@ const CsFaqWriteForm = (props) => {
     })
     const editorRef = useRef();
     const {category,title ,content} = form 
-    let [file, setFile] = useState([]);
+    //let [file, setFile] = useState([]);
   
     
   
@@ -44,9 +44,9 @@ const CsFaqWriteForm = (props) => {
         console.log(content)
     }
 
-    const [url, setUrl] = useState([]);
-    
-   
+   // const [url, setUrl] = useState([]);
+   const onUploadImage =() =>{}
+   /*
     const onUploadImage = async (blob,callback) => { //글 등록 이전 Toast에디터 작성 페이지에 사진 뜨게 하기....
        
         const url = window.URL.createObjectURL(blob);
@@ -56,14 +56,15 @@ const CsFaqWriteForm = (props) => {
 
        
       };
+      */
     
 
     const onCsFaqWriteFormSubmit =( ) =>{
-        console.log( "url = " +url)
-        var formData = new FormData()   //가지고가야할 데이터를 넣기
+       // console.log( "url = " +url)
+       // var formData = new FormData()   //가지고가야할 데이터를 넣기
         
-       file.map(files=>formData.append('list',files))
-        axios.post('http://localhost:8080/cs/write',formData,{
+      // file.map(files=>formData.append('list',files))
+        axios.post('http://localhost:8080/cs/write',null,/*,formData*/{
             params:{
                     category : category,
                     title : title,
@@ -71,7 +72,7 @@ const CsFaqWriteForm = (props) => {
                     content:editorRef.current?.getInstance().getHTML()
                  }
              })
-             .then((data)=>{
+             .then(()=>{
                // callback(data.imgUrl);
               
                 console.log(content +'성공')
@@ -81,7 +82,7 @@ const CsFaqWriteForm = (props) => {
              })
              .catch(error => {
                 console.log(content)
-                console.log(formData)
+               // console.log(formData)
                 console.log(error +'완전에러')
 
             })

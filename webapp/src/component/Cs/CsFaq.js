@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material';
+import {  TextField } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
 import Header from '../Header/Header';
 import CsNav from './Csnav/CsNav';
@@ -8,11 +8,16 @@ import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import CsFaqWriteForm from './CsFaqWriteForm';
 import axios from 'axios';
 import { Viewer } from '@toast-ui/react-editor';
+import Pagination from './Pagination';
+
+
 
 
 
 const CsFaq = () => {
+    
     const [list, setList] =useState([])
+
     const [keyword ,setKeyword]=useState('')
     const [search ,setSearch] =useState('')
     const [visible, setVisible] = useState(false);
@@ -29,15 +34,33 @@ const CsFaq = () => {
               .catch(error=> console.log(error))
     }
     const [category , setCategory] =useState('')
+    //--Paging-----
+    const [currentPage, setCurrentPage] = useState(1);
+    const [listsPerPage, setListsPerPage] = useState(10);
+    const indexOfLast = currentPage * listsPerPage;
+    const indexOfFirst = indexOfLast - listsPerPage;
+    const currentLists = (list) => {
+    let currentLists = 0;
+    currentLists = list.slice(indexOfFirst, indexOfLast);
+    return currentLists;
+  };
+   
 
     useEffect(()=>{
         axios.get('http://localhost:8080/cs/getList')//포트 다르니가 풀주소
 
         .then((res) => {//주소가서 res 받아오기
-            setList(res.data)})//setList에 담기            
+           
+            console.log(list)
+            setList(res.data)
+           
+            console.log(list)})//setList에 담기  
+        
         .catch((error) => console.log(error));
+        
 
     },[])
+   
     const onClickCategory = (e) => {
        // e.preventDefault();
        setCategory(e.target.value); 
@@ -89,14 +112,12 @@ const CsFaq = () => {
         .catch(error=> console.log(error))
     }
 
-   
 
+   
 
     return (
      
         <>
-               <Header/>
-                <CsNav/>
 
             <p>자주묻는 질문</p>
             <hr/>
@@ -123,7 +144,7 @@ const CsFaq = () => {
                
             </p>
             <table>
-                {list.map((item) => {
+                {list.slice(indexOfFirst, indexOfLast).map((item) => { //10개씩 글목록이 뜨게?? 하기 위해서 map을 list(전체)가 아닌 {list.slice(indexOfFirst, indexOfLast) 으로 돌리기..그냥 이렇게 해야 그렇게 되어서 ,,,
                     return (
                         <table key={item.seq}>
                             <tr
@@ -148,7 +169,14 @@ const CsFaq = () => {
                         </table>
                     );
                 })}
+                <Pagination
+                listsPerPage={listsPerPage}
+                totalLists={list.length}
+                paginate={setCurrentPage}
+                 ></Pagination>
             </table>
+
+           
 
         </>
     );

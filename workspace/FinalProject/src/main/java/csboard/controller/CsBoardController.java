@@ -41,8 +41,13 @@ public class CsBoardController {
 	
 	@Autowired
 	private CsBoardService csBoardService;
+	@PostMapping(path="write")	
+	public void write(@ModelAttribute CsBoardDTO csBoardDTO) {
+		System.out.println(csBoardDTO);
+		csBoardService.write(csBoardDTO);		
+	}
 	
-	
+	/*
 	@PostMapping(path="write" , produces="text/html; charset=UTF-8")
 	@ResponseBody
 	public void write(@RequestBody List<MultipartFile> list,@ModelAttribute CsBoardDTO csBoardDTO, HttpSession session) {
@@ -124,6 +129,8 @@ public class CsBoardController {
 		System.out.println(csBoardDTO);
 		csBoardService.write(csBoardDTO);		
 	}
+	
+	*/
 	//게시판 글 가져오기
 	@GetMapping(path="getList")	
 	public List<CsBoardDTO> getUserList(){
