@@ -98,7 +98,7 @@ const UsedItem = () => {
 
         <>
         <U.ModalDiv>
-            <UpdateBtnModal writer={isWriter} seq={searchParams.get('seq')}></UpdateBtnModal>
+            <UpdateBtnModal writer={isWriter} seq={searchParams.get('seq')} imgNameSend={form.imgName}></UpdateBtnModal>
         </U.ModalDiv>
         <U.BaseBody>
             <U.ImgBody>

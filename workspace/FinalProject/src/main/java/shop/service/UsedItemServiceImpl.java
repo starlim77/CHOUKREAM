@@ -82,6 +82,13 @@ public class UsedItemServiceImpl implements UsedItemService {
 			usedItemDAO.likeDown(usedItemLikeDTO.getSeq());
 		}
 	}
+
+
+	@Override
+	public void updateItem(UsedItemDTO usedItemDTO) {
+		usedItemDAO.save(usedItemDTO);
+		
+	}
 	
 
 	
