@@ -35,9 +35,6 @@ import NewList from './component/Shop/manager/NewList';
 import NewSearch from './component/Shop/manager/NewSearch';
 import NewProducts from './component/Products/NewProducts';
 import UsedUpdate from './component/Used/UsedUpdate';
-import FindEmailResult from './component/User/FindEmailResult';
-import FindPasswordResult from './component/User/FindPasswordResult';
-import Logout from './component/User/Logout';
 
 function App() {
     
@@ -90,10 +87,10 @@ function App() {
                     <Route path="newProducts/:seq" element={<NewProducts />} />
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/login/find_email" element={<FindEmail />} />
-                    <Route path="/login/find_email/result" element={<FindEmailResult />} />
-                    <Route path="/login/find_password" element={<FindPassword />}/>
-                    <Route path="/login/find_password/result" element={<FindPasswordResult />} />
-                    <Route path="/logout" element={<Logout />} />
+                    <Route
+                        path="/login/find_password"
+                        element={<FindPassword />}
+                    />
                     <Route path="/join" element={<WriteForm />} />
                 </Route>
                 <Route path="/lookbook" element={<Trending />}>

@@ -11,12 +11,10 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "member")
-@NoArgsConstructor
 @SequenceGenerator(name = "MEMBER_SEQ_GENERATOR", sequenceName = "MEMBER_SEQ", initialValue = 1, allocationSize = 1)
 public class MemberDto {
 	@Id
@@ -49,12 +47,10 @@ public class MemberDto {
 	private int emailOption; //0이면 수신x , 1이면 수신o
 
 	@Builder
-    public MemberDto(String email, String password, String phone, Authority authority, int smsOption, int emailOption) { 
+    public MemberDto(String email, String password, String phone, Authority authority) { //옵션 체크값은 수정 예정
         this.email = email;
         this.password = password;
         this.phone = phone;
         this.authority = authority;
-        this.smsOption = smsOption;
-        this.emailOption = emailOption;
     }
 }
