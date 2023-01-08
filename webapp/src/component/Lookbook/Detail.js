@@ -40,7 +40,7 @@ const [form, setForm] = useState({
 const {commentMember, commentContents, seq} = form
 
 const onUpload = (e) => {    
-    //setForm(e.target.value)
+    setForm(e.target.value)
     //e.preventdefault()
     console.log(e.target.value)
     axios
@@ -100,10 +100,13 @@ const onUpload = (e) => {
                                                     <TextField
                                                         multiline 
                                                         fullWidth
+                                                        name='commentContents'
+                                                        value={commentContents}
+                                                        onChange={onInput}
                                                     />
 
 
-                                                <textarea >{item.seq}</textarea>
+                                                <textarea onChange={onInput}>{item.seq}</textarea>
                                                 </DialogContentText>
                                             </DialogContent>
                                             <DialogActions>
