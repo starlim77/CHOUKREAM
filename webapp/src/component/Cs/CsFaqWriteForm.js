@@ -7,10 +7,15 @@ import { useRef } from 'react';
 
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import { UploadFile } from '@mui/icons-material';
+
+
 /*
 npm install @toast-ui/react-editor
 버전 호환?/ 에러? 때문에 설치 할 때 --force 붙이기 .
 */
+
+
 
 const CsFaqWriteForm = (props) => {
     const[form ,setForm] =useState({
@@ -20,6 +25,11 @@ const CsFaqWriteForm = (props) => {
     })
     const editorRef = useRef();
     const {category,title ,content} = form 
+    //let [file, setFile] = useState([]);
+  
+    
+  
+   
    
     
     const navigate = useNavigate('')
@@ -34,22 +44,48 @@ const CsFaqWriteForm = (props) => {
         console.log(content)
     }
 
+   // const [url, setUrl] = useState([]);
+   const onUploadImage =() =>{}
+   /*
+    const onUploadImage = async (blob,callback) => { //글 등록 이전 Toast에디터 작성 페이지에 사진 뜨게 하기....
+       
+        const url = window.URL.createObjectURL(blob);
+      
+        callback(url); //callback 에  blob 를  넣으면 글 쓰는 페이지에 사진이 안뜸 
+        console.log(url +'url')
+
+       
+      };
+      */
+    
+
     const onCsFaqWriteFormSubmit =( ) =>{
-        axios.post('http://localhost:8080/cs/write',null,{
+       // console.log( "url = " +url)
+       // var formData = new FormData()   //가지고가야할 데이터를 넣기
+        
+      // file.map(files=>formData.append('list',files))
+        axios.post('http://localhost:8080/cs/write',null,/*,formData*/{
             params:{
                     category : category,
                     title : title,
-                    //content :editorRef.current?.getInstance()
+                 
                     content:editorRef.current?.getInstance().getHTML()
                  }
              })
              .then(()=>{
-                console.log(content)
+               // callback(data.imgUrl);
+              
+                console.log(content +'성공')
                 alert(' 자주 묻는 질문 글 등록')
                 navigate(-1)
 
              })
-             .catch(error => console.log(error))
+             .catch(error => {
+                console.log(content)
+               // console.log(formData)
+                console.log(error +'완전에러')
+
+            })
     }
     const onReset =(e) =>{
         e.preventDefault()//일단 submit막기
@@ -63,8 +99,20 @@ const CsFaqWriteForm = (props) => {
         console.log(error => console.log(error))
     }
 
+    // const onUploadImage = (blob, callback) => {
+    //     var reader = new FileReader(); //생성
+    //     const url = window.URL.createObjectURL(blob);
+
+    //     reader.onload = () => {
+    //         console.log(url.files[0])   //파일확인
+            
+    //         //setFile(input.files[0])
+    //         Array.from(url.files).map(items=>file.push(items))
+    //         console.log(file)
+    //     }
+    // }
    
-    
+
 
 
     return (
@@ -94,7 +142,8 @@ const CsFaqWriteForm = (props) => {
                 <tr>
                     <td colSpan='2'>
                     <Editor
-             ref={editorRef}         
+             ref={editorRef}
+            
           placeholder="내용을 입력해주세요."
           previewStyle="vertical" // 미리보기 스타일 지정
           height="300px" // 에디터 창 높이
@@ -107,6 +156,9 @@ const CsFaqWriteForm = (props) => {
             ['table', 'image', 'link'],
             ['code', 'codeblock']
           ]} 
+          hooks={{ //사진 등록 버튼 눌렀을 때.
+            addImageBlobHook: onUploadImage
+          }} //
        
         ></Editor>
    
@@ -127,17 +179,6 @@ const CsFaqWriteForm = (props) => {
                 </p>
              </div>
 
-             <table  style={{border : '1px solid black'}} >
-                <tr>
-                    <td>1</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                 <td>3</td>
-                 <td>4</td>
-                </tr>
-
-             </table>
 
 
 

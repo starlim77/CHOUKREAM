@@ -33,6 +33,10 @@ public class CsBoardDTO {
 	private String content;
 	@Column(name="id")
 	private String id;
+	@Column(name="filename", length=500)
+	private String filename;
+	@Column(name="filepath", length=500)
+	private String filepath;
 	
 
 }

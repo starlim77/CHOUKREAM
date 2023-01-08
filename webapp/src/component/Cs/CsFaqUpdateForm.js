@@ -34,16 +34,18 @@ const CsFaqUpdateForm = () => {
 
             .then(res => {
                 //주소가서 res 받아오기
-                setForm(res.data);
-            })
-            .catch(error => console.log(error));
-            console.log(form) 
+            setForm(res.data)
+           // editorRef.current?.getInstance().setHTML(content)
+          }
+          
+           
+            )        
+        .catch((error) => console.log(error));
 
-    }, []);
+    },[])
     useEffect(() => {
-        editorRef.current?.getInstance().setHTML(form.content);
-    }, [form])
-
+        editorRef.current?.getInstance().setHTML(content)
+    }, [form]) 
 
     const onInput = e => {
         const { name, value } = e.target;
