@@ -27,11 +27,46 @@ export const HelpTitle = styled.h2`
     font-weight: bold;
 `;
 
+export const HelpSpan = styled.span`
+    height: 29px;
+    font-size: 24px;
+    font-weight: bold;
+`;
+
 export const HelpNotice = styled.div`
     width: 400px;
+    height: 108px;
+`;
+
+export const NoticeTxt = styled.p`
     height: 38px;
     padding-top: 40px;
     padding-bottom: 30px;
+`;
+
+export const SuccessNotice = styled.div`
+    width: 400px;
+    height: 46px;
+    padding-top: 30px;
+`;
+
+export const SuccessNoticeDl = styled.dl`
+    height: 46px;
+`;
+
+export const SuccessNoticeDt = styled.dt`
+    height: 16px;
+    text-align: center;
+    font-size: 12px;
+    color: #222;
+`;
+
+export const SuccessNoticeDd = styled.dd`
+    height: 22px;
+    padding-top: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
 `;
 
 export const InputBox = styled.div`
@@ -74,4 +109,24 @@ export const HelpBtn = styled.button`
     font-size: 16px;
     font-weight: bold;
     color: #fff;
+`;
+
+export const SuccessBtnBox = styled.div`
+    display: flex;
+    width: 400px;
+    height: 52px;
+    padding-top: 56px;
+`;
+
+export const SuccessBtn = styled.button`
+    width: 195px;
+    height: 52px;
+    padding: 0 25px;
+    border-radius: 12px;
+    border: 1px solid #d3d3d3;
+    font-size: 16px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-left: ${props => props.margin || 0};
 `;

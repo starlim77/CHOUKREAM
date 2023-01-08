@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from './styleFindInfo.js';
 
 const FindEmail = () => {
@@ -19,16 +21,32 @@ const FindEmail = () => {
         }
     }, [])
 
+    const navigate = useNavigate()
+
+    const onClick = () => {
+        axios
+            .get(`http://localhost:8080/findEmail?phone=${phone}`)
+            .then((res) => {
+                var email = res.data.email
+                var num = email.lastIndexOf("@")
+                var replace = email.substring(1, num)
+                var replacedEmail = email.replace(replace, "x".repeat(num-1))
+
+                navigate('/login/find_email/result', {state: { replacedEmail : replacedEmail }})
+            })
+            .catch(error => console.log(error))
+    }
+
     return (
         <S.Container>
             <S.HelpAreaDiv>
                 <S.HelpTitle>이메일 아이디 찾기</S.HelpTitle>
 
                 <S.HelpNotice>
-                    <p>
+                    <S.NoticeTxt>
                         가입 시 등록한 휴대폰 번호를 입력하면 <br/>
                         이메일 주소를 알려드립니다.
-                    </p>
+                    </S.NoticeTxt>
                 </S.HelpNotice>
 
                 <S.InputBox>
@@ -40,7 +58,7 @@ const FindEmail = () => {
                 </S.InputBox>
 
                 <S.HelpBtnBox>
-                    <S.HelpBtn type='button' disabled={!isPhone}>이메일 아이디 찾기</S.HelpBtn>
+                    <S.HelpBtn type='button' disabled={!isPhone} onClick={onClick}>이메일 아이디 찾기</S.HelpBtn>
                 </S.HelpBtnBox>
             </S.HelpAreaDiv>
         </S.Container>
