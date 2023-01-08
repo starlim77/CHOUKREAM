@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import shop.bean.BidsListDTO;
+import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
@@ -93,8 +94,9 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	public List<BidsListDTO> getBuyBidsListBySize(int seq, String size) {
 		return orderRepository.getBuyBidsListBySize(seq, size);
 	}
-//	@Override
-//	public Optional<Integer> getProductSizeMin(int seq, String size) {
-//		return orderRepository.getProductMin(seq, size);
-//	}
+	
+	@Override
+	public List<BrandListDTO> getBrandList(int seq, String brand) {
+		return shopDAO.getBrandList(seq, brand);
+	}
 }

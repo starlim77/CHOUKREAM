@@ -23,21 +23,24 @@ export const Content = styled.div`
     padding: 30px 40px 120px;
     max-width: 1280px;
     border: 1px blue dotted;
+
+    display: block;
 `;
 export const ColumnBind = styled.div`
     display: flex;
     border: 1px green dotted;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-content: center; 
     position: relative;
-    width: 1080px;
+    /* width: 1100px;
+    margin: auto; */
 `;
 
 export const ColumnIsFixed = styled.div`
-    display: flex;
-    flex-direction: column;
-    border: 1px black dotted;
-    overflow: auto;
+    float: left;
+    padding-right: 3.334%;
     width: 50%;
+    display: block;
 `;
 
 export const ColumnBox = styled.div`
@@ -58,13 +61,11 @@ export const ColumnBoxAbsolute = styled.div`
 `;
 
 export const Column = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    border: 1px orange dotted;
     position: relative;
     float: right;
     padding-left: 3.334%;
     width: 50%;
+    display: block;
 `;
 
 export const BannerAlert = styled.div`
@@ -74,8 +75,9 @@ export const BannerAlert = styled.div`
 export const BannerAlertContent = styled.div`
     display: -webkit-box;
     display: flex;
+    flex-direction: column;
     -webkit-box-align: center;
-    align-items: center;
+    align-items: flex-start;
     padding: 11px 12px 12px 11px;
     background-color: #fafafa;
     border: 1px solid rgba(34,34,34,.05);
@@ -142,7 +144,6 @@ export const DetailSize = styled.div`
     padding-bottom: 12px;
     border-bottom: 1px solid #ebebeb;
     border: 1px red dotted;
-    margin-top: 15px;
     min-height: 50px;
 `;
 
@@ -169,6 +170,8 @@ export const BtnSize = styled.a`
     line-height: 24px;
     letter-spacing: -.21px;
     font-weight: 700;
+
+    cursor: pointer;
 `;
 
 export const BtnSizeBtnText = styled.span`
@@ -249,6 +252,8 @@ export const DivisionBtnBoxBtnDivisionBuy = styled.a`
     color: #fff;
     background-color: #ef6253;
     margin-right: 10px;
+
+    cursor: pointer;
 `;
 
 export const DivisionBtnBoxBtnDivisionSell = styled.a`
@@ -262,6 +267,8 @@ export const DivisionBtnBoxBtnDivisionSell = styled.a`
     border-radius: 10px;
     color: #fff;
     background-color: #41b979;
+
+    cursor: pointer;
 `;
 
 export const DivisionBtnBoxTitle = styled.strong`
@@ -317,7 +324,10 @@ export const LargeBtnWish = styled.a`
     border-radius: 10px;
     color: #333;
     margin-top: 12px;
+
+    cursor: pointer;
 `;
+
 
 export const LargeBtnWishBtnText = styled.span`
     font-size: 15px;
@@ -332,7 +342,79 @@ export const LargeBtnWishCountNum = styled.span`
     font-weight: 600;
     font-weight: semibold;
     letter-spacing: normal;
+    `;
+
+export const DeliveryWayWrap = styled.div`
+    display: block;
 `;
+
+export const DeliveryWayWrapDetailTitle = styled.h3`
+    line-height: 17px;
+    padding-bottom: 0;
+    font-size: 14px;
+    letter-spacing: -.21px;
+    font-weight: 400;
+    color: rgba(34,34,34,.8);
+
+    padding: 40px 0 0 0;
+
+    display: block;
+`;
+
+export const DeliveryWay = styled.div`
+    padding-top: 12px;
+
+    padding: 18px 0;
+
+    display: block;
+`;
+
+export const WayInfo = styled.div`
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+`;
+
+export const WayStatusThumb = styled.div`
+    width: 40px;
+    height: 40px;
+
+    -webkit-box-flex: 0;
+    flex: none;
+    margin-right: 14px;
+
+    display: block;
+`;
+
+export const WayDesc = styled.div`
+    -webkit-box-flex: 1;
+    flex: 1;
+    display: block;
+`;
+
+export const Company = styled.p`
+    font-size: 14px;
+    letter-spacing: -.21px;
+    line-height: 17px;
+    display: block;
+`;
+
+export const CompanyBadgeTitle = styled.span`
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: -.21px;
+`;
+
+export const SubText = styled.p`
+    line-height: 16px;
+    margin-top: 3px;
+    font-size: 14px;
+    color: rgba(34,34,34,.5);
+    display: block;
+`;
+
+
 
 export const DetailTitleInfoTitle = styled.h3`
     margin-left: 4px;
@@ -500,6 +582,8 @@ export const SizeLink = styled.a`
 
     font-weight: ${(props) => props.size === props.itemSize && "700"};
     color: #222;
+
+    cursor: pointer;
 `;
 
 export const WrapSales = styled.div`
@@ -549,7 +633,7 @@ export const WrapBids = styled.div`
 `;
 
 export const TabContent = styled.div`
-    display: block;
+    display: ${(props) => props.open ? 'block' : 'none'};
     height: auto;
     overflow: hidden;
 `;
@@ -558,7 +642,7 @@ export const TableWrap = styled.div`
     padding: 21px 0 20px;
 `;
 
-export const Table = styled.div`
+export const Table = styled.table`
     table-layout: fixed;
     width: 100%;
     border-spacing: 0;
@@ -617,6 +701,88 @@ export const TableThAlignRight = styled.th`
     vertical-align: inherit;
 `;
 
+export const TableTd = styled.td`
+    line-height: 17px;
+    padding-top: 9px;
+    font-size: 14px;
+    font-weight: 500;
+
+    display: table-cell;
+    vertical-align: inherit;
+`;
+
+export const TableTdAlignRight = styled.td`
+    line-height: 17px;
+    padding-top: 9px;
+    font-size: 14px;
+    text-align: right;
+    font-weight: 500;
+
+    display: table-cell;
+    vertical-align: inherit;
+`;
+
+export const BtnOutLineGrey = styled.a`
+    font-weight: 400;
+
+    border: 1px solid #d3d3d3;
+    color: rgba(34,34,34,.8);
+
+    padding: 0 18px;
+    height: 42px;
+    border-radius: 12px;
+    font-size: 14px;
+    letter-spacing: -.14px;
+
+    width: 100%;
+
+    display: inline-flex;
+    cursor: pointer;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    vertical-align: middle;
+    text-align: center;
+
+    background-color: #fff;
+
+    cursor: pointer;
+`;
+
+export const EmptyContent = styled.div`
+    text-align: center;
+    padding: 42px 0 22px;
+
+    display: block;
+`;
+
+export const EmptyBg = styled.div`
+    display: inline-block;
+    vertical-align: top;
+    width: 58px;
+    height: 58px;
+    /* background-image: url(/_nuxt/img/detail_empty_img.106499f.png); */
+    background-repeat: no-repeat;
+    background-size: 58px 58px;
+`;
+
+export const Blind = styled.span`
+    overflow: hidden!important;
+    position: absolute!important;
+    clip: rect(0,0,0,0)!important;
+    width: 1px!important;
+    height: 1px!important;
+    margin: -1px!important;
+    display: hidden;
+`;
+
+export const EmptyText = styled.p`
+    margin-top: 8px;
+    font-size: 13px;
+    letter-spacing: -.07px;
+    color: rgba(34,34,34,.3);
+`;
 
 
 export const ConfirmWrap = styled.div`
@@ -672,6 +838,197 @@ export const DropdownContentContent = styled.div`
 export const Emphasis = styled.strong`
     font-weight: bold;
 `;
+
+export const FloatingPrice = styled.div`
+    display: ${(props) => props.ScrollActive2 ? "none" : "block"};
+    top: 99px;
+
+    position: fixed;
+    left: 0;
+    right: 0;
+    padding: 0 40px 15px;
+    background-color: #fff;
+    box-shadow: 4px 0 10px 0 rgb(0 0 0 / 10%);
+    z-index: 1;
+`;
+
+export const FloatingPriceInnerBox = styled.div`
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+`;
+
+export const FloatingPriceProductArea = styled.div`
+    padding-right: 40px;
+
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+`;
+
+export const FloatingPriceProductThumb = styled.div`
+    overflow: hidden;
+    -webkit-box-flex: 0;
+    flex: none;
+    margin-right: 12px;
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+
+    display: block;
+`;
+
+export const PictureProductImg = styled.picture`
+    display: flex;
+`;
+
+export const Image = styled.img`
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    image-rendering: auto;
+`;
+
+export const FloatingProductInfo = styled.div`
+    -webkit-box-flex: 1;
+    flex: 1;
+
+    display: block;
+`;
+
+export const FloatingProductName = styled.p`
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    line-height: 18px;
+    font-size: 15px;
+`;
+
+export const FloatingProductTranslatedName = styled.p`
+    line-height: 14px;
+    margin-top: 4px;
+    font-size: 12px;
+    letter-spacing: -.06px;
+    color: rgba(34,34,34,.5);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`;
+
+export const FloatingProductBtnArea = styled.div`
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 560px;
+    height: 50px;
+`;
+
+export const FloatingBtnOutLineGrey = styled.div`
+    width: 160px;
+
+    -webkit-box-flex: 0;
+    flex: none;
+    height: inherit;
+    line-height: 48px;
+    margin-right: 8px;
+    border-radius: 10px;
+
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border: 1px solid #ebebeb;
+    color: #333;
+`;
+
+export const WishCountNum = styled.span`
+    margin-left: 4px;
+
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: normal;
+`;
+
+export const FloatingPriceDivisionBtnBox = styled.div`
+    -webkit-box-flex: 1;
+    flex: 1;
+    width: 100%;
+    height: inherit;
+    margin-top: 0;
+
+    display: flex;
+`;
+
+export const FloatingPriceDivisionBuy = styled.a`
+    border-radius: 10px;
+
+    background-color: #ef6253;
+
+    position: relative;
+    display: inline-flex;
+    -webkit-box-flex: 1;
+    flex: 1;
+    -webkit-box-align: center;
+    align-items: center;
+    color: #fff;
+
+    cursor: pointer;
+
+    width: 192px;
+    height: 50px;
+`;
+
+export const FloatingPriceTitle = styled.strong`
+    width: 44px;
+    font-size: 15px;
+    letter-spacing: -.15px;
+
+    text-align: center;
+
+    font-weight: bold;
+`;
+
+export const FloatingPriceBuyPrice = styled.div`
+    margin-left: 10px;
+    line-height: 15px;
+
+    color: #fff;
+`;
+
+export const FloatingPriceBtnDivisionSell = styled.a`
+    margin-left: 8px;
+
+    border-radius: 10px;
+
+    background-color: #41b979;
+
+    position: relative;
+    display: inline-flex;
+    -webkit-box-flex: 1;
+    flex: 1;
+    -webkit-box-align: center;
+    align-items: center;
+    color: #fff;
+
+    cursor: pointer;
+
+    width: 192px;
+    height: 50px;
+`;
+
+export const FloatingPriceSellPrice = styled.div`
+    margin-left: 10px;
+    line-height: 15px;
+
+    color: #fff;
+`;
+
 
 export const ThumbArea = styled.div`
     float: left;
@@ -836,6 +1193,7 @@ export const SelectLinkBuy = styled.button`
     height: 100%;
     cursor: pointer;
     background-color: white;
+    border: 0;
 `;
 
 export const LinkInner = styled.div`
@@ -864,3 +1222,490 @@ export const PriceNull = styled.span`
     margin-top: 1px;
     font-size: 12px;
 `;
+
+export const FeedArea = styled.div`
+    margin: 0 auto;
+    padding-bottom: 60px;
+    max-width: 1280px;
+
+    display: block;
+
+    border: 1px blue dotted;
+`;
+
+export const FeedTitle = styled.h2`
+    display: flex;
+    padding-top: 40px;
+    margin: 0 40px;
+    -webkit-box-align: center;
+    align-items: center;
+    border-top: 1px solid #ebebeb;
+
+    font-size: 1.5em;
+    font-weight: bold;
+`;
+
+export const FeedTitleTitle = styled.span`
+    font-size: 20px;
+    letter-spacing: -.3px;
+    font-weight: 700;
+`;
+
+export const FeedTitleNum = styled.span`
+    padding-left: 4px;
+    font-size: 20px;
+    letter-spacing: -.1px;
+    font-weight: 700;
+`;
+
+export const SocialFeeds = styled.div`
+    padding: 24px 0 0;
+    margin: 0 40px;
+    display: block;
+`;
+
+export const MoreBtnBox = styled.div`
+    padding-top: 40px;
+    text-align: center;
+    display: block;
+`;
+
+export const ButtonOutlineGreyMedium = styled.button`
+    padding: 0 30px;
+    border: 1px solid #d3d3d3;
+    color: rgba(34,34,34,.8);
+    height: 42px;
+    border-radius: 12px;
+    font-size: 14px;
+    letter-spacing: -.14px;
+    display: inline-flex;
+    cursor: pointer;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    vertical-align: middle;
+    text-align: center;
+    background-color: #fff;
+`;
+
+export const BrandArea = styled.div`
+    margin: 0 auto;
+    padding-bottom: 40px;
+    max-width: 1280px;
+
+    display: block;
+`;
+
+export const BrandTitle = styled.h3`
+    margin: 0 40px;
+    padding-top: 40px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    max-width: 100%;
+    line-height: 24px;
+    font-size: 20px;
+    letter-spacing: -.15px;
+    border-top: 1px solid #ebebeb;
+
+    font-weight: bold;
+`;
+
+export const BrandTitleBrand = styled.span`
+    flex-shrink: 0;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 24px;
+    font-size: 20px;
+    letter-spacing: -.15px;
+`;
+
+export const BrandTitleText = styled.span`
+    margin-right: 50px;
+    flex-shrink: 0;
+    font-weight: 400;
+    line-height: 24px;
+    font-size: 20px;
+    letter-spacing: -.15px;
+`;
+
+export const BtnMore = styled.a`
+    margin-top: -2px;
+    margin-left: auto;
+    padding: 3px 0 3px 5px;
+    display: inline-flex;
+    flex-shrink: 0;
+    cursor: pointer;
+`;
+
+export const BtnText = styled.span`
+    line-height: 20px;
+    font-size: 13px;
+    letter-spacing: -.07px;
+    font-weight: 400;
+    color: rgba(34,34,34,.5);
+`;
+
+export const BrandProducts = styled.div`
+    display: block;
+`;
+
+export const BrandProductList = styled.div`
+    padding: 0 30px;
+    display: block;
+`;
+
+export const ProductItem = styled.div`
+    margin: 24px 0 20px;
+    padding: 0 10px;
+    width: 20%;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+`;
+
+export const ItemInner = styled.div`
+    display: block;
+    background-color: #fff;
+    border-radius: 12px;
+    cursor: pointer;
+`;
+
+export const Product = styled.div`
+    overflow: hidden;
+    position: relative;
+    padding-top: 100%;
+    border-radius: 8px;
+`;
+
+export const PictureBrandProductImg = styled.picture`
+    display: flex;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+`;
+
+export const BrandProductImg = styled.img`
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    image-rendering: auto;
+`;
+
+export const ProductItemInfoBox = styled.div`
+    padding-top: 9px;
+    display: block;
+`;
+
+export const BrandTextWithOutWish = styled.p`
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
+    height: 17px;
+    line-height: 17px;
+    padding-bottom: 2px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-bottom: 1px solid #222;
+    width: fit-content;
+    max-width: 100%;
+`;
+
+export const BrandProductInfoBoxName = styled.p`
+    max-height: 44px;
+    margin-bottom: 2px;
+    line-height: 17px;
+    margin-top: 8.5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    font-size: 14px;
+    color: #222;
+`;
+
+export const BrandProductInfoBoxPrice = styled.div`
+    padding-top: 7px;
+    display: block;
+`;
+
+export const BrandProductInfoBoxPriceAmount = styled.div`
+    font-size: 0;
+    line-height: 0;
+    display: block;
+`;
+
+export const BrandProductInfoBoxPriceAmountNum = styled.div`
+    display: inline-block;
+    vertical-align: top;
+    line-height: 17px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -.04px;
+    font-style: normal;
+`;
+
+export const BrandProductInfoBoxPriceDesc = styled.div`
+    line-height: 13px;
+    font-size: 11px;
+    color: rgba(34,34,34,.5);
+    display: block;
+`;
+
+export const Wrap = styled.div`
+    position: relative;
+    overflow-anchor: none;
+    display: block;
+`;
+
+export const ColumnIsAbsolute = styled.div`
+    float: left;
+    padding-right: 3.334%;
+    width: 50%;
+    display: block;
+`;
+
+export const Spread = styled.div`
+    position: static;
+    display: block;
+    height: 560px;
+    background-color: transparent;
+`;
+
+export const NewColumnBox = styled.div`
+    width: 560px;
+    position: absolute;
+    bottom: 0;
+    display: block;
+`;
+
+export const SlideItem = styled.div`
+    background-color: #f4f4f4;
+    position: relative;
+    display: block;
+`;
+
+export const NewPictureProductImg = styled.picture`
+    display: flex;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 1000%;
+    left: 50%;
+    transform:
+     translate(-50%,-50%);
+`;
+
+export const NewColumn = styled.div`
+    position: relative;
+    float: right;
+    padding-left: 3.334%;
+
+    width: 50%;
+    display: block;
+`;
+
+export const NewProductBuyBtn = styled.button`
+    background-color: rgb(239, 98, 83);
+    color: rgb(255, 255, 255);
+    margin-bottom: 12px;
+    width: 100%;
+    font-size: 18px;
+    letter-spacing: -.09px;
+    font-weight: 700;
+    height: 60px;
+    cursor: pointer;
+    border-radius: 10px;
+    min-width: fit-content;
+    padding: 0;
+    border: 0;
+    outline: none;
+`;
+
+export const ProductDetailItemContent = styled.div`
+    margin-top: 60px;
+    display: block;
+`;
+
+export const ProductDetailTabWrap = styled.div`
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #ebebeb;
+    margin: 0 0 80px;
+    padding: 21.5px 0;
+    display: block;
+`;
+
+export const ProductDetailTab = styled.div`
+    width: fit-content;
+    margin: 0 auto;
+    display: block;
+`;
+
+export const TabActive = styled.a`
+    color: #333;
+    font-size: 14px;
+    width: 120px;
+    cursor: pointer;
+`;
+
+export const Tab = styled.a`
+    margin-left: 120px;
+    color: rgba(34,34,34,.5);
+    font-size: 14px;
+    width: 120px;
+    cursor: pointer;
+`;
+
+export const DetailTitleHeaderImages = styled.div`
+    padding: 0 100px;
+    text-align: center;
+    display: block;
+`;
+
+export const DetailHeaderImgWrap = styled.div`
+    margin-top: 40px;
+    display: block;
+`;
+
+export const CoverImg = styled.img`
+    width: -webkit-fill-available;
+`;
+
+export const DetailHeaderTitleWrap = styled.div`
+    text-align: left;
+    border-top: 1px solid #ebebeb;
+    padding: 57px 0 0;
+    margin-top: 40px;
+`;
+
+export const DetailHeaderProductNo = styled.p`
+    font-size: 14px;
+    color: rgba(34,34,34,.5);
+`;
+
+export const DetailHeaderTitle = styled.p`
+    margin-top: 24px;
+    font-size: 32px;
+    letter-spacing: -.48px;
+    font-weight: 700;
+    text-transform: capitalize;
+    padding: 0;
+`;
+
+export const DetailHeaderSubTitle = styled.p`
+    margin-top: 4px;
+    font-size: 28px;
+    letter-spacing: -.015em;
+    text-transform: capitalize;
+    color: rgba(34,34,34,.8);
+`;
+
+export const DetailHeaderDescription = styled.p`
+    font-size: 17px;
+    margin: 24px 0 0;
+    padding: 0;
+    border: 0;
+    line-height: 24px;
+    color: rgba(34,34,34,.5);
+`;
+
+export const DetailImgWrap = styled.div`
+    margin-top: 27px;
+`;
+
+export const DetailContentImages = styled.div`
+    max-height: unset!important;
+    position: relative;
+    overflow: hidden;
+`;
+
+export const DetailTitlePreviewWrap = styled.div`
+    padding: 42px 100px 0;
+`;
+
+export const DetailLinkPreviewItemTitleDetailItemTitle = styled.div`
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+`;
+
+export const ProductDetailItemTitleUndefined = styled.p`
+    margin-bottom: 17px;
+    font-size: 17px;
+    font-weight: 700;
+`;
+
+export const DetailLinkPreviewItemWrap = styled.div`
+    margin: 17px 0 40px;
+    width: 100%;
+    font-size: 13px;
+`;
+
+export const DetailLinkPreviewItems = styled.ul`
+    border-top: 1px solid #ebebeb;
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+`;
+
+export const DetailLinkPreviewItem = styled.li`
+    border-bottom: 1px solid #ebebeb;
+    display: flex;
+
+    text-align: -webkit-match-parent;
+`;
+
+export const ItemTitleWrap = styled.div`
+    display: table;
+`;
+
+export const ItemTitle = styled.span`
+    width: 240px;
+    background: #fafafa;
+    padding: 16px 20px;
+    display: table-cell;
+    vertical-align: middle;
+`;
+
+export const ItemDescription = styled.ul`
+    padding: 16px 20px;
+    width: 100%;
+`;
+
+export const ItemDescriptionLi = styled.li`
+    margin-top: 8px;
+`;
+
+export const NewFloatingLargeBtn = styled.button`
+    background-color: #EF6253;
+    color: #FFFFFF;
+    font-size: 15px;
+    letter-spacing: -.15px;
+    font-weight: 700;
+    height: 100%;
+    width: 100%;
+    padding: 13px 0;
+    cursor: pointer;
+    border-radius: 10px;
+    min-width: fit-content;
+    border: 0;
+`;
+
+
+
+
+
+
+
+
+

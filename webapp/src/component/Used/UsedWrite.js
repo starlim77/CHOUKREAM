@@ -1,11 +1,15 @@
+import { integerPropType } from '@mui/utils';
 import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from './styleWrite';
 import tagData from './TagItem';
 
 const UsedWrite = () => {
 
+    const navigate = useNavigate();
     const[form,setForm] = useState({
+        id:'홍헌',
         title : '',
         productName : '',
         kind : '',
@@ -13,6 +17,9 @@ const UsedWrite = () => {
         price : '',
         contents : '',
         hashTag : []
+        //지훈씨한테 들은 내용(홍헌)
+        //배열은 데이터 보낼 때 배열로 안보내고 리액트 내에서 Stringify하면 문자열로 보낼 수 있다.
+        //데이터를 받아오고 나서는 parse로 데이터를 풀어주면 된다.
     })
 
     const [hashTag2,setHashTag2] = useState()
@@ -57,6 +64,7 @@ const UsedWrite = () => {
             ...form
         })
 
+        setCount(count-1)
         console.log(form)
     }
 
@@ -64,9 +72,11 @@ const UsedWrite = () => {
 
     const onWrite = (e) =>{
         e.preventDefault()
-
+        
         var sw = 1
-
+       
+        //file[0]||--sw&&alert("이미지 파일을 등록해주세요");
+       
         if(!title){
             sw=0
         }else if(kind === '상품 종류' || !kind){
@@ -74,19 +84,25 @@ const UsedWrite = () => {
         }else if(!price){
             sw=0
         }
-
+    
+        var formData=new FormData();
+        file.map(files=>formData.append('img',files));
+        
         if(sw == 1) {
-            axios.post('http://localhost:8080/used/writeItem',null,({params:{
+
+            alert('글작성 성공')
+           // axios.post('http://localhost:8080/used/writeItem',null,({params:{
+            axios.post('http://localhost:8080/used/upload',formData,({params:{
                ...form,
                 hashTag : encodeURI(form.hashTag)
             }}))
                  .then(() => {
-                    alert('글작성 완료')
+                    navigate("/used/usedMain");
                  })
                  .catch(error => console.log(error))
         }
-
-        console.log(form)
+       
+        
     }
 
     // ---------------
@@ -99,29 +115,62 @@ const UsedWrite = () => {
     const onSubImg = () => {
         imgRef.current.click();
     }
-  
-    const[forRender,setForRender]=useState();
-    const onImgRead = (e) => {
+    //const[forRendering,setForRendering]=useState('');
+    const[random,setRandom]=useState();
 
-        var reader= new FileReader();
-        
+    const onImgRead = (e) => {
+       
+
+        //유효성 검사
+        //https://velog.io/@fxoco/image-input-%EC%9C%A0%ED%9A%A8%EC%84%B1-%EA%B2%80%EC%82%AC
+        let sw=0;
+        var fileForm = /(.*?)\.(jpg|jpeg|png|gif)$/;
+        Array.from(e.target.files).map(item=>item.name.match(fileForm)||++sw&&alert("'.jpeg, .jpg, .png, .gif ' 형식만 사용해주세요"));
+
+        if(sw===0){
+        //이미지 세팅 함수 호출
+        addFile(e);
+        }
+        //push로 넣어줬기 때문에 별도의 렌더링이 되지 않는다
+        //따라서 onImgRead함수가 종료될 때 강제로 렌더링이 될 수 있도록 한다.
+        //굳이 Math.random을 사용하여 렌더링을 하는 이유는 렌더링 값이 기존 값과 같다면 렌더링이 되지 않기 때문이다. 
+       setRandom(Math.random);
+       //setForRendering(`${random}`); 
+       
+      
+        //동일한 파일을 넣어주는 경우에 발생하는 버그 방지
+       e.target.value='';
+    }
+    
+    const addFile=(e)=>{
         //Array.from 사용 이유. 
         //e.target.files는 배열의 형태처럼 보이긴 하나 실제 배열이 아니라서 배열형태로 만들어서 map을 돌리는 것이다.
         //https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/types%20%26%20grammar/ch2.md#array-likes
         Array.from(e.target.files).map((items,index)=>{
-            let urlTemp=URL.createObjectURL(items);
-            subImg.push({id:index, url:urlTemp});
-            //setSubImg([...subImg,{id:index, url:urlTemp}]);
-            file.push(items);
+            var urlTemp=window.URL.createObjectURL(items);
+           //var urlTemp=reader.readAsDataURL(items);
+           //var url=urlTemp.slice(5);
+           subImg.push({url:urlTemp});
            
-        })
-        //subImg가 set으로 설정을 할 수 없어서 push로 배열에 강제로 주입.
-        //push할 경우 rendering이 되지 않아 사진이 로딩되지 않음.
-        //따라서 강제 rendering을 통해 사진이 로딩될 수 있게 처리.
-        setForRender('');
-        console.log(subImg);
+           //setSubImg(urlTemp);
+            file.push(items);
+         })
     }
- 
+
+
+    const deleteImg=(e)=>{
+        //console.log(e.target.getAttribute("id"));
+        var id=e.target.getAttribute("id");
+        
+        //https://forum.freecodecamp.org/t/how-to-filter-using-array-index-in-react/403524
+        //index값은 숫자인데 그냥 id값을 주면 id를 받아 문자열로 인식을 하기때문에 parseInt를 이용해 숫자로 바꿔준다. 
+        var imgTemp= subImg.filter((item,index)=>index!==parseInt(id));
+        var fileTemp = file.filter((item,index)=>index!==parseInt(id));
+        setSubImg([...imgTemp]);
+        setFile([...fileTemp]);
+        //console.log(file);
+       
+    }
 
     // const imgReading=(file)=>{
     //     const reader = new FileReader();
@@ -136,55 +185,53 @@ const UsedWrite = () => {
 
     // }
 
-
+//읽어볼 자료.https://velog.io/@eeeve/React-07
     return (
         <>
             <S.WriteBody>
-                {
-                !subImg[0]?
-                    (
-                    <S.ImgBody>
-                        {/* 이미지 소스 이용방법 2가지 사용해봄 */}
-                        <S.MainImgP>
-                         <S.MainImg name='mainImg' src={`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg}></S.MainImg>
-                        </S.MainImgP>
-                        <S.SubImgBody>
-                            <S.SubImgP><S.SubImg name='subImg1' src='/image/used/plusIcon.png' onClick={onSubImg}/></S.SubImgP>
-                            <S.SubImgP><S.SubImg name='subImg2' src='/image/used/plusIcon.png' onClick={onSubImg}/></S.SubImgP>
-                            <S.SubImgP><S.SubImg name='subImg3' src='/image/used/plusIcon.png' onClick={onSubImg}/></S.SubImgP>
-                        </S.SubImgBody>
-                        <input type='file' name="img" style={{display: 'none'}} accept="image/*" onChange={ e=>onImgRead(e) } ref={imgRef} multiple></input>
-                        
-                    </S.ImgBody>
-                    ):(
-                    <S.ImgBody>
-                        {
-                        subImg.map((items,index)=>items.id===0? 
-                        <S.MainImg key={index} src={items.url} alt={items.id}></S.MainImg>:<S.SubImg key={index} src={items.url} alt={items.id}></S.SubImg>)
-                        }
-                    </S.ImgBody>
-                    )
+               
+                <S.ImgBody>
+                    {/* 이미지 소스 이용방법 2가지 사용해봄 */}
+                    <S.MainImgP setPosition={subImg[0]?true:false}>
+                        <S.MainImg name='mainImg' sizing={subImg[0]?true:false} src={subImg[0]?subImg[0].url:`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg} alt={subImg[0]?subImg[0].url:"nothing"}></S.MainImg>
+                        <S.DeleteMainImg setPosition={subImg[0]?true:false} id="0" onClick={e=>deleteImg(e)}></S.DeleteMainImg>
+                    </S.MainImgP>
+                    <S.SubImgBody >
+                        <S.SubImgP setPosition={subImg[1]?true:false}>
+                            <S.SubImg sizing={subImg[1]?true:false} name='subImg1' src={subImg[1]?subImg[1].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
+                            <S.DeleteImg setPosition={subImg[1]?true:false} id="1" onClick={e=>deleteImg(e)}></S.DeleteImg>
+                        </S.SubImgP>
+                        <S.SubImgP setPosition={subImg[2]?true:false}>
+                            <S.SubImg sizing={subImg[2]?true:false} name='subImg2' src={subImg[2]?subImg[2].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
+                            <S.DeleteImg setPosition={subImg[2]?true:false} id="2"  onClick={e=>deleteImg(e)}></S.DeleteImg>
+                        </S.SubImgP>
+                        <S.SubImgP setPosition={subImg[3]?true:false}>
+                            <S.SubImg sizing={subImg[3]?true:false} name='subImg3' src={subImg[3]?subImg[3].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
+                            <S.DeleteImg setPosition={subImg[3]?true:false} id="3"  onClick={e=>deleteImg(e)}></S.DeleteImg>
+                        </S.SubImgP>
+                    </S.SubImgBody>
                     
-                }
+                    {/* https://blog.munilive.com/posts/input-file-type-accept-attribute.html
+                    파일 형식 제한은 accept이용.
+                    다만 업로드 하는 사람이 형식을 모든 파일로 받으면 다른 파일로 업로드가 가능해진다.
+                    유효성 검사 필요 */}
+                    <input type='file' name="img" style={{display: 'none'}} accept=".jpg,.png, .jpeg, .gif" onChange={ e=>onImgRead(e) } ref={imgRef} multiple></input>
 
-
+                </S.ImgBody>
+            
                 
-                {/* <S.ImgBody>
-                    
-                </S.ImgBody> */}
-                
-                <S.Imformation>
+                <S.Information>
                     <S.Necessary>* 필수 입력</S.Necessary>
                     <S.Subject>* 제목</S.Subject>
                     <S.Title type='text' name= 'title' onChange={ onInput }/>
 
 
-                    <S.Subject>* 상품 이름</S.Subject>
+                    <S.Subject> 상품 이름</S.Subject>
                     <S.SubTitle type='text' name= 'productName' onChange={ onInput }/>
 
 
-                    <S.Necessary>* 필수 입력</S.Necessary>
-                    <S.Subject>* 상품 정보</S.Subject>
+                    <S.Necessary>* 필수</S.Necessary>
+                    <S.Subject> 상품 정보</S.Subject>
                     <S.ItemKindPriceDiv>
                         <S.ItemKind name= 'kind' onChange={ onInput }>
                             <S.ItemKindOption>상품 종류</S.ItemKindOption>
@@ -196,15 +243,15 @@ const UsedWrite = () => {
                     </S.ItemKindPriceDiv>
 
 
-                    <S.Necessary>* 필수 입력</S.Necessary>
-                    <S.Subject >* 가격</S.Subject>
+                    <S.Necessary>* 필수</S.Necessary>
+                    <S.Subject > 가격</S.Subject>
                     <S.PriceDiv><S.ItemPrice type='number' name= 'price' onChange={ onInput }/><S.ItemPriceSpan>원</S.ItemPriceSpan></S.PriceDiv>
 
-                    <S.Subject>* 상품 설명</S.Subject>
+                    <S.Subject> 제품 설명</S.Subject>
                     <S.ItemContent name= 'contents' onChange={ onInput }/>
 
 
-                    <S.Subject>* Hash Tag </S.Subject>
+                    <S.Subject> Hash Tag </S.Subject>
 
                     <S.HashTag>
                         {
@@ -224,7 +271,7 @@ const UsedWrite = () => {
                     </S.HashTagWriteDiv>
                     
                     <S.WriteBtn onClick={onWrite}>작성 완료</S.WriteBtn>
-                </S.Imformation>
+                </S.Information>
             </S.WriteBody>
         </>
     );

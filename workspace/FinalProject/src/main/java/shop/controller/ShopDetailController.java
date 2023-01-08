@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import shop.bean.BidsListDTO;
+import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
@@ -28,16 +29,6 @@ public class ShopDetailController {
 		return shopDetailService.getProduct(seq);
 	}
 	
-	@GetMapping(path="getSellOrderList")
-	public List<OrderDTO> getSellOrderList(@RequestParam int seq) {
-		return shopDetailService.getSellOrderList(seq);  
-	}
-	
-	@GetMapping(path="getBuyOrderList")
-	public List<OrderDTO> getBuyOrderList(@RequestParam int seq) {
-		return shopDetailService.getBuyOrderList(seq);
-	}
-	
 	@GetMapping(path="getCompletedOrderList")
 	public List<CompletedOrderDTO> getCompletedOrderList(@RequestParam int seq) {
 		return shopDetailService.getCompletedOrderList(seq);
@@ -51,16 +42,6 @@ public class ShopDetailController {
 	@GetMapping(path="getProductSizeSell")
 	public List<SizeMinDTO> getProductSizeSell(@RequestParam int seq) {
 		return shopDetailService.getProductSizeSell(seq);
-	}
-	
-	@GetMapping(path="getSellOrderListBySize")
-	public List<OrderDTO> getSellOrderListBySize(@RequestParam int seq,@RequestParam String size) {
-		return shopDetailService.getSellOrderListBySize(seq, size);  
-	}
-	
-	@GetMapping(path="getBuyOrderListBySize")
-	public List<OrderDTO> getBuyOrderListBySize(@RequestParam int seq,@RequestParam String size) {
-		return shopDetailService.getBuyOrderListBySize(seq, size);
 	}
 	
 	@GetMapping(path="getCompletedOrderListBySize")
@@ -86,6 +67,11 @@ public class ShopDetailController {
 	@GetMapping(path="getBuyBidsListBySize")
 	public List<BidsListDTO> getBuyBidsListBySize(@RequestParam int seq,@RequestParam String size) {
 		return shopDetailService.getBuyBidsListBySize(seq, size);  
+	}
+	
+	@GetMapping(path="getBrandList")
+	public List<BrandListDTO> getBrandList(@RequestParam int seq,@RequestParam String brand) {
+		return shopDetailService.getBrandList(seq, brand);  
 	}
 	
 	
