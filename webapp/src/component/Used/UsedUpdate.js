@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import * as S from './styleWrite';
+import * as U from './UsedItemStyle';
 import tagData from './TagItem';
 
 const UsedUpdate = () => {
@@ -130,22 +131,29 @@ const UsedUpdate = () => {
         return (
             <>
                 <S.WriteBody>
-                    <S.ImgBody>
+                    {/* <S.ImgBody>
                         <S.MainImgP setPosition={true}>
                             <S.MainImg name='mainImg' sizing={true} src={subImg[0]} alt={subImg[0]}></S.MainImg>
                         </S.MainImgP>
 
-                        <S.SubImgBody >
+                        <S.SubImgBody spacing={true} >
                                 {
                                     subImg.map((items,index)=>index===0?'':
                                         <S.SubImgP key={index} setPosition={true}>
-                                            <S.SubImg sizing={true} name='subImg1'  src={subImg[index]} alt={subImg[index]} />
+                                            <S.SubImg sizing={true} name='subImg'  src={subImg[index]} alt={subImg[index]} />
                                         </S.SubImgP>
                                     )
+                                    
                                 }
                         </S.SubImgBody>
-                    </S.ImgBody>
+                    </S.ImgBody> */}
                   
+                <U.ImgBody>
+                    <U.MainImg src={subImg[0]}></U.MainImg>
+                    {subImg[1]&&<U.SmallImg src={subImg[1]}></U.SmallImg>}
+                    {subImg[2]&&<U.SmallImg src={subImg[2]}></U.SmallImg>}
+                    {subImg[3]&&<U.SmallImg src={subImg[3]}></U.SmallImg>}
+                </U.ImgBody>&emsp;
           
                     
                     <S.Information>

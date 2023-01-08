@@ -103,9 +103,9 @@ const UsedItem = () => {
         <U.BaseBody>
             <U.ImgBody>
                 <U.MainImg src={`/storage/${mainImg}`}></U.MainImg>
-                <U.SmallImg src={`/storage/${subImg1}`}></U.SmallImg>
-                <U.SmallImg src={`/storage/${subImg2}`}></U.SmallImg>
-                <U.SmallImg src={`/storage/${subImg3}`}></U.SmallImg>
+            {subImg1&&<U.SmallImg src={`/storage/${subImg1}`}></U.SmallImg>}
+            {subImg2&&<U.SmallImg src={`/storage/${subImg2}`}></U.SmallImg>}
+            {subImg3&&<U.SmallImg src={`/storage/${subImg3}`}></U.SmallImg>}
             </U.ImgBody>&emsp;
 
 
