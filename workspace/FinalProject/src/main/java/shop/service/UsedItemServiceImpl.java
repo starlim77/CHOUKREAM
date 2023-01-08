@@ -87,7 +87,6 @@ public class UsedItemServiceImpl implements UsedItemService {
 	@Override
 	public void updateItem(UsedItemDTO usedItemDTO) {
 		usedItemDAO.save(usedItemDTO);
-		
 	}
 	
 
