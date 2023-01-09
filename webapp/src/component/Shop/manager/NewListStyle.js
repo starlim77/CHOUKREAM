@@ -42,7 +42,7 @@ export const Input = styled.input`
 `;
 
 export const MenuBtn = styled.button`
-    color: lightgray;
+    color: RGB(85, 26, 139);
     margin: 5px;
     //padding: 10px;
     font-size: 20px;
