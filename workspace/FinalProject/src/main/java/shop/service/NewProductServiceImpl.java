@@ -15,12 +15,25 @@ public class NewProductServiceImpl implements NewProductService {
 
 	@Override
 	public void upload(NewProductDTO newProductDTO) {
+		System.out.println(newProductDTO);
 		newProductDAO.save(newProductDTO);
 	}
 
 	@Override
 	public List<NewProductDTO> getNewProductList() {
 		return newProductDAO.findAll();
+	}
+
+	@Override
+	public void update(NewProductDTO newProductDTO) {
+		System.out.println(newProductDTO);
+		
+		newProductDAO.save(newProductDTO);
+	}
+
+	@Override
+	public void delete(int seq) {
+		newProductDAO.deleteBySeq(seq);
 	}
 	
 	

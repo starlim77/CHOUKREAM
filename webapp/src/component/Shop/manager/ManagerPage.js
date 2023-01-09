@@ -13,14 +13,16 @@ const ManagerPage = () => {
             <Ma.Menu>
                 <Ma.MenuUl>
                     <Ma.Logo>
-                        <Link to={'/admin'}>관리자페이지</Link>
+                        <Link to={'/admin'} style={{ textDecoration: 'none' }}>
+                            관리자페이지
+                        </Link>
                     </Ma.Logo>
                     <Ma.MenuLi>
-                        <Ma.MenuBtn>
-                            <Link to={'/admin/newWrite'}>Create</Link>
+                        <Ma.MenuBtn style={{backgroundColor:'#fce205'}}>
+                            <Link to={'/admin/newWrite'}style={{textDecoration: "none"}}>Create</Link>
                         </Ma.MenuBtn>
-                        <Ma.MenuBtn>
-                            <Link to={'/admin/newList'}>List</Link>
+                        <Ma.MenuBtn style={{backgroundColor:'#fce205'}}>
+                            <Link to={'/admin/newList'}style={{textDecoration: "none"}}>List</Link>
                         </Ma.MenuBtn>
                         {/* <Ma.MenuBtn style={{ display: showBtn ? '' : 'none' }}>
                             <Link to={'/admin/newList'}>Update</Link>

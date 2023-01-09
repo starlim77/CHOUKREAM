@@ -35,6 +35,7 @@ import NewList from './component/Shop/manager/NewList';
 import NewSearch from './component/Shop/manager/NewSearch';
 import NewProducts from './component/Products/NewProducts';
 import UsedUpdate from './component/Used/UsedUpdate';
+import NewUpdate from './component/Shop/manager/NewUpdate';
 
 function App() {
     
@@ -51,6 +52,7 @@ function App() {
                     <Route path="admin/newWrite" element={<><ManagerPage/><AdminWrite /></>} />
                     <Route path="admin/newList" element={<><ManagerPage/><NewList /></>} />
                     <Route path="admin/newSearch" element={<><ManagerPage/><NewSearch/></>} />
+                    <Route path="admin/newUpdate" element={<><ManagerPage/><NewUpdate/></>} />
                     
         
                     <Route path="Used/usedMain" element={<UsedMain />} />

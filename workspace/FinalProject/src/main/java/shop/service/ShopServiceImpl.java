@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import shop.dao.ShopDAO;
+import shop.bean.NewProductDTO;
 import shop.bean.ProductDTO;
 
 @Service
@@ -36,12 +37,6 @@ public class ShopServiceImpl implements ShopService {
 	public List<ProductDTO> getShoesList(String shoes) {
 		return shopDAO.findProductDTOsByCategory(shoes);
 	}
-
-	@Override
-	public void delete(int seq) {
-		shopDAO.deleteBySeq(seq);
-	}
-
 	
 }
 

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Li from './NewListStyle';
+import NewProductList from './NewProductList';
 import Pagination from './Pagination';
 
 const NewList = () => {
@@ -97,69 +98,15 @@ const NewList = () => {
 
     const [checked, setChecked] = useState(false);
     const [checkedId, setCheckedId] = useState(0);
-    // var checkedId;
-    const checkHandler = e => {
-        console.log('e.target.id ' + e.target.id);
-        console.log('e.target.isChecked ' + e.target.checked);
-        // console.log('copy_newProductList ' + copy_newProductList);
-
-        copy_newProductList.map((item, index) => {
-            console.log('e.target.id ' + e.target.id);
-            console.log('item.seq ' + item.seq);
-            if (e.target.id == item.seq) {
-                copy_newProductList[index].isChecked = !checked;
-                setChecked(!checked);
-            }
-            // const test = e.target.id === item.seq ? item.seq : '';
-
-            // console.log("테스트 " + test)
-            // copy_newProductList[e.target.id - 1].isChecked;
-            console.log(copy_newProductList);
-            // 사용자가 checkbox 클릭할때마다 isChecked 속성을 true false로 바꿔줌
-        });
-
-        // if (copy_newProductList.find(item2 => item2.isChecked === true)) {
-        //     console.log('여기오니 ?? ' + item2);
-        // }
-
-        // checkedItemHandler(e.target.id, e.target.isChecked);
-        // console.log("seq " +newProductList[0].seq);
-        // newProductList.seq == e.target.id && setNewProductList({...newProductList, isChecked: true})
-
-        // newProductList.map(item => {
-        //     item.seq === e.target.id &&
-        //         setNewProductList([{ ...newProductList, isChecked: true }]);
-        //     // console.log(newProductList);
-        // });
-
-        // name 이랑 value 써서 구현 가능하다
-
-        // newProductList.map(item)
-        // setChecked(!checked);
-        // console.log('e.target.key ' + e.target.value);
-        // console.log('e.target.checked ' + target.checked);
-        // 조건식 && set()
-
-        copy_newProductList.map(item => {
-            if (item.isChecked === true) {
-                console.log('제발요 ㅠㅠ ');
-                setCheckedId(
-                    copy_newProductList.find(item2 => item2.isChecked === true)
-                        .seq,
-                );
-                console.log(checkedId);
-                console.log(copy_newProductList);
-            }
-        });
-    };
+    
 
     const navigate = useNavigate();
 
-    const onDelete = () => {
+    const newProductDelete = () => {
         // isChecked true 인 애들만
         // id를 보내야함
-        console.log(typeof checkedId + 'ㄴㅇㅎㄴㅇㅎㄴㅇㅎㄴㅇ');
-        console.log(checkedId + 'ㄴㅇㅎㄴㅇㅎㄴㅇㅎㄴㅇ');
+        // console.log(typeof checkedId + 'ㄴㅇㅎㄴㅇㅎㄴㅇㅎㄴㅇ');
+        // console.log(checkedId + 'ㄴㅇㅎㄴㅇㅎㄴㅇㅎㄴㅇ');
         // axios.delete('http://localhost:8080/shop/delete?id=' + checkedId)
         axios
             .delete(`http://localhost:8080/shop/delete?seq=${checkedId}`)
@@ -169,28 +116,48 @@ const NewList = () => {
         navigate('/admin/newList');
         window.location.reload();
     };
-    const onUpdate = () => {
-        // axios.put(`http://localhost:8080/shop/delete?id=${checkedId.seq}`);
-    };
-
-    // 사진 여러장 등록 했을때 잘라서 1장 보여줌 
-    // const arr = JSON.stringify(copy_newProductList.imgName).split(',');
-    // //수정사항
-    // // console.log(data.seq + ' :'  + typeof(arr) +  " arr : " + arr)
-
-    // const str = arr[0].slice(1);
-
-    // if (!arr[1]) {
-    //     // console.log(str.length)
-    //     // console.log(str)
-    //     var str2 = str.slice(0, str.length - 1);
-    //     // console.log(str2)
-    // }
-
+    const [disabledCheck, setDisabledCheck] = useState(true)
+    
     return (
         <>
-            <Li.MenuBtn onClick={onUpdate}>Update</Li.MenuBtn>
-            <Li.MenuBtn onClick={onDelete}>Delete</Li.MenuBtn>
+            <Li.MenuBtn
+                onClick={newProductDelete}
+                disabled={disabledCheck}
+                style={{ backgroundColor: disabledCheck ? '' : '#fce205' }}
+            >
+                {/* <Link 
+                    to={{pathname:'/admin/newUpdate',
+                    state: {
+                        name: '현욱',
+                        checkedId: checkedId,
+                    }
+                }}>Update</Link> */}
+                {/* <Link
+                    to={{
+                        pathname: '/admin/newUpdate',
+                        state: {
+                            name: '현욱',
+                            checkedId: checkedId,
+                        },
+                    }}
+                >
+                    Update
+                </Link> */}
+                <Link
+                    to={'/admin/newUpdate'}
+                    state={{ name: '현욱', checkedId: checkedId }}
+                    style={{ textDecoration: 'none' }}
+                >
+                    Update
+                </Link>
+            </Li.MenuBtn>
+            <Li.MenuBtn
+                onClick={newProductDelete}
+                disabled={disabledCheck}
+                style={{ backgroundColor: disabledCheck ? '' : '#fce205' }}
+            >
+                Delete
+            </Li.MenuBtn>
             <Li.Title>새 상품 목록</Li.Title>
             <Li.Label>
                 페이지 당 표시할 상품 개수:&nbsp;
@@ -225,7 +192,6 @@ const NewList = () => {
                             ></Li.Input> */}
                         </Li.Th>
                         <Li.Th>seq</Li.Th>
-                        <Li.Th>id</Li.Th>
                         <Li.Th>이미지 </Li.Th>
                         <Li.Th>brand</Li.Th>
                         <Li.Th>category</Li.Th>
@@ -239,42 +205,18 @@ const NewList = () => {
                         <Li.Th>subTitle</Li.Th>
                     </Li.Tr>
                 </Li.Thead>
-                <Li.Tbody>
-                    {/* map 오류 뜰때 && 연산자 씀으로 list가 있을때만 돌릴수 있다 */}
-                    {copy_newProductList
-                        .slice(offset, offset + limit)
-                        .map(item => (
-                            <Li.Tr key={item.seq}>
-                                <Li.Td style={{ width: '200px' }}>
-                                    <Li.Input
-                                        type="checkbox"
-                                        // checked={item.isChecked}
-                                        id={item.seq}
-                                        onChange={e => checkHandler(e)}
-                                    ></Li.Input>
-                                </Li.Td>
-                                <Li.Td>{item.seq}</Li.Td>
-                                <Li.Td>{item.id}</Li.Td>
-                                {/* <Li.Td>{item.imgName}</Li.Td> */}
-                                {/* 이게 이미지 주소 */}
-                                <Li.Td>
-                                    <Li.SmallImg
-                                        src={`/newProductList/${item.imgName}`}
-                                    ></Li.SmallImg>
-                                </Li.Td>
-                                <Li.Td>{item.brand}</Li.Td>
-                                <Li.Td>{item.category}</Li.Td>
-                                <Li.Td>{item.categoryDetail}</Li.Td>
-                                <Li.Td>{item.color}</Li.Td>
-                                <Li.Td>{item.modelNum}</Li.Td>
-                                <Li.Td>{item.price}</Li.Td>
-                                <Li.Td>{item.releaseDate}</Li.Td>
-                                <Li.Td>{item.registerProductDate}</Li.Td>
-                                <Li.Td>{item.title}</Li.Td>
-                                <Li.Td>{item.subTitle}</Li.Td>
-                            </Li.Tr>
-                        ))}
-                </Li.Tbody>
+                <NewProductList
+                    newProductList={newProductList}
+                    copy_newProductList={copy_newProductList}
+                    offset={offset}
+                    limit={limit}
+                    checked={checked}
+                    setChecked={setChecked}
+                    checkedId={checkedId}
+                    setCheckedId={setCheckedId}
+                    disabledCheck={disabledCheck}
+                    setDisabledCheck={setDisabledCheck}
+                ></NewProductList>
             </Li.Table>
 
             <Li.Footer>
