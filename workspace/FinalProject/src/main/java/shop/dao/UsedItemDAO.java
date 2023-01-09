@@ -25,12 +25,12 @@ public interface UsedItemDAO extends JpaRepository<UsedItemDTO, Integer>{
 	@Query("update UsedItemDTO usedItemDTO set usedItemDTO.likes = usedItemDTO.likes - 1 where usedItemDTO.seq = :seq")
 	public void likeDown(int seq);
 	
-	
-	@Modifying
-	@Transactional
-	@Query(value="delete from used_item where seq = ?1", nativeQuery=true)
-	public void deleteItem(@Param("seq") int seq);
-	//https://stackoverflow.com/questions/62778719/spring-data-jpa-delete-query
-	
+//	
+//	@Modifying
+//	@Transactional
+//	@Query(value="delete from used_item where seq = ?1", nativeQuery=true)
+//	public void deleteItem(@Param("seq") int seq);
+//	//https://stackoverflow.com/questions/62778719/spring-data-jpa-delete-query
+//	
 	
 }
