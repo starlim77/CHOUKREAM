@@ -949,6 +949,7 @@ export const FloatingBtnOutLineGrey = styled.div`
     justify-content: center;
     border: 1px solid #ebebeb;
     color: #333;
+    cursor: pointer;
 `;
 
 export const WishCountNum = styled.span`

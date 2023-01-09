@@ -6,6 +6,7 @@ import java.util.Optional;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
+import shop.bean.NewNewProductDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
@@ -40,6 +41,8 @@ public interface ShopDetailService {
 	public List<BidsListDTO> getBuyBidsListBySize(int seq, String size);
 
 	public List<BrandListDTO> getBrandList(int seq, String brand);
+
+	public Optional<NewNewProductDTO> getNewProduct(int seq);
 
 //	public Optional<Integer> getProductSizeMin(int seq, String size);
 }

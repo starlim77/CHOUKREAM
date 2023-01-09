@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
+import shop.bean.NewNewProductDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
 import shop.bean.SizeMinDTO;
 import shop.dao.CompletedOrderRepository;
+import shop.dao.NewNewProductRepository;
 import shop.dao.OrderRepository;
 import shop.dao.ProductSizeRepository;
 import shop.dao.ShopDAO;
@@ -28,6 +30,8 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	private CompletedOrderRepository completedOrderRepository;
 	@Autowired
 	private ProductSizeRepository productSizeRepository; 
+	@Autowired
+	private NewNewProductRepository newNewProductRepository;
 	
 	@Override
 	public Optional<ProductDTO> getProduct(int seq) {
@@ -98,5 +102,10 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	@Override
 	public List<BrandListDTO> getBrandList(int seq, String brand) {
 		return shopDAO.getBrandList(seq, brand);
+	}
+	
+	@Override
+	public Optional<NewNewProductDTO> getNewProduct(int seq) {
+		return newNewProductRepository.findById(seq);
 	}
 }

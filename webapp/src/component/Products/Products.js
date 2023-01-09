@@ -323,7 +323,7 @@ const Products = () => {
                                             <S.DetailPricePrice>
                                                 <S.DetailPriceAmount>
                                                     <S.DetailPriceNum>
-                                                        { completedOrderForm[0].price }
+                                                        { completedOrderForm[0].price.toLocaleString('ko-KR') }
                                                     </S.DetailPriceNum>
                                                     <S.DetailPriceWon>원</S.DetailPriceWon>
                                                 </S.DetailPriceAmount>
@@ -340,7 +340,7 @@ const Products = () => {
                                                 <S.DivisionBtnBoxPrice>
                                                     <S.DivisionBtnBoxAmount>
                                                         <S.DivisionBtnBoxNum>
-                                                            { sellBidsListForm[0].price }
+                                                            { sellBidsListForm[0].price.toLocaleString('ko-KR') }
                                                         </S.DivisionBtnBoxNum>
                                                         <S.DivisionBtnBoxWon>원</S.DivisionBtnBoxWon>
                                                     </S.DivisionBtnBoxAmount>
@@ -352,7 +352,7 @@ const Products = () => {
                                                 <S.DivisionBtnBoxPrice>
                                                     <S.DivisionBtnBoxAmount>
                                                         <S.DivisionBtnBoxNum>   
-                                                            { buyBidsListForm[0].price }
+                                                            { buyBidsListForm[0].price.toLocaleString('ko-KR') }
                                                         </S.DivisionBtnBoxNum>
                                                         <S.DivisionBtnBoxWon>원</S.DivisionBtnBoxWon>
                                                     </S.DivisionBtnBoxAmount>
@@ -694,7 +694,7 @@ const Products = () => {
                                         </S.FloatingPriceProductArea>
                                         <S.FloatingProductBtnArea>
                                             <S.FloatingBtnOutLineGrey onClick={onInterest}>
-                                            <S.LargeBtnWishBtnImg src={likeForm.userLike?'/image/used/blackBookmark.png':'../image/used/bookmark.svg'}/>
+                                                <S.LargeBtnWishBtnImg src={likeForm.userLike?'/image/used/blackBookmark.png':'../image/used/bookmark.svg'}/>
                                                 <S.WishCountNum>3.1만</S.WishCountNum>
                                             </S.FloatingBtnOutLineGrey>
                                             <S.FloatingPriceDivisionBtnBox>

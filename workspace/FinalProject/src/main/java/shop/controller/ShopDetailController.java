@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
+import shop.bean.NewNewProductDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
@@ -72,6 +73,12 @@ public class ShopDetailController {
 	@GetMapping(path="getBrandList")
 	public List<BrandListDTO> getBrandList(@RequestParam int seq,@RequestParam String brand) {
 		return shopDetailService.getBrandList(seq, brand);  
+	}
+	
+	@GetMapping(path="getNewProduct")
+	public Optional<NewNewProductDTO> getNewProduct(@RequestParam int seq) {
+		System.out.println(shopDetailService.getNewProduct(seq));
+		return shopDetailService.getNewProduct(seq);  
 	}
 	
 	
