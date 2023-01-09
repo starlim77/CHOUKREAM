@@ -37,6 +37,11 @@ public class ShopServiceImpl implements ShopService {
 		return shopDAO.findProductDTOsByCategory(shoes);
 	}
 
+	@Override
+	public void delete(int seq) {
+		shopDAO.deleteBySeq(seq);
+	}
+
 	
 }
 

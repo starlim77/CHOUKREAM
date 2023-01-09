@@ -7,12 +7,13 @@ import shop.bean.ProductDTO;
 
 public interface ShopService {
 
-	List<ProductDTO> getProductList();
+	public List<ProductDTO> getProductList();
 
-	List<ProductDTO> sortGetProductList();
+	public List<ProductDTO> sortGetProductList();
 
-	Optional<ProductDTO> getProductBySeq(int seq);
+	public Optional<ProductDTO> getProductBySeq(int seq);
 	
-	List<ProductDTO> getShoesList(String shoes);
+	public List<ProductDTO> getShoesList(String shoes);
 
+	public void delete(int seq);
 }

@@ -10,6 +10,7 @@ import org.aspectj.weaver.patterns.IScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.Delegate;
 import shop.bean.NewProductDTO;
 import shop.bean.ProductDTO;
 import shop.bean.UsedItemDTO;
@@ -50,7 +52,6 @@ public class ShopController {
 	
 	@PostMapping("getProductBySeq")
 	public Optional<ProductDTO> getProductBySeq(@RequestParam int seq) {
-		
 		return shopService.getProductBySeq(seq);
 	}
 	
@@ -65,6 +66,11 @@ public class ShopController {
 		return newProductService.getNewProductList();
 	}
 	
+	@DeleteMapping(value="delete")
+	//@ResponseBody // void로 잡혀있어서 // 디스패쳐로 가지마라 
+	public void delete(@RequestParam int seq) { 
+		shopService.delete(seq);
+	}
 	
 	
 	@PostMapping(path="newProductUpload", produces="text/html;charset-UTF-8")

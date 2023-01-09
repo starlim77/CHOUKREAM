@@ -91,8 +91,8 @@ const NewWrite = () => {
                 .catch(error => console.log(error));
         }
         navigate('/admin/newList');
+        window.location.reload();
     };
-
     // ---------------
     const [subImg, setSubImg] = useState([]);
 

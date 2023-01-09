@@ -3,11 +3,15 @@ package shop.dao;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.annotations.Parent;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import jakarta.transaction.Transactional;
+import lombok.experimental.PackagePrivate;
 import shop.bean.BrandListDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
@@ -16,7 +20,14 @@ import shop.bean.ProductDTO;
 public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 
 	List<ProductDTO> findProductDTOsByCategory(String shoes);
-
+	
+	@Transactional
+	@Modifying
+	@Query("delete from NewProductDTO newproductDTO where newproductDTO.seq = :seq ")
+	// @Query(value="delete from NewProductDTO newproductDTO where newproductDTO.seq = :seq", nativeQuery = true)
+	// query문 그대로 적으면된다
+	public void deleteBySeq(@Param("seq") int seq);
+	
 	
 //	@Query("select productDTO from ProductDTO productDTO where productDTO.category = :shoes")
 //	List<ProductDTO> getShoesList(@Param("shoes") String shoes);
