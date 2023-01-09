@@ -12,7 +12,9 @@ import lookbook.entity.StyleEntity;
 @Repository
 public interface StyleDAO extends JpaRepository<StyleEntity, String> {
 	
-	Optional<StyleEntity> findBySeq(int seq);
+	Optional<StyleEntity> findBySeq(int seq);	
+	
+	public List<StyleEntity> findAllByOrderBySeqDesc();
 	
 	Optional<StyleEntity> findById(String id);
 	

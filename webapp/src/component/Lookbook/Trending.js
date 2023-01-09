@@ -10,6 +10,8 @@ import MessageOutlinedIcon from '@mui/icons-material/MessageOutlined';
 import * as S from './style';
 import { grey } from '@mui/material/colors';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { MasonryInfiniteGrid } from "@egjs/react-infinitegrid";
 
 
 const Trending = () => {  
@@ -19,8 +21,8 @@ const Trending = () => {
         content: '',
         logtime: '',
         styleFile: '',
-        originalFileName:'',
-        storedFileName:''
+        originalFileName:[],
+        storedFileName:[]
     }])
     
 
@@ -31,26 +33,65 @@ const Trending = () => {
             .catch(error => console.log(error));
     }, []);
 
+    //네이버
+    // function getItems(nextGroupKey, count) {
+    //     const nextItems = [];
+      
+    //     for (let i = 0; i < count; ++i) {
+    //       const num = nextGroupKey * count + i;
+    //       nextItems.push(`<div class="item">
+    //     <div class="thumbnail">
+    //         <img src="https://naver.github.io/egjs-infinitegrid/assets/image/${(num % 33) + 1}.jpg" alt="egjs" />
+    //     </div>
+    //     <div class="info">egjs ${num}</div>
+    //   </div>`);
+    //     }
+    //     return nextItems;
+    //   }
+    //   const ig = new MasonryInfiniteGrid(".container", {
+    //     gap: 5,
+    //   });
 
     return (
         
-        <>
-            <Header />
+        <> 
+               
             <Social />
-            
             <div>태그</div>
-
-            <Container fixed>            
-            <S.TrGridContainer>
+    
+            {/* <MasonryInfiniteGrid
+                className='products'
+               
+                gap={25}
+                threshold={1000}
+                onRequestAppend={(e) => {
+                    const nextGroupKey = (+e.groupKey! || 0) + 1;
+              
+                    setItems([
+                      ...items,
+                      ...getItems(nextGroupKey, 10),    
+                    ]);
+                  }}
+                > */}
+   
+    
+            <Container fixed> 
+                 
+            <S.TrGridContainer>   
+            
                 { list.map(item =>{ return(
-                    <S.TrGridBox key={item.seq}> 
-                       
-
-                    <div className='item'>피드                         
-                        <Grid item xs="auto">
+                    <S.TrGridBox key={item.seq}>                     
+                        
                             <Card sx={{ width: 250 }}>
-                                <a>                                                       
-                                <S.TrGridBoxImg src={'../storage/'+item.storedFileName[0]}></S.TrGridBoxImg>                              
+                                <Link to = {'/lookbook/detail'+ item.seq}>                                                                                
+                                <S.TrGridBoxImg src={'../storage/'+item.storedFileName[0]}></S.TrGridBoxImg>    
+                                 
+                                {
+                                item.storedFileName.map((index,item) => {
+                                    return(<img src={'../storage/'+item}/>)
+                                })
+                                }                        
+                                
                                 <CardHeader 
                                     avatar={
                                         <Avatar sx={{ bgcolor: grey }} >
@@ -59,13 +100,19 @@ const Trending = () => {
                                     }
                                     title= {item.id}                                
                                 />
-                                </a>  
+                               
+                                </Link>
                                 <CardContent>       
-                                    <Typography variant="body2" color="text.secondary">
-                                    {item.content}                        
+                                    <Typography variant="body2" color="text.secondary" >
+                                    <S.TrTypoDiv>
+                                    {item.content}
+                                    <br/>
+                                    seq={item.seq}
+                                    </S.TrTypoDiv>                      
                                     </Typography>     
                                                 
-                                </CardContent>
+                                </CardContent> 
+                                
                                 <CardActions disableSpacing>
                                     <Typography variant="body2" color="text.secondary">
                                         <IconButton aria-label="add to favorites">
@@ -78,30 +125,21 @@ const Trending = () => {
                                         </IconButton>                        
                                         <span>15</span>                                                                
 
-                                                                    
-                                        {/* 
-                                        상품리스트
-                                            <ul>
-                                                <li>1</li>
-                                                <li>1</li>
-                                                <li>1</li>
-                                                <li>1</li>
-                                            </ul> 
-                                            */}
-                                        
+                                       
                                     </Typography>
                                 </CardActions>
                             </Card>
-                        </Grid>
-                    </div>
+                                         
                   
                     </S.TrGridBox> 
                     )
-                })
-            }                
-            </S.TrGridContainer>      
+                    })
+                }           
             
+            </S.TrGridContainer>      
+              
             </Container>
+            {/* </MasonryInfiniteGrid> */}
         </>
         
     );

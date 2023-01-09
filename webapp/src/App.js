@@ -17,6 +17,7 @@ import Products from './component/Products/Products';
 import PayForm from './component/payment/PayForm';
 import Trending from './component/Lookbook/Trending';
 import Detail from './component/Lookbook/Detail';
+import StyleComment from './component/Lookbook/styleComment';
 import Mystyle from './component/Lookbook/Mystyle';
 import Social from './component/Lookbook/Social';
 import SearchForm from './component/Search/SearchForm';
@@ -62,20 +63,19 @@ function App() {
                         path="/login/find_password"
                         element={<FindPassword />}
                     />
-                    <Route path="/join" element={<WriteForm />} />
+                    <Route path="/join" element={<WriteForm />} />    
+                    <Route path="/Search/SearchForm" element={<SearchForm />} />
 
+                    <Route path="/lookbook/trending" element={<Trending />} /> 
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
                     <Route path="/lookbook/detail" element={<Detail />} />
+                    <Route path="/lookbook/styleComment/:seq" element={<StyleComment />} />
+                    <Route path="/Search/SearchForm" element={<SearchForm />} />
                     <Route path="/lookbook/mystyledetail/:seq/:id" element={<MystyleDetail />} />
                     <Route path="/lookbook/mystyleUpdate/:seq/:id" element={<MystyleUpdate />} />
-                </Route>
-                <Route path="/lookbook" element={<Trending />}>
-                    <Route path="/lookbook/trending" element="" />
-                    {/* <Route path='/detail' element='' /> */}
-                </Route>
-
-                <Route path="/Search/SearchForm" element={<SearchForm />} />
+                
+                </Route> 
 
                 <Route path="/cs/csnotice" element={<CsNotice />} />
                 <Route path="/cs/CsFaq" element={<CsFaq />} />

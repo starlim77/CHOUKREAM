@@ -133,6 +133,16 @@ public class StyleServiceImpl implements StyleService {
 		
 	}
 
+	@Transactional
+	public List<StyleDTO> findAllByOrderBySeqDesc(){
+		List<StyleEntity> styleEntityList = styleDAO.findAllByOrderBySeqDesc();
+		List<StyleDTO> styleDTOList = new ArrayList<>();
+		for (StyleEntity styleEntity: styleEntityList) {
+			styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
+		}
+		return styleDTOList; 
+		
+	}
 
 	
 	  @Transactional
