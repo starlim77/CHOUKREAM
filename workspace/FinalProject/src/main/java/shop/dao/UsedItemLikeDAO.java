@@ -22,7 +22,8 @@ public interface UsedItemLikeDAO extends JpaRepository<UsedItemLikeDTO, Integer>
 	@Transactional
 	public void deleteBySeqAndIdAndShopKind(int seq, String id,String shopKind);
 
-	
+	@Query("select count(*) as count from UsedItemLikeDTO usedItemLikeDTO where usedItemLikeDTO.seq = :seq And usedItemLikeDTO.shopKind = :shopKind")
+	public Long likeCount(int seq, String shopKind);
 	
 	
 	

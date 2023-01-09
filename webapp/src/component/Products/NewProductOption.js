@@ -20,7 +20,7 @@ const newProductOption = ({ setModalOpen, option, newProductOption, getOption })
                             {console.log(newProductOption)}
                             {
                                 newProductOption.map((item, index) => (
-                                <S.SelectItem style={{border: option === item.productOption && "1px solid black"}} key={index}>
+                                <S.SelectItem style={{border: option === item.productOption && "1px solid black", pointerEvents: item.inventory === 0 && 'none'}} key={index}>
                                     <S.SelectLinkBuy onClick={e => getOption(item.productOption)}>
                                         <S.LinkInner>
                                             <S.Size style={{fontWeight: option === item.productOption && "700"}}>{item.productOption}</S.Size>

@@ -17,6 +17,7 @@ import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
 import shop.bean.SizeMinDTO;
+import shop.bean.UsedItemLikeDTO;
 import shop.service.ShopDetailService;
 
 @CrossOrigin
@@ -81,6 +82,10 @@ public class ShopDetailController {
 		return shopDetailService.getNewProduct(seq);  
 	}
 	
+	@GetMapping(path="likeCount")
+	public Long likeCount(@RequestParam int seq, @RequestParam String shopKind) {
+		return shopDetailService.likeCount(seq, shopKind);  
+	}
 	
 	
 //	@GetMapping(path="getProductSizeMin")

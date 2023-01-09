@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from "react-router-dom";
 import GlobalStyle from './GlobalStyle';
 import ScrollToTop from './ScrollToTop';
@@ -8,11 +8,15 @@ import NewProductOption from "./NewProductOption";
 
 const NewProducts = () => {
 
+    const [count, setCount] = useState('');
+
     const [option ,setOption] = useState("옵션 선택");
 
     const [modalOpen, setModalOpen] = useState(false);
 
     const date = new Date();
+
+    const id = 'gong@naver.com'
 
     const {seq} = useParams();
 
@@ -21,6 +25,7 @@ const NewProducts = () => {
     const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장 
 
     const [ScrollActive2, setScrollActive2] = useState(true); 
+
     const handleScroll2 = () => { 
         if(ScrollY < 400) {
             setScrollY(window.pageYOffset);
@@ -46,46 +51,59 @@ const NewProducts = () => {
         registerNo:''
     })
 
-    // useEffect(() => {
-    //     axios.get('http://localhost:8080/used/itemLike?seq=' + seq + '&id=' + id + '&shopKind=' + shopKind)
-    //          .then(res => res.data ? setLikeForm(res.data) : '')
-    //          .catch(error => console.log(error))
-    // }, [])
-
-    // const onInterest = () => {
-    //     // likeForm.userLike || setLikeForm({...likeForm, userLike:'false'})
-        
-    //     setLikeForm({...likeForm, userLike:!likeForm.userLike})
-    //     if(likeForm.userLike){
-    //         setForm({...form,likes:form.likes-1})
-    //     }else{
-    //         setForm({...form,likes:form.likes+1})
-    //     }
-    //     // console.log(likeForm)
-    
-    //     // // 데이터가 없어서 강제 주입
-    //     // setLikeForm({...likeForm , seq:searchParams.get('seq'),id:'asd'})
-
-    //     axios.post(`http://localhost:8080/used/likeSet?seq=`+seq + '&id=' + id + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
-    //     // axios.post('http://localhost:8080/used/likeSet',null,{params:likeForm})
-    //     // axios.get('http://localhost:8080/used/likeSet'+   likeForm) 나중에 다시 해보기
-    //     .then()
-    //     .catch()
-        
-    // }
-
-    const [form, setForm] = useState([{}])
-
     useEffect(() => {
         axios.get(`http://localhost:8080/getNewProduct?seq=${seq}`)
              .then(res => res.data.length !== 0 && setForm(res.data))
              .catch(error => console.log(error))
+
+        axios.get('http://localhost:8080/used/itemLike?seq=' + seq + '&id=' + id + '&shopKind=' + shopKind)
+             .then(res => res.data ? setLikeForm(res.data) : '')
+             .catch(error => console.log(error))
+
+        axios.get('http://localhost:8080/likeCount?seq=' + seq + '&shopKind=' + shopKind)
+             .then(res => setCount(res.data))
+             .catch(err => console.log(err))
     }, [])
+    
+
+    const onInterest = () => {   
+        setLikeForm({...likeForm, userLike:!likeForm.userLike})
+
+        axios.post(`http://localhost:8080/used/productLikeSet?seq=`+ seq + '&id=' + id + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
+        .then()
+        .catch(error => console.log(error))
+
+        {likeForm.userLike === false ? setCount(count+1) : setCount(count-1)}
+    }
+
+    const [form, setForm] = useState([{}])
 
     const getOption = (productOption) => {
         setOption(productOption);
         setModalOpen(false)
     }
+
+  
+    const element = useRef(null);
+    const onMoveToElement = () => {
+        element.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    const element2 = useRef(null);
+    const onMoveToElement2 = () => {
+        element2.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    const element3 = useRef(null);
+    const onMoveToElement3 = () => {
+        element3.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    const element4 = useRef(null);
+    const onMoveToElement4 = () => {
+        element4.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
 
 
 
@@ -156,7 +174,7 @@ const NewProducts = () => {
                                             <S.DetailPricePrice>
                                                 <S.DetailPriceAmount>
                                                     <S.DetailPriceNum>
-                                                        {form.price}
+                                                        {Number(form.price).toLocaleString('ko-KR')}
                                                     </S.DetailPriceNum>
                                                     <S.DetailPriceWon>원</S.DetailPriceWon>
                                                 </S.DetailPriceAmount>
@@ -172,10 +190,10 @@ const NewProducts = () => {
                                                 구매하기
                                             </S.NewProductBuyBtn>
                                         </S.DivisionBtnBox>
-                                        <S.LargeBtnWish area-label="관심상품">
-                                            <S.LargeBtnWishBtnImg src={likeForm.userLike?'/image/used/blackBookmark.png':'../image/used/bookmark.svg'}/>
+                                        <S.LargeBtnWish area-label="관심상품" onClick={onInterest}>
+                                            <S.LargeBtnWishBtnImg src={likeForm.userLike ? '/image/used/blackBookmark.png' : '../image/used/bookmark.svg'}/>
                                             <S.LargeBtnWishBtnText>관심상품</S.LargeBtnWishBtnText>
-                                            <S.LargeBtnWishCountNum>100</S.LargeBtnWishCountNum>
+                                            <S.LargeBtnWishCountNum>{count}</S.LargeBtnWishCountNum>
                                         </S.LargeBtnWish>
                                     </div>
                                 </div>        
@@ -206,7 +224,7 @@ const NewProducts = () => {
                                         <S.FloatingPriceProductArea>
                                             <S.FloatingPriceProductThumb>
                                                 <S.PictureProductImg>
-                                                    <S.Image width="65px" height="65px"></S.Image>
+                                                    <S.Image src={form.imgName} width="65px" height="65px"></S.Image>
                                                 </S.PictureProductImg>
                                             </S.FloatingPriceProductThumb>
                                             <S.FloatingProductInfo>
@@ -215,9 +233,9 @@ const NewProducts = () => {
                                             </S.FloatingProductInfo>
                                         </S.FloatingPriceProductArea>
                                         <S.FloatingProductBtnArea>
-                                            <S.FloatingBtnOutLineGrey>
+                                            <S.FloatingBtnOutLineGrey onClick={onInterest}>
                                                 <S.LargeBtnWishBtnImg src={likeForm.userLike?'/image/used/blackBookmark.png':'../image/used/bookmark.svg'}/>
-                                                <S.WishCountNum>3.1만</S.WishCountNum>
+                                                <S.WishCountNum>{count}</S.WishCountNum>
                                             </S.FloatingBtnOutLineGrey>
                                             <S.FloatingPriceDivisionBtnBox>
                                                 <S.FloatingPriceDivisionBuy>
@@ -233,13 +251,14 @@ const NewProducts = () => {
                     <S.ProductDetailItemContent>
                         <S.ProductDetailTabWrap>
                             <S.ProductDetailTab>
-                                <S.TabActive>상품 상세정보</S.TabActive>
-                                <S.Tab>교환 및 반품 안내</S.Tab>
-                                <S.Tab>스타일 리뷰</S.Tab>
-                                <S.Tab>추천 상품</S.Tab>
+                                <S.TabActive onClick={onMoveToElement}>상품 상세정보</S.TabActive>
+                                <S.Tab onClick={onMoveToElement2}>교환 및 반품 안내</S.Tab>
+                                <S.Tab onClick={onMoveToElement3}>스타일 리뷰</S.Tab>
+                                <S.Tab onClick={onMoveToElement4}>추천 상품</S.Tab>
                             </S.ProductDetailTab>
                         </S.ProductDetailTabWrap>
-                        <div className='product_detail_item_wrap'>
+                        <div ref={element} style={{paddingTop: "160px"}} />
+                        <div className='product_detail_item_wrap' >
                             <div>
                                 <S.DetailTitleHeaderImages>
                                     <S.DetailHeaderImgWrap>
@@ -264,6 +283,7 @@ const NewProducts = () => {
                                 </S.DetailTitleHeaderImages>
                             </div>
                         </div>
+                        <div ref={element2} style={{paddingTop: "160px"}} />
                         <div className='product_detail_item_wrap'>
                             <div>
                                 <S.DetailTitlePreviewWrap>
@@ -482,6 +502,7 @@ const NewProducts = () => {
                     </S.ProductDetailItemContent>
                 </S.Content>
                 <div>
+                    <div ref={element3} style={{paddingTop: "160px"}} />
                     <S.FeedArea>
                         <S.FeedTitle>
                             <S.FeedTitleTitle>스타일</S.FeedTitleTitle>
@@ -496,6 +517,7 @@ const NewProducts = () => {
                             </S.MoreBtnBox>
                         </S.SocialFeeds>
                     </S.FeedArea>
+                    <div ref={element4} style={{paddingTop: "160px"}} />
                     <S.BrandArea>
                         <S.BrandTitle>
                             <S.BrandTitleBrand>브랜드</S.BrandTitleBrand>

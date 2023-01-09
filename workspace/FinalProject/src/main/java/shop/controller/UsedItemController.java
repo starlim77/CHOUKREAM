@@ -70,6 +70,18 @@ public class UsedItemController {
 		
 	}// 차후 수정
 	
+	@PostMapping(path="productLikeSet")
+	public void productLikeSet(@ModelAttribute UsedItemLikeDTO usedItemLikeDTO){
+		System.out.println(usedItemLikeDTO);
+		
+		if(usedItemLikeDTO.getUserLike() == null)usedItemLikeDTO.setUserLike(false);
+		
+		System.out.println("들어온 userLike"+usedItemLikeDTO.getUserLike());
+		usedItemLikeDTO.setUserLike(!usedItemLikeDTO.getUserLike());
+		System.out.println("바꾼 userLike"+usedItemLikeDTO.getUserLike());
+		usedItemService.likeSet(usedItemLikeDTO);
+	}// 차후 수정
+	
 //	@PostMapping(path="writeItem")
 //	public void writeItem(@ModelAttribute UsedItemDTO usedItemDTO) {
 //		System.out.println("찍어라"+usedItemDTO);

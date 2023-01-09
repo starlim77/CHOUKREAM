@@ -14,9 +14,11 @@ import Graph from './Graph';
 
 const Products = () => {
 
+    const [count, setCount] = useState('');
+
     const date = new Date();
 
-    const id = "asd";
+    const id = "kim@gmail.com";
 
     const shopKind = 'resell'
 
@@ -130,6 +132,9 @@ const Products = () => {
              .then(res => res.data ? setLikeForm(res.data) : '')
              .catch(error => console.log(error))
 
+        axios.get('http://localhost:8080/likeCount?seq=' + seq + '&shopKind=' + shopKind)
+             .then(res => setCount(res.data))
+             .catch(err => console.log(err))
     }, []);
 
     useEffect(() => {
@@ -225,25 +230,13 @@ const Products = () => {
     }
 
     const onInterest = () => {
-        // likeForm.userLike || setLikeForm({...likeForm, userLike:'false'})
-        
         setLikeForm({...likeForm, userLike:!likeForm.userLike})
-        if(likeForm.userLike){
-            setForm({...form,likes:form.likes-1})
-        }else{
-            setForm({...form,likes:form.likes+1})
-        }
-        // console.log(likeForm)
-    
-        // // 데이터가 없어서 강제 주입
-        // setLikeForm({...likeForm , seq:searchParams.get('seq'),id:'asd'})
 
-        axios.post(`http://localhost:8080/used/likeSet?seq=`+seq + '&id=' + id + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
-        // axios.post('http://localhost:8080/used/likeSet',null,{params:likeForm})
-        // axios.get('http://localhost:8080/used/likeSet'+   likeForm) 나중에 다시 해보기
+        axios.post(`http://localhost:8080/used/productLikeSet?seq=`+ seq + '&id=' + id + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
         .then()
-        .catch()
-        
+        .catch(error => console.log(error))
+
+        {likeForm.userLike === false ? setCount(count+1) : setCount(count-1)}  
     }
 
 
@@ -364,7 +357,7 @@ const Products = () => {
                                             {/* <U.InterestInput src={likeForm.userLike?'/image/used/blackBookmark.png':'../image/used/bookmark.svg'}/> */}
                                             <S.LargeBtnWishBtnImg src={likeForm.userLike?'/image/used/blackBookmark.png':'../image/used/bookmark.svg'}/>
                                             <S.LargeBtnWishBtnText>관심상품</S.LargeBtnWishBtnText>
-                                            <S.LargeBtnWishCountNum>100</S.LargeBtnWishCountNum>
+                                            <S.LargeBtnWishCountNum>{count}</S.LargeBtnWishCountNum>
                                         </S.LargeBtnWish>
                                     </div>
                                 </div>
@@ -695,7 +688,7 @@ const Products = () => {
                                         <S.FloatingProductBtnArea>
                                             <S.FloatingBtnOutLineGrey onClick={onInterest}>
                                                 <S.LargeBtnWishBtnImg src={likeForm.userLike?'/image/used/blackBookmark.png':'../image/used/bookmark.svg'}/>
-                                                <S.WishCountNum>3.1만</S.WishCountNum>
+                                                <S.WishCountNum>{count}</S.WishCountNum>
                                             </S.FloatingBtnOutLineGrey>
                                             <S.FloatingPriceDivisionBtnBox>
                                                 <S.FloatingPriceDivisionBuy onClick={ buyNavigate }>
