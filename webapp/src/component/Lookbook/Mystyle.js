@@ -14,6 +14,7 @@ const Mystyle = () => {
     const [showImgSrc,setShowImgSrc] = useState([]);
     const [styleBoardWriteOpen, setStyleBoardWriteOpen] = useState(false);
     
+    
     //등록한 게시물 확인
     const [myList, setMyList] = useState([]);
     

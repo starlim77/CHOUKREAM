@@ -1,22 +1,23 @@
 import { Avatar, Button, Card, CardHeader, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import ClearIcon from '@mui/icons-material/Clear';
 import React, { useEffect, useRef, useState } from 'react';
 import * as S from './style';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const MystyleUpdate = () => {
     const { seq } = useParams();  //주소값 파라미터 seq 가져오기
     const imgRef = useRef();
+    const navigate = useNavigate()
     
-    const [file, setFile] = useState([])
-    const [showImgSrc,setShowImgSrc] = useState([]);
-    const [ list, setList] = useState();
-
+    //const [file, setFile] = useState([])
+    // const [showImgSrc,setShowImgSrc] = useState([]);
+    // const [ list, setList] = useState();
 
     const [form, setForm] = useState({
-        id: 'testid',
+        id: '',
         content: '',
+        seq :''
+
     })
     const {id, content} = form  
 
@@ -27,18 +28,47 @@ const MystyleUpdate = () => {
             [name] : value
         })
     }
-    
-    const readURL = () => {};
-    const onUpdate = () => {}; //수정하기
-    const onDelete = () => {}; //삭제하기
-
 
     
+    // const readURL = () => {};
+    
+    //수정하기
+    const onUpdate = (e) => {    
+       e.preventDefault();
+    
+       axios.put('http://localhost:8080/lookbook/update', null, {
+                params:{
+                    seq : seq, // seq 필수로 들어가야 함 .그래야 insert가 아닌 update가  (seq가 pk) 
+                    content : content,
+                    id : id   
+                }
+            })      
+             .then(
+                alert("글 수정완료"),
+                navigate('/lookbook/mystyle')
+            )
+             .catch(error => console.log(error))
+    };
+
+
+    //삭제하기
+    const onDelete = () => { 
+        axios.delete(`http://localhost:8080/lookbook/delete?seq=${seq}`)
+            .then(
+                alert("게시글 삭제완료")
+            )
+            .catch(error => console.log(error) )
+
+    }; 
+
+
+    //선택한 글 가지고오기
     useEffect( ()=> {
         axios.get(`http://localhost:8080/lookbook/findMyListDetail/${seq}`)
-             .then(res => setList(res.data))
+             .then(res => setForm(res.data) )
              .catch(error => console.log(error))
     }, []) 
+
 
     return (
         <div>
@@ -54,17 +84,29 @@ const MystyleUpdate = () => {
                                 value={id}
                                 name='id'
                                 onChange={onInput}
-                            />                       
+                            />   
 
+                            
+
+                        <input type="text" name="seq" value={seq} readOnly />
                             <S.Container>
                                 <S.showImgSrcDiv>  {/*  가로로정렬   */}
-                                    {/* {showImgSrc.map((item, index) => (
-                                        <div key={index}>
+                                        {/* <div>
                                             <S.showImgSrcImg src={item}  />
                                             <ClearIcon onClick={() => onImgRemove(index)}>삭제</ClearIcon>
                                                                                     
-                                        </div>
-                                    ))} */}
+                                        </div> */}
+
+                                        {
+                                          form.storedFileName?
+                                            form.storedFileName.map( (item, index) => (
+                                                    <p key={index}>
+                                                        <img src={'/storage/'+item} ref={imgRef} />
+                                                    </p>
+                                                ))
+                                            :
+                                            ''
+                                         }
 
                                 </S.showImgSrcDiv>
 
@@ -76,10 +118,11 @@ const MystyleUpdate = () => {
                             <textarea 
                                     type='text-area'
                                     name='content'
-                                    value={content}
-                                    placeholder='내용 입력'
-                                    // onChange={onInput}
+                                    //value={content}  변하는 값
+                                    defaultValue={content}
+                                    onChange={onInput}
                                     style={{width:494, height:80, resize:'none'}}  />
+
                        
 
                             <DialogActions>

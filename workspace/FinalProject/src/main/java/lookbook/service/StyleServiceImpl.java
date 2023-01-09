@@ -60,6 +60,23 @@ public class StyleServiceImpl implements StyleService {
         }
 	}
 	
+	//업데이트. 글만 업데이트 가능
+	@Override
+	public void save(StyleDTO styleDTO) {
+		//업데이트 할 때 파일이 있는 경우 수정이라서 toSaveFileEntity로 사용 
+		StyleEntity styleEntity = StyleEntity.toSaveFileEntity(styleDTO);
+    	styleDAO.save(styleEntity);
+		
+	}
+	
+	//글삭제
+	@Override
+	public void delete(int seq) {
+		System.out.println("서비스임플 seq ="+seq);
+		styleDAO.deleteBySeq(seq);
+		
+	}
+	
 	public void save(List<MultipartFile> list, StyleDTO styleDTO) {		
 			
 		styleDTO.setStyleFile(list);			
@@ -140,6 +157,7 @@ public class StyleServiceImpl implements StyleService {
 	            return null;
 	        }
 	    }
+
 
 
 	 

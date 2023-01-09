@@ -14,6 +14,10 @@ public interface StyleService {
 	//public List<StyleDTO> findAllMyList(); 
 	
 	public void save(List<MultipartFile> list,StyleDTO styleDTO);
+	
+	public void save(StyleDTO styleDTO);
+	
+	public void delete(int seq);
 
 	public List<StyleDTO> findAll();
 

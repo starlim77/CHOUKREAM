@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, {  useEffect,  useRef,  useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
-import { Avatar, Button, CardActions, CardContent, CardHeader, CardMedia, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from '@mui/material';
+import { Avatar, Button, CardActions, CardContent, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Container from '@mui/material/Container';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
@@ -10,7 +10,7 @@ import * as S from './style';
 import { FiMoreHorizontal } from "react-icons/fi";
 
 const MystyleDetail = () => {
-    const { seq , id } = useParams();  //주소값 파라미터 seq 가져오기
+    const { seq , id } = useParams();  //주소값 파라미터 seq id가져오기
     const updateRef = useRef();
     const [commentOpen, setCommentOpen] = useState(false)
 
@@ -19,11 +19,13 @@ const MystyleDetail = () => {
 
     useEffect( ()=> {
         axios.get(`http://localhost:8080/lookbook/findAllMyList/${id}`)
-             .then(res => setList(res.data))
+             .then(res => setList(res.data)
+                // res => console.log("디테일 확인 "+res.data)  
+             )
              .catch(error => console.log(error))
     }, []) 
 
-    const updateBtn = (e) =>{
+    const updateBtn = () =>{
         updateRef.current.click();        
     }
 
@@ -36,7 +38,7 @@ const MystyleDetail = () => {
                 {
                     list.map((item, index) => {
                         return (
-                             <S.DeDiv key={seq}>  
+                             <S.DeDiv key={index}>  
                                 <Card >
                                     <S.MyDeheadercontainer>
                                         
@@ -47,19 +49,21 @@ const MystyleDetail = () => {
                                                 subheader={item.logtime}
                                             /> 
                                         </S.MyDeprofile>
-                                     
+                                        
+                                        {/* <input type="text" name="seq" value={item.seq} readOnly /> */}
 
                                         <S.MyDeIcon>   {/* ...아이콘 */}
-                                            <FiMoreHorizontal       
+                                            {/* <FiMoreHorizontal       
                                                 size="42"
                                                 text-align="right"
                                                 onClick={updateBtn}
-                                            />  
-
+                                                Link to={`/lookbook/mystyleUpdate/${item.seq}/${id}`} 
+                                            />   */}
+                                            
+                                            <Link to={`/lookbook/mystyleUpdate/${item.seq}/${id}`} ref={updateRef} >
                                             <img src='/image/style/menu.png' width={24}></img>
-                                            <button >
-                                            <Link to={`/lookbook/mystyleUpdate/${seq}/${id}`}>수정</Link>
-                                            </button>
+                                            </Link>
+                                           
 
 
                                             
@@ -76,8 +80,10 @@ const MystyleDetail = () => {
                                     /> */}
 
                                     {
-                                        item.storedFileName.map( (item) => (
-                                            <img src={'/storage/'+item} />
+                                        item.storedFileName.map( (item, index) => (
+                                            <p key={index}>
+                                                <img src={'/storage/'+item} />
+                                            </p>
                                         ))
                                     }
 

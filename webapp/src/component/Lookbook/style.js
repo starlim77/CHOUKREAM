@@ -123,16 +123,16 @@ export const MyPhotoMini = styled.div`
 
 
 export const showImgSrcDiv = styled.div`
-    // width: 500px;
-    // height: 400px;   
+     /* width: 500px;
+     height: 400px;    */
     // Overflow: hidden;        
-    display: flex;   //사진 가로로 정렬
-    width: 100vw;
+    /* display: flex;   //사진 가로로 정렬 */
+    /* width: 100vw; */
 `
 export const Container = styled.div`
-    width: 500px;
-    height: 400px; 
-    overflow: hidden; // 선을 넘어간 이미지들은 보이지 않도록 처리합니다.
+    /* width: 500px;
+    height: 400px;  */
+    /* overflow: hidden; // 선을 넘어간 이미지들은 보이지 않도록 처리합니다. */
 `;
 
 export const showImgSrcImg = styled.img`
