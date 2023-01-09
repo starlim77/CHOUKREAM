@@ -69,8 +69,8 @@ public class UsedItemServiceImpl implements UsedItemService {
 
 	@Override
 	public void deleteItem(int seq) {
-		usedItemDAO.deleteItem(seq);
-		//usedItemDAO.deleteById(seq);
+//		usedItemDAO.deleteItem(seq);
+		usedItemDAO.deleteById(seq);
 	}
 
 
@@ -81,6 +81,12 @@ public class UsedItemServiceImpl implements UsedItemService {
 		}else {
 			usedItemDAO.likeDown(usedItemLikeDTO.getSeq());
 		}
+	}
+
+
+	@Override
+	public void updateItem(UsedItemDTO usedItemDTO) {
+		usedItemDAO.save(usedItemDTO);
 	}
 	
 

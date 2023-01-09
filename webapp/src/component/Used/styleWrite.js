@@ -47,6 +47,13 @@ export const SubImgBody = styled.div`
     display: flex;
     justify-content: space-between;
 `;
+
+// export const SubImgBody = styled.div`
+//     margin-top: 15px;
+//     display: flex;
+//     justify-content:${props=>props.spacing?"center":"space-between"} ;
+// `;
+
 export const SubImgP=styled.p`
     width: 175px;
     height: 175px;
@@ -73,21 +80,23 @@ export const SubImg = styled.img`
 export const DeleteMainImg = styled.img.attrs({
     src:'/image/used/deleteIcon.png' 
 })`
-    width:50px;
-    height:50px;
+    width:30px;
+    height:30px;
     display:${props=>props.setPosition?'':'none'};
     position:${props=>props.setPosition?'absolute':'none'};
     left:90%;
+    top:5%;
 `;
 
 export const DeleteImg = styled.img.attrs({
     src:'/image/used/deleteIcon.png' 
 })`
-    width:50px;
-    height:50px;
+    width:30px;
+    height:30px;
     display:${props=>props.setPosition?'':'none'};
     position:${props=>props.setPosition?'absolute':'none'};
-    left:70%;
+    left:80%;
+    top : 5%
 `;
 
 // ----------------------------------------------내용 부분

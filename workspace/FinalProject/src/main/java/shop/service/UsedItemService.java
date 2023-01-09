@@ -24,4 +24,6 @@ public interface UsedItemService {
 
 	public void usedlike(UsedItemLikeDTO usedItemLikeDTO);
 
+	public void updateItem(UsedItemDTO usedItemDTO);
+
 }

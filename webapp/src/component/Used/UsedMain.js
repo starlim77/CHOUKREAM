@@ -70,8 +70,9 @@ const UsedMain = () => {
 
             <S.UsedMain>
                 {
-                    
-                    data.map(item => <MainItem key={item.seq} data = {item} onItem={onItem} />)
+                    //데이터를 오래된 순으로 뽑아오기 때문에 역순으로 배열 출력
+                    //https://velog.io/@dregonc/map%EC%9D%84-%EC%97%AD%EC%88%9C%EC%9C%BC%EB%A1%9C
+                    data.slice(0).reverse().map(item => <MainItem key={item.seq} data = {item} onItem={onItem} />)
                 }
             </S.UsedMain>
             { writeBtn ? <S.WriteBtn src='../image/used/plus.svg' onClick={ onWrite }/> : '' }
