@@ -1,44 +1,50 @@
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
-import axios from 'axios';
-import { Button } from 'bootstrap';
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
+import React, { useState,useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import * as S from './style';
+import axios from 'axios';
+const StyleComment = () => {
 
-const styleComment = () => {
-
-const [commentOpen, setCommentOpen] = useState(false)
-
-
-//상세 글 하나 가져오기
+    const {styleSeq}= useParams()   
+    const navigate = useNavigate()
 
 
-const {styleSeq}= useParams()
-const onInput = (e) =>{
-    const { name, value } = e.target
-    setForm({
-        ...form,
-        [name] : value
+    //선택한 글 가지고오기
+    useEffect( ()=> {
+        axios.get(`http://localhost:8080/lookbook/findMyListDetail/${styleSeq}`)
+            .then(res => console.log(res.data.seq) )
+            .catch(error => console.log(error))
+    }, []) 
+
+    
+    const onInput = (e) =>{
+        const { name, value } = e.target
+        setForm({
+            ...form,
+            [name] : value
+        })
+    }
+
+    const [form, setForm] = useState({
+        commentMember: '댓글입력자', //댓글입력아이디
+        commentContents: '',
+        styleSeq: styleSeq//게시글 번호
     })
-}
 
-const [form, setForm] = useState({
-    commentMember: '댓글입력자', //댓글입력아이디
-    commentContents: '',
-    styleSeq: ''//게시글 번호
-})
-
-const {commentMember, commentContents} = form
+    const {commentMember, commentContents} = form
 
 
-    const onUpload = () => {    
+    const onUpload = (e) => {    
         //e.preventDefault()      
         console.log(form)
         axios
-            .post(`http://localhost:8080/lookbook/commentSave?styleSeq=${styleSeq}`,null , {params:form})
+            .post(`http://localhost:8080/lookbook/commentSave`,null , {
+                params:form
+                //styleSeq: styleSeq
+            })
             .then(                
                     alert("댓글등록 성공"),
-                    setCommentOpen(false),
+                    navigate('/lookbook/detail'),
                     console.log(form)
             )
             .catch( error => console.log(error) )
@@ -47,33 +53,32 @@ const {commentMember, commentContents} = form
 
 
     return (
-        <div>
-            
-            <Dialog open={true}> 
-                                        <S.DeComment>
-                                            <DialogTitle sx={{mt:5}}>댓글</DialogTitle>
-                                            <DialogContent>
-
-                                            
-                                                <DialogContentText>
-                                                    <TextField
-                                                        multiline 
-                                                        fullWidth
-                                                        name='commentContents'
-                                                        value={commentContents}
-                                                        onChange={onInput}
-                                                    />
-                                                <textarea onChange={onInput} name='styleSeq' value={item.seq}></textarea>
-                                                </DialogContentText>
-                                            </DialogContent>
-                                            <DialogActions>
-                                                <Button onClick = {onUpload}></Button>
-                                                <Button onClick={ ()=>{setCommentOpen(false)}}>취소</Button>
-                                            </DialogActions>
-                                        </S.DeComment>
-                                </Dialog>
+        <div>            
+            <Dialog open={true} > 
+                <S.DeComment>
+                    <DialogTitle sx={{mt:5}}>댓글</DialogTitle>
+                    <DialogContent >
+                    
+                        <DialogContentText >
+                            <TextField                                                          
+                                multiline
+                                fullWidth                       
+                                name='commentContents'
+                                value={commentContents}
+                                onChange={onInput}
+                            />
+                        
+                        </DialogContentText>
+                    </DialogContent>
+                     <DialogActions>                         
+                        <Button onClick={onUpload}>등록</Button>
+                        <Button ><Link to ={'/lookbook/detail'}>취소</Link></Button> 
+                    </DialogActions>  
+                    
+                </S.DeComment>
+        </Dialog>
         </div>
     );
 };
 
-export default styleComment;
+export default StyleComment;

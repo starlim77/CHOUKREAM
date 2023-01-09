@@ -40,8 +40,8 @@ export const TrTypoDiv = styled.div`
 
 //Detail.js 
 export const DeComment = styled.div`
-    width: 700px;
-    height: 700px;
+    width: 550px;
+    
 `;
 
 export const DeTopDiv = styled.div`

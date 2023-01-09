@@ -17,7 +17,7 @@ import Products from './component/Products/Products';
 import PayForm from './component/payment/PayForm';
 import Trending from './component/Lookbook/Trending';
 import Detail from './component/Lookbook/Detail';
-import StyleComment from './component/Lookbook/styleComment';
+import StyleComment from './component/Lookbook/StyleComment';
 import Mystyle from './component/Lookbook/Mystyle';
 import Social from './component/Lookbook/Social';
 import SearchForm from './component/Search/SearchForm';
@@ -70,7 +70,7 @@ function App() {
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
                     <Route path="/lookbook/detail" element={<Detail />} />
-                    <Route path="/lookbook/styleComment/:seq" element={<StyleComment />} />
+                    <Route path="/lookbook/styleComment/:styleSeq" element={<StyleComment />} />
                     <Route path="/Search/SearchForm" element={<SearchForm />} />
                     <Route path="/lookbook/mystyledetail/:seq/:id" element={<MystyleDetail />} />
                     <Route path="/lookbook/mystyleUpdate/:seq/:id" element={<MystyleUpdate />} />

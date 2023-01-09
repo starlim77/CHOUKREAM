@@ -102,7 +102,7 @@ public class styleController {
 	//상세에서 댓글 등록기능
 	@PostMapping(path="commentSave")
 	@ResponseBody
-	public void commentSave(@ModelAttribute StyleCommentDTO styleCommentDTO, @RequestParam int styleSeq ) {
+	public void commentSave(@ModelAttribute StyleCommentDTO styleCommentDTO ) {
 //		ResponseEntity
 		System.out.println(styleCommentDTO);
 		
@@ -118,18 +118,11 @@ public class styleController {
 //		}
 	}
 	//댓글 가져오기
-	@GetMapping(path="commentGet")	
-	public ResponseEntity commentGet(@ModelAttribute StyleCommentDTO styleCommentDTO) {
-		
-		Long saveResult = styleCommentService.save(styleCommentDTO);//댓글저장
-		if(saveResult != null) {
-			//작성 성공하면 댓글 목록을 가져와서 리턴
-			//댓글목록: 해당 게시글의 댓글 전체 (게시글 아이디 필요)			
-			List<StyleCommentDTO> styleCommentDTOList = styleCommentService.findAll(styleCommentDTO.getStyleSeq());
-			return new ResponseEntity<>(styleCommentDTOList, HttpStatus.OK);//내가 전달하려는 바디값(styleCommentDTOList)과 상태값(HttpStatus.OK)
-		} else {
-			return new ResponseEntity<>("해당 게시글이 존재하지 않습니다.", HttpStatus.NOT_FOUND);//내가 전달하려는 바디값("해당 게시글이 존재하지 않습니다.")
-		}
+	@GetMapping(path="getComment")	
+	public ResponseEntity getComment(@ModelAttribute StyleCommentDTO styleCommentDTO) {
+				
+		List<StyleCommentDTO> styleCommentDTOList = styleCommentService.findAll(styleCommentDTO.getStyleSeq());
+		return new ResponseEntity<>(styleCommentDTOList, HttpStatus.OK);//내가 전달하려는 바디값(styleCommentDTOList)과 상태값(HttpStatus.OK)
 		
 	}
 	

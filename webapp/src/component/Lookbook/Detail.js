@@ -8,11 +8,10 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Container from '@mui/material/Container';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import * as S from './style';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const Detail = () => {
-    const [commentOpen, setCommentOpen] = useState(false)
+    
    
     //게시물 뿌리기
     const [list, setList] = useState([]);
@@ -24,7 +23,13 @@ const Detail = () => {
              console.log("list",list) 
     }, []) 
     //댓글 뿌리기
+    const [comment, setComment] = useState([]);
 
+    useEffect(() => {
+        axios.get('http://localhost:8080/lookbook/getComment')
+             .then(res => setComment(res.data))
+             .catch(error => console.log(error))
+    },[])
     
 
     return (
@@ -57,9 +62,11 @@ const Detail = () => {
                                     <IconButton aria-label="add to favorites">
                                         <FavoriteIcon />
                                     </IconButton>
-                                    <IconButton onClick={()=>{setCommentOpen(true)}}>
-                                        <ChatBubbleOutlineIcon />
-                                        <Link to ='/lookbook/styleComment'></Link>
+                                    <IconButton >
+                                        
+                                        <Link to ={`/lookbook/StyleComment/${item.seq}`} >
+                                        <ChatBubbleOutlineIcon />    
+                                        </Link>
                                     </IconButton> 
                                                           
                                 </CardActions>
@@ -70,11 +77,22 @@ const Detail = () => {
                                 <CardContent>       
                                     <Typography variant="body2" color="text.secondary" >
                                     <S.TrTypoDiv>
-                                    <Chip
-                                        avatar={<Avatar alt="" src="" />}
-                                        label=  ''                             
-                                    /> 
-                                    댓글 불러올 곳
+                                     
+                                    {
+                                    comment.map((item, index )=> {
+                                        return(
+                                            <div>
+                                                {/* <Chip
+                                                    avatar={<Avatar alt="" src="" />}
+                                                    label=  ''                             
+                                                /> */}
+                                                댓글수
+                                                {item.commentContents}
+                                            </div>
+                                        )
+                                    })
+                                    }
+                                    
                                     </S.TrTypoDiv>                      
                                     </Typography>     
                                                 
