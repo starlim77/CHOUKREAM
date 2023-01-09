@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.StreamingHttpOutputMessage.Body;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,10 +64,27 @@ public class styleController {
 	}
 
 	//상세에서 댓글 등록기능
-	@PostMapping("/commentSave")
+	@PostMapping(path="commentSave")
 	@ResponseBody
-	public ResponseEntity commentSave(@ModelAttribute StyleCommentDTO styleCommentDTO) {
-		System.out.println("commentDTO"+ styleCommentDTO);
+	public void commentSave(@ModelAttribute StyleCommentDTO styleCommentDTO, @RequestParam int styleSeq ) {
+//		ResponseEntity
+		System.out.println(styleCommentDTO);
+		
+		styleCommentService.save(styleCommentDTO);//댓글저장
+//		Long saveResult = styleCommentService.save(styleCommentDTO);//댓글저장
+//		if(saveResult != null) {
+//			//작성 성공하면 댓글 목록을 가져와서 리턴
+//			//댓글목록: 해당 게시글의 댓글 전체 (게시글 아이디 필요)			
+//			List<StyleCommentDTO> styleCommentDTOList = styleCommentService.findAll(styleCommentDTO.getStyleSeq());
+//			return new ResponseEntity<>(styleCommentDTOList, HttpStatus.OK);//내가 전달하려는 바디값(styleCommentDTOList)과 상태값(HttpStatus.OK)
+//		} else {
+//			return new ResponseEntity<>("해당 게시글이 존재하지 않습니다.", HttpStatus.NOT_FOUND);//내가 전달하려는 바디값("해당 게시글이 존재하지 않습니다.")
+//		}
+	}
+	//댓글 가져오기
+	@GetMapping(path="commentGet")	
+	public ResponseEntity commentGet(@ModelAttribute StyleCommentDTO styleCommentDTO) {
+		
 		Long saveResult = styleCommentService.save(styleCommentDTO);//댓글저장
 		if(saveResult != null) {
 			//작성 성공하면 댓글 목록을 가져와서 리턴
@@ -77,6 +94,7 @@ public class styleController {
 		} else {
 			return new ResponseEntity<>("해당 게시글이 존재하지 않습니다.", HttpStatus.NOT_FOUND);//내가 전달하려는 바디값("해당 게시글이 존재하지 않습니다.")
 		}
+		
 	}
 	
 	

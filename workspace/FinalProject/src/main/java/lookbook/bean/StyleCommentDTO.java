@@ -27,9 +27,9 @@ public class StyleCommentDTO {
 		 styleCommentDTO.setCommentMember(styleCommentEntity.getCommentMember());
 		 styleCommentDTO.setCommentContents(styleCommentEntity.getCommentContents());
 		 styleCommentDTO.setCommentCreatedTime(styleCommentEntity.getCreatedTime());		
-		 //styleCommentDTO.setStyleSeq(styleCommentEntity.getStyleEntity().getSeq());//자식한테 있는 부모엔티티에서 seq 값 꺼내는것
+		 styleCommentDTO.setStyleSeq(styleCommentEntity.getStyleEntity().getSeq());//자식한테 있는 부모엔티티에서 seq 값 꺼내는것
 		 //service메서드에 @Transactional 붙여줘
-		 styleCommentDTO.setStyleSeq(styleSeq);
+		 //styleCommentDTO.setStyleSeq(styleSeq);
 		return styleCommentDTO;
 	}
 }

@@ -33,9 +33,24 @@ const Trending = () => {
             .catch(error => console.log(error));
     }, []);
 
-    ///네이버
-
-  
+    //네이버
+    // function getItems(nextGroupKey, count) {
+    //     const nextItems = [];
+      
+    //     for (let i = 0; i < count; ++i) {
+    //       const num = nextGroupKey * count + i;
+    //       nextItems.push(`<div class="item">
+    //     <div class="thumbnail">
+    //         <img src="https://naver.github.io/egjs-infinitegrid/assets/image/${(num % 33) + 1}.jpg" alt="egjs" />
+    //     </div>
+    //     <div class="info">egjs ${num}</div>
+    //   </div>`);
+    //     }
+    //     return nextItems;
+    //   }
+    //   const ig = new MasonryInfiniteGrid(".container", {
+    //     gap: 5,
+    //   });
 
     return (
         
@@ -44,25 +59,26 @@ const Trending = () => {
             <Social />
             <div>태그</div>
     
-            <MasonryInfiniteGrid
-                className="container"
+            {/* <MasonryInfiniteGrid
+                className='products'
+               
                 gap={25}
                 threshold={1000}
-                onRequestAppend={(e) => {//끝 지점에 도달하자마자 스크롤 움직임 마다 이벤트를 발생시킨다.
-                e.wait() 
-                setLoading(true)
-                getItems(e)
-                }}
-                onRenderComplete={(e) => {
-                setLoading(false)
-                }}
-                >
+                onRequestAppend={(e) => {
+                    const nextGroupKey = (+e.groupKey! || 0) + 1;
+              
+                    setItems([
+                      ...items,
+                      ...getItems(nextGroupKey, 10),    
+                    ]);
+                  }}
+                > */}
+   
     
-
             <Container fixed> 
-                   
+                 
             <S.TrGridContainer>   
-
+            
                 { list.map(item =>{ return(
                     <S.TrGridBox key={item.seq}>                     
                         
@@ -119,11 +135,11 @@ const Trending = () => {
                     )
                     })
                 }           
-           
-            </S.TrGridContainer>      
             
+            </S.TrGridContainer>      
+              
             </Container>
-            </MasonryInfiniteGrid>
+            {/* </MasonryInfiniteGrid> */}
         </>
         
     );

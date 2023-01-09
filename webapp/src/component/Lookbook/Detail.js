@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Header from '../Header/Header';
 import Social from '../Lookbook/Social';
 import Card from '@mui/material/Card';
-import { Avatar, Button, CardActions, CardContent, CardHeader, CardMedia, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from '@mui/material';
+import { Avatar, Button, CardActions, CardContent, CardHeader, CardMedia, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField, Typography } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Container from '@mui/material/Container';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import * as S from './style';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Detail = () => {
     const [commentOpen, setCommentOpen] = useState(false)
@@ -21,36 +22,7 @@ const Detail = () => {
              .catch(error => console.log(error))
              console.log("list",list) 
     }, []) 
-
-// 댓글
-
-const onInput = (e) =>{
-    const { name, value } = e.target
-    setForm({
-        ...form,
-        [name] : value
-    })
-}
-
-const [form, setForm] = useState({
-    commentMember: '댓글입력자', //댓글입력아이디
-    commentContents: '',
-    seq: ''//게시글 번호
-})
-const {commentMember, commentContents, seq} = form
-
-const onUpload = (e) => {    
-    setForm(e.target.value)
-    //e.preventdefault()
-    console.log(e.target.value)
-    axios
-        .post("http://localhost:8080/lookbook/commentSave", {params:form})
-        .then(
-                alert("댓글등록 성공"),
-                setCommentOpen(false),
-        )
-        .catch()
-}
+    //댓글 뿌리기
 
     
 
@@ -86,36 +58,27 @@ const onUpload = (e) => {
                                     </IconButton>
                                     <IconButton onClick={()=>{setCommentOpen(true)}}>
                                         <ChatBubbleOutlineIcon />
-                                    </IconButton>                        
+                                        <Link to ='/lookbook/styleComment'></Link>
+                                    </IconButton> 
+                                                          
                                 </CardActions>
 
             
-                                <Dialog open={commentOpen}> 
-                                        <S.DeComment>
-                                            <DialogTitle sx={{mt:5}}>댓글</DialogTitle>
-                                            <DialogContent>
+                               
 
-                                            
-                                                <DialogContentText>
-                                                    <TextField
-                                                        multiline 
-                                                        fullWidth
-                                                        name='commentContents'
-                                                        value={commentContents}
-                                                        onChange={onInput}
-                                                    />
-
-
-                                                <textarea onChange={onInput}>{item.seq}</textarea>
-                                                </DialogContentText>
-                                            </DialogContent>
-                                            <DialogActions>
-                                                <Button >등록</Button>
-                                                <Button onClick={ ()=>{setCommentOpen(false)}}>취소</Button>
-                                            </DialogActions>
-                                        </S.DeComment>
-                                    </Dialog>
-
+                                <CardContent>       
+                                    <Typography variant="body2" color="text.secondary" >
+                                    <S.TrTypoDiv>
+                                    <Chip
+                                        avatar={<Avatar alt="" src="" />}
+                                        label=  ''                             
+                                    /> 
+                                    댓글 불러올 곳
+                                    </S.TrTypoDiv>                      
+                                    </Typography>     
+                                                
+                                </CardContent> 
+                           
 
                             </Card>
                         </div>
