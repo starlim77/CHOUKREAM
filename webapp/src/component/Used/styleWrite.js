@@ -45,15 +45,14 @@ export const MainImg = styled.img`
 export const SubImgBody = styled.div`
     margin-top: 15px;
     display: flex;
-    justify-content:${props=>props.spacing?"center":"space-between"} ;
-`;
-
-
-export const SubImgBody2 = styled.div`
-    margin-top: 15px;
-    display: flex;
     justify-content: space-between;
 `;
+
+// export const SubImgBody = styled.div`
+//     margin-top: 15px;
+//     display: flex;
+//     justify-content:${props=>props.spacing?"center":"space-between"} ;
+// `;
 
 export const SubImgP=styled.p`
     width: 175px;
