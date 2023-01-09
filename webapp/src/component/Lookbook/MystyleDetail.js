@@ -29,6 +29,24 @@ const MystyleDetail = () => {
         updateRef.current.click();        
     }
 
+    const [likes, setLikes] = useState(0)  //기본0, 좋아요 누르면 1
+
+    //좋아요 클릭
+    const onLikes = () => {
+        axios.post('http://localhost8080/lookbook/likes', null, {
+            params : {
+                likes:1,   //누르면 1로 셋팅
+                id:id,     //로그인한 id
+                seq:seq    //좋아요 할 글번호
+            }}
+           )
+     .then( setLikes(1), alert("좋아요 클릭"+likes+id+seq))
+     .catch(error => console.log(error))
+        
+    }
+
+    
+
 
 
     return (
@@ -52,32 +70,13 @@ const MystyleDetail = () => {
                                         
                                         {/* <input type="text" name="seq" value={item.seq} readOnly /> */}
 
-                                        <S.MyDeIcon>   {/* ...아이콘 */}
-                                            {/* <FiMoreHorizontal       
-                                                size="42"
-                                                text-align="right"
-                                                onClick={updateBtn}
-                                                Link to={`/lookbook/mystyleUpdate/${item.seq}/${id}`} 
-                                            />   */}
-                                            
+                                        <S.MyDeIcon>                                
                                             <Link to={`/lookbook/mystyleUpdate/${item.seq}/${id}`} ref={updateRef} >
                                             <img src='/image/style/menu.png' width={24}></img>
                                             </Link>
                                            
-
-
-                                            
                                         </S.MyDeIcon>
                                    </S.MyDeheadercontainer>
-
-
-                                    {/* <CardMedia 
-                                        component="img"
-                                        width="500"
-                                        height="500"
-                                        image={'/storage/'+item.storedFileName[index]}  //여러장보이게해야함
-                                        alt=""
-                                    /> */}
 
                                     {
                                         item.storedFileName.map( (item, index) => (
@@ -88,15 +87,20 @@ const MystyleDetail = () => {
                                     }
 
                                     
-                                    <CardContent>
+                                
+                                    <S.MyStContent>
                                         {item.content}
-                                    </CardContent>
+                                    </S.MyStContent>
 
 
                                     <CardActions >                                    
-                                        <IconButton aria-label="add to favorites">
+                                        <IconButton aria-label="add to favorites" onClick={onLikes}>
                                             <FavoriteIcon />  
                                         </IconButton>
+
+
+
+
 
                                         <IconButton onClick={()=>{setCommentOpen(true)}}>
                                             <ChatBubbleOutlineIcon />

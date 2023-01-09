@@ -52,6 +52,7 @@ public class styleController {
 	//내 id를 들고가서 내 게시글만 뿌리기
 	@GetMapping(path="findAllMyList/{id}")
 	public List<StyleDTO> findAllMyList(@PathVariable String id) {
+		//좋아요조회 styleService.findLikes(id,style_seq);
 		return styleService.findAllMyList(id);
 	}
 	
@@ -91,12 +92,17 @@ public class styleController {
 
 	
 //좋아요
-//    @PostMapping(path="likes")
-//    @ResponseBody
-//    public int likes(String boardId, String id) {
-//        int result = styleService.saveLike(boardId,id);
+    @PostMapping(path="likes")
+    @ResponseBody
+    //public int likes(String member_id, int style_seq) {
+    //public int likes(@RequestParam String member_id, @RequestParam int seq) {
+    public int likes(@ModelAttribute StyleDTO styleDTO) {
+//    	System.out.println("컨트롤러  member_id "+ member_id);
+//        System.out.println("컨트롤러 style_seq" + seq);
+//    	int result = styleService.saveLikes(member_id,seq);
 //        return result;
-//    }
+        return 100;
+    }
 		
 
 	//상세에서 댓글 등록기능

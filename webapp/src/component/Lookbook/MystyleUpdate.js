@@ -55,7 +55,8 @@ const MystyleUpdate = () => {
     const onDelete = () => { 
         axios.delete(`http://localhost:8080/lookbook/delete?seq=${seq}`)
             .then(
-                alert("게시글 삭제완료")
+                alert("게시글 삭제완료"),
+                navigate('/lookbook/mystyle')
             )
             .catch(error => console.log(error) )
 
@@ -86,7 +87,6 @@ const MystyleUpdate = () => {
                                 onChange={onInput}
                             />   
 
-                            
 
                         <input type="text" name="seq" value={seq} readOnly />
                             <S.Container>
