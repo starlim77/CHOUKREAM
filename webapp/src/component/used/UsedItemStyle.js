@@ -15,6 +15,7 @@ export const ImgBody = styled.div`
     height: 820px;
     padding:  0 40px 0  0;
     text-align: center;
+    
     /* border: 1px solid black; */
 `;
 
@@ -52,6 +53,7 @@ export const MainImg=styled.img`
     width:560px;
     height:560px;
     object-fit: cover;
+    border: 0.5px solid #ececec;
 `;
 
 export const SmallImg=styled.img`
@@ -59,6 +61,7 @@ export const SmallImg=styled.img`
     height:100px;
     padding:25px;
     object-fit: cover;
+    border: 0.5px solid #ececec;
 `;
 
 export const TitleWrapper=styled.div`
