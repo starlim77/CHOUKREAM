@@ -51,12 +51,14 @@ export const BottomDiv = styled.div`
 export const MainImg=styled.img`
     width:560px;
     height:560px;
+    object-fit: cover;
 `;
 
 export const SmallImg=styled.img`
     width:100px;
     height:100px;
     padding:25px;
+    object-fit: cover;
 `;
 
 export const TitleWrapper=styled.div`

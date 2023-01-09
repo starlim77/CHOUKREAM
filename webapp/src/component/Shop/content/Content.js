@@ -3,43 +3,46 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faBoltLightning } from '@fortawesome/free-solid-svg-icons';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
-import { faSquare } from '@fortawesome/free-regular-svg-icons';
 import * as Co from './ContentStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Modal from './Modal';
+import Modal from '../modal/Modal';
 import { Link } from 'react-router-dom';
 import categoryData from './CategoryData';
+import MenuList from './MenuList';
 
 const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
+    const [categoryData2, setCategoryData2] = useState(categoryData);
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => {
-            // 여기서 return 은 무슨 뜻 ??
+            // 여기서 return 은 무슨 뜻 ?? 다른페이지로 이동하거나 할때 발동됨
+            // console.log( addEventListener 추가한 스크롤 이벤트 종료 시키기 'end') //처음에 1번나오고 이후에 나옴 
             window.removeEventListener('scroll', handleScroll); //clean up
         };
     }, []);
-
-    const [i, setI] = useState(1); // 한번에 보여줄 페이지 ? 개수
-    const [f, setF] = useState(8); // 사진 개수
+    
+    const [pictures, setPictures] = useState(8); // 사진 개수
+    // const [scrollHeight, setScrollHeight] = useState(window.scrollY);
+    // console.log('유즈스테이트' + scrollHeight)
+    const [heightTop, setHeightTop] = useState(0)
     // const [scrollHeight, setScrollHeight] = useState(0)
     // const [heightTop, setHeightTop] = useState(0)
 
     const handleScroll = () => {
         /// setHeightTop(window.scrollY);
         var heightTop = window.scrollY; // 화면의 Y축의 상단값
-        const setHeightTop = () => {
-            heightTop = heightTop + 838;
-        };
 
         const heightBottom = window.scrollY + window.innerHeight; // 화면의 Y축의 하단값
         const innerHeight = window.innerHeight;
-        console.log('window.scrollY 화면의 Y축의 상단값 ' + heightTop);
-        console.log('window.innerHeight 브라우저 화면의 높이' + innerHeight); // 현재 브라우저 화면의 높이
-        console.log('Y축의 하단값' + heightBottom); //window.scrollY + window.innerHeight 화면의 y축 하단값
+        // console.log('window.scrollY 화면의 Y축의 상단값 ' + heightTop);
+        // console.log('window.innerHeight 브라우저 화면의 높이' + innerHeight); // 현재 브라우저 화면의 높이
+        // console.log('Y축의 하단값' + heightBottom); //window.scrollY + window.innerHeight 화면의 y축 하단값
 
         const scrollHeight = document.body.scrollHeight;
         console.log('scrollHeight 스크롤 전체길이 ' + scrollHeight); // 불변
-
+        
+        // const clientHeight = document.body.clientHeight;
+        // console.log('clientHeight 눈에 보이는 만큼 높이 ' + clientHeight); // 불변
         // 상단값과 + 현재 브라우저 높이 =
         // 현재 브라우저 높이는 불변
 
@@ -48,15 +51,23 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
 
         // 611 > 781-100
         // heightTop >= innerHeight - 170 && setF(f + 8);
-        if (heightTop >= innerHeight - 170) {
-            setF(f + 8);
+        
+        // if (scrollHeight < 1000) {
+        //     setF(f => f + 8);
+        //     console.log('우구')
+        // }
+        
+        if (heightBottom >= scrollHeight - 110) {
+            console.log( '하단높이 '+ heightBottom + ' , ' + (scrollHeight - 100));
+            setPictures(pictures => pictures + 8);
+            // 상태변수f는 다시 리렌더링 하기 전까지는 안바뀐다 
             console.log('이게 8개 늘려줌');
         }
         // 1448 >= innerHeight - 170 && setF( f + 8 );
-        if (heightTop === heightBottom - innerHeight && heightTop > 1400) {
-            setF(f + 16);
-            console.log('이게 16개 늘려줌 ');
-        }
+        // if (heightTop === heightBottom - innerHeight && heightTop > 1400) {
+        //     setF(f + 16);
+        //     console.log('이게 16개 늘려줌 ');
+        // }
 
         // heightTop + 838 >= innerHeight - 170 && console.log('제발');
         // heightTop + 837 >= innerHeight - 200 && setF(f + 8) && console.log('gdgd');
@@ -69,8 +80,29 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
         // scrollHeight - 112 < heightBottom && setF(f + 8);
     };
 
-    const [isMenu, setIsMenu] = useState(true);
     const [isActive, setIsActive] = useState(true);
+
+    const changeDisplay = id => {
+        // console.log('id 는 ? ' + id)
+        var copyStatus = [];
+        categoryData2.map(item => {
+            if (item.id == id) {
+                if (!item.checked) {
+                    copyStatus.push({ ...item, checked: true });
+                } else {
+                    copyStatus.push({
+                        id: item.id,
+                        title: item.title,
+                        subTitle: item.subTitle,
+                        menuList: item.menuList,
+                    });
+                }
+            } else {
+                copyStatus.push({ ...item });
+            }
+        });
+        setCategoryData2(copyStatus);
+    };
 
     // 3자리마다 콤마 넣어서 문자열로 변환
     const addComma = num => {
@@ -96,11 +128,12 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                         </Co.StatusBox>
                     </Co.FilterStatus>
 
-                    {categoryData.map(item => (
-                        <Co.FilterList key={item.id}>
-                            {/* FilterList가 기본상태 + 버튼 누르면
-                        밑에 munu list가 나오면된다  
-                        */}
+                    {categoryData2.map(item => (
+                        <Co.FilterList
+                            key={item.id}
+                            id={item.id}
+                            onClick={e => changeDisplay(item.id)}
+                        >
                             <Co.FilterTitle>
                                 <Co.TitleBox>
                                     <Co.MainTitle>{item.title}</Co.MainTitle>
@@ -109,24 +142,15 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                     </Co.Placeholder>
                                 </Co.TitleBox>
                                 <Co.IcoBox>
-                                    <FontAwesomeIcon
-                                        icon={faPlus}
-                                        onClick={() => setIsMenu(!isMenu)}
-                                    />
+                                    <FontAwesomeIcon icon={faPlus} />
                                 </Co.IcoBox>
                             </Co.FilterTitle>
                             <Co.FilterMenu
-                                style={{ display: isMenu ? 'none' : '' }}
+                                style={{
+                                    display: item.checked ? 'block' : 'none',
+                                }}
                             >
-                                <Co.MenuList>
-                                    {console.log('gdgd' + item.menuList)}
-                                    {console.log(
-                                        'ㅠㅠㅠ' + typeof item.menuList,
-                                    )}
-                                    {/* {item.menuList.map((menu) => { 
-                                    return <h2>gdgd</h2>
-                                })} */}
-                                </Co.MenuList>
+                                <MenuList item={item} setDummy={setDummy} setPictures={setPictures} ></MenuList>
                             </Co.FilterMenu>
                         </Co.FilterList>
                     ))}
@@ -135,7 +159,7 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                     <Co.SearchOption>
                         <Co.FilterBtns>
                             <Co.FilterExpress
-                                style={{ display: isActive ? '' : 'none' }}
+                                style={{ display: isActive ? 'none' : '' }}
                             >
                                 <Co.ExpressBtn
                                     onClick={() => setIsActive(!isActive)}
@@ -145,7 +169,7 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                 </Co.ExpressBtn>
                             </Co.FilterExpress>
                             <Co.FilterExpress
-                                style={{ display: isActive ? 'none' : '' }}
+                                style={{ display: isActive ? '' : 'none' }}
                             >
                                 <Co.ExpressBtn2
                                     onClick={() => setIsActive(!isActive)}
@@ -154,12 +178,11 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                     <Co.Text>빠른배송</Co.Text>
                                 </Co.ExpressBtn2>
                             </Co.FilterExpress>
-
-                            <Co.FilterBrand>
+                            {/* <Co.FilterBrand>
                                 <Co.BrandBtn>
-                                    <Co.Text>브랜드배송</Co.Text>
+                                    <Co.Text>새상품 버튼</Co.Text>
                                 </Co.BrandBtn>
-                            </Co.FilterBrand>
+                            </Co.FilterBrand> */}
                             <Co.FilterBrand>
                                 <Co.BrandBtn>
                                     <Co.Text>
@@ -167,11 +190,6 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                             중고 버튼
                                         </Link>
                                     </Co.Text>
-                                </Co.BrandBtn>
-                            </Co.FilterBrand>
-                            <Co.FilterBrand>
-                                <Co.BrandBtn>
-                                    <Co.Text>현욱 managerPage</Co.Text>
                                 </Co.BrandBtn>
                             </Co.FilterBrand>
                         </Co.FilterBtns>
@@ -187,6 +205,7 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                     setDummy={setDummy}
                                     open={modalOpen}
                                     close={closeModal}
+                                    setPictures={setPictures}
                                 >
                                     {/* modalOpen 현재 state 상태  */}
                                 </Modal>
@@ -200,12 +219,14 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                     </div>
                     <Co.SearchResult>
                         <Co.SearchResultList>
-                            {dummy.map(item => (
+                            {/* {console.log('더미더미 ' + f)} */}
+                            {dummy.map((item,index) => (
                                 <Co.ProductCard
                                     key={item.seq}
                                     style={{
-                                        display: f >= item.seq ? '' : 'none',
-                                    }}
+                                        display: pictures > index ? 'block' : 'none',
+                                    }} 
+                                    // 사진 8개씩 출력 idx는 0부터 시작
                                 >
                                     <Link to={`/products/${item.seq}`}>
                                         <Co.ItemInner href="#">
@@ -269,7 +290,6 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                             </Co.BtnWish>
                                             <Co.Text>
                                                 {followCalc(item.interest)}
-                                                
                                             </Co.Text>
                                         </Co.WishFigure>
                                         <Co.ReviewFigure>

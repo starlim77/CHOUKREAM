@@ -75,22 +75,25 @@ const UsedWrite = () => {
         
         var sw = 1
        
-        //file[0]||--sw&&alert("이미지 파일을 등록해주세요");
-       
         if(!title){
             sw=0
         }else if(kind === '상품 종류' || !kind){
             sw=0
         }else if(!price){
             sw=0
+        }else if(!file[0]){
+            sw=0
         }
-    
+        
+        if(sw===0){
+            alert("필수 항목을 입력해주세요")
+        }
+
         var formData=new FormData();
         file.map(files=>formData.append('img',files));
-        
-        if(sw == 1) {
 
-            alert('글작성 성공')
+        if(sw === 1) {
+
            // axios.post('http://localhost:8080/used/writeItem',null,({params:{
             axios.post('http://localhost:8080/used/upload',formData,({params:{
                ...form,
@@ -216,7 +219,8 @@ const UsedWrite = () => {
                     다만 업로드 하는 사람이 형식을 모든 파일로 받으면 다른 파일로 업로드가 가능해진다.
                     유효성 검사 필요 */}
                     <input type='file' name="img" style={{display: 'none'}} accept=".jpg,.png, .jpeg, .gif" onChange={ e=>onImgRead(e) } ref={imgRef} multiple></input>
-
+                    *이미지는 1대 1비율이 아니면 잘려서 보일 수 있습니다.<br></br>
+                    *이미지 파일만 업로드 가능합니다.
                 </S.ImgBody>
             
                 

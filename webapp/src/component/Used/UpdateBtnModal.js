@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as M from './UpdateBtnModalStyle';
 
-const UpdateBtnModal = ({writer, seq}) => {
+const UpdateBtnModal = ({writer, seq, imgNameSend}) => {
     const[buttonVisibility,setButtonVisibility]=useState(false);
     const modalVisibility=()=>{
         setButtonVisibility(!buttonVisibility);
@@ -12,7 +12,7 @@ const UpdateBtnModal = ({writer, seq}) => {
     const navigate = useNavigate();
     const moveToPage=()=>{
         //참고자료 https://curryyou.tistory.com/477
-        navigate('/Used/usedUpdate',{state:{writer:writer,seq:seq}});
+        navigate('/Used/usedUpdate',{state:{writer:writer,seq:seq,imgNameSend:imgNameSend}});
     }
     const deleteItem=()=>{
         axios.delete(`http://localhost:8080/used/deleteItem?seq=${seq}`)
