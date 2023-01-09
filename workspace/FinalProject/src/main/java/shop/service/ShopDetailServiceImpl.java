@@ -9,14 +9,18 @@ import org.springframework.stereotype.Service;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
+import shop.bean.NewNewProductDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
 import shop.bean.SizeMinDTO;
+import shop.bean.UsedItemLikeDTO;
 import shop.dao.CompletedOrderRepository;
+import shop.dao.NewNewProductRepository;
 import shop.dao.OrderRepository;
 import shop.dao.ProductSizeRepository;
 import shop.dao.ShopDAO;
+import shop.dao.UsedItemLikeDAO;
 
 @Service
 public class ShopDetailServiceImpl implements ShopDetailService {	
@@ -28,6 +32,10 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	private CompletedOrderRepository completedOrderRepository;
 	@Autowired
 	private ProductSizeRepository productSizeRepository; 
+	@Autowired
+	private NewNewProductRepository newNewProductRepository;
+	@Autowired
+	private UsedItemLikeDAO useItemLikeDAO;
 	
 	@Override
 	public Optional<ProductDTO> getProduct(int seq) {
@@ -98,5 +106,15 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	@Override
 	public List<BrandListDTO> getBrandList(int seq, String brand) {
 		return shopDAO.getBrandList(seq, brand);
+	}
+	
+	@Override
+	public Optional<NewNewProductDTO> getNewProduct(int seq) {
+		return newNewProductRepository.findById(seq);
+	}
+	
+	@Override
+	public Long likeCount(int seq, String shopKind) {
+		return useItemLikeDAO.likeCount(seq, shopKind);
 	}
 }

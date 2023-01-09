@@ -99,7 +99,9 @@ const UsedItem = () => {
     //이미지 순서 바꾸기
     const changImg=(e)=>{
         var id = e.target.getAttribute("id");
-
+        //진영씨 방법
+        //1. if로 아이디 값 걸러서 바꿔주기
+        //2. getAttribute로 src를 받아오기
         var imgTemp=allImg[0];
         allImg[0]=allImg[id];
         allImg[id]=imgTemp;

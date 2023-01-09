@@ -33,18 +33,30 @@ const UsedUpdate = () => {
          const seq = location.state.seq;
          const writer = location.state.writer;
          const imgNameSend=location.state.imgNameSend;
-
+        
+        const[num,setNum]=useState('');
         useEffect(()=>{
             axios.get("http://localhost:8080/used/viewItem",{params:{seq:seq}})
                 .then(res=>setForm(res.data))
+                .then(res=>{var img = (imgNameSend).split(',');
+                        var img2=img.map(item=>"/storage/"+item);
+                        setSubImg(img2);} )
                 .catch(err=>console.log(err))
 
-            var img = (imgNameSend).split(',');
-            var img2=img.map(item=>"/storage/"+item);
-            setSubImg(img2); 
-            console.log(img);
+            
+           
         },[])
        
+        //hash태그가 인코딩 되어서 들어갔기 때문에 decode를 먼저해서 해석을 해줌
+        useEffect(()=>{
+
+            var decoding= decodeURI(form.hashTag).split(',');
+            setForm({
+                ...form,
+                hashTag: decoding});
+            
+            //form이 바뀌는 걸로 설정하면 무한 루프도니까 한 번만 돌게 form.title사용
+        },[subImg])
         const [hashTag2,setHashTag2] = useState()
     
         const [count,setCount] = useState(0)

@@ -69,8 +69,8 @@ public class UsedItemServiceImpl implements UsedItemService {
 
 	@Override
 	public void deleteItem(int seq) {
-		usedItemDAO.deleteItem(seq);
-		//usedItemDAO.deleteById(seq);
+//		usedItemDAO.deleteItem(seq);
+		usedItemDAO.deleteById(seq);
 	}
 
 

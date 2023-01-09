@@ -14,9 +14,13 @@ import Graph from './Graph';
 
 const Products = () => {
 
+    const [count, setCount] = useState('');
+
     const date = new Date();
 
-    const id = "hong@gmail.com";
+    const id = "kim@gmail.com";
+
+    const shopKind = 'resell'
 
     const [open1, setOpen1] = useState(true)
     const [open2, setOpen2] = useState(false)
@@ -60,6 +64,13 @@ const Products = () => {
     const [buyBidsListForm, setBuyBidsListForm] = useState([{
         price: '-'
     }])
+
+    const [likeForm, setLikeForm] = useState({
+        seq:'',
+        id:'',
+        userLike:false,
+        registerNo:''
+    })
 
     const [brandListForm, setBrandListForm] = useState([])
 
@@ -117,6 +128,13 @@ const Products = () => {
              .then(res => res.data.length !== 0 && setBuyBidsListForm(res.data))
              .catch(error => console.log(error))
         
+        axios.get('http://localhost:8080/used/itemLike?seq=' + seq + '&id=' + id + '&shopKind=' + shopKind)
+             .then(res => res.data ? setLikeForm(res.data) : '')
+             .catch(error => console.log(error))
+
+        axios.get('http://localhost:8080/likeCount?seq=' + seq + '&shopKind=' + shopKind)
+             .then(res => setCount(res.data))
+             .catch(err => console.log(err))
     }, []);
 
     useEffect(() => {
@@ -211,6 +229,16 @@ const Products = () => {
         window.location.reload()
     }
 
+    const onInterest = () => {
+        setLikeForm({...likeForm, userLike:!likeForm.userLike})
+
+        axios.post(`http://localhost:8080/used/productLikeSet?seq=`+ seq + '&id=' + id + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
+        .then()
+        .catch(error => console.log(error))
+
+        {likeForm.userLike === false ? setCount(count+1) : setCount(count-1)}  
+    }
+
 
 
     return (
@@ -288,7 +316,7 @@ const Products = () => {
                                             <S.DetailPricePrice>
                                                 <S.DetailPriceAmount>
                                                     <S.DetailPriceNum>
-                                                        { completedOrderForm[0].price }
+                                                        { completedOrderForm[0].price.toLocaleString('ko-KR') }
                                                     </S.DetailPriceNum>
                                                     <S.DetailPriceWon>원</S.DetailPriceWon>
                                                 </S.DetailPriceAmount>
@@ -305,7 +333,7 @@ const Products = () => {
                                                 <S.DivisionBtnBoxPrice>
                                                     <S.DivisionBtnBoxAmount>
                                                         <S.DivisionBtnBoxNum>
-                                                            { sellBidsListForm[0].price }
+                                                            { sellBidsListForm[0].price.toLocaleString('ko-KR') }
                                                         </S.DivisionBtnBoxNum>
                                                         <S.DivisionBtnBoxWon>원</S.DivisionBtnBoxWon>
                                                     </S.DivisionBtnBoxAmount>
@@ -317,7 +345,7 @@ const Products = () => {
                                                 <S.DivisionBtnBoxPrice>
                                                     <S.DivisionBtnBoxAmount>
                                                         <S.DivisionBtnBoxNum>   
-                                                            { buyBidsListForm[0].price }
+                                                            { buyBidsListForm[0].price.toLocaleString('ko-KR') }
                                                         </S.DivisionBtnBoxNum>
                                                         <S.DivisionBtnBoxWon>원</S.DivisionBtnBoxWon>
                                                     </S.DivisionBtnBoxAmount>
@@ -325,12 +353,11 @@ const Products = () => {
                                                 </S.DivisionBtnBoxPrice>
                                             </S.DivisionBtnBoxBtnDivisionSell>
                                         </S.DivisionBtnBox>
-                                        <S.LargeBtnWish area-label="관심상품">
-                                            {/* <svg className="icon sprite-icons ico-wish-off">
-                                                <use></use>
-                                            </svg> */}
+                                        <S.LargeBtnWish area-label="관심상품" onClick={onInterest} >
+                                            {/* <U.InterestInput src={likeForm.userLike?'/image/used/blackBookmark.png':'../image/used/bookmark.svg'}/> */}
+                                            <S.LargeBtnWishBtnImg src={likeForm.userLike?'/image/used/blackBookmark.png':'../image/used/bookmark.svg'}/>
                                             <S.LargeBtnWishBtnText>관심상품</S.LargeBtnWishBtnText>
-                                            <S.LargeBtnWishCountNum>100</S.LargeBtnWishCountNum>
+                                            <S.LargeBtnWishCountNum>{count}</S.LargeBtnWishCountNum>
                                         </S.LargeBtnWish>
                                     </div>
                                 </div>
@@ -659,8 +686,9 @@ const Products = () => {
                                             </S.FloatingProductInfo>
                                         </S.FloatingPriceProductArea>
                                         <S.FloatingProductBtnArea>
-                                            <S.FloatingBtnOutLineGrey>
-                                                <S.WishCountNum>3.1만</S.WishCountNum>
+                                            <S.FloatingBtnOutLineGrey onClick={onInterest}>
+                                                <S.LargeBtnWishBtnImg src={likeForm.userLike?'/image/used/blackBookmark.png':'../image/used/bookmark.svg'}/>
+                                                <S.WishCountNum>{count}</S.WishCountNum>
                                             </S.FloatingBtnOutLineGrey>
                                             <S.FloatingPriceDivisionBtnBox>
                                                 <S.FloatingPriceDivisionBuy onClick={ buyNavigate }>
