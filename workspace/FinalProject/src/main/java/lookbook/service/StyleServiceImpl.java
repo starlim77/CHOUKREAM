@@ -15,8 +15,11 @@ import lombok.RequiredArgsConstructor;
 import lookbook.bean.StyleDTO;
 import lookbook.dao.StyleDAO;
 import lookbook.dao.StyleFileDAO;
+import lookbook.dao.StyleLikesDAO;
 import lookbook.entity.StyleEntity;
 import lookbook.entity.StyleFileEntity;
+import lookbook.entity.StyleLikesEntity;
+import member.bean.MemberDto;
 import member.dao.MemberDAO;
 
 
@@ -32,6 +35,8 @@ public class StyleServiceImpl implements StyleService {
 	private StyleFileDAO styleFileDAO;
 	@Autowired
 	private MemberDAO memberDAO;
+	@Autowired
+	private StyleLikesDAO styleLikesDAO;
 
 	//내 글 list 
 	@Transactional
@@ -162,46 +167,48 @@ public class StyleServiceImpl implements StyleService {
 
 	 
 	 
-/*	 
 	//좋아요 했는지 찾기
 		 @Override
-		    public int findLike(String boardId, String id) {
+		    public int findLikes(String id, int style_seq) {
 		        
-			 // 저장된 DTO 가 없다면 0, 있다면 1
-		        Optional<StyleLikesEntity> findLike = likesDAO.findByStyleEntity_IdAndMemberDto_Id(boardId, id);
-		        if (findLike.isEmpty()){
+			 // 저장된 좋아요가 없다면 0, 있다면 1 //게시물 seq와 로그인아이디를 같이 가져가서 조회
+		        Optional<StyleLikesEntity> findLikes = styleLikesDAO.findByMemberDto_idAndStyleEntity_seq(id, style_seq);
+		        if (findLikes.isEmpty()){
 		            return 0;
 		        }else {
 		            return 1;
 		        }
 		    }
+
 
 	//좋아요 저장하기
 	//참고 : https://velog.io/@hellocdpa/220220-SpringBoot%EC%A2%8B%EC%95%84%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0
 			@Transactional
 		    @Override
-		    public int saveLike(String boardId, String id) {
-		        Optional<StyleLikesEntity> findLike = likesDAO.findByStyleEntity_IdAndMemberDto_Id(boardId, id);
+		    public int saveLikes(String id,int style_seq) {
+		       // Optional<StyleLikesEntity> findLikes = likesDAO.findByStyleEntity_IdAndMemberDto_Id(boardId, id);
 
-		        System.out.println(findLike.isEmpty());
+		        //System.out.println(findLike.isEmpty());
 
-		        if (findLike.isEmpty()){
+		       // if (findLike.isEmpty()){
 		            MemberDto memberDto = memberDAO.findById(id).get();
-		            StyleEntity styleEntity = styleDAO.findById(boardId).get();
+		            StyleEntity styleEntity = styleDAO.findBySeq(style_seq).get();
+		            //System.out.println("서비스임플의 memberDto "+ memberDto);
+		            //System.out.println("서비스임플의 styleEntity" + styleEntity);
 
-		            StyleLikesEntity styleLikesEntity = LikesEntity.toLikeEntity(memberDto, styleEntity);
-		            likesDAO.save(likeEntity);
+		            StyleLikesEntity styleLikesEntity = StyleLikesEntity.toLikesEntity(memberDto, styleEntity);
+		            styleLikesDAO.save(styleLikesEntity);
 		            //styleDAO.plusLike(boardId);
 		            return 1;
-		        }else {
-		        	likesDAO.deleteByStyleEntity_IdAndMemberDto_Id(boardId, id);
-		            //styleDAO.minusLike(boardId);
-		            return 0;
-
-		        }
+//		        }else {
+//		        	likesDAO.deleteByStyleEntity_IdAndMemberDto_Id(boardId, id);
+//		            //styleDAO.minusLike(boardId);
+//		            return 0;
+//
+//		        }
 
 		    }
-		*/
+		
 	
 
 

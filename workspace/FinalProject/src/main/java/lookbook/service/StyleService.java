@@ -23,8 +23,8 @@ public interface StyleService {
 
 	public StyleDTO findMyListDetail(int seq);
 
-//	public int saveLike(String boardId, String id);
-//	public int findLike(String boardId, String id);
+	public int saveLikes(String id,int style_seq);
+	public int findLikes(String id, int style_seq);
 
 		
 }

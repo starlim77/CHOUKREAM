@@ -65,6 +65,13 @@ export const MyDeIcon = styled.div`
     padding-top: 16px;
 
 `
+
+export const MyStContent = styled.pre`
+    white-space: pre-wrap;   //text 줄바꿈허용
+    word-break: break-all;   //text 줄바꿈허용
+    padding: 20px 0 15px 0;
+`
+
 //Social.js 
 export const SoHeader = styled.div`
     padding: 20px 0 20px 0;
