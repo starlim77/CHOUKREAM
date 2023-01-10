@@ -52,6 +52,9 @@ const UsedMain = () => {
 
     },[tag])
 
+    const tagReset = () => {
+        setTag('')
+    }
 
 
     const onItem = (seq) => {
@@ -100,11 +103,15 @@ const UsedMain = () => {
                 
             <S.TagImg>
                 {
-                    tagData.map(item => <S.TagImgLi key={item.id} onClick={ e => onTag(item.title)}><S.TagImgItem src={item.img}/><S.TagImgSpan>{item.title}</S.TagImgSpan></S.TagImgLi>)
+                    tagData.map(item => <S.TagImgLi key={item.id} onClick={ e => onTag(item.title)}>
+                                             <S.TagImgItem src={item.img}/>
+                                             <S.TagImgSpan>{item.title}</S.TagImgSpan>
+                                        </S.TagImgLi>)
                 }
                    
             </S.TagImg>
-            <S.SearchHashTag>해쉬태그 검색 기능</S.SearchHashTag>
+            <S.TagReset><S.TagResetSpan onClick={tagReset}>[모든 상품보기]</S.TagResetSpan></S.TagReset>
+            <S.SearchHashTag><S.SearchInput placeholder='HashTag 검색을 한번 해보세요!'/><S.SearchBtn >검색</S.SearchBtn></S.SearchHashTag>
 
             <S.UsedMain>
                 {

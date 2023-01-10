@@ -26,18 +26,34 @@ export const TagImgLi = styled.li`
     display: flex;
     flex-direction: column;
     align-items: center;
+    :hover{
+        background-color: #E1ECF4;
+        border-radius: 50px;
+    }
 `;
 
 export const TagImgItem = styled.img`
     width: 70px;
     height: 70px;
+
 `;
 
 export const TagImgSpan = styled.span`
     font-size: 14px;
 `;
 
+export const TagReset = styled.div`
+    margin: 16px auto 0px auto;
+    width: 1200px;
+    display: flex;
+    justify-content: center;
 
+`;
+export const TagResetSpan = styled.span`
+    :hover{
+        cursor: pointer;
+    }
+`;
 
 export const SearchHashTag = styled.div`
     margin: 16px auto 0px auto;
@@ -45,8 +61,22 @@ export const SearchHashTag = styled.div`
     display: flex;
     justify-content: center;
 
-    border: 1px solid red;
 `;
+
+export const SearchInput = styled.input`
+    width: 300px;
+    border: 1px solid black;
+`;
+
+export const SearchBtn = styled.div`
+    border: 1px solid black;
+    :hover{
+        cursor: pointer;
+    }
+`;
+
+
+
 
 export const UsedMain = styled.div`
     margin: 16px auto 0px auto;
