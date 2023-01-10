@@ -55,10 +55,20 @@ public class StyleCommentServiceImpl implements StyleCommentService {
 	        for (StyleCommentEntity styleCommentEntity : styleCommentEntityList) {
 	            StyleCommentDTO styleCommentDTO = StyleCommentDTO.toStyleCommentDTO(styleCommentEntity, styleSeq);
 	            styleCommentDTOList.add(styleCommentDTO);
+	            
+	            System.out.println(styleCommentDTO);
 	        }
 		
 		
 		return styleCommentDTOList;
 	}
+
+	@Transactional
+	public void delete(String id) {
+		styleCommentDAO.deleteById(id);
+		
+	}
+
+	
 	
 }

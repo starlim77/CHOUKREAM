@@ -84,6 +84,15 @@ export const MyStContent = styled.pre`
     padding: 20px 0 15px 0;
 `
 
+//StyleCommentList
+export const SCLdeletebutton= styled.div`
+    float: right;
+`
+
+export const SCLcomment = styled.div`
+    margin-bottom: 10px;
+`
+
 //Social.js 
 export const SoHeader = styled.div`
     padding: 20px 0 20px 0;

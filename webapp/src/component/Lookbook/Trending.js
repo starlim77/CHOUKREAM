@@ -106,8 +106,7 @@ const Trending = () => {
                                     <Typography variant="body2" color="text.secondary" >
                                     <S.TrTypoDiv>
                                     {item.content}
-                                    <br/>
-                                    seq={item.seq}
+                                    <br/>                                    
                                     </S.TrTypoDiv>                      
                                     </Typography>     
                                                 
