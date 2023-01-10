@@ -24,6 +24,7 @@
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",
         "@testing-library/user-event": "^13.5.0",
+        "@toast-ui/react-editor": "^3.2.2",
         "axios": "^1.2.1",
         "bootstrap": "^5.2.3",
         "core-js": "^3.27.0",
@@ -46,6 +47,7 @@
         "redux": "^4.2.0",
         "redux-persist": "^6.0.0",
         "styled-components": "^5.3.6",
+        "text-selection-react": "^1.1.8",
         "web-vitals": "^2.1.4"
     },
     "scripts": {

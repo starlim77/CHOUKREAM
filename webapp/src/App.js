@@ -22,8 +22,9 @@ import StyleComment from './component/Lookbook/StyleComment';
 import Mystyle from './component/Lookbook/Mystyle';
 import Social from './component/Lookbook/Social';
 import SearchForm from './component/Search/SearchForm';
-import CsNotice from './component/Cs/CsNotice';
+import CsNotice from './component/Cs/CsNotice/CsNotice';
 import CsFaq from './component/Cs/CsFaq';
+
 import CsFaqWriteForm from './component/Cs/CsFaqWriteForm';
 import LoginForm from './component/User/LoginForm';
 import WriteForm from './component/User/WriteForm';
@@ -41,6 +42,7 @@ import FindPassword from './component/User/FindPassword';
 import FindEmailResult from './component/User/FindEmailResult';
 import FindPasswordResult from './component/User/FindPasswordResult';
 import Logout from './component/User/Logout';
+import CsFaqUpdateForm from './component/Cs/CsFaqUpdateForm';
 
 function App() {
     return (
@@ -166,6 +168,10 @@ function App() {
                 <Route path="/cs/csnotice" element={<CsNotice />} />
                 <Route path="/cs/CsFaq" element={<CsFaq />} />
                 <Route path="/cs/CsFaqWriteForm" element={<CsFaqWriteForm />} />
+                <Route
+                    path={'/cs/CsFaqUpdateForm/:seq'}
+                    element={<CsFaqUpdateForm />}
+                />
             </Routes>
         </BrowserRouter>
     );
