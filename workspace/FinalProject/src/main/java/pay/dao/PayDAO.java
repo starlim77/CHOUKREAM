@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import pay.bean.CompletePaymentDTO;
-import pay.bean.PayDTO;
 import shop.bean.BidsListDTO;
 
 public interface PayDAO<T> extends JpaRepository<CompletePaymentDTO, Integer> {
