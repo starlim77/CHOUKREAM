@@ -1,11 +1,33 @@
 import axios from 'axios';
 import React, { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import * as S from './styleWrite';
+import { useLocation, useNavigate } from 'react-router-dom';
+import * as S from '.././register/styleWrite';
 
-const NewWrite = () => {
+const NewUpdate = () => {
+    const location = useLocation();
+    const checkedId = location.state.checkedId;
+    
+    // console.log( '' + typeof(checkedId))
+    // console.log( '' + checkedId)
+
     const navigate = useNavigate();
+    const date = new Date();
+
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    const dateStr = year + '.' + month + '.' + day;
+    
+    const hours = ('0' + date.getHours()).slice(-2);
+    const minutes = ('0' + date.getMinutes()).slice(-2);
+    const seconds = ('0' + date.getSeconds()).slice(-2);
+    const timeStr = ' ' + hours + ':' + minutes;
+    
+    console.log(dateStr + timeStr);
+    
     const [form, setForm] = useState({
+        seq: checkedId,
+        registerProductDate: dateStr+timeStr,
         title: '',
         subTitle: '',
         brand: '',
@@ -20,6 +42,8 @@ const NewWrite = () => {
     });
 
     const {
+        seq,
+        registerProductDate,
         title,
         subTitle,
         brand,
@@ -58,13 +82,6 @@ const NewWrite = () => {
         // console.log(--sw);
         file[0] || (--sw && alert('이미지 파일을 등록해주세요'));
         // false ||
-        if (!title) {
-            sw = 0;
-        } else if (category === '상품 종류' || !category) {
-            sw = 0;
-        } else if (!price) {
-            sw = 0;
-        }
 
         var formData = new FormData();
         file.map(files => formData.append('img', files)); // 무조건 문자열로 반환된다
@@ -80,14 +97,17 @@ const NewWrite = () => {
         if (sw == 1) {
             // null로 하든 formData로 하든 상관없나 ?
             // axios.post('http://localhost:8080/used/writeItem',null,({params:{
+            // 이게맞음 
+            console.log('디비가러 가는길 ~ ' + checkedId )
             axios
-                .post('http://localhost:8080/shop/newProductUpload', formData, {
+                // .put(`http://localhost:8080/shop/update?seq=${checkedId}`, null, {
+                .put('http://localhost:8080/shop/update', formData, {
                     params: form,
                 })
                 .then(() => {
-                    alert('글작성 완료');
+                    alert('글 수정 완료')
                 })
-                .catch(error => console.log(error));
+                .catch(error => console.log(error))
         }
         navigate('/admin/newList');
         window.location.reload();
@@ -181,8 +201,14 @@ const NewWrite = () => {
     // }
 
     //읽어볼 자료.https://velog.io/@eeeve/React-07
+    
+    // console.log(location + 'ddd');
+    // console.log(location);
+    // console.log(location.state.name);
+    
     return (
         <>
+            <h1>상품 수정 </h1>
             <S.WriteBody>
                 <S.ImgBody>
                     {/* 이미지 소스 이용방법 2가지 사용해봄 */}
@@ -354,11 +380,11 @@ const NewWrite = () => {
                     {/* <S.Subject> 제품 설명</S.Subject>
                     <S.ItemContent name="contents" onChange={onInput} /> */}
 
-                    <S.WriteBtn onClick={onWrite}>작성 완료</S.WriteBtn>
+                    <S.WriteBtn onClick={onWrite}>새 상품 수정 완료</S.WriteBtn>
                 </S.Information>
             </S.WriteBody>
         </>
     );
 };
 
-export default NewWrite;
+export default NewUpdate;

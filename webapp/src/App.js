@@ -46,6 +46,7 @@ import FindPasswordResult from './component/User/FindPasswordResult';
 import Logout from './component/User/Logout';
 import MyPageMain from './component/myPage/MyPageMain';
 import MyPageApp from './component/myPage/MyPageApp';
+import NewUpdate from './component/Shop/manager/NewUpdate';
 
 function App() {
     return (
@@ -82,6 +83,43 @@ function App() {
                             <>
                                 <ManagerPage />
                                 <NewSearch />
+                            </>
+                        }
+                    />
+
+                    <Route
+                        path="admin/newWrite"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <AdminWrite />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newList"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewList />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newSearch"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewSearch />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newUpdate"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewUpdate />
                             </>
                         }
                     />
