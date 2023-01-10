@@ -4,7 +4,7 @@ import * as S from './style';
 import tagData from './TagItem';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import Banner from '../Shop/banner/Banner';
 
 const UsedMain = () => {
 
@@ -34,7 +34,7 @@ const UsedMain = () => {
 
     const[tag,setTag] = useState('')
     const[tagLive,setTagLive] = useState(false)
-    
+    const[searchLive,setSearchLive] = useState(false)
 
     const onTag = (title) => {
         setTag(title)
@@ -54,7 +54,22 @@ const UsedMain = () => {
 
     const tagReset = () => {
         setTag('')
+        setSearchLive(false)
     }
+
+    const [search,setSearch] = useState('')
+
+    const onSearch = () => {
+        if(search === ''){
+            alert('데이터 입력값이 없습니다')
+        }else{
+            setSearchLive(true)
+            // console.log(data.filter(item => decodeURI(item.hashTag).includes(search) ? decodeURI(item.hashTag) : '')) 해쉬태그 해당 글자 존재 여부 확인
+            // console.log(data.map(item => decodeURI(item.hashTag))) 해쉬태그 정체 확인
+            setDataFilter(data.filter(item => decodeURI(item.hashTag).includes(search) ? decodeURI(item.hashTag) : ''))
+        }
+    }
+
 
 
     const onItem = (seq) => {
@@ -111,7 +126,13 @@ const UsedMain = () => {
                    
             </S.TagImg>
             <S.TagReset><S.TagResetSpan onClick={tagReset}>[모든 상품보기]</S.TagResetSpan></S.TagReset>
-            <S.SearchHashTag><S.SearchInput placeholder='HashTag 검색을 한번 해보세요!'/><S.SearchBtn >검색</S.SearchBtn></S.SearchHashTag>
+
+            <Banner/>
+
+            <S.SearchHashTag>
+                <S.SearchInput onChange={ (e) => setSearch(e.target.value)} placeholder='Tag 검색을 해보세요!'/>
+                <S.SearchBtn onClick={ onSearch}>검색</S.SearchBtn>
+            </S.SearchHashTag>
 
             <S.UsedMain>
                 {
@@ -122,6 +143,12 @@ const UsedMain = () => {
                     
                     : 
                     
+                    
+                    searchLive ?
+
+                    dataFilter.slice(0).reverse().map((item,index) => index >= itemLength ? '':
+                         <MainItem key={item.seq} data = {item} onItem={onItem} index={index} itemLength={itemLength}/>)
+                    :
                     data.slice(0).reverse().map((item,index) => index >= itemLength ? '':
                         <MainItem key={item.seq} data = {item} onItem={onItem} index={index} itemLength={itemLength}/>)
 

@@ -43,20 +43,25 @@ export const TagImgSpan = styled.span`
 `;
 
 export const TagReset = styled.div`
-    margin: 16px auto 0px auto;
+    margin: 16px auto 15px auto;
     width: 1200px;
     display: flex;
     justify-content: center;
 
+
 `;
 export const TagResetSpan = styled.span`
+    color: #32b232;
+    font-size: 15pt;
+
     :hover{
         cursor: pointer;
+        background-color: #8DEA8D;
     }
 `;
 
 export const SearchHashTag = styled.div`
-    margin: 16px auto 0px auto;
+    margin: 30px auto 30px auto;
     width: 1200px;
     display: flex;
     justify-content: center;
@@ -64,12 +69,27 @@ export const SearchHashTag = styled.div`
 `;
 
 export const SearchInput = styled.input`
-    width: 300px;
-    border: 1px solid black;
+    width: 140px;
+    border: none;
+    font-size: 11px;
+    background-color: #d5d6ec4d;
+    border-radius: 10px;
+
+    :focus{
+        outline: none;
+    }
 `;
 
 export const SearchBtn = styled.div`
-    border: 1px solid black;
+    border: 0.5px solid #ececec;
+    background-color: #c7fbfb;
+    border-radius: 15px;
+    font-size: 10pt;
+    height: 15px;
+    width: 35px;
+    display: flex;
+    justify-content: space-around;
+    margin-left: 5px;
     :hover{
         cursor: pointer;
     }
