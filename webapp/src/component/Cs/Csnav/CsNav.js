@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import CsFaq from '../CsFaq';
 import CsInspection from '../CsInspection';
 import CsNotice from '../CsNotice/CsNotice';
-import * as S from './style';
+import * as S from './CsNavStyle';
 
 const initialState = 'NOTICE';
 const fontInitialstate = {

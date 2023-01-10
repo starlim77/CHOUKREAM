@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,12 +42,29 @@ public class CsBoardController {
 	
 	@Autowired
 	private CsBoardService csBoardService;
+	
 	@PostMapping(path="write")	
 	public void write(@ModelAttribute CsBoardDTO csBoardDTO) {
 		System.out.println(csBoardDTO);
 		csBoardService.write(csBoardDTO);		
 	}
 	
+	@PostMapping(path = "writeTest")
+	public void writeTest(@ModelAttribute CsBoardDTO csBoardDTO) {
+		System.out.println(csBoardDTO);
+	}
+	
+	@GetMapping(path = "getNotices")
+	public List<CsBoardDTO> getNotices() {
+		return csBoardService.getNotices("buying");
+	}
+	@GetMapping(path = "getNotice")
+	public Optional<CsBoardDTO> getNotice(@RequestParam String seqString) {
+		System.out.println(seqString);
+		int seq = Integer.parseInt(seqString);
+		System.out.println(seq);
+		return csBoardService.getNotice(seq);
+	}
 	/*
 	@PostMapping(path="write" , produces="text/html; charset=UTF-8")
 	@ResponseBody

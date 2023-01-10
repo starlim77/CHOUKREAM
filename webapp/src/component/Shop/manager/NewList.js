@@ -16,8 +16,9 @@ const NewList = () => {
     };
     useEffect(() => {
         getNewProductList();
-        // setNewProductList([{ ...newProductList, isChecked: false }]);
-        // console.log('렌더링 1');
+        newProductList.map(item => setNewProductList({...item, isChecked: false}))
+        setNewProductList([ ...newProductList]);  
+        console.log(newProductList);
     }, []);
 
     // useEffect(() => {
@@ -139,11 +140,11 @@ const NewList = () => {
                         <Li.Th>title</Li.Th>
                         <Li.Th>subTitle</Li.Th>
                     </Li.Tr>
-                </Li.Thead>
+                </Li.Thead> 
                 <Li.Tbody>
                     {/* map 오류 뜰때 && 연산자 씀으로 list가 있을때만 돌릴수 있다 */}
-                    {newProductList.slice(offset, offset + limit).map(item => (
-                        <Li.Tr key={item.seq}>
+                    {newProductList.slice(offset, offset + limit).map((item, index) => (
+                        <Li.Tr key={index}>
                             <Li.Td style={{ width: '200px' }}>
                                 <Li.Input
                                     type="checkbox"

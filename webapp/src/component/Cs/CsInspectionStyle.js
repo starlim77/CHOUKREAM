@@ -4,7 +4,6 @@ export const InspectionWrapper = styled.div`
     display: flex;
     width: 1000px;
     height: 100%;
-    border: 1px solid black;
 `
 export const CategoryTable = styled.table`
     display: flex;

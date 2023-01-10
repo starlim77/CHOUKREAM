@@ -28,6 +28,7 @@ import shop.service.NewProductService;
 import shop.service.ShopDetailService;
 import shop.service.ShopService;
 
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(path="shop")
@@ -64,8 +65,6 @@ public class ShopController {
 	public List<NewProductDTO> getNewProductList() {
 		return newProductService.getNewProductList();
 	}
-	
-	
 	
 	@PostMapping(path="newProductUpload", produces="text/html;charset-UTF-8")
 	 @ResponseBody
