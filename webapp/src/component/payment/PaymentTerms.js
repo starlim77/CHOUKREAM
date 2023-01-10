@@ -81,7 +81,7 @@ const PaymentTerms = () => {
                                 </S.TermsDiv>)
                         }
                         {
-                            isAllChecked ? <S.BuyBtn onClick={onOrderType}>구매 계속</S.BuyBtn> : <S.BuyBtn style={{backgroundColor: "#ebebeb", cursor: 'default'}} disabled>구매 계속</S.BuyBtn>
+                            isAllChecked ? <S.BuyBtn onClick={onOrderType}>{type === "/buy" ? "구매" : "판매" }계속</S.BuyBtn> : <S.BuyBtn style={{backgroundColor: "#ebebeb", cursor: 'default'}} disabled>구매 계속</S.BuyBtn>
                         }
                         {isInpectionOpen && <Inspection onInspenctionClose={onInspenctionClose} />}
                         {isPolicyOpen && <Policy onPolicyClose={onPolicyClose}/>}

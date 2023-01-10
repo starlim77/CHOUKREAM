@@ -18,7 +18,7 @@ const SizePage = () => {
         setSelectSize(e.target.id)
     }
     const onNavigate = () => {
-        navigate(`/payTerms?size=${selectSize}&type=${location.pathname}`)
+        navigate(`/payTerms?type=${location.pathname}&size=${selectSize}`)
     }
     return (
         <S.Container>
@@ -34,7 +34,7 @@ const SizePage = () => {
             </S.Body>
             {isBtnClick &&
                 <S.BuyBtnWrapper>
-                    <B.BuyBtn onClick={onNavigate} isBtnClick={isBtnClick}>구매계속</B.BuyBtn>
+                    <B.BuyBtn onClick={onNavigate} isBtnClick={isBtnClick}>{location.pathname === "/buy" ? "구매" : "판매"}계속</B.BuyBtn>
                 </S.BuyBtnWrapper>}
         </S.Container>
 

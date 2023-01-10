@@ -6,6 +6,7 @@ import java.util.Optional;
 import shop.bean.CompletedOrderDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
+import shop.bean.ProductSizeDTO;
 
 public interface ShopDetailService {
 	
@@ -16,4 +17,8 @@ public interface ShopDetailService {
 	public List<OrderDTO> getBuyOrderList(int seq);
 
 	public List<CompletedOrderDTO> getCompletedOrderList(int seq);
+
+	public List<ProductSizeDTO> getProductSize(int seq);
+
+	public Optional<Integer> getProductSizeMin(int seq, String size);
 }

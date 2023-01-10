@@ -30,7 +30,7 @@ public class UsedItemDTO {
 	@Column(name="id",length=100)
 	private String id;
 	
-	@Column(name="imgName", length=3000)
+	@Column(name="imgName",length=3000)
 	private String imgName;
 	
 	@Column(name="title",length=400)

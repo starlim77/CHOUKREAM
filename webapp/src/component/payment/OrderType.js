@@ -12,7 +12,6 @@ const OrderType = () => {
     
     const onClick =(e) => {
           setClickedBtn(e.target.innerText)
-          console.log(clickedBtn)
     }
     
     return (
