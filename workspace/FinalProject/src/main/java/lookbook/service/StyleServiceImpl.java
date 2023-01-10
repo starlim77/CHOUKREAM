@@ -210,13 +210,13 @@ public class StyleServiceImpl implements StyleService {
 		        //System.out.println(findLike.isEmpty());
 
 		       // if (findLike.isEmpty()){
-		            MemberDto memberDto = memberDAO.findById(id).get();
+		     //       MemberDto memberDto = memberDAO.findById(id).get();
 		            StyleEntity styleEntity = styleDAO.findBySeq(style_seq).get();
 		            //System.out.println("서비스임플의 memberDto "+ memberDto);
 		            //System.out.println("서비스임플의 styleEntity" + styleEntity);
 
-		            StyleLikesEntity styleLikesEntity = StyleLikesEntity.toLikesEntity(memberDto, styleEntity);
-		            styleLikesDAO.save(styleLikesEntity);
+		 //           StyleLikesEntity styleLikesEntity = StyleLikesEntity.toLikesEntity(memberDto, styleEntity);
+		//            styleLikesDAO.save(styleLikesEntity);
 		            //styleDAO.plusLike(boardId);
 		            return 1;
 //		        }else {

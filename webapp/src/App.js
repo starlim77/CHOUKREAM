@@ -98,7 +98,6 @@ function App() {
                         path="/lookbook/styleComment/:styleSeq"
                         element={<StyleComment />}
                     />
-                    <Route path="/Search/SearchForm" element={<SearchForm />} />
                     <Route
                         path="/lookbook/mystyledetail/:seq/:id"
                         element={<MystyleDetail />}
@@ -108,7 +107,7 @@ function App() {
                         element={<MystyleUpdate />}
                     />
                 </Route>
-
+                <Route path="/Search/SearchForm" element={<SearchForm />} />
                 <Route path="/cs/csnotice" element={<CsNotice />} />
                 <Route path="/cs/CsFaq" element={<CsFaq />} />
                 <Route path="/cs/CsFaqWriteForm" element={<CsFaqWriteForm />} />

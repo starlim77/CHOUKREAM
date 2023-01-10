@@ -54,7 +54,7 @@ public class CompletePaymentDTO {
 	@Column
 	private String ask;
 	
-	@Column(columnDefinition = "String default 결제완료")
+	@Column
 	private String status;
 	
 }
