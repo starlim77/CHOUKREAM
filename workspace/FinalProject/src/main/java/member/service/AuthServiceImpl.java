@@ -1,20 +1,35 @@
 package member.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseCookie;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jwt.TokenProvider;
+
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import member.bean.MemberDto;
 import member.bean.MemberRequestDto;
 import member.bean.MemberResponseDto;
+import member.bean.RefreshToken;
+import member.bean.TokenDto;
+import member.bean.TokenRequestDto;
 import member.dao.MemberDAO;
+import member.dao.RefreshTokenRepository;
 
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
+	private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final MemberDAO memberDAO;
     private final PasswordEncoder passwordEncoder;
+    private final TokenProvider tokenProvider;
+    //private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
     public MemberResponseDto join(MemberRequestDto memberRequestDto) {

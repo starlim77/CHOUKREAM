@@ -1,5 +1,6 @@
 package member.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,10 +18,12 @@ import member.service.AuthService;
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
+	@Autowired
 	private AuthService authService;
 	
 	@PostMapping("/join")
 	public ResponseEntity<MemberResponseDto> join(@RequestBody MemberRequestDto memberRequestDto) {
+		System.out.println(memberRequestDto);
         return ResponseEntity.ok(authService.join(memberRequestDto));
     }
 	

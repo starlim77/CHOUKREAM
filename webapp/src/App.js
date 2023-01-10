@@ -27,13 +27,8 @@ import CsFaq from './component/Cs/CsFaq';
 import CsFaqWriteForm from './component/Cs/CsFaqWriteForm';
 import LoginForm from './component/User/LoginForm';
 import WriteForm from './component/User/WriteForm';
-import FindEmail from './component/User/FindEmail';
-import FindPassword from './component/User/FindPassword';
 import MystyleDetail from './component/Lookbook/MystyleDetail';
 import MystyleUpdate from './component/Lookbook/MystyleUpdate';
-import FindEmailResult from './component/User/FindEmailResult';
-import FindPasswordResult from './component/User/FindPasswordResult';
-import Logout from './component/User/Logout';
 import ManagerPage from './component/Shop/manager/ManagerPage';
 import List from './component/Shop/manager/NewList';
 import AdminWrite from './component/Shop/register/NewWrite';
@@ -41,6 +36,11 @@ import NewList from './component/Shop/manager/NewList';
 import NewSearch from './component/Shop/manager/NewSearch';
 import NewProducts from './component/Products/NewProducts';
 import UsedUpdate from './component/Used/UsedUpdate';
+import FindEmail from './component/User/FindEmail';
+import FindPassword from './component/User/FindPassword';
+import FindEmailResult from './component/User/FindEmailResult';
+import FindPasswordResult from './component/User/FindPasswordResult';
+import Logout from './component/User/Logout';
 
 function App() {
     return (

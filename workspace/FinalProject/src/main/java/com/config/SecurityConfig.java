@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableWebSecurity
 @Component
-public class WebSecurityConfig {
+public class SecurityConfig {
 	private final TokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
@@ -42,7 +42,10 @@ public class WebSecurityConfig {
                 .accessDeniedHandler(jwtAccessDeniedHandler)
 
                 //페이지 권한 추후 설정
-
+                .and()
+                .authorizeHttpRequests()
+                .requestMatchers("/", "/**").permitAll()
+                
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
 

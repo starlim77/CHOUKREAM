@@ -5,6 +5,14 @@ import java.util.Random;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.config.SecurityUtil;
+
+import lombok.RequiredArgsConstructor;
+import member.bean.MemberDto;
+import member.bean.MemberResponseDto;
+import member.dao.MemberDAO;
 
 @Service
 @RequiredArgsConstructor
@@ -56,6 +64,5 @@ public class MemberServiceImpl implements MemberService {
         memberDto.setPassword(passwordEncoder.encode((newPassword)));
         return MemberResponseDto.of(memberDAO.save(memberDto));
 	}
-public class MemberServiceImpl implements MemberService {
 
 }
