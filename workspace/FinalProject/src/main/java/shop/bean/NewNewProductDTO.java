@@ -78,6 +78,9 @@ public class NewNewProductDTO {
 			registerProductDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
 		}
 	}
+	//상세설명 이미지
+	@Column(name="descriptionImg")
+	private String descriptionImg;
    
 	// 판매가
 	@Column(name="price")
