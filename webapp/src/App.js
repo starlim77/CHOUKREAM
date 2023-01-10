@@ -195,33 +195,22 @@ function App() {
                     {/* 마이 페이지 */}
                     <Route path="/my/*" element={<MyPageApp />} />
 
-                    <Route path="/lookbook" element={<Trending />}>
-                        <Route path="/lookbook/trending" element="" />
-                        {/* <Route path='/detail' element='' /> */}
-                        <Route
-                            path="/lookbook/trending"
-                            element={<Trending />}
-                        />
-                        <Route path="/lookbook/social" element={<Social />} />
-                        <Route path="/lookbook/mystyle" element={<Mystyle />} />
-                        <Route path="/lookbook/detail" element={<Detail />} />
-                        <Route
-                            path="/lookbook/styleComment/:styleSeq"
-                            element={<StyleComment />}
-                        />
-                        <Route
-                            path="/lookbook/mystyledetail/:seq/:id"
-                            element={<MystyleDetail />}
-                        />
-                        <Route
-                            path="/lookbook/mystyleUpdate/:seq/:id"
-                            element={<MystyleUpdate />}
-                        />
-                    </Route>
-
+                    <Route path="/lookbook/trending" element={<Trending />} />
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
                     <Route path="/lookbook/detail" element={<Detail />} />
+                    <Route
+                        path="/lookbook/styleComment/:styleSeq"
+                        element={<StyleComment />}
+                    />
+                    <Route
+                        path="/lookbook/mystyledetail/:seq/:id"
+                        element={<MystyleDetail />}
+                    />
+                    <Route
+                        path="/lookbook/mystyleUpdate/:seq/:id"
+                        element={<MystyleUpdate />}
+                    />
                 </Route>
 
                 <Route path="/Search/SearchForm" element={<SearchForm />} />
