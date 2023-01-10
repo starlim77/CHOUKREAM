@@ -12,8 +12,11 @@ import BuyBidsTable from "./table/BuyBidsTable";
 import EmptyTable from "./table/EmptyTable";
 import Graph from './Graph';
 import * as U from '../Used/UsedItemStyle';
+import ListModal from './ListModal';
 
 const Products = () => {
+
+    const [listOpen, setListOpen] = useState(false)
 
     const [count, setCount] = useState('');
 
@@ -52,6 +55,7 @@ const Products = () => {
     const navigate = useNavigate();
 
     const [modalOpen, setModalOpen] = useState(false);
+    const [modalOpen2, setModalOpen2] = useState(false);
 
     const [form, setForm] = useState({});
 
@@ -162,6 +166,7 @@ const Products = () => {
              .catch(error => console.log(error));   
 
         setModalOpen(false)
+        setListOpen(false)
     }
 
     const getAll = (seq) => {
@@ -180,6 +185,7 @@ const Products = () => {
                 .catch(error => console.log(error));    
         
         setModalOpen(false)
+        setListOpen(false)
     }
 
     const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장 
@@ -542,23 +548,26 @@ const Products = () => {
                                                     <S.TableWrap>
                                                         {completedOrderForm[0].price !== '-' ? <CompletedOrderTable completedOrderForm={completedOrderForm}/> : <EmptyTable word={'체결된 거래'}/>}
                                                     </S.TableWrap>
-                                                    {completedOrderForm[0].price !== '-' && <S.BtnOutLineGrey>체결 내역 더보기</S.BtnOutLineGrey>}
+                                                    {completedOrderForm[0].price !== '-' && <S.BtnOutLineGrey onClick={() => setModalOpen2(true)}>체결 내역 더보기</S.BtnOutLineGrey>}
                                                 </S.TabContent>
                                                 <S.TabContent open={ open7 }>
                                                     <S.TableWrap>
                                                         {sellBidsListForm[0].price !== '-' ? <SellBidsTable sellBidsListForm={sellBidsListForm}/> : <EmptyTable word={'판매 희망가'}/>}
                                                     </S.TableWrap>
-                                                    {sellBidsListForm[0].price !== '-' && <S.BtnOutLineGrey>입찰 내역 더보기</S.BtnOutLineGrey>}
+                                                    {sellBidsListForm[0].price !== '-' && <S.BtnOutLineGrey onClick={() => setModalOpen2(true)}>입찰 내역 더보기</S.BtnOutLineGrey>}
                                                 </S.TabContent>
                                                 <S.TabContent open={ open8 }>
                                                     <S.TableWrap>
                                                         {buyBidsListForm[0].price !== '-' ? <BuyBidsTable buyBidsListForm={buyBidsListForm}/> : <EmptyTable word={'구매 희망가'}/>}   
                                                     </S.TableWrap>
-                                                    {buyBidsListForm[0].price !== '-' && <S.BtnOutLineGrey>입찰 내역 더보기</S.BtnOutLineGrey>}
+                                                    {buyBidsListForm[0].price !== '-' && <S.BtnOutLineGrey onClick={() => setModalOpen2(true)}>입찰 내역 더보기</S.BtnOutLineGrey>}
                                                 </S.TabContent>
                                             </S.TabArea>
                                         </S.WrapBids>
                                     </S.ProductSalesGraph>
+                                    {modalOpen2 && <ListModal setModalOpen={setModalOpen2} completedOrderForm={completedOrderForm} sellBidsListForm={sellBidsListForm} buyBidsListForm={buyBidsListForm} 
+                                                              form={form} mainImg={mainImg} sizeForm={sizeForm} onOpen2={onOpen2} open6={open6} open7={open7} open={open8}
+                                                              getSize={getSize} getAll={getAll} setListOpen={setListOpen} listOpen={listOpen} size={size} seq={seq}/> }
                                     <div>
                                         <S.ConfirmWrap>
                                             <S.ConfirmWrapConfirmTitle>구매 전 꼭 확인해주세요</S.ConfirmWrapConfirmTitle>
