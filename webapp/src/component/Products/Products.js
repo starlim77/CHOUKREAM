@@ -782,8 +782,8 @@ const Products = () => {
                         </S.BrandTitle>
                         <S.BrandProducts>
                             <S.BrandProductList>
-                            {/* {
-                                brandListForm.length > 10 ? 
+                            {
+                                brandListForm.length < 10 ? 
                                 brandListForm.map((item, index) => (
                                     <S.ProductItem key={index}>
                                         <S.ItemInner onClick={() => brandNavigate(item.seq)}>
@@ -840,7 +840,7 @@ const Products = () => {
                                         </S.ItemInner>
                                     </S.ProductItem>
                                 })
-                            } */}
+                            }
                             </S.BrandProductList>
                         </S.BrandProducts>
                     </S.BrandArea>
