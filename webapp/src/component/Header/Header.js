@@ -36,12 +36,6 @@ const Header = () => {
                 <S.Bottom>
                     <S.BottomImg src="../image/logo.png" />
                     <S.BottomWrapper>
-                        <S.BottomLi>
-                            <Link to="/buy">구매 임시</Link>
-                        </S.BottomLi>
-                        <S.BottomLi>
-                            <Link to="/sell">판매 임시</Link>
-                        </S.BottomLi>
                         <S.BottomLi active={true}>STYLE</S.BottomLi>
                         <S.BottomLi>
                             <Link to="/shop">shop</Link>

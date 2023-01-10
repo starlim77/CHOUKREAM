@@ -2,6 +2,7 @@ package shop.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.PublicKey;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,6 +28,7 @@ import shop.bean.NewProductDTO;
 import shop.bean.ProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.service.NewProductService;
+import shop.bean.ProductSizeDTO;
 import shop.service.ShopDetailService;
 import shop.service.ShopService;
 
