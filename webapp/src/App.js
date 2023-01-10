@@ -38,6 +38,8 @@ import NewList from './component/Shop/manager/NewList';
 import NewSearch from './component/Shop/manager/NewSearch';
 import NewProducts from './component/Products/NewProducts';
 import UsedUpdate from './component/Used/UsedUpdate';
+import MyPageMain from './component/myPage/MyPageMain';
+import MyPageApp from './component/myPage/MyPageApp';
 
 function App() {
     
@@ -97,6 +99,11 @@ function App() {
                     <Route path="/join" element={<WriteForm />} />
 
                     <Route path="/cs/*" element={<CsMain />} />
+
+                      {/* 마이 페이지 */}
+                <Route path='/my/*' element={<MyPageApp/>}/>
+
+                
                 <Route path="/lookbook" element={<Trending />}>
                     <Route path="/lookbook/trending" element="" />
                     {/* <Route path='/detail' element='' /> */}
@@ -108,6 +115,8 @@ function App() {
                 <Route path="/lookbook/detail" element={<Detail />} />
                 <Route path="/Search/SearchForm" element={<SearchForm />} />
 
+
+              
             </Routes>
         </BrowserRouter>
     );
