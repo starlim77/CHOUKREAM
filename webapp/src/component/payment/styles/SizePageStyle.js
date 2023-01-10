@@ -11,7 +11,7 @@ export const Container = styled.div`
 `;
 export const Body = styled.div`
     width: 100%;
-    height: 300px;
+    height: 100%;
     border-top: 1px solid #ebebeb;
 `;
 export const BtnWrapper = styled.div`

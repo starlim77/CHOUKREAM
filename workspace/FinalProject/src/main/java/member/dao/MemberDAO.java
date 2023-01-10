@@ -8,9 +8,8 @@ import org.springframework.stereotype.Repository;
 import member.bean.MemberDto;
 
 @Repository
-public interface MemberDAO extends JpaRepository<MemberDto, Long> {
+public interface MemberDAO extends JpaRepository<MemberDto, String> {
 	public Optional<MemberDto> findByEmail(String email);
-	
     public boolean existsByEmail(String email);
     
 	public Optional<MemberDto> findEmailByPhone(String phone);
