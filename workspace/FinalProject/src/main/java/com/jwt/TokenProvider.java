@@ -26,8 +26,6 @@ public class TokenProvider {
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 5; //5분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
     
-    private MemberDto memberDto;
-    
     private final Key key;
     
     public TokenProvider(@Value("${jwt.secret}") String secretKey) {
