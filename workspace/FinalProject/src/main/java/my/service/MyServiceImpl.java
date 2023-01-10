@@ -22,11 +22,26 @@ public class MyServiceImpl implements MyService{
 	
 	@Override
 	public void addAddress(AddressDTO addressDTO) {
-		addressDAO.save(addressDTO);
+		List<AddressDTO> list = addressDAO.findAddressDTOsByIdOrderByDefaultAddressDesc(addressDTO.getId());
+//		System.out.println("list = "+list);
+		if(list.size() == 0) {
+			addressDTO.setDefaultAddress(1);
+			addressDAO.save(addressDTO);
+		}else if(addressDTO.getDefaultAddress()==1) {
+			list.get(0).setDefaultAddress(0);
+			addressDAO.save(list.get(0));
+			addressDAO.save(addressDTO);
+		}else {
+			addressDAO.save(addressDTO);
+		}
 	}
 	@Override
 	public List<AddressDTO> getAllAddress(@RequestParam String id) {
-		return addressDAO.findAddressDTOsById(id);
+		return addressDAO.findAddressDTOsByIdOrderByDefaultAddressDesc(id);
+	}
+	@Override
+	public Optional<AddressDTO> getDefaultAddress(String id) {
+		return addressDAO.findByIdAndDefaultAddress(id, 1);
 	}
 	@Override
 	public Optional<PointDTO> getHavePoint(String id) {
@@ -36,6 +51,7 @@ public class MyServiceImpl implements MyService{
 	public void changePoint(PointDTO pointDTO) {
 		pointDAO.save(pointDTO);
 	}
+
 	
 	
 }

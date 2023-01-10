@@ -47,6 +47,10 @@ function App() {
                         element={<UsedItem></UsedItem>}
                     ></Route>
                     <Route path="products/:seq" element={<Products />} />
+                    <Route
+                        path="pay/payForm"
+                        element={<PayForm></PayForm>}
+                    ></Route>
                     <Route path="pay/payForm" element={<PayForm />}></Route>
                     <Route path="Used/usedMain" element={<UsedMain />} />
                     <Route path="Used/usedItem" element={<UsedItem />} />
