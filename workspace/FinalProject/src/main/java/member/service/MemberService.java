@@ -3,11 +3,14 @@ package member.service;
 import java.util.Optional;
 
 import member.bean.MemberDto;
+import member.bean.MemberResponseDto;
 
 public interface MemberService {
 
 	public Optional<MemberDto> findEmailByPhone(String phone);
 
-	public Optional<MemberDto> findPWByPhoneEmail(String phone, String email);
+	public String findPasswordByPhoneAndEmail(String phone, String email);
+	
+	public MemberResponseDto changeMemberPassword(String email, String exPassword, String newPassword);
 
 }

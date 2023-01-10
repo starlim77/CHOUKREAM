@@ -2,6 +2,7 @@ package member.controller;
 
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import member.bean.ChangePasswordRequestDto;
 import member.bean.MemberDto;
+import member.bean.MemberResponseDto;
 import member.service.MemberService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -30,10 +33,14 @@ public class MemberController {
 		return memberService.findEmailByPhone(phone);
 	}
 	
-	@GetMapping(path="sendSms")
-	public String findPWByPhoneEmail(@RequestParam String phone, @RequestParam String email) {
-		Optional<MemberDto> memberDto = memberService.findPWByPhoneEmail(phone,email);
-		return null;
+	@GetMapping(path="tempPassword")
+	public String findPasswordByPhoneAndEmail(@RequestParam String phone, @RequestParam String email) {
+		return memberService.findPasswordByPhoneAndEmail(phone,email);
 	}
+	
+	@PostMapping(path="changePassword")
+    public ResponseEntity<MemberResponseDto> setMemberPassword(@RequestBody ChangePasswordRequestDto request) {
+        return ResponseEntity.ok(memberService.changeMemberPassword(request.getEmail() ,request.getExPassword(), request.getNewPassword()));
+    }
 
 }

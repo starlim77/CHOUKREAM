@@ -1,21 +1,24 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { getCookieToken } from './storage/Cookie';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { removeCookieToken } from './storage/Cookie';
 
 const Logout = () => {
-    const { accessToken } = useSelector(state => state.token)
-    const refreshToken = getCookieToken()
-
-    const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    
+    const logout = () => {
+        localStorage.removeItem('accessToken');
+        removeCookieToken();
+        return navigate('/login');
+    }
+
+    useEffect( () => {
+        logout();
+    }, [])
 
     return (
-        <div>
-            
-        </div>
+        <>
+          <Link to="/login" />  
+        </>
     );
 };
 
