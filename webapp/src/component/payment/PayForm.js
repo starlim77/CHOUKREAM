@@ -7,18 +7,21 @@ import NewAddressModal from './NewAddressModal';
 import ChangeAddressModal from './ChangeAddressModal';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
+import Ask from './Ask';
 
 const PayForm = () => {
     //  const id = sessionStorage.getItem('id');
     const id = 'hong@gmail.com';
-    const name = 'hongildong';
-    const phone = '01011111111';
+    const phone = '01012345678';
 
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const [modals, setModals] = useState([false, false]);
+
+    const type = searchParams.get('type');
     const productNum = searchParams.get('productNum');
     const size = searchParams.get('size');
+    const orderNum = searchParams.get('orderNum');
 
     const [shipInfo, setShipInfo] = useState({
         shipName: '',
@@ -27,8 +30,8 @@ const PayForm = () => {
     });
 
     const { shipName, shipPhone, shipAddress } = shipInfo;
-    const [ask, setAsk] = useState('요청사항 없음');
-    const [usePoint, setUsePoint] = useState('');
+    const [ask, setAsk] = useState('배송 시 요청사항을 선택해주세요');
+    const [usePoint, setUsePoint] = useState(0);
     const [havePoint, setHavePoint] = useState('');
 
     useEffect(() => {
@@ -36,10 +39,33 @@ const PayForm = () => {
             .get('http://localhost:8080/my/getHavePoint', { params: { id } })
             .then(res => setHavePoint(res.data))
             .catch(error => console.log(error));
+
+        axios
+            .get('http://localhost:8080/my/getDefaultAddress', {
+                params: { id },
+            })
+            .then(res => {
+                if (res.data !== null) {
+                    setShipInfo({
+                        shipName: res.data.name,
+                        shipPhone: res.data.phone,
+                        shipAddress: `(${res.data.zipcode}) ${res.data.addr1} ${res.data.addr2}`,
+                    });
+                }
+            })
+            .catch(err => console.log(err));
+
+        if (type === 'new') {
+            axios.get('http://localhost:8080').then().post();
+        } else if (type === 'resell') {
+            axios.get('http://localhost:8080/').then().post();
+        } else if (type === 'used') {
+            axios.get('http://local').then().post();
+        }
     }, []);
 
-    const [productPrice] = useState(13000);
-    const [payPrice, setPayPrice] = useState(productPrice);
+    const [productPrice] = useState(0);
+    const [payPrice, setPayPrice] = useState(0);
 
     const addComma = num => {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -47,22 +73,24 @@ const PayForm = () => {
 
     const handleInputChange = e => {
         const { value } = e.target;
-        setUsePoint(Number(value.replace(/[^0-9]/g, '')).toLocaleString());
-        const removedCommaValue = Number(value.replaceAll(',', ''));
-        setPayPrice(productPrice - removedCommaValue);
+        if (value <= havePoint) {
+            setUsePoint(Number(value.replace(/[^0-9]/g, '')).toLocaleString());
+            const removedCommaValue = Number(value.replaceAll(',', ''));
+            setPayPrice(productPrice - removedCommaValue);
+        }
     };
     const date = new Date();
     const todayDate =
         date.getFullYear() + '' + (date.getMonth() + 1) + '' + date.getDate();
 
-    const [finalOrderNumber, setFinalOrderNumber] = useState('');
+    const [orderNumber, setOrderNumber] = useState('');
 
     useEffect(() => {
         axios
             .get('http://localhost:8080/pay/getOrderNumber')
             .then(res => {
                 //console.log(res.data);
-                setFinalOrderNumber(
+                setOrderNumber(
                     'ORD' + todayDate + '-' + ('00000000' + res.data).slice(-8),
                 );
             })
@@ -82,6 +110,28 @@ const PayForm = () => {
             .catch(error => console.log(error));
     };
 
+    const completePayment = () => {
+        axios
+            .post('http://localhost:8080/pay/completePay', null, {
+                params: {
+                    id,
+                    type,
+                    productNum,
+                    size,
+                    orderNumber,
+                    productPrice,
+                    payPrice,
+                    usePoint,
+                    shipName,
+                    shipPhone,
+                    shipAddress,
+                    ask,
+                },
+            })
+            .then(alert('결제 완료'))
+            .catch(err => console.log(err));
+    };
+
     // console.log(
     //     havePoint -
     //         Number(usePoint.replaceAll(',', '')) +
@@ -99,11 +149,11 @@ const PayForm = () => {
                 // param
                 pg: 'html5_inicis',
                 pay_method: 'card',
-                merchant_uid: finalOrderNumber,
+                merchant_uid: orderNumber,
                 name: '노르웨이 회전 의자',
                 amount: payPrice,
                 buyer_email: id,
-                buyer_name: name,
+                buyer_name: '',
                 buyer_tel: phone,
                 buyer_addr: '',
                 buyer_postcode: '',
@@ -112,13 +162,14 @@ const PayForm = () => {
                 // callback
                 if (res.success) {
                     // 결제 성공 시 로직,
-                    alert('결제 완료');
-                    changePoint(
-                        id,
-                        havePoint -
-                            Number(usePoint.replaceAll(',', '')) +
-                            Math.ceil(payPrice / 100),
-                    );
+                    //alert('결제 완료');
+                    completePayment();
+                    // changePoint(
+                    //     id,
+                    //     havePoint -
+                    //         Number(usePoint.replaceAll(',', '')) +
+                    //         Math.ceil(payPrice / 100),
+                    // );
                 } else {
                     // 결제 실패 시 로직,
                     alert('결제 취소');
@@ -127,30 +178,57 @@ const PayForm = () => {
         );
     };
 
+    const pointBtn = e => {
+        if (e.target.innerText === '모두 이용') {
+            setUsePoint(havePoint);
+            setPayPrice(productPrice - havePoint);
+        } else {
+            setUsePoint(0);
+            setPayPrice(productPrice);
+        }
+    };
+
     return (
         <S.PayForm>
+            {modals[0] && (
+                <S.ModalBackground
+                    onClick={() => setModals([false, false, false])}
+                ></S.ModalBackground>
+            )}
+
+            {modals[1] && (
+                <S.ModalBackground
+                    onClick={() => setModals([false, false, false])}
+                ></S.ModalBackground>
+            )}
+            {modals[2] && (
+                <S.ModalBackground
+                    onClick={() => setModals([false, false, false])}
+                ></S.ModalBackground>
+            )}
             {modals[0] ? (
-                <S.ModalBackground onClick={() => setModals([false, false])}>
-                    <NewAddressModal
-                        id={id}
-                        setShipInfo={setShipInfo}
-                        setModals={setModals}
-                    ></NewAddressModal>
-                </S.ModalBackground>
+                <NewAddressModal
+                    id={id}
+                    setShipInfo={setShipInfo}
+                    setModals={setModals}
+                ></NewAddressModal>
             ) : null}
             {modals[1] ? (
-                <S.ModalBackground onClick={() => setModals([false, false])}>
-                    <ChangeAddressModal
-                        id={id}
-                        setShipInfo={setShipInfo}
-                    ></ChangeAddressModal>
-                </S.ModalBackground>
+                <ChangeAddressModal
+                    id={id}
+                    setShipInfo={setShipInfo}
+                    setModals={setModals}
+                ></ChangeAddressModal>
             ) : null}
-
+            {modals[2] ? (
+                <Ask setModals={setModals} ask={ask} setAsk={setAsk}></Ask>
+            ) : null}
             <S.Address>
                 <S.AddressTitle>
                     <S.AddressText>배송 주소</S.AddressText>
-                    <S.AddressAddNew onClick={() => setModals([true, false])}>
+                    <S.AddressAddNew
+                        onClick={() => setModals([true, false, false])}
+                    >
                         <FontAwesomeIcon icon={faPlus} />
                         &nbsp;새 주소 추가
                     </S.AddressAddNew>
@@ -182,11 +260,13 @@ const PayForm = () => {
                         <S.AddressChangeBtn
                             type="button"
                             value="변경"
-                            onClick={() => setModals([false, true])}
+                            onClick={() => setModals([false, true, false])}
                         ></S.AddressChangeBtn>
                     </S.AddressDeleveryInfo>
                 </S.AddressContent>
-                <S.AddressDeleveryAsk>
+                <S.AddressDeleveryAsk
+                    onClick={() => setModals([false, false, true])}
+                >
                     <S.ShippingMemo>{ask}</S.ShippingMemo>
                 </S.AddressDeleveryAsk>
                 <S.Hr></S.Hr>
@@ -204,7 +284,6 @@ const PayForm = () => {
                     </S.DeleveryInfo>
                 </S.BrandDelevery>
             </S.Address>
-
             <S.Point>
                 <S.AddressText>포인트</S.AddressText>
                 <S.UsePoint>
@@ -216,10 +295,10 @@ const PayForm = () => {
                     ></S.UsePointShow>
                     <S.UseAllBtn
                         havePoint={havePoint}
-                        onClick={() => setUsePoint(havePoint)}
+                        onClick={e => pointBtn(e)}
                         usePoint={usePoint}
                     >
-                        {usePoint === '' ? '모두 이용' : '모두 취소'}
+                        {usePoint === 0 ? '모두 이용' : '모두 취소'}
                     </S.UseAllBtn>
                 </S.UsePoint>
                 <S.HavePoint>
@@ -232,7 +311,6 @@ const PayForm = () => {
                     <S.HavePointShow>{addComma(havePoint)}P</S.HavePointShow>
                 </S.HavePoint>
             </S.Point>
-
             <S.OrderInfo>
                 <S.AddressText>최종 주문 정보</S.AddressText>
                 <S.PriceTitle>총 결제금액</S.PriceTitle>
@@ -253,7 +331,7 @@ const PayForm = () => {
                     <S.PriceDL>
                         <S.PriceDT>포인트</S.PriceDT>
                         <S.PriceDD>
-                            {usePoint === ''
+                            {usePoint === 0
                                 ? '-'
                                 : '-' + addComma(usePoint) + 'P'}
                         </S.PriceDD>
@@ -264,7 +342,6 @@ const PayForm = () => {
                     </S.PriceDL>
                 </S.PriceInfo>
             </S.OrderInfo>
-
             <S.OrderWay>
                 <S.AddressText>결제 방법</S.AddressText>
                 <S.OrderNormal>
