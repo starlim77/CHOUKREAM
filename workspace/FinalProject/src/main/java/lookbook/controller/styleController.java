@@ -29,7 +29,7 @@ import lookbook.entity.StyleEntity;
 import lookbook.service.StyleService;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(value = "lookbook")
 public class styleController {
 	@Autowired
@@ -63,6 +63,15 @@ public class styleController {
 		System.out.println("컨트롤러에 seq확인 : "+ seq);
 		return styleService.findMyListDetail(seq);
 	}
+	
+   //내글 갯수 카운트
+   @GetMapping(path="findCountById")
+   @ResponseBody
+   public Long findCountById(@RequestParam String id) {
+	   //System.out.println("컨트롤러에 아이디" + id);
+      return styleService.findCountById(id);
+   }
+
 	
 		
 	//trending,detail 목록 가져오기

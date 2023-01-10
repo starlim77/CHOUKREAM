@@ -77,10 +77,19 @@ public class StyleServiceImpl implements StyleService {
 	//글삭제
 	@Override
 	public void delete(int seq) {
-		System.out.println("서비스임플 seq ="+seq);
+		//System.out.println("서비스임플 seq ="+seq);
 		styleDAO.deleteBySeq(seq);
 		
 	}
+	
+    @Override
+    public Long findCountById(String id) {
+    	//System.out.println("서비스임플에 id" + id);
+       //return styleDAO.findCountById(id);
+    	return null;
+       
+    }
+
 	
 	public void save(List<MultipartFile> list, StyleDTO styleDTO) {		
 			

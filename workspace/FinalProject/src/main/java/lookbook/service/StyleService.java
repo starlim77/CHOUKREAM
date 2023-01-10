@@ -26,6 +26,8 @@ public interface StyleService {
 
 	public int saveLikes(String id,int style_seq);
 	public int findLikes(String id, int style_seq);
+	
+	public Long findCountById(String id);
 
 		
 }
