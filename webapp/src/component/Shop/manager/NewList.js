@@ -4,6 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as Li from './NewListStyle';
 import NewProductList from './NewProductList';
 import Pagination from './Pagination';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { relativeTimeRounding } from 'moment/moment';
 
 const NewList = () => {
     const [newProductList, setNewProductList] = useState([]);
@@ -27,6 +30,9 @@ const NewList = () => {
         // console.log('ㅠㅠ ' + newProductList[0])
         // console.log('ㅠㅠ ' + newProductList)
         // 자꾸 유니크 키가 없다고함 키줬는데
+        // return () => {
+        //     console.log('NewList 컴포넌트가 화면에서 사라짐');
+        // };
 
         // console.log('렌더링 1');
     }, []);
@@ -118,10 +124,28 @@ const NewList = () => {
     };
     const [disabledCheck, setDisabledCheck] = useState(true)
     
+    const [keyword, setKeyword] = useState('');
+    const [searchOption, setSearchOption] = useState('브랜드');
+    const onSearch = e => {
+        // get select 
+        e.preventDefault();
+        axios
+            .get('http://localhost:8080/shop/search', {
+                // get방식은 2번째 인자에 null 안써줘도된다
+                params: {
+                    searchOption: searchOption,
+                    keyword: keyword,
+                },
+            })
+            .then(res => setNewProductList(res.data))
+            .catch(error => console.error(error));
+    };
+    
+    const [searchBtn, setSearchBtn] = useState(false)
+    
     return (
         <>
             <Li.MenuBtn
-                onClick={newProductDelete}
                 disabled={disabledCheck}
                 style={{ backgroundColor: disabledCheck ? '' : '#fce205' }}
             >
@@ -146,8 +170,12 @@ const NewList = () => {
                 <Link
                     to={'/admin/newUpdate'}
                     state={{ name: '현욱', checkedId: checkedId }}
-                    style={{ textDecoration: 'none' }}
+                    style={{
+                        textDecoration: 'none',
+                        pointerEvents: disabledCheck ? 'none' : '',
+                    }}
                 >
+                    {/* pointerEvents: 'none' Link 태그 버튼 고장내는거거 */}
                     Update
                 </Link>
             </Li.MenuBtn>
@@ -158,25 +186,60 @@ const NewList = () => {
             >
                 Delete
             </Li.MenuBtn>
+            <Li.MenuBtn
+                onClick={() => setSearchBtn(!searchBtn)}
+                style={{ backgroundColor: searchBtn ? '#fce205' : '' }}
+            >
+                <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    style={{
+                        margin: '3px',
+                    }}
+                />
+            </Li.MenuBtn>
             <Li.Title>새 상품 목록</Li.Title>
-            <Li.Label>
-                페이지 당 표시할 상품 개수:&nbsp;
-                <Li.Select
-                    type="number"
-                    value={limit}
-                    onChange={({ target: { value } }) =>
-                        setLimit(Number(value))
-                    }
-                >
-                    <Li.Option value="5">5</Li.Option>
-                    <Li.Option value="10">10</Li.Option>
-                    <Li.Option value="15">15</Li.Option>
-                    <Li.Option value="20">20</Li.Option>
-                    <Li.Option value="20">25</Li.Option>
-                </Li.Select>
-            </Li.Label>
-            {/* {console.log("리미트 뭐니 " + limit)} */}
 
+            <Li.SearchDiv style={{ display: searchBtn ? '' : 'none' }}>
+                <Li.SearchForm id="searchForm">
+                    <Li.SearchSelect
+                        name="searchOption"
+                        onChange={e => setSearchOption(e.target.value)}
+                    >
+                        <Li.SearchOption value="brand">brand</Li.SearchOption>
+                        <Li.SearchOption value="category">
+                            category
+                        </Li.SearchOption>
+                    </Li.SearchSelect>
+                    &nbsp; &nbsp;
+                    <Li.SearchInput
+                        type="text"
+                        name="keyword"
+                        value={keyword}
+                        onChange={e => setKeyword(e.target.value)}
+                    ></Li.SearchInput>
+                    &nbsp; &nbsp;
+                    <Li.SearchBtn>검색</Li.SearchBtn>
+                    {/* onClick={onSearch} */}
+                </Li.SearchForm>
+            </Li.SearchDiv>
+            <Li.LabelDiv>
+                <Li.Label>
+                    페이지 당 표시할 상품 개수:&nbsp;
+                    <Li.Select
+                        type="number"
+                        value={limit}
+                        onChange={({ target: { value } }) =>
+                            setLimit(Number(value))
+                        }
+                    >
+                        <Li.Option value="5">5</Li.Option>
+                        <Li.Option value="10">10</Li.Option>
+                        <Li.Option value="15">15</Li.Option>
+                        <Li.Option value="20">20</Li.Option>
+                        <Li.Option value="20">25</Li.Option>
+                    </Li.Select>
+                </Li.Label>
+            </Li.LabelDiv>
             <Li.Table>
                 <Li.Thead>
                     <Li.Tr>
@@ -205,18 +268,26 @@ const NewList = () => {
                         <Li.Th>subTitle</Li.Th>
                     </Li.Tr>
                 </Li.Thead>
-                <NewProductList
-                    newProductList={newProductList}
-                    copy_newProductList={copy_newProductList}
-                    offset={offset}
-                    limit={limit}
-                    checked={checked}
-                    setChecked={setChecked}
-                    checkedId={checkedId}
-                    setCheckedId={setCheckedId}
-                    disabledCheck={disabledCheck}
-                    setDisabledCheck={setDisabledCheck}
-                ></NewProductList>
+                <Li.Tbody>
+                    {copy_newProductList
+                        .slice(offset, offset + limit)
+                        .map(item => (
+                            <NewProductList
+                                key={item.seq}
+                                newProductList={newProductList}
+                                copy_newProductList={copy_newProductList}
+                                item={item}
+                                offset={offset}
+                                limit={limit}
+                                checked={checked}
+                                setChecked={setChecked}
+                                checkedId={checkedId}
+                                setCheckedId={setCheckedId}
+                                disabledCheck={disabledCheck}
+                                setDisabledCheck={setDisabledCheck}
+                            ></NewProductList>
+                        ))}
+                </Li.Tbody>
             </Li.Table>
 
             <Li.Footer>

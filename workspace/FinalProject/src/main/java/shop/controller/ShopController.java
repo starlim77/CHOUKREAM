@@ -3,6 +3,7 @@ package shop.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -140,6 +141,12 @@ public class ShopController {
 		newProductService.update(newProductDTO);
 	}
 	
+//	@GetMapping("search")
+//	// @ResponseBody
+//	public List<NewProductDTO> search(@RequestParam Map<String, String> map) { // searchOption, keyword
+//		System.out.println("map 은 ?> " + map);
+//		return newProductService.search(map);
+//	}
 	
 	@PostMapping(path="newProductUpload", produces="text/html;charset-UTF-8")
 	 @ResponseBody

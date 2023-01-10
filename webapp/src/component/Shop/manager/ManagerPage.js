@@ -30,12 +30,12 @@ const ManagerPage = () => {
                         <Ma.MenuBtn style={{ display: showBtn ? '' : 'none' }}>
                             <Link to={'/admin/newList'}>Delete</Link>
                         </Ma.MenuBtn> */}
-                        <Link to="/admin/newSearch">
+                        {/* <Link to="/admin/newSearch">
                             <FontAwesomeIcon
                                 icon={faMagnifyingGlass}
                                 style={{ marginLeft: '15px' }}
                             />
-                        </Link>
+                        </Link> */}
                     </Ma.MenuLi>
                 </Ma.MenuUl>
             </Ma.Menu>
