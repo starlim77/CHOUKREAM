@@ -1,16 +1,23 @@
 package member.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Data;
+import lookbook.entity.StyleLikesEntity;
 
 @Data
 @Entity
@@ -53,4 +60,11 @@ public class MemberDto {
         this.phone = phone;
         this.authority = authority;
     }
+	
+	//lookbook   
+	//cascade = CascadeType.REMOVE  : 멤버id가 삭제되면 멤버가 누른 좋아요도 같이 삭제
+//	@OneToMany(mappedBy = "memberDto", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+//	private List<StyleLikesEntity> styleLikesEntity = new ArrayList<>();
+//	
+	
 }

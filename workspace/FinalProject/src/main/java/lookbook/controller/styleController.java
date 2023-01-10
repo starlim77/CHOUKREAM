@@ -1,6 +1,7 @@
 package lookbook.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,8 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lookbook.bean.StyleCommentDTO;
 import lookbook.bean.StyleDTO;
+import lookbook.bean.StyleLikesDTO;
 import lookbook.service.StyleCommentService;
-import lookbook.entity.StyleCommentEntity;
-import lookbook.entity.StyleEntity;
 import lookbook.service.StyleService;
 
 @RestController
@@ -60,7 +60,7 @@ public class styleController {
 	@GetMapping(path="findMyListDetail/{seq}")
 	@ResponseBody
 	public StyleDTO findMyListDetail(@PathVariable int seq) {
-		System.out.println("컨트롤러에 seq확인 : "+ seq);
+		//System.out.println("컨트롤러에 seq확인 : "+ seq);
 		return styleService.findMyListDetail(seq);
 	}
 	
@@ -94,23 +94,20 @@ public class styleController {
 	@Transactional
 	@ResponseBody
 	public void delete(@RequestParam int seq) {
-		System.out.println("컨트롤러 딜리트 seq =" + seq);
+		//System.out.println("컨트롤러 딜리트 seq =" + seq);
 		styleService.delete(seq);
 	}
 	
 
 	
-//좋아요
-    @PostMapping(path="likes")
-    @ResponseBody
-    //public int likes(String member_id, int style_seq) {
-    //public int likes(@RequestParam String member_id, @RequestParam int seq) {
-    public int likes(@ModelAttribute StyleDTO styleDTO) {
-//    	System.out.println("컨트롤러  member_id "+ member_id);
-//        System.out.println("컨트롤러 style_seq" + seq);
-//    	int result = styleService.saveLikes(member_id,seq);
-//        return result;
-        return 100;
+	//좋아요
+    @PostMapping(path="likebutton")
+    public int likes(@ModelAttribute StyleLikesDTO styleLikesDTO) {
+    	System.out.println("컨트롤러 styleLikesDTO ==== "+ styleLikesDTO);
+    	return styleService.saveLikes(styleLikesDTO);
+
+
+  
     }
 		
 
@@ -142,12 +139,5 @@ public class styleController {
 	}
 	
 	
-	
-
-
-//	@GetMapping(path="getMyStyleBoardList")
-//	public List<StyleDTO> getMyStyleBoardList() {
-//		return styleService.getMyStyleBoardList();
-//	}
 
 }
