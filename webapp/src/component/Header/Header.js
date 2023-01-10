@@ -26,6 +26,7 @@ const Header = () => {
                         <S.TopLi>마이페이지</S.TopLi>
                         <S.TopLi>
                             <Link to="/login">로그인</Link>
+                            <Link to="/logout">로그아웃</Link>
                         </S.TopLi>
                     </S.TopWrapper>
                 </S.Top>

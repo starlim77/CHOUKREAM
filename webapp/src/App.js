@@ -30,6 +30,9 @@ import FindEmail from './component/User/FindEmail';
 import FindPassword from './component/User/FindPassword';
 import MystyleDetail from './component/Lookbook/MystyleDetail';
 import MystyleUpdate from './component/Lookbook/MystyleUpdate';
+import FindEmailResult from './component/User/FindEmailResult';
+import FindPasswordResult from './component/User/FindPasswordResult';
+import Logout from './component/User/Logout';
 
 function App() {
     return (
@@ -67,19 +70,44 @@ function App() {
                         path="/login/find_password"
                         element={<FindPassword />}
                     />
-                    <Route path="/join" element={<WriteForm />} />    
+                    <Route path="/join" element={<WriteForm />} />
                     <Route path="/Search/SearchForm" element={<SearchForm />} />
-
-                    <Route path="/lookbook/trending" element={<Trending />} /> 
+                    <Route
+                        path="/login/find_email/result"
+                        element={<FindEmailResult />}
+                    />
+                    <Route
+                        path="/login/find_password"
+                        element={<FindPassword />}
+                    />
+                    <Route
+                        path="/login/find_password/result"
+                        element={<FindPasswordResult />}
+                    />
+                    <Route path="/logout" element={<Logout />} />
+                    <Route path="/join" element={<WriteForm />} />
+                </Route>
+                <Route path="/lookbook" element={<Trending />}>
+                    <Route path="/lookbook/trending" element="" />
+                    {/* <Route path='/detail' element='' /> */}
+                    <Route path="/lookbook/trending" element={<Trending />} />
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
                     <Route path="/lookbook/detail" element={<Detail />} />
-                    <Route path="/lookbook/styleComment/:styleSeq" element={<StyleComment />} />
+                    <Route
+                        path="/lookbook/styleComment/:styleSeq"
+                        element={<StyleComment />}
+                    />
                     <Route path="/Search/SearchForm" element={<SearchForm />} />
-                    <Route path="/lookbook/mystyledetail/:seq/:id" element={<MystyleDetail />} />
-                    <Route path="/lookbook/mystyleUpdate/:seq/:id" element={<MystyleUpdate />} />
-                
-                </Route> 
+                    <Route
+                        path="/lookbook/mystyledetail/:seq/:id"
+                        element={<MystyleDetail />}
+                    />
+                    <Route
+                        path="/lookbook/mystyleUpdate/:seq/:id"
+                        element={<MystyleUpdate />}
+                    />
+                </Route>
 
                 <Route path="/cs/csnotice" element={<CsNotice />} />
                 <Route path="/cs/CsFaq" element={<CsFaq />} />
