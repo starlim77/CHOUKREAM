@@ -11,6 +11,7 @@ import SellBidsTable from "./table/SellBidsTable";
 import BuyBidsTable from "./table/BuyBidsTable";
 import EmptyTable from "./table/EmptyTable";
 import Graph from './Graph';
+import * as U from '../Used/UsedItemStyle';
 
 const Products = () => {
 
@@ -72,7 +73,9 @@ const Products = () => {
         registerNo:''
     })
 
-    const [brandListForm, setBrandListForm] = useState([])
+    const [brandListForm, setBrandListForm] = useState([{
+        seq: "", img: "", price: "", title: "", brand: ""
+    }])
 
     const [sizeForm, setSizeForm] = useState([{}])
 
@@ -240,6 +243,33 @@ const Products = () => {
     }
 
 
+    const [mainImg,setMainImg] = useState('')
+    const [subImg0,setSubImg0] = useState('')
+    const [subImg1,setSubImg1] = useState('')
+    const [subImg2,setSubImg2] = useState('')
+    const [subImg3,setSubImg3] = useState('')
+
+    useEffect(()=>{
+        if((form.img)){
+            const img = ((form.img).split(','))
+
+            setMainImg(img[0])
+
+            img[0] && setSubImg0(img[0]) 
+            img[1] && setSubImg1(img[1]) 
+            img[2] && setSubImg2(img[2]) 
+            img[3] && setSubImg3(img[3]) 
+        }
+    },[form])
+
+    const changImg=(e)=>{
+        var id = e.target.getAttribute("id");
+        if(id == 0) setMainImg(subImg0)
+        else if(id == 1) setMainImg(subImg1)
+        else if(id == 2) setMainImg(subImg2)
+        else if(id == 3) setMainImg(subImg3)
+    }
+
 
     return (
         <>
@@ -252,9 +282,16 @@ const Products = () => {
                     <S.ColumnBind>
                         <S.ColumnIsFixed>
                             <S.ColumnBox ScrollActive={ ScrollActive }>
-                                <div className="spread">
+                                <U.ImgBody2>
+                                    <U.MainImg src={`/storage/${mainImg}`} alt={mainImg}></U.MainImg>
+                                    {subImg1&&<U.SmallImg2 src={`/storage/${subImg0}`} id="0" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg1&&<U.SmallImg2 src={`/storage/${subImg1}`} id="1" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg2&&<U.SmallImg2 src={`/storage/${subImg2}`} id="2" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg3&&<U.SmallImg2 src={`/storage/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                </U.ImgBody2>
+                                {/* <div className="spread">
                                     <S.Image src={form.img} ></S.Image>
-                                </div>
+                                </div> */}
                                 {/* <div className="column_box">
                                     <div className="detail_banner_area">
                                         <div className="banner_slide detail_slide slick-slider slick-initialized">
@@ -265,7 +302,7 @@ const Products = () => {
                                         </div>
                                     </div>
                                 </div> */}
-                                <S.BannerAlert>
+                                <S.BannerAlert subImg1 = {subImg1}>
                                     <S.BannerAlertContent>
                                         <div>
                                             <S.AlertTitleCareMark>주의</S.AlertTitleCareMark>
@@ -379,7 +416,7 @@ const Products = () => {
                                             </S.DetailBox>
                                             <S.DetailBox>
                                                 <S.DetailBoxProductTitle>발매가</S.DetailBoxProductTitle>
-                                                <S.DetailBoxProductInfo>{form.releasePrice}</S.DetailBoxProductInfo>
+                                                <S.DetailBoxProductInfo>{Number(form.releasePrice).toLocaleString('ko-KR')}</S.DetailBoxProductInfo>
                                             </S.DetailBox>
                                         </S.DetailProduct>
                                     </S.DetailProductWrap>
@@ -677,7 +714,7 @@ const Products = () => {
                                         <S.FloatingPriceProductArea>
                                             <S.FloatingPriceProductThumb>
                                                 <S.PictureProductImg>
-                                                    <S.Image src={form.img} width="65px" height="65px"></S.Image>
+                                                    <S.Image src={`/storage/${subImg0}`} width="65px" height="65px"></S.Image>
                                                 </S.PictureProductImg>
                                             </S.FloatingPriceProductThumb>
                                             <S.FloatingProductInfo>
@@ -745,7 +782,8 @@ const Products = () => {
                         </S.BrandTitle>
                         <S.BrandProducts>
                             <S.BrandProductList>
-                            {
+                            {/* {
+                                brandListForm.length > 10 ? 
                                 brandListForm.map((item, index) => (
                                     <S.ProductItem key={index}>
                                         <S.ItemInner onClick={() => brandNavigate(item.seq)}>
@@ -772,7 +810,37 @@ const Products = () => {
                                         </S.ProductItemInfoBox>
                                         </S.ItemInner>
                                     </S.ProductItem>))
-                            }
+
+                                    :
+                       
+                                    [...Array(parseInt(10))].map((n, index) => {
+                                        return <S.ProductItem key={index}>
+                                        <S.ItemInner onClick={() => brandNavigate(brandListForm[index].seq)}>
+                                            <div className='thumb_box'>
+                                                <S.Product>
+                                                    <S.PictureBrandProductImg>
+                                                        <S.BrandProductImg src={brandListForm[index].img}/>
+                                                    </S.PictureBrandProductImg>
+                                                </S.Product>
+                                            </div>
+                                            <S.ProductItemInfoBox>
+                                            <div className='info_box'>
+                                                <div className='brand'>
+                                                    <S.BrandTextWithOutWish>{brandListForm[index].brand}</S.BrandTextWithOutWish>
+                                                </div>
+                                                <S.BrandProductInfoBoxName>{brandListForm[index].title}</S.BrandProductInfoBoxName>
+                                                <S.BrandProductInfoBoxPrice>
+                                                    <S.BrandProductInfoBoxPriceAmount>
+                                                        <S.BrandProductInfoBoxPriceAmountNum>{brandListForm[index].price}</S.BrandProductInfoBoxPriceAmountNum>
+                                                    </S.BrandProductInfoBoxPriceAmount>
+                                                    <S.BrandProductInfoBoxPriceDesc>즉시 구매가</S.BrandProductInfoBoxPriceDesc>
+                                                </S.BrandProductInfoBoxPrice>
+                                            </div>
+                                        </S.ProductItemInfoBox>
+                                        </S.ItemInner>
+                                    </S.ProductItem>
+                                })
+                            } */}
                             </S.BrandProductList>
                         </S.BrandProducts>
                     </S.BrandArea>

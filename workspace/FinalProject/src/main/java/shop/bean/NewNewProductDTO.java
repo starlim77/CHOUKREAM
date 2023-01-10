@@ -83,33 +83,43 @@ public class NewNewProductDTO {
 	@Column(name="price")
    	private int price;
 	
+	//상호명
 	@Column(name="businessName")
 	private String businessName;
 	
+	//사업자 등록번호
 	@Column(name="comRegNo")
 	private String comRegNo;
 	
+	//대표자
 	@Column(name="representative")
 	private String representative;
 	
+	//사업장 소재지
 	@Column(name="businessLocation")
 	private String businessLocation;
 	
+	//고객센터
 	@Column(name="serviceCall")
 	private String serviceCall;
 	
+	//소재
 	@Column(name="material")
 	private String material;
 	
+	//색상
 	@Column(name="color")
 	private String color;
 	
+	//제조자
 	@Column(name="manufacturer")
 	private String manufacturer;
 	
+	//제조국
 	@Column(name="countryOfManufacturer")
 	private String countryOfManufacturer;
 	
+	//제조년월
 	@Column(name="dateOfManufacturer")
 	private String dateOfManufacturer;
 	

@@ -69,7 +69,8 @@ export const Column = styled.div`
 `;
 
 export const BannerAlert = styled.div`
-    padding-top: 20px;
+    /* padding-top: 20px; */
+    padding-top: ${(props) => props.subImg1 ? '120px' : "20px"};
 `;
 
 export const BannerAlertContent = styled.div`
