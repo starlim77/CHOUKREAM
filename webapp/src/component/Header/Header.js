@@ -34,7 +34,10 @@ const Header = () => {
                     </S.TopWrapper>
                 </S.Top>
                 <S.Bottom>
-                    <S.BottomImg src="/image/logo.png" />
+                    <Link to="/">
+                        <S.BottomImg src="/image/logo.png" />
+                    </Link>
+
                     <S.BottomWrapper>
                         <S.BottomLi active={true}>STYLE</S.BottomLi>
                         <S.BottomLi>

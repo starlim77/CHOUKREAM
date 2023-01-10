@@ -11,7 +11,6 @@ import pay.bean.CompletePaymentDTO;
 import shop.bean.BidsListDTO;
 
 public interface PayDAO<T> extends JpaRepository<CompletePaymentDTO, Integer> {
-
 	
 	@Query(nativeQuery = true ,value = "select nextval('order_number') from dual")
 	public int getOrderNumber();

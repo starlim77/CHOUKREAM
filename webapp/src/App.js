@@ -30,8 +30,6 @@ import LoginForm from './component/User/LoginForm';
 import WriteForm from './component/User/WriteForm';
 import MystyleDetail from './component/Lookbook/MystyleDetail';
 import MystyleUpdate from './component/Lookbook/MystyleUpdate';
-import FindEmail from './component/User/FindEmail';
-import FindPassword from './component/User/FindPassword';
 import CsFaqUpdateForm from './component/Cs/CsFaqUpdateForm';
 import CsMain from './component/Cs/CsMain';
 import ManagerPage from './component/Shop/manager/ManagerPage';
@@ -46,7 +44,6 @@ import FindPassword from './component/User/FindPassword';
 import FindEmailResult from './component/User/FindEmailResult';
 import FindPasswordResult from './component/User/FindPasswordResult';
 import Logout from './component/User/Logout';
-import CsFaqUpdateForm from './component/Cs/CsFaqUpdateForm';
 import MyPageMain from './component/myPage/MyPageMain';
 import MyPageApp from './component/myPage/MyPageApp';
 
@@ -155,37 +152,40 @@ function App() {
                     />
                     <Route path="/logout" element={<Logout />} />
                     <Route path="/join" element={<WriteForm />} />
-                </Route>
+                    <Route path="/cs/*" element={<CsMain />} />
 
-                <Route path="/cs/*" element={<CsMain />} />
+                    {/* 마이 페이지 */}
+                    <Route path="/my/*" element={<MyPageApp />} />
 
-                {/* 마이 페이지 */}
-                <Route path="/my/*" element={<MyPageApp />} />
+                    <Route path="/lookbook" element={<Trending />}>
+                        <Route path="/lookbook/trending" element="" />
+                        {/* <Route path='/detail' element='' /> */}
+                        <Route
+                            path="/lookbook/trending"
+                            element={<Trending />}
+                        />
+                        <Route path="/lookbook/social" element={<Social />} />
+                        <Route path="/lookbook/mystyle" element={<Mystyle />} />
+                        <Route path="/lookbook/detail" element={<Detail />} />
+                        <Route
+                            path="/lookbook/styleComment/:styleSeq"
+                            element={<StyleComment />}
+                        />
+                        <Route
+                            path="/lookbook/mystyledetail/:seq/:id"
+                            element={<MystyleDetail />}
+                        />
+                        <Route
+                            path="/lookbook/mystyleUpdate/:seq/:id"
+                            element={<MystyleUpdate />}
+                        />
+                    </Route>
 
-                <Route path="/lookbook" element={<Trending />}>
-                    <Route path="/lookbook/trending" element="" />
-                    {/* <Route path='/detail' element='' /> */}
-                    <Route path="/lookbook/trending" element={<Trending />} />
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
                     <Route path="/lookbook/detail" element={<Detail />} />
-                    <Route
-                        path="/lookbook/styleComment/:styleSeq"
-                        element={<StyleComment />}
-                    />
-                    <Route
-                        path="/lookbook/mystyledetail/:seq/:id"
-                        element={<MystyleDetail />}
-                    />
-                    <Route
-                        path="/lookbook/mystyleUpdate/:seq/:id"
-                        element={<MystyleUpdate />}
-                    />
                 </Route>
 
-                <Route path="/lookbook/social" element={<Social />} />
-                <Route path="/lookbook/mystyle" element={<Mystyle />} />
-                <Route path="/lookbook/detail" element={<Detail />} />
                 <Route path="/Search/SearchForm" element={<SearchForm />} />
             </Routes>
         </BrowserRouter>
