@@ -17,8 +17,6 @@ public class CsBoardServiceImpl implements CsBoardService {
 	@Override
 	public void write(CsBoardDTO csBoardDTO) {
 		csBoardDAO.save(csBoardDTO);
-		
-		
 	}
 
 	@Override
@@ -42,7 +40,8 @@ public class CsBoardServiceImpl implements CsBoardService {
 	public Optional<CsBoardDTO> getBoard(int seq) {
 		
 		return csBoardDAO.findBySeq(seq);
-		}
+	}
+	
 	@Transactional
 	@Override
 	public void delete(int seq) {
@@ -54,7 +53,16 @@ public class CsBoardServiceImpl implements CsBoardService {
 		csBoardDAO.save(csBoardDTO);
 		
 	}
-	
+
+	@Override
+	public List<CsBoardDTO> getNotices(String category) {
+		return csBoardDAO.findAllByCategory(category);
+	}
+
+	@Override
+	public Optional<CsBoardDTO> getNotice(int seq) {
+		return csBoardDAO.findById(seq);
+	}
 
 	
 }

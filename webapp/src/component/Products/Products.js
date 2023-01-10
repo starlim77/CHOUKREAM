@@ -1008,6 +1008,52 @@ const Products = () => {
                                                                         안내
                                                                     </S.DropdownHeadTitle>
                                                                     {/* <svg>
+                                            </S.TabArea>
+                                        </S.WrapSales>
+                                        <S.WrapBids>
+                                            <S.TabArea>
+                                                <S.TabList>
+                                                    <S.TabAreaItem>
+                                                        <S.TabAreaItemLink onClick={ onOpen2 } open={ open6 } name='6'>체결 거래</S.TabAreaItemLink>
+                                                    </S.TabAreaItem>
+                                                    <S.TabAreaItem>
+                                                        <S.TabAreaItemLink onClick={ onOpen2 } open={ open7 } name='7'>판매 입찰</S.TabAreaItemLink>
+                                                    </S.TabAreaItem>
+                                                    <S.TabAreaItem>
+                                                        <S.TabAreaItemLink onClick={ onOpen2 } open={ open8 } name='8'>구매 입찰</S.TabAreaItemLink>
+                                                    </S.TabAreaItem>
+                                                </S.TabList>
+                                                <S.TabContent open={ open6 }>
+                                                    <S.TableWrap>
+                                                        {completedOrderForm[0].price !== '-' ? <CompletedOrderTable completedOrderForm={completedOrderForm}/> : <EmptyTable word={'체결된 거래'}/>}
+                                                    </S.TableWrap>
+                                                    {completedOrderForm[0].price !== '-' && <S.BtnOutLineGrey>체결 내역 더보기</S.BtnOutLineGrey>}
+                                                </S.TabContent>
+                                                <S.TabContent open={ open7 }>
+                                                    <S.TableWrap>
+                                                        {sellBidsListForm[0].price !== '-' ? <SellBidsTable sellBidsListForm={sellBidsListForm}/> : <EmptyTable word={'판매 희망가'}/>}
+                                                    </S.TableWrap>
+                                                    {sellBidsListForm[0].price !== '-' && <S.BtnOutLineGrey>입찰 내역 더보기</S.BtnOutLineGrey>}
+                                                </S.TabContent>
+                                                <S.TabContent open={ open8 }>
+                                                    <S.TableWrap>
+                                                        {buyBidsListForm[0].price !== '-' ? <BuyBidsTable buyBidsListForm={buyBidsListForm}/> : <EmptyTable word={'구매 희망가'}/>}   
+                                                    </S.TableWrap>
+                                                    {buyBidsListForm[0].price !== '-' && <S.BtnOutLineGrey>입찰 내역 더보기</S.BtnOutLineGrey>}
+                                                </S.TabContent>
+                                            </S.TabArea>
+                                        </S.WrapBids>
+                                    </S.ProductSalesGraph>
+                                    <div>
+                                        <S.ConfirmWrap>
+                                            <S.ConfirmWrapConfirmTitle>구매 전 꼭 확인해주세요</S.ConfirmWrapConfirmTitle>
+                                            <S.ConfirmWrapConfirmContemt>
+                                                <ul className="dropdown_list">
+                                                    <li>
+                                                        <div className="dropdown">
+                                                            <S.DropdownHead onClick={ OpenDrop }>
+                                                                <S.DropdownHeadTitle>배송 기간 안내</S.DropdownHeadTitle>
+                                                                {/* <svg>
                                                                     <use></use>
                                                                 </svg> */}
                                                                 </S.DropdownHead>

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import csboard.bean.CsBoardDTO;
 
 @Repository
-public interface CsBoardDAO extends JpaRepository<CsBoardDTO, String> {
+public interface CsBoardDAO extends JpaRepository<CsBoardDTO, Integer> {
 
 	List<CsBoardDTO> findByCategory(String category);
 
@@ -23,6 +23,9 @@ public interface CsBoardDAO extends JpaRepository<CsBoardDTO, String> {
 
 
 	void deleteBySeq(int seq);
+
+
+	List<CsBoardDTO> findAllByCategory(String category);
 
 	//완전 에러 --  keyword 하나로 내용 과 제목 둘다 한꺼번에 찾아서 하는것......ㅠㅠㅠㅠㅠ모르겠음 
 //	@Query("csBoardDTO from CsBoardDTO csBoardDTO where csBoardDTO.title like '%' || :keyword || '%' or csBoardDTO.content like '%' || :keyword || '%'")

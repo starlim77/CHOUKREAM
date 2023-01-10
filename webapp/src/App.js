@@ -30,6 +30,10 @@ import LoginForm from './component/User/LoginForm';
 import WriteForm from './component/User/WriteForm';
 import MystyleDetail from './component/Lookbook/MystyleDetail';
 import MystyleUpdate from './component/Lookbook/MystyleUpdate';
+import FindEmail from './component/User/FindEmail';
+import FindPassword from './component/User/FindPassword';
+import CsFaqUpdateForm from './component/Cs/CsFaqUpdateForm';
+import CsMain from './component/Cs/CsMain';
 import ManagerPage from './component/Shop/manager/ManagerPage';
 import List from './component/Shop/manager/NewList';
 import AdminWrite from './component/Shop/register/NewWrite';
@@ -43,6 +47,8 @@ import FindEmailResult from './component/User/FindEmailResult';
 import FindPasswordResult from './component/User/FindPasswordResult';
 import Logout from './component/User/Logout';
 import CsFaqUpdateForm from './component/Cs/CsFaqUpdateForm';
+import MyPageMain from './component/myPage/MyPageMain';
+import MyPageApp from './component/myPage/MyPageApp';
 
 function App() {
     return (
@@ -150,6 +156,12 @@ function App() {
                     <Route path="/logout" element={<Logout />} />
                     <Route path="/join" element={<WriteForm />} />
                 </Route>
+
+                <Route path="/cs/*" element={<CsMain />} />
+
+                {/* 마이 페이지 */}
+                <Route path="/my/*" element={<MyPageApp />} />
+
                 <Route path="/lookbook" element={<Trending />}>
                     <Route path="/lookbook/trending" element="" />
                     {/* <Route path='/detail' element='' /> */}
@@ -170,13 +182,11 @@ function App() {
                         element={<MystyleUpdate />}
                     />
                 </Route>
-                <Route path="/cs/csnotice" element={<CsNotice />} />
-                <Route path="/cs/CsFaq" element={<CsFaq />} />
-                <Route path="/cs/CsFaqWriteForm" element={<CsFaqWriteForm />} />
-                <Route
-                    path={'/cs/CsFaqUpdateForm/:seq'}
-                    element={<CsFaqUpdateForm />}
-                />
+
+                <Route path="/lookbook/social" element={<Social />} />
+                <Route path="/lookbook/mystyle" element={<Mystyle />} />
+                <Route path="/lookbook/detail" element={<Detail />} />
+                <Route path="/Search/SearchForm" element={<SearchForm />} />
             </Routes>
         </BrowserRouter>
     );

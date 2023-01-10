@@ -49,6 +49,7 @@ public class ShopServiceImpl implements ShopService {
 		return sizeRepository.findBySeq(seq);
 	}
 
+
 	
 }
 

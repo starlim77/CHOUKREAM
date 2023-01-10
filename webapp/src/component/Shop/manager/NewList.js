@@ -28,6 +28,11 @@ const NewList = () => {
         // 자꾸 유니크 키가 없다고함 키줬는데
 
         // console.log('렌더링 1');
+        newProductList.map(item =>
+            setNewProductList({ ...item, isChecked: false }),
+        );
+        setNewProductList([...newProductList]);
+        console.log(newProductList);
     }, []);
 
     // console.log(newProductList)
@@ -173,7 +178,7 @@ const NewList = () => {
         // axios.put(`http://localhost:8080/shop/delete?id=${checkedId.seq}`);
     };
 
-    // 사진 여러장 등록 했을때 잘라서 1장 보여줌 
+    // 사진 여러장 등록 했을때 잘라서 1장 보여줌
     // const arr = JSON.stringify(copy_newProductList.imgName).split(',');
     // //수정사항
     // // console.log(data.seq + ' :'  + typeof(arr) +  " arr : " + arr)
@@ -241,14 +246,14 @@ const NewList = () => {
                 </Li.Thead>
                 <Li.Tbody>
                     {/* map 오류 뜰때 && 연산자 씀으로 list가 있을때만 돌릴수 있다 */}
-                    {copy_newProductList
+                    {newProductList
                         .slice(offset, offset + limit)
-                        .map(item => (
-                            <Li.Tr key={item.seq}>
+                        .map((item, index) => (
+                            <Li.Tr key={index}>
                                 <Li.Td style={{ width: '200px' }}>
                                     <Li.Input
                                         type="checkbox"
-                                        // checked={item.isChecked}
+                                        checked={checked}
                                         id={item.seq}
                                         onChange={e => checkHandler(e)}
                                     ></Li.Input>

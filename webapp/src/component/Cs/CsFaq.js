@@ -118,7 +118,6 @@ const CsFaq = () => {
     return (
      
         <>
-
             <p>자주묻는 질문</p>
             <hr/>
            
@@ -157,15 +156,15 @@ const CsFaq = () => {
                             </tr>
                             {visible[item.seq] && (
                                 <tr>
-                                    {/* <td colSpan="2">{item.content}</td>  원래 */}
-                                  <td colSpan='2'> <Viewer initialValue={item.content || ''} /></td>  {/*toast viewer 사용해서 toast 편집기로  작성되어 html or markdown으로 저장된 content 내용 웹에 가져오기 */}
-                                    <Link to={'/cs/CsFaqUpdateForm/'+item.seq}><button  value ={item.seq}>수정</button></Link> {/*param 가져가기 */}
+                                    <td colSpan="2">{item.content}</td>  원래
+                                  <td colSpan='2'> <Viewer initialValue={item.content || ''} /></td>  toast viewer 사용해서 toast 편집기로  작성되어 html or markdown으로 저장된 content 내용 웹에 가져오기
+                                    <Link to={'/cs/CsFaqUpdateForm/'+item.seq}><button  value ={item.seq}>수정</button></Link> param 가져가기
                                     
                                     <button  value ={item.seq} onClick={onDelete}>삭제</button>
                                 </tr>
                                
                                 
-                            )}
+                             )}
                         </table>
                     );
                 })}

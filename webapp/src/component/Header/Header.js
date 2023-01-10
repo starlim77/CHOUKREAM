@@ -34,7 +34,7 @@ const Header = () => {
                     </S.TopWrapper>
                 </S.Top>
                 <S.Bottom>
-                    <S.BottomImg src="../image/logo.png" />
+                    <S.BottomImg src="/image/logo.png" />
                     <S.BottomWrapper>
                         <S.BottomLi active={true}>STYLE</S.BottomLi>
                         <S.BottomLi>
