@@ -61,6 +61,7 @@ export const MainItem = styled.div`
    height: 430px;
    margin-left: 15px;
    margin-right: 10px;
+   position: relative;
 `;
 
 export const ItemImg = styled.img`
@@ -72,6 +73,16 @@ export const ItemImg = styled.img`
     border: 0.5px solid #ececec;
 `;
 
+export const ItemLayer = styled.img.attrs({
+    src:"/image/used/soldout.jpg"
+})`
+    position:absolute;
+    top:0px;
+    width: 276px;
+    height: 276px;
+    border-radius: 15px;
+    opacity:0.5;
+`;
 export const ItemTitle = styled.h2`
     margin-top: 7px;
     font-weight: 700;

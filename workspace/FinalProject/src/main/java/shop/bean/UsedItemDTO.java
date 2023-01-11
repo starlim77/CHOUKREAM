@@ -58,6 +58,8 @@ public class UsedItemDTO {
 	@CollectionTable(name="usedItem_hashTag")
 	private Set<String> hashTag = new HashSet<String>();
 	
+	@Column(name="sellingState")
+	private boolean sellingState;
 	
 	
 	//jpa관련 기본 개념

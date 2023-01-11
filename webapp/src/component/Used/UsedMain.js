@@ -87,7 +87,7 @@ const UsedMain = () => {
 
 
     const onWrite = () => {
-            navigate('/Used/usedWrite')
+            navigate('/Used/usedWrite');
     }
 
 

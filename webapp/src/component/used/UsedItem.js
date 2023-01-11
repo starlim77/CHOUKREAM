@@ -19,8 +19,10 @@ const UsedItem = () => {
         price:'',
         likes:'',
         contents:'',
-        hashtag:[]
+        hashtag:[],
+        sellingState:true
     });
+    
 
     const [likeForm, setLikeForm] = useState({
         seq:'',
@@ -113,12 +115,14 @@ const UsedItem = () => {
         
 
     }
+    
 
     return (
 
         <>
         <U.ModalDiv>
-            <UpdateBtnModal writer={isWriter} seq={searchParams.get('seq')} imgNameSend={form.imgName}></UpdateBtnModal>
+            <UpdateBtnModal writer={isWriter} form={form} setForm={setForm}
+                        seq={searchParams.get('seq')} imgNameSend={form.imgName}></UpdateBtnModal>
         </U.ModalDiv>
         <U.BaseBody>
             <U.ImgBody>
@@ -131,7 +135,7 @@ const UsedItem = () => {
 
             <U.BaseDiv>
             <U.TitleWrapper>
-                <U.TitleSpan>{form.title}</U.TitleSpan>
+                <U.TitleSpan>{!form.sellingState&&<span>[판매완료]</span>}{form.title}</U.TitleSpan>
             </U.TitleWrapper>
             
 

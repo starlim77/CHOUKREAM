@@ -26,4 +26,6 @@ public interface UsedItemService {
 
 	public void updateItem(UsedItemDTO usedItemDTO);
 
+	public void soldOut(UsedItemDTO usedItemDTO);
+
 }
