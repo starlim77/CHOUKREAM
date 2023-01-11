@@ -145,7 +145,7 @@ const UsedItem = () => {
             <br/>
 
             <U.SizeWrapper>
-                <U.SizeSpan>사이즈 : </U.SizeSpan>
+                <U.Sizetitle>사이즈</U.Sizetitle>
                 <U.SizeSpan>{form.size}</U.SizeSpan>
             </U.SizeWrapper>
 

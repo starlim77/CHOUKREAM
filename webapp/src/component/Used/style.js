@@ -26,27 +26,77 @@ export const TagImgLi = styled.li`
     display: flex;
     flex-direction: column;
     align-items: center;
+    :hover{
+        background-color: #E1ECF4;
+        border-radius: 50px;
+    }
 `;
 
 export const TagImgItem = styled.img`
     width: 70px;
     height: 70px;
+
 `;
 
 export const TagImgSpan = styled.span`
     font-size: 14px;
 `;
 
-
-
-export const SearchHashTag = styled.div`
-    margin: 16px auto 0px auto;
+export const TagReset = styled.div`
+    margin: 16px auto 15px auto;
     width: 1200px;
     display: flex;
     justify-content: center;
 
-    border: 1px solid red;
+
 `;
+export const TagResetSpan = styled.span`
+    color: #32b232;
+    font-size: 15pt;
+
+    :hover{
+        cursor: pointer;
+        background-color: #8DEA8D;
+    }
+`;
+
+export const SearchHashTag = styled.div`
+    margin: 30px auto 30px auto;
+    width: 1200px;
+    display: flex;
+    justify-content: center;
+
+`;
+
+export const SearchInput = styled.input`
+    width: 140px;
+    border: none;
+    font-size: 11px;
+    background-color: #d5d6ec4d;
+    border-radius: 10px;
+
+    :focus{
+        outline: none;
+    }
+`;
+
+export const SearchBtn = styled.div`
+    border: 0.5px solid #ececec;
+    background-color: #c7fbfb;
+    border-radius: 15px;
+    font-size: 10pt;
+    height: 15px;
+    width: 35px;
+    display: flex;
+    justify-content: space-around;
+    margin-left: 5px;
+    :hover{
+        cursor: pointer;
+    }
+`;
+
+
+
 
 export const UsedMain = styled.div`
     margin: 16px auto 0px auto;
