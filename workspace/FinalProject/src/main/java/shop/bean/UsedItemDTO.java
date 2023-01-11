@@ -59,10 +59,9 @@ public class UsedItemDTO {
 	private Set<String> hashTag = new HashSet<String>();
 	
 	
-
 	
-	
-	
+	//jpa관련 기본 개념
+	//https://data-make.tistory.com/610
 	
 	
 	

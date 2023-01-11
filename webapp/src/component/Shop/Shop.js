@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import * as Ba from './BannerStyle';
-import * as Se from './SearchStyle';
-import data from './TrendData';
-import filterData from './FilterData';
-import Content from './Content';
+import * as Se from './content/SearchStyle';
+import data from './content/TrendData';
+import filterData from './content/FilterData';
+import Content from './content/Content';
+import Banner from './banner/Banner';
 import axios from 'axios';
+
+
 
 const Shop = () => {
     const [dummy, setDummy] = useState([]);
@@ -18,6 +20,9 @@ const Shop = () => {
             .catch(error => console.log(error));
     }, []);
 
+   // console.log(JSON.stringify(dummy));
+    
+    
     // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -85,48 +90,7 @@ const Shop = () => {
                     </Se.BrandList>
                 </Se.SearchTrendContainer>
                 {/* Banner */}
-                <Ba.Banner>
-                    <Ba.BannerBox>
-                        <Ba.BannerSlide>
-                            <Ba.SlickList>
-                                <Ba.SlickTrack>
-                                    <Ba.SlickSlide
-                                        tabIndex="-1"
-                                        aria-hidden="false"
-                                    >
-                                        <div>
-                                            <Ba.DetailBanner tabIndex="-1">
-                                                <Ba.BannerLink href="https://kream.co.kr/search?keyword=나이키 오프화이트 신상">
-                                                    <Ba.BannerImg
-                                                        alt="배너"
-                                                        src="../ShopImage/나이키 오프 화이트 신상.jpg"
-                                                    />
-                                                    <Ba.BannerCountBox>
-                                                        <Ba.SlickPrev>
-                                                            Previous
-                                                        </Ba.SlickPrev>
-                                                        <Ba.BannerCount>
-                                                            <Ba.Current>
-                                                                1
-                                                            </Ba.Current>
-                                                            /
-                                                            <Ba.Total>
-                                                                10
-                                                            </Ba.Total>
-                                                        </Ba.BannerCount>
-                                                        <Ba.SlickNext>
-                                                            Next
-                                                        </Ba.SlickNext>
-                                                    </Ba.BannerCountBox>
-                                                </Ba.BannerLink>
-                                            </Ba.DetailBanner>
-                                        </div>
-                                    </Ba.SlickSlide>
-                                </Ba.SlickTrack>
-                            </Ba.SlickList>
-                        </Ba.BannerSlide>
-                    </Ba.BannerBox>
-                </Ba.Banner>
+                <Banner/>
                 <Content
                     dummy={dummy}
                     setDummy={setDummy}

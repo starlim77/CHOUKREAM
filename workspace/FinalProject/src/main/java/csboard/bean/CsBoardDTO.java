@@ -20,9 +20,10 @@ import lombok.Data;
 	   )
 @Table(name="csboard")
 public class CsBoardDTO {
-	@Id
+	
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "csboard_SEQ_GENERATOR")
 	@Column(name="seq")
+	@Id
 	private int seq;
 	@Column(name="category")
 	private String category;
@@ -32,6 +33,10 @@ public class CsBoardDTO {
 	private String content;
 	@Column(name="id")
 	private String id;
+	@Column(name="filename", length=500)
+	private String filename;
+	@Column(name="filepath", length=500)
+	private String filepath;
 	
 
 }
