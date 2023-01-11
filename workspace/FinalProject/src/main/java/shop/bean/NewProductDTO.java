@@ -23,7 +23,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "NewProduct")
+@Table(name = "newProduct")
 public class NewProductDTO {
 	
 	@Id
