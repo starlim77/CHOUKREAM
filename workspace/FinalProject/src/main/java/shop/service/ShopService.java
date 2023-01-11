@@ -3,6 +3,7 @@ package shop.service;
 import java.util.List;
 import java.util.Optional;
 
+import shop.bean.NewProductDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
 

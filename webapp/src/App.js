@@ -46,6 +46,7 @@ import FindPasswordResult from './component/User/FindPasswordResult';
 import Logout from './component/User/Logout';
 import MyPageMain from './component/myPage/MyPageMain';
 import MyPageApp from './component/myPage/MyPageApp';
+import NewUpdate from './component/Shop/manager/NewUpdate';
 
 function App() {
     return (
@@ -82,6 +83,43 @@ function App() {
                             <>
                                 <ManagerPage />
                                 <NewSearch />
+                            </>
+                        }
+                    />
+
+                    <Route
+                        path="admin/newWrite"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <AdminWrite />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newList"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewList />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newSearch"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewSearch />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newUpdate"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewUpdate />
                             </>
                         }
                     />
@@ -157,33 +195,22 @@ function App() {
                     {/* 마이 페이지 */}
                     <Route path="/my/*" element={<MyPageApp />} />
 
-                    <Route path="/lookbook" element={<Trending />}>
-                        <Route path="/lookbook/trending" element="" />
-                        {/* <Route path='/detail' element='' /> */}
-                        <Route
-                            path="/lookbook/trending"
-                            element={<Trending />}
-                        />
-                        <Route path="/lookbook/social" element={<Social />} />
-                        <Route path="/lookbook/mystyle" element={<Mystyle />} />
-                        <Route path="/lookbook/detail" element={<Detail />} />
-                        <Route
-                            path="/lookbook/styleComment/:styleSeq"
-                            element={<StyleComment />}
-                        />
-                        <Route
-                            path="/lookbook/mystyledetail/:seq/:id"
-                            element={<MystyleDetail />}
-                        />
-                        <Route
-                            path="/lookbook/mystyleUpdate/:seq/:id"
-                            element={<MystyleUpdate />}
-                        />
-                    </Route>
-
+                    <Route path="/lookbook/trending" element={<Trending />} />
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
                     <Route path="/lookbook/detail" element={<Detail />} />
+                    <Route
+                        path="/lookbook/styleComment/:styleSeq"
+                        element={<StyleComment />}
+                    />
+                    <Route
+                        path="/lookbook/mystyledetail/:seq/:id"
+                        element={<MystyleDetail />}
+                    />
+                    <Route
+                        path="/lookbook/mystyleUpdate/:seq/:id"
+                        element={<MystyleUpdate />}
+                    />
                 </Route>
 
                 <Route path="/Search/SearchForm" element={<SearchForm />} />
