@@ -43,7 +43,7 @@ public class MemberServiceImpl implements MemberService {
 		MemberDto memberDto = memberDAO.findPasswordByPhoneAndEmail(phone, email);
 		
 		if(memberDto != null) {
-			String tempPassword = new GenerateTempPassword().excuteGenerate();
+			String tempPassword = new GenerateTempPassword().randomPassword();
 			
 			memberDto.setPassword(passwordEncoder.encode((tempPassword))); 
 			memberDAO.save(memberDto);

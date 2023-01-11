@@ -46,9 +46,15 @@ const FindPassword = () => {
             .get(`http://localhost:8080/tempPassword?phone=${phone}&email=${email}`)
             .then((res) => {
                 if(res.data !== 'non_exist'){
-                    console.log(res)
-                    //문자 보내기 추가
-                    //navigate('/login/find_password/result')
+                    console.log(res.data)
+                    
+                    const tempPassword = res.data
+                    const content = `[KREAM] 임시 비밀번호 ${tempPassword} 입니다.`
+
+                    axios
+                        .get(encodeURI(`http://localhost:8080/sendSms?phone=${phone}&content=${content}`))
+                        .then(() => navigate('/login/find_password/result'))
+                        .catch(error => console.log(error))
                 } else {
                     alert('일치하는 사용자 정보를 찾을 수 없습니다.')
                 }

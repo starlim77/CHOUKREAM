@@ -1,7 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from './styleFindInfo.js';
 
 const FindPasswordResult = () => {
+    const navigate = useNavigate()
+    
+    const onLoginPage = () => {
+        navigate('/login')
+    }
+
     return (
         <S.Container>
             <S.HelpAreaDiv>
@@ -15,7 +22,7 @@ const FindPasswordResult = () => {
                 </S.HelpNotice>
 
                 <S.HelpBtnBox>
-                    <button>로그인</button>
+                    <button onClick={onLoginPage}>로그인</button>
                 </S.HelpBtnBox>
             </S.HelpAreaDiv>
         </S.Container>
