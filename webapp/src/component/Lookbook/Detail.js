@@ -63,7 +63,7 @@ const Detail = () => {
                                     <IconButton >
                                         
                                         <Link to ={`/lookbook/StyleComment/${item.seq}`} >
-                                        <ChatBubbleOutlineIcon />    
+                                        <ChatBubbleOutlineIcon  style={{color: 'grey', textDecoration:'none'}}/>    
                                         </Link>
                                     </IconButton> 
                                                           
