@@ -6,7 +6,7 @@ import * as S from './style';
 const social = () => {
     
     return (
-        <div>
+        <S.SoTopDiv>
             <S.SoHeader>
                 <a href='#!' >인기</a> &nbsp;
                 <a href='#!' >최신</a> &nbsp;
@@ -17,7 +17,7 @@ const social = () => {
                 <button><Link to='/lookbook/detail'>상세보기</Link></button>&nbsp;
                 <button><Link to='/lookbook/mystyle'>MY스타일</Link></button>
             </div>
-        </div>
+        </S.SoTopDiv>
     );
 };
 

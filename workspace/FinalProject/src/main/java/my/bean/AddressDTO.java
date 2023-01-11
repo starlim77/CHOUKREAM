@@ -37,4 +37,6 @@ public class AddressDTO {
 	@Column
 	private String addr2;
 	
+	@Column
+	private int defaultAddress;
 }

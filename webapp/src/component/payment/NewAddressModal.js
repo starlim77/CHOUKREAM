@@ -5,10 +5,15 @@ import * as S from './NewAddressModalStyle';
 
 const NewAddressModal = props => {
     const { setShipInfo, id, setModals } = props;
+    const [defaultAddress, setDefaultAddress] = useState(false);
     const addAddress = () => {
         axios
             .post('http://localhost:8080/my/addAddress', null, {
-                params: { ...address, id },
+                params: {
+                    ...address,
+                    id,
+                    defaultAddress: defaultAddress ? 1 : 0,
+                },
             })
             .then(alert('성공'))
             .catch(err => console.log(err));
@@ -87,21 +92,25 @@ const NewAddressModal = props => {
                 ></S.Input>
             </S.InputInfo>
             <S.DefaltAddress>
-                <S.DefaultCheckBox type="checkbox"></S.DefaultCheckBox>
+                <S.DefaultCheckBox
+                    checked={defaultAddress}
+                    onChange={() => setDefaultAddress(!defaultAddress)}
+                    type="checkbox"
+                ></S.DefaultCheckBox>
                 <S.DefaultSpan>기본 배송지로 설정</S.DefaultSpan>
             </S.DefaltAddress>
             <S.Buttons>
                 <S.CancelBtn
                     type="button"
                     value="취소"
-                    onClick={() => setModals([false, false])}
+                    onClick={() => setModals([false, false, false])}
                 ></S.CancelBtn>
                 <S.SaveBtn
                     type="button"
                     value="저장하기"
                     onClick={() => {
                         addAddress();
-                        setModals([false, false]);
+                        setModals([false, false, false]);
                     }}
                 ></S.SaveBtn>
             </S.Buttons>

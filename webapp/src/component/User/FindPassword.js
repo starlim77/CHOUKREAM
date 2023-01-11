@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from './styleFindInfo.js';
 
 const FindPassword = () => {
@@ -37,16 +39,34 @@ const FindPassword = () => {
         }
     }, [])
 
+    const navigate = useNavigate()
+
+    const onSendSms = () => {
+        axios
+            .get(`http://localhost:8080/tempPassword?phone=${phone}&email=${email}`)
+            .then((res) => {
+                if(res.data !== 'non_exist'){
+                    console.log(res)
+                    //문자 보내기 추가
+                    //navigate('/login/find_password/result')
+                } else {
+                    alert('일치하는 사용자 정보를 찾을 수 없습니다.')
+                }
+
+            })
+            .catch(error => console.log(error))
+    }
+    
     return (
         <S.Container>
             <S.HelpAreaDiv>
                 <S.HelpTitle>비밀번호 찾기</S.HelpTitle>
 
                 <S.HelpNotice>
-                    <p>
+                    <S.NoticeTxt>
                         가입 시 등록한 휴대폰 번호와 이메일을 입력하시면, <br/>
                         휴대폰으로 임시 비밀번호를 전송해 드립니다.
-                    </p>
+                    </S.NoticeTxt>
                 </S.HelpNotice>
 
                 <S.InputBox>
@@ -66,7 +86,7 @@ const FindPassword = () => {
                 </S.InputBox>
 
                 <S.HelpBtnBox>
-                    <S.HelpBtn type='button' disabled={!(isEmail && isPhone)}>문자 발송하기</S.HelpBtn>
+                    <S.HelpBtn type='button' onClick={onSendSms} disabled={!(isEmail && isPhone)}>문자 발송하기</S.HelpBtn>
                 </S.HelpBtnBox>
             </S.HelpAreaDiv>
         </S.Container>

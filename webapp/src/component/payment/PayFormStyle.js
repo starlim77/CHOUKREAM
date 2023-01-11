@@ -182,7 +182,7 @@ export const UseAllBtn = styled.button`
     font-size: 12px;
     padding: 5px 9px;
     color: #fff;
-
+    background-color: ${props => (props.havePoint > 0 ? 'black' : null)};
     cursor: ${props => (props.havePoint > 0 ? 'pointer' : 'default')};
 `;
 
@@ -352,12 +352,13 @@ export const PayBtn = styled.button`
 `;
 
 export const ModalBackground = styled.div`
-    /* position: absolute;
+    position: absolute;
+    top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100vh;
-    z-index: 9999;
-    background-color: rgba(34, 34, 34, 0.5); */
+    z-index: 998;
+    background-color: rgba(34, 34, 34, 0.5);
 `;
