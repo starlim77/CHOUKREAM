@@ -31,10 +31,6 @@ public class NewProductDTO {
 	@Column
 	private int seq;
 	
-	// 회원 id
-	@Column(name="id",length=100)
-	private String id;
-	
 	// 사진 경로 
 	@Column(name="imgName",length=3000)
 	private String imgName;

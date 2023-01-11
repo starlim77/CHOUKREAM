@@ -4,6 +4,7 @@ export const NewAddress = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
+    flex-direction: column;
     background-color: white;
     border-radius: 15px;
     box-sizing: border-box;
@@ -14,7 +15,6 @@ export const NewAddress = styled.div`
 `;
 
 export const NewAddressTitle = styled.div`
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
