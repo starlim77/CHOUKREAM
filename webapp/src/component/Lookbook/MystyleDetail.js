@@ -35,7 +35,7 @@ const MystyleDetail = () => {
     const onLikes = () => {
         axios.post('http://localhost8080/lookbook/likes', null, {
             params : {
-                likes:1,   //누르면 1로 셋팅
+                likes: '',   //누르면 1로 셋팅
                 id:id,     //로그인한 id
                 seq:seq    //좋아요 할 글번호
             }}

@@ -13,7 +13,7 @@ const Mystyle = () => {
     const [file, setFile] = useState([])
     const [showImgSrc,setShowImgSrc] = useState([]);
     const [styleBoardWriteOpen, setStyleBoardWriteOpen] = useState(false);
-    
+    const [listCount, setListCount] = useState(0);
     
     //등록한 게시물 확인
     const [myList, setMyList] = useState([]);
@@ -92,6 +92,14 @@ const Mystyle = () => {
              .catch(error => console.log(error))
     }, []) 
 
+    useEffect( ()=> {
+        // axios.get(`http://localhost:8080/lookbook/findCountById/${id}`)
+        axios.get(`http://localhost:8080/lookbook/findCountById?id=${id}`)
+        .then(res => console.log(res.data))
+        .catch(error => console.log(error))
+        
+    })
+
 
     return (
         <Container fixed>
@@ -105,7 +113,7 @@ const Mystyle = () => {
             </S.MyDiv>
             <S.MyDiv>
                 <ul>
-                    <S.MyLi>게시물<span>0</span></S.MyLi>
+                    <S.MyLi>게시물<span>{listCount}</span></S.MyLi>
                     <S.MyLi>팔로워<span>0</span></S.MyLi>
                     <S.MyLi>팔로잉<span>0</span></S.MyLi>
                 </ul>
