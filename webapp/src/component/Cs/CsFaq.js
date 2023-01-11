@@ -1,14 +1,14 @@
-import {  TextField } from '@mui/material';
+
 import React, { useEffect, useMemo, useState } from 'react';
 import Header from '../Header/Header';
 import CsNav from './Csnav/CsNav';
 import { SearchInpt } from './style';
-import { Collapse } from '@mui/material';
+
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import CsFaqWriteForm from './CsFaqWriteForm';
 import axios from 'axios';
 import { Viewer } from '@toast-ui/react-editor';
-import Pagination from './Pagination';
+import Paging from './Paging.js';
 
 
 
@@ -35,15 +35,14 @@ const CsFaq = () => {
     }
     const [category , setCategory] =useState('')
     //--Paging-----
-    const [currentPage, setCurrentPage] = useState(1);
-    const [listsPerPage, setListsPerPage] = useState(10);
-    const indexOfLast = currentPage * listsPerPage;
-    const indexOfFirst = indexOfLast - listsPerPage;
-    const currentLists = (list) => {
-    let currentLists = 0;
-    currentLists = list.slice(indexOfFirst, indexOfLast);
-    return currentLists;
-  };
+   // npm i react-js-pagination --force  설치
+ 
+   const [count, setCount] = useState(0); // 아이템 총 개수
+   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지. default 값으로 1
+   const [postPerPage] = useState(10); // 한 페이지에 보여질 아이템 수 
+   const [indexOfLastPost, setIndexOfLastPost] = useState(0); // 현재 페이지의 마지막 아이템 인덱스
+   const [indexOfFirstPost, setIndexOfFirstPost] = useState(0); // 현재 페이지의 첫번째 아이템 인덱스
+   const [currentPosts, setCurrentPosts] = useState(0); // 현재 페이지에서 보여지는 아이템들
    
 
     useEffect(()=>{
@@ -60,6 +59,19 @@ const CsFaq = () => {
         
 
     },[])
+
+     //pagination 관련
+     useEffect(() => {
+      
+        setCount(list.length);
+        setIndexOfLastPost(currentPage * postPerPage);
+        setIndexOfFirstPost(indexOfLastPost - postPerPage);
+        setCurrentPosts(list.slice(indexOfFirstPost, indexOfLastPost));
+    },[currentPage, indexOfLastPost, indexOfFirstPost, list, postPerPage])
+
+    const setPage = (error) => {
+        setCurrentPage(error);
+      };
    
     const onClickCategory = (e) => {
        // e.preventDefault();
@@ -143,7 +155,8 @@ const CsFaq = () => {
                
             </p>
             <table>
-                {list.slice(indexOfFirst, indexOfLast).map((item) => { //10개씩 글목록이 뜨게?? 하기 위해서 map을 list(전체)가 아닌 {list.slice(indexOfFirst, indexOfLast) 으로 돌리기..그냥 이렇게 해야 그렇게 되어서 ,,,
+               
+                { list.slice(indexOfFirstPost, indexOfLastPost).map((item) => { //10개씩 글목록이 뜨게?? 하기 위해서 map을 list(전체)가 아닌 {list.slice(indexOfFirst, indexOfLast) 으로 돌리기..그냥 이렇게 해야 그렇게 되어서 ,,,
                     return (
                         <table key={item.seq}>
                             <tr
@@ -156,10 +169,9 @@ const CsFaq = () => {
                             </tr>
                             {visible[item.seq] && (
                                 <tr>
-                                    <td colSpan="2">{item.content}</td>  원래
-                                  <td colSpan='2'> <Viewer initialValue={item.content || ''} /></td>  toast viewer 사용해서 toast 편집기로  작성되어 html or markdown으로 저장된 content 내용 웹에 가져오기
-                                    <Link to={'/cs/CsFaqUpdateForm/'+item.seq}><button  value ={item.seq}>수정</button></Link> param 가져가기
-                                    
+                                 
+                                    <td colSpan='2'> <Viewer initialValue={item.content || ''} /></td>  {/*toast viewer 사용해서 toast 편집기로  작성되어 html or markdown으로 저장된 content 내용 웹에 가져오기 */}
+                                    <td><Link to={'/cs/CsFaqUpdateForm/'+item.seq}><button  value ={item.seq}>수정</button></Link> </td>{/*param 가져가기 */}
                                     <button  value ={item.seq} onClick={onDelete}>삭제</button>
                                 </tr>
                                
@@ -168,14 +180,11 @@ const CsFaq = () => {
                         </table>
                     );
                 })}
-                <Pagination
-                listsPerPage={listsPerPage}
-                totalLists={list.length}
-                paginate={setCurrentPage}
-                 ></Pagination>
+                
             </table>
 
-           
+            {/*  PAGINATION */}
+            <Paging page={currentPage} count={count} setPage={setPage} />
 
         </>
     );

@@ -10,7 +10,7 @@ import { useRef } from 'react';
 import { Editor, Viewer } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
-// npm install text-selection-react --force star
+
 
 // 리액트가 새 컴파일/ 랜더링 되어야지 수정 전 내용이 뜸  - 즉 리액트가 새로고침이 안되면 내용이 수정페이지에 안들어옴 (제목이랑 카테고리는들어옴.)
 const CsFaqUpdateForm = () => {

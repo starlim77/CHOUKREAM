@@ -45,13 +45,73 @@ public class CsBoardController {
 	
 	@PostMapping(path="write")	
 	public void write(@ModelAttribute CsBoardDTO csBoardDTO) {
+		String path = System.getProperty("user.dir");
+		 int index = path.lastIndexOf("\\");
+		 System.out.println(index +"index" + "filepath"+csBoardDTO.getFilepath());
+		 //	\FinalProject를 자르고 앞부분만 남김. ex)F:\project\finalProject\final\final1zo\workspace
+		 String pathModified=path.substring(0, index);
+		 System.out.println("pathModified"+ pathModified);
 		System.out.println(csBoardDTO);
 		csBoardService.write(csBoardDTO);		
 	}
 	
-	@PostMapping(path = "writeTest")
-	public void writeTest(@ModelAttribute CsBoardDTO csBoardDTO) {
+	@PostMapping(path = "writeTest" , produces="text/html; charset=UTF-8")
+	@ResponseBody
+	public void writeTest(@RequestBody List<MultipartFile> img, @ModelAttribute CsBoardDTO csBoardDTO) {
+		System.out.println(img);
 		System.out.println(csBoardDTO);
+		String path = System.getProperty("user.dir");
+		 int index = path.lastIndexOf("\\");
+		 System.out.println(index +"index" + "filepath"+csBoardDTO.getFilepath());
+		 //	\FinalProject를 자르고 앞부분만 남김. ex)F:\project\finalProject\final\final1zo\workspace
+		 String pathModified=path.substring(0, index);
+		 
+		 System.out.println("pathModified"+ pathModified);
+	
+		//csBoardService.write(csBoardDTO);	
+		//반복
+		 index=pathModified.lastIndexOf("\\");
+		 pathModified = pathModified.substring(0,index);
+		 System.out.println("경로확인"+pathModified);
+		//실제 저장될 경로 지정
+		 //ex) pathModified	= F:\project\finalProject\final\final1zo 뒤에 webapp경로 지정
+		 String filePath=pathModified+"/webapp/public/storage";
+	 	 System.out.println("실제폴더 : " + filePath);
+	 	 
+		
+		 
+		 System.out.println(csBoardDTO);
+		 for(MultipartFile sendImg:img) {
+			 String fileName = csBoardDTO.getFilename()+".png";
+			 File file = new File(filePath , fileName);
+			try {
+				sendImg.transferTo(file);
+				System.out.println(file +"file 드렁옴??");
+				//DTO에 사진명 수정 후 DTO에 세팅
+				 String imgName;
+				 imgName=fileName.substring(4, csBoardDTO.getFilename().length()-1);
+				 System.out.println(imgName);
+				 csBoardDTO.setFilename(imgName);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 };
+		System.out.println();
+		// csBoardfile.transferTo(new File(filePath, csBoardDTO.getFilename()));
+		 csBoardService.write(csBoardDTO);
+	 	 
+	 	 	
+		 
+		 //원래는 img가 list형태라서 iterator를 사용하는 것이 더 올바른 방법이긴 함.
+		// for(MultipartFile sendImg:list) {
+		// String fileName=csBoardDTO.getFilename();
+			//사진을 webapp쪽에 실제로 등록할 때 사용할 이름을 위한 변수
+		//	String sendName=null;
+		
 	}
 	
 	@GetMapping(path = "getNotices")
