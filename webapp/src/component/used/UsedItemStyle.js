@@ -70,19 +70,30 @@ export const ProductNameWrapper=styled.div`
 `;
 
 export const ProdcuctNameSpan=styled.p`
-    font-size:30px;
+    font-size: 24px;
     text-align: left;
+    margin-top: 15px;
 `;
 
 export const SizeWrapper=styled.div`
-    width:560px;
+    width:550px;
     font-size:30px;
     text-align: left;
     padding: 15px 0 15px 0;
+    
+    display: flex;
+    justify-content: space-between;
+
+    border-bottom : 1px solid black;
 `;
 
+export const Sizetitle=styled.span`
+    font-size: 10pt;
+    margin-top: 9.5px;
+`
+
 export const SizeSpan=styled.span`
-    font-size:30px;
+    font-size:30px; 
 `;
 
 export const PriceWrapper=styled.div`
