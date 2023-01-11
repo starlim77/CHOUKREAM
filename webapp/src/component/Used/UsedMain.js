@@ -117,6 +117,10 @@ const UsedMain = () => {
             <S.H2>중고 상품</S.H2>
                 
             <S.TagImg>
+                <S.TagImgLi onClick={tagReset}>
+                    <S.TagImgItem src='../image/used/ALL.png'/>
+                    <S.TagImgSpan>전체</S.TagImgSpan>
+                </S.TagImgLi>
                 {
                     tagData.map(item => <S.TagImgLi key={item.id} onClick={ e => onTag(item.title)}>
                                              <S.TagImgItem src={item.img}/>
@@ -125,7 +129,7 @@ const UsedMain = () => {
                 }
                    
             </S.TagImg>
-            <S.TagReset><S.TagResetSpan onClick={tagReset}>[모든 상품보기]</S.TagResetSpan></S.TagReset>
+            {/* <S.TagReset><S.TagResetSpan onClick={tagReset}>[모든 상품보기]</S.TagResetSpan></S.TagReset> */}
 
             <Banner/>
 
