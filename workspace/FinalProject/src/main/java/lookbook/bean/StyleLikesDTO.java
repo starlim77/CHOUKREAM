@@ -15,7 +15,7 @@ import lookbook.entity.StyleLikesEntity;
 @AllArgsConstructor // 모든 필드를 매개변수로 하는 생성자
 public class StyleLikesDTO {
 	
-	private int likesId;
+	private Long likesId;
 	
 	private Long memberId;   //로그인id
 	
@@ -23,6 +23,7 @@ public class StyleLikesDTO {
 
 	public static StyleLikesDTO  toStyleLikesDTO(StyleLikesEntity styleLikesEntity, int styleSeq) {
 		StyleLikesDTO styleLikesDTO = new StyleLikesDTO();
+//		styleLikesDTO.setLikesId(styleLikesEntity.isLikesId());
 		styleLikesDTO.setLikesId(styleLikesEntity.getLikesId());
 		styleLikesDTO.setMemberId(styleLikesEntity.getMemberDto().getId());   //로그인한 id
 		styleLikesDTO.setStyleSeq(styleLikesEntity.getStyleEntity().getSeq());  //게시글 번호

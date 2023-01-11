@@ -25,32 +25,41 @@ const MystyleDetail = () => {
              .catch(error => console.log(error))
     }, []) 
 
+    useEffect( ()=> {
+        axios.get(`http://localhost:8080/lookbook/findLikes?memberId=${id}&styleSeq=${seq}`)
+             .then(res => setIsLike(res.data)
+                // res => console.log("디테일 확인 "+res.data)  
+             )
+             .catch(error => console.log(error))
+    }, []) 
+
+
     const updateBtn = () =>{
         updateRef.current.click();        
     }
 
-    const [likesForm, setLikesForm] = useState({   //기본 f, 좋아요 누르면 t
-        seq: '',
-        memberId: '',
-        likesId: false
+    const [likesForm, setLikesForm] = useState({   //기본 0 f, 좋아요 누르면 t 1
+        styleSeq: seq,
+        memberId: id,
+        likesId: ''
     })  
+
+    const [isLike, setIsLike] = useState(0);
 
     //좋아요 클릭
     const onLikes = () => {
-        setLikesForm({...likesForm, likesId: !likesForm.likesId});
+        // setLikesForm({...likesForm, });
 
-        axios.post('http://localhost:8080/lookbook/likebutton', null, {
-            params : {
-                likesId: '',   //누르면 1로 셋팅
-                memberId: id,     //로그인한 id 숫자
-                styleSeq: seq    //좋아요 할 글번호
-            }}
-           )
-            .then( alert("좋아요 클릭"+id+seq))
+        axios.post('http://localhost:8080/lookbook/likebutton', null, {params:likesForm})
+            .then( res => 
+                // console.log(res.data), 
+                setIsLike(res.data),
+                   alert("좋아요 클릭")
+                )
             .catch(error => console.log(error))
 
         {
-            likesForm.likesId === false ? setCount(count + 1) : setCount(count - 1);
+            likesForm.likesId === 0 ? setCount(count + 1) : setCount(count - 1);
         }
         
     }
@@ -102,8 +111,9 @@ const MystyleDetail = () => {
 
                                     <CardActions >                                    
                                         <IconButton aria-label="add to favorites" onClick={onLikes}>
-                                            <FavoriteIcon />  
-                                            <img src={ likesForm.likesId ?  '/image/style/likes.png'  : '/image/style/unlikes.png'  }/>
+                                            {/* <FavoriteIcon />  //react Icon */}
+                                            <img src={ isLike === 1 ?  '/image/style/likes.png'  : '/image/style/unlikes.png'  }
+                                            style={{ width:'28px'}}/>
 
                                         </IconButton>
 

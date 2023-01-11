@@ -26,6 +26,7 @@ import lookbook.bean.StyleCommentDTO;
 import lookbook.bean.StyleDTO;
 import lookbook.bean.StyleLikesDTO;
 import lookbook.service.StyleCommentService;
+import lookbook.service.StyleLikesService;
 import lookbook.service.StyleService;
 
 @RestController
@@ -36,6 +37,8 @@ public class styleController {
 	private StyleService styleService;
 	@Autowired
 	private StyleCommentService styleCommentService;
+	@Autowired
+	private StyleLikesService styleLikesService;
 	
 	//스타일 게시물 입력	
 	@PostMapping(path="upload" , produces="text/html; charset=UTF-8")
@@ -103,11 +106,17 @@ public class styleController {
 	//좋아요
     @PostMapping(path="likebutton")
     public int likes(@ModelAttribute StyleLikesDTO styleLikesDTO) {
-    	System.out.println("컨트롤러 styleLikesDTO ==== "+ styleLikesDTO);
-    	return styleService.saveLikes(styleLikesDTO);
+    	//System.out.println("컨트롤러 styleLikesDTO ==== "+ styleLikesDTO);
+    	return styleLikesService.save(styleLikesDTO);
 
+    }
+    
+    //좋아요 확인
+    @GetMapping(path="findLikes")
+    public int findLikes(@ModelAttribute StyleLikesDTO styleLikesDTO) {
+    	//System.out.println("컨트롤러 조아요 확인 styleLikesDTO ==== "+ styleLikesDTO);
+    	return styleLikesService.findLikes(styleLikesDTO);
 
-  
     }
 		
 

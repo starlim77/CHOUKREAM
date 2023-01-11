@@ -24,11 +24,8 @@ public interface StyleService {
 	public List<StyleDTO> findAll();
 
 	public StyleDTO findMyListDetail(int seq);
-
-	public int saveLikes(StyleLikesDTO styleLikesDTO);
-	public int findLikes(Long memberId, int style_seq);
 	
-	public Long findCountById(String id);
+	public Long findCountById(String id);  //게시글 카운트
 
 
 

@@ -21,7 +21,7 @@ public class StyleLikesEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="likes_id")
-	private int likesId; //좋아요 1 또는 0
+	private Long likesId; //좋아요 1 또는 0
 	
 	
 	@ManyToOne(fetch = FetchType.EAGER)
