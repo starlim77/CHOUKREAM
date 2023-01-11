@@ -40,16 +40,22 @@ const UpdateBtnModal = ({writer, seq, imgNameSend, form,setForm}) => {
     const soldOut=()=>{
         // setForm({...form, title:`[판매완료]${form.title}`})
         
-        axios.put('http://localhost:8080/used/soldOut','',{params:form})
+        axios.put('http://localhost:8080/used/soldOut','',{params:{
+            ...form,
+             hashTag : encodeURI(form.hashTag)
+         }})
         .then(alert('판매완료 처리되었습니다.'))
-        // .then(navigate('/used/usedMain'))
+        .then(navigate('/used/usedMain'))
         .catch(err=>console.log(err))
        
     }
     const onSale=()=>{
         // setForm({...form, title:form.title.substr(6)})
        
-        axios.put('http://localhost:8080/used/onSale','',{params:form})
+        axios.put('http://localhost:8080/used/onSale','',{params:{
+            ...form,
+             hashTag : encodeURI(form.hashTag)
+         }})
         .then(alert('판매중 처리되었습니다.'))
         .then(navigate('/used/usedMain'))
         .catch(err=>console.log(err))
@@ -58,6 +64,7 @@ const UpdateBtnModal = ({writer, seq, imgNameSend, form,setForm}) => {
 
     return (
         <>
+        
         {   //판매중이면  뜨는 버튼
             writer&&(form.sellingState)&&
             <M.ModalWrapper>

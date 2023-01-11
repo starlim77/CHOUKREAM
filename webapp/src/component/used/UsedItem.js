@@ -50,6 +50,17 @@ const UsedItem = () => {
 
     },[form.id])
 
+    useEffect(()=>{
+    
+        var decoding= decodeURI(form.hashTag).split(',');
+        console.log(decoding);
+        setForm({
+            ...form,
+            hashTag: decoding});
+        
+        //form이 바뀌는 걸로 설정하면 무한 루프도니까 한 번만 돌게 form.title사용
+    },[isWriter])
+
     const [splitImg,setSplitImg] = useState([])
 
     const [mainImg,setMainImg] = useState('')
@@ -100,6 +111,7 @@ const UsedItem = () => {
 
     //이미지 순서 바꾸기
     const changImg=(e)=>{
+        console.log(form.hashTag);
         var id = e.target.getAttribute("id");
         //진영씨 방법
         //1. if로 아이디 값 걸러서 바꿔주기
