@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState} from 'react';
-import {useParams, useSearchParams } from 'react-router-dom';
+import {useNavigate, useSearchParams } from 'react-router-dom';
 import UpdateBtnModal from './UpdateBtnModal';
 import * as U from './UsedItemStyle';
 const UsedItem = () => {
-
+    const navigate = useNavigate();
     // console.log("seq = " + location.seq +" seq = "+ {seq})
     const shopKind = 'used'
 
@@ -19,7 +19,7 @@ const UsedItem = () => {
         price:'',
         likes:'',
         contents:'',
-        hashtag:[],
+        hashTag:[],
         sellingState:true
     });
     
@@ -50,16 +50,7 @@ const UsedItem = () => {
 
     },[form.id])
 
-    useEffect(()=>{
     
-        var decoding= decodeURI(form.hashTag).split(',');
-        console.log(decoding);
-        setForm({
-            ...form,
-            hashTag: decoding});
-        
-        //form이 바뀌는 걸로 설정하면 무한 루프도니까 한 번만 돌게 form.title사용
-    },[isWriter])
 
     const [splitImg,setSplitImg] = useState([])
 
@@ -127,13 +118,50 @@ const UsedItem = () => {
         
 
     }
+
+    useEffect(()=>{
     
+        var decoding= decodeURI(form.hashTag).split(',');
+        console.log(decoding);
+        setForm({
+            ...form,
+            hashTag: decoding});
+        
+        //form이 바뀌는 걸로 설정하면 무한 루프도니까 한 번만 돌게 form.title사용
+    },[form.title])
+    
+    const soldOut=()=>{
+       
+        
+        axios.put('http://localhost:8080/used/soldOut','',({params:{
+            ...form,
+             hashTag : encodeURI(form.hashTag)
+         }}))
+        .then(alert('판매완료 처리되었습니다.'))
+        .then(window.location.reload())
+        .catch(err=>console.log(err))
+       
+    }
+
+    const onSale=()=>{
+        // setForm({...form, title:form.title.substr(6)})
+       
+        axios.put('http://localhost:8080/used/onSale','',({params:{
+            ...form,
+             hashTag : encodeURI(form.hashTag)
+         }}))
+        .then(alert('판매중 처리되었습니다.'))
+        .then(window.location.reload())
+        .catch(err=>console.log(err))
+
+        
+    }
 
     return (
 
         <>
         <U.ModalDiv>
-            <UpdateBtnModal writer={isWriter} form={form} setForm={setForm}
+            <UpdateBtnModal writer={isWriter} form={form} setForm={setForm} onSale={onSale} soldOut={soldOut}
                         seq={searchParams.get('seq')} imgNameSend={form.imgName}></UpdateBtnModal>
         </U.ModalDiv>
         <U.BaseBody>

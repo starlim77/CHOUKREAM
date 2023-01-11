@@ -4,13 +4,12 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as M from './UpdateBtnModalStyle';
 
-const UpdateBtnModal = ({writer, seq, imgNameSend, form,setForm}) => {
+const UpdateBtnModal = ({writer, seq, imgNameSend, form,onSale,soldOut}) => {
     const[buttonVisibility,setButtonVisibility]=useState(false);
     const modalVisibility=()=>{
         setButtonVisibility(!buttonVisibility);
     }
     const navigate = useNavigate();
-
     //업데이트
     const moveToPage=()=>{
         //참고자료 https://curryyou.tistory.com/477
@@ -25,42 +24,8 @@ const UpdateBtnModal = ({writer, seq, imgNameSend, form,setForm}) => {
              })
             .catch(err=>console.log(err))
     }
-    //판매완료
-    // const{id,imgName,title, productName,size,price,likes,contents,hashtag,sellingState}=form
-    // const soldOut=()=>{
-    //     setForm({...form, title:`[판매완료]${form.title}`})
-        
-    //     axios.put('http://localhost:8080/used/soldOut','',{params:{id:id, imgName:imgName, size:size,price:price,
-    //                             likes:likes,contents:contents,hashtag:hashtag,sellingState:sellingState, title:title,productName:productName}})
-    //     .then(alert('판매완료 처리되었습니다.'))
-    //     .then(()=>navigate(`/used/usedItem?seq=${seq}`))
-    //     .catch(err=>console.log(err))
-    //     console.log(form.title)
-    // }
-    const soldOut=()=>{
-        // setForm({...form, title:`[판매완료]${form.title}`})
-        
-        axios.put('http://localhost:8080/used/soldOut','',{params:{
-            ...form,
-             hashTag : encodeURI(form.hashTag)
-         }})
-        .then(alert('판매완료 처리되었습니다.'))
-        .then(navigate('/used/usedMain'))
-        .catch(err=>console.log(err))
-       
-    }
-    const onSale=()=>{
-        // setForm({...form, title:form.title.substr(6)})
-       
-        axios.put('http://localhost:8080/used/onSale','',{params:{
-            ...form,
-             hashTag : encodeURI(form.hashTag)
-         }})
-        .then(alert('판매중 처리되었습니다.'))
-        .then(navigate('/used/usedMain'))
-        .catch(err=>console.log(err))
 
-    }
+    
 
     return (
         <>

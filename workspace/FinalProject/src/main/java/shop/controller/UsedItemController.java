@@ -181,12 +181,12 @@ public class UsedItemController {
 	 
 	 @PutMapping(path="updateItem")
 	 public void updateItem(@ModelAttribute UsedItemDTO usedItemDTO) {
+		 System.out.println(usedItemDTO);
 		 usedItemService.updateItem(usedItemDTO);
 	 }
 	 
 	 @PutMapping(path="soldOut")
 	 public void soldOut(@ModelAttribute UsedItemDTO usedItemDTO) {
-		// System.out.println("오냐?");
 		 System.out.println(usedItemDTO);
 		 if(usedItemDTO.isSellingState()) {
 			 usedItemDTO.setSellingState(false);
