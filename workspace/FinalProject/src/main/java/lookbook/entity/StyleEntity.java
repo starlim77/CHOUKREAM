@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -46,6 +47,14 @@ public class StyleEntity {
 	
 	@Column
 	private int fileAttached;// 1 or 0
+	
+	@Column	
+	private int commentCount;
+	
+	@Column	
+	private int likesCount;
+	
+	
 	
 	@OneToMany(mappedBy = "styleEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<StyleFileEntity> styleFileEntityList = new ArrayList<>();

@@ -20,9 +20,9 @@ const StyleCommentList = (props) => {
              .catch(error => console.log(error))
     },[])
     
-    const onCommentDelete = (id) => {
-        console.log(id)
-        axios.delete(`http://localhost:8080/lookbook/deleteComment?id=${id}`)
+    const onCommentDelete = (id,styleSeq) => {
+        console.log(id, styleSeq)
+        axios.delete(`http://localhost:8080/lookbook/deleteComment?id=${id}&styleSeq=${styleSeq}`)
              .then(
                 alert("삭제완료"),
                 window.location.replace("/lookbook/detail")//새로고침
@@ -48,7 +48,7 @@ const StyleCommentList = (props) => {
                         {item.commentContents}
                         
                         <S.SCLdeletebutton>
-                        <ClearIcon onClick = { () => { onCommentDelete(item.id) }} >삭제</ClearIcon>
+                        <ClearIcon onClick = { () => { onCommentDelete(item.id,item.styleSeq) }} >삭제</ClearIcon>
                         </S.SCLdeletebutton>
                     </S.SCLcomment>
                 )

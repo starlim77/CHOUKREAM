@@ -169,7 +169,7 @@ const Trending = () => {
                                             <IconButton aria-label="add to favorites">
                                                 <MessageOutlinedIcon />
                                             </IconButton>
-                                            <span>15</span>
+                                            <span>{item.commentCount}</span>
                                         </Typography>
                                     </CardActions>
                                 </Card>

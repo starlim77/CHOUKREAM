@@ -144,9 +144,9 @@ public class styleController {
 	
 	//댓글 삭제
 	@DeleteMapping(path="deleteComment")
-	public void deleteComment(@RequestParam String id) {
+	public void deleteComment(@RequestParam String id, String styleSeq) {
 		System.out.println("댓글 삭제"+ id);
-		styleCommentService.delete(id);
+		styleCommentService.delete(id,styleSeq);
 	}
 	
 	

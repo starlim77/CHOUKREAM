@@ -19,6 +19,8 @@ const Detail = () => {
     useEffect( ()=> {
         axios.get('http://localhost:8080/lookbook/getStyleList')
              .then(res => setList(res.data))
+            //.then(res => console.log(res.data))
+                
              .catch(error => console.log(error))
              console.log("list",list) 
     }, [])   
@@ -29,8 +31,7 @@ const Detail = () => {
         //=item.id 가 id 인 것을 제거한다
         
     }
-    //댓글 개수 입력
-    //const[data, setData]= useState('');
+    
 
     return (
         <div>            
@@ -70,7 +71,8 @@ const Detail = () => {
                                         </Link>
                                         
                                     </IconButton> 
-                                    {/* <span>{data}</span>   */}
+                                    <span>{item.commentCount}</span>  
+                                    
                                     </div>                   
                                 </CardActions>
 

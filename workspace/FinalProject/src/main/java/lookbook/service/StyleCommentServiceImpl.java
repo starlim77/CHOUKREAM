@@ -37,6 +37,9 @@ public class StyleCommentServiceImpl implements StyleCommentService {
 			//클래스 메소드로 사용하는이유- 엔티티를 외부에 노출안시키고 보호해/엔티티는 DB연결하니까
 			//builder를 쓰기도 한다
 			
+			//댓글수 +1 저장
+			styleEntity.setCommentCount(styleEntity.getCommentCount()+1);
+			
 			return styleCommentDAO.save(styleCommentEntity).getId();//댓글 저장
 		} else {
 			return null;
@@ -68,10 +71,20 @@ public class StyleCommentServiceImpl implements StyleCommentService {
 
 	//댓글 삭제
 	@Transactional
-	public void delete(String id) {
+	public void delete(String id, String styleSeq) {
 		styleCommentDAO.deleteById(id);
 		
+		//댓글수 -1
+		int seq = Integer.parseInt(styleSeq);
+		Optional<StyleEntity> optionalStyleEntity = styleDAO.findBySeq(seq);
+		StyleEntity styleEntity = optionalStyleEntity.get(); 
+		styleEntity.setCommentCount(styleEntity.getCommentCount()-1);	
+		
+		
 	}
+
+
+
 
 	
 	

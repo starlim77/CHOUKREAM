@@ -38,7 +38,9 @@ public class StyleDTO {
 	private List<String> storedFileName;   //서버 저장용 파일 이름
 	private int fileAttached; // 파일 첨부 여부 (첨부1, 미첨부 0)
 	
-	//private List<StyleCommentDTO> comment;
+	private int commentCount;
+	
+	private int likesCount;
 
 	
 	public static StyleDTO toStyleDTO(StyleEntity styleEntity) {
@@ -76,7 +78,8 @@ public class StyleDTO {
 			
 		}
 		
-		//styleDTO.setComment(styleEntity.getStyleCommentEntityList().stream().map(StyleCommentDTO::new).collect(Collectors.toList());
+		styleDTO.setCommentCount(styleEntity.getCommentCount());
+		
 		
 		return styleDTO;
 	}
