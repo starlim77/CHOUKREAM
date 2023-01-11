@@ -60,6 +60,33 @@ const Trending = () => {
     //     gap: 5,
     //   });
 
+
+    const [itemLength,setItemLength] = useState(12) // 처음에 가져올 아이템 갯수
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll); //clean up
+        };
+    }, []);
+
+    
+    const handleScroll = () => {
+        var heightTop = window.scrollY; // 화면의 Y축의 상단값
+
+        const heightBottom = window.scrollY + window.innerHeight; // 화면의 Y축의 하단값
+        const innerHeight = window.innerHeight;
+
+        const scrollHeight = document.body.scrollHeight;
+        // console.log('scrollHeight 스크롤 전체길이 ' + scrollHeight); // 불변
+
+        if (heightBottom >= scrollHeight - 80) {
+            console.log( '하단높이 '+ heightBottom + ' , ' + (scrollHeight - 100));
+
+            setItemLength(itemLength => itemLength + 8)
+        }
+    };
+
     return (
         <>
             <Social />
@@ -82,9 +109,9 @@ const Trending = () => {
 
             <Container fixed>
                 <S.TrGridContainer>
-                    {list.map(item => {
+                    {list.map((item,index) => {
                         return (
-                            <S.TrGridBox key={item.seq}>
+                            <S.TrGridBox key={item.seq} style={{display : index < itemLength ? '':'none'}}>
                                 <Card sx={{ width: 250 }}>
                                     <Link to={'/lookbook/detail' + item.seq}>
                                         <S.TrGridBoxImg
@@ -93,7 +120,7 @@ const Trending = () => {
                                                 item.storedFileName[0]
                                             }
                                         ></S.TrGridBoxImg>
-
+                                    {/* 
                                         {item.storedFileName.map(
                                             (index, item) => {
                                                 return (
@@ -104,7 +131,8 @@ const Trending = () => {
                                                     />
                                                 );
                                             },
-                                        )}
+                                        )} 
+                                        */}
 
                                         <CardHeader
                                             avatar={

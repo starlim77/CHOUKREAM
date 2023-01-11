@@ -22,7 +22,8 @@ public class StyleCommentServiceImpl implements StyleCommentService {
 	private StyleDAO styleDAO;
 	@Autowired
 	private StyleCommentDAO styleCommentDAO;
-		
+	
+	//등록
 	@Transactional
 	public Long save(StyleCommentDTO styleCommentDTO) {
 		//부모엔티티( StyleEntity ) 조회
@@ -43,6 +44,8 @@ public class StyleCommentServiceImpl implements StyleCommentService {
 		
 	}
 	
+	
+	//글에 달린 댓글 가져오기
 	@Transactional
 	public List<StyleCommentDTO> findAll(int styleSeq) {
 		//select * from style_comment_table where styleSeq=? order by seq desc;
@@ -63,6 +66,7 @@ public class StyleCommentServiceImpl implements StyleCommentService {
 		return styleCommentDTOList;
 	}
 
+	//댓글 삭제
 	@Transactional
 	public void delete(String id) {
 		styleCommentDAO.deleteById(id);

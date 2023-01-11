@@ -30,12 +30,13 @@ const StyleCommentList = (props) => {
              .catch(error => console.log(error))
     } 
 
-
+   // props.setData(comment.length)
+    
 
     return (
-        <>                                                                   
-            {
-            comment.map((item, index )=> {
+        <>                                                                               
+            {             
+            comment.map((item, index)=> {
                 return(
                     <S.SCLcomment key={index}>
                             <Chip
@@ -45,6 +46,7 @@ const StyleCommentList = (props) => {
                         /> 
                                                        
                         {item.commentContents}
+                        
                         <S.SCLdeletebutton>
                         <ClearIcon onClick = { () => { onCommentDelete(item.id) }} >삭제</ClearIcon>
                         </S.SCLdeletebutton>

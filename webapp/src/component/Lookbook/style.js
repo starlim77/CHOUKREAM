@@ -10,7 +10,7 @@ export const TrGridContainer = styled.div`
     column-gap: 10 px;
     display: grid;
     grid-template-columns: repeat(4,1fr);
-    grid-auto-rows: auto;
+    //grid-auto-rows: auto;
     
 
 `  

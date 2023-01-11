@@ -29,6 +29,8 @@ const Detail = () => {
         //=item.id 가 id 인 것을 제거한다
         
     }
+    //댓글 개수 입력
+    //const[data, setData]= useState('');
 
     return (
         <div>            
@@ -60,13 +62,16 @@ const Detail = () => {
                                     <IconButton aria-label="add to favorites">
                                         <FavoriteIcon />
                                     </IconButton>
+                                    <div>
                                     <IconButton >
                                         
                                         <Link to ={`/lookbook/StyleComment/${item.seq}`} >
                                         <ChatBubbleOutlineIcon  style={{color: 'grey', textDecoration:'none'}}/>    
                                         </Link>
+                                        
                                     </IconButton> 
-                                                          
+                                    {/* <span>{data}</span>   */}
+                                    </div>                   
                                 </CardActions>
 
             
@@ -75,7 +80,7 @@ const Detail = () => {
                                 <CardContent>       
                                     <Typography variant="body2" color="text.secondary" >
                                     <S.TrTypoDiv>
-                                     <StyleCommentList styleSeq={item.seq}  onCommentDelete={onCommentDelete} />                                
+                                     <StyleCommentList styleSeq={item.seq}  onCommentDelete={onCommentDelete}  />                                
                                     
                                     </S.TrTypoDiv>                      
                                     </Typography>     
