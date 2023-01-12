@@ -49,7 +49,10 @@ const Detail = () => {
                                     title={item.id}
                                     subheader={item.logtime}
                                 />
-                                {item.seq}
+
+                                <Button variant="contained" style={{backgroundColor: 'black'}}>팔로우</Button>
+                                <Button variant="outlined"  style={{color: 'black'}}>언팔로우</Button>
+                               
                                 <CardMedia 
                                     component="img"
                                     height="500"
@@ -67,7 +70,7 @@ const Detail = () => {
                                     <IconButton >
                                         
                                         <Link to ={`/lookbook/StyleComment/${item.seq}`} >
-                                        <ChatBubbleOutlineIcon  style={{color: 'grey', textDecoration:'none'}}/>    
+                                        <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
                                         </Link>
                                         
                                     </IconButton> 
