@@ -57,9 +57,10 @@ public class CsBoardController {
 	
 	@PostMapping(path = "writeTest" , produces="text/html; charset=UTF-8")
 	@ResponseBody
-	public void writeTest(@RequestBody List<MultipartFile> img, @ModelAttribute CsBoardDTO csBoardDTO) {
+	public void writeTest(@RequestBody List<MultipartFile> img, @ModelAttribute CsBoardDTO csBoardDTO, HttpSession session) {
 		System.out.println(img);
 		System.out.println(csBoardDTO);
+		if(img!=null) {
 		String path = System.getProperty("user.dir");
 		 int index = path.lastIndexOf("\\");
 		 System.out.println(index +"index" + "filepath"+csBoardDTO.getFilepath());
@@ -82,16 +83,16 @@ public class CsBoardController {
 		 
 		 System.out.println(csBoardDTO);
 		 for(MultipartFile sendImg:img) {
-			 String fileName = csBoardDTO.getFilename()+".png";
+			 String fileName = csBoardDTO.getFilename()+".png";//폴더에 저장 될 때 - 확장자명 붙여서 ??
 			 File file = new File(filePath , fileName);
 			try {
 				sendImg.transferTo(file);
 				System.out.println(file +"file 드렁옴??");
 				//DTO에 사진명 수정 후 DTO에 세팅
-				 String imgName;
-				 imgName=fileName.substring(4, csBoardDTO.getFilename().length()-1);
-				 System.out.println(imgName);
-				 csBoardDTO.setFilename(imgName);
+				//String imgName;
+				//imgName=fileName.substring(4, fileName.length()-1);				 
+				//System.out.println(imgName +"imgName");
+				
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -102,7 +103,12 @@ public class CsBoardController {
 		 };
 		System.out.println();
 		// csBoardfile.transferTo(new File(filePath, csBoardDTO.getFilename()));
-		 csBoardService.write(csBoardDTO);
+		
+		csBoardDTO.setFilepath(filePath); 
+		csBoardService.write(csBoardDTO);
+		}else {
+			csBoardService.write(csBoardDTO);
+		}
 	 	 
 	 	 	
 		 

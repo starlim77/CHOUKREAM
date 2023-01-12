@@ -101,10 +101,11 @@ const CsFaqWriteForm = props => {
     
     // console.log(url);
     const split = url.split('/');
+    console.log(split)
     // console.log(split)
     
     setImg1(split[3])
-    const imageSrc =split[3]+'.png';
+ //   const imageSrc =split[3]+'.png';
 
 
 
@@ -266,8 +267,7 @@ const CsFaqWriteForm = props => {
                             ></Editor>
                         </td>
                     </tr>
-                    </tbody>
-                    {/* <tr>
+                    </tbody>                    {/* <tr>
                     <td colSpan='2'>
                         <textarea name ='content' placeholder='내용' style={{width :'350px' , height:'350px' }} onChange={onInput} value={content}/>
                     </td>

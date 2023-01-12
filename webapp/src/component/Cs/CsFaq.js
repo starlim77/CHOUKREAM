@@ -9,7 +9,7 @@ import CsFaqWriteForm from './CsFaqWriteForm';
 import axios from 'axios';
 import { Viewer } from '@toast-ui/react-editor';
 import Paging from './Paging.js';
-
+import * as C from './CsFaqStyle';
 
 
 
@@ -130,14 +130,14 @@ const CsFaq = () => {
     return (
      
         <>
-            <p>자주묻는 질문</p>
-            <hr/>
+           
            
            
             <input type ='text' value={keyword} onChange = { e=>setKeyword(e.target.value)}/>
             <button onClick={onSearch}>검색</button><br/>
            
             <table style={{border : '1px solid black'}}>
+                <tbody>
                 <tr >
                     <td ><button style ={{border:'0'}} onClick={onClickCategory}  value='buying' width="150">buying</button></td>
                     <td  ><button style ={{border:'0'}} onClick={onClickCategory}  value='policy' width="150">policy</button></td>
@@ -149,39 +149,41 @@ const CsFaq = () => {
                     <td   width="150"></td>
                    
                 </tr>
+                </tbody>
             </table>
             <p>
                 <Link to='/cs/CsFaqWriteForm'><button>글쓰기</button></Link>
                
             </p>
-            <table>
+         
                
                 { list.slice(indexOfFirstPost, indexOfLastPost).map((item) => { //10개씩 글목록이 뜨게?? 하기 위해서 map을 list(전체)가 아닌 {list.slice(indexOfFirst, indexOfLast) 으로 돌리기..그냥 이렇게 해야 그렇게 되어서 ,,,
                     return (
-                        <table key={item.seq}>
-                            <tr
+                        <C.NoticeUl key={item.seq}>
+                            <C.NoticeLi
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => handleClickItem(item.seq)}
                             >
                                 {/* {' '} */}
-                                <td width="50">{item.category}</td>
-                                <td width="200">{item.title}</td>
-                            </tr>
+                               {item.category} &nbsp;&nbsp;&nbsp;
+                                {item.title}
+                            </C.NoticeLi>
                             {visible[item.seq] && (
-                                <tr>
-                                 
-                                    <td colSpan='2'> <Viewer initialValue={item.content || ''} /></td>  {/*toast viewer 사용해서 toast 편집기로  작성되어 html or markdown으로 저장된 content 내용 웹에 가져오기 */}
-                                    <td><Link to={'/cs/CsFaqUpdateForm/'+item.seq}><button  value ={item.seq}>수정</button></Link> </td>{/*param 가져가기 */}
-                                    <button  value ={item.seq} onClick={onDelete}>삭제</button>
-                                </tr>
+                            
+                                    <C.NoticeContent>
+                                       <Viewer initialValue={(item.content).replace('<img src="blob:http://localhost:3000/'+item.filename+'" contenteditable="false">', '<img src="/storage/'+item.filename+'.png" contenteditable="false">') } />
+                                        <Link to={'/cs/CsFaqUpdateForm/'+item.seq}><button  value ={item.seq}>수정</button></Link> {/*param 가져가기 */}
+                                         <button  value ={item.seq} onClick={onDelete}>삭제</button>
+                                    </C.NoticeContent>
+                         
                                
                                 
                              )}
-                        </table>
+                        </C.NoticeUl>
                     );
                 })}
                 
-            </table>
+         
 
             {/*  PAGINATION */}
             <Paging page={currentPage} count={count} setPage={setPage} />
