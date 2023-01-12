@@ -1,6 +1,6 @@
 import { faL } from '@fortawesome/free-solid-svg-icons';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, useSearchParams, Link } from 'react-router-dom';
 import Inspection from './Inspection';
 import PayHeader from './PayHeader';
 import Policy from './Policy';
@@ -22,32 +22,44 @@ const sellDataList = [
 ]
 
 const PaymentTerms = () => {
-    const [data, setData] = useState(buyDataList)
-    const [isInpectionOpen, setIsInpectionOpen] = useState(false)
-    const [isPolicyOpen, setIsPolicyOpen] = useState(false)
-    const [isAllChecked, setIsAllChecked] = useState(false)
-    const [checkedItem, setCheckedItem] = useState([])
     const navigate = useNavigate()
+    const location = useLocation()
     const [searchParams, setSearchParams] = useSearchParams()
-    const size = searchParams.get("size")
-    const type = searchParams.get("type")
+    const sellOrbuy = location.pathname.split("/")[1] // sell or buy
+    const selectSize = searchParams.get("size")
+    const productNum = searchParams.get("productNum")
+    const type = searchParams.get("type") //리셀 & 새상품 & 중고
 
+    const [data, setData] = useState(buyDataList)
     useEffect(() => {
-        type === "sell" ? setData(sellDataList) : setData(buyDataList)
+        sellOrbuy === "sell" ? setData(sellDataList) : setData(buyDataList)
     }, [])
 
-    const onCheck = (e) => {
-        const { name, checked } = e.target
-        setData(data.map(item => item.name === name ? { ...item, isChk: checked } : item))
 
+    //체크 박스
+    const [isAllChecked, setIsAllChecked] = useState(false)
+    const [checkedItem, setCheckedItem] = useState([])
+    useEffect(() => {
+        if(checkedItem.length === 5){
+            setIsAllChecked(true)
+        } else {
+            setIsAllChecked(false)
+        }
+    }, [checkedItem])
+
+    const onCheck = (e) => {
+        const { name, checked } = e.currentTarget
+        setData(data.map(item => item.name === name ? { ...item, isChk: checked } : item))
         if (checked) {
             setCheckedItem([...checkedItem, name])
         } else {
             setCheckedItem(checkedItem.filter(item => item !== name ))
         }
-        setIsAllChecked(data.filter(item => item.isChk === true).length === 4)
     }
 
+    //모달
+    const [isInpectionOpen, setIsInpectionOpen] = useState(false)
+    const [isPolicyOpen, setIsPolicyOpen] = useState(false)
     const onLink = (e) => {
         const { innerHTML } = e.target
         innerHTML === " 검수 기준 보기" && setIsInpectionOpen(true)
@@ -60,7 +72,7 @@ const PaymentTerms = () => {
         setIsPolicyOpen(false)
     }
     const onOrderType = () => {
-        navigate(`/orderType?type=${type}&size=${size}`)
+        navigate(`/${sellOrbuy}/orderType?type=${type}&productNum=${productNum}&size=${selectSize}`)
     }
 
     return (
@@ -81,8 +93,15 @@ const PaymentTerms = () => {
                                 </S.TermsDiv>)
                         }
                         {
-                            isAllChecked ? <S.BuyBtn onClick={onOrderType}>{type === "/buy" ? "구매" : "판매" }계속</S.BuyBtn> : <S.BuyBtn style={{backgroundColor: "#ebebeb", cursor: 'default'}} disabled>구매 계속</S.BuyBtn>
-                        }
+                            sellOrbuy === "buy" ?
+                                isAllChecked ? 
+                                    <S.BuyBtn onClick={onOrderType}>구매 계속</S.BuyBtn>
+                                    : <S.BuyBtn style={{backgroundColor: "#ebebeb", cursor: 'default'}} disabled>구매 계속</S.BuyBtn>
+                            : sellOrbuy === "sell" &&
+                                isAllChecked ?
+                                    <S.BuyBtn onClick={onOrderType}>판매 계속</S.BuyBtn>
+                                    : <S.BuyBtn style={{backgroundColor: "#ebebeb", cursor: 'default'}} disabled>판매 계속</S.BuyBtn>
+                        }       
                         {isInpectionOpen && <Inspection onInspenctionClose={onInspenctionClose} />}
                         {isPolicyOpen && <Policy onPolicyClose={onPolicyClose}/>}
                     </S.TermBottomUl>

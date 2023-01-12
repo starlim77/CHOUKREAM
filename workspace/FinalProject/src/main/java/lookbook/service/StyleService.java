@@ -1,14 +1,33 @@
 package lookbook.service;
 
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import lookbook.bean.StyleDTO;
 
 public interface StyleService {
 
-	public void upload(StyleDTO styleDTO);
+	//public void upload(StyleDTO styleDTO);
 
-	public List<StyleDTO> getMyStyleBoardList();
+	public List<StyleDTO> findAllMyList(String id);
+	//public List<StyleDTO> findAllMyList(); 
 	
-	public List<StyleDTO> getStyleBoardList();
+	public void save(List<MultipartFile> list,StyleDTO styleDTO);
+	
+	public void save(StyleDTO styleDTO);
+	
+	public void delete(int seq);
+
+	public List<StyleDTO> findAllByOrderBySeqDesc();
+	public List<StyleDTO> findAll();
+
+	public StyleDTO findMyListDetail(int seq);
+
+	public int saveLikes(String id,int style_seq);
+	public int findLikes(String id, int style_seq);
+	
+	public Long findCountById(String id);
+
 		
 }

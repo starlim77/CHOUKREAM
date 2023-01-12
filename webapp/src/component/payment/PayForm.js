@@ -36,6 +36,7 @@ const PayForm = () => {
     const type = searchParams.get('type');
     const productNum = searchParams.get('productNum');
     const size = searchParams.get('size');
+    const orderNum = searchParams.get('orderNum');
 
     const [shipInfo, setShipInfo] = useState({
         shipName: '',
@@ -78,8 +79,8 @@ const PayForm = () => {
         }
     }, []);
 
-    const [productPrice] = useState(13000);
-    const [payPrice, setPayPrice] = useState(productPrice);
+    const [productPrice] = useState(0);
+    const [payPrice, setPayPrice] = useState(0);
 
     const addComma = num => {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');

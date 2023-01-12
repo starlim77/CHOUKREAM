@@ -19,6 +19,9 @@ const Header = () => {
             <S.HeaderWrapper>
                 <S.Top>
                     <S.TopWrapper>
+                        <Link to="/admin">
+                            <S.TopLi>관리자페이지</S.TopLi>
+                        </Link>
                         <Link to="/cs/CsNotice">
                             x<S.TopLi>고객센터</S.TopLi>
                         </Link>
@@ -26,21 +29,19 @@ const Header = () => {
                         <S.TopLi>마이페이지</S.TopLi>
                         <S.TopLi>
                             <Link to="/login">로그인</Link>
+                            <Link to="/logout">로그아웃</Link>
                         </S.TopLi>
                     </S.TopWrapper>
                 </S.Top>
                 <S.Bottom>
-                    <S.BottomImg src="../image/logo.png" />
+                    <Link to="/">
+                        <S.BottomImg src="/image/logo.png" />
+                    </Link>
+
                     <S.BottomWrapper>
-                        <S.BottomLi>
-                            <Link to="/buy">구매 임시</Link>
-                        </S.BottomLi>
-                        <S.BottomLi>
-                            <Link to="/sell">판매 임시</Link>
-                        </S.BottomLi>
                         <S.BottomLi active={true}>STYLE</S.BottomLi>
                         <S.BottomLi>
-                            <Link to={'/shop'}>shop</Link>
+                            <Link to="/shop">shop</Link>
                         </S.BottomLi>
                         <S.BottomLi active={true}>
                             <Link to="/lookbook/trending">STYLE</Link>
