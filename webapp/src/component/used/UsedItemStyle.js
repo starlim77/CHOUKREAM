@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 export const WholeWrapper=styled.div`
    
-`
+`;
 export const BaseBody = styled.div`
     display: flex;
     width:1220px;
     margin:40px auto 0px auto;
    
-`
+`;
 
 export const ImgBody = styled.div`
     width: 560px; 
@@ -38,11 +38,11 @@ export const ImgBody2 = styled.div`
 // `;
 
 export const BaseDiv = styled.div`
-     width: 560px;
+    width: 560px;
     height: 820px;
     padding: 0 0 0 40px;
 
-    border-left: 1px solid black;
+    border-left:1px solid rgba(236,236,236);
 
     overflow-y: scroll;
     ::-webkit-scrollbar{
@@ -54,7 +54,7 @@ export const BottomDiv = styled.div`
     width:1220px;
     margin:auto;
     
-`
+`;
 
 //imgsrc설정방법
 //https://velog.io/@shinwonse/React-styled-components%EC%97%90%EC%84%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80
@@ -125,7 +125,7 @@ export const PriceWrapper=styled.div`
     text-align: left;
     padding: 15px 0 15px 0;
 
-`
+`;
 export const PriceSpan=styled.span`
     font-size:30px;
 `;

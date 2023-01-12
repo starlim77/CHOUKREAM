@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '../Header/Header';
 import * as S from './style';
@@ -10,7 +10,7 @@ const Layout = () => {
             <S.LayoutWraaper>
                 <Outlet />
             </S.LayoutWraaper>
-            <footer></footer>
+            <footer></footer>   
         </>
     );
 };

@@ -44,20 +44,14 @@ margin-bottom: 5px;
 export const content = styled.p`
 display: flex;
 width: 100%;
-font-size: 10.8px;
-font-weight: 100;
 margin-top: 13px;
 letter-spacing: 0.5px;
-line-height: 15px;
 `;
 export const contentRed = styled.p`
 display: flex;
 width: 100%;
-font-size: 10.8px;
-font-weight: 100;
 margin-top: 13px;
 letter-spacing: 0.5px;
-line-height: 15px;
 color: #f15746;
 `;
 export const contentUl = styled.ul`

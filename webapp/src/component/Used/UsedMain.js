@@ -107,7 +107,7 @@ const UsedMain = () => {
             <S.SearchHashTag>해쉬태그 검색 기능</S.SearchHashTag>
 
             <S.UsedMain>
-                {
+                {   
                     tagLive ? 
                     
                     dataFilter.slice(0).reverse().map((item,index) => index >= itemLength ? '':

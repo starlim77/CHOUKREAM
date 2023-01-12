@@ -33,6 +33,11 @@ public class MyController {
 		return myService.getAllAddress(id);
 	}
 	
+	@RequestMapping(path = "getDefaultAddress")
+	public Optional<AddressDTO> getDefaultAddress(@RequestParam String id){
+		return myService.getDefaultAddress(id);
+	}
+	
 	@RequestMapping(path = "getHavePoint")
 	public int getHavePoint(@RequestParam String id) {
 		

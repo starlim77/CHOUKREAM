@@ -25,8 +25,9 @@ public class ProductDTO {
    @Column(name="seq", length = 30)
    private int seq;
    
+   // 이미지 주소 
    @Column(name="img", nullable = false, length = 500)
-   private String img;
+   private String img; 
    
    @Column(name="brand", length = 30)
    private String brand;
@@ -42,7 +43,7 @@ public class ProductDTO {
 
    @Column(name="categoryDetail", length = 30)
    private String categoryDetail;
-
+   
    @Column(name="modelNum")
    private String modelNum;
    
