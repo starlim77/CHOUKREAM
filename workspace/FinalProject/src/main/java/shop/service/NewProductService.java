@@ -2,6 +2,7 @@ package shop.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import shop.bean.NewProductDTO;
 
@@ -15,5 +16,7 @@ public interface NewProductService {
 
 	public void delete(int seq);
 
-	// public List<NewProductDTO> search(Map<String, String> map);
+	public List<NewProductDTO> search(Map<String, String> map);
+
+	public Optional<NewProductDTO> updateNewProductInfo(int seq);
 }

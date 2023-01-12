@@ -144,12 +144,22 @@ public class ShopController {
 		newProductService.update(newProductDTO);
 	}
 	
-//	@GetMapping("search")
-//	// @ResponseBody
-//	public List<NewProductDTO> search(@RequestParam Map<String, String> map) { // searchOption, keyword
-//		System.out.println("map 은 ?> " + map);
-//		return newProductService.search(map);
-//	}
+	@GetMapping(value="updateNewProductInfo")
+	public Optional<NewProductDTO> updateNewProductInfo(@RequestParam int seq) { 
+		// 바로 db로 가도됨 근데 비추천 일을하면안됨 
+		// 요청과 응답만 해야댐 
+		System.out.println("seq 는 머니 " + seq);
+		System.out.println("return 하기전 " + newProductService.updateNewProductInfo(seq));
+		return newProductService.updateNewProductInfo(seq);
+	}
+	
+	@GetMapping("search")
+	// @ResponseBody
+	public List<NewProductDTO> search(@RequestParam Map<String, String> map) { // searchOption, keyword
+		System.out.println("map 은 ?> " + map);
+		System.out.println(" return 전 " + newProductService.search(map));
+		return newProductService.search(map);
+	}
 	
 	@PostMapping(path="newProductUpload", produces="text/html;charset-UTF-8")
 	 @ResponseBody

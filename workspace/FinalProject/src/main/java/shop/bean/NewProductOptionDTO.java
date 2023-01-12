@@ -17,8 +17,8 @@ public class NewProductOptionDTO {
 	@Column(name="newOptionSeq")
 	private int newOptionSeq;
 	
-	@Column(name="newSeq")
-	private int newSeq;
+	@Column(name="seq")
+	private int seq;
 	
 	@Column(name="productOption")
 	private String productOption;

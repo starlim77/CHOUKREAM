@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Title = styled.h1`
     display: flex;
     justify-content: center;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
     font-size: 50px;
     font-weight: 500px;
 `;
@@ -57,7 +57,6 @@ export const Label = styled.label`
     box-sizing: border-box;
     position: absolute;
     bottom: 5px;
-    
 `;
 export const LabelDiv = styled.div`
     display: flex;
@@ -83,7 +82,6 @@ export const SmallImg = styled.img`
 `;
 export const SearchDiv = styled.div`
     text-align: center;
-    border: 1px solid red;
     display: inline-block;
     margin-left: 80px;
     box-sizing: border-box;

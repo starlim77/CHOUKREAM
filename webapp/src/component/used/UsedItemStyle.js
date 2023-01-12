@@ -19,6 +19,24 @@ export const ImgBody = styled.div`
     /* border: 1px solid black; */
 `;
 
+export const ImgBody2 = styled.div`
+    width: 560px; 
+    height: 560px;
+    padding:  0 40px 0  0;
+    text-align: center;
+    
+    /* border: 1px solid black; */
+`;
+
+// export const BaseDiv = styled.div`
+//     width:600px;
+//     height:700px;
+//     border-left:1px solid rgba(236,236,236);
+//     border-right:1px solid rgba(236,236,236);
+//     text-align: center;
+//     display: inline-block;
+// `;
+
 export const BaseDiv = styled.div`
     width: 560px;
     height: 820px;
@@ -47,12 +65,28 @@ export const MainImg=styled.img`
     border: 0.5px solid #ececec;
 `;
 
+export const MainImg2=styled.img`
+    width:560px;
+    height:560px;
+    object-fit: cover;
+    border: 0.5px solid #ececec;
+`;
+
 export const SmallImg=styled.img`
     width:100px;
     height:100px;
     padding:25px;
     object-fit: cover;
     border: 0.5px solid #ececec;
+`;
+
+export const SmallImg2=styled.img`
+    width:100px;
+    height:100px;
+    padding:5px;
+    object-fit: cover;
+    border: 0.5px solid #ececec;
+    cursor: pointer;
 `;
 
 export const TitleWrapper=styled.div`
