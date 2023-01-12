@@ -22,7 +22,7 @@ const Mystyle = () => {
         imgRef.current.click()
     }
     const [form, setForm] = useState({
-        id: '2',    //멤버id = long type....
+        id: '3',    //멤버id = long type....
         content: '',
     })
     const {id, content} = form  

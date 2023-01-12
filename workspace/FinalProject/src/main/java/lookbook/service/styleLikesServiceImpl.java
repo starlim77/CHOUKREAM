@@ -51,25 +51,27 @@ public class styleLikesServiceImpl implements StyleLikesService {
 	    public int save(StyleLikesDTO styleLikesDTO) {
 			Long memberId = styleLikesDTO.getMemberId();				
 			int styleSeq = styleLikesDTO.getStyleSeq();
-			//System.out.println("임플 멤버아이디"+ memberId);
-			//System.out.println("임플 styleSeq + " + styleSeq );
 				
 			Optional<StyleLikesEntity> findLikes = styleLikesDAO.findByMemberDto_IdAndStyleEntity_Seq(memberId, styleSeq);
 
-	        if (findLikes.isEmpty()){
-	           MemberDto memberDto = memberDAO.findById(memberId).get();   //memberdto 테이블의 @id 컬럼
-	           Optional<StyleEntity> optionalStyleEntity = styleDAO.findBySeq(styleSeq);
-	           StyleEntity styleEntity = optionalStyleEntity.get();
+			
+			MemberDto memberDto = memberDAO.findById(memberId).get();   //memberdto 테이블의 @id 컬럼
+			Optional<StyleEntity> optionalStyleEntity = styleDAO.findBySeq(styleSeq);
+			StyleEntity styleEntity = optionalStyleEntity.get();
 
-	            StyleLikesEntity styleLikesEntity = StyleLikesEntity.toLikesEntity(memberDto, styleEntity );
+			StyleLikesEntity styleLikesEntity = StyleLikesEntity.toLikesEntity(memberDto, styleEntity );
+	      
+			if (findLikes.isEmpty()){
 	            styleLikesDAO.save(styleLikesEntity);
-	            
-//	            styleDAO.plusLike(styleSeq);
+				styleEntity.setLikesCount(styleEntity.getLikesCount()+1);  //좋아요 +1 저장
+
 	            return 1;
 	            
 	        } else {
+		      
 	        	styleLikesDAO.deleteByMemberDto_IdAndStyleEntity_Seq(memberId, styleSeq);
-	            //styleDAO.minusLike(boardId);
+	        	styleEntity.setLikesCount(styleEntity.getLikesCount()-1);
+
 	            return 0;
 
 	        }

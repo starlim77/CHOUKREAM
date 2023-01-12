@@ -1,28 +1,32 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import Header from '../Header/Header';
 import Social from '../Lookbook/Social';
 import Card from '@mui/material/Card';
-import { Avatar, Button, CardActions, CardContent, CardHeader, CardMedia, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField, Typography } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Avatar, CardActions, CardContent, CardHeader, CardMedia,  IconButton, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import * as S from './style';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import StyleCommentList from './StyleCommentList';
 
 const Detail = () => {    
    
     //게시물 뿌리기
     const [list, setList] = useState([]);
+    const [isLike, setIsLike] = useState(0);
+    
+    const [id] = useState(3)   //아이디값 로그인한걸로 가져오는거로 변경해야됨
 
     useEffect( ()=> {
         axios.get('http://localhost:8080/lookbook/getStyleList')
              .then(res => setList(res.data))
-            //.then(res => console.log(res.data))
-                
              .catch(error => console.log(error))
              console.log("list",list) 
+
+        //좋아요 여부 보여주기
+        // axios.get(`http://localhost:8080/lookbook/findLikes?memberId=${id}&styleSeq=${seq}`)
+        //      .then(res => setIsLike(res.data)  )
+        //      .catch(error => console.log(error))
     }, [])   
     
     //댓글삭제
@@ -30,6 +34,28 @@ const Detail = () => {
         //item.id가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듦
         //=item.id 가 id 인 것을 제거한다
         
+    }
+
+    //좋아요 있으면 1리턴, 없으면 0 리턴
+    const [likesForm, setLikesForm] = useState({   
+        memberId: id,
+        likesId: ''
+    }) 
+
+
+    //좋아요 클릭 로그인했을때만 가능하게 변경해야함
+    const onLikes = (seq) => {
+        axios.post('http://localhost:8080/lookbook/likebutton', null, {
+            params: {
+                styleSeq: seq,
+                memberId: id,
+                likesId: ''
+            }})
+            .then( res =>  setIsLike(res.data), 
+                           window.location.replace('/lookbook/detail')//새로고침
+                        //navigate('/lookbook/detail')                        
+                )
+            .catch(error => console.log(error))
     }
     
 
@@ -59,10 +85,17 @@ const Detail = () => {
                                 <CardContent>
                                     {item.content}
                                 </CardContent>
+
+                               
                                 <CardActions >
-                                    <IconButton aria-label="add to favorites">
-                                        <FavoriteIcon />
+                                    <div>
+                                    <IconButton aria-label="add to favorites" onClick={ () => onLikes(item.seq)}>
+                                        <img src={ isLike === 1 ?  '/image/style/likes.png'  : '/image/style/unlikes.png'  }
+                                            style={{ width:'28px'}} />
+                                           
                                     </IconButton>
+                                    <span>{item.likesCount}</span>
+                                    </div>
                                     <div>
                                     <IconButton >
                                         
@@ -76,8 +109,8 @@ const Detail = () => {
                                     </div>                   
                                 </CardActions>
 
-            
-                               
+
+
 
                                 <CardContent>       
                                     <Typography variant="body2" color="text.secondary" >

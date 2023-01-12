@@ -79,6 +79,7 @@ public class StyleDTO {
 		}
 		
 		styleDTO.setCommentCount(styleEntity.getCommentCount());
+		styleDTO.setLikesCount(styleEntity.getLikesCount());
 		
 		
 		return styleDTO;
