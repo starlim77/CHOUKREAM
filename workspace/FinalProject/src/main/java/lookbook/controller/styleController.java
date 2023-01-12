@@ -1,6 +1,7 @@
 package lookbook.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,9 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lookbook.bean.StyleCommentDTO;
 import lookbook.bean.StyleDTO;
+import lookbook.bean.StyleLikesDTO;
 import lookbook.service.StyleCommentService;
-import lookbook.entity.StyleCommentEntity;
-import lookbook.entity.StyleEntity;
+import lookbook.service.StyleLikesService;
 import lookbook.service.StyleService;
 import member.bean.MemberDto;
 
@@ -37,14 +38,15 @@ public class styleController {
 	private StyleService styleService;
 	@Autowired
 	private StyleCommentService styleCommentService;
+	@Autowired
+	private StyleLikesService styleLikesService;
 	
 	//스타일 게시물 입력	
 	@PostMapping(path="upload" , produces="text/html; charset=UTF-8")
 	@ResponseBody
 	public void upload(@RequestBody List<MultipartFile> list, @ModelAttribute StyleDTO styleDTO, HttpSession session) {
 		//System.out.println("list= " + list);	
-		
-		System.out.println("컨드롤러 dto="+ styleDTO);
+		//System.out.println("컨드롤러 dto="+ styleDTO);
 		styleService.save(list, styleDTO);
 
 	}
@@ -61,7 +63,7 @@ public class styleController {
 	@GetMapping(path="findMyListDetail/{seq}")
 	@ResponseBody
 	public StyleDTO findMyListDetail(@PathVariable int seq) {
-		System.out.println("컨트롤러에 seq확인 : "+ seq);
+		//System.out.println("컨트롤러에 seq확인 : "+ seq);
 		return styleService.findMyListDetail(seq);
 	}
 	
@@ -95,23 +97,32 @@ public class styleController {
 	@Transactional
 	@ResponseBody
 	public void delete(@RequestParam int seq) {
-		System.out.println("컨트롤러 딜리트 seq =" + seq);
+		//System.out.println("컨트롤러 딜리트 seq =" + seq);
 		styleService.delete(seq);
 	}
 	
 
 	
-//좋아요
-    @PostMapping(path="likes")
-    @ResponseBody
-    //public int likes(String member_id, int style_seq) {
-    //public int likes(@RequestParam String member_id, @RequestParam int seq) {
-    public int likes(@ModelAttribute StyleDTO styleDTO) {
-//    	System.out.println("컨트롤러  member_id "+ member_id);
-//        System.out.println("컨트롤러 style_seq" + seq);
-//    	int result = styleService.saveLikes(member_id,seq);
-//        return result;
-        return 100;
+	//좋아요
+    @PostMapping(path="likebutton")
+    public int likes(@ModelAttribute StyleLikesDTO styleLikesDTO) {
+    	//System.out.println("컨트롤러 styleLikesDTO ==== "+ styleLikesDTO);
+    	return styleLikesService.save(styleLikesDTO);
+
+    }
+    
+    //좋아요 확인
+    @GetMapping(path="findLikes")
+    public int findLikes(@ModelAttribute StyleLikesDTO styleLikesDTO) {
+    	//System.out.println("컨트롤러 조아요 확인 styleLikesDTO ==== "+ styleLikesDTO);
+    	return styleLikesService.findLikes(styleLikesDTO);
+
+    }
+		
+    //좋아요 카운트
+    @GetMapping(path="likescount")
+    public int likescount(@ModelAttribute StyleLikesDTO styleLikesDTO) {
+    	return styleLikesService.findAll(styleLikesDTO);
     }
 
     

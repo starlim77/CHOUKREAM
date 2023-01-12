@@ -64,6 +64,11 @@ public class StyleEntity {
 	@OneToMany(mappedBy = "styleEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<StyleCommentEntity> styleCommentEntityList = new ArrayList<>();
 	
+	@OneToMany(mappedBy = "styleEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+	private List<StyleLikesEntity> styleLikesEntity = new ArrayList<>();
+	
+	
+	
 	public static StyleEntity toSaveEntity(StyleDTO styleDTO) {
 		StyleEntity styleEntity = new StyleEntity();
 		styleEntity.setId(styleDTO.getId());		
