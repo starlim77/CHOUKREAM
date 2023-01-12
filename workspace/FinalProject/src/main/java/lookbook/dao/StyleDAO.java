@@ -24,5 +24,6 @@ public interface StyleDAO extends JpaRepository<StyleEntity, String> {
 	
 	//SELECT COUNT(*) FROM style_table where id= 'id'?
 	Long countById(String id);
+
 	   
 }

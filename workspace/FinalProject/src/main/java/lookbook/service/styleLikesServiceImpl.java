@@ -57,18 +57,14 @@ public class styleLikesServiceImpl implements StyleLikesService {
 			Optional<StyleLikesEntity> findLikes = styleLikesDAO.findByMemberDto_IdAndStyleEntity_Seq(memberId, styleSeq);
 
 	        if (findLikes.isEmpty()){
-//				String id = Long.toString(memberId);    //id long형 -> string으로 변환
-//				System.out.println("임플 스트링 형변환 아이디 === "+id);
 	           MemberDto memberDto = memberDAO.findById(memberId).get();   //memberdto 테이블의 @id 컬럼
 	           Optional<StyleEntity> optionalStyleEntity = styleDAO.findBySeq(styleSeq);
 	           StyleEntity styleEntity = optionalStyleEntity.get();
 
-//	           System.out.println("임플의 memberDto " + memberDto);
-
 	            StyleLikesEntity styleLikesEntity = StyleLikesEntity.toLikesEntity(memberDto, styleEntity );
 	            styleLikesDAO.save(styleLikesEntity);
 	            
-//	            styleDAO.plusLike(boardId);
+//	            styleDAO.plusLike(styleSeq);
 	            return 1;
 	            
 	        } else {
@@ -79,5 +75,15 @@ public class styleLikesServiceImpl implements StyleLikesService {
 	        }
 
 	    }
+
+		
+		//좋아요 카운트
+		@Override
+		public int findAll(StyleLikesDTO styleLikesDTO) {	
+			int styleSeq = styleLikesDTO.getStyleSeq();
+			System.out.println("styleSeq ====="  + styleSeq);
+			return styleLikesDAO.countByStyleEntity_Seq(styleSeq);
+			
+		}
 
 }

@@ -39,7 +39,7 @@ const Detail = () => {
             <Container fixed>
                 <S.DeTopDiv> 
                 {
-                    list.map((item, index) => {
+                    list.map((item,index) => {
                         return (
                             <div>
                             <Card key={item.seq}>

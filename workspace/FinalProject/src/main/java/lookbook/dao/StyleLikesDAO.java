@@ -16,6 +16,10 @@ public interface StyleLikesDAO extends JpaRepository<StyleLikesEntity, String> {
 
 	public void deleteByMemberDto_IdAndStyleEntity_Seq(Long memberId, int styleSeq);
 	
+	//쿼리 select COUNT(*) from style_likes_table where style_seq = 2;
+	public int countByStyleEntity_Seq(int styleSeq);
+
+	
 	
  
 

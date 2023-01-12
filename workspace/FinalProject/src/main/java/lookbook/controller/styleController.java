@@ -45,8 +45,7 @@ public class styleController {
 	@ResponseBody
 	public void upload(@RequestBody List<MultipartFile> list, @ModelAttribute StyleDTO styleDTO, HttpSession session) {
 		//System.out.println("list= " + list);	
-		
-		System.out.println("컨드롤러 dto="+ styleDTO);
+		//System.out.println("컨드롤러 dto="+ styleDTO);
 		styleService.save(list, styleDTO);
 
 	}
@@ -119,6 +118,11 @@ public class styleController {
 
     }
 		
+    //좋아요 카운트
+    @GetMapping(path="likescount")
+    public int likescount(@ModelAttribute StyleLikesDTO styleLikesDTO) {
+    	return styleLikesService.findAll(styleLikesDTO);
+    }
 
 	//상세에서 댓글 등록기능
 	@PostMapping(path="commentSave")

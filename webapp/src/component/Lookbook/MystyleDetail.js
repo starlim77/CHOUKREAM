@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, {  useEffect,  useRef,  useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import { Avatar, Button, CardActions, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -12,7 +12,7 @@ const MystyleDetail = () => {
     const { seq , id } = useParams();  //주소값 파라미터 seq id가져오기
     const updateRef = useRef();
     const [commentOpen, setCommentOpen] = useState(false)
-    const [count, setCount] = useState('');   // 좋아요 갯수 카운트
+    
 
     //게시물 뿌리기
     const [list, setList] = useState([]);
@@ -23,45 +23,43 @@ const MystyleDetail = () => {
                 // res => console.log("디테일 확인 "+res.data)  
              )
              .catch(error => console.log(error))
-    }, []) 
 
-    useEffect( ()=> {
-        axios.get(`http://localhost:8080/lookbook/findLikes?memberId=${id}&styleSeq=${seq}`)
-             .then(res => setIsLike(res.data)
-                // res => console.log("디테일 확인 "+res.data)  
-             )
-             .catch(error => console.log(error))
-    }, []) 
+         //좋아요 여부 보여주기
+         axios.get(`http://localhost:8080/lookbook/findLikes?memberId=${id}&styleSeq=${seq}`)
+              .then(res => setIsLike(res.data)  )
+              .catch(error => console.log(error))
 
+        //좋아요 갯수 확인
+         axios.get(`http://localhost:8080/lookbook/likescount?styleSeq=${seq}`)
+              .then(res => setLikesCount(res.data))
+              .catch(error => console.log(error))
+    }, []) 
 
     const updateBtn = () =>{
         updateRef.current.click();        
     }
 
-    const [likesForm, setLikesForm] = useState({   //기본 0 f, 좋아요 누르면 t 1
+    const [likesForm, setLikesForm] = useState({   //좋아요 있으면 1리턴, 없으면 0 리턴
         styleSeq: seq,
         memberId: id,
         likesId: ''
     })  
 
     const [isLike, setIsLike] = useState(0);
+    const [likesCount, setLikesCount] = useState('');   // 좋아요 갯수 카운트
+    //const navigate = useNavigate()
 
     //좋아요 클릭
     const onLikes = () => {
         // setLikesForm({...likesForm, });
 
         axios.post('http://localhost:8080/lookbook/likebutton', null, {params:likesForm})
-            .then( res => 
-                // console.log(res.data), 
-                setIsLike(res.data),
-                   alert("좋아요 클릭")
+            .then( res =>  
+                        setIsLike(res.data), 
+                        window.location.replace(`/lookbook/mystyledetail/${seq}/${id}`)//새로고침 넘느료..
+                        //navigate(`/lookbook/mystyledetail/${seq}/${id}`)                        
                 )
             .catch(error => console.log(error))
-
-        {
-            likesForm.likesId === 0 ? setCount(count + 1) : setCount(count - 1);
-        }
-        
     }
 
 
@@ -114,6 +112,7 @@ const MystyleDetail = () => {
                                             {/* <FavoriteIcon />  //react Icon */}
                                             <img src={ isLike === 1 ?  '/image/style/likes.png'  : '/image/style/unlikes.png'  }
                                             style={{ width:'28px'}}/>
+                                           <p>{likesCount}</p>
 
                                         </IconButton>
 
