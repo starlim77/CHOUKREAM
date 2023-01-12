@@ -1,6 +1,8 @@
 package member.service;
 
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Random;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +14,9 @@ import com.config.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import member.bean.MemberDto;
 import member.bean.MemberResponseDto;
+import member.dao.MemberDAO;
+
+import member.bean.MemberDto;
 import member.dao.MemberDAO;
 
 @Service
@@ -64,5 +69,11 @@ public class MemberServiceImpl implements MemberService {
         memberDto.setPassword(passwordEncoder.encode((newPassword)));
         return MemberResponseDto.of(memberDAO.save(memberDto));
 	}
-
+	
+	@Override
+	public Optional<MemberDto> getMemberInfo(long seq) {
+		System.out.println(memberDAO.findById(seq));
+		return memberDAO.findById(seq);
+	}
+	
 }
