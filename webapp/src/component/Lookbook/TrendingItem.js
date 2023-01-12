@@ -26,7 +26,7 @@ const TrendingItem = ({item,index,itemLength}) => {
 
     return (
         <S.TrGridBox style={{display : index < itemLength ? '':'none'}}>
-            <Card sx={{ width: 250 }}>
+            <Card sx={{ width: 250 }} >
                 <Link to={'/lookbook/detail' + item.seq}>
                     <S.TrGridBoxImg src={'../storage/' + item.storedFileName[0]}/>
                 </Link>

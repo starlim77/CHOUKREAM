@@ -60,8 +60,9 @@ const Detail = () => {
     }
         
     //팔로우
-    const onFollow = () => {
-
+    const onFollow = (id) => {
+        //id //followee id
+        axios.get('http://localhost:8080/lookbook/saveFollow')
     }
     
 
@@ -82,7 +83,7 @@ const Detail = () => {
                                     subheader={item.logtime}
                                 />
 
-                                <Button variant="contained" style={{backgroundColor: 'black'}} onClick={ onFollow }>팔로우</Button>
+                                <Button variant="contained" style={{backgroundColor: 'black'}} onClick={() => onFollow (item.id)} >팔로우</Button>
                                 <Button variant="outlined"  style={{color: 'black'}}>언팔로우</Button>
                                
                                 <CardMedia 

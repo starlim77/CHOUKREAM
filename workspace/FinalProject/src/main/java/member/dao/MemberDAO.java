@@ -19,5 +19,8 @@ public interface MemberDAO extends JpaRepository<MemberDto, Long> {
 	public MemberDto findPasswordByPhoneAndEmail(String phone, String email);
 
 	public void save(Optional<MemberDto> memberDto);
+
+	public Optional<MemberDto> findByName(String name); //팔로우 기능
+	
 	
 }

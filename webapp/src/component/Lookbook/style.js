@@ -6,7 +6,7 @@ import styled from "styled-components"
 export const TrGridContainer = styled.div`
     width: 1200px;
     margin: 0px auto;
-    display: flex;
+    display: flex;     
 `  
 export const TrGridContainerSub = styled.div`
     width: 350px;
