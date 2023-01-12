@@ -117,6 +117,12 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
             return num / 10000 + '만';
         }
     };
+    
+    const photoshop = (itemImg) => {
+        const img = itemImg.split(',');
+        
+        return img[0]
+    }
 
     return (
         <>
@@ -241,7 +247,7 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                             <Co.Product>
                                                 <Co.ProductImg
                                                     // src={item.img_web}
-                                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ_BVogtO-Sbhl9vMBw2igwDTDESrtpjbaFNDB7jc&s"
+                                                    src={`/resellList/${photoshop(item.img)}`}
                                                 >
                                                     {/* picture 태그 사용시 밑에꺼 사용 */}
                                                     {/* <Co.Source
@@ -334,7 +340,7 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                             <Co.Product>
                                                 <Co.ProductImg
                                                     // src={item.img_web}
-                                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ_BVogtO-Sbhl9vMBw2igwDTDESrtpjbaFNDB7jc&s"
+                                                    src={`/resellList/${photoshop(item.img)}`}
                                                 >
                                                     {/* picture 태그 사용시 밑에꺼 사용 */}
                                                     {/* <Co.Source
