@@ -8,11 +8,26 @@ import ChangeAddressModal from './ChangeAddressModal';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import Ask from './Ask';
+import jwt_decode from 'jwt-decode';
 
 const PayForm = () => {
-    //  const id = sessionStorage.getItem('id');
-    const id = 'hong@gmail.com';
-    const phone = '01012345678';
+    const token = localStorage.getItem('accessToken');
+    const tokenJson = jwt_decode(token);
+    const sub = tokenJson['sub'];
+
+    var id = null;
+    var phone = null;
+    useEffect(() => {
+        axios
+            .get('http://localhost:8080/getMemberInfo', 'seq=' + sub)
+            .then(res => {
+                id = res.data.email;
+            })
+            .catch(err => console.log(err));
+    }, []);
+
+    console.log(id);
+    console.log(phone);
 
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
