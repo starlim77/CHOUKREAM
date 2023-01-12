@@ -8,24 +8,42 @@ const Modal = props => {
     const { setDummy, open, close, setPictures } = props;
     
     const favourSort = () => {
-        console('인기 정렬')
-    }
-    const PremiumSort = () => {
-        console('프리미엄 정렬')
+        console.log('인기 정렬')
     }
     const BuySort = () => {
-        console('구매 정렬')
+        console.log('구매 정렬');
     }
     const SellSort = () => {
-        console('판매 정렬')
+        console.log('판매 정렬');
     }
     
     const sortType = (sort) => {
-        if(sort==="PremiumSort"){
+        if(sort==="favourSort"){
+            axios
+                .get('http://localhost:8080/shop/sortGetProductList1')
+                // .then(res => console.log(JSON.stringify(res.data)))
+                .then(res => setDummy(res.data))
+                .catch(error => console.log(error));
+                setPictures(8); 
+            
         }
         else if (sort === 'BuySort') {
+            axios
+                .get('http://localhost:8080/shop/sortGetProductList2')
+               // .then(res => console.log(JSON.stringify(res.data)))
+                .then(res => setDummy(res.data))
+                .catch(error => console.log(error));
+                setPictures(8); 
+            
         }
         else if (sort === 'SellSort') {
+            axios
+                .get('http://localhost:8080/shop/sortGetProductList3')
+               // .then(res => console.log(JSON.stringify(res.data)))
+                .then(res => setDummy(res.data))
+                .catch(error => console.log(error));
+                setPictures(8); 
+            
         }
         else if(sort==="releaseDateSort"){
             axios

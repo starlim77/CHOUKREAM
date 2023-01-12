@@ -1,9 +1,9 @@
 export default [
     {
         id: 1,
-        maindesc: '인기순',
+        maindesc: '프리미엄순',
         subdesc: '발매가 대비 가격이 높은 순서대로 정렬합니다.',
-        sort: 'favourSort',
+        sort: 'PremiumSort',
     },
     {
         id: 2,

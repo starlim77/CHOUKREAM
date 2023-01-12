@@ -217,6 +217,15 @@ const NewList = () => {
     
     return (
         <>
+            <Link to={'/admin/newWrite'} style={{ textDecoration: 'none' }}>
+                <Li.MenuBtn
+                    // disabled={disabledCheck}
+                    style={{ backgroundColor: disabledCheck ? '#fce205' : '' }}
+                    onClick={updateSearch}
+                >
+                    Create
+                </Li.MenuBtn>
+            </Link>
             <Li.MenuBtn
                 disabled={disabledCheck}
                 style={{ backgroundColor: disabledCheck ? '' : '#fce205' }}
