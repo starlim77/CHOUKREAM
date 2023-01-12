@@ -1,6 +1,7 @@
 package lookbook.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,11 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lookbook.bean.StyleCommentDTO;
 import lookbook.bean.StyleDTO;
+import lookbook.bean.StyleLikesDTO;
 import lookbook.service.StyleCommentService;
-import lookbook.entity.StyleCommentEntity;
-import lookbook.entity.StyleEntity;
+import lookbook.service.StyleLikesService;
 import lookbook.service.StyleService;
+import member.bean.MemberDto;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -36,14 +38,15 @@ public class styleController {
 	private StyleService styleService;
 	@Autowired
 	private StyleCommentService styleCommentService;
+	@Autowired
+	private StyleLikesService styleLikesService;
 	
 	//스타일 게시물 입력	
 	@PostMapping(path="upload" , produces="text/html; charset=UTF-8")
 	@ResponseBody
 	public void upload(@RequestBody List<MultipartFile> list, @ModelAttribute StyleDTO styleDTO, HttpSession session) {
 		//System.out.println("list= " + list);	
-		
-		System.out.println("컨드롤러 dto="+ styleDTO);
+		//System.out.println("컨드롤러 dto="+ styleDTO);
 		styleService.save(list, styleDTO);
 
 	}
@@ -60,7 +63,7 @@ public class styleController {
 	@GetMapping(path="findMyListDetail/{seq}")
 	@ResponseBody
 	public StyleDTO findMyListDetail(@PathVariable int seq) {
-		System.out.println("컨트롤러에 seq확인 : "+ seq);
+		//System.out.println("컨트롤러에 seq확인 : "+ seq);
 		return styleService.findMyListDetail(seq);
 	}
 	
@@ -94,26 +97,37 @@ public class styleController {
 	@Transactional
 	@ResponseBody
 	public void delete(@RequestParam int seq) {
-		System.out.println("컨트롤러 딜리트 seq =" + seq);
+		//System.out.println("컨트롤러 딜리트 seq =" + seq);
 		styleService.delete(seq);
 	}
 	
 
 	
-//좋아요
-    @PostMapping(path="likes")
-    @ResponseBody
-    //public int likes(String member_id, int style_seq) {
-    //public int likes(@RequestParam String member_id, @RequestParam int seq) {
-    public int likes(@ModelAttribute StyleDTO styleDTO) {
-//    	System.out.println("컨트롤러  member_id "+ member_id);
-//        System.out.println("컨트롤러 style_seq" + seq);
-//    	int result = styleService.saveLikes(member_id,seq);
-//        return result;
-        return 100;
+	//좋아요
+    @PostMapping(path="likebutton")
+    public int likes(@ModelAttribute StyleLikesDTO styleLikesDTO) {
+    	//System.out.println("컨트롤러 styleLikesDTO ==== "+ styleLikesDTO);
+    	return styleLikesService.save(styleLikesDTO);
+
+    }
+    
+    //좋아요 확인
+    @GetMapping(path="findLikes")
+    public int findLikes(@ModelAttribute StyleLikesDTO styleLikesDTO) {
+    	//System.out.println("컨트롤러 조아요 확인 styleLikesDTO ==== "+ styleLikesDTO);
+    	return styleLikesService.findLikes(styleLikesDTO);
+
     }
 		
+    //좋아요 카운트
+    @GetMapping(path="likescount")
+    public int likescount(@ModelAttribute StyleLikesDTO styleLikesDTO) {
+    	return styleLikesService.findAll(styleLikesDTO);
+    }
 
+    
+//댓글
+    
 	//상세에서 댓글 등록기능
 	@PostMapping(path="commentSave")
 	@ResponseBody
@@ -135,19 +149,35 @@ public class styleController {
 	//댓글 가져오기
 	@GetMapping(path="getComment")	
 	public ResponseEntity getComment(@ModelAttribute StyleCommentDTO styleCommentDTO) {
+		System.out.println(styleCommentDTO);
 				
 		List<StyleCommentDTO> styleCommentDTOList = styleCommentService.findAll(styleCommentDTO.getStyleSeq());
 		return new ResponseEntity<>(styleCommentDTOList, HttpStatus.OK);//내가 전달하려는 바디값(styleCommentDTOList)과 상태값(HttpStatus.OK)
 		
 	}
 	
+	//댓글 삭제
+	@DeleteMapping(path="deleteComment")
+	public void deleteComment(@RequestParam String id, String styleSeq) {
+		System.out.println("댓글 삭제"+ id);
+		styleCommentService.delete(id,styleSeq);
+	}
+	
+	
+//팔로잉
+	//팔로우
+	@PutMapping(path="saveFollow")
+	public void saveFollow(@ModelAttribute StyleDTO styleDTO, @RequestParam MemberDto fromUser ) {
+		System.out.println("toUser 글쓴사람 아이디"+styleDTO.getId());
+		System.out.println("fromUser 현재 로그인한 아이디"+ fromUser);
+		
+		
+		
+	}
+	//언팔
 	
 	
 
 
-//	@GetMapping(path="getMyStyleBoardList")
-//	public List<StyleDTO> getMyStyleBoardList() {
-//		return styleService.getMyStyleBoardList();
-//	}
 
 }

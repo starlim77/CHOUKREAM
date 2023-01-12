@@ -10,7 +10,7 @@ export const TrGridContainer = styled.div`
     column-gap: 10 px;
     display: grid;
     grid-template-columns: repeat(4,1fr);
-    grid-auto-rows: auto;
+    //grid-auto-rows: auto;
     
 
 `  
@@ -82,6 +82,15 @@ export const MyStContent = styled.pre`
     white-space: pre-wrap;   //text 줄바꿈허용
     word-break: break-all;   //text 줄바꿈허용
     padding: 20px 0 15px 0;
+`
+
+//StyleCommentList
+export const SCLdeletebutton= styled.div`
+    float: right;
+`
+
+export const SCLcomment = styled.div`
+    margin-bottom: 10px;
 `
 
 //Social.js 
