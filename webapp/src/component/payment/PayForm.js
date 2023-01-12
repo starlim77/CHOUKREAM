@@ -15,19 +15,10 @@ const PayForm = () => {
     const tokenJson = jwt_decode(token);
     const sub = tokenJson['sub'];
 
-    var id = null;
-    var phone = null;
-    useEffect(() => {
-        axios
-            .get('http://localhost:8080/getMemberInfo', 'seq=' + sub)
-            .then(res => {
-                id = res.data.email;
-            })
-            .catch(err => console.log(err));
-    }, []);
+    const [id, setId] = useState('');
+    const [phone, setPhone] = useState('');
 
-    console.log(id);
-    console.log(phone);
+    // console.log('id = ' + id);;
 
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -51,15 +42,51 @@ const PayForm = () => {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8080/my/getHavePoint', { params: { id } })
+            .get('http://localhost:8080/getMemberInfo', {
+                params: { seq: sub },
+            })
+            .then(res => {
+                //console.log(JSON.stringify(res.data));
+                setId(res.data.email);
+                setPhone(res.data.phone);
+
+                //console.log('id = ' + id);
+            })
+            .catch(err => console.log(err));
+
+        /* if (type === 'new') {
+            axios
+                .get('http://localhost:8080')
+                .then()
+                .post();
+        } else if (type === 'resell') {
+            axios
+                .get('http://localhost:8080/')
+                .then()
+                .post();
+        } else if (type === 'used') {
+            axios
+                .get('http://local')
+                .then()
+                .post();
+        }*/
+    }, []);
+
+    useEffect(() => {
+        // 포인트
+        axios
+            .get('http://localhost:8080/my/getHavePoint', {
+                params: { id },
+            })
             .then(res => setHavePoint(res.data))
             .catch(error => console.log(error));
-
+        //주소
         axios
             .get('http://localhost:8080/my/getDefaultAddress', {
                 params: { id },
             })
             .then(res => {
+                console.log(JSON.stringify(res.data));
                 if (res.data !== null) {
                     setShipInfo({
                         shipName: res.data.name,
@@ -69,15 +96,7 @@ const PayForm = () => {
                 }
             })
             .catch(err => console.log(err));
-
-        if (type === 'new') {
-            axios.get('http://localhost:8080').then().post();
-        } else if (type === 'resell') {
-            axios.get('http://localhost:8080/').then().post();
-        } else if (type === 'used') {
-            axios.get('http://local').then().post();
-        }
-    }, []);
+    }, [id]);
 
     const [productPrice] = useState(0);
     const [payPrice, setPayPrice] = useState(0);
@@ -286,18 +305,34 @@ const PayForm = () => {
                 </S.AddressDeleveryAsk>
                 <S.Hr></S.Hr>
                 <S.AddressText>배송 방법</S.AddressText>
-                <S.BrandDelevery>
-                    <S.DeleveryImg src="/image/payment/brand_delevery.png"></S.DeleveryImg>
-                    <S.DeleveryInfo>
-                        <S.DeleveryTitle>
-                            <S.DeleveryName>브랜드배송</S.DeleveryName>
-                            <S.DeleveryCost>무료</S.DeleveryCost>
-                        </S.DeleveryTitle>
-                        <S.DeleveryDesc>
-                            입점한 브랜드에서 직접 택배 배송
-                        </S.DeleveryDesc>
-                    </S.DeleveryInfo>
-                </S.BrandDelevery>
+                {type === 'new' ? (
+                    <S.BrandDelevery>
+                        <S.DeleveryImg src="/image/payment/brand_delevery.png"></S.DeleveryImg>
+                        <S.DeleveryInfo>
+                            <S.DeleveryTitle>
+                                <S.DeleveryName>브랜드배송</S.DeleveryName>
+                                <S.DeleveryCost>무료</S.DeleveryCost>
+                            </S.DeleveryTitle>
+                            <S.DeleveryDesc>
+                                입점한 브랜드에서 직접 택배 배송
+                            </S.DeleveryDesc>
+                        </S.DeleveryInfo>
+                    </S.BrandDelevery>
+                ) : null}
+                {type === 'resell' ? (
+                    <S.BrandDelevery>
+                        <S.DeleveryImg src="/image/payment/brand_delevery.png"></S.DeleveryImg>
+                        <S.DeleveryInfo>
+                            <S.DeleveryTitle>
+                                <S.DeleveryName>브랜드배송</S.DeleveryName>
+                                <S.DeleveryCost>무료</S.DeleveryCost>
+                            </S.DeleveryTitle>
+                            <S.DeleveryDesc>
+                                입점한 브랜드에서 직접 택배 배송
+                            </S.DeleveryDesc>
+                        </S.DeleveryInfo>
+                    </S.BrandDelevery>
+                ) : null}
             </S.Address>
             <S.Point>
                 <S.AddressText>포인트</S.AddressText>

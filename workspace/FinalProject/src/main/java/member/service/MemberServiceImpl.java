@@ -69,14 +69,10 @@ public class MemberServiceImpl implements MemberService {
         memberDto.setPassword(passwordEncoder.encode((newPassword)));
         return MemberResponseDto.of(memberDAO.save(memberDto));
 	}
-
-	@Autowired
-	private MemberDAO memberDAO;
-	
 	
 	@Override
 	public Optional<MemberDto> getMemberInfo(long seq) {
-		
+		System.out.println(memberDAO.findById(seq));
 		return memberDAO.findById(seq);
 	}
 	
