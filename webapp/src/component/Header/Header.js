@@ -26,7 +26,7 @@ const Header = () => {
                             x<S.TopLi>고객센터</S.TopLi>
                         </Link>
                         <S.TopLi>관심상품</S.TopLi>
-                        <S.TopLi>마이페이지</S.TopLi>
+                        <S.TopLi><Link to="/my/"> 마이페이지</Link></S.TopLi>
                         <S.TopLi>
                             <Link to="/login">로그인</Link>
                         </S.TopLi>

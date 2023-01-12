@@ -17,6 +17,7 @@ font-size: 25px;
 font-weight: 600;
 `
 export const NavUl = styled.ul`
+width: 100%;
 `
 export const NavLi =styled.li`
 font-size : 15px;
@@ -24,6 +25,7 @@ margin : 13px;
 height : 100%;
 color: rgba(34,34,34,.5);
 text-decoration: none;
+width: 100%;
 `
 export const NavDiv = styled.div`
 height : 100%;

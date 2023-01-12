@@ -1,10 +1,12 @@
 import React from 'react';
+import * as S from './ProfileStyle';
+
 
 const Profile = () => {
     return (
-        <div>
-            Profile
-        </div>
+        <S.ProfileWrapper>
+            <S.ProfileTitle>프로필 정보</S.ProfileTitle>
+        </S.ProfileWrapper>
     );
 };
 
