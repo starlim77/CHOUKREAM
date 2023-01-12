@@ -128,8 +128,8 @@ export const ItemLayer = styled.img.attrs({
 })`
     position:absolute;
     top:0px;
-    width: 276px;
-    height: 276px;
+    width: 277px;
+    height: 277px;
     border-radius: 15px;
     opacity:0.5;
 `;

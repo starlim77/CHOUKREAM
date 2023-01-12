@@ -12,10 +12,22 @@ const UsedItemList = () => {
             .catch(error => console.log(error));
             console.log(data); 
     },[])
-
-    
+    const [searchOption, setSearchOption] = useState('브랜드');
+    const[searching, setSearching]=useState('');
+    const searchingForm=(e)=>{
+        setSearching(e.target.value);
+    }
+    const searchContent=(e)=>{
+        e.preventDefault();
+        // axios.get("http://localhost:8080/used/search",params)
+    }
     return (
-        <>
+        <>  
+            <Li.SearchingWrapper>
+
+                <Li.SearchingInput value={searching} onChange={e=>searchingForm(e)}></Li.SearchingInput>
+                <Li.SearchingBTN onClick={e=>searchContent(e)}>검색</Li.SearchingBTN>
+            </Li.SearchingWrapper>
             <Li.Table>
                 <Li.Thead>
                     <Li.Tr>

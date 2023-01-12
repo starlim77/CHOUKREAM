@@ -116,6 +116,16 @@ export const Td2 = styled.td`
     height:100px;
     vertical-align: middle;
 `;
+export const SearchingWrapper=styled.div`
+    display:flex;
+    justify-content: flex-end;
+`
+export const SearchingInput=styled.input`
+
+`
+export const SearchingBTN=styled.button`
+
+`
 export const SearchSelect = styled.select``;
 export const SearchOption = styled.option``;
 export const SearchInput = styled.input``;
