@@ -1,10 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import * as Li from './NewListStyle';
+import Pagination from './Pagination';
 import UsedItemListing from './UsedItemListing';
 
 const UsedItemList = () => {
     const [data, setData] = useState([]);
+    const [limit, setLimit] = useState(5);
+    const [page, setPage] = useState(1);
+    const offset = (page - 1) * limit;
+    
     useEffect(()=>{
         axios
             .get('http://localhost:8080/used/getItem')
@@ -54,10 +59,18 @@ const UsedItemList = () => {
                 </Li.Thead>
                 <Li.Tbody>
                     {
-                        data.slice(0).reverse().map(item=><UsedItemListing key={item.seq} item={item}></UsedItemListing>)
+                        data.slice(0).reverse().slice(offset, offset + limit).map(item=><UsedItemListing key={item.seq} item={item}></UsedItemListing>)
                     }
                 </Li.Tbody>
             </Li.Table>
+            <Li.Footer>
+                <Pagination
+                    total={data.length}
+                    limit={limit}
+                    page={page}
+                    setPage={setPage}
+                />
+            </Li.Footer>
         </>
     );
 };
