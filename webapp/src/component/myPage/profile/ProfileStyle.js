@@ -94,18 +94,19 @@ display: flex;
 flex-wrap: wrap;
 width: 60%;
 border-bottom: 1px solid #ebebeb;
-padding-bottom: 30px;
+padding-bottom: 20px;
 `
 export const Title = styled.div`
 display: flex;
 width: 100%;
-margin-bottom: 20px;
+margin: 10px 0;
 color: rgba(34,34,34,.5);
 `
 export const Email = styled.div`
 display: flex;
 width: 80%;
 color: rgba(34,34,34,.5);
+padding-bottom: 20px;
 `
 export const ChangeButton = styled.button`
 display: flex;
@@ -117,4 +118,19 @@ border: 1px solid #d3d3d3;
 border-radius: 10px;
 background-color: #fff;
 cursor: pointer;
+`
+export const Password = styled.input`
+display: flex;
+width: 80%;
+border: 0;
+font-size: 40px;
+`
+export const CheckBox = styled.div`
+display: flex;
+width: 100%;
+margin-bottom: 25px;
+`
+export const CheckBoxText = styled.div`
+display: flex;
+width: 50%;
 `
