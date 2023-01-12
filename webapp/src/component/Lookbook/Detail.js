@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Social from '../Lookbook/Social';
 import Card from '@mui/material/Card';
-import { Avatar, CardActions, CardContent, CardHeader, CardMedia,  IconButton, Typography } from '@mui/material';
+import { Avatar, Button, CardActions, CardContent, CardHeader, CardMedia,  IconButton, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import * as S from './style';
@@ -14,6 +14,7 @@ const Detail = () => {
     //게시물 뿌리기
     const [list, setList] = useState([]);
     const [isLike, setIsLike] = useState(0);
+    const navigate = useNavigate();
     
     const [id] = useState(3)   //아이디값 로그인한걸로 가져오는거로 변경해야됨
 
@@ -53,7 +54,7 @@ const Detail = () => {
             }})
             .then( res =>  setIsLike(res.data), 
                            window.location.replace('/lookbook/detail')//새로고침
-                        //navigate('/lookbook/detail')                        
+                           //navigate('/lookbook/detail')                        
                 )
             .catch(error => console.log(error))
     }
@@ -67,7 +68,7 @@ const Detail = () => {
     return (
         <div>            
             <Social />
-            <br/>
+            <br/><br/><br/><br/><br/><br/>
             <Container fixed>
                 <S.DeTopDiv> 
                 {

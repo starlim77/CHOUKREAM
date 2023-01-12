@@ -78,14 +78,15 @@ const MystyleDetail = () => {
                                         
                                    </S.MyDeheadercontainer>
 
-                                    {
-                                        item.storedFileName.map( (item, index) => (
-                                            <p key={index}>
-                                                <img src={'/storage/'+item} alt='list사진' />
-                                            </p>
-                                        ))
-                                    }
-
+                                   <S.MyStdiv>
+                                        {
+                                            item.storedFileName.map( (item, index) => (
+                                                <p key={index} >
+                                                    <img src={'/storage/'+item} alt='list사진' style={{width:'100%'}} />
+                                                </p>
+                                            ))
+                                        }
+                                    </S.MyStdiv>
                                     
                                 
                                     <S.MyStContent>

@@ -15,8 +15,32 @@ const Mystyle = () => {
     const [styleBoardWriteOpen, setStyleBoardWriteOpen] = useState(false);
     const [listCount, setListCount] = useState(0);
     
-    //등록한 게시물 확인
-    const [myList, setMyList] = useState([]);
+    const [myList, setMyList] = useState([]);   //등록한 게시물 확인
+
+    const [itemLength,setItemLength] = useState(8) // 처음에 가져올 아이템 갯수
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll); //clean up
+        };
+    }, []);
+
+    const handleScroll = () => {
+        var heightTop = window.scrollY; // 화면의 Y축의 상단값
+
+        const heightBottom = window.scrollY + window.innerHeight; // 화면의 Y축의 하단값
+        const innerHeight = window.innerHeight;
+
+        const scrollHeight = document.body.scrollHeight;
+        // console.log('scrollHeight 스크롤 전체길이 ' + scrollHeight); // 불변
+
+        if (heightBottom >= scrollHeight - 80) {
+            // console.log( '하단높이 '+ heightBottom + ' , ' + (scrollHeight - 100));
+
+            setItemLength(itemLength => itemLength + 8)
+        }
+    };
     
     const onUploadFile = (e) =>{
         imgRef.current.click()
@@ -71,16 +95,23 @@ const Mystyle = () => {
     const onUpload = () => {
         var formData = new FormData()   //가지고가야할 데이터를 넣기
         file.map(files => formData.append('list',files))
-        axios
-            .post("http://localhost:8080/lookbook/upload", formData, {params:form})
-           
-             .then(
-                            alert("게시물 등록 완료"),
-                            setStyleBoardWriteOpen(false),
-                            window.location.replace("/lookbook/mystyle"),  //새로고침
-                            console.log(formData)
-            )
-            .catch( error => console.log(error) )
+
+        if(file.length === 0 ){
+            alert("사진은 1장 이상 등록되어야 합니다")
+            window.location.replace("/lookbook/mystyle") //새로고침
+            
+        } else if(file.length !== 0){
+            axios
+                .post("http://localhost:8080/lookbook/upload", formData, {params:form})
+            
+                .then(
+                                alert("게시물 등록 완료"),
+                                setStyleBoardWriteOpen(false),
+                                window.location.replace("/lookbook/mystyle"),  //새로고침
+                                console.log(formData)
+                )
+                .catch( error => console.log(error) )
+        }
     }
 
     //완료후 다시 랜더링
@@ -114,12 +145,11 @@ const Mystyle = () => {
                     <S.MyLi>게시물<span>{listCount}</span></S.MyLi>
                     <S.MyLi>팔로워<span>0</span></S.MyLi>
                     <S.MyLi>팔로잉<span>0</span></S.MyLi>
+                    <S.MyLi><span onClick={()=>{setStyleBoardWriteOpen(true)}}>게시물등록하기</span></S.MyLi>
                 </ul>
             </S.MyDiv>
             <hr />
-            <S.MyDiv>
-                <button onClick={()=>{setStyleBoardWriteOpen(true)} }>게시물등록</button>
-            </S.MyDiv> 
+
             
             
             <Dialog open={ styleBoardWriteOpen }>
@@ -160,6 +190,7 @@ const Mystyle = () => {
                             </S.showImgSrcDiv>
                             <S.Button>이전</S.Button>
                             <S.Button>다음</S.Button>
+                            <button>상품검색</button>
                             </S.Container>
 
 
@@ -185,7 +216,10 @@ const Mystyle = () => {
             {
                 myList.map((item, index) => {
                     return (
-                            <S.MyPhotoMini key={item.seq}> 
+                       
+                            <S.MyPhotoMini key={item.seq} 
+                                           itemLength ={itemLength}
+                                           style={{display : index < itemLength ? '':'none'}}> 
 
                                 <Link to={`/lookbook/mystyledetail/${item.seq}/${item.id}`}>
                                 <CardMedia
@@ -202,8 +236,9 @@ const Mystyle = () => {
                                     value={id}
                                     name='id'
                                 />
-                            </S.MyPhotoMini> 
-                        )
+                            </S.MyPhotoMini>
+                       
+                    )
                 })
             }
             </S.MyDiv>

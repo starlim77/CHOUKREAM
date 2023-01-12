@@ -213,6 +213,7 @@ function App() {
                         path="/lookbook/mystyleUpdate/:seq/:id"
                         element={<MystyleUpdate />}
                     />
+                    
                 </Route>
 
                 <Route path="/Search/SearchForm" element={<SearchForm />} />

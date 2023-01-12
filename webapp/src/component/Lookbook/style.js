@@ -36,6 +36,20 @@ export const TrTypoDiv = styled.pre`
     -webkit-box-orient: vertical;
     overflow: hidden;
 `
+export const TrBox = styled.div`
+    display: flex;
+    align-items: center;
+`
+export const TrUsernameBox = styled.div`
+
+`
+
+export const TrlikeBox = styled.div`
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+`
+
 
 //Detail.js 
 export const DeComment = styled.div`
@@ -76,7 +90,9 @@ export const MyDeIcon = styled.div`
     padding-top: 16px;
 
 `
-
+export const MyStdiv = styled.div`
+    width: 500px;
+`
 export const MyStContent = styled.pre`
     white-space: pre-wrap;   //text 줄바꿈허용
     word-break: break-all;   //text 줄바꿈허용
@@ -90,28 +106,6 @@ export const SCLdeletebutton= styled.div`
 
 export const SCLcomment = styled.div`
     margin-bottom: 10px;
-`
-
-//Social.js 
-export const SoHeader = styled.div`
-    padding: 20px 0 20px 0;
-    text-align: center;
-    font-size: 20px;
-`;
-
-export const SoOnHeader = styled.a`
-    background-color: #222;
-    color: #fff;
-    font-weight: 700;
-    border-radius: 19px;
-`;
-
-export const SoWrapper = styled.div`
-    
-`;
-
-export const SoTopDiv = styled.div`
-    padding-top: 90px;
 `
 
 //Mystyle.js 
@@ -140,6 +134,7 @@ export const MyLi = styled.li`
     font-weight: bolder;
 `;
 
+
 export const MyPhotoMini = styled.div`
     width: 200px;
     height: 220px;
@@ -150,8 +145,8 @@ export const MyPhotoMini = styled.div`
 
 
 export const showImgSrcDiv = styled.div`
-     /* width: 500px;
-     height: 400px;    */
+    width: 500px;
+
     // Overflow: hidden;        
     /* display: flex;   //사진 가로로 정렬 */
     /* width: 100vw; */
@@ -163,9 +158,9 @@ export const Container = styled.div`
 `;
 
 export const showImgSrcImg = styled.img`
-    width: 500px;
-    height: 400px; 
-    
+    width: 100%;  
+    height: '100%';
+    Overflow: hidden;  
     
 `
 
