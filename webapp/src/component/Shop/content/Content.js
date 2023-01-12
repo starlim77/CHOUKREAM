@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import categoryData from './CategoryData';
 import MenuList from './MenuList';
 
-const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
+const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModal, tagLive }) => {
     const [categoryData2, setCategoryData2] = useState(categoryData);
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
@@ -39,7 +39,7 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
         // console.log('Y축의 하단값' + heightBottom); //window.scrollY + window.innerHeight 화면의 y축 하단값
 
         const scrollHeight = document.body.scrollHeight;
-        console.log('scrollHeight 스크롤 전체길이 ' + scrollHeight); // 불변
+        // console.log('scrollHeight 스크롤 전체길이 ' + scrollHeight); // 불변 잠깐주석
 
         // const clientHeight = document.body.clientHeight;
         // console.log('clientHeight 눈에 보이는 만큼 높이 ' + clientHeight); // 불변
@@ -58,12 +58,10 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
         // }
 
         if (heightBottom >= scrollHeight - 110) {
-            console.log(
-                '하단높이 ' + heightBottom + ' , ' + (scrollHeight - 100),
-            );
+            // 잠깐주석 console.log('하단높이 ' + heightBottom + ' , ' + (scrollHeight - 100));
             setPictures(pictures => pictures + 8);
             // 상태변수f는 다시 리렌더링 하기 전까지는 안바뀐다
-            console.log('이게 8개 늘려줌');
+            // 잠깐 주석 console.log('이게 8개 늘려줌');
         }
         // 1448 >= innerHeight - 170 && setF( f + 8 );
         // if (heightTop === heightBottom - innerHeight && heightTop > 1400) {
@@ -228,7 +226,8 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                     <Co.SearchResult>
                         <Co.SearchResultList>
                             {/* {console.log('더미더미 ' + f)} */}
-                            {dummy.map((item, index) => (
+                            { tagLive ? 
+                                dummyFilter && dummyFilter.map((item, index) => (
                                 <Co.ProductCard
                                     key={item.seq}
                                     style={{
@@ -244,7 +243,7 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                                     // src={item.img_web}
                                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ_BVogtO-Sbhl9vMBw2igwDTDESrtpjbaFNDB7jc&s"
                                                 >
-                                                    {/* picture 태그 사용 */}
+                                                    {/* picture 태그 사용시 밑에꺼 사용 */}
                                                     {/* <Co.Source
                                                         type="image/webp"
                                                         srcSet={item.img_web}
@@ -320,7 +319,101 @@ const Content = ({ dummy, setDummy, modalOpen, openModal, closeModal }) => {
                                         </Co.ReviewFigure>
                                     </Co.ActionWishReview>
                                 </Co.ProductCard>
-                            ))}
+                            )) : 
+                            dummy.map((item, index) => (
+                                <Co.ProductCard
+                                    key={item.seq}
+                                    style={{
+                                        display:
+                                            pictures > index ? 'block' : 'none',
+                                    }}
+                                    // 사진 8개씩 출력 idx는 0부터 시작
+                                >
+                                    <Link to={`/products/${item.seq}`}>
+                                        <Co.ItemInner href="#">
+                                            <Co.Product>
+                                                <Co.ProductImg
+                                                    // src={item.img_web}
+                                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ_BVogtO-Sbhl9vMBw2igwDTDESrtpjbaFNDB7jc&s"
+                                                >
+                                                    {/* picture 태그 사용시 밑에꺼 사용 */}
+                                                    {/* <Co.Source
+                                                        type="image/webp"
+                                                        srcSet={item.img_web}
+                                                    ></Co.Source>
+                                                    <Co.Source
+                                                        srcSet={item.img}
+                                                    ></Co.Source>
+                                                    <Co.Image
+                                                        alt={item.sub_title}
+                                                        src={item.img}
+                                                        loading="lazy"
+                                                    ></Co.Image> */}
+                                                </Co.ProductImg>
+                                            </Co.Product>
+                                            <Co.ProductInfoArea>
+                                                <Co.Title>
+                                                    <Co.ProductInfoBrand>
+                                                        {item.brand}
+                                                    </Co.ProductInfoBrand>
+                                                    <Co.ProductInfoName>
+                                                        <Co.Name>
+                                                            {item.title}
+                                                        </Co.Name>
+                                                        <Co.TranslatedName>
+                                                            {item.subTitle}
+                                                        </Co.TranslatedName>
+                                                    </Co.ProductInfoName>
+                                                </Co.Title>
+                                                <Co.ProductExpress>
+                                                    <FontAwesomeIcon
+                                                        icon={faBoltLightning}
+                                                    />
+                                                    빠른배송
+                                                </Co.ProductExpress>
+                                            </Co.ProductInfoArea>
+                                            <Co.PriceInfoArea>
+                                                <Co.Amount>
+                                                    {addComma(
+                                                        item.releasePrice,
+                                                    )}
+                                                </Co.Amount>
+                                                <Co.Desc>즉시 구매가</Co.Desc>
+                                            </Co.PriceInfoArea>
+                                        </Co.ItemInner>
+                                    </Link>
+                                    <Co.ActionWishReview>
+                                        <Co.WishFigure>
+                                            <Co.BtnWish
+                                                href="#"
+                                                aria-label="관심상품"
+                                                icon-name="ico-wish-grey"
+                                            >
+                                                <FontAwesomeIcon
+                                                    icon={faBookmark}
+                                                />
+                                            </Co.BtnWish>
+                                            <Co.Text>
+                                                {followCalc(item.interest)}
+                                            </Co.Text>
+                                        </Co.WishFigure>
+                                        <Co.ReviewFigure>
+                                            <Co.ReviewLink
+                                                href="/social/products/51930"
+                                                aria-label={item.subTitle}
+                                            >
+                                                <FontAwesomeIcon
+                                                    icon={faHeart}
+                                                />
+                                            </Co.ReviewLink>
+                                            <Co.Text>
+                                                {followCalc(item.follow)}
+                                            </Co.Text>
+                                        </Co.ReviewFigure>
+                                    </Co.ActionWishReview>
+                                </Co.ProductCard>)) 
+                            }
+                                
                         </Co.SearchResultList>
                     </Co.SearchResult>
                 </Co.SearchContent>

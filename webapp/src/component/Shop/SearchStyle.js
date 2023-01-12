@@ -163,3 +163,29 @@ export const BrandName = styled.p`
     cursor: pointer;
     list-style: none;
 `;
+
+export const TagImgLi = styled.li`
+    list-style: none;
+    width: 84px;
+    height: 84px;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    :hover {
+        background-color: #e1ecf4;
+        border-radius: 50px;
+        cursor: pointer;
+    }
+`;
+
+export const TagImgItem = styled.img`
+    width: 70px;
+    height: 70px;
+`;
+
+export const TagImgSpan = styled.span`
+    font-size: 14px;
+    font-family: sans-serif;
+    font-weight: 600;
+`;

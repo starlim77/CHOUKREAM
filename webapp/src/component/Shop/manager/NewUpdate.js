@@ -6,7 +6,9 @@ import * as S from '.././register/styleWrite';
 const NewUpdate = () => {
     const location = useLocation();
     const checkedId = location.state.checkedId;
-    const updateList = location.state.updateList;
+    // const updateList = location.state.updateList;
+    const imgNameSend = location.state.updateList[0].imgName;
+    console.log(imgNameSend)
     
     // console.log(location.state)
     // console.log(location.state.updateList[0].subTitle)
@@ -16,6 +18,15 @@ const NewUpdate = () => {
     
     // console.log( '' + typeof(checkedId))
     // console.log( '' + checkedId)
+    
+    // update 화면 처음떴을때 전에 등록했던 사진이 떠야함 
+    const [subImg, setSubImg] = useState([]);
+    useEffect(() => {
+        var img = imgNameSend.split(',');
+        var img2 = img.map(item => '/newProductList/'+item);
+        setSubImg(img2);
+    }, []);
+    
 
     const navigate = useNavigate();
     
@@ -121,7 +132,7 @@ const NewUpdate = () => {
         window.location.reload();
     };
     // ---------------
-    const [subImg, setSubImg] = useState([]);
+    
 
     const imgRef = useRef();
 
@@ -180,9 +191,9 @@ const NewUpdate = () => {
     };
 
     const deleteImg = e => {
-        console.log(e.target.getAttribute('id'));
-        console.log(e.target);
-        console.log(e.target.id);
+        // console.log(e.target.getAttribute('id'));
+        // console.log(e.target);
+        // console.log(e.target.id);
         var id = e.target.getAttribute('id');
 
         //https://forum.freecodecamp.org/t/how-to-filter-using-array-index-in-react/403524
@@ -222,20 +233,20 @@ const NewUpdate = () => {
                 <S.ImgBody>
                     {/* 이미지 소스 이용방법 2가지 사용해봄 */}
                     <S.MainImgP setPosition={subImg[0]?true:false}>
-                        <S.MainImg name='mainImg' sizing={subImg[0]?true:false} src={subImg[0]?subImg[0].url:`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg} alt={subImg[0]?subImg[0].url:"nothing"}></S.MainImg>
+                        <S.MainImg name='mainImg' sizing={subImg[0]?true:false} src={subImg[0]?subImg[0]:`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg} alt={subImg[0]?subImg[0].url:"nothing"}></S.MainImg>
                         <S.DeleteMainImg setPosition={subImg[0]?true:false} id="0" onClick={e=>deleteImg(e)}></S.DeleteMainImg>
                     </S.MainImgP>
                     <S.SubImgBody >
                         <S.SubImgP setPosition={subImg[1]?true:false}>
-                            <S.SubImg sizing={subImg[1]?true:false} name='subImg1' src={subImg[1]?subImg[1].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
+                            <S.SubImg sizing={subImg[1]?true:false} name='subImg1' src={subImg[1]?subImg[1]:'/image/used/plusIcon.png'} onClick={onSubImg}/>
                             <S.DeleteImg setPosition={subImg[1]?true:false} id="1" onClick={e=>deleteImg(e)}></S.DeleteImg>
                         </S.SubImgP>
                         <S.SubImgP setPosition={subImg[2]?true:false}>
-                            <S.SubImg sizing={subImg[2]?true:false} name='subImg2' src={subImg[2]?subImg[2].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
+                            <S.SubImg sizing={subImg[2]?true:false} name='subImg2' src={subImg[2]?subImg[2]:'/image/used/plusIcon.png'} onClick={onSubImg}/>
                             <S.DeleteImg setPosition={subImg[2]?true:false} id="2"  onClick={e=>deleteImg(e)}></S.DeleteImg>
                         </S.SubImgP>
                         <S.SubImgP setPosition={subImg[3]?true:false}>
-                            <S.SubImg sizing={subImg[3]?true:false} name='subImg3' src={subImg[3]?subImg[3].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
+                            <S.SubImg sizing={subImg[3]?true:false} name='subImg3' src={subImg[3]?subImg[3]:'/image/used/plusIcon.png'} onClick={onSubImg}/>
                             <S.DeleteImg setPosition={subImg[3]?true:false} id="3"  onClick={e=>deleteImg(e)}></S.DeleteImg>
                         </S.SubImgP>
                     </S.SubImgBody>

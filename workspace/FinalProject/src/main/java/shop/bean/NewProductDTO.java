@@ -4,17 +4,22 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -38,6 +43,7 @@ public class NewProductDTO {
 	// 브랜드 
 	@Column(name="brand", length = 30)
 	private String brand;
+	
 	// 제품 영어이름
 	@Column(name="title", length = 100) 
 	private String title;  
@@ -52,17 +58,6 @@ public class NewProductDTO {
 	@Column(name="categoryDetail", length = 30)
 	private String categoryDetail;
 	
-	@Column(name="gender")
-	private int gender;
-   
-	// 모델 번호 (고유 번호)
-	@Column(name="modelNum")
-	private String modelNum;
-	
-	// 발매일 만들기 
-	@Column(name="releaseDate")
-	private String releaseDate;
-	
 	// 상품 등록 날짜
 	@Column(name="registerProductDate", nullable = false)
 	@CreatedDate
@@ -75,17 +70,58 @@ public class NewProductDTO {
 			registerProductDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
 		}
 	}
-   
+	
+	// 상세설명 이미지
+	@Column(name="descriptionImg")
+   	private String descriptionImg;
+	
 	// 판매가
 	@Column(name="price")
    	private int price;
-   
+	
+	// 상호명
+	@Column(name="businessName")
+	private String businessName;
+	
+	// 사업자 번호
+	@Column(name="comRegNo")
+	private String comRegNo;
+	
+	// 대표자 
+	@Column(name="representative")
+	private String representative;
+	
+	// 사업장 소재지
+	@Column(name="businessLocation")
+	private String businessLocation;
+	
+	// 고객센터
+	@Column(name="serviceCall")
+	private String serviceCall;
+	
+	// 소재
+	@Column(name="material")
+	private String material;
+	
 	@Column(name="color")
 	private String color;
 	
-	// size 테이블에 따로넣기
-	@Column(name="size", length=30)
-	private String size;
+	// 제조 회사
+	@Column(name="manufacturer")
+	private String manufacturer;
+	
+	// 제조국
+	@Column(name="countryOfManufacturer")
+	private String countryOfManufacturer;
+	
+	// 제조 날짜 년,월 까지
+	@Column(name="dateOfManufacturer")
+	private String dateOfManufacturer;
+	
+	// size 테이블 
+	@OneToMany(targetEntity = NewProductOptionDTO.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name ="seq", referencedColumnName = "seq")
+	private List<NewProductOptionDTO> NewProductOptionDTO;
 	
 }
 
