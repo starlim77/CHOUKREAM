@@ -17,6 +17,12 @@ const ListModal = ({ setModalOpen, completedOrderForm, sellBidsListForm, buyBids
         else if(e.target.name == 8) {setOpen3(true); setOpen1(false); setOpen2(false);}
      }
 
+    const time = (a) => {
+        var date = new Date(a)
+        var b = date.getFullYear() + "/" + date.getMonth()+1 + "/" + date.getDate()
+        return b
+    }
+
     return (
         <S.Container>
             <S.LayerContainer>
@@ -32,7 +38,7 @@ const ListModal = ({ setModalOpen, completedOrderForm, sellBidsListForm, buyBids
                     <S.BuyProduct>
                         <S.BuyProductProduct>
                             <S.BuyProductProductImg>
-                                <img src={`/storage/${mainImg}`} width="80px" height="80px"/>
+                                <img src={`/resellList/${mainImg}`} width="80px" height="80px"/>
                             </S.BuyProductProductImg>
                         </S.BuyProductProduct>
                         <S.BuyInfo>
@@ -109,8 +115,8 @@ const ListModal = ({ setModalOpen, completedOrderForm, sellBidsListForm, buyBids
                                             completedOrderForm.map((item, index) => (
                                                 <S.BodyList key={index}>
                                                     <S.ListText1>{item.size}</S.ListText1>
-                                                    <S.ListText2>{item.price}</S.ListText2>
-                                                    <S.ListText3>{item.tradeDate}</S.ListText3>
+                                                    <S.ListText2>{item.price.toLocaleString('ko-KR')+'원'}</S.ListText2>
+                                                    <S.ListText3>{time(item.tradeDate)}</S.ListText3>
                                                 </S.BodyList>
                                             ))
                                         }
@@ -145,7 +151,7 @@ const ListModal = ({ setModalOpen, completedOrderForm, sellBidsListForm, buyBids
                                             sellBidsListForm.map((item, index) => (
                                                 <S.BodyList key={index}>
                                                     <S.ListText1>{item.size}</S.ListText1>
-                                                    <S.ListText2>{item.price}</S.ListText2>
+                                                    <S.ListText2>{item.price.toLocaleString('ko-KR')+'원'}</S.ListText2>
                                                     <S.ListText3>{item.count}</S.ListText3>
                                                 </S.BodyList>
                                             ))
@@ -181,7 +187,7 @@ const ListModal = ({ setModalOpen, completedOrderForm, sellBidsListForm, buyBids
                                             buyBidsListForm.map((item, index) => (
                                                 <S.BodyList key={index}>
                                                     <S.ListText1>{item.size}</S.ListText1>
-                                                    <S.ListText2>{item.price}</S.ListText2>
+                                                    <S.ListText2>{item.price.toLocaleString('ko-KR')+'원'}</S.ListText2>
                                                     <S.ListText3>{item.count}</S.ListText3>
                                                 </S.BodyList>
                                             ))

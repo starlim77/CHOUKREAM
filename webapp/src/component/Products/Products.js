@@ -23,9 +23,11 @@ const Products = () => {
 
     const date = new Date();
 
+    if(false){
     const token = localStorage.getItem('accessToken');
     const tokenJson = jwt_decode(token);
     const sub = tokenJson['sub'];
+    }
 
     const [id, setId] = useState('');
 
@@ -138,17 +140,17 @@ const Products = () => {
              .then(res => setCount(res.data))
              .catch(err => console.log(err))
 
-        axios
-             .get('http://localhost:8080/getMemberInfo', {
-                 params: { seq: sub },
-             })
-             .then(res => {
-                 //console.log(JSON.stringify(res.data));
-                 setId(res.data.email);
+        // axios
+        //      .get('http://localhost:8080/getMemberInfo', {
+        //          params: { seq: sub },
+        //      })
+        //      .then(res => {
+        //          //console.log(JSON.stringify(res.data));
+        //          setId(res.data.email);
  
-                 //console.log('id = ' + id);
-             })
-             .catch(err => console.log(err));
+        //          //console.log('id = ' + id);
+        //      })
+        //      .catch(err => console.log(err));
     }, []);
 
     useEffect(() => {
@@ -302,11 +304,11 @@ const Products = () => {
                         <S.ColumnIsFixed>
                             <S.ColumnBox ScrollActive={ ScrollActive }>
                                 <U.ImgBody2>
-                                    <U.MainImg src={`/storage/${mainImg}`} alt={mainImg}></U.MainImg>
-                                    {subImg1&&<U.SmallImg2 src={`/storage/${subImg0}`} id="0" onClick={e=>changImg(e)}></U.SmallImg2>}
-                                    {subImg1&&<U.SmallImg2 src={`/storage/${subImg1}`} id="1" onClick={e=>changImg(e)}></U.SmallImg2>}
-                                    {subImg2&&<U.SmallImg2 src={`/storage/${subImg2}`} id="2" onClick={e=>changImg(e)}></U.SmallImg2>}
-                                    {subImg3&&<U.SmallImg2 src={`/storage/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    <U.MainImg src={`/resellList/${mainImg}`} alt={mainImg}></U.MainImg>
+                                    {subImg1&&<U.SmallImg2 src={`/resellList/${subImg0}`} id="0" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg1&&<U.SmallImg2 src={`/resellList/${subImg1}`} id="1" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg2&&<U.SmallImg2 src={`/resellList/${subImg2}`} id="2" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg3&&<U.SmallImg2 src={`/resellList/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg2>}
                                 </U.ImgBody2>
                                 {/* <div className="spread">
                                     <S.Image src={form.img} ></S.Image>
@@ -735,7 +737,7 @@ const Products = () => {
                                         <S.FloatingPriceProductArea>
                                             <S.FloatingPriceProductThumb>
                                                 <S.PictureProductImg>
-                                                    <S.Image src={`/storage/${subImg0}`} width="65px" height="65px"></S.Image>
+                                                    <S.Image src={`/resellList/${subImg0}`} width="65px" height="65px"></S.Image>
                                                 </S.PictureProductImg>
                                             </S.FloatingPriceProductThumb>
                                             <S.FloatingProductInfo>
