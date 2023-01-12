@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +27,11 @@ import lookbook.bean.StyleCommentDTO;
 import lookbook.bean.StyleDTO;
 import lookbook.bean.StyleLikesDTO;
 import lookbook.service.StyleCommentService;
+import lookbook.service.StyleFollowingService;
 import lookbook.service.StyleLikesService;
 import lookbook.service.StyleService;
 import member.bean.MemberDto;
+
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -40,6 +43,9 @@ public class styleController {
 	private StyleCommentService styleCommentService;
 	@Autowired
 	private StyleLikesService styleLikesService;
+	@Autowired
+	private StyleFollowingService styleFollowingService;
+	
 	
 	//스타일 게시물 입력	
 	@PostMapping(path="upload" , produces="text/html; charset=UTF-8")
@@ -165,19 +171,33 @@ public class styleController {
 	
 	
 //팔로잉
+	
+	
+	
 	//팔로우
-	@PutMapping(path="saveFollow")
-	public void saveFollow(@ModelAttribute StyleDTO styleDTO, @RequestParam MemberDto fromUser ) {
-		System.out.println("toUser 글쓴사람 아이디"+styleDTO.getId());
-		System.out.println("fromUser 현재 로그인한 아이디"+ fromUser);
+	@PutMapping(path="follow/{id}")
+	public void follow(@AuthenticationPrincipal MemberDto follower, @ModelAttribute StyleDTO styleDTO) {
+		//@AuthenticationPrincipal-로그인 아이디 받기?아마?
 		
+		System.out.println("followee 글쓴사람 아이디"+styleDTO.getId());
+		System.out.println("follower 현재 로그인한 아이디"+ follower);			
+	
+		
+		styleFollowingService.save(follower, styleDTO);		
+		
+		
+		
+		
+		//MemberDto followeeMemberDto = MemberDAO.findByName(styleDTO.getId());
 		
 		
 	}
 	//언팔
+	@DeleteMapping(path="follow/{id}")
+	public void unFollow(@AuthenticationPrincipal MemberDto follower, @ModelAttribute StyleDTO styleDTO) {
 	
-	
-
-
+		
+		
+	}
 
 }
