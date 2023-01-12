@@ -201,12 +201,9 @@ const NewProducts = () => {
                                             </S.DetailSizeTitle>
                                             {modalOpen && <NewProductOption setModalOpen={setModalOpen} newProductOption={form.newProductOptionDTO} option={option} newSeq={seq} getOption={getOption}/> }
                                             <S.DetailSizeSize>
-                                                <S.BtnSize>
-                                                    {form.newProductOptionDTO === null ? 'ONE SIZE' : <S.BtnSizeBtnText onClick={e => setModalOpen(true)}>{option}</S.BtnSizeBtnText> }
-                                                    {/* <S.BtnSizeBtnText onClick={e => setModalOpen(true)}>{size}</S.BtnSizeBtnText>
-                                                    {/* <svg>
-                                                        <use></use>
-                                                    </svg> */}
+                                                <S.BtnSize onClick={e => setModalOpen(true)}>
+                                                    {form.newProductOptionDTO === null ? 'ONE SIZE' : <S.BtnSizeBtnText>{option}</S.BtnSizeBtnText> }
+                                                    <img src={'/image/product/4829876_arrow_direction_down_navigation_icon.png'} width="24px" heigh="24px"></img>
                                                 </S.BtnSize>
                                             </S.DetailSizeSize>
                                         </S.DetailSize>

@@ -94,20 +94,14 @@ const Products = () => {
     const [dropdown, setDropdown] = useState(true);
     const OpenDrop = () => {  
         setDropdown(!dropdown);
-        console.log(completedOrderForm)
-        console.log(form.brand)
-        console.log(brandListForm)
-        
     }
     const [dropdown1, setDropdown1] = useState(true);
     const OpenDrop1 = () => {
         setDropdown1(!dropdown1);
-        console.log(sellBidsListForm)
     }
     const [dropdown2, setDropdown2] = useState(true);
     const OpenDrop2 = () => {
         setDropdown2(!dropdown2);
-        console.log(buyBidsListForm)
     }
 
     useEffect(() => {
@@ -343,12 +337,9 @@ const Products = () => {
                                                 <S.DetailSizeTitleText>사이즈</S.DetailSizeTitleText>
                                             </S.DetailSizeTitle>
                                             <S.DetailSizeSize>
-                                                <S.BtnSize>
-                                                    {isOneSize ? 'ONE SIZE' : <S.BtnSizeBtnText onClick={e => setModalOpen(true)}>{size}</S.BtnSizeBtnText> }
-                                                    {/* <S.BtnSizeBtnText onClick={e => setModalOpen(true)}>{size}</S.BtnSizeBtnText> */}
-                                                    {/* <svg>
-                                                        <use></use>
-                                                    </svg> */}
+                                                <S.BtnSize onClick={e => setModalOpen(true)}>
+                                                    {isOneSize ? 'ONE SIZE' : <S.BtnSizeBtnText>{size}</S.BtnSizeBtnText> }
+                                                    <img src={'/image/product/4829876_arrow_direction_down_navigation_icon.png'} width="24px" heigh="24px"></img>
                                                 </S.BtnSize>
                                             </S.DetailSizeSize>
                                         </S.DetailSize>
@@ -422,7 +413,7 @@ const Products = () => {
                                             </S.DetailBox>
                                             <S.DetailBox>
                                                 <S.DetailBoxProductTitle>발매가</S.DetailBoxProductTitle>
-                                                <S.DetailBoxProductInfo>{Number(form.releasePrice).toLocaleString('ko-KR')}</S.DetailBoxProductInfo>
+                                                <S.DetailBoxProductInfo>{Number(form.releasePrice).toLocaleString('ko-KR')+'원'}</S.DetailBoxProductInfo>
                                             </S.DetailBox>
                                         </S.DetailProduct>
                                     </S.DetailProductWrap>
@@ -457,6 +448,7 @@ const Products = () => {
                                                     <S.BtnBtnSelect slot="button" onClick={ e => setOpenLayer(!openLayer)}>
                                                         <S.SelectTextLayerOpen>
                                                             {isOneSize ? 'ONE SIZE' : size}
+                                                            { openLayer? <img src={'/image/product/211687_down_arrow_icon.png'} width="15px" heigh="15px"></img> : <img src={'/image/product/211690_up_arrow_icon.png'} width="15px" heigh="15px"></img> } 
                                                         </S.SelectTextLayerOpen>
                                                     </S.BtnBtnSelect>
                                                     <S.LayerSizeListLayer hidden={openLayer}>
@@ -685,7 +677,8 @@ const Products = () => {
                                             <ul className="guide_list">
                                                 <li className="guide_item" style={{overflow: "hidden"}}>
                                                     <S.ThumbArea>
-                                                        <S.ThumbAreaImg>  
+                                                        <S.ThumbAreaImg src={'/image/product/100-percent.png'}>
+                                                            {/* <img src={'/image/product/211690_up_arrow_icon.png'} width="15px" heigh="15px"></img>  */}
                                                         </S.ThumbAreaImg>
                                                     </S.ThumbArea>
                                                     <div className="text_area" style={{overflow: "hidden"}}>
@@ -695,7 +688,7 @@ const Products = () => {
                                                 </li>
                                                 <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
                                                     <S.ThumbArea>
-                                                        <S.ThumbAreaImg></S.ThumbAreaImg>
+                                                        <S.ThumbAreaImg src={'/image/product/magnifying-glass-with-check-mark.png'}></S.ThumbAreaImg>
                                                     </S.ThumbArea>
                                                     <div className="text_area" style={{overflow: "hidden"}}>
                                                         <S.TextAreaTitle>엄격한 다중검수</S.TextAreaTitle>
@@ -704,7 +697,7 @@ const Products = () => {
                                                 </li>
                                                 <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
                                                     <S.ThumbArea>
-                                                        <S.ThumbAreaImg></S.ThumbAreaImg>
+                                                        <S.ThumbAreaImg src={'/image/product/package-box.png'}></S.ThumbAreaImg>
                                                     </S.ThumbArea>
                                                     <div className="text_area" style={{overflow: "hidden"}}>
                                                         <S.TextAreaTitle>정품 인증 패키지</S.TextAreaTitle>

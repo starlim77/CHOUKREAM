@@ -5,7 +5,9 @@ const EmptyCompleted = ({word}) => {
     return (
         <S.EmptyContent>
             <S.EmptyBg>
-                <S.Blind>빈 데이터 이미지</S.Blind>
+                
+                    <img src={'/image/product/close.png'} width="30px" heigh="30px"></img>
+                
             </S.EmptyBg>
             <S.EmptyText>{word}가 아직 없습니다</S.EmptyText>
         </S.EmptyContent>
