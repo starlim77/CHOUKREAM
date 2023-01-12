@@ -56,7 +56,6 @@ height: 33%;
 margin-right: 10%;
 margin-top: 2%;
 margin-bottom: 2%;
-color: rgba(34,34,34,.5);
 `
 export const ButtonWrapper = styled.div`
 display: flex;
@@ -105,8 +104,8 @@ color: rgba(34,34,34,.5);
 export const Email = styled.div`
 display: flex;
 width: 80%;
-color: rgba(34,34,34,.5);
 padding-bottom: 20px;
+margin-right: 2px;
 `
 export const ChangeButton = styled.button`
 display: flex;
@@ -133,4 +132,15 @@ margin-bottom: 25px;
 export const CheckBoxText = styled.div`
 display: flex;
 width: 50%;
+`
+export const NewTitle = styled.div`
+display: flex;
+width: 100%;
+`
+export const NewEmail = styled.input`
+display: flex;
+width: 80%;
+border: 0;
+margin: 10px 0;
+font-size: 18px;
 `

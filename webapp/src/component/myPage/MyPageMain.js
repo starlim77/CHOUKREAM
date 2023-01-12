@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from './MyPageMainStyle';
-import * as L from './like/LikeStyle';
 import HistoryProduct from './HistoryProduct';
+import axios from 'axios';
 
 const MyPageMain = () => {
+    const [member, setMember] = useState({})
+
+    useEffect(() => {
+        axios.get(`http://localhost:8080/getMember?id=1`)
+             .then(res => setMember(res.data))
+    }, [])
+
     return (
         <S.MainWrapper>
             {/* 로그인 정보 */}
@@ -12,8 +19,8 @@ const MyPageMain = () => {
                     <S.Picture src="../image/myProfile.png" />
                 </S.PictureWrapper>
                 <S.MiddleWrapper>
-                    <S.IdDIv>id : asdasd</S.IdDIv>
-                    <S.EmailDIv>email : asdasdasd@asdasdasd.com</S.EmailDIv>
+                    <S.IdDIv>id : {member.id}</S.IdDIv>
+                    <S.EmailDIv>email : {member.email}</S.EmailDIv>
                     <S.MemberLevel>일반 회원</S.MemberLevel>
                     <S.ButtonWrapper>
                         <S.Button>프로필 수정</S.Button>
