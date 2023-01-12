@@ -26,7 +26,7 @@ const Shop = () => {
     
     useEffect(() => {
         if (tag !== '') {
-            setDummyFilter(dummy.filter(item => item.category === tag));
+            setDummyFilter(dummy.filter(item => item.tag === tag));
             setTagLive(true);
             // console.log('tag 태그 ' + tag)
             // console.log('태그 라이브1 ' + tagLive)
