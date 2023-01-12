@@ -208,4 +208,11 @@ public class UsedItemController {
 		 usedItemService.soldOut(usedItemDTO);
 		 
 	 }	
+	 
+	 @PutMapping(path="updateState")
+	 public void updateState(@RequestParam int seq, @RequestParam boolean sellingState) {
+		 System.out.println(seq);
+		 System.out.println(sellingState);
+		 usedItemService.updateState(seq, sellingState);
+	 }
 }

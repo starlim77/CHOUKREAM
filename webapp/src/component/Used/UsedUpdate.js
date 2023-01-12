@@ -122,17 +122,19 @@ const UsedUpdate = () => {
                      .catch(error => console.log(error))
             }
     
-            window.location.reload()
+            window.location.reload();
             
         }
   
         useEffect(()=>{
             console.log("해쉬태그"+hashTag);
-            var decoding= decodeURI(hashTag).split(',');
-            console.log(decoding);
-            setForm({
-                ...form,
-                hashTag:decoding});
+            if(!hashTag){
+                var decoding= decodeURI(hashTag).split(',');
+                console.log(decoding);
+                setForm({
+                    ...form,
+                    hashTag:decoding});
+            }
             
             //form이 바뀌는 걸로 설정하면 무한 루프도니까 한 번만 돌게 subImg사용
         },[subImg])

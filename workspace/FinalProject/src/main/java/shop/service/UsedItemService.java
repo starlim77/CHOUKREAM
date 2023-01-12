@@ -28,4 +28,6 @@ public interface UsedItemService {
 
 	public void soldOut(UsedItemDTO usedItemDTO);
 
+	public void updateState(int seq, boolean sellingState);
+
 }

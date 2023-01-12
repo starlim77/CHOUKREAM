@@ -25,6 +25,11 @@ public interface UsedItemDAO extends JpaRepository<UsedItemDTO, Integer>{
 	@Query("update UsedItemDTO usedItemDTO set usedItemDTO.likes = usedItemDTO.likes - 1 where usedItemDTO.seq = :seq")
 	public void likeDown(int seq);
 	
+	@Transactional
+	@Modifying
+	@Query("update UsedItemDTO usedItemDTO set usedItemDTO.sellingState =?2 where usedItemDTO.seq = ?1")
+	public void saveByIdAndSellingState(int seq, boolean sellingState);
+	
 //	
 //	@Modifying
 //	@Transactional

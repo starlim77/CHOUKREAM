@@ -47,6 +47,7 @@ import Logout from './component/User/Logout';
 import MyPageMain from './component/myPage/MyPageMain';
 import MyPageApp from './component/myPage/MyPageApp';
 import NewUpdate from './component/Shop/manager/NewUpdate';
+import UsedItemList from './component/Shop/manager/UsedItemList';
 
 function App() {
     return (
@@ -211,9 +212,19 @@ function App() {
                         path="/lookbook/mystyleUpdate/:seq/:id"
                         element={<MystyleUpdate />}
                     />
+                    <Route
+                        path="admin/UsedItemList"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <UsedItemList/>
+                            </>
+                        }
+                    />
                 </Route>
 
                 <Route path="/Search/SearchForm" element={<SearchForm />} />
+                
             </Routes>
         </BrowserRouter>
     );

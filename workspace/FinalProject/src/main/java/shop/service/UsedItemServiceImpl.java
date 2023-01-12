@@ -95,6 +95,13 @@ public class UsedItemServiceImpl implements UsedItemService {
 		
 		usedItemDAO.save(usedItemDTO);
 	}
+
+
+	@Override
+	public void updateState(int seq, boolean sellingState) {
+		System.out.println("여기 오냐?");
+		usedItemDAO.saveByIdAndSellingState(seq,sellingState);
+	}
 	
 
 	

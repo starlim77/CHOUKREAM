@@ -24,6 +24,9 @@ const ManagerPage = () => {
                         <Ma.MenuBtn style={{backgroundColor:'#fce205'}}>
                             <Link to={'/admin/newList'}style={{textDecoration: "none"}}>List</Link>
                         </Ma.MenuBtn>
+                        <Ma.MenuBtn style={{backgroundColor:'#fce205'}}>
+                            <Link to={'/admin/UsedItemList'}style={{textDecoration: "none"}}>중고상품 관리</Link>
+                        </Ma.MenuBtn>
                         {/* <Ma.MenuBtn style={{ display: showBtn ? '' : 'none' }}>
                             <Link to={'/admin/newList'}>Update</Link>
                         </Ma.MenuBtn>
