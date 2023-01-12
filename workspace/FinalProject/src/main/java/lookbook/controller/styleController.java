@@ -145,10 +145,18 @@ public class styleController {
 	//댓글 가져오기
 	@GetMapping(path="getComment")	
 	public ResponseEntity getComment(@ModelAttribute StyleCommentDTO styleCommentDTO) {
+		System.out.println(styleCommentDTO);
 				
 		List<StyleCommentDTO> styleCommentDTOList = styleCommentService.findAll(styleCommentDTO.getStyleSeq());
 		return new ResponseEntity<>(styleCommentDTOList, HttpStatus.OK);//내가 전달하려는 바디값(styleCommentDTOList)과 상태값(HttpStatus.OK)
 		
+	}
+	
+	//댓글 삭제
+	@DeleteMapping(path="deleteComment")
+	public void deleteComment(@RequestParam String id, String styleSeq) {
+		System.out.println("댓글 삭제"+ id);
+		styleCommentService.delete(id,styleSeq);
 	}
 	
 	
