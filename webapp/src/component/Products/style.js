@@ -12,7 +12,7 @@ export const ContainerDetail = styled.div`
     display: flex;
     width: 100%;
     height: 100%;
-    border: 1px red dotted;
+    /* border: 1px red dotted; */
     flex-direction: column;
 `;
 
@@ -22,13 +22,13 @@ export const Content = styled.div`
     margin: 0 auto;
     padding: 30px 40px 120px;
     max-width: 1280px;
-    border: 1px blue dotted;
+    /* border: 1px blue dotted; */
 
     display: block;
 `;
 export const ColumnBind = styled.div`
     display: flex;
-    border: 1px green dotted;
+    /* border: 1px green dotted; */
     /* justify-content: space-between; */
     justify-content: center; 
     position: relative;
@@ -144,7 +144,7 @@ export const DetailSize = styled.div`
     padding-top: 19px;
     padding-bottom: 12px;
     border-bottom: 1px solid #ebebeb;
-    border: 1px red dotted;
+    /* border: 1px red dotted; */
     min-height: 50px;
 `;
 
@@ -1250,7 +1250,7 @@ export const FeedArea = styled.div`
 
     display: block;
 
-    border: 1px blue dotted;
+    /* border: 1px blue dotted; */
 `;
 
 export const FeedTitle = styled.h2`
