@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
+import shop.bean.NewProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.bean.UsedItemLikeDTO;
 import shop.dao.UsedItemDAO;
@@ -215,4 +217,10 @@ public class UsedItemController {
 		 System.out.println(sellingState);
 		 usedItemService.updateState(seq, sellingState);
 	 }
+	 
+	 @GetMapping("search")
+	public List<UsedItemDTO> search(@RequestParam Map<String, String> map) { // searchOption, keyword
+	 	//System.out.println(map);
+		return usedItemService.search(map);
+	}
 }

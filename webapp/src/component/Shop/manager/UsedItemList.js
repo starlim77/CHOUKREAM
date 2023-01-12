@@ -12,27 +12,34 @@ const UsedItemList = () => {
             .catch(error => console.log(error));
             console.log(data); 
     },[])
-    const [searchOption, setSearchOption] = useState('브랜드');
-    const[searching, setSearching]=useState('');
+    const [searchOption, setSearchOption] = useState('id');
+    const[keyword, setKeyword]=useState('');
     const searchingForm=(e)=>{
-        setSearching(e.target.value);
+        setKeyword(e.target.value);
     }
     const searchContent=(e)=>{
         e.preventDefault();
-        // axios.get("http://localhost:8080/used/search",params)
+        axios.get("http://localhost:8080/used/search",{params:{keyword:keyword, searchOption:searchOption}})
+            .then(res=>setData(res.data))
+            .catch(err=>console.log(err))
     }
     return (
         <>  
             <Li.SearchingWrapper>
-
-                <Li.SearchingInput value={searching} onChange={e=>searchingForm(e)}></Li.SearchingInput>
+                    <Li.SearchSelect
+                        name="searchOption"
+                        onChange={e => setSearchOption(e.target.value)}>
+                        <Li.SearchOption value="id">아이디</Li.SearchOption>
+                        <Li.SearchOption value="title">제목</Li.SearchOption>
+                    </Li.SearchSelect>
+                <Li.SearchingInput value={keyword} onChange={e=>searchingForm(e)}></Li.SearchingInput>
                 <Li.SearchingBTN onClick={e=>searchContent(e)}>검색</Li.SearchingBTN>
             </Li.SearchingWrapper>
             <Li.Table>
                 <Li.Thead>
                     <Li.Tr>
-                            <Li.Th2>seq</Li.Th2>
-                            <Li.Th2>id</Li.Th2>
+                            <Li.Th2>글번호</Li.Th2>
+                            <Li.Th2>아이디</Li.Th2>
                             <Li.Th2>이미지</Li.Th2>
                             <Li.Th2>제목</Li.Th2>
                             <Li.Th2>제품명</Li.Th2>
