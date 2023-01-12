@@ -114,6 +114,12 @@ const UsedItem = () => {
 
     }
 
+
+    const addComma = (price) => {
+        price = String(price);
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원';
+    }
+
     return (
 
         <>
@@ -121,11 +127,14 @@ const UsedItem = () => {
             <UpdateBtnModal writer={isWriter} seq={searchParams.get('seq')} imgNameSend={form.imgName}></UpdateBtnModal>
         </U.ModalDiv>
         <U.BaseBody>
+            
             <U.ImgBody>
                 <U.MainImg src={`/storage/${mainImg}`} alt={mainImg}></U.MainImg>
-                {subImg1&&<U.SmallImg src={`/storage/${subImg1}`} id="1" onClick={e=>changImg(e)}></U.SmallImg>}
-                {subImg2&&<U.SmallImg src={`/storage/${subImg2}`} id="2" onClick={e=>changImg(e)}></U.SmallImg>}
-                {subImg3&&<U.SmallImg src={`/storage/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg>}
+                <U.SmallImgBody>
+                    {subImg1&&<U.SmallImg src={`/storage/${subImg1}`} id="1" onClick={e=>changImg(e)}></U.SmallImg>}
+                    {subImg2&&<U.SmallImg src={`/storage/${subImg2}`} id="2" onClick={e=>changImg(e)}></U.SmallImg>}
+                    {subImg3&&<U.SmallImg src={`/storage/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg>}
+                </U.SmallImgBody>
             </U.ImgBody>&emsp;
 
 
@@ -141,13 +150,13 @@ const UsedItem = () => {
             <br/>
 
             <U.SizeWrapper>
-                <U.SizeSpan>사이즈 : </U.SizeSpan>
+                <U.Sizetitle>사이즈</U.Sizetitle>
                 <U.SizeSpan>{form.size}</U.SizeSpan>
             </U.SizeWrapper>
 
             <U.PriceWrapper>
-                <U.PriceSpan>가격 : </U.PriceSpan>
-                <U.PriceSpan>{form.price}</U.PriceSpan>
+                <U.PriceSpan>거래가</U.PriceSpan>
+                <U.PriceSpan>{addComma(form.price)}</U.PriceSpan>
             </U.PriceWrapper>
 
             <U.InterestWrapper onClick={onInterest}>

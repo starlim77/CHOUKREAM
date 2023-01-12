@@ -96,7 +96,7 @@ export const DeleteImg = styled.img.attrs({
     display:${props=>props.setPosition?'':'none'};
     position:${props=>props.setPosition?'absolute':'none'};
     left:80%;
-    top : 5%
+    top : 5%;
 `;
 
 // ----------------------------------------------내용 부분
@@ -119,6 +119,7 @@ export const Necessary = styled.div`
     margin-top: 30px;
     font-size: 12px;
     color: red;
+    font-weight: 800;
 `;
 
 //입력 사항
@@ -126,6 +127,8 @@ export const Subject = styled.div`
     font-size: 20px;
     margin-top: 5px;
     margin-bottom: 5px;
+    font-family: fangsong;
+    font-weight: 600;
 `
 
 //제목
@@ -158,10 +161,12 @@ export const ItemKindPriceDiv = styled.div`
     justify-content: space-around;
     align-items: center;
 
-    border: 1px solid black; 
+    border: 1px solid #e2e2e2;
 `;
 
 export const ItemKind = styled.select`
+    border-radius: 5px;
+    font-family: initial;
     :hover{
         cursor: pointer;
     }
@@ -213,8 +218,15 @@ export const ItemContent = styled.textarea`
     width: 510px;
     height: 500px;
     margin-bottom: 30px;
-
     resize: none;
+
+    border: 1px solid #8e8e8e;
+    font-size: 15pt;
+    font-family: sans-serif;
+
+    :focus{
+        outline: none;
+    }
     ::-webkit-scrollbar{
         display: none;
     }
@@ -231,14 +243,22 @@ export const HashTag = styled.div`
 
 export const HashTagDiv = styled.button`
     display: flex;
-    border: 0.5px solid black;
     margin-right: 10px;
     margin-top: 10px;
+
+    border: 0.5px solid #5bb2b2;;
+    background: none;
+    border-radius: 10px;
+    color: #a49bef;
+    align-items: center;
 `
 export const HasgTagSpan = styled.span``;
 
 export const HasgTagX = styled.div`
+    color: black;
     margin-left: 7px;
+    margin-bottom: 1px;
+
     :hover{
         cursor: pointer;
     }
@@ -256,6 +276,10 @@ export const HashTagWrite = styled.input`
     border-top: 0px;
     border-right: 0px;
     border-left: 0px;
+
+    :focus{
+        outline: none;
+    }
 `
 
 
@@ -278,4 +302,11 @@ export const WriteBtn = styled.button`
     margin-bottom: 100px;
     float: right;
     margin-right: 30px;
+    border: 0.5px solid #e2e2e2;
+    border-radius: 10px;
+    background-color: #def4ff;
+
+    :hover{
+        cursor: pointer;
+    }
 `;

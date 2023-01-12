@@ -57,6 +57,11 @@ const Detail = () => {
                 )
             .catch(error => console.log(error))
     }
+        
+    //팔로우
+    const onFollow = () => {
+
+    }
     
 
     return (
@@ -75,7 +80,10 @@ const Detail = () => {
                                     title={item.id}
                                     subheader={item.logtime}
                                 />
-                                {item.seq}
+
+                                <Button variant="contained" style={{backgroundColor: 'black'}} onClick={ onFollow }>팔로우</Button>
+                                <Button variant="outlined"  style={{color: 'black'}}>언팔로우</Button>
+                               
                                 <CardMedia 
                                     component="img"
                                     height="500"
@@ -100,7 +108,7 @@ const Detail = () => {
                                     <IconButton >
                                         
                                         <Link to ={`/lookbook/StyleComment/${item.seq}`} >
-                                        <ChatBubbleOutlineIcon  style={{color: 'grey', textDecoration:'none'}}/>    
+                                        <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
                                         </Link>
                                         
                                     </IconButton> 
@@ -115,7 +123,7 @@ const Detail = () => {
                                 <CardContent>       
                                     <Typography variant="body2" color="text.secondary" >
                                     <S.TrTypoDiv>
-                                     <StyleCommentList styleSeq={item.seq}  onCommentDelete={onCommentDelete}  />                                
+                                     <StyleCommentList styleSeq={item.seq}  onCommentDelete={ onCommentDelete }  />                                
                                     
                                     </S.TrTypoDiv>                      
                                     </Typography>     

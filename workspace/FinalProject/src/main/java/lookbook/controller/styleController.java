@@ -28,6 +28,7 @@ import lookbook.bean.StyleLikesDTO;
 import lookbook.service.StyleCommentService;
 import lookbook.service.StyleLikesService;
 import lookbook.service.StyleService;
+import member.bean.MemberDto;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -118,6 +119,9 @@ public class styleController {
 
     }
 
+    
+//댓글
+    
 	//상세에서 댓글 등록기능
 	@PostMapping(path="commentSave")
 	@ResponseBody
@@ -154,5 +158,20 @@ public class styleController {
 	}
 	
 	
+//팔로잉
+	//팔로우
+	@PutMapping(path="saveFollow")
+	public void saveFollow(@ModelAttribute StyleDTO styleDTO, @RequestParam MemberDto fromUser ) {
+		System.out.println("toUser 글쓴사람 아이디"+styleDTO.getId());
+		System.out.println("fromUser 현재 로그인한 아이디"+ fromUser);
+		
+		
+		
+	}
+	//언팔
+	
+	
+
+
 
 }

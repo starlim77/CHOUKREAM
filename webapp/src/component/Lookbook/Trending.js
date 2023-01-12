@@ -20,6 +20,7 @@ import { grey } from '@mui/material/colors';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { MasonryInfiniteGrid } from '@egjs/react-infinitegrid';
+import TrendingItem from './TrendingItem';
 
 const Trending = () => {
     const [list, setList] = useState([
@@ -41,25 +42,7 @@ const Trending = () => {
             .catch(error => console.log(error));
     }, []);
 
-    //네이버
-    // function getItems(nextGroupKey, count) {
-    //     const nextItems = [];
-
-    //     for (let i = 0; i < count; ++i) {
-    //       const num = nextGroupKey * count + i;
-    //       nextItems.push(`<div class="item">
-    //     <div class="thumbnail">
-    //         <img src="https://naver.github.io/egjs-infinitegrid/assets/image/${(num % 33) + 1}.jpg" alt="egjs" />
-    //     </div>
-    //     <div class="info">egjs ${num}</div>
-    //   </div>`);
-    //     }
-    //     return nextItems;
-    //   }
-    //   const ig = new MasonryInfiniteGrid(".container", {
-    //     gap: 5,
-    //   });
-
+  
 
     const [itemLength,setItemLength] = useState(12) // 처음에 가져올 아이템 갯수
 
@@ -81,7 +64,7 @@ const Trending = () => {
         // console.log('scrollHeight 스크롤 전체길이 ' + scrollHeight); // 불변
 
         if (heightBottom >= scrollHeight - 80) {
-            console.log( '하단높이 '+ heightBottom + ' , ' + (scrollHeight - 100));
+            // console.log( '하단높이 '+ heightBottom + ' , ' + (scrollHeight - 100));
 
             setItemLength(itemLength => itemLength + 8)
         }
@@ -91,91 +74,45 @@ const Trending = () => {
         <>
             <Social />
             <div>태그</div>
-
-            {/* <MasonryInfiniteGrid
-                className='products'
-               
-                gap={25}
-                threshold={1000}
-                onRequestAppend={(e) => {
-                    const nextGroupKey = (+e.groupKey! || 0) + 1;
-              
-                    setItems([
-                      ...items,
-                      ...getItems(nextGroupKey, 10),    
-                    ]);
-                  }}
-                > */}
-
+            
             <Container fixed>
                 <S.TrGridContainer>
-                    {list.map((item,index) => {
-                        return (
-                            <S.TrGridBox key={item.seq} style={{display : index < itemLength ? '':'none'}}>
-                                <Card sx={{ width: 250 }}>
-                                    <Link to={'/lookbook/detail' + item.seq}>
-                                        <S.TrGridBoxImg
-                                            src={
-                                                '../storage/' +
-                                                item.storedFileName[0]
-                                            }
-                                        ></S.TrGridBoxImg>
-                                    {/* 
-                                        {item.storedFileName.map(
-                                            (index, item) => {
-                                                return (
-                                                    <img
-                                                        src={
-                                                            '../storage/' + item
-                                                        }
-                                                    />
-                                                );
-                                            },
-                                        )} 
-                                        */}
+                    <S.TrGridContainerSub>
+                    {list.map((item,index) => 
+                        index % 4 === 0 ? 
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        :
+                        ''
+                    )}
+                    </S.TrGridContainerSub>
 
-                                        <CardHeader
-                                            avatar={
-                                                <Avatar
-                                                    sx={{ bgcolor: grey }}
-                                                ></Avatar>
-                                            }
-                                            title={item.id}
-                                        />
-                                    </Link>
-                                    <CardContent>
-                                        <Typography
-                                            variant="body2"
-                                            color="text.secondary"
-                                        >
-                                            <S.TrTypoDiv>
-                                                {item.content}
-                                                <br />
-                                                seq={item.seq}
-                                            </S.TrTypoDiv>
-                                        </Typography>
-                                    </CardContent>
+                    <S.TrGridContainerSub>
+                    {list.map((item,index) => 
+                        index % 4 === 1 ? 
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        :
+                        ''
+                    )}
+                    </S.TrGridContainerSub>
 
-                                    <CardActions disableSpacing>
-                                        <Typography
-                                            variant="body2"
-                                            color="text.secondary"
-                                        >
-                                            <IconButton aria-label="add to favorites">
-                                                <FavoriteBorderOutlinedIcon />
-                                                <FavoriteIcon />
-                                            </IconButton>
-                                            <span>35 </span>
-                                            <IconButton aria-label="add to favorites">
-                                                <MessageOutlinedIcon />
-                                            </IconButton>
-                                            <span>{item.commentCount}</span>
-                                        </Typography>
-                                    </CardActions>
-                                </Card>
-                            </S.TrGridBox>
-                        );
-                    })}
+                    <S.TrGridContainerSub>
+                    {list.map((item,index) => 
+                        index % 4 === 2 ? 
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        :
+                        ''
+                    )}
+                    </S.TrGridContainerSub>
+
+                    <S.TrGridContainerSub>
+                    {list.map((item,index) => 
+                        index % 4 === 3 ? 
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        :
+                        ''
+                    )}
+                    </S.TrGridContainerSub>
+
                 </S.TrGridContainer>
             </Container>
             {/* </MasonryInfiniteGrid> */}
