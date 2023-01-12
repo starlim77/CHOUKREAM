@@ -43,5 +43,9 @@ public interface NewProductDAO extends JpaRepository<NewProductDTO, Integer> {
 //	
 //	@Query("select newProductDTO from NewProductDTO newproductDTO where newproductDTO.category like '%' || :keyword || '%'") // 이런 Query 문을 수행해주세요
 //	public List<NewProductDTO> getSearchCategory(@Param("keyword") String keyword);
-
+	
+	
+	
+	
+	
 }

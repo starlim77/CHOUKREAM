@@ -254,8 +254,8 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                                 <Co.Product>
                                                     <Co.ProductImg
                                                         // src={item.img_web}
-                                                        src={`/resellList/${photoshop(
-                                                            item.img,
+                                                        src={`/newProductList/${photoshop(
+                                                            item.imgName,
                                                         )}`}
                                                     >
                                                         {/* picture 태그 사용시 밑에꺼 사용 */}
@@ -327,19 +327,6 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                                     )}
                                                 </Co.Text>
                                             </Co.WishFigure>
-                                            <Co.ReviewFigure>
-                                                <Co.ReviewLink
-                                                    href="/social/products/51930"
-                                                    aria-label={item.subTitle}
-                                                >
-                                                    <FontAwesomeIcon
-                                                        icon={faHeart}
-                                                    />
-                                                </Co.ReviewLink>
-                                                <Co.Text>
-                                                    {followCalc(item.follow)}
-                                                </Co.Text>
-                                            </Co.ReviewFigure>
                                         </Co.ActionWishReview>
                                     </Co.ProductCard>
                                 ))
@@ -359,8 +346,8 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                                 <Co.Product>
                                                     <Co.ProductImg
                                                         // src={item.img_web}
-                                                        src={`/resellList/${photoshop(
-                                                            item.img,
+                                                        src={`/newProductList/${photoshop(
+                                                            item.imgName,
                                                         )}`}
                                                     >
                                                         {/* picture 태그 사용시 밑에꺼 사용 */}

@@ -25,12 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
-import lombok.Delegate;
 import shop.bean.NewProductDTO;
 import shop.bean.ProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.service.NewProductService;
 import shop.bean.ProductSizeDTO;
+import shop.bean.SortListDTO;
 import shop.service.ShopDetailService;
 import shop.service.ShopService;
 
@@ -55,6 +55,24 @@ public class ShopController {
 		return shopService.sortGetProductList();
 	}
 	
+	@GetMapping("sortGetProductList1")
+	public List<SortListDTO> sortGetProductList1() {
+		System.out.println("왔니 ");
+		System.out.println(shopService.sortGetProductList1() + "ㄴㄹㄴㄹㅇㄹㄴㅇ");
+		return shopService.sortGetProductList1();
+	}
+//	@GetMapping("sortGetProductList2")
+//	public List<ProductDTO> sortGetProductList2() {
+//		return shopService.sortGetProductList2();
+//	}
+//	@GetMapping("sortGetProductList3")
+//	public List<ProductDTO> sortGetProductList3() {
+//		return shopService.sortGetProductList3();
+//	}
+	
+	
+	
+	
 	@PostMapping("getProductBySeq")
 	public Optional<ProductDTO> getProductBySeq(@RequestParam int seq) {
 		return shopService.getProductBySeq(seq);
@@ -68,6 +86,7 @@ public class ShopController {
 	
 	@GetMapping("getNewProductList")
 	public List<NewProductDTO> getNewProductList() {
+		System.out.println(" 리턴 하기전에 " + newProductService.getNewProductList());
 		return newProductService.getNewProductList();
 	}
 	
@@ -240,6 +259,8 @@ public class ShopController {
 		newProductService.upload(newProductDTO);
 
 	 }
-	
+
 }
+
+
 

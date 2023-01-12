@@ -13,6 +13,7 @@ import shop.dao.ShopDAO;
 import shop.bean.NewProductDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
+import shop.bean.SortListDTO;
 
 @Service
 public class ShopServiceImpl implements ShopService {
@@ -48,6 +49,12 @@ public class ShopServiceImpl implements ShopService {
 	}
 	public List<ProductSizeDTO> findBySeq(int seq) {
 		return sizeRepository.findBySeq(seq);
+	}
+
+	@Override
+	public List<SortListDTO> sortGetProductList1() {
+		
+		return shopDAO.sortGetProductList1();
 	}
 
 
