@@ -13,6 +13,7 @@ import EmptyTable from "./table/EmptyTable";
 import Graph from './Graph';
 import * as U from '../Used/UsedItemStyle';
 import ListModal from './ListModal';
+import jwt_decode from 'jwt-decode';
 
 const Products = () => {
 
@@ -22,7 +23,11 @@ const Products = () => {
 
     const date = new Date();
 
-    const id = "kim@gmail.com";
+    const token = localStorage.getItem('accessToken');
+    const tokenJson = jwt_decode(token);
+    const sub = tokenJson['sub'];
+
+    const [id, setId] = useState('');
 
     const shopKind = 'resell'
 
@@ -128,15 +133,29 @@ const Products = () => {
         axios.get(`http://localhost:8080/getBuyBidsList?seq=${seq}`)
              .then(res => res.data.length !== 0 && setBuyBidsListForm(res.data))
              .catch(error => console.log(error))
-        
-        axios.get('http://localhost:8080/used/itemLike?seq=' + seq + '&id=' + id + '&shopKind=' + shopKind)
-             .then(res => res.data ? setLikeForm(res.data) : '')
-             .catch(error => console.log(error))
 
         axios.get('http://localhost:8080/likeCount?seq=' + seq + '&shopKind=' + shopKind)
              .then(res => setCount(res.data))
              .catch(err => console.log(err))
+
+        axios
+             .get('http://localhost:8080/getMemberInfo', {
+                 params: { seq: sub },
+             })
+             .then(res => {
+                 //console.log(JSON.stringify(res.data));
+                 setId(res.data.email);
+ 
+                 //console.log('id = ' + id);
+             })
+             .catch(err => console.log(err));
     }, []);
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/used/itemLike?seq=' + seq + '&id=' + id + '&shopKind=' + shopKind)
+             .then(res => res.data ? setLikeForm(res.data) : '')
+             .catch(error => console.log(error))
+    }, [id]);
 
     useEffect(() => {
         axios.get(`http://localhost:8080/getBrandList?seq=${seq}&brand=${form.brand}`)
