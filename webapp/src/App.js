@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Layout from './component/Layout/Layout';
 
@@ -47,8 +47,24 @@ import Logout from './component/User/Logout';
 import MyPageMain from './component/myPage/MyPageMain';
 import MyPageApp from './component/myPage/MyPageApp';
 import NewUpdate from './component/Shop/manager/NewUpdate';
+import jwt_decode from 'jwt-decode';
 
 function App() {
+    const token = localStorage.getItem('accessToken');
+
+    const [auth, setAuth] = useState('ROLE_GUEST');
+    const [sub, setSub] = useState('');
+
+    useEffect(() => {
+        if (token !== null) {
+            const tokenJson = jwt_decode(token);
+            setAuth(tokenJson['auth']);
+            setSub(tokenJson['sub']);
+        }
+    }, []);
+
+    console.log(auth);
+
     return (
         <BrowserRouter>
             <Routes>

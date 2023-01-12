@@ -321,14 +321,28 @@ const PayForm = () => {
                 ) : null}
                 {type === 'resell' ? (
                     <S.BrandDelevery>
-                        <S.DeleveryImg src="/image/payment/brand_delevery.png"></S.DeleveryImg>
+                        <S.DeleveryImg src="/image/payment/quick_delevery.png"></S.DeleveryImg>
                         <S.DeleveryInfo>
                             <S.DeleveryTitle>
-                                <S.DeleveryName>브랜드배송</S.DeleveryName>
+                                <S.DeleveryName>빠른배송</S.DeleveryName>
                                 <S.DeleveryCost>무료</S.DeleveryCost>
                             </S.DeleveryTitle>
                             <S.DeleveryDesc>
-                                입점한 브랜드에서 직접 택배 배송
+                                지금 결제시 창고에서 즉시 배송
+                            </S.DeleveryDesc>
+                        </S.DeleveryInfo>
+                    </S.BrandDelevery>
+                ) : null}
+                {type === 'used' ? (
+                    <S.BrandDelevery>
+                        <S.DeleveryImg src="/image/payment/seller_delevery.png"></S.DeleveryImg>
+                        <S.DeleveryInfo>
+                            <S.DeleveryTitle>
+                                <S.DeleveryName>판매자 배송</S.DeleveryName>
+                                <S.DeleveryCost>무료</S.DeleveryCost>
+                            </S.DeleveryTitle>
+                            <S.DeleveryDesc>
+                                물품 판매자가 직접 배송
                             </S.DeleveryDesc>
                         </S.DeleveryInfo>
                     </S.BrandDelevery>
