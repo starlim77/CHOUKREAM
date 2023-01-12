@@ -23,14 +23,6 @@ const Products = () => {
 
     const date = new Date();
 
-    if(false){
-    const token = localStorage.getItem('accessToken');
-    const tokenJson = jwt_decode(token);
-    const sub = tokenJson['sub'];
-    }
-
-    const [id, setId] = useState('');
-
     const shopKind = 'resell'
 
     const [open1, setOpen1] = useState(true)
@@ -111,6 +103,27 @@ const Products = () => {
         setDropdown2(!dropdown2);
     }
 
+
+    const token = localStorage.getItem('accessToken');
+    const [sub, setSub] = useState('');
+        
+
+    useEffect(() => {
+        axios
+             .get('http://localhost:8080/getMemberInfo', {
+                 params: { seq: sub },
+             })
+             .then(res => {
+                 //console.log(JSON.stringify(res.data));
+                 setId(res.data.email);
+ 
+                 //console.log('id = ' + id);
+             })
+             .catch(err => console.log(err));
+    }, [sub]);
+
+    const [id, setId] = useState('ROLE_GUEST');
+
     useEffect(() => {
         axios.get(`http://localhost:8080/getProduct?seq=${seq}`)
              .then(res => res.data !== null && setForm(res.data))
@@ -140,17 +153,11 @@ const Products = () => {
              .then(res => setCount(res.data))
              .catch(err => console.log(err))
 
-        // axios
-        //      .get('http://localhost:8080/getMemberInfo', {
-        //          params: { seq: sub },
-        //      })
-        //      .then(res => {
-        //          //console.log(JSON.stringify(res.data));
-        //          setId(res.data.email);
- 
-        //          //console.log('id = ' + id);
-        //      })
-        //      .catch(err => console.log(err));
+        if (token !== null) {
+                const tokenJson = jwt_decode(token);
+                setSub(tokenJson['sub']);
+            }
+
     }, []);
 
     useEffect(() => {
@@ -254,13 +261,13 @@ const Products = () => {
     }
 
     const onInterest = () => {
+        if(id!=="ROLE_GUEST"){
         setLikeForm({...likeForm, userLike:!likeForm.userLike})
-
         axios.post(`http://localhost:8080/used/productLikeSet?seq=`+ seq + '&id=' + id + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
         .then()
         .catch(error => console.log(error))
-
         {likeForm.userLike === false ? setCount(count+1) : setCount(count-1)}  
+        }else { navigate(`/login`) }
     }
 
 
@@ -291,6 +298,10 @@ const Products = () => {
         else if(id == 3) setMainImg(subImg3)
     }
 
+    const photoshop = (itemImg) => {
+        const img = ((itemImg).split(','))
+        return img[0]
+    }
 
     return (
         <>
@@ -444,7 +455,7 @@ const Products = () => {
                                     <S.DeliveryWay>
                                         <S.WayInfo>
                                             <S.WayStatusThumb>
-                                                <img src="https://kream-phinf.pstatic.net/MjAyMTExMjFfMjU5/MDAxNjM3NDczNzU0MjA1.ON3pvFYAq_xSSaNWDgUWe1YfIx-C0fm91PDtcsUn3AEg.Q4EbbNWl_ua916jg0NQ0dWOS3h7W9eiiI2kK9YPWlgwg.PNG/a_120a84f036724d0d97a2343aafff4ecf.png" width="40px" height="40px"/>
+                                                <img src="/image/product/a_120a84f036724d0d97a2343aafff4ecf.png" width="40px" height="40px"/>
                                             </S.WayStatusThumb>
                                             <S.WayDesc>
                                                 <S.Company>
@@ -813,7 +824,7 @@ const Products = () => {
                                             <div className='thumb_box'>
                                                 <S.Product>
                                                     <S.PictureBrandProductImg>
-                                                        <S.BrandProductImg src={item.img}/>
+                                                        <S.BrandProductImg src={`/resellList/${photoshop(item.img)}`}/>
                                                     </S.PictureBrandProductImg>
                                                 </S.Product>
                                             </div>

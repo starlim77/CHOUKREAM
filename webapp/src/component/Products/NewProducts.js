@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import GlobalStyle from './GlobalStyle';
 import ScrollToTop from './ScrollToTop';
 import * as S from './style';
@@ -16,11 +16,21 @@ const NewProducts = () => {
 
     const [modalOpen, setModalOpen] = useState(false);
 
+    const navigate = useNavigate();
+
     const date = new Date();
 
     const token = localStorage.getItem('accessToken');
-    const tokenJson = jwt_decode(token);
-    const sub = tokenJson['sub'];
+    const [sub, setSub] = useState('');
+        
+
+    useEffect(() => {
+        if (token !== null) {
+            const tokenJson = jwt_decode(token);
+            setSub(tokenJson['sub']);
+        }
+        console.log(id)
+    }, []);
 
     const [id, setId] = useState('');
 
@@ -86,14 +96,14 @@ const NewProducts = () => {
     }, [id]);
     
 
-    const onInterest = () => {   
+    const onInterest = () => {
+        if(id!=="ROLE_GUEST"){
         setLikeForm({...likeForm, userLike:!likeForm.userLike})
-
         axios.post(`http://localhost:8080/used/productLikeSet?seq=`+ seq + '&id=' + id + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
         .then()
         .catch(error => console.log(error))
-
-        {likeForm.userLike === false ? setCount(count+1) : setCount(count-1)}
+        {likeForm.userLike === false ? setCount(count+1) : setCount(count-1)}  
+        }else { navigate(`/login`) }
     }
 
     const [form, setForm] = useState([{}])
