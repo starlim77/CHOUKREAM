@@ -55,9 +55,6 @@ public class NewProductDTO {
 
 	@Column(name="categoryDetail", length = 30)
 	private String categoryDetail;
-	
-	@Column(name="gender")
-	private int gender;
    
 	// 모델 번호 (고유 번호)
 	@Column(name="modelNum")

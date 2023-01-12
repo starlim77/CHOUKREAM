@@ -27,9 +27,6 @@ public class ProductDTO {
    
    @Column(name="img", nullable = false, length = 500)
    private String img;
-
-   @Column(name="imgWeb", nullable = false, length = 500)
-   private String imgWeb;
    
    @Column(name="brand", length = 30)
    private String brand;
@@ -45,10 +42,7 @@ public class ProductDTO {
 
    @Column(name="categoryDetail", length = 30)
    private String categoryDetail;
-   
-   @Column(name="gender")
-   private int gender;
-   
+
    @Column(name="modelNum")
    private String modelNum;
    
@@ -60,16 +54,6 @@ public class ProductDTO {
    
    @Column(name="color")
    private String color;
-   
-   
-//   @CreationTimestamp // 엔티티가 생성되는 시점의 시간 등록
-//   private Timestamp logtime;
-   
-//   @Column(name="interest" , length = 20)
-//   private int interest;
-//   
-//   @Column(name="follow" , length = 20)
-//   private int follow;
 }
 
 
