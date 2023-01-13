@@ -13,10 +13,10 @@ import lombok.Data;
 @Data
 public class CompletePaymentDTO {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
-	private Long seq;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@Column
+//	private Long seq;
 	
 	@Column
 	private String id;
@@ -30,6 +30,7 @@ public class CompletePaymentDTO {
 	@Column
 	private String size;
 	
+	@Id
 	@Column
 	private String orderNumber;
 	

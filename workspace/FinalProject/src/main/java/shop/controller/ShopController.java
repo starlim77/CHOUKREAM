@@ -35,7 +35,8 @@ import shop.service.ShopDetailService;
 import shop.service.ShopService;
 
 
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RestController
 @RequestMapping(path="shop")
 public class ShopController {

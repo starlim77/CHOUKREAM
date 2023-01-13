@@ -46,6 +46,8 @@ export const Input = styled.input`
 `;
 export const DefaltAddress = styled.div`
     display: flex;
+    align-items: center;
+    margin-top: 20px;
 `;
 export const DefaultCheckBox = styled.input``;
 export const DefaultSpan = styled.span``;

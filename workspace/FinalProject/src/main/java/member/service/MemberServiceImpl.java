@@ -57,7 +57,6 @@ public class MemberServiceImpl implements MemberService {
 		} else {
 			return "non_exist";
 		}
-		
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import my.bean.AddressDTO;
+import my.bean.GradeDTO;
 import my.bean.PointDTO;
 
 public interface MyService {
@@ -17,5 +18,9 @@ public interface MyService {
 	public void changePoint(PointDTO pointDTO);
 	
 	public Optional<AddressDTO> getDefaultAddress(String id);
+
+	public Optional<GradeDTO> getGrade(String id);
+
+	public void saveGradeNewMember(String id);
 	
 }

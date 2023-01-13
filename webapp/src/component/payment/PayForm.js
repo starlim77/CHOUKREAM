@@ -29,6 +29,14 @@ const PayForm = () => {
     const size = searchParams.get('size');
     const orderNum = searchParams.get('orderNum');
 
+    const [imgName, setImgName] = useState('');
+    const [modelNum, setModelNum] = useState('');
+    const [productName, setProductName] = useState('');
+    const [productSubName, setProductSubName] = useState('');
+
+    const [productPrice, setProductPrice] = useState(0);
+    const [payPrice, setPayPrice] = useState(0);
+
     const [shipInfo, setShipInfo] = useState({
         shipName: '',
         shipPhone: '',
@@ -53,23 +61,47 @@ const PayForm = () => {
                 //console.log('id = ' + id);
             })
             .catch(err => console.log(err));
+    }, []);
 
-        /* if (type === 'new') {
+    useEffect(() => {
+        if (type === 'new') {
             axios
                 .get('http://localhost:8080')
-                .then()
-                .post();
+                .then(res => {
+                    setModelNum(res.data.modelNum);
+                    setProductPrice(res.data.orderPrice);
+                    setPayPrice(res.data.orderPrice);
+                })
+                .catch(err => console.log(err));
         } else if (type === 'resell') {
             axios
-                .get('http://localhost:8080/')
-                .then()
-                .post();
+                .post(
+                    'http://localhost:8080/shop/getProductBySeq?seq=' +
+                        productNum,
+                )
+                .then(res => {
+                    setImgName(res.data.imgName);
+                    setModelNum(res.data.modelNum);
+                    setProductName(res.data.title);
+                    setProductSubName(res.data.subTitle);
+                })
+                .catch(err => console.log(err));
+            axios
+                .get(
+                    'http://localhost:8080/pay/getOrderTableBySeq?seq=' +
+                        orderNum,
+                )
+                .then(res => {
+                    setProductPrice(res.data.orderPrice);
+                    setPayPrice(res.data.orderPrice);
+                })
+                .catch(err => console.log(err));
         } else if (type === 'used') {
             axios
                 .get('http://local')
                 .then()
-                .post();
-        }*/
+                .catch(err => console.log(err));
+        }
     }, []);
 
     useEffect(() => {
@@ -97,9 +129,6 @@ const PayForm = () => {
             })
             .catch(err => console.log(err));
     }, [id]);
-
-    const [productPrice] = useState(0);
-    const [payPrice, setPayPrice] = useState(0);
 
     const addComma = num => {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -144,7 +173,7 @@ const PayForm = () => {
             .catch(error => console.log(error));
     };
 
-    const completePayment = () => {
+    const completePay = () => {
         axios
             .post('http://localhost:8080/pay/completePay', null, {
                 params: {
@@ -159,7 +188,11 @@ const PayForm = () => {
                     shipName,
                     shipPhone,
                     shipAddress,
-                    ask,
+                    ask:
+                        ask !== '배송 시 요청사항을 선택해주세요' &&
+                        ask !== '요청사항 없음'
+                            ? ask
+                            : '',
                 },
             })
             .then(alert('결제 완료'))
@@ -184,7 +217,7 @@ const PayForm = () => {
                 pg: 'html5_inicis',
                 pay_method: 'card',
                 merchant_uid: orderNumber,
-                name: '노르웨이 회전 의자',
+                name: productName,
                 amount: payPrice,
                 buyer_email: id,
                 buyer_name: '',
@@ -197,7 +230,7 @@ const PayForm = () => {
                 if (res.success) {
                     // 결제 성공 시 로직,
                     //alert('결제 완료');
-                    completePayment();
+                    completePay();
                     // changePoint(
                     //     id,
                     //     havePoint -
@@ -257,6 +290,17 @@ const PayForm = () => {
             {modals[2] ? (
                 <Ask setModals={setModals} ask={ask} setAsk={setAsk}></Ask>
             ) : null}
+            <S.Product>
+                <S.ProductInfo>
+                    <S.ProductImg src={'/storage/' + imgName}></S.ProductImg>
+                    <S.ProductEachInfo>
+                        <S.ProductSerial>{modelNum}</S.ProductSerial>
+                        <S.ProductName>{productName}</S.ProductName>
+                        <S.ProductSubName>{productSubName}</S.ProductSubName>
+                        <S.ProductSize>{size}</S.ProductSize>
+                    </S.ProductEachInfo>
+                </S.ProductInfo>
+            </S.Product>
             <S.Address>
                 <S.AddressTitle>
                     <S.AddressText>배송 주소</S.AddressText>
