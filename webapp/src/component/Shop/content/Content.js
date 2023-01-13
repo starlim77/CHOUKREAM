@@ -9,8 +9,9 @@ import Modal from '../modal/Modal';
 import { Link } from 'react-router-dom';
 import categoryData from './CategoryData';
 import MenuList from './MenuList';
+import MenuList2 from './MenuList2';
 
-const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModal, tagLive }) => {
+const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModal, tagLive, dummyOriginal}) => {
     const [categoryData2, setCategoryData2] = useState(categoryData);
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
@@ -104,7 +105,7 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
         });
         setCategoryData2(copyStatus);
     };
-
+    
     // 3자리마다 콤마 넣어서 문자열로 변환
     const addComma = num => {
         num = String(num);
@@ -124,6 +125,33 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
         return img[0]
     }
 
+    const[menuArray,setMenuArray]=useState([]);
+    
+    const dataSetting=(menu)=>{
+        
+        var sw=0
+        var isExist=menuArray.filter(item=>item===menu);
+        isExist.length!==0&&sw++;
+        if(sw===1){
+    
+            var arrayTemp=menuArray.filter(item=>item!==menu);
+            setMenuArray(arrayTemp);
+            var dummyTemp=dummyOriginal.filter(item=>item.category===menu);
+            // var dummy2=dummy
+            //console.log(dummy)
+            // setDummy([...dummy,dummyTemp]) 최상단에서 넘겨준 dummy라 스프레드 안됨.
+            // setDummy(dummy,dummy2)
+            var dummyTemp2=dummy.concat(dummyTemp)
+            setDummy(dummyTemp2);
+            
+        }else{
+            setMenuArray([...menuArray,menu]);
+            //console.log(menuArray);
+            var dummyTemp=dummy.filter(item=>item.category!==menu);
+            //console.log(dummyTemp);
+            setDummy(dummyTemp);
+        }
+    }
     return (
         <>
             {/* Content */}
@@ -157,12 +185,19 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                     display: item.checked ? 'block' : 'none',
                                 }}
                             >
-                                <MenuList
+                                {/* <MenuList
                                     item={item}
                                     dummy={dummy}
                                     setDummy={setDummy}
                                     setPictures={setPictures}
-                                ></MenuList>
+                                ></MenuList> */}
+                                <MenuList2
+                                    item={item}
+                                    dummy={dummy}
+                                    setDummy={setDummy}
+                                    setPictures={setPictures}
+                                    dataSetting={dataSetting}
+                                ></MenuList2>
                             </Co.FilterMenu>
                         </Co.FilterList>
                     ))}
