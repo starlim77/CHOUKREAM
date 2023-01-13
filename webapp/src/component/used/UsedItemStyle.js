@@ -198,6 +198,15 @@ export const ChatButton=styled.button`
     }
 `;
 
+export const SettlementButton=styled.button`
+    width:560px;
+    font-size:50px;
+
+    :hover{
+        cursor: pointer;
+    }
+`;
+
 export const ProfileWrapper=styled.div`
     line-height:30px;
     //border-top:1px solid rgba(236,236,236);

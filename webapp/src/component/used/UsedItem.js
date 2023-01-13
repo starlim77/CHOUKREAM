@@ -27,7 +27,8 @@ const UsedItem = () => {
         likes:'',
         contents:'',
         hashTag:[],
-        sellingState:true
+        sellingState:true,
+        shopKind:''
     });
     
 
@@ -180,6 +181,10 @@ const UsedItem = () => {
         
     }
 
+    const onSettle=()=>{
+        navigate(`pay/payForm?shopKind=${form.shopKind}&seq=${form.seq}`)
+    }
+
     return (
 
         <>
@@ -233,7 +238,8 @@ const UsedItem = () => {
             <br></br>
 
 
-                <U.ChatButton>채팅하기</U.ChatButton>
+                {/* <U.ChatButton>채팅하기</U.ChatButton> */}
+                <U.SettlementButton onClick={onSettle}>결제하기</U.SettlementButton>
             </U.BaseDiv>
         </U.BaseBody>
         

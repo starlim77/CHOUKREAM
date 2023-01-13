@@ -61,6 +61,8 @@ public class UsedItemDTO {
 	@Column(name="sellingState")
 	private boolean sellingState;
 	
+	@Column(name="shopKind")//중고물품 구분
+	private String shopKind;
 	
 	//jpa관련 기본 개념
 	//https://data-make.tistory.com/610
