@@ -1,80 +1,33 @@
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import * as S from '.././register/styleWrite';
+import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import * as S from './styleWrite';
 
-const NewUpdate = () => {
-    const location = useLocation();
-    const checkedId = location.state.checkedId;
-    // const updateList = location.state.updateList;
-    const imgNameSend = location.state.updateList[0].imgName;
-    console.log(imgNameSend)
-    
-    // console.log(location.state)
-    // console.log(location.state.updateList[0].subTitle)
-    // useEffect (() => {
-        
-    // },[])
-    
-    // console.log( '' + typeof(checkedId))
-    // console.log( '' + checkedId)
-    
-    // update 화면 처음떴을때 전에 등록했던 사진이 떠야함 
-    const [subImg, setSubImg] = useState([]);
-    useEffect(() => {
-        var img = imgNameSend.split(',');
-        var img2 = img.map(item => '/newProductList/'+item);
-        setSubImg(img2);
-    }, []);
-    
-
+const ReWrite = () => {
     const navigate = useNavigate();
-    
-    const date = new Date();
-
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-    const dateStr = year + '.' + month + '.' + day;
-    
-    const hours = ('0' + date.getHours()).slice(-2);
-    const minutes = ('0' + date.getMinutes()).slice(-2);
-    const seconds = ('0' + date.getSeconds()).slice(-2);
-    const timeStr = ' ' + hours + ':' + minutes;
-    
-    // console.log(dateStr + timeStr);
-    
     const [form, setForm] = useState({
-        seq: checkedId,
-        registerProductDate: dateStr+timeStr,
         title: '',
         subTitle: '',
         brand: '',
         category: '',
-        categoryDetail: '',
         gender: '',
         modelNum: '',
         releaseDate: '',
         color: '',
-        size: '',
-        price: '',
     });
 
     const {
-        seq,
-        registerProductDate,
         title,
         subTitle,
         brand,
         category,
-        categoryDetail,
         gender,
         modelNum,
         releaseDate,
         color,
-        size,
-        price,
     } = form;
+    
+    // 사이즈 빼기 
 
     const onInput = e => {
         const { name, value } = e.target;
@@ -101,6 +54,13 @@ const NewUpdate = () => {
         // console.log(--sw);
         file[0] || (--sw && alert('이미지 파일을 등록해주세요'));
         // false ||
+        // if (!title) {
+        //     sw = 0;
+        // } else if (category === '상품 종류' || !category) {
+        //     sw = 0;
+        // } else if (!price) {
+        //     sw = 0;
+        // }
 
         var formData = new FormData();
         file.map(files => formData.append('img', files)); // 무조건 문자열로 반환된다
@@ -108,31 +68,29 @@ const NewUpdate = () => {
         // FormData 객체 만들어서 담아서 보낸다
         // 하지만 HTML이 아닌 자바스크립트 단 에서 form 전송 동작이 필요한 경우가 있는데, 이미지 같은 멀티미디어 파일을 페이지 전환 없이 폼 데이터를 비동기로 제출 하고 싶을 때나,
         //  자바스크립트로 좀더 타이트하게 폼 데이터를 관리하고 싶을때 formData 객체를 이용한다고 보면 된다.
-        Object.keys(formData).forEach(key => {
-            console.log('키' + key);
-            console.log('formData[key]' + formData[key]);
-        });
+        // Object.keys(formData).forEach(key => {
+        //     console.log('키' + key);
+        //     console.log('formData[key]' + formData[key]);
+        // });
+        console.log('formData'+ formData);
         console.log('스위치 찍어라' + 1);
         if (sw == 1) {
             // null로 하든 formData로 하든 상관없나 ?
             // axios.post('http://localhost:8080/used/writeItem',null,({params:{
-            // 이게맞음 
-            console.log('디비가러 가는길 ~ ' + checkedId )
             axios
-                // .put(`http://localhost:8080/shop/update?seq=${checkedId}`, null, {
-                .put('http://localhost:8080/shop/reUpdate', formData, {
+                .post('http://localhost:8080/shop/productUpload', formData, {
                     params: form,
                 })
                 .then(() => {
-                    alert('글 수정 완료')
+                    alert('리셀 상품 등록 완료');
                 })
-                .catch(error => console.log(error))
+                .catch(error => console.log(error));
         }
-        navigate('/admin/newList');
+        navigate('/admin/reList');
         window.location.reload();
     };
     // ---------------
-    
+    const [subImg, setSubImg] = useState([]);
 
     const imgRef = useRef();
 
@@ -183,7 +141,6 @@ const NewUpdate = () => {
             //var urlTemp=reader.readAsDataURL(items);
             //var url=urlTemp.slice(5);
             subImg.push({ url: urlTemp });
-            // push 해서 onImgRead 파일 자동으로 땡겨지게 해준다 / push 없는거 자동으로 땡겨서 채워줌 
 
             //setSubImg(urlTemp);
             file.push(items);
@@ -191,9 +148,9 @@ const NewUpdate = () => {
     };
 
     const deleteImg = e => {
-        // console.log(e.target.getAttribute('id'));
-        // console.log(e.target);
-        // console.log(e.target.id);
+        console.log(e.target.getAttribute('id'));
+        console.log(e.target);
+        console.log(e.target.id);
         var id = e.target.getAttribute('id');
 
         //https://forum.freecodecamp.org/t/how-to-filter-using-array-index-in-react/403524
@@ -221,14 +178,8 @@ const NewUpdate = () => {
     // }
 
     //읽어볼 자료.https://velog.io/@eeeve/React-07
-    
-    // console.log(location + 'ddd');
-    // console.log(location);
-    // console.log(location.state.name);
-    
     return (
         <>
-            <h1>상품 수정 </h1>
             <S.WriteBody>
                 <S.ImgBody>
                     {/* 이미지 소스 이용방법 2가지 사용해봄 */}
@@ -238,7 +189,7 @@ const NewUpdate = () => {
                             sizing={subImg[0] ? true : false}
                             src={
                                 subImg[0]
-                                    ? subImg[0]
+                                    ? subImg[0].url
                                     : `${process.env.PUBLIC_URL}/image/used/plusIcon.png`
                             }
                             onClick={onSubImg}
@@ -257,7 +208,7 @@ const NewUpdate = () => {
                                 name="subImg1"
                                 src={
                                     subImg[1]
-                                        ? subImg[1]
+                                        ? subImg[1].url
                                         : '/image/used/plusIcon.png'
                                 }
                                 onClick={onSubImg}
@@ -274,7 +225,7 @@ const NewUpdate = () => {
                                 name="subImg2"
                                 src={
                                     subImg[2]
-                                        ? subImg[2]
+                                        ? subImg[2].url
                                         : '/image/used/plusIcon.png'
                                 }
                                 onClick={onSubImg}
@@ -291,7 +242,7 @@ const NewUpdate = () => {
                                 name="subImg3"
                                 src={
                                     subImg[3]
-                                        ? subImg[3]
+                                        ? subImg[3].url
                                         : '/image/used/plusIcon.png'
                                 }
                                 onClick={onSubImg}
@@ -320,7 +271,6 @@ const NewUpdate = () => {
                     <br></br>
                     *이미지 파일만 업로드 가능합니다.
                 </S.ImgBody>
-                {/* onImgRead 함수가 파일 올렸을때 자동으로 땡겨지게해준다 */}
 
                 <S.Information>
                     {/* <S.Necessary>* 필수 입력</S.Necessary> */}
@@ -328,128 +278,47 @@ const NewUpdate = () => {
                     <S.Title type="text" name="title" onChange={onInput} /> */}
 
                     <S.Subject> 제품 영어 이름</S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="title"
-                        onChange={onInput}
-                        placeholder={location.state.updateList[0].title}
-                    />
+                    <S.SubTitle type="text" name="title" onChange={onInput} />
                     <S.Subject> 제품 한글 이름</S.Subject>
                     <S.SubTitle
                         type="text"
                         name="subTitle"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].subTitle}
                     />
                     <S.Subject> 브랜드</S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="brand"
-                        onChange={onInput}
-                        placeholder={location.state.updateList[0].brand}
-                    />
+                    <S.SubTitle type="text" name="brand" onChange={onInput} />
                     <S.Subject> 제품 카테고리 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="category"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].category}
                     />
-                    <S.Subject> 제품 카테고리 디테일 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="categoryDetail"
-                        onChange={onInput}
-                        placeholder={
-                            location.state.updateList[0].categoryDetail
-                        }
-                    />
-                    <S.Subject> 상세설명 이미지 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="descriptionImg"
-                        onChange={onInput}
-                        placeholder={
-                            location.state.updateList[0].descriptionImg
-                        }
-                    />
+                    <S.Subject> 성별 </S.Subject>
+                    <S.SubTitle type="text" name="gender" onChange={onInput} />
                     <S.Subject> 판매가 </S.Subject>
+                    <S.SubTitle type="text" name="price" onChange={onInput} />
+                    <S.Subject> 모델 번호 </S.Subject>
                     <S.SubTitle
                         type="text"
-                        name="price"
+                        name="modelNum"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].price}
-                    />
-                    <S.Subject> 상호명 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="businessName"
-                        onChange={onInput}
-                        placeholder={location.state.updateList[0].businessName}
                     />
                     <S.Subject> 색상 </S.Subject>
+                    <S.SubTitle type="text" name="color" onChange={onInput} />
+                    <S.Subject> 발매일 </S.Subject>
                     <S.SubTitle
                         type="text"
-                        name="color"
+                        name="releaseDate"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].color}
                     />
-                    <S.Subject> 사업자 번호 </S.Subject>
+                    <S.Subject> 발매가 </S.Subject>
                     <S.SubTitle
                         type="text"
-                        name="comRegNo"
+                        name="releasePrice"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].comRegNo}
                     />
-                    <S.Subject> 대표자 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="representative"
-                        onChange={onInput}
-                        placeholder={location.state.updateList[0].representative}
-                    />
-                    <S.Subject> 사업장 소재지 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="businessLocation"
-                        onChange={onInput}
-                        placeholder={location.state.updateList[0].businessLocation}
-                    />
-                    <S.Subject> 고객센터 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="serviceCall"
-                        onChange={onInput}
-                        placeholder={location.state.updateList[0].serviceCall}
-                    />
-                    <S.Subject> 소재 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="material"
-                        onChange={onInput}
-                        placeholder={location.state.updateList[0].material}
-                    />
-                    <S.Subject> 제조 회사 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="manufacturer"
-                        onChange={onInput}
-                        placeholder={location.state.updateList[0].manufacturer}
-                    />
-                    <S.Subject> 제조국 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="countryOfManufacturer"
-                        onChange={onInput}
-                        placeholder={location.state.updateList[0].countryOfManufacturer}
-                    />
-                    <S.Subject> 제조 날짜 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="dateOfManufacturer"
-                        onChange={onInput}
-                        placeholder={location.state.updateList[0].dateOfManufacturer}
-                    />
+                    <S.Subject> 태그 </S.Subject>
+                    <S.SubTitle type="text" name="tag" onChange={onInput} />
 
                     {/* <S.Necessary>* 필수</S.Necessary>
                     <S.Subject> 상품 정보</S.Subject> */}
@@ -493,4 +362,4 @@ const NewUpdate = () => {
     );
 };
 
-export default NewUpdate;
+export default ReWrite;

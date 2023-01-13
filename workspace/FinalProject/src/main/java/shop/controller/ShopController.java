@@ -55,11 +55,11 @@ public class ShopController {
 		return shopService.sortGetProductList();
 	}
 	
-	@GetMapping("sortGetProductList1")
-	public List<SortListDTO> sortGetProductList1() {
-		System.out.println("왔니 ");
-		System.out.println(shopService.sortGetProductList1() + "ㄴㄹㄴㄹㅇㄹㄴㅇ");
-		return shopService.sortGetProductList1();
+	@GetMapping("favourSort")
+	public List<SortListDTO> favourSort() {
+		System.out.println("ㅎㅇㅎㅇ");
+		System.out.println(shopService.favourSort());
+		return shopService.favourSort();
 	}
 //	@GetMapping("sortGetProductList2")
 //	public List<ProductDTO> sortGetProductList2() {

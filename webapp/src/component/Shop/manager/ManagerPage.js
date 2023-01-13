@@ -22,7 +22,7 @@ const ManagerPage = () => {
                             <Link to={'/admin/newWrite'}style={{textDecoration: "none"}}>Create</Link>
                         </Ma.MenuBtn> */}
                         <Ma.MenuBtn style={{backgroundColor:'#fce205'}}>
-                            <Link to={'/resell/newList'}style={{textDecoration: "none"}}>리셀 상품 관리</Link>
+                            <Link to={'/admin/reList'}style={{textDecoration: "none"}}>리셀 상품 관리</Link>
                         </Ma.MenuBtn>
                         <Ma.MenuBtn style={{backgroundColor:'#fce205'}}>
                             <Link to={'/admin/newList'}style={{textDecoration: "none"}}>새 상품 관리</Link>

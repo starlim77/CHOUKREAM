@@ -36,7 +36,6 @@ import ManagerPage from './component/Shop/manager/ManagerPage';
 import List from './component/Shop/manager/NewList';
 import AdminWrite from './component/Shop/register/NewWrite';
 import NewList from './component/Shop/manager/NewList';
-import NewSearch from './component/Shop/manager/NewSearch';
 import NewProducts from './component/Products/NewProducts';
 import UsedUpdate from './component/Used/UsedUpdate';
 import FindEmail from './component/User/FindEmail';
@@ -48,6 +47,9 @@ import MyPageMain from './component/myPage/MyPageMain';
 import MyPageApp from './component/myPage/MyPageApp';
 import NewUpdate from './component/Shop/manager/NewUpdate';
 import NewProductPage from './component/Shop/newProduct/NewProductPage';
+import ReList from './component/Shop/resell/ReList';
+import ReUpdate from './component/Shop/resell/ReUpdate';
+import ReWrite from './component/Shop/register/ReWrite';
 
 function App() {
     return (
@@ -60,15 +62,14 @@ function App() {
                     <Route path="shop" element={<Shop />} />
                     
                     <Route path="shop/newProduct" element={<NewProductPage />} />
-        
                     <Route path="admin" element={<ManagerPage />} />
                     <Route path="admin/newWrite"element={<><ManagerPage /><AdminWrite /></>}/>
                     <Route path="admin/newList"element={<><ManagerPage /><NewList /></>}/>
-                    <Route path="admin/newSearch"element={<><ManagerPage /><NewSearch /></>}/>
-                    <Route path="admin/newWrite"element={<><ManagerPage /><AdminWrite /></>}/>
-                    <Route path="admin/newList"element={<><ManagerPage /><NewList /></>}/>
-                    <Route path="admin/newSearch"element={<><ManagerPage /><NewSearch /></>}/>
                     <Route path="admin/newUpdate"element={<><ManagerPage /><NewUpdate /></>}/>
+                    
+                    <Route path="admin/reWrite"element={<><ManagerPage /><ReWrite /></>}/>
+                    <Route path="admin/reList"element={<><ManagerPage /><ReList /></>}/>
+                    <Route path="admin/reUpdate"element={<><ManagerPage /><ReUpdate /></>}/>
 
                     <Route path="Used/usedMain" element={<UsedMain />} />
                     <Route path="Used/usedWrite" element={<UsedWrite />} />
