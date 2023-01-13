@@ -14,4 +14,10 @@ public interface CsBoardNoticeService {
 
 	public Optional<CsBoarNoticeDTO> getNotice(int seq);
 
+	public void delete(int seq);
+
+	public void update(CsBoarNoticeDTO csBoardNoticeDTO);
+
+	public Optional<CsBoarNoticeDTO> getNoticeInt(int seq);
+
 }

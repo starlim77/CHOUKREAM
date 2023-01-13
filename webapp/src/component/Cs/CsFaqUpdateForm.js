@@ -20,22 +20,27 @@ const CsFaqUpdateForm = () => {
     const { seq } = useParams();
 
     const htmlString = useState('');
+    const[file , setFile] =useState([])
+    const [img1, setImg1] = useState();
 
     const [form, setForm] = useState({
         category: '',
         title: '',
         content: '',
+        filename:''
     });
-    const { category, title, content } = form;
+    const { category, title, content,filename } = form;
     const editorRef = useRef();
     useEffect(() => {
         axios
             .get(`http://localhost:8080/cs/getBoard?seq=${seq}`) //
 
             .then(res => {
-                //주소가서 res 받아오기
+              
             setForm(res.data)
+       //     content = content.replace('<img src="blob:http://localhost:3000/'+filename+'" contenteditable="false">', '<img src="/storage/'+filename+'.png" contenteditable="false">')
            // editorRef.current?.getInstance().setHTML(content)
+          
           }
           
            
@@ -43,9 +48,11 @@ const CsFaqUpdateForm = () => {
         .catch((error) => console.log(error));
 
     },[])
+
     useEffect(() => {
-        editorRef.current?.getInstance().setHTML(content)
-    }, [form]) 
+        
+        editorRef.current?.getInstance().setHTML((content))
+    }, [form.filename]) 
 
     const onInput = e => {
         const { name, value } = e.target;
@@ -57,14 +64,41 @@ const CsFaqUpdateForm = () => {
     };
 
     const navigate = useNavigate();
+    const onUploadImage = async (img, callback) => {
+       
+        
+        const url =  window.URL.createObjectURL(img)
+        console.log(img);
+    
+      
+        const split = url.split('/');
+        console.log(split)
+       
+        setImg1(split[3])
+   
+       alert(url)
+        file.push(img);
+       
+        callback(url); 
+        
+    };
+    
     const onUpdate = e => {
+        console.log(file)
+         var formData = new FormData();
+         file.map(files=>formData.append('img',files));
+         for (let key of formData.keys()) {
+        console.log(key, ":", formData.get(key));
+    }
         axios
-            .put('http://localhost:8080/cs/updateBoard', null, {
+            .put('http://localhost:8080/cs/update', formData, {
                 params: {
                     seq: seq, // seq 필수로 들어가야 함 .그래야 insert가 아닌 update가  (seq가 pk)
                     category: category,
                     title: title,
+                    
                     content: editorRef.current?.getInstance().getHTML(),
+                    filename :filename
                 },
             })
             .then(() => {
@@ -125,7 +159,7 @@ const CsFaqUpdateForm = () => {
                                     previewStyle="vertical" // 미리보기 스타일 지정
                                     height="300px" // 에디터 창 높이
                                     initialEditType="wysiwyg" // 초기 입력모드 설정(디폴트 markdown)
-                                    initialValue={form.content}  
+                                  //  initialValue={(form.content) }   
                                     toolbarItems={[
                                         // 툴바 옵션 설정
                                         ['heading', 'bold', 'italic', 'strike'],
@@ -139,6 +173,10 @@ const CsFaqUpdateForm = () => {
                                         ['table', 'image', 'link'],
                                         ['code', 'codeblock'],
                                     ]}
+                                    hooks={{
+                                        //사진 등록 버튼 눌렀을 때.
+                                        addImageBlobHook: onUploadImage,
+                                    }} //
                                 ></Editor>
                                 {/* <textarea name ='content' placeholder='내용' style={{width :'350px' , height:'350px' }} onChange={onInput} value={content}/> */}
                             </td>
@@ -146,6 +184,7 @@ const CsFaqUpdateForm = () => {
                     </tbody>
                 </table>
             </form>
+           
             <div>
                 <p>
                     <button onClick={onList}>목록</button>

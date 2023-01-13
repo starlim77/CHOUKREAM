@@ -7,4 +7,6 @@ import csboard.bean.CsBoarNoticeDTO;
 @Repository
 public interface CsBoardNoticeDAO extends JpaRepository<CsBoarNoticeDTO,Integer> {
 
+	void deleteBySeq(int seq);
+
 }

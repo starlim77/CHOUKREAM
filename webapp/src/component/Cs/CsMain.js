@@ -10,6 +10,7 @@ import CsHeader from './CsHeader';
 import CsFaqWriteForm from './CsFaqWriteForm';
 import CsNoticeDetail from './CsNotice/CsNoticeDetail';
 import CsNoticeWrite from './CsNotice/CsNoticeWrite';
+import CsNoticeUpdateForm from './CsNotice/CsNoticeUpdateForm';
 
 const CsMain = () => {
     return (
@@ -23,6 +24,10 @@ const CsMain = () => {
                         <Route
                             path="/csNotice/:seq"
                             element={<CsNoticeDetail />}
+                        />
+                        <Route
+                            path="/csNoticeUpdateForm/:seq"
+                            element={<CsNoticeUpdateForm />}
                         />
                         <Route path ='/csNoticeWrite' element={<CsNoticeWrite/>}/>
 

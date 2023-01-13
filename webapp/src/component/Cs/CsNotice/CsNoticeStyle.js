@@ -47,3 +47,13 @@ export const Button = styled.button`
     cursor: pointer;
     border-radius: 10px;
 `
+export const DateSpan = styled.span`
+argin-bottom: 1px;
+   
+    display: inline-flex;
+    font-size: 12px;
+    
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 5px 5px 0px;
+`

@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import csboard.bean.CsBoarNoticeDTO;
 import csboard.bean.CsBoardDTO;
 import csboard.dao.CsBoardNoticeDAO;
-
-
+import jakarta.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
@@ -33,8 +32,26 @@ public class CsBoardNoticeServiceImpl implements CsBoardNoticeService {
 
 	@Override
 	public Optional<CsBoarNoticeDTO> getNotice(int seq) {
-		// TODO Auto-generated method stub
+		
 		return csBoardNoticeDAO.findById(seq);
 	}
+
+	@Override
+	@Transactional
+	public void delete(int seq) {
+		csBoardNoticeDAO.deleteBySeq(seq);
+		
+	}
+
+	@Override
+	public void update(CsBoarNoticeDTO csBoardNoticeDTO) {
+		csBoardNoticeDAO.save(csBoardNoticeDTO);
+	}
+
+	@Override
+	public Optional<CsBoarNoticeDTO> getNoticeInt(int seq) {
+		// TODO Auto-generated method stub
+		return csBoardNoticeDAO.findById(seq);
+		}
 
 }

@@ -18,7 +18,7 @@ const CsNotice = () => {
     }
     return (
         <>
-           <Link to='/cs/csNoticeWrite'> <button> 글쓰기 </button></Link>
+           <Link to='/cs/csNoticeWrite'> <S.Button> 글쓰기 </S.Button></Link>
             <S.NoticeUl>
                 {
                     noticeList.map(item => 
