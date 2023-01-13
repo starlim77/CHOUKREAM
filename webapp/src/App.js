@@ -68,11 +68,16 @@ function App() {
                         path="Used/uploadform2"
                         element={<UploadForm2></UploadForm2>}
                     ></Route>
-                    <Route path="products/:seq" element={<Products />} />
-                    <Route path="/sell" element={<SizePage />} />
-                    <Route path="/buy" element={<SizePage />} />
+                     <Route path="products/:seq" element={<Products />} />
                     <Route path="/payTerms/*" element={<PaymentTerms />} />
                     <Route path="/orderType/*" element={<OrderType />} />
+                    <Route path="/buy" element={<SizePage />} />
+                    <Route path="buy/payTerms" element={<PaymentTerms />} />
+                    <Route path="buy/orderType" element={<OrderType />} />
+                    <Route path="/sell" element={<SizePage />} />
+                    <Route path="sell/payTerms" element={<PaymentTerms />} />
+                    <Route path="sell/orderType" element={<OrderType />} />
+                    <Route path="shop" element={<Shop />} />
                     <Route
                         path="Used/useditem"
                         element={<UsedItem></UsedItem>}

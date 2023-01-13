@@ -139,8 +139,9 @@ width: 100%;
 `
 export const NewEmail = styled.input`
 display: flex;
-width: 80%;
+width: 75%;
 border: 0;
 margin: 10px 0;
+margin-right: 4%;
 font-size: 18px;
 `
