@@ -8,42 +8,56 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import * as S from './style';
 
 const MystyleDetail = () => {
-    const { seq , id } = useParams();  //주소값 파라미터 seq id가져오기
+    const { id } = useParams();  //주소값 파라미터 seq id가져오기
     const [commentOpen, setCommentOpen] = useState(false)
-    const [isLike, setIsLike] = useState(0);
+    const [isLike, setIsLike] = useState();
+
+    //좋아요 전체 리스트
+    const [likeAll, setLikeAll] = useState([]);
+    
    
     //게시물 뿌리기
     const [list, setList] = useState([]);
 
     //좋아요 있으면 1리턴, 없으면 0 리턴
-    const [likesForm, setLikesForm] = useState({   
-        styleSeq: seq,
-        memberId: id,
-        likesId: ''
-    })  
+    // const [likesForm, setLikesForm] = useState({   
+    //     styleSeq: seq,
+    //     memberId: id,
+    //     likesId: ''
+    // })  
 
     useEffect( ()=> {
         axios.get(`http://localhost:8080/lookbook/findAllMyList/${id}`)
              .then(res => setList(res.data))
+
+             .then(
+                
+                axios.get(`http://localhost:8080/lookbook/findLikes?id=${id}`)
+                    .then(
+                          res => setLikeAll(res.data)
+                    )
+                    .catch(error => console.log(error))
+
+             )
              .catch(error => console.log(error))
 
-         //좋아요 여부 보여주기
-         axios.get(`http://localhost:8080/lookbook/findLikes?memberId=${id}&styleSeq=${seq}`)
-              .then(res => setIsLike(res.data)  )
-              .catch(error => console.log(error))
+        //좋아요 여부 보여주기
+        //  axios.get(`http://localhost:8080/lookbook/findLikes?memberId=${id}&styleSeq=${seq}`)
+        //       .then(res => setIsLike(res.data)  )
+        //       .catch(error => console.log(error))
     }, []) 
 
+   
  
     //좋아요 클릭
-    const onLikes = () => {
-        setLikesForm({...likesForm });  
+    const onLikes = (e,seq) => {
+        e.preventDefault();
+        console.log(seq, id , isLike )
+        
+        // setLikesForm({...likesForm });  
 
-        axios.post('http://localhost:8080/lookbook/likebutton', null, {params:likesForm})
-            .then( res =>  
-                        setIsLike(res.data), 
-                        window.location.replace(`/lookbook/mystyledetail/${seq}/${id}`)//새로고침 넘느료..
-                        //navigate(`/lookbook/mystyledetail/${seq}/${id}`)                        
-                )
+        axios.post('http://localhost:8080/lookbook/likebutton?styleSeq='+seq+'&memberId='+id+"&isLike="+isLike) //1, 0  같이 보내준다
+            .then(  setIsLike(!isLike) )
             .catch(error => console.log(error))
     }
 
@@ -77,6 +91,7 @@ const MystyleDetail = () => {
                                         </S.MyDeIcon>
                                         
                                    </S.MyDeheadercontainer>
+                                   
 
                                    <S.MyStdiv>
                                         {
@@ -87,18 +102,34 @@ const MystyleDetail = () => {
                                             ))
                                         }
                                     </S.MyStdiv>
-                                    
+                                    글번호: {item.seq}
                                 
                                     <S.MyStContent>
                                         {item.content}
                                     </S.MyStContent>
 
 
-                                    <CardActions >                                    
-                                        <IconButton aria-label="add to favorites" onClick={onLikes} >
-                                            <img src={ isLike === 1 ?  '/image/style/likes.png'  : '/image/style/unlikes.png'  }
+                                    <CardActions >   
+                                        
+                                 
+                                        <IconButton aria-label="add to favorites" onClick={(e) => onLikes(e, item.seq ,index)} >
+                                            
+                                            {/* {
+                                                likeAll.filter((fix) => item.seq === fix.styleSeq & id === fix.memberId) ? '/image/style/likes.png' : '/image/style/likes.png'
+                                            }
+
+
+                                            <img src={ item.likesCount === 0 ?  '/image/style/likes.png'  : '/image/style/likes.png'   }
                                                  style={{ width:'28px'}}
-                                                 />
+                                                 /> */}
+
+                                            {/* <img src={ likeAll.filter((fix) => item.seq === fix.styleSeq).filter((fix) => id === fix.memberId) ? '/image/style/likes.png':'/image/style/unlikes.png'}
+                                                 style={{ width:'28px'}}
+                                                 /> */}
+
+                                            {/* <img src={ likeAll.seq === item.seq ? '/image/style/likes.png' : '/image/style/unlikes.png'} style={{ width:'28px'}} /> */}
+                                            <img src={ '알아서 해주시겠죠?'} style={{ width:'28px'}} />
+                                            
                                         </IconButton>
                                         <span>{item.likesCount}</span>
 

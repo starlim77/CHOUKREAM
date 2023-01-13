@@ -5,10 +5,18 @@ import { Container } from '@mui/system';
 import React, { useEffect, useRef, useState } from 'react';
 import * as S from './style';
 import { Link } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 
 
 
 const Mystyle = () => {
+
+    const [form, setForm] = useState({
+        id: '',    //멤버id = long type....
+        content: '',
+    })
+    const {id, content} = form  
+
     const imgRef = useRef();
     const [file, setFile] = useState([])
     const [showImgSrc,setShowImgSrc] = useState([]);
@@ -17,7 +25,44 @@ const Mystyle = () => {
     
     const [myList, setMyList] = useState([]);   //등록한 게시물 확인
 
-    const [itemLength,setItemLength] = useState(8) // 처음에 가져올 아이템 갯수
+    const [itemLength,setItemLength] = useState(12) // 처음에 가져올 아이템 갯수
+
+    const token = localStorage.getItem('accessToken');
+    const [auth, setAuth] = useState('ROLE_GUEST');
+    useEffect(() => {
+        if (token !== null) {
+            const tokenJson = jwt_decode(token);
+            setAuth(tokenJson['auth']);
+            //localStorage.setItem('userInfo', JSON.stringify(tokenJson));
+            settokenId(tokenJson['sub']);
+            // setForm({...form, id:tokenId})
+        }
+    }, [token]);
+    const [tokenId, settokenId] = useState('')
+    // console.log(auth);
+    // console.log(tokenId)
+
+
+    useEffect( ()=> {
+
+        if(tokenId !== ''){
+            // console.log('tokenId ===  ' + typeof(tokenId) )
+            // console.log('tokenId =1==  ' + tokenId )
+            // console.log('ids == ' + form.id)
+            setForm({id:tokenId})
+
+                axios.get(`http://localhost:8080/lookbook/findAllMyList/${tokenId}`)
+                    .then( //res => console.log(res.data)
+                        res => setMyList(res.data)
+                        )
+                    .catch(error => console.log(error))
+
+                axios.get(`http://localhost:8080/lookbook/findCountById?id=${tokenId}`)
+                    .then(res => setListCount(res.data))
+                    .catch(error => console.log(error))
+        }
+    }, [tokenId]) 
+
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
@@ -45,12 +90,7 @@ const Mystyle = () => {
     const onUploadFile = (e) =>{
         imgRef.current.click()
     }
-    const [form, setForm] = useState({
-        id: '3',    //멤버id = long type....
-        content: '',
-    })
-    const {id, content} = form  
-
+   
 
     const onInput = (e) => {
         const { name, value} = e.target
@@ -101,6 +141,8 @@ const Mystyle = () => {
             window.location.replace("/lookbook/mystyle") //새로고침
             
         } else if(file.length !== 0){
+            console.log('id ===== ' + form.id)
+
             axios
                 .post("http://localhost:8080/lookbook/upload", formData, {params:form})
             
@@ -114,21 +156,7 @@ const Mystyle = () => {
         }
     }
 
-    //완료후 다시 랜더링
-    useEffect( ()=> {
-        axios.get(`http://localhost:8080/lookbook/findAllMyList/${id}`)
-             .then( //res => console.log(res.data)
-                   res => setMyList(res.data)
-                   )
-             .catch(error => console.log(error))
-    }, []) 
-    useEffect( ()=> {
-         axios.get(`http://localhost:8080/lookbook/findCountById?id=${id}`)
-        .then(res => setListCount(res.data))
-        .catch(error => console.log(error))
-        
-    })
-
+ 
 
     return (
         <Container fixed>
@@ -137,7 +165,7 @@ const Mystyle = () => {
                     <img name='myProfile' width='130px' src='../image/myProfile.png' alt='마이프로필' 
                     style={{ borderRadius:"70%" }} />               
                 </div>
-                <div name='id' value='id'>{id}</div>  
+                <div name='id' value='id'>{tokenId}</div>  
                 <S.MyDivText>프로필 정보는 마이페이지에서 수정해주세요.</S.MyDivText>            
             </S.MyDiv>
             <S.MyDiv>
@@ -159,20 +187,13 @@ const Mystyle = () => {
                         <Card>
                             <CardHeader
                                 avatar={ <Avatar>프로필</Avatar> }
-                                title={id}
-                                value={id}
+                                title={tokenId}
+                                value={tokenId}
                                 name='id'
                                 onChange={onInput}
                             />
                             <Button onClick={ onUploadFile }> 사진등록 +</Button><br/>
                             
-                            {/* <CardMedia
-                                component="img"
-                                height="400"
-                                image={showImgSrc}
-                            /> */}
-
-
                             <input type='file' name='file' id='file' accept="image/*" multiple  ref={imgRef}   style={ {visibility: 'hidden'}}
                                     //onChange={ e=> readURL( e.target) }  
                                     onChange={readURL}
@@ -221,7 +242,8 @@ const Mystyle = () => {
                                            itemLength ={itemLength}
                                            style={{display : index < itemLength ? '':'none'}}> 
 
-                                <Link to={`/lookbook/mystyledetail/${item.seq}/${item.id}`}>
+                                {/* <Link to={`/lookbook/mystyledetail/${item.seq}/${item.id}`}> */}
+                                <Link to={`/lookbook/mystyledetail/${item.id}`}>
                                 <CardMedia
                                     component="img"
                                     height="200"

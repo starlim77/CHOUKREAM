@@ -53,14 +53,16 @@ public class styleController {
 	public void upload(@RequestBody List<MultipartFile> list, @ModelAttribute StyleDTO styleDTO, HttpSession session) {
 		//System.out.println("list= " + list);	
 		//System.out.println("컨드롤러 dto="+ styleDTO);
+		System.out.println(styleDTO.getId()+"////와라");
 		styleService.save(list, styleDTO);
 
 	}
 	
 	
-	//내 id를 들고가서 내 게시글만 뿌리기
+	//내 id를 들고가서 내 게시글만 뿌리기    @AuthenticationPrincipal
 	@GetMapping(path="findAllMyList/{id}")
 	public List<StyleDTO> findAllMyList(@PathVariable String id) {
+		System.out.println(id);
 		//좋아요조회 styleService.findLikes(id,style_seq);
 		return styleService.findAllMyList(id);
 	}
@@ -111,17 +113,29 @@ public class styleController {
 	
 	//좋아요
     @PostMapping(path="likebutton")
-    public int likes(@ModelAttribute StyleLikesDTO styleLikesDTO) {
-    	//System.out.println("컨트롤러 styleLikesDTO ==== "+ styleLikesDTO);
-    	return styleLikesService.save(styleLikesDTO);
+    public void likes(@ModelAttribute StyleLikesDTO styleLikesDTO, @RequestParam boolean isLike) { //1,0값 받는거 추가 void로 형태 변환
+    	System.out.println("컨트롤러 styleLikesDTO ==== "+ styleLikesDTO);
+    	System.out.println("isLike ===="+isLike);
+    	
+    	styleLikesService.save(styleLikesDTO, isLike);
+ 
+    	/*
+    	
+    	if(1,0)받는값 === 1){
+    		테이블 delete해주는 메소드 생성
+    	}else{
+    		테이블 insert해주는 메소드 생성
+    	}
+    	
+    	*/
 
     }
     
     //좋아요 확인
     @GetMapping(path="findLikes")
-    public int findLikes(@ModelAttribute StyleLikesDTO styleLikesDTO) {
+    public List<StyleLikesDTO> findLikes(@RequestParam String id) {
     	//System.out.println("컨트롤러 조아요 확인 styleLikesDTO ==== "+ styleLikesDTO);
-    	return styleLikesService.findLikes(styleLikesDTO);
+    	return styleLikesService.findLikes(id);
 
     }
 
@@ -150,7 +164,7 @@ public class styleController {
 	@GetMapping(path="getComment")	
 	public ResponseEntity getComment(@ModelAttribute StyleCommentDTO styleCommentDTO) {
 		System.out.println(styleCommentDTO);
-				
+			
 		List<StyleCommentDTO> styleCommentDTOList = styleCommentService.findAll(styleCommentDTO.getStyleSeq());
 		return new ResponseEntity<>(styleCommentDTOList, HttpStatus.OK);//내가 전달하려는 바디값(styleCommentDTOList)과 상태값(HttpStatus.OK)
 		
