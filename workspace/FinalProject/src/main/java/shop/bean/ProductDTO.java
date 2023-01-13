@@ -39,7 +39,7 @@ public class ProductDTO {
    private String color;
    
    // 이미지 주소 
-   @Column(name="img", nullable = false, length = 500)
+   @Column(name="imgName", length = 500)
    private String img; 
    
    @Column(name="modelNum")

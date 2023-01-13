@@ -77,7 +77,7 @@ const Products = () => {
     })
 
     const [brandListForm, setBrandListForm] = useState([{
-        seq: "", img: "", price: "", title: "", brand: ""
+        seq: "", img_name: "", price: "", title: "", brand: ""
     }])
 
     const [sizeForm, setSizeForm] = useState([{}])
@@ -93,6 +93,7 @@ const Products = () => {
     const [dropdown, setDropdown] = useState(true);
     const OpenDrop = () => {  
         setDropdown(!dropdown);
+        console.log(brandListForm)
     }
     const [dropdown1, setDropdown1] = useState(true);
     const OpenDrop1 = () => {
@@ -109,17 +110,20 @@ const Products = () => {
         
 
     useEffect(() => {
-        axios
-             .get('http://localhost:8080/getMemberInfo', {
-                 params: { seq: sub },
-             })
-             .then(res => {
-                 //console.log(JSON.stringify(res.data));
-                 setId(res.data.email);
- 
-                 //console.log('id = ' + id);
-             })
-             .catch(err => console.log(err));
+        if(sub!==""){
+            axios
+            .get('http://localhost:8080/getMemberInfo', {
+                params: { seq: sub },
+            })
+            .then(res => {
+                //console.log(JSON.stringify(res.data));
+                setId(res.data.email);
+
+                //console.log('id = ' + id);
+            })
+            .catch(err => console.log(err));
+        }
+       
     }, [sub]);
 
     const [id, setId] = useState('ROLE_GUEST');
@@ -299,7 +303,7 @@ const Products = () => {
     }
 
     const photoshop = (itemImg) => {
-        const img = ((itemImg).split(','))
+        const img = (itemImg.split(','))
         return img[0]
     }
 
@@ -322,7 +326,7 @@ const Products = () => {
                                     {subImg3&&<U.SmallImg2 src={`/resellList/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg2>}
                                 </U.ImgBody2>
                                 {/* <div className="spread">
-                                    <S.Image src={form.img} ></S.Image>
+                                    <S.Image src={form.imgName} ></S.Image>
                                 </div> */}
                                 {/* <div className="column_box">
                                     <div className="detail_banner_area">
@@ -817,43 +821,15 @@ const Products = () => {
                         <S.BrandProducts>
                             <S.BrandProductList>
                             {
-                                brandListForm.length < 10 ? 
-                                brandListForm.map((item, index) => (
-                                    <S.ProductItem key={index}>
-                                        <S.ItemInner onClick={() => brandNavigate(item.seq)}>
-                                            <div className='thumb_box'>
-                                                <S.Product>
-                                                    <S.PictureBrandProductImg>
-                                                        <S.BrandProductImg src={`/resellList/${photoshop(item.img)}`}/>
-                                                    </S.PictureBrandProductImg>
-                                                </S.Product>
-                                            </div>
-                                            <S.ProductItemInfoBox>
-                                            <div className='info_box'>
-                                                <div className='brand'>
-                                                    <S.BrandTextWithOutWish>{item.brand}</S.BrandTextWithOutWish>
-                                                </div>
-                                                <S.BrandProductInfoBoxName>{item.title}</S.BrandProductInfoBoxName>
-                                                <S.BrandProductInfoBoxPrice>
-                                                    <S.BrandProductInfoBoxPriceAmount>
-                                                        <S.BrandProductInfoBoxPriceAmountNum>{item.price}</S.BrandProductInfoBoxPriceAmountNum>
-                                                    </S.BrandProductInfoBoxPriceAmount>
-                                                    <S.BrandProductInfoBoxPriceDesc>즉시 구매가</S.BrandProductInfoBoxPriceDesc>
-                                                </S.BrandProductInfoBoxPrice>
-                                            </div>
-                                        </S.ProductItemInfoBox>
-                                        </S.ItemInner>
-                                    </S.ProductItem>))
+                                brandListForm.length > 10 ? 
 
-                                    :
-                       
                                     [...Array(parseInt(10))].map((n, index) => {
                                         return <S.ProductItem key={index}>
                                         <S.ItemInner onClick={() => brandNavigate(brandListForm[index].seq)}>
                                             <div className='thumb_box'>
                                                 <S.Product>
                                                     <S.PictureBrandProductImg>
-                                                        <S.BrandProductImg src={brandListForm[index].img}/>
+                                                        <S.BrandProductImg src={`/resellList/${photoshop(brandListForm[index].img_name)}`}/>
                                                     </S.PictureBrandProductImg>
                                                 </S.Product>
                                             </div>
@@ -873,7 +849,39 @@ const Products = () => {
                                         </S.ProductItemInfoBox>
                                         </S.ItemInner>
                                     </S.ProductItem>
-                                })
+                                    })
+
+                                    :
+
+                                    brandListForm[0].img_name !== '' &&
+
+                                    brandListForm.map((item, index) => (
+                                        <S.ProductItem key={index}>
+                                            <S.ItemInner onClick={() => brandNavigate(item.seq)}>
+                                                <div className='thumb_box'>
+                                                    <S.Product>
+                                                        <S.PictureBrandProductImg>
+                                                            <S.BrandProductImg src={`/resellList/${photoshop(item.img_name)}`}/>
+                                                        </S.PictureBrandProductImg>
+                                                    </S.Product>
+                                                </div>
+                                                <S.ProductItemInfoBox>
+                                                <div className='info_box'>
+                                                    <div className='brand'>
+                                                        <S.BrandTextWithOutWish>{item.brand}</S.BrandTextWithOutWish>
+                                                    </div>
+                                                    <S.BrandProductInfoBoxName>{item.title}</S.BrandProductInfoBoxName>
+                                                    <S.BrandProductInfoBoxPrice>
+                                                        <S.BrandProductInfoBoxPriceAmount>
+                                                            <S.BrandProductInfoBoxPriceAmountNum>{item.price}</S.BrandProductInfoBoxPriceAmountNum>
+                                                        </S.BrandProductInfoBoxPriceAmount>
+                                                        <S.BrandProductInfoBoxPriceDesc>즉시 구매가</S.BrandProductInfoBoxPriceDesc>
+                                                    </S.BrandProductInfoBoxPrice>
+                                                </div>
+                                            </S.ProductItemInfoBox>
+                                            </S.ItemInner>
+                                        </S.ProductItem>))
+                                    
                             }
                             </S.BrandProductList>
                         </S.BrandProducts>

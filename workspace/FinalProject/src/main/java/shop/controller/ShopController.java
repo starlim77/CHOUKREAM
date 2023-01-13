@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpSession;
 import lombok.Delegate;
 import shop.bean.NewProductDTO;
+import shop.bean.NewProductOptionDTO;
 import shop.bean.ProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.service.NewProductService;
@@ -165,6 +166,7 @@ public class ShopController {
 	 @ResponseBody
 	 public void upload(@RequestBody List<MultipartFile> img, HttpSession session, @ModelAttribute NewProductDTO newProductDTO) {
 		System.out.println(newProductDTO);
+		System.out.println(newProductDTO.getNewProductOptionDTO());
 		System.out.println(" 현욱 ");
 		 //이미지 저장 경로 설정
 		 //1. properties 이용하여 저장 경로를 지정하는 방법 https://saii42.tistory.com/68
@@ -240,6 +242,6 @@ public class ShopController {
 		newProductService.upload(newProductDTO);
 
 	 }
-	
+
 }
 
