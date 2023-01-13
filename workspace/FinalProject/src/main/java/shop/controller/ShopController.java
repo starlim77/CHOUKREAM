@@ -25,12 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
-import lombok.Delegate;
 import shop.bean.NewProductDTO;
 import shop.bean.ProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.service.NewProductService;
 import shop.bean.ProductSizeDTO;
+import shop.bean.SortListDTO;
 import shop.service.ShopDetailService;
 import shop.service.ShopService;
 
@@ -56,6 +56,24 @@ public class ShopController {
 		return shopService.sortGetProductList();
 	}
 	
+	@GetMapping("sortGetProductList1")
+	public List<SortListDTO> sortGetProductList1() {
+		System.out.println("왔니 ");
+		System.out.println(shopService.sortGetProductList1() + "ㄴㄹㄴㄹㅇㄹㄴㅇ");
+		return shopService.sortGetProductList1();
+	}
+//	@GetMapping("sortGetProductList2")
+//	public List<ProductDTO> sortGetProductList2() {
+//		return shopService.sortGetProductList2();
+//	}
+//	@GetMapping("sortGetProductList3")
+//	public List<ProductDTO> sortGetProductList3() {
+//		return shopService.sortGetProductList3();
+//	}
+	
+	
+	
+	
 	@PostMapping("getProductBySeq")
 	public Optional<ProductDTO> getProductBySeq(@RequestParam int seq) {
 		return shopService.getProductBySeq(seq);
@@ -69,6 +87,7 @@ public class ShopController {
 	
 	@GetMapping("getNewProductList")
 	public List<NewProductDTO> getNewProductList() {
+		System.out.println(" 리턴 하기전에 " + newProductService.getNewProductList());
 		return newProductService.getNewProductList();
 	}
 	
@@ -145,12 +164,22 @@ public class ShopController {
 		newProductService.update(newProductDTO);
 	}
 	
-//	@GetMapping("search")
-//	// @ResponseBody
-//	public List<NewProductDTO> search(@RequestParam Map<String, String> map) { // searchOption, keyword
-//		System.out.println("map 은 ?> " + map);
-//		return newProductService.search(map);
-//	}
+	@GetMapping(value="updateNewProductInfo")
+	public Optional<NewProductDTO> updateNewProductInfo(@RequestParam int seq) { 
+		// 바로 db로 가도됨 근데 비추천 일을하면안됨 
+		// 요청과 응답만 해야댐 
+		System.out.println("seq 는 머니 " + seq);
+		System.out.println("return 하기전 " + newProductService.updateNewProductInfo(seq));
+		return newProductService.updateNewProductInfo(seq);
+	}
+	
+	@GetMapping("search")
+	// @ResponseBody
+	public List<NewProductDTO> search(@RequestParam Map<String, String> map) { // searchOption, keyword
+		System.out.println("map 은 ?> " + map);
+		System.out.println(" return 전 " + newProductService.search(map));
+		return newProductService.search(map);
+	}
 	
 	@PostMapping(path="newProductUpload", produces="text/html;charset-UTF-8")
 	 @ResponseBody
@@ -231,6 +260,8 @@ public class ShopController {
 		newProductService.upload(newProductDTO);
 
 	 }
-	
+
 }
+
+
 

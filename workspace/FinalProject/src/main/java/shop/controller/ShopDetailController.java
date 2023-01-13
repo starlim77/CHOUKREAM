@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
-import shop.bean.NewNewProductDTO;
+import shop.bean.NewProductDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
@@ -77,7 +77,7 @@ public class ShopDetailController {
 	}
 	
 	@GetMapping(path="getNewProduct")
-	public Optional<NewNewProductDTO> getNewProduct(@RequestParam int seq) {
+	public Optional<NewProductDTO> getNewProduct(@RequestParam int seq) {
 		System.out.println(shopDetailService.getNewProduct(seq));
 		return shopDetailService.getNewProduct(seq);  
 	}

@@ -1,11 +1,13 @@
 package shop.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import shop.bean.NewProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.bean.UsedItemLikeDTO;
 import shop.dao.UsedItemDAO;
@@ -87,6 +89,36 @@ public class UsedItemServiceImpl implements UsedItemService {
 	@Override
 	public void updateItem(UsedItemDTO usedItemDTO) {
 		usedItemDAO.save(usedItemDTO);
+	}
+
+
+	@Override
+	public void soldOut(UsedItemDTO usedItemDTO) {
+		
+		usedItemDAO.save(usedItemDTO);
+	}
+
+
+	@Override
+	public void updateState(int seq, boolean sellingState) {
+		System.out.println("여기 오냐?");
+		usedItemDAO.saveByIdAndSellingState(seq,sellingState);
+	}
+
+
+	@Override
+	public List<UsedItemDTO> search(Map<String, String> map) {
+		String searchOption = map.get("searchOption");
+		String keyword = map.get("keyword");
+		
+		System.out.println("searchOption " + searchOption);
+		System.out.println("keyword " + keyword);
+		
+		if(searchOption.equals("id")) {
+			System.out.println("얘 실행");
+			return usedItemDAO.getSearchId(keyword);
+		}else
+			return usedItemDAO.getSearchTitle(keyword);
 	}
 	
 

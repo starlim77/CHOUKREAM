@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
+import shop.bean.NewProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.bean.UsedItemLikeDTO;
 import shop.dao.UsedItemDAO;
@@ -174,13 +176,51 @@ public class UsedItemController {
 	 
 	 @DeleteMapping(path="deleteItem")
 	 public void deleteItem(@RequestParam int seq) {
-		 System.out.println(seq);
+		 
 		 usedItemService.deleteItem(seq);
 		 
 	 }
 	 
 	 @PutMapping(path="updateItem")
 	 public void updateItem(@ModelAttribute UsedItemDTO usedItemDTO) {
+		 System.out.println(usedItemDTO);
 		 usedItemService.updateItem(usedItemDTO);
 	 }
+	 
+	 @PutMapping(path="soldOut")
+	 public void soldOut(@ModelAttribute UsedItemDTO usedItemDTO) {
+		 System.out.println(usedItemDTO);
+		 if(usedItemDTO.isSellingState()) {
+			 usedItemDTO.setSellingState(false);
+		 }
+		 
+		 usedItemService.soldOut(usedItemDTO);
+		 
+	 }	
+	 
+	 @PutMapping(path="onSale")
+	 public void onSale(@ModelAttribute UsedItemDTO usedItemDTO) {
+
+		 if(!usedItemDTO.isSellingState()) {
+//			 usedItemDTO.setTitle(usedItemDTO.getTitle().substring(5,usedItemDTO.getTitle().length()-1));
+			 usedItemDTO.setSellingState(true);
+		 }
+		 System.out.println(usedItemDTO);
+		 
+		 usedItemService.soldOut(usedItemDTO);
+		 
+	 }	
+	 
+	 @PutMapping(path="updateState")
+	 public void updateState(@RequestParam int seq, @RequestParam boolean sellingState) {
+		 System.out.println(seq);
+		 System.out.println(sellingState);
+		 usedItemService.updateState(seq, sellingState);
+	 }
+	 
+	 @GetMapping("search")
+	public List<UsedItemDTO> search(@RequestParam Map<String, String> map) { // searchOption, keyword
+	 	//System.out.println(map);
+		return usedItemService.search(map);
+	}
 }

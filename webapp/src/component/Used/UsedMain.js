@@ -4,7 +4,7 @@ import * as S from './style';
 import tagData from './TagItem';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import Banner from '../Shop/banner/Banner';
 
 const UsedMain = () => {
 
@@ -34,7 +34,7 @@ const UsedMain = () => {
 
     const[tag,setTag] = useState('')
     const[tagLive,setTagLive] = useState(false)
-    
+    const[searchLive,setSearchLive] = useState(false)
 
     const onTag = (title) => {
         setTag(title)
@@ -51,6 +51,24 @@ const UsedMain = () => {
         }
 
     },[tag])
+
+    const tagReset = () => {
+        setTag('')
+        setSearchLive(false)
+    }
+
+    const [search,setSearch] = useState('')
+
+    const onSearch = () => {
+        if(search === ''){
+            alert('데이터 입력값이 없습니다')
+        }else{
+            setSearchLive(true)
+            // console.log(data.filter(item => decodeURI(item.hashTag).includes(search) ? decodeURI(item.hashTag) : '')) 해쉬태그 해당 글자 존재 여부 확인
+            // console.log(data.map(item => decodeURI(item.hashTag))) 해쉬태그 정체 확인
+            setDataFilter(data.filter(item => decodeURI(item.hashTag).includes(search) ? decodeURI(item.hashTag) : ''))
+        }
+    }
 
 
 
@@ -87,7 +105,7 @@ const UsedMain = () => {
 
 
     const onWrite = () => {
-            navigate('/Used/usedWrite')
+            navigate('/Used/usedWrite');
     }
 
 
@@ -100,14 +118,24 @@ const UsedMain = () => {
                 
             <S.TagImg>
                 {
-                    tagData.map(item => <S.TagImgLi key={item.id} onClick={ e => onTag(item.title)}><S.TagImgItem src={item.img}/><S.TagImgSpan>{item.title}</S.TagImgSpan></S.TagImgLi>)
+                    tagData.map(item => <S.TagImgLi key={item.id} onClick={ e => onTag(item.title)}>
+                                             <S.TagImgItem src={item.img}/>
+                                             <S.TagImgSpan>{item.title}</S.TagImgSpan>
+                                        </S.TagImgLi>)
                 }
                    
             </S.TagImg>
-            <S.SearchHashTag>해쉬태그 검색 기능</S.SearchHashTag>
+            <S.TagReset><S.TagResetSpan onClick={tagReset}>[모든 상품보기]</S.TagResetSpan></S.TagReset>
+
+            <Banner/>
+
+            <S.SearchHashTag>
+                <S.SearchInput onChange={ (e) => setSearch(e.target.value)} placeholder='Tag 검색을 해보세요!'/>
+                <S.SearchBtn onClick={ onSearch}>검색</S.SearchBtn>
+            </S.SearchHashTag>
 
             <S.UsedMain>
-                {
+                {   
                     tagLive ? 
                     
                     dataFilter.slice(0).reverse().map((item,index) => index >= itemLength ? '':
@@ -115,6 +143,12 @@ const UsedMain = () => {
                     
                     : 
                     
+                    
+                    searchLive ?
+
+                    dataFilter.slice(0).reverse().map((item,index) => index >= itemLength ? '':
+                         <MainItem key={item.seq} data = {item} onItem={onItem} index={index} itemLength={itemLength}/>)
+                    :
                     data.slice(0).reverse().map((item,index) => index >= itemLength ? '':
                         <MainItem key={item.seq} data = {item} onItem={onItem} index={index} itemLength={itemLength}/>)
 

@@ -47,7 +47,9 @@ import Logout from './component/User/Logout';
 import MyPageMain from './component/myPage/MyPageMain';
 import MyPageApp from './component/myPage/MyPageApp';
 import NewUpdate from './component/Shop/manager/NewUpdate';
+import UsedItemList from './component/Shop/manager/UsedItemList';
 import jwt_decode from 'jwt-decode';
+import NewProductPage from './component/Shop/newProduct/NewProductPage';
 
 function App() {
     const token = localStorage.getItem('accessToken');
@@ -73,72 +75,17 @@ function App() {
 
                     {/* shop */}
                     <Route path="shop" element={<Shop />} />
-
+                    
+                    <Route path="shop/newProduct" element={<NewProductPage />} />
+        
                     <Route path="admin" element={<ManagerPage />} />
-                    <Route
-                        path="admin/newWrite"
-                        element={
-                            <>
-                                <ManagerPage />
-                                <AdminWrite />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="admin/newList"
-                        element={
-                            <>
-                                <ManagerPage />
-                                <NewList />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="admin/newSearch"
-                        element={
-                            <>
-                                <ManagerPage />
-                                <NewSearch />
-                            </>
-                        }
-                    />
-
-                    <Route
-                        path="admin/newWrite"
-                        element={
-                            <>
-                                <ManagerPage />
-                                <AdminWrite />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="admin/newList"
-                        element={
-                            <>
-                                <ManagerPage />
-                                <NewList />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="admin/newSearch"
-                        element={
-                            <>
-                                <ManagerPage />
-                                <NewSearch />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="admin/newUpdate"
-                        element={
-                            <>
-                                <ManagerPage />
-                                <NewUpdate />
-                            </>
-                        }
-                    />
+                    <Route path="admin/newWrite"element={<><ManagerPage /><AdminWrite /></>}/>
+                    <Route path="admin/newList"element={<><ManagerPage /><NewList /></>}/>
+                    <Route path="admin/newSearch"element={<><ManagerPage /><NewSearch /></>}/>
+                    <Route path="admin/newWrite"element={<><ManagerPage /><AdminWrite /></>}/>
+                    <Route path="admin/newList"element={<><ManagerPage /><NewList /></>}/>
+                    <Route path="admin/newSearch"element={<><ManagerPage /><NewSearch /></>}/>
+                    <Route path="admin/newUpdate"element={<><ManagerPage /><NewUpdate /></>}/>
 
                     <Route path="Used/usedMain" element={<UsedMain />} />
                     <Route path="Used/usedWrite" element={<UsedWrite />} />
@@ -227,9 +174,19 @@ function App() {
                         path="/lookbook/mystyleUpdate/:seq/:id"
                         element={<MystyleUpdate />}
                     />
+                    <Route
+                        path="admin/UsedItemList"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <UsedItemList/>
+                            </>
+                        }
+                    />
                 </Route>
 
                 <Route path="/Search/SearchForm" element={<SearchForm />} />
+                
             </Routes>
         </BrowserRouter>
     );

@@ -1,10 +1,27 @@
 import axios from 'axios';
 import React, { useEffect, useState} from 'react';
-import {useParams, useSearchParams } from 'react-router-dom';
+import {useNavigate, useSearchParams } from 'react-router-dom';
 import UpdateBtnModal from './UpdateBtnModal';
 import * as U from './UsedItemStyle';
-const UsedItem = () => {
+import jwt_decode from 'jwt-decode';
 
+const UsedItem = () => {
+   
+    if(localStorage.getItem('accessToken')){
+    const token = localStorage.getItem('accessToken');
+    const tokenJson = jwt_decode(token);
+    const sub = tokenJson['sub'];
+    
+
+    console.log(token);
+    console.log(tokenJson);
+    console.log(sub);
+    }
+   
+
+    
+
+    const navigate = useNavigate();
     // console.log("seq = " + location.seq +" seq = "+ {seq})
     const shopKind = 'used'
 
@@ -19,8 +36,10 @@ const UsedItem = () => {
         price:'',
         likes:'',
         contents:'',
-        hashtag:[]
+        hashTag:[],
+        sellingState:true
     });
+    
 
     const [likeForm, setLikeForm] = useState({
         seq:'',
@@ -47,6 +66,8 @@ const UsedItem = () => {
         setIsWriter(form.id==='홍헌')
 
     },[form.id])
+
+    
 
     const [splitImg,setSplitImg] = useState([])
 
@@ -98,6 +119,7 @@ const UsedItem = () => {
 
     //이미지 순서 바꾸기
     const changImg=(e)=>{
+        console.log(form.hashTag);
         var id = e.target.getAttribute("id");
         //진영씨 방법
         //1. if로 아이디 값 걸러서 바꿔주기
@@ -114,11 +136,50 @@ const UsedItem = () => {
 
     }
 
+    useEffect(()=>{
+    
+        var decoding= decodeURI(form.hashTag).split(',');
+        console.log(decoding);
+        setForm({
+            ...form,
+            hashTag: decoding});
+        
+        //form이 바뀌는 걸로 설정하면 무한 루프도니까 한 번만 돌게 form.title사용
+    },[form.title])
+    
+    const soldOut=()=>{
+       
+        
+        axios.put('http://localhost:8080/used/soldOut','',({params:{
+            ...form,
+             hashTag : encodeURI(form.hashTag)
+         }}))
+        .then(alert('판매완료 처리되었습니다.'))
+        .then(window.location.reload())
+        .catch(err=>console.log(err))
+       
+    }
+
+    const onSale=()=>{
+        // setForm({...form, title:form.title.substr(6)})
+       
+        axios.put('http://localhost:8080/used/onSale','',({params:{
+            ...form,
+             hashTag : encodeURI(form.hashTag)
+         }}))
+        .then(alert('판매중 처리되었습니다.'))
+        .then(window.location.reload())
+        .catch(err=>console.log(err))
+
+        
+    }
+
     return (
 
         <>
         <U.ModalDiv>
-            <UpdateBtnModal writer={isWriter} seq={searchParams.get('seq')} imgNameSend={form.imgName}></UpdateBtnModal>
+            <UpdateBtnModal writer={isWriter} form={form} setForm={setForm} onSale={onSale} soldOut={soldOut}
+                        seq={searchParams.get('seq')} imgNameSend={form.imgName}></UpdateBtnModal>
         </U.ModalDiv>
         <U.BaseBody>
             <U.ImgBody>
@@ -131,7 +192,7 @@ const UsedItem = () => {
 
             <U.BaseDiv>
             <U.TitleWrapper>
-                <U.TitleSpan>{form.title}</U.TitleSpan>
+                <U.TitleSpan>{!form.sellingState&&<span>[판매완료]</span>}{form.title}</U.TitleSpan>
             </U.TitleWrapper>
             
 
@@ -141,7 +202,7 @@ const UsedItem = () => {
             <br/>
 
             <U.SizeWrapper>
-                <U.SizeSpan>사이즈 : </U.SizeSpan>
+                <U.Sizetitle>사이즈</U.Sizetitle>
                 <U.SizeSpan>{form.size}</U.SizeSpan>
             </U.SizeWrapper>
 
