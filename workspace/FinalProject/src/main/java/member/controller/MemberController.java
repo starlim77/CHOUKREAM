@@ -3,6 +3,7 @@ package member.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,15 +29,19 @@ public class MemberController {
 	
 	@GetMapping(path="getMember")
 	public Optional<MemberDto> getMember(@RequestParam String id) {
-		System.out.println(id);
 		return memberService.getMember(id);
 	}
 	
 	@PostMapping(path="updateEmail")
 	public Optional<MemberDto> updateEmail(@RequestParam String id, String email) {
-		System.out.println(id);
-		System.out.println(email);
 		return memberService.updateEmail(id, email);
 	}
 
+	@PostMapping(path = "updatePassword")
+	public Optional<MemberDto> updatePassword(@RequestParam String email, String password) {
+		
+		System.out.println(email);
+		System.out.println(password);
+		return memberService.updatePassword(email, password);
+	}
 }

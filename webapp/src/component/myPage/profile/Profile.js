@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { id } from 'date-fns/locale';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as S from './ProfileStyle';
 
@@ -64,17 +65,17 @@ const Profile = () => {
     }
     const onChangePassword = () => {
         const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/
-        if(!passwordRegex.test(password)){
-            passwordRef.current.focus()
+        if(!passwordRegex.test(password) || !passwordRegex.test(rePassword)){
             alert('영문, 숫자, 특수문자를 조합해서 입력해주세요. (8-16자)')
-            if(!passwordRegex.test(rePassword)){
-                alert('영문, 숫자, 특수문자를 조합해서 입력해주세요. (8-16자)')
-                RePasswordRef.current.focus()
-            }
+            return
         }
-
-
-        console.log("password", password)
+        if(password !== rePassword){
+            alert("비밀버호가 일치하지 않습니다")
+            return
+        }
+        axios.post(`http://localhost:8080/updatePassword?id=1&email=${member.email}&password=${password}`)
+             .then(res => setMember(res.data))
+        setIsOpen(false)
     }
 
     return (
@@ -168,7 +169,7 @@ const Profile = () => {
                             style={{ marginRight: '20px' }}
                         />
                         수신거부
-                        <input type="checkbox" checked={!smsOption} />
+                        <input type="checkbox" checked={!smsOption}/>
                     </S.CheckBox>
                     <S.CheckBox>
                         <S.CheckBoxText>이메일</S.CheckBoxText>
