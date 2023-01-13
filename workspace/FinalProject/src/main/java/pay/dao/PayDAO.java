@@ -21,4 +21,7 @@ public interface PayDAO<T> extends JpaRepository<CompletePaymentDTO, Integer> {
 	@Query(nativeQuery = true, value = "select min(order_price) as price, min(order_seq) as orderSeq, size from order_table where buy_sell = 0 and size = :size and seq = :seq")
 	public Optional<BidsListDTO> getBuyBidsPriceMax(@Param("size") String size, @Param("seq") int seq);
 
+	@Query(nativeQuery = true, value = "select sum(pay_price) as totalPrice from complete_payment where id = :id and status = '결제완료' group by id")
+	public int getAllPayPrice(String id);
+
 }

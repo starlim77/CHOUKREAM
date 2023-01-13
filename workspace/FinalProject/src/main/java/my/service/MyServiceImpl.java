@@ -59,13 +59,4 @@ public class MyServiceImpl implements MyService{
 	public Optional<GradeDTO> getGrade(String id) {
 		return gradeDAO.findById(id);
 	}
-	
-	public void saveGradeNewMember(String id) {
-		GradeDTO gradeDTO = new GradeDTO();
-		gradeDTO.setId(id);
-		gradeDTO.setGrade("일반회원");
-		gradeDAO.save(gradeDTO);
-	}
-	
-	
 }

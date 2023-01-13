@@ -122,7 +122,6 @@ public class NewProductDTO {
 	@OneToMany(targetEntity = NewProductOptionDTO.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name ="seq", referencedColumnName = "seq")
 	private List<NewProductOptionDTO> NewProductOptionDTO;
-	
 }
 
 

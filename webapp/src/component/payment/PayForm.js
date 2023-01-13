@@ -193,6 +193,8 @@ const PayForm = () => {
                         ask !== '요청사항 없음'
                             ? ask
                             : '',
+                    status: '결제완료',
+                    orderTableSeq: orderNum,
                 },
             })
             .then(alert('결제 완료'))
@@ -217,7 +219,7 @@ const PayForm = () => {
                 pg: 'html5_inicis',
                 pay_method: 'card',
                 merchant_uid: orderNumber,
-                name: productName,
+                name: /*productName*/ 'asdf',
                 amount: payPrice,
                 buyer_email: id,
                 buyer_name: '',

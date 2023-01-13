@@ -20,7 +20,5 @@ public interface MyService {
 	public Optional<AddressDTO> getDefaultAddress(String id);
 
 	public Optional<GradeDTO> getGrade(String id);
-
-	public void saveGradeNewMember(String id);
 	
 }
