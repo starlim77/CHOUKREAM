@@ -27,6 +27,9 @@ public class UsedItemDTO {
 	@Column(name="seq",length=30)
 	private int seq;
 	
+	@Column(name="writer",length=100)
+	private String writer;
+	
 	@Column(name="id",length=100)
 	private String id;
 	

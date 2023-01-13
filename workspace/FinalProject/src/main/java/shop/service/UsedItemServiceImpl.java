@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import member.bean.MemberDto;
+import member.dao.MemberDAO;
 import shop.bean.NewProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.bean.UsedItemLikeDTO;
@@ -119,6 +121,15 @@ public class UsedItemServiceImpl implements UsedItemService {
 			return usedItemDAO.getSearchId(keyword);
 		}else
 			return usedItemDAO.getSearchTitle(keyword);
+	}
+
+
+	@Override
+	public String getId(int seq) {
+		String sending=usedItemDAO.getId(seq);
+		System.out.println(sending);
+		return sending;
+		
 	}
 	
 

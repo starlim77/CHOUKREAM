@@ -37,6 +37,9 @@ public interface UsedItemDAO extends JpaRepository<UsedItemDTO, Integer>{
 	@Query("SELECT usedItemDTO FROM UsedItemDTO usedItemDTO WHERE usedItemDTO.title like %:keyword%")
 	public List<UsedItemDTO> getSearchTitle(@Param("keyword") String keyword);
 	
+	@Query("SELECT memberDTO.email FROM MemberDto memberDTO WHERE memberDTO.id = :seq")
+	public String getId(int seq);
+	
 //	
 //	@Modifying
 //	@Transactional

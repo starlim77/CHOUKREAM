@@ -7,24 +7,14 @@ import jwt_decode from 'jwt-decode';
 
 const UsedItem = () => {
    
-    if(localStorage.getItem('accessToken')){
-    const token = localStorage.getItem('accessToken');
-    const tokenJson = jwt_decode(token);
-    const sub = tokenJson['sub'];
-    
-
-    console.log(token);
-    console.log(tokenJson);
-    console.log(sub);
-    }
-   
-
-    
-
     const navigate = useNavigate();
     // console.log("seq = " + location.seq +" seq = "+ {seq})
     const shopKind = 'used'
 
+    const[currentId,setCurrentId]=useState('user');
+    const[isWriter,setIsWriter]=useState(false);
+    
+    
     const [searchParams,setSearchParams] = useSearchParams();
 
     const [form,setForm]=useState({
@@ -50,21 +40,38 @@ const UsedItem = () => {
 
     
     useEffect(()=>{
+
+        if(localStorage.getItem('accessToken')){
+            const token = localStorage.getItem('accessToken');
+            const tokenJson = jwt_decode(token);
+            const sub = tokenJson['sub'];
+            
+            if(tokenJson['auth']==='ROLE_ADMIN'){
+                    setIsWriter(true);
+            }else{
+            
+                axios.get(`http://localhost:8080/used/getId?seq=${sub}`)
+                    .then(res=>{setCurrentId(res.data)})
+                    .catch(err=>console.log(err))
+            }
+        }
+
         axios.get('http://localhost:8080/used/viewItem?seq=' + searchParams.get('seq'))
-        .then(res => setForm(res.data))
-        .then(axios.get('http://localhost:8080/used/itemLike?seq=' + searchParams.get('seq') + '&id=' + 'asd' + '&shopKind=' + shopKind)
-                    .then(res => res.data ? setLikeForm(res.data) : '')
-                    .catch(error => console.log(error)))
-        .catch(error => console.log(error))
+            .then(res => setForm(res.data))
+            .then(axios.get('http://localhost:8080/used/itemLike?seq=' + searchParams.get('seq') + '&id=' + 'asd' + '&shopKind=' + shopKind)
+                        .then(res => res.data ? setLikeForm(res.data) : '')
+                        .catch(error => console.log(error)))
+            .catch(error => console.log(error))
 
     },[])
 
     //나중에 세션값 들어오는 거랑 글 작성자랑 맞는지 확인하는 과정
-    const[isWriter,setIsWriter]=useState(false);
+    
     useEffect(()=>{
         //여기서 글로 써놓은 게 나중에 세션을 적어줄 공간
-        setIsWriter(form.id==='홍헌')
-
+        if(currentId===form.id){
+            setIsWriter(true);
+        }
     },[form.id])
 
     
@@ -139,7 +146,6 @@ const UsedItem = () => {
     useEffect(()=>{
     
         var decoding= decodeURI(form.hashTag).split(',');
-        console.log(decoding);
         setForm({
             ...form,
             hashTag: decoding});
@@ -234,7 +240,7 @@ const UsedItem = () => {
         <U.BottomDiv>
             <U.ProfileWrapper>
                 <U.ProfileImg></U.ProfileImg>
-                <U.ProfileSpan>아이디/거래수/거래이슈</U.ProfileSpan>
+                <U.ProfileSpan>작성자:{form.id}/거래수/거래이슈</U.ProfileSpan>
             </U.ProfileWrapper>
         </U.BottomDiv>
 

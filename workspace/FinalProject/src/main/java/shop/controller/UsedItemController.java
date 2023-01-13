@@ -223,4 +223,11 @@ public class UsedItemController {
 	 	//System.out.println(map);
 		return usedItemService.search(map);
 	}
+	 
+	@GetMapping("getId")
+	public String getId(@RequestParam int seq) {
+		
+		
+		return usedItemService.getId(seq);
+	}
 }

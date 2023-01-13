@@ -34,4 +34,6 @@ public interface UsedItemService {
 
 	public List<UsedItemDTO> search(Map<String, String> map);
 
+	public String getId(int seq);
+
 }

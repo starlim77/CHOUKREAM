@@ -70,7 +70,7 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route element={<Layout />}>
+                <Route element={<Layout auth={auth} />}>
                     <Route path="/" element="" />
 
                     {/* shop */}

@@ -4,12 +4,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './styleWrite';
 import tagData from './TagItem';
+import jwt_decode from 'jwt-decode';
 
 const UsedWrite = () => {
-
+    const[currentId,setCurrentId]=useState('user');
     const navigate = useNavigate();
     const[form,setForm] = useState({
-        id:'홍헌',
+        id:'',
         title : '',
         productName : '',
         kind : '',
@@ -23,6 +24,22 @@ const UsedWrite = () => {
         //데이터를 받아오고 나서는 parse로 데이터를 풀어주면 된다.
     })
 
+    useEffect(()=>{
+        if(localStorage.getItem('accessToken')){
+            const token = localStorage.getItem('accessToken');
+            const tokenJson = jwt_decode(token);
+            const sub = tokenJson['sub'];
+            
+            axios.get(`http://localhost:8080/used/getId?seq=${sub}`)
+                .then(res=>setForm({...form,id:res.data}))
+                .catch(err=>console.log(err))
+        }else{
+            alert("글작성 권한이 없습니다.")
+            navigate("/login")
+        }
+
+    },[])
+   
     const [hashTag2,setHashTag2] = useState()
 
     const [count,setCount] = useState(0)
