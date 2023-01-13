@@ -6,5 +6,5 @@ public interface BrandListDTO {
 	String getPrice();
 	String getTitle();
 	String getSub_title();
-	String getImg();
+	String getImg_name();
 }

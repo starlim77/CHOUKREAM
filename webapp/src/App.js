@@ -75,17 +75,76 @@ function App() {
 
                     {/* shop */}
                     <Route path="shop" element={<Shop />} />
-                    
-                    <Route path="shop/newProduct" element={<NewProductPage />} />
-        
+
+                    <Route
+                        path="shop/newProduct"
+                        element={<NewProductPage />}
+                    />
+
                     <Route path="admin" element={<ManagerPage />} />
-                    <Route path="admin/newWrite"element={<><ManagerPage /><AdminWrite /></>}/>
-                    <Route path="admin/newList"element={<><ManagerPage /><NewList /></>}/>
-                    <Route path="admin/newSearch"element={<><ManagerPage /><NewSearch /></>}/>
-                    <Route path="admin/newWrite"element={<><ManagerPage /><AdminWrite /></>}/>
-                    <Route path="admin/newList"element={<><ManagerPage /><NewList /></>}/>
-                    <Route path="admin/newSearch"element={<><ManagerPage /><NewSearch /></>}/>
-                    <Route path="admin/newUpdate"element={<><ManagerPage /><NewUpdate /></>}/>
+                    <Route
+                        path="admin/newWrite"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <AdminWrite />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newList"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewList />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newSearch"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewSearch />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newWrite"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <AdminWrite />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newList"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewList />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newSearch"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewSearch />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newUpdate"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewUpdate />
+                            </>
+                        }
+                    />
 
                     <Route path="Used/usedMain" element={<UsedMain />} />
                     <Route path="Used/usedWrite" element={<UsedWrite />} />
@@ -179,14 +238,13 @@ function App() {
                         element={
                             <>
                                 <ManagerPage />
-                                <UsedItemList/>
+                                <UsedItemList />
                             </>
                         }
                     />
                 </Route>
 
                 <Route path="/Search/SearchForm" element={<SearchForm />} />
-                
             </Routes>
         </BrowserRouter>
     );

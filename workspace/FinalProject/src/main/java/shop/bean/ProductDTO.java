@@ -38,6 +38,10 @@ public class ProductDTO {
    @Column(name="color")
    private String color;
    
+   // 이미지 주소 
+   @Column(name="imgName", length = 500)
+   private String imgName; 
+   
    @Column(name="modelNum")
    private String modelNum;
    
