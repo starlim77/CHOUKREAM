@@ -3,7 +3,24 @@ import React, { useEffect, useState} from 'react';
 import {useNavigate, useSearchParams } from 'react-router-dom';
 import UpdateBtnModal from './UpdateBtnModal';
 import * as U from './UsedItemStyle';
+import jwt_decode from 'jwt-decode';
+
 const UsedItem = () => {
+   
+    if(localStorage.getItem('accessToken')){
+    const token = localStorage.getItem('accessToken');
+    const tokenJson = jwt_decode(token);
+    const sub = tokenJson['sub'];
+    
+
+    console.log(token);
+    console.log(tokenJson);
+    console.log(sub);
+    }
+   
+
+    
+
     const navigate = useNavigate();
     // console.log("seq = " + location.seq +" seq = "+ {seq})
     const shopKind = 'used'

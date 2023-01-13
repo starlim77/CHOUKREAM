@@ -12,15 +12,16 @@ import axios from 'axios';
 
 const Shop = () => {
     const [dummy, setDummy] = useState([]);
+    const [dummyOriginal, setDummyOriginal] = useState([]);
     const [dummyFilter, setDummyFilter] = useState([]);
 
     useEffect(() => {
         axios
             .get('http://localhost:8080/shop/getProductList')
-            .then(res => setDummy(res.data))
+            .then(res => {setDummy(res.data); setDummyOriginal(res.data)})
             .catch(error => console.log(error));
     }, []);
-    
+    // console.log(dummyOriginal)
     const [tag, setTag] = useState('');
     const [tagLive, setTagLive] = useState(false);
     
@@ -131,6 +132,7 @@ const Shop = () => {
                     modalOpen={modalOpen}
                     openModal={openModal}
                     closeModal={closeModal}
+                    dummyOriginal={dummyOriginal}
                 />
             </Se.Container>
         </>
