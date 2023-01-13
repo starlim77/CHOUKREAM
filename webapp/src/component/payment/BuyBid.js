@@ -21,11 +21,11 @@ const BuyBid = ({ clickedBtn, buyPrice, sellPrice, orderNum  }) => {
 
     useEffect(() => {
         clickedBtn === "즉시판매"
-            ? setPriceInput(sellPrice)
+            ? setPriceInput(buyPrice)
             : clickedBtn === "판매입찰" 
             ? setPriceInput()
             : clickedBtn === "즉시구매"
-            ? setPriceInput(buyPrice)
+            ? setPriceInput(sellPrice)
             : clickedBtn === "구매입찰"
             && setPriceInput()
     }, [clickedBtn])
@@ -47,7 +47,7 @@ const BuyBid = ({ clickedBtn, buyPrice, sellPrice, orderNum  }) => {
 
     //payForm 페이지로 이동
     const onPayForm = () => {
-        navigate(`/pay/payForm?type=resell&productNum=${productNum}&size=${size}$orderNum=${orderNum}`)
+        navigate(`/pay/payForm?type=resell&productNum=${productNum}&size=${size}&orderNum=${orderNum}`)
     };
 
     return (

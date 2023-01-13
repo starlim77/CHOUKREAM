@@ -55,13 +55,13 @@ const PayForm = () => {
             })
             .catch(err => console.log(err));
 
-        if (type === 'new') {
-            axios.get('http://localhost:8080').then().post();
-        } else if (type === 'resell') {
-            axios.get('http://localhost:8080/').then().post();
-        } else if (type === 'used') {
-            axios.get('http://local').then().post();
-        }
+        // if (type === 'new') {
+        //     axios.get('http://localhost:8080').then().post();
+        // } else if (type === 'resell') {
+        //     axios.get('http://localhost:8080/').then().post();
+        // } else if (type === 'used') {
+        //     axios.get('http://local').then().post();
+        // }
     }, []);
 
     const [productPrice] = useState(0);
