@@ -131,33 +131,33 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
         
     }
 
-    const[menuArray,setMenuArray]=useState([]);
+    // const[menuArray,setMenuArray]=useState([]);
     
-    const dataSetting=(menu)=>{
+    // const dataSetting=(menu)=>{
         
-        var sw=0
-        var isExist=menuArray.filter(item=>item===menu);
-        isExist.length!==0&&sw++;
-        if(sw===1){
+    //     var sw=0
+    //     var isExist=menuArray.filter(item=>item===menu);
+    //     isExist.length!==0&&sw++;
+    //     if(sw===1){
     
-            var arrayTemp=menuArray.filter(item=>item!==menu);
-            setMenuArray(arrayTemp);
-            var dummyTemp=dummyOriginal.filter(item=>item.category===menu);
-            // var dummy2=dummy
-            //console.log(dummy)
-            // setDummy([...dummy,dummyTemp]) 최상단에서 넘겨준 dummy라 스프레드 안됨.
-            // setDummy(dummy,dummy2)
-            var dummyTemp2=dummy.concat(dummyTemp)
-            setDummy(dummyTemp2);
+    //         var arrayTemp=menuArray.filter(item=>item!==menu);
+    //         setMenuArray(arrayTemp);
+    //         var dummyTemp=dummyOriginal.filter(item=>item.category===menu);
+    //         // var dummy2=dummy
+    //         //console.log(dummy)
+    //         // setDummy([...dummy,dummyTemp]) 최상단에서 넘겨준 dummy라 스프레드 안됨.
+    //         // setDummy(dummy,dummy2)
+    //         var dummyTemp2=dummy.concat(dummyTemp)
+    //         setDummy(dummyTemp2);
             
-        }else{
-            setMenuArray([...menuArray,menu]);
-            //console.log(menuArray);
-            var dummyTemp=dummy.filter(item=>item.category!==menu);
-            //console.log(dummyTemp);
-            setDummy(dummyTemp);
-        }
-    }
+    //     }else{
+    //         setMenuArray([...menuArray,menu]);
+    //         //console.log(menuArray);
+    //         var dummyTemp=dummy.filter(item=>item.category!==menu);
+    //         //console.log(dummyTemp);
+    //         setDummy(dummyTemp);
+    //     }
+    // }
     return (
         <>
             {/* Content */}
@@ -191,19 +191,19 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                     display: item.checked ? 'block' : 'none',
                                 }}
                             >
-                                {/* <MenuList
+                                <MenuList
                                     item={item}
                                     dummy={dummy}
                                     setDummy={setDummy}
                                     setPictures={setPictures}
-                                ></MenuList> */}
-                                <MenuList2
+                                ></MenuList>
+                                {/* <MenuList2
                                     item={item}
                                     dummy={dummy}
                                     setDummy={setDummy}
                                     setPictures={setPictures}
                                     dataSetting={dataSetting}
-                                ></MenuList2>
+                                ></MenuList2> */}
                             </Co.FilterMenu>
                         </Co.FilterList>
                     ))}
