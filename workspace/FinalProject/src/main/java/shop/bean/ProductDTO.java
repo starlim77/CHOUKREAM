@@ -25,11 +25,6 @@ public class ProductDTO {
    @Column(name="seq", length = 30)
    private int seq;
    
-   @Column(name="img", nullable = false, length = 500)
-   private String img;
-
-   @Column(name="imgWeb", nullable = false, length = 500)
-   private String imgWeb;
    
    @Column(name="brand", length = 30)
    private String brand;
