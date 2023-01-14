@@ -5,13 +5,15 @@ import axios from 'axios';
 
 const MyPageMain = () => {
     const [member, setMember] = useState({})
+    const [point, setPoint] = useState()
 
     //회원정보 불러옴 / 회원 등급 불러옴
     useEffect(() => {
         axios.get(`http://localhost:8080/getMember?id=1`)
              .then(res => setMember(res.data))
 
-        // axios.get(`http://localhost:8080/getMember?id=1`)
+        axios.get(`http://localhost:8080/my/getHavePoint?id=starlim777@naver.com`)
+             .then(res => setPoint(res.data))
     }, [])
 
 
@@ -31,7 +33,7 @@ const MyPageMain = () => {
                         <S.Button>내 스타일</S.Button>
                     </S.ButtonWrapper>
                 </S.MiddleWrapper>
-                <S.RightWrapper>0 포인트</S.RightWrapper>
+                <S.RightWrapper>{point} 포인트</S.RightWrapper>
             </S.Top>
 
             {/* 구매 내역 */}

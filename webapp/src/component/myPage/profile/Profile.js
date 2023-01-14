@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import * as S from './ProfileStyle';
 
 const Profile = () => {
@@ -106,14 +106,13 @@ const Profile = () => {
         e.target.name === "sms" && setSmsOption(!smsOption)
         e.target.name === "email" && setEmailOption(!emailOption)
     }
-    useEffect(() => {
+
+    useMemo(() => {
         smsOption ? setSmsOptionNum(1) : setSmsOptionNum(0)
         emailOption ? setEmailOptionNum(1) : setEmailOptionNum(0)
     }, [smsOption, emailOption])
-    useEffect(() => {
-        console.log("smsOptionNum", smsOptionNum)
-        console.log("emailOptionNum", emailOptionNum)
 
+    useMemo(() => {
         axios.post(
             `http://localhost:8080/updateMarketingOption?email=${member.email}&smsOption=${smsOptionNum}&emailOption=${emailOptionNum}`,
         )
@@ -233,9 +232,10 @@ const Profile = () => {
                             checked={smsOption === true}
                             style={{ marginRight: '20px' }}
                             onClick={onMarketing}
+                            readOnly
                         />
                         수신거부
-                        <input type="checkbox" name='sms' checked={smsOption === false}  onClick={onMarketing}/>
+                        <input type="checkbox" name='sms' checked={smsOption === false}  onClick={onMarketing} readOnly/>
                     </S.CheckBox>
                     <S.CheckBox>
                         <S.CheckBoxText>이메일</S.CheckBoxText>
@@ -246,9 +246,10 @@ const Profile = () => {
                             checked={emailOption === true}
                             style={{ marginRight: '20px' }}
                             onClick={onMarketing}
+                            readOnly
                         />
                         수신거부
-                        <input type="checkbox" name="email" checked={emailOption === false} onClick={onMarketing}/>
+                        <input type="checkbox" name="email" checked={emailOption === false} onClick={onMarketing} readOnly/>
                     </S.CheckBox>
                 </S.Unit>
             </S.Bottom>

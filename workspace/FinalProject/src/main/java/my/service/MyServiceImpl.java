@@ -51,7 +51,11 @@ public class MyServiceImpl implements MyService{
 	public void changePoint(PointDTO pointDTO) {
 		pointDAO.save(pointDTO);
 	}
+	@Override
+	public List<AddressDTO> deleteAddress(String id, long seq) {
+		addressDAO.deleteByIdAndSeq(id, seq);
+		
+		return addressDAO.findAddressDTOsByIdOrderByDefaultAddressDesc(id);
+	}
 
-	
-	
 }

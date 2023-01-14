@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-
+import jakarta.transaction.Transactional;
 import my.bean.AddressDTO;
 
 public interface AddressDAO extends JpaRepository<AddressDTO, Long> {
@@ -15,4 +15,7 @@ public interface AddressDAO extends JpaRepository<AddressDTO, Long> {
 	Optional<AddressDTO> findByIdAndDefaultAddress(String id, int i);
 
 	List<AddressDTO> findAddressDTOsByIdOrderByDefaultAddressDesc(String id);
+
+	@Transactional
+	Optional<AddressDTO> deleteByIdAndSeq(String id, long seq);
 }

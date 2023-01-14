@@ -17,5 +17,7 @@ public interface MyService {
 	public void changePoint(PointDTO pointDTO);
 	
 	public Optional<AddressDTO> getDefaultAddress(String id);
-	
+
+	public List<AddressDTO> deleteAddress(String id, long seq);
+
 }

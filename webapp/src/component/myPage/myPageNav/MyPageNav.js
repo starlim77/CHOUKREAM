@@ -1,5 +1,5 @@
-import React, { useReducer } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useReducer, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import * as S from './MyPageNavStyle';
 
 const initialState = '';
@@ -65,14 +65,19 @@ const fontReducer = (state, action) => {
     }
 };
 const MyPageNav = () => {
+    const location = useLocation();
+    const [id, setId] = useState()
     const [clickedContent, dispatch] = useReducer(reducer, initialState);
     const [fontStyle, fontDispatch] = useReducer(fontReducer, fontInitialstate);
 
-    const onclick = e => {
-        const { id } = e.target;
+    useEffect(() => {
+        setId(location.pathname.split("/")[2].toUpperCase())
+    }, [location])
+
+    useEffect(() => {
         dispatch({ type: id });
         fontDispatch({ type: id });
-    };
+    }, [id])
 
     return (
         <>
