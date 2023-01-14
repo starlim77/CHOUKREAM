@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
+import lookbook.bean.LikesDTO;
 import lookbook.bean.StyleCommentDTO;
 import lookbook.bean.StyleDTO;
 import lookbook.bean.StyleLikesDTO;
+import lookbook.dao.StyleFileDAO;
 import lookbook.service.StyleCommentService;
 import lookbook.service.StyleFollowingService;
 import lookbook.service.StyleLikesService;
@@ -62,7 +64,7 @@ public class styleController {
 	//내 id를 들고가서 내 게시글만 뿌리기    @AuthenticationPrincipal
 	@GetMapping(path="findAllMyList/{id}")
 	public List<StyleDTO> findAllMyList(@PathVariable String id) {
-		System.out.println(id);
+		System.out.println(id + " 아이디받기----------------------");
 		//좋아요조회 styleService.findLikes(id,style_seq);
 		return styleService.findAllMyList(id);
 	}
@@ -111,35 +113,33 @@ public class styleController {
 	
 
 	
-	//좋아요
+	//좋아요 포함 전체 리스트 받아오기
     @PostMapping(path="likebutton")
-    public void likes(@ModelAttribute StyleLikesDTO styleLikesDTO, @RequestParam boolean isLike) { //1,0값 받는거 추가 void로 형태 변환
-    	System.out.println("컨트롤러 styleLikesDTO ==== "+ styleLikesDTO);
-    	System.out.println("isLike ===="+isLike);
+    public List<LikesDTO> likes(@ModelAttribute StyleLikesDTO styleLikesDTO, @RequestParam boolean isLike) { //1,0값 받는거 추가 void로 형태 변환
     	
     	styleLikesService.save(styleLikesDTO, isLike);
- 
-    	/*
     	
-    	if(1,0)받는값 === 1){
-    		테이블 delete해주는 메소드 생성
-    	}else{
-    		테이블 insert해주는 메소드 생성
-    	}
-    	
-    	*/
+    	return styleLikesService.findLikes(Long.toString(styleLikesDTO.getMemberId()));
+  
 
     }
     
     //좋아요 확인
     @GetMapping(path="findLikes")
-    public List<StyleLikesDTO> findLikes(@RequestParam String id) {
+    public List<LikesDTO> findLikes(@RequestParam String id) {
     	//System.out.println("컨트롤러 조아요 확인 styleLikesDTO ==== "+ styleLikesDTO);
     	return styleLikesService.findLikes(id);
 
     }
-
     
+    //보드등록시 상품검색하기
+	@GetMapping(value="search")
+	public void search(@RequestParam Map<String, String> map){ //searchOption, keyword
+//		System.out.println(map);  //진짜오는지 찍어보기
+//		return userService.search(map);
+		
+	}
+	
 //댓글
     
 	//상세에서 댓글 등록기능

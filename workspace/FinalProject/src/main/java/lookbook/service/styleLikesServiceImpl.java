@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lookbook.bean.LikesDTO;
 import lookbook.bean.StyleDTO;
 import lookbook.bean.StyleLikesDTO;
 import lookbook.dao.StyleDAO;
@@ -31,26 +32,10 @@ public class styleLikesServiceImpl implements StyleLikesService {
 	
 	 //좋아요 했는지 찾기
 	 @Override
-	 public List<StyleLikesDTO> findLikes(String id) {
-//			Long memberId = styleLikesDTO.getMemberId();				
-//			int styleSeq = styleLikesDTO.getStyleSeq();
-			 
-		 // 저장된 좋아요가 없다면 false , 있다면 true // 게시물 seq와 로그인아이디를 같이 가져가서 조회
-//	        Optional<StyleLikesEntity> findLikes = styleLikesDAO.findByMemberDto_IdAndStyleEntity_Seq(memberId, styleSeq);
-	       
-//	        if (findLikes.isEmpty()){
-//	            return false;
-//	        }else {
-//	            return true;
-//	        }
-		 List<StyleLikesEntity> styleEntityList = styleLikesDAO.findByMemberDto_Id(id);
-	     List<StyleLikesDTO> styleLikesDTOList = new ArrayList<>();
-	     
-	      for (StyleLikesEntity styleEntity: styleEntityList) {
-	         styleLikesDTOList.add(StyleLikesDTO.toStyleLikesDTO(styleEntity));
-	      }
-		 
-		 return styleLikesDTOList;
+	 public List<LikesDTO> findLikes(String id) {		 
+		 List<LikesDTO> likesDTOList= styleDAO.findLikes(id);
+		 //System.out.println("라이크서비스임플 likesDTOList === " + likesDTOList);		 
+		 return likesDTOList;
 
     }
 

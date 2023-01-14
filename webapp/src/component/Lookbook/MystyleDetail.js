@@ -6,11 +6,11 @@ import { Avatar, Button, CardActions, CardHeader, Dialog, DialogActions, DialogC
 import Container from '@mui/material/Container';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import * as S from './style';
+import MyPhoto from './MyPhoto';
 
 const MystyleDetail = () => {
     const { id } = useParams();  //주소값 파라미터 seq id가져오기
     const [commentOpen, setCommentOpen] = useState(false)
-    const [isLike, setIsLike] = useState();
 
     //좋아요 전체 리스트
     const [likeAll, setLikeAll] = useState([]);
@@ -27,19 +27,20 @@ const MystyleDetail = () => {
     // })  
 
     useEffect( ()=> {
-        axios.get(`http://localhost:8080/lookbook/findAllMyList/${id}`)
-             .then(res => setList(res.data))
+        // axios.get(`http://localhost:8080/lookbook/findAllMyList/${id}`)
+        //      .then(res => setList(res.data))
 
-             .then(
+        //      .then(
                 
                 axios.get(`http://localhost:8080/lookbook/findLikes?id=${id}`)
                     .then(
-                          res => setLikeAll(res.data)
+                        //  res=> console.log(res.data)
+                        res => setLikeAll(res.data)  
                     )
                     .catch(error => console.log(error))
 
-             )
-             .catch(error => console.log(error))
+            //  )
+            //  .catch(error => console.log(error))
 
         //좋아요 여부 보여주기
         //  axios.get(`http://localhost:8080/lookbook/findLikes?memberId=${id}&styleSeq=${seq}`)
@@ -47,27 +48,65 @@ const MystyleDetail = () => {
         //       .catch(error => console.log(error))
     }, []) 
 
+    useEffect(()=>{
+
+    },[])
    
  
     //좋아요 클릭
-    const onLikes = (e,seq) => {
+    const onLikes = (e,seq,checkLike,index) => {
         e.preventDefault();
-        console.log(seq, id , isLike )
+        checkLike = checkLike === 'false' ? false : true
         
-        // setLikesForm({...likesForm });  
+        //console.log(seq, id , checkLike , index )
+        
+        // setIsLike()
 
-        axios.post('http://localhost:8080/lookbook/likebutton?styleSeq='+seq+'&memberId='+id+"&isLike="+isLike) //1, 0  같이 보내준다
-            .then(  setIsLike(!isLike) )
+        axios.post('http://localhost:8080/lookbook/likebutton?styleSeq='+seq+'&memberId='+id+"&isLike="+checkLike) //1, 0  같이 보내준다
+            .then(res => setLikeAll(res.data) )
             .catch(error => console.log(error))
     }
+
+    // const onfilter = (seq) => {
+    //     likeAll.filter(item => item.seq === seq)
+    // }
+
+    const photoShop1 = (storedImg) => {
+        const img = ((storedImg).split(','))
+        return img[0]
+    }
+
+    const photoShop2 = (storedImg) => {
+        const img = ((storedImg).split(','))
+        return img[1]
+    }
+
+    const photoShop3 = (storedImg) => {
+        const img = ((storedImg).split(','))
+        return img[2]
+    }
+
+    const photoShop4 = (storedImg) => {
+        const img = ((storedImg).split(','))
+        return img[3]
+    }
+
+    const photoShop5 = (storedImg) => {
+        const img = ((storedImg).split(','))
+        return img[4]
+    }
+
+        
+
 
 
     return (
         <div>
+            {console.log(likeAll )}
             <Container fixed>
                 <S.DeTopDiv> {/* outer */}
                 {
-                    list.map((item, index) => {
+                    likeAll.map((item, index) => {
                         return (
                              <S.DeDiv key={index}>  
                                 <Card >
@@ -77,7 +116,7 @@ const MystyleDetail = () => {
                                             <CardHeader
                                                 avatar={ <Avatar> 프로필</Avatar> }
                                                 title={item.id}
-                                                subheader={item.logtime}
+                                                subheader={item.logTime}
                                             /> 
                                         </S.MyDeprofile>
                                         
@@ -94,15 +133,25 @@ const MystyleDetail = () => {
                                    
 
                                    <S.MyStdiv>
-                                        {
+                               
+                                    <img src={`/storage/${photoShop1(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />
+                                    {photoShop2(item.stored_file_name) && <img src={`/storage/${photoShop2(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                                    {photoShop3(item.stored_file_name) && <img src={`/storage/${photoShop3(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                                    {photoShop4(item.stored_file_name) && <img src={`/storage/${photoShop4(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                                    {photoShop5(item.stored_file_name) && <img src={`/storage/${photoShop5(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                                   {/* <MyPhoto seq={item.seq} />        */}
+
+                                        {/* {
                                             item.storedFileName.map( (item, index) => (
                                                 <p key={index} >
                                                     <img src={'/storage/'+item} alt='list사진' style={{width:'100%'}} />
                                                 </p>
                                             ))
-                                        }
+                                        } */}
                                     </S.MyStdiv>
                                     글번호: {item.seq}
+
+                                    
                                 
                                     <S.MyStContent>
                                         {item.content}
@@ -112,26 +161,13 @@ const MystyleDetail = () => {
                                     <CardActions >   
                                         
                                  
-                                        <IconButton aria-label="add to favorites" onClick={(e) => onLikes(e, item.seq ,index)} >
+                                        <IconButton aria-label="add to favorites" onClick={(e) => onLikes(e, item.seq ,item.islikes,index)} >
                                             
-                                            {/* {
-                                                likeAll.filter((fix) => item.seq === fix.styleSeq & id === fix.memberId) ? '/image/style/likes.png' : '/image/style/likes.png'
-                                            }
-
-
-                                            <img src={ item.likesCount === 0 ?  '/image/style/likes.png'  : '/image/style/likes.png'   }
-                                                 style={{ width:'28px'}}
-                                                 /> */}
-
-                                            {/* <img src={ likeAll.filter((fix) => item.seq === fix.styleSeq).filter((fix) => id === fix.memberId) ? '/image/style/likes.png':'/image/style/unlikes.png'}
-                                                 style={{ width:'28px'}}
-                                                 /> */}
-
-                                            {/* <img src={ likeAll.seq === item.seq ? '/image/style/likes.png' : '/image/style/unlikes.png'} style={{ width:'28px'}} /> */}
-                                            <img src={ '알아서 해주시겠죠?'} style={{ width:'28px'}} />
-                                            
+                                            <img src={  item.islikes === "false"  ? '/image/style/unlikes.png' : '/image/style/likes.png' } style={{ width:'28px'}} />
+                                           
                                         </IconButton>
-                                        <span>{item.likesCount}</span>
+                                        
+                                        <span>{item.likes_count}</span>
 
 
                                         <IconButton onClick={()=>{setCommentOpen(true)}}>

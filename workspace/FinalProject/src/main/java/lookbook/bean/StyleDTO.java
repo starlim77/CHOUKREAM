@@ -42,6 +42,8 @@ public class StyleDTO {
 	private int commentCount;
 	
 	private int likesCount;
+	
+	private int productSeq;
 
 	
 	public static StyleDTO toStyleDTO(StyleEntity styleEntity) {
