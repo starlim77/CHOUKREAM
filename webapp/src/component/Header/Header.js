@@ -29,11 +29,15 @@ const Header = () => {
                         <S.TopLi><Link to="/my/"> 마이페이지</Link></S.TopLi>
                         <S.TopLi>
                             <Link to="/login">로그인</Link>
+                            <Link to="/logout">로그아웃</Link>
                         </S.TopLi>
                     </S.TopWrapper>
                 </S.Top>
                 <S.Bottom>
-                    <S.BottomImg src="/image/logo.png" />
+                    <Link to="/">
+                        <S.BottomImg src="/image/logo.png" />
+                    </Link>
+
                     <S.BottomWrapper>
                         <S.BottomLi active={true}>STYLE</S.BottomLi>
                         <S.BottomLi>

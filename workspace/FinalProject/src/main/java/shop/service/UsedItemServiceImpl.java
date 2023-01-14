@@ -47,9 +47,8 @@ public class UsedItemServiceImpl implements UsedItemService {
 
 
 	@Override
-	public UsedItemLikeDTO itemLike(int seq, String id) {
-
-		return usedItemLikeDAO.itemLike(seq,id);
+	public UsedItemLikeDTO itemLike(UsedItemLikeDTO usedItemLikeDTO) {
+		return usedItemLikeDAO.itemLike(usedItemLikeDTO.getSeq(),usedItemLikeDTO.getId(),usedItemLikeDTO.getShopKind());
 	}
 
 
@@ -60,22 +59,34 @@ public class UsedItemServiceImpl implements UsedItemService {
 		if(usedItemLikeDTO.getUserLike()) {
 			System.out.println("좋아요 ++");
 			usedItemLikeDAO.save(usedItemLikeDTO);
-			usedItemDAO.likeUp(usedItemLikeDTO.getSeq());
-			
 		}else {
 			System.out.println("좋아요 --");
-			usedItemLikeDAO.deleteBySeqAndId(usedItemLikeDTO.getSeq(),usedItemLikeDTO.getId());
-			usedItemDAO.likeDown(usedItemLikeDTO.getSeq());
+			usedItemLikeDAO.deleteBySeqAndIdAndShopKind(usedItemLikeDTO.getSeq(),usedItemLikeDTO.getId(),usedItemLikeDTO.getShopKind());
 		}
 		
-		System.out.println("오긴왔나");
 	}
 
 
 	@Override
 	public void deleteItem(int seq) {
-		usedItemDAO.deleteItem(seq);
-		//usedItemDAO.deleteById(seq);
+//		usedItemDAO.deleteItem(seq);
+		usedItemDAO.deleteById(seq);
+	}
+
+
+	@Override
+	public void usedlike(UsedItemLikeDTO usedItemLikeDTO) {
+		if(usedItemLikeDTO.getUserLike()) {
+			usedItemDAO.likeUp(usedItemLikeDTO.getSeq());
+		}else {
+			usedItemDAO.likeDown(usedItemLikeDTO.getSeq());
+		}
+	}
+
+
+	@Override
+	public void updateItem(UsedItemDTO usedItemDTO) {
+		usedItemDAO.save(usedItemDTO);
 	}
 	
 

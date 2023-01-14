@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as S from '../style';
 
 const CompletedOrderTable = ({completedOrderForm}) => {
@@ -7,6 +7,7 @@ const CompletedOrderTable = ({completedOrderForm}) => {
         var b = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate()
         return b
     }
+
 
     return (
         <S.Table>

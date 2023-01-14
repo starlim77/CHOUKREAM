@@ -1,8 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Li from './NewListStyle';
+import NewProductList from './NewProductList';
 import Pagination from './Pagination';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { relativeTimeRounding } from 'moment/moment';
 
 const NewList = () => {
     const [newProductList, setNewProductList] = useState([]);
@@ -10,16 +14,37 @@ const NewList = () => {
     const getNewProductList = () => {
         axios
             .get('http://localhost:8080/shop/getNewProductList')
+            // .then(res =>( setNewProductList(res.data), console.log(newProductList)))
+            // .then(res =>( setNewProductList(res.data), setNewProductList([...newProductList, { isChecked: false }])))
+            // .then(res =>( setNewProductList(res.data), setNewProductList([{...newProductList, isChecked:false}])))
             .then(res => setNewProductList(res.data))
+            // .then(setNewProductList([{ ...newProductList, isChecked: false }]))
+            // .then(setNewProductList({...newProductList, [isChecked]: false}))
             .catch(error => console.log(error));
         //.then(res => console.log(JSON.stringify(res.data)))
     };
     useEffect(() => {
         getNewProductList();
-        newProductList.map(item => setNewProductList({...item, isChecked: false}))
-        setNewProductList([ ...newProductList]);  
-        console.log(newProductList);
+        // setNewProductList([{...newProductList, [isChecked]: false}])
+        // setNewProductList([...newProductList, { isChecked: false }]);
+        // console.log('ㅠㅠ ' + newProductList[0])
+        // console.log('ㅠㅠ ' + newProductList)
+        // 자꾸 유니크 키가 없다고함 키줬는데
+        // return () => {
+        //     console.log('NewList 컴포넌트가 화면에서 사라짐');
+        // };
+
+        // console.log('렌더링 1');
     }, []);
+
+    // console.log(newProductList)
+    var copy_newProductList = [];
+    newProductList.map(item => {
+        copy_newProductList.push({ ...item, isChecked: false });
+    });
+    // console.log(copy_newProductList)
+
+    // console.log(newProductList[0])
 
     // useEffect(() => {
     //     newProductList.map(item =>
@@ -38,39 +63,27 @@ const NewList = () => {
         if (isChecked) {
             checkedItems.add(id);
             setCheckedItems(checkedItems);
+            console.log('checkItems add ' + checkedItems);
             //체크됐을 경우, 요소를 Set에 추가되도록 setCheckedItems를 활용해 add시킴
         } else if (!isChecked && checkedItems.has(id)) {
             checkedItems.delete(id);
             setCheckedItems(checkedItems);
+            console.log('checkItems delete ' + checkedItems);
         }
         // 체크되지 않았을 경우, 선택됐던 것이 해제된 것이라면 checkItems에서 delete함
     };
 
-    const [checked, setChecked] = useState(false);
-    const checkHandler = e => {
-        // console.log("seq " +newProductList[0].seq);
-        // newProductList.seq == e.target.id && setNewProductList({...newProductList, isChecked: true})
-
-        // newProductList.map(item => {
-        //     item.seq === e.target.id &&
-        //         setNewProductList([{ ...newProductList, isChecked: true }]);
-        //     // console.log(newProductList);
-        // });
-
-        // newProductList.map(item)
-        setChecked(!checked);
-        //console.log('e.target.key ' + e.target.value);
-        // console.log('e.target.checked ' + target.checked);
-        // 조건식 && set()
-
-        console.log('e.target.id ' + e.target.id);
-        console.log('e.target.checked ' + e.target.checked);
-        checkedItemHandler(e.target.id, e.target.checked);
-    };
-
+    // 전체 체크
     const [isAllChecked, setIsAllChecked] = useState(false);
     const allCheckedHandler = isChecked => {
         console.log('allCheckedHandler isChecked ' + isChecked);
+        setIsAllChecked(!isAllChecked);
+        // copy_newProductList.map 돌려서 isChecked 전부 바꾸기
+        newProductList.map((item, index) => {
+            copy_newProductList[index].isChecked = true;
+            console.log(copy_newProductList);
+        });
+        //javascript 객체 배열 속성 바꾸기 https://blogpack.tistory.com/655
 
         if (isChecked) {
             setCheckedItems(new Set(newProductList.map(({ id }) => id)));
@@ -81,53 +94,166 @@ const NewList = () => {
             setIsAllChecked(false);
         }
     };
-    const allCheckHandler = () => setChecked(isAllChecked);
-    useEffect(() => allCheckHandler(), [isAllChecked]);
+    // const allCheckHandler = () => {
+
+    // }
+    // useEffect(() => allCheckHandler(), [isAllChecked]);
+    // useEffect(() => {
+
+    // },[isAllChecked])
+
+    const [checked, setChecked] = useState(false);
+    const [checkedId, setCheckedId] = useState(0);
+
+    const navigate = useNavigate();
+
+    const newProductDelete = () => {
+        // isChecked true 인 애들만
+        // id를 보내야함
+        // console.log(typeof checkedId + 'ㄴㅇㅎㄴㅇㅎㄴㅇㅎㄴㅇ');
+        // console.log(checkedId + 'ㄴㅇㅎㄴㅇㅎㄴㅇㅎㄴㅇ');
+        // axios.delete('http://localhost:8080/shop/delete?id=' + checkedId)
+        axios
+            .delete(`http://localhost:8080/shop/delete?seq=${checkedId}`)
+            .then(alert('새상품 삭제 완료'))
+            .catch(error => console.log(error));
+
+        navigate('/admin/newList');
+        window.location.reload();
+    };
+    const [disabledCheck, setDisabledCheck] = useState(true);
+
+    const [keyword, setKeyword] = useState('');
+    const [searchOption, setSearchOption] = useState('브랜드');
+    const onSearch = e => {
+        // get select
+        e.preventDefault();
+        axios
+            .get('http://localhost:8080/shop/search', {
+                // get방식은 2번째 인자에 null 안써줘도된다
+                params: {
+                    searchOption: searchOption,
+                    keyword: keyword,
+                },
+            })
+            .then(res => setNewProductList(res.data))
+            .catch(error => console.error(error));
+    };
+
+    const [searchBtn, setSearchBtn] = useState(false);
 
     return (
         <>
-            {/* <Li.MenuBtn>
-                <Link to={''}>Update</Link>
-            </Li.MenuBtn>
-            <Li.MenuBtn>
-                <Link to={''}>Delete</Link>
-            </Li.MenuBtn> */}
-            <Li.Title>새 상품 목록</Li.Title>
-            <Li.Label>
-                페이지 당 표시할 상품 개수:&nbsp;
-                <Li.Select
-                    type="number"
-                    value={limit}
-                    onChange={({ target: { value } }) =>
-                        setLimit(Number(value))
+            <Li.MenuBtn
+                disabled={disabledCheck}
+                style={{ backgroundColor: disabledCheck ? '' : '#fce205' }}
+            >
+                {/* <Link 
+                    to={{pathname:'/admin/newUpdate',
+                    state: {
+                        name: '현욱',
+                        checkedId: checkedId,
                     }
+                }}>Update</Link> */}
+                {/* <Link
+                    to={{
+                        pathname: '/admin/newUpdate',
+                        state: {
+                            name: '현욱',
+                            checkedId: checkedId,
+                        },
+                    }}
                 >
-                    <Li.Option value="5">5</Li.Option>
-                    <Li.Option value="10">10</Li.Option>
-                    <Li.Option value="15">15</Li.Option>
-                    <Li.Option value="20">20</Li.Option>
-                    <Li.Option value="20">25</Li.Option>
-                    <Li.Option value="20">30</Li.Option>
-                </Li.Select>
-            </Li.Label>
-            {/* {console.log("리미트 뭐니 " + limit)} */}
+                    Update
+                </Link> */}
+                <Link
+                    to={'/admin/newUpdate'}
+                    state={{ name: '현욱', checkedId: checkedId }}
+                    style={{
+                        textDecoration: 'none',
+                        pointerEvents: disabledCheck ? 'none' : '',
+                    }}
+                >
+                    {/* pointerEvents: 'none' Link 태그 버튼 고장내는거거 */}
+                    Update
+                </Link>
+            </Li.MenuBtn>
+            <Li.MenuBtn
+                onClick={newProductDelete}
+                disabled={disabledCheck}
+                style={{ backgroundColor: disabledCheck ? '' : '#fce205' }}
+            >
+                Delete
+            </Li.MenuBtn>
+            <Li.MenuBtn
+                onClick={() => setSearchBtn(!searchBtn)}
+                style={{ backgroundColor: searchBtn ? '#fce205' : '' }}
+            >
+                <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    style={{
+                        margin: '3px',
+                    }}
+                />
+            </Li.MenuBtn>
+            <Li.Title>새 상품 목록</Li.Title>
 
+            <Li.SearchDiv style={{ display: searchBtn ? '' : 'none' }}>
+                <Li.SearchForm id="searchForm">
+                    <Li.SearchSelect
+                        name="searchOption"
+                        onChange={e => setSearchOption(e.target.value)}
+                    >
+                        <Li.SearchOption value="brand">brand</Li.SearchOption>
+                        <Li.SearchOption value="category">
+                            category
+                        </Li.SearchOption>
+                    </Li.SearchSelect>
+                    &nbsp; &nbsp;
+                    <Li.SearchInput
+                        type="text"
+                        name="keyword"
+                        value={keyword}
+                        onChange={e => setKeyword(e.target.value)}
+                    ></Li.SearchInput>
+                    &nbsp; &nbsp;
+                    <Li.SearchBtn>검색</Li.SearchBtn>
+                    {/* onClick={onSearch} */}
+                </Li.SearchForm>
+            </Li.SearchDiv>
+            <Li.LabelDiv>
+                <Li.Label>
+                    페이지 당 표시할 상품 개수:&nbsp;
+                    <Li.Select
+                        type="number"
+                        value={limit}
+                        onChange={({ target: { value } }) =>
+                            setLimit(Number(value))
+                        }
+                    >
+                        <Li.Option value="5">5</Li.Option>
+                        <Li.Option value="10">10</Li.Option>
+                        <Li.Option value="15">15</Li.Option>
+                        <Li.Option value="20">20</Li.Option>
+                        <Li.Option value="20">25</Li.Option>
+                    </Li.Select>
+                </Li.Label>
+            </Li.LabelDiv>
             <Li.Table>
                 <Li.Thead>
                     <Li.Tr>
                         <Li.Th style={{ width: '200px' }}>
-                            <Li.Input
+                            {/* <Li.Input
                                 type="checkbox"
-                                checked={checked}
+                                checked={isAllChecked}
                                 // checked={isChecked} 로 바꾸면됨
                                 // 객체 속성으로 ischecked 추가 하기 
                                 onChange={e =>
                                     allCheckedHandler(e.target.checked)
                                 }
-                            ></Li.Input>
+                            ></Li.Input> */}
                         </Li.Th>
                         <Li.Th>seq</Li.Th>
-                        <Li.Th>id</Li.Th>
                         <Li.Th>이미지 </Li.Th>
                         <Li.Th>brand</Li.Th>
                         <Li.Th>category</Li.Th>
@@ -140,40 +266,26 @@ const NewList = () => {
                         <Li.Th>title</Li.Th>
                         <Li.Th>subTitle</Li.Th>
                     </Li.Tr>
-                </Li.Thead> 
+                </Li.Thead>
                 <Li.Tbody>
-                    {/* map 오류 뜰때 && 연산자 씀으로 list가 있을때만 돌릴수 있다 */}
-                    {newProductList.slice(offset, offset + limit).map((item, index) => (
-                        <Li.Tr key={index}>
-                            <Li.Td style={{ width: '200px' }}>
-                                <Li.Input
-                                    type="checkbox"
-                                    checked={checked}
-                                    id={item.seq}
-                                    onChange={e => checkHandler(e)}
-                                ></Li.Input>
-                            </Li.Td>
-                            <Li.Td>{item.seq}</Li.Td>
-                            <Li.Td>{item.id}</Li.Td>
-                            {/* <Li.Td>{item.imgName}</Li.Td> */}
-                            {/* 이게 이미지 주소 */}
-                            <Li.Td>
-                                <Li.SmallImg
-                                    src={`/newProductList/${item.imgName}`}
-                                ></Li.SmallImg>
-                            </Li.Td>
-                            <Li.Td>{item.brand}</Li.Td>
-                            <Li.Td>{item.category}</Li.Td>
-                            <Li.Td>{item.categoryDetail}</Li.Td>
-                            <Li.Td>{item.color}</Li.Td>
-                            <Li.Td>{item.modelNum}</Li.Td>
-                            <Li.Td>{item.price}</Li.Td>
-                            <Li.Td>{item.releaseDate}</Li.Td>
-                            <Li.Td>{item.registerProductDate}</Li.Td>
-                            <Li.Td>{item.title}</Li.Td>
-                            <Li.Td>{item.subTitle}</Li.Td>
-                        </Li.Tr>
-                    ))}
+                    {copy_newProductList
+                        .slice(offset, offset + limit)
+                        .map(item => (
+                            <NewProductList
+                                key={item.seq}
+                                newProductList={newProductList}
+                                copy_newProductList={copy_newProductList}
+                                item={item}
+                                offset={offset}
+                                limit={limit}
+                                checked={checked}
+                                setChecked={setChecked}
+                                checkedId={checkedId}
+                                setCheckedId={setCheckedId}
+                                disabledCheck={disabledCheck}
+                                setDisabledCheck={setDisabledCheck}
+                            ></NewProductList>
+                        ))}
                 </Li.Tbody>
             </Li.Table>
 

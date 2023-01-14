@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import shop.dao.ProductSizeRepository;
 import shop.dao.ShopDAO;
+import shop.bean.NewProductDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
 
@@ -37,12 +38,18 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public List<ProductSizeDTO> findBySeq(int seq) {
-		return sizeRepository.findBySeq(seq);
-	}
 	public List<ProductDTO> getShoesList(String shoes) {
 		return shopDAO.findProductDTOsByCategory(shoes);
 	}
+
+	@Override
+	public void delete(int seq) {
+		shopDAO.deleteBySeq(seq);
+	}
+	public List<ProductSizeDTO> findBySeq(int seq) {
+		return sizeRepository.findBySeq(seq);
+	}
+
 
 	
 }

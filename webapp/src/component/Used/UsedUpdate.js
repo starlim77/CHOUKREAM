@@ -3,23 +3,20 @@ import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import * as S from './styleWrite';
+import * as U from './UsedItemStyle';
 import tagData from './TagItem';
 
 const UsedUpdate = () => {
+        const navigate = useNavigate();
         //참고자료 https://curryyou.tistory.com/477
         // 1. useLocation 훅 취득
+        //UsedItem내에 있는 UpdateBtnModal에서 navigate로 보낸 데이터들 받는 작업
         const location = useLocation();
 
-        // 2. location.state 에서 파라미터 취득
-        const seq = location.state.seq;
-        const writer = location.state.writer;
-
-
-
-        const navigate = useNavigate();
         const[form,setForm] = useState({
             id:'홍헌',
             title : '',
+            imgName:'',
             productName : '',
             kind : '',
             size : '',
@@ -30,21 +27,49 @@ const UsedUpdate = () => {
             //배열은 데이터 보낼 때 배열로 안보내고 리액트 내에서 Stringify하면 문자열로 보낼 수 있다.
             //데이터를 받아오고 나서는 parse로 데이터를 풀어주면 된다.
         })
-    
+        const {title , imgName, productName , kind , size , price , contents , hashTag} = form
+        const [subImg,setSubImg] = useState([]);
+         // 2. location.state 에서 파라미터 취득
+         const seq = location.state.seq;
+         const writer = location.state.writer;
+         const imgNameSend=location.state.imgNameSend;
+        
+        const[num,setNum]=useState('');
+        useEffect(()=>{
+            axios.get("http://localhost:8080/used/viewItem",{params:{seq:seq}})
+                .then(res=>setForm(res.data))
+                .then(res=>{var img = (imgNameSend).split(',');
+                        var img2=img.map(item=>"/storage/"+item);
+                        setSubImg(img2);} )
+                .catch(err=>console.log(err))
+
+            
+           
+        },[])
+       
+        //hash태그가 인코딩 되어서 들어갔기 때문에 decode를 먼저해서 해석을 해줌
+        useEffect(()=>{
+
+            var decoding= decodeURI(form.hashTag).split(',');
+            setForm({
+                ...form,
+                hashTag: decoding});
+            
+            //form이 바뀌는 걸로 설정하면 무한 루프도니까 한 번만 돌게 form.title사용
+        },[subImg])
         const [hashTag2,setHashTag2] = useState()
     
         const [count,setCount] = useState(0)
     
-        const {title , productName , kind , size , price , contents , hashTag} = form
         
         const onInput = (e) => {
+            console.log(hashTag);
             const {name,value} = e.target
        
             setForm({
                 ...form,
                 [name] : value
             })
-    
         }
     
         const onHash = () => {
@@ -73,7 +98,7 @@ const UsedUpdate = () => {
                 ...form
             })
     
-            console.log(form)
+            console.log("해쉬부르기"+form)
         }
     
     
@@ -81,12 +106,10 @@ const UsedUpdate = () => {
         const onWrite = (e) =>{
             e.preventDefault()
     
-           
-    
-            
             var sw = 1
-            file[0]||--sw&&alert("이미지 파일을 등록해주세요");
            
+
+
             if(!title){
                 sw=0
             }else if(kind === '상품 종류' || !kind){
@@ -95,150 +118,64 @@ const UsedUpdate = () => {
                 sw=0
             }
         
-            var formData=new FormData();
-            file.map(files=>formData.append('img',files));
+            if(sw===0){
+                alert("필수 항목을 입력해주세요")
+            }
             
             if(sw == 1) {
-               // axios.post('http://localhost:8080/used/writeItem',null,({params:{
-                axios.post('http://localhost:8080/used/upload',formData,({params:{
+                axios.put('http://localhost:8080/used/updateItem','',({params:{
                    ...form,
                     hashTag : encodeURI(form.hashTag)
                 }}))
                      .then(() => {
                         alert('글작성 완료')
                      })
+                     .then(navigate("/used/usedMain"))
                      .catch(error => console.log(error))
             }
     
-           navigate("/used/usedMain");
+           
             
         }
-    
-        // ---------------
-        const [subImg,setSubImg] = useState([]);
-    
-        const imgRef = useRef();
-    
-        const[file,setFile]= useState([]);
-    
-        const onSubImg = () => {
-            imgRef.current.click();
-        }
-        //const[forRendering,setForRendering]=useState('');
-        const[random,setRandom]=useState();
-    
-        const onImgRead = (e) => {
-    
-            //유효성 검사
-            //https://velog.io/@fxoco/image-input-%EC%9C%A0%ED%9A%A8%EC%84%B1-%EA%B2%80%EC%82%AC
-            let sw=0;
-            var fileForm = /(.*?)\.(jpg|jpeg|png|gif)$/;
-            Array.from(e.target.files).map(item=>item.name.match(fileForm)||++sw&&alert("'.jpeg, .jpg, .png, .gif ' 형식만 사용해주세요"));
-    
-            if(sw===0){
-            //이미지 세팅 함수 호출
-            addFile(e);
-            }
-            //push로 넣어줬기 때문에 별도의 렌더링이 되지 않는다
-            //따라서 onImgRead함수가 종료될 때 강제로 렌더링이 될 수 있도록 한다.
-            //굳이 Math.random을 사용하여 렌더링을 하는 이유는 렌더링 값이 기존 값과 같다면 렌더링이 되지 않기 때문이다. 
-           setRandom(Math.random);
-           //setForRendering(`${random}`); 
-           
-          
-            //동일한 파일을 넣어주는 경우에 발생하는 버그 방지
-           e.target.value='';
-        }
-        
-        const addFile=(e)=>{
-            //Array.from 사용 이유. 
-            //e.target.files는 배열의 형태처럼 보이긴 하나 실제 배열이 아니라서 배열형태로 만들어서 map을 돌리는 것이다.
-            //https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/types%20%26%20grammar/ch2.md#array-likes
-            Array.from(e.target.files).map((items,index)=>{
-                var urlTemp=window.URL.createObjectURL(items);
-               //var urlTemp=reader.readAsDataURL(items);
-               //var url=urlTemp.slice(5);
-               subImg.push({url:urlTemp});
-               
-               //setSubImg(urlTemp);
-                file.push(items);
-             })
-        }
+  
     
     
-        const deleteImg=(e)=>{
-            //console.log(e.target.getAttribute("id"));
-            var id=e.target.getAttribute("id");
-            
-            //https://forum.freecodecamp.org/t/how-to-filter-using-array-index-in-react/403524
-            //index값은 숫자인데 그냥 id값을 주면 id를 받아 문자열로 인식을 하기때문에 parseInt를 이용해 숫자로 바꿔준다. 
-            var imgTemp= subImg.filter((item,index)=>index!==parseInt(id));
-            var fileTemp = file.filter((item,index)=>index!==parseInt(id));
-            setSubImg([...imgTemp]);
-            setFile([...fileTemp]);
-            //console.log(file);
-           
-        }
-    
-        // const imgReading=(file)=>{
-        //     const reader = new FileReader();
-        //     reader.readAsDataURL(file);
-    
-        // //https://velog.io/@ckm960411/FileReader-%EB%A1%9C-%EC%97%AC%EB%9F%AC-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%8C%8C%EC%9D%BC-%EB%8F%99%EC%8B%9C%EC%97%90-%EC%B2%A8%EB%B6%80%ED%95%98%EA%B8%B0-NextReact-TypeScript
-        // //https://www.inflearn.com/questions/36091/foreach-call-%EC%A7%88%EB%AC%B8%EB%93%9C%EB%A6%BD%EB%8B%88%EB%8B%A4
-       
-        //     reader.onload=()=>{
-        //         setSubImg(reader.result);
-        //     }
-    
-        // }
-    
-    //읽어볼 자료.https://velog.io/@eeeve/React-07
         return (
             <>
-                
                 <S.WriteBody>
-                   
-                    <S.ImgBody>
-                        {/* 이미지 소스 이용방법 2가지 사용해봄 */}
-                        <S.MainImgP setPosition={subImg[0]?true:false}>
-                            <S.MainImg name='mainImg' sizing={subImg[0]?true:false} src={subImg[0]?subImg[0].url:`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg} alt={subImg[0]?subImg[0].url:"nothing"}></S.MainImg>
-                            <S.DeleteMainImg setPosition={subImg[0]?true:false} id="0" onClick={e=>deleteImg(e)}></S.DeleteMainImg>
+                    {/* <S.ImgBody>
+                        <S.MainImgP setPosition={true}>
+                            <S.MainImg name='mainImg' sizing={true} src={subImg[0]} alt={subImg[0]}></S.MainImg>
                         </S.MainImgP>
-                        <S.SubImgBody >
-                            <S.SubImgP setPosition={subImg[1]?true:false}>
-                                <S.SubImg sizing={subImg[1]?true:false} name='subImg1' src={subImg[1]?subImg[1].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
-                                <S.DeleteImg setPosition={subImg[1]?true:false} id="1" onClick={e=>deleteImg(e)}></S.DeleteImg>
-                            </S.SubImgP>
-                            <S.SubImgP setPosition={subImg[2]?true:false}>
-                                <S.SubImg sizing={subImg[2]?true:false} name='subImg2' src={subImg[2]?subImg[2].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
-                                <S.DeleteImg setPosition={subImg[2]?true:false} id="2"  onClick={e=>deleteImg(e)}></S.DeleteImg>
-                            </S.SubImgP>
-                            <S.SubImgP setPosition={subImg[3]?true:false}>
-                                <S.SubImg sizing={subImg[3]?true:false} name='subImg3' src={subImg[3]?subImg[3].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
-                                <S.DeleteImg setPosition={subImg[3]?true:false} id="3"  onClick={e=>deleteImg(e)}></S.DeleteImg>
-                            </S.SubImgP>
-                            
+
+                        <S.SubImgBody spacing={true} >
+                                {
+                                    subImg.map((items,index)=>index===0?'':
+                                        <S.SubImgP key={index} setPosition={true}>
+                                            <S.SubImg sizing={true} name='subImg'  src={subImg[index]} alt={subImg[index]} />
+                                        </S.SubImgP>
+                                    )
+                                    
+                                }
                         </S.SubImgBody>
-                        
-                        {/* https://blog.munilive.com/posts/input-file-type-accept-attribute.html
-                        파일 형식 제한은 accept이용.
-                        다만 업로드 하는 사람이 형식을 모든 파일로 받으면 다른 파일로 업로드가 가능해진다.
-                        유효성 검사 필요 */}
-                        <input type='file' name="img" style={{display: 'none'}} accept=".jpg,.png, .jpeg, .gif" onChange={ e=>onImgRead(e) } ref={imgRef} multiple></input>
-        
-                    </S.ImgBody>
+                    </S.ImgBody> */}
                   
+                <U.ImgBody>
+                    <U.MainImg src={subImg[0]}></U.MainImg>
+                    {subImg[1]&&<U.SmallImg src={subImg[1]}></U.SmallImg>}
+                    {subImg[2]&&<U.SmallImg src={subImg[2]}></U.SmallImg>}
+                    {subImg[3]&&<U.SmallImg src={subImg[3]}></U.SmallImg>}
+                </U.ImgBody>&emsp;
           
                     
                     <S.Information>
                         <S.Necessary>* 필수 입력</S.Necessary>
                         <S.Subject>* 제목</S.Subject>
-                        <S.Title type='text' name= 'title' onChange={ onInput }/>
+                        <S.Title type='text' name= 'title' value={title} onChange={ onInput }></S.Title>
     
     
                         <S.Subject> 상품 이름</S.Subject>
-                        <S.SubTitle type='text' name= 'productName' onChange={ onInput }/>
+                        <S.SubTitle type='text' name= 'productName' value={productName} onChange={ onInput }/>
     
     
                         <S.Necessary>* 필수</S.Necessary>
@@ -250,16 +187,16 @@ const UsedUpdate = () => {
                                     tagData.map(item => <S.ItemKindOption key={item.id}>{item.title}</S.ItemKindOption>)
                                 }
                             </S.ItemKind>
-                            <div><S.ItemSizeSpan>Size :</S.ItemSizeSpan><S.ItemSize type='text' name= 'size' onChange={ onInput } /></div>
+                            <div><S.ItemSizeSpan>Size :</S.ItemSizeSpan><S.ItemSize type='text' name= 'size' value={size} onChange={ onInput } /></div>
                         </S.ItemKindPriceDiv>
     
     
                         <S.Necessary>* 필수</S.Necessary>
                         <S.Subject > 가격</S.Subject>
-                        <S.PriceDiv><S.ItemPrice type='number' name= 'price' onChange={ onInput }/><S.ItemPriceSpan>원</S.ItemPriceSpan></S.PriceDiv>
+                        <S.PriceDiv><S.ItemPrice type='number' name= 'price' value={price} onChange={ onInput }/><S.ItemPriceSpan>원</S.ItemPriceSpan></S.PriceDiv>
     
                         <S.Subject> 제품 설명</S.Subject>
-                        <S.ItemContent name= 'contents' onChange={ onInput }/>
+                        <S.ItemContent name= 'contents' value={contents} onChange={ onInput }/>
     
     
                         <S.Subject> Hash Tag </S.Subject>

@@ -7,14 +7,20 @@ import member.bean.MemberDto;
 
 public interface MemberService {
 
-	Optional<MemberDto> getMember(String id);
+	Optional<MemberDto> getMember(Long id);
 
-	Optional<MemberDto> updateEmail(String id, String email);
+	Optional<MemberDto> updateEmail(Long id, String email);
 
 	Optional<MemberDto> updatePassword(String email, String password);
 
 	Optional<MemberDto> updatePhone(String email, String phone);
 
 	Optional<MemberDto> updateMarketingOption(String email, String smsOption, String emailOption);
+
+	public Optional<MemberDto> findEmailByPhone(String phone);
+
+	public String findPasswordByPhoneAndEmail(String phone, String email);
+	
+//	public MemberResponseDto changeMemberPassword(String email, String exPassword, String newPassword);
 
 }

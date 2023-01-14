@@ -6,7 +6,7 @@ import * as U from './UsedItemStyle';
 const UsedItem = () => {
 
     // console.log("seq = " + location.seq +" seq = "+ {seq})
-    const shopKind = useState('used')
+    const shopKind = 'used'
 
     const [searchParams,setSearchParams] = useSearchParams();
 
@@ -18,7 +18,8 @@ const UsedItem = () => {
         size:'',
         price:'',
         likes:'',
-        contents:''
+        contents:'',
+        hashtag:[]
     });
 
     const [likeForm, setLikeForm] = useState({
@@ -32,7 +33,7 @@ const UsedItem = () => {
     useEffect(()=>{
         axios.get('http://localhost:8080/used/viewItem?seq=' + searchParams.get('seq'))
         .then(res => setForm(res.data))
-        .then(axios.get('http://localhost:8080/used/itemLike?seq=' + searchParams.get('seq') + '&id=' + 'asd')
+        .then(axios.get('http://localhost:8080/used/itemLike?seq=' + searchParams.get('seq') + '&id=' + 'asd' + '&shopKind=' + shopKind)
                     .then(res => res.data ? setLikeForm(res.data) : '')
                     .catch(error => console.log(error)))
         .catch(error => console.log(error))
@@ -53,7 +54,7 @@ const UsedItem = () => {
     const [subImg1,setSubImg1] = useState('')
     const [subImg2,setSubImg2] = useState('')
     const [subImg3,setSubImg3] = useState('')
-
+    const [allImg,setAllImg]=useState([]);
     useEffect(()=>{
 
         if((form.imgName)){
@@ -62,9 +63,11 @@ const UsedItem = () => {
 
             setMainImg(img[0])
         
-            img[1] && setSubImg1(img[1])
-            img[2] && setSubImg2(img[2])
-            img[3] && setSubImg3(img[3])
+            img[1] && setSubImg1(img[1]) 
+            img[2] && setSubImg2(img[2]) 
+            img[3] && setSubImg3(img[3]) 
+            setAllImg(img);
+
         }
     },[form])
 
@@ -85,26 +88,44 @@ const UsedItem = () => {
         // // 데이터가 없어서 강제 주입
         // setLikeForm({...likeForm , seq:searchParams.get('seq'),id:'asd'})
 
-        axios.post(`http://localhost:8080/used/likeSet?seq=`+searchParams.get('seq') + '&id=' + 'asd' + '&userLike=' + likeForm.userLike)
+        axios.post(`http://localhost:8080/used/likeSet?seq=`+searchParams.get('seq') + '&id=' + 'asd' + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
         // axios.post('http://localhost:8080/used/likeSet',null,{params:likeForm})
         // axios.get('http://localhost:8080/used/likeSet'+   likeForm) 나중에 다시 해보기
         .then()
-        .catch()
+        .catch(error => console.log(error))
         
+    }
+
+    //이미지 순서 바꾸기
+    const changImg=(e)=>{
+        var id = e.target.getAttribute("id");
+        //진영씨 방법
+        //1. if로 아이디 값 걸러서 바꿔주기
+        //2. getAttribute로 src를 받아오기
+        var imgTemp=allImg[0];
+        allImg[0]=allImg[id];
+        allImg[id]=imgTemp;
+        
+        setMainImg(allImg[0]);
+        allImg[1] && setSubImg1(allImg[1]);
+        allImg[2] && setSubImg2(allImg[2]);
+        allImg[3] && setSubImg3(allImg[3]);
+        
+
     }
 
     return (
 
         <>
         <U.ModalDiv>
-            <UpdateBtnModal writer={isWriter} seq={searchParams.get('seq')}></UpdateBtnModal>
+            <UpdateBtnModal writer={isWriter} seq={searchParams.get('seq')} imgNameSend={form.imgName}></UpdateBtnModal>
         </U.ModalDiv>
         <U.BaseBody>
             <U.ImgBody>
-                <U.MainImg src={`/storage/${mainImg}`}></U.MainImg>
-                <U.SmallImg src={`/storage/${subImg1}`}></U.SmallImg>
-                <U.SmallImg src={`/storage/${subImg2}`}></U.SmallImg>
-                <U.SmallImg src={`/storage/${subImg3}`}></U.SmallImg>
+                <U.MainImg src={`/storage/${mainImg}`} alt={mainImg}></U.MainImg>
+                {subImg1&&<U.SmallImg src={`/storage/${subImg1}`} id="1" onClick={e=>changImg(e)}></U.SmallImg>}
+                {subImg2&&<U.SmallImg src={`/storage/${subImg2}`} id="2" onClick={e=>changImg(e)}></U.SmallImg>}
+                {subImg3&&<U.SmallImg src={`/storage/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg>}
             </U.ImgBody>&emsp;
 
 

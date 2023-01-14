@@ -328,6 +328,10 @@ export const LargeBtnWish = styled.a`
     cursor: pointer;
 `;
 
+export const LargeBtnWishBtnImg = styled.img`
+    width: 20px;
+    height: 20px;
+`;
 
 export const LargeBtnWishBtnText = styled.span`
     font-size: 15px;
@@ -945,6 +949,7 @@ export const FloatingBtnOutLineGrey = styled.div`
     justify-content: center;
     border: 1px solid #ebebeb;
     color: #333;
+    cursor: pointer;
 `;
 
 export const WishCountNum = styled.span`
@@ -1183,7 +1188,22 @@ export const SelectItem = styled.li`
     border: 1px solid #d3d3d3;
     height: 52px;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: black;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+`;
+
+export const SelectItemStockOut = styled.li`
+    overflow: hidden;
+    margin: 4px;
+    display: inline-block;
+    vertical-align: top;
+    width: calc(33.33333% - 8px);
+    border: 1px solid #d3d3d3;
+    height: 52px;
+    border-radius: 10px;
+    background-color: #f4f4f4;
+    color: rgba(34,34,34,.3)!important;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 `;

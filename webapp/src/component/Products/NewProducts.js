@@ -1,15 +1,31 @@
 import axios from "axios";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useParams } from "react-router-dom";
 import GlobalStyle from './GlobalStyle';
 import ScrollToTop from './ScrollToTop';
 import * as S from './style';
+import NewProductOption from "./NewProductOption";
 
 const NewProducts = () => {
+
+    const [count, setCount] = useState('');
+
+    const [option ,setOption] = useState("옵션 선택");
+
+    const [modalOpen, setModalOpen] = useState(false);
+
     const date = new Date();
+
+    const id = 'gong@naver.com'
+
+    const {seq} = useParams();
+
+    const shopKind = 'new'
 
     const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장 
 
     const [ScrollActive2, setScrollActive2] = useState(true); 
+
     const handleScroll2 = () => { 
         if(ScrollY < 400) {
             setScrollY(window.pageYOffset);
@@ -28,6 +44,68 @@ const NewProducts = () => {
         return () => { window.removeEventListener("scroll", handleScroll2); }; //  window 에서 스크롤을 감시를 종료
     });
 
+    const [likeForm, setLikeForm] = useState({
+        seq:'',
+        id:'',
+        userLike:false,
+        registerNo:''
+    })
+
+    useEffect(() => {
+        axios.get(`http://localhost:8080/getNewProduct?seq=${seq}`)
+             .then(res => res.data.length !== 0 && setForm(res.data))
+             .catch(error => console.log(error))
+
+        axios.get('http://localhost:8080/used/itemLike?seq=' + seq + '&id=' + id + '&shopKind=' + shopKind)
+             .then(res => res.data ? setLikeForm(res.data) : '')
+             .catch(error => console.log(error))
+
+        axios.get('http://localhost:8080/likeCount?seq=' + seq + '&shopKind=' + shopKind)
+             .then(res => setCount(res.data))
+             .catch(err => console.log(err))
+    }, [])
+    
+
+    const onInterest = () => {   
+        setLikeForm({...likeForm, userLike:!likeForm.userLike})
+
+        axios.post(`http://localhost:8080/used/productLikeSet?seq=`+ seq + '&id=' + id + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
+        .then()
+        .catch(error => console.log(error))
+
+        {likeForm.userLike === false ? setCount(count+1) : setCount(count-1)}
+    }
+
+    const [form, setForm] = useState([{}])
+
+    const getOption = (productOption) => {
+        setOption(productOption);
+        setModalOpen(false)
+    }
+
+  
+    const element = useRef(null);
+    const onMoveToElement = () => {
+        element.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    const element2 = useRef(null);
+    const onMoveToElement2 = () => {
+        element2.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    const element3 = useRef(null);
+    const onMoveToElement3 = () => {
+        element3.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    const element4 = useRef(null);
+    const onMoveToElement4 = () => {
+        element4.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+
+
 
     return (
         <>
@@ -41,7 +119,7 @@ const NewProducts = () => {
                         <S.ColumnIsFixed>
                             <S.ColumnBox>
                                 <div className="spread">
-                                    <img src="https://kream-phinf.pstatic.net/MjAyMjEyMjlfMjY3/MDAxNjcyMjg0MTUxOTc1.WI7bFvrrA12DqQbBkClLxkrcSYqjvWWNELb4ylPVYsMg.bZb5S82vDpuqgQ3sRP5ARUUIqfC-JOO2Pyd4tY8nAZAg.JPEG/a_9b6b9ca6d31a4f749da65960e43f9207.jpg?type=l_webp" width="480px" height="480px"></img>
+                                    <img src={form.imgName} width="480px" height="480px"></img>
                                 </div>
                                 {/* <div className="column_box">
                                     <div className="detail_banner_area">
@@ -67,10 +145,10 @@ const NewProducts = () => {
                                     <div className="detail_main_title">
                                         <div className="main_title_box">
                                             <div>
-                                                <S.MainTitleBoxBrand>브랜드</S.MainTitleBoxBrand>
+                                                <S.MainTitleBoxBrand>{form.brand}</S.MainTitleBoxBrand>
                                             </div>
-                                            <S.MainTitleBoxTitle>타이틀</S.MainTitleBoxTitle>
-                                            <S.MainTitleBoxSubTitle>서브타이틀</S.MainTitleBoxSubTitle>
+                                            <S.MainTitleBoxTitle>{form.title}</S.MainTitleBoxTitle>
+                                            <S.MainTitleBoxSubTitle>{form.subTitle}</S.MainTitleBoxSubTitle>
                                         </div>
                                     </div>
                                     <div className="product_figure_wrap">
@@ -78,10 +156,11 @@ const NewProducts = () => {
                                             <S.DetailSizeTitle>
                                                 <S.DetailSizeTitleText>옵션</S.DetailSizeTitleText>
                                             </S.DetailSizeTitle>
+                                            {modalOpen && <NewProductOption setModalOpen={setModalOpen} newProductOption={form.newProductOptionDTO} option={option} newSeq={seq} getOption={getOption}/> }
                                             <S.DetailSizeSize>
                                                 <S.BtnSize>
-                                                    {/* {isOneSize ? 'ONE SIZE' : <S.BtnSizeBtnText onClick={e => setModalOpen(true)}>{size}</S.BtnSizeBtnText> } */}
-                                                    {/* <S.BtnSizeBtnText onClick={e => setModalOpen(true)}>{size}</S.BtnSizeBtnText> */}
+                                                    {form.newProductOptionDTO === null ? 'ONE SIZE' : <S.BtnSizeBtnText onClick={e => setModalOpen(true)}>{option}</S.BtnSizeBtnText> }
+                                                    {/* <S.BtnSizeBtnText onClick={e => setModalOpen(true)}>{size}</S.BtnSizeBtnText>
                                                     {/* <svg>
                                                         <use></use>
                                                     </svg> */}
@@ -95,7 +174,7 @@ const NewProducts = () => {
                                             <S.DetailPricePrice>
                                                 <S.DetailPriceAmount>
                                                     <S.DetailPriceNum>
-                                                        최근 거래가
+                                                        {Number(form.price).toLocaleString('ko-KR')}
                                                     </S.DetailPriceNum>
                                                     <S.DetailPriceWon>원</S.DetailPriceWon>
                                                 </S.DetailPriceAmount>
@@ -111,12 +190,10 @@ const NewProducts = () => {
                                                 구매하기
                                             </S.NewProductBuyBtn>
                                         </S.DivisionBtnBox>
-                                        <S.LargeBtnWish area-label="관심상품">
-                                            {/* <svg className="icon sprite-icons ico-wish-off">
-                                                <use></use>
-                                            </svg> */}
+                                        <S.LargeBtnWish area-label="관심상품" onClick={onInterest}>
+                                            <S.LargeBtnWishBtnImg src={likeForm.userLike ? '/image/used/blackBookmark.png' : '../image/used/bookmark.svg'}/>
                                             <S.LargeBtnWishBtnText>관심상품</S.LargeBtnWishBtnText>
-                                            <S.LargeBtnWishCountNum>100</S.LargeBtnWishCountNum>
+                                            <S.LargeBtnWishCountNum>{count}</S.LargeBtnWishCountNum>
                                         </S.LargeBtnWish>
                                     </div>
                                 </div>        
@@ -125,7 +202,7 @@ const NewProducts = () => {
                                     <S.DeliveryWay>
                                         <S.WayInfo>
                                             <S.WayStatusThumb>
-                                                <img src="https://kream-phinf.pstatic.net/MjAyMTExMjFfMjU5/MDAxNjM3NDczNzU0MjA1.ON3pvFYAq_xSSaNWDgUWe1YfIx-C0fm91PDtcsUn3AEg.Q4EbbNWl_ua916jg0NQ0dWOS3h7W9eiiI2kK9YPWlgwg.PNG/a_120a84f036724d0d97a2343aafff4ecf.png" width="40px" height="40px"/>
+                                                <img src='https://kream-phinf.pstatic.net/MjAyMTExMjFfMjU5/MDAxNjM3NDczNzU0MjA1.ON3pvFYAq_xSSaNWDgUWe1YfIx-C0fm91PDtcsUn3AEg.Q4EbbNWl_ua916jg0NQ0dWOS3h7W9eiiI2kK9YPWlgwg.PNG/a_120a84f036724d0d97a2343aafff4ecf.png' width="40px" height="40px"/>
                                             </S.WayStatusThumb>
                                             <S.WayDesc>
                                                 <S.Company>
@@ -147,17 +224,18 @@ const NewProducts = () => {
                                         <S.FloatingPriceProductArea>
                                             <S.FloatingPriceProductThumb>
                                                 <S.PictureProductImg>
-                                                    <S.Image width="65px" height="65px"></S.Image>
+                                                    <S.Image src={form.imgName} width="65px" height="65px"></S.Image>
                                                 </S.PictureProductImg>
                                             </S.FloatingPriceProductThumb>
                                             <S.FloatingProductInfo>
-                                                <S.FloatingProductName>타이틀</S.FloatingProductName>
-                                                <S.FloatingProductTranslatedName>서브타이틀</S.FloatingProductTranslatedName>
+                                                <S.FloatingProductName>{form.title}</S.FloatingProductName>
+                                                <S.FloatingProductTranslatedName>{form.subTitle}</S.FloatingProductTranslatedName>
                                             </S.FloatingProductInfo>
                                         </S.FloatingPriceProductArea>
                                         <S.FloatingProductBtnArea>
-                                            <S.FloatingBtnOutLineGrey>
-                                                <S.WishCountNum>3.1만</S.WishCountNum>
+                                            <S.FloatingBtnOutLineGrey onClick={onInterest}>
+                                                <S.LargeBtnWishBtnImg src={likeForm.userLike?'/image/used/blackBookmark.png':'../image/used/bookmark.svg'}/>
+                                                <S.WishCountNum>{count}</S.WishCountNum>
                                             </S.FloatingBtnOutLineGrey>
                                             <S.FloatingPriceDivisionBtnBox>
                                                 <S.FloatingPriceDivisionBuy>
@@ -173,24 +251,25 @@ const NewProducts = () => {
                     <S.ProductDetailItemContent>
                         <S.ProductDetailTabWrap>
                             <S.ProductDetailTab>
-                                <S.TabActive>상품 상세정보</S.TabActive>
-                                <S.Tab>교환 및 반품 안내</S.Tab>
-                                <S.Tab>스타일 리뷰</S.Tab>
-                                <S.Tab>추천 상품</S.Tab>
+                                <S.TabActive onClick={onMoveToElement}>상품 상세정보</S.TabActive>
+                                <S.Tab onClick={onMoveToElement2}>교환 및 반품 안내</S.Tab>
+                                <S.Tab onClick={onMoveToElement3}>스타일 리뷰</S.Tab>
+                                <S.Tab onClick={onMoveToElement4}>추천 상품</S.Tab>
                             </S.ProductDetailTab>
                         </S.ProductDetailTabWrap>
-                        <div className='product_detail_item_wrap'>
+                        <div ref={element} style={{paddingTop: "160px"}} />
+                        <div className='product_detail_item_wrap' >
                             <div>
                                 <S.DetailTitleHeaderImages>
                                     <S.DetailHeaderImgWrap>
-                                        <S.CoverImg src="https://kream-phinf.pstatic.net/MjAyMjEyMjlfNiAg/MDAxNjcyMjg0MTU2MTkw.GdYgMkvzN9oQkIqu9JXBkgObGcH6uH1JjJOTspGJMwog.8PNGQaJSHvxsFffBN6CGQOWqJdfHWxreisfr5KeC4R4g.JPEG/a_c6b7ad4a3d95415c88f17560b623fa8c.jpg"></S.CoverImg>
+                                        <S.CoverImg src={form.imgName}></S.CoverImg>
                                     </S.DetailHeaderImgWrap>
                                     <S.DetailHeaderTitleWrap>
-                                        <S.DetailHeaderProductNo> 상품번호 seq</S.DetailHeaderProductNo>
+                                        <S.DetailHeaderProductNo>{form.newSeq}</S.DetailHeaderProductNo>
                                         <S.DetailHeaderTitle>
-                                            <em>상품이름</em>
+                                            <em>{form.title}</em>
                                         </S.DetailHeaderTitle>
-                                        <S.DetailHeaderSubTitle>상품한글이름</S.DetailHeaderSubTitle>
+                                        <S.DetailHeaderSubTitle>{form.subTitle}</S.DetailHeaderSubTitle>
                                         <S.DetailHeaderDescription></S.DetailHeaderDescription>
                                     </S.DetailHeaderTitleWrap>
                                     <S.DetailImgWrap>
@@ -204,6 +283,7 @@ const NewProducts = () => {
                                 </S.DetailTitleHeaderImages>
                             </div>
                         </div>
+                        <div ref={element2} style={{paddingTop: "160px"}} />
                         <div className='product_detail_item_wrap'>
                             <div>
                                 <S.DetailTitlePreviewWrap>
@@ -225,7 +305,7 @@ const NewProducts = () => {
                                                                     </S.ItemTitle>
                                                                 </S.ItemTitleWrap>
                                                                 <S.ItemDescription>
-                                                                    <li>상호명</li>
+                                                                    <li>{form.businessName}</li>
                                                                 </S.ItemDescription>
                                                             </S.DetailLinkPreviewItem>
                                                         </S.DetailLinkPreviewItems>
@@ -237,7 +317,7 @@ const NewProducts = () => {
                                                                     </S.ItemTitle>
                                                                 </S.ItemTitleWrap>
                                                                 <S.ItemDescription>
-                                                                    <li>사업자 등록번호</li>
+                                                                    <li>{form.comRegNo}</li>
                                                                 </S.ItemDescription>
                                                             </S.DetailLinkPreviewItem>
                                                         </S.DetailLinkPreviewItems>
@@ -249,7 +329,7 @@ const NewProducts = () => {
                                                                     </S.ItemTitle>
                                                                 </S.ItemTitleWrap>
                                                                 <S.ItemDescription>
-                                                                    <li>대표자</li>
+                                                                    <li>{form.representative}</li>
                                                                 </S.ItemDescription>
                                                             </S.DetailLinkPreviewItem>
                                                         </S.DetailLinkPreviewItems>
@@ -261,7 +341,7 @@ const NewProducts = () => {
                                                                     </S.ItemTitle>
                                                                 </S.ItemTitleWrap>
                                                                 <S.ItemDescription>
-                                                                    <li>사업장 소재지</li>
+                                                                    <li>{form.businessLocation}</li>
                                                                 </S.ItemDescription>
                                                             </S.DetailLinkPreviewItem>
                                                         </S.DetailLinkPreviewItems>
@@ -273,7 +353,7 @@ const NewProducts = () => {
                                                                     </S.ItemTitle>
                                                                 </S.ItemTitleWrap>
                                                                 <S.ItemDescription>
-                                                                    <li>고객센터</li>
+                                                                    <li>{form.serviceCall}</li>
                                                                 </S.ItemDescription>
                                                             </S.DetailLinkPreviewItem>
                                                         </S.DetailLinkPreviewItems>
@@ -296,7 +376,7 @@ const NewProducts = () => {
                                                                     </S.ItemTitle>
                                                                 </S.ItemTitleWrap>
                                                                 <S.ItemDescription>
-                                                                    <li>소재</li>
+                                                                    <li>{form.material}</li>
                                                                 </S.ItemDescription>
                                                             </S.DetailLinkPreviewItem>
                                                         </S.DetailLinkPreviewItems>                                               
@@ -308,7 +388,7 @@ const NewProducts = () => {
                                                                     </S.ItemTitle>
                                                                 </S.ItemTitleWrap>
                                                                 <S.ItemDescription>
-                                                                    <li>색상</li>
+                                                                    <li>{form.color}</li>
                                                                 </S.ItemDescription>
                                                             </S.DetailLinkPreviewItem>
                                                         </S.DetailLinkPreviewItems>                                                    
@@ -316,11 +396,11 @@ const NewProducts = () => {
                                                             <S.DetailLinkPreviewItem>
                                                                 <S.ItemTitleWrap>
                                                                     <S.ItemTitle>
-                                                                        제조자/수입자
+                                                                        제조자
                                                                     </S.ItemTitle>
                                                                 </S.ItemTitleWrap>
                                                                 <S.ItemDescription>
-                                                                    <li>제조자/수입자</li>
+                                                                    <li>{form.manufacturer}</li>
                                                                 </S.ItemDescription>
                                                             </S.DetailLinkPreviewItem>
                                                         </S.DetailLinkPreviewItems>                                                  
@@ -332,7 +412,7 @@ const NewProducts = () => {
                                                                     </S.ItemTitle>
                                                                 </S.ItemTitleWrap>
                                                                 <S.ItemDescription>
-                                                                    <li>제조국</li>
+                                                                    <li>{form.countryOfManufacturer}</li>
                                                                 </S.ItemDescription>
                                                             </S.DetailLinkPreviewItem>
                                                         </S.DetailLinkPreviewItems>                                                  
@@ -344,7 +424,7 @@ const NewProducts = () => {
                                                                     </S.ItemTitle>
                                                                 </S.ItemTitleWrap>
                                                                 <S.ItemDescription>
-                                                                    <li>제조년월</li>
+                                                                    <li>{form.dateOfManufacturer}</li>
                                                                 </S.ItemDescription>
                                                             </S.DetailLinkPreviewItem>
                                                         </S.DetailLinkPreviewItems>
@@ -422,6 +502,7 @@ const NewProducts = () => {
                     </S.ProductDetailItemContent>
                 </S.Content>
                 <div>
+                    <div ref={element3} style={{paddingTop: "160px"}} />
                     <S.FeedArea>
                         <S.FeedTitle>
                             <S.FeedTitleTitle>스타일</S.FeedTitleTitle>
@@ -436,6 +517,7 @@ const NewProducts = () => {
                             </S.MoreBtnBox>
                         </S.SocialFeeds>
                     </S.FeedArea>
+                    <div ref={element4} style={{paddingTop: "160px"}} />
                     <S.BrandArea>
                         <S.BrandTitle>
                             <S.BrandTitleBrand>브랜드</S.BrandTitleBrand>

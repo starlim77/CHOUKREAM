@@ -53,15 +53,13 @@ export const UsedMain = styled.div`
     width: 1200px;
     display: flex;
     flex-wrap: wrap;
-
 `;
 
 export const MainItem = styled.div`
    margin-bottom: 40px;
    width: 275px;
    height: 430px;
-
-   margin-left: 10px;
+   margin-left: 15px;
    margin-right: 10px;
 `;
 
@@ -69,6 +67,9 @@ export const ItemImg = styled.img`
     width: 275px;
     height: 275px;
     border-radius: 15px;
+    object-fit: cover;
+
+    border: 0.5px solid #ececec;
 `;
 
 export const ItemTitle = styled.h2`

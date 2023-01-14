@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,9 +48,9 @@ public class UsedItemController {
 	
 	
 	@GetMapping(path="itemLike")
-	public UsedItemLikeDTO itemLike(@RequestParam int seq, @RequestParam String id){
+	public UsedItemLikeDTO itemLike(@ModelAttribute UsedItemLikeDTO usedItemLikeDTO){
 		//System.out.println("라이크 찍기"+seq);
-		UsedItemLikeDTO imsi = usedItemService.itemLike(seq,id);
+		UsedItemLikeDTO imsi = usedItemService.itemLike(usedItemLikeDTO);
 		//System.out.println("임시용 "+imsi);
 		return imsi;
 		//return usedItemService.itemLike(seq);
@@ -57,7 +58,7 @@ public class UsedItemController {
 	
 	@PostMapping(path="likeSet")
 	public void likeSet(@ModelAttribute UsedItemLikeDTO usedItemLikeDTO){
-		//System.out.println(usedItemLikeDTO);
+		System.out.println(usedItemLikeDTO);
 		
 		if(usedItemLikeDTO.getUserLike() == null)usedItemLikeDTO.setUserLike(false);
 		
@@ -66,8 +67,21 @@ public class UsedItemController {
 		System.out.println("바꾼 userLike"+usedItemLikeDTO.getUserLike());
 		usedItemService.likeSet(usedItemLikeDTO);
 		
+		usedItemService.usedlike(usedItemLikeDTO);
 		
-	}
+	}// 차후 수정
+	
+	@PostMapping(path="productLikeSet")
+	public void productLikeSet(@ModelAttribute UsedItemLikeDTO usedItemLikeDTO){
+		System.out.println(usedItemLikeDTO);
+		
+		if(usedItemLikeDTO.getUserLike() == null)usedItemLikeDTO.setUserLike(false);
+		
+		System.out.println("들어온 userLike"+usedItemLikeDTO.getUserLike());
+		usedItemLikeDTO.setUserLike(!usedItemLikeDTO.getUserLike());
+		System.out.println("바꾼 userLike"+usedItemLikeDTO.getUserLike());
+		usedItemService.likeSet(usedItemLikeDTO);
+	}// 차후 수정
 	
 //	@PostMapping(path="writeItem")
 //	public void writeItem(@ModelAttribute UsedItemDTO usedItemDTO) {
@@ -163,5 +177,10 @@ public class UsedItemController {
 		 System.out.println(seq);
 		 usedItemService.deleteItem(seq);
 		 
+	 }
+	 
+	 @PutMapping(path="updateItem")
+	 public void updateItem(@ModelAttribute UsedItemDTO usedItemDTO) {
+		 usedItemService.updateItem(usedItemDTO);
 	 }
 }

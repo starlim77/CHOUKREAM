@@ -7,11 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import pay.bean.PayDTO;
+import pay.bean.CompletePaymentDTO;
 import shop.bean.BidsListDTO;
 
-public interface PayDAO<T> extends JpaRepository<PayDTO, Integer> {
-
+public interface PayDAO<T> extends JpaRepository<CompletePaymentDTO, Integer> {
 	
 	@Query(nativeQuery = true ,value = "select nextval('order_number') from dual")
 	public int getOrderNumber();

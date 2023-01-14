@@ -16,10 +16,14 @@ public interface UsedItemService {
 
 	public Optional<UsedItemDTO> viewItem(int seq);
 
-	public UsedItemLikeDTO itemLike(int seq, String id);
+	public UsedItemLikeDTO itemLike(UsedItemLikeDTO usedItemLikeDTO);
 
 	public void likeSet(UsedItemLikeDTO usedItemLikeDTO);
 
 	public void deleteItem(int seq);
+
+	public void usedlike(UsedItemLikeDTO usedItemLikeDTO);
+
+	public void updateItem(UsedItemDTO usedItemDTO);
 
 }

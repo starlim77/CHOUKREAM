@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@egjs/react-infinitegrid": "^4.7.1"
+  }
+}
