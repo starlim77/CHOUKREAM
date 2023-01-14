@@ -23,33 +23,52 @@ public class StyleFollowingServiceImpl implements StyleFollowingService {
 	
 	
 	
-	//팔로잉 했는지 검사
-	
+
 	
 	//팔로우하기
 	@Transactional
-	public void save(MemberDto follower, StyleDTO styleDTO) {
-		
-		//스타일에서는 member의 name을 아이디로 쓴다
-		Optional<MemberDto> optionalfolloweeMemberDto =  memberDAO.findByName(styleDTO.getId());		
-		MemberDto followeeMemberDto =  optionalfolloweeMemberDto.get();
-		
+	public void save(MemberDto followerDto, MemberDto followeeDto) {
 		//dto -> Entity
-		StyleFollowingEntity styleFollowingEntity = StyleFollowingEntity.toFollowingEntity(follower, followeeMemberDto);
+		StyleFollowingEntity styleFollowingEntity = StyleFollowingEntity.toFollowingEntity(followerDto, followeeDto);
 		
 		//엔티티 저장
-		styleFollowingDAO.save(styleFollowingEntity).getId();
+		styleFollowingDAO.save(styleFollowingEntity);
+	}
+
+
+	//언팔하기
+	@Transactional
+	public void delete(int followerId, int followeeId) {
+				
+		//StyleFollowingEntity styleFollowingEntity = StyleFollowingEntity.toFollowingEntity(followerDto, followeeDto);
+		//엔티티 삭제
+		styleFollowingDAO.deleteByFollowerIdAndFolloweeId(followerId, followeeId);
+		//styleFollowingDAO.delete(styleFollowingEntity);
 	}
 	
+
 	
-	//언팔하기
-	
-	
-	//팔로우 카운트
+	//내 팔로잉 리스트 불러오기
 	
 	
 	
 	
+	
+//	
+//	//팔로워 카운트
+//	
+//	public Long followerCount(MemberDto follower, MemberDto followee) {
+//		return  styleFollowingDAO.countFollwerByFollowee(follower,followee);
+//		
+//	}
+//	
+//	//팔로잉 카운트
+//	public Long followeeCount(MemberDto follower, MemberDto followee) {
+//		return styleFollowingDAO.countFolloweeByFollower(follower,followee);
+//
+//	}
+//	
+//	
 	
 	
 }

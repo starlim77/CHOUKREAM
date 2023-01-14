@@ -31,6 +31,7 @@ import lookbook.service.StyleFollowingService;
 import lookbook.service.StyleLikesService;
 import lookbook.service.StyleService;
 import member.bean.MemberDto;
+import member.dao.MemberDAO;
 
 
 @RestController
@@ -45,6 +46,8 @@ public class styleController {
 	private StyleLikesService styleLikesService;
 	@Autowired
 	private StyleFollowingService styleFollowingService;
+	@Autowired 
+	private MemberDAO memberDAO;
 	
 	
 	//스타일 게시물 입력	
@@ -164,33 +167,40 @@ public class styleController {
 	}
 	
 	
-//팔로잉
-	
-	
+//팔로잉	
 	
 	//팔로우
-	@PutMapping(path="follow/{id}")
-	public void follow(@AuthenticationPrincipal MemberDto follower, @ModelAttribute StyleDTO styleDTO) {
-		//@AuthenticationPrincipal-로그인 아이디 받기?아마?
+	@PostMapping(path="saveFollow/{followerId}/{followeeId}")
+	@ResponseBody
+	public void follow(@PathVariable int followerId, @PathVariable int followeeId) {
 		
-		System.out.println("followee 글쓴사람 아이디"+styleDTO.getId());
-		System.out.println("follower 현재 로그인한 아이디"+ follower);			
-	
+		System.out.println("followee 글쓴사람 아이디"+followeeId);
+		System.out.println("follower 현재 로그인한 아이디"+ followerId);		
 		
-		styleFollowingService.save(follower, styleDTO);		
+		MemberDto followerDto = memberDAO.findById(followerId);
+		MemberDto followeeDto = memberDAO.findById(followeeId);
+		//id로 일단은 수정???
+		//스타일에서는 member의 name을 아이디로 쓴다
 		
-		
-		
-		
-		//MemberDto followeeMemberDto = MemberDAO.findByName(styleDTO.getId());
-		
+		styleFollowingService.save(followerDto, followeeDto);	
 		
 	}
-	//언팔
-	@DeleteMapping(path="follow/{id}")
-	public void unFollow(@AuthenticationPrincipal MemberDto follower, @ModelAttribute StyleDTO styleDTO) {
 	
+	//언팔
+	@DeleteMapping(path="unFollow/{followerid}/{followeeId}")
+	@ResponseBody
+	public void unFollow(@PathVariable int followerId, @PathVariable int followeeId) {
+	
+		System.out.println("followee 글쓴사람 아이디"+followeeId);
+		System.out.println("follower 현재 로그인한 아이디"+ followerId);	
 		
+		//MemberDto followerDto = memberDAO.findById(followerId);
+		//MemberDto followeeDto = memberDAO.findById(followeeId);
+		//id로 일단은 수정???
+		//스타일에서는 member의 name을 아이디로 쓴다
+		
+		styleFollowingService.delete(followerId, followeeId);
+		//styleFollowingService.delete(followerDto, followeeDto);
 		
 	}
 
