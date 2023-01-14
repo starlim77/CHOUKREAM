@@ -14,6 +14,7 @@ const Shop = () => {
     const [dummy, setDummy] = useState([]);
     const [dummyFilter, setDummyFilter] = useState([]);
 
+    
     useEffect(() => {
         axios
             .get('http://localhost:8080/shop/getProductList')

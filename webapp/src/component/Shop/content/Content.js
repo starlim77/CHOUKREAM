@@ -199,7 +199,11 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                             <Co.FilterBrand>
                                 <Co.BrandBtn>
                                     <Co.Text>
-                                        <Link to={'/shop/newProduct'}>
+                                        <Link to={'/shop/newProduct'}
+                                        state={{
+                                            name: '현욱',
+                                            dummyFilter: dummyFilter
+                                        }}>
                                             새상품 버튼
                                         </Link>
                                     </Co.Text>

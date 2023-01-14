@@ -4,9 +4,10 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import * as Se from '../SearchStyle';
 import data from '../content/TrendData';
 import filterData from '../content/FilterData';
-import Content from '../newContent/Content';
 import Banner from '../banner/Banner';
 import axios from 'axios';
+import NewContent2 from '../newContent/NewContent2';
+
 
 const NewProductPage = () => {
     const [dummy, setDummy] = useState([]);
@@ -122,7 +123,7 @@ const NewProductPage = () => {
                 {/* Banner */}
                 <Banner />
 
-                <Content
+                <NewContent2
                     dummy={dummy}
                     setDummy={setDummy}
                     dummyFilter={dummyFilter}

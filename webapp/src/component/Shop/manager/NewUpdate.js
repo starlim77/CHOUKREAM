@@ -46,7 +46,8 @@ const NewUpdate = () => {
     
     const [form, setForm] = useState({
         seq: checkedId,
-        registerProductDate: dateStr+timeStr,
+        registerProductDate: dateStr + timeStr,
+        imgName: imgNameSend,
         title: '',
         subTitle: '',
         brand: '',
@@ -63,6 +64,7 @@ const NewUpdate = () => {
     const {
         seq,
         registerProductDate,
+        imgName,
         title,
         subTitle,
         brand,
@@ -99,7 +101,7 @@ const NewUpdate = () => {
         var sw = 1;
         console.log('file[0] ', file[0]);
         // console.log(--sw);
-        file[0] || (--sw && alert('이미지 파일을 등록해주세요'));
+        // file[0] || (--sw && alert('이미지 파일을 등록해주세요'));
         // false ||
 
         var formData = new FormData();
@@ -112,7 +114,7 @@ const NewUpdate = () => {
             console.log('키' + key);
             console.log('formData[key]' + formData[key]);
         });
-        console.log('스위치 찍어라' + 1);
+       
         if (sw == 1) {
             // null로 하든 formData로 하든 상관없나 ?
             // axios.post('http://localhost:8080/used/writeItem',null,({params:{
@@ -120,16 +122,16 @@ const NewUpdate = () => {
             console.log('디비가러 가는길 ~ ' + checkedId )
             axios
                 // .put(`http://localhost:8080/shop/update?seq=${checkedId}`, null, {
-                .put('http://localhost:8080/shop/reUpdate', formData, {
+                .put('http://localhost:8080/shop/newUpdate', formData, {
                     params: form,
                 })
                 .then(() => {
-                    alert('글 수정 완료')
+                    alert('새상품 수정 완료')
                 })
                 .catch(error => console.log(error))
         }
-        navigate('/admin/newList');
-        window.location.reload();
+        // navigate('/admin/newList');
+        // window.location.reload();
     };
     // ---------------
     
@@ -184,7 +186,7 @@ const NewUpdate = () => {
             //var url=urlTemp.slice(5);
             subImg.push({ url: urlTemp });
             // push 해서 onImgRead 파일 자동으로 땡겨지게 해준다 / push 없는거 자동으로 땡겨서 채워줌 
-
+        
             //setSubImg(urlTemp);
             file.push(items);
         });
