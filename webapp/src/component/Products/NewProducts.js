@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import GlobalStyle from './GlobalStyle';
 import ScrollToTop from './ScrollToTop';
 import * as S from './style';
 import NewProductOption from "./NewProductOption";
 import * as U from '../Used/UsedItemStyle';
+import jwt_decode from 'jwt-decode';
 
 const NewProducts = () => {
 
@@ -15,9 +16,23 @@ const NewProducts = () => {
 
     const [modalOpen, setModalOpen] = useState(false);
 
+    const navigate = useNavigate();
+
     const date = new Date();
 
-    const id = 'gong@naver.com'
+    const token = localStorage.getItem('accessToken');
+    const [sub, setSub] = useState('');
+        
+
+    useEffect(() => {
+        if (token !== null) {
+            const tokenJson = jwt_decode(token);
+            setSub(tokenJson['sub']);
+        }
+        console.log(id)
+    }, []);
+
+    const [id, setId] = useState('');
 
     const {seq} = useParams();
 
@@ -57,24 +72,38 @@ const NewProducts = () => {
              .then(res => res.data.length !== 0 && setForm(res.data))
              .catch(error => console.log(error))
 
-        axios.get('http://localhost:8080/used/itemLike?seq=' + seq + '&id=' + id + '&shopKind=' + shopKind)
-             .then(res => res.data ? setLikeForm(res.data) : '')
-             .catch(error => console.log(error))
-
         axios.get('http://localhost:8080/likeCount?seq=' + seq + '&shopKind=' + shopKind)
              .then(res => setCount(res.data))
              .catch(err => console.log(err))
+
+        axios
+             .get('http://localhost:8080/getMemberInfo', {
+                 params: { seq: sub },
+             })
+             .then(res => {
+                 //console.log(JSON.stringify(res.data));
+                 setId(res.data.email);
+ 
+                 //console.log('id = ' + id);
+             })
+             .catch(err => console.log(err));
     }, [])
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/used/itemLike?seq=' + seq + '&id=' + id + '&shopKind=' + shopKind)
+             .then(res => res.data ? setLikeForm(res.data) : '')
+             .catch(error => console.log(error))
+    }, [id]);
     
 
-    const onInterest = () => {   
+    const onInterest = () => {
+        if(id!=="ROLE_GUEST"){
         setLikeForm({...likeForm, userLike:!likeForm.userLike})
-
         axios.post(`http://localhost:8080/used/productLikeSet?seq=`+ seq + '&id=' + id + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
         .then()
         .catch(error => console.log(error))
-
-        {likeForm.userLike === false ? setCount(count+1) : setCount(count-1)}
+        {likeForm.userLike === false ? setCount(count+1) : setCount(count-1)}  
+        }else { navigate(`/login`) }
     }
 
     const [form, setForm] = useState([{}])

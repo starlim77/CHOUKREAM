@@ -13,6 +13,7 @@ import EmptyTable from "./table/EmptyTable";
 import Graph from './Graph';
 import * as U from '../Used/UsedItemStyle';
 import ListModal from './ListModal';
+import jwt_decode from 'jwt-decode';
 
 const Products = () => {
 
@@ -21,8 +22,6 @@ const Products = () => {
     const [count, setCount] = useState('');
 
     const date = new Date();
-
-    const id = "kim@gmail.com";
 
     const shopKind = 'resell'
 
@@ -78,7 +77,7 @@ const Products = () => {
     })
 
     const [brandListForm, setBrandListForm] = useState([{
-        seq: "", img: "", price: "", title: "", brand: ""
+        seq: "", img_name: "", price: "", title: "", brand: ""
     }])
 
     const [sizeForm, setSizeForm] = useState([{}])
@@ -94,6 +93,7 @@ const Products = () => {
     const [dropdown, setDropdown] = useState(true);
     const OpenDrop = () => {  
         setDropdown(!dropdown);
+        console.log(brandListForm)
     }
     const [dropdown1, setDropdown1] = useState(true);
     const OpenDrop1 = () => {
@@ -103,6 +103,30 @@ const Products = () => {
     const OpenDrop2 = () => {
         setDropdown2(!dropdown2);
     }
+
+
+    const token = localStorage.getItem('accessToken');
+    const [sub, setSub] = useState('');
+        
+
+    useEffect(() => {
+        if(sub!==""){
+            axios
+            .get('http://localhost:8080/getMemberInfo', {
+                params: { seq: sub },
+            })
+            .then(res => {
+                //console.log(JSON.stringify(res.data));
+                setId(res.data.email);
+
+                //console.log('id = ' + id);
+            })
+            .catch(err => console.log(err));
+        }
+       
+    }, [sub]);
+
+    const [id, setId] = useState('ROLE_GUEST');
 
     useEffect(() => {
         axios.get(`http://localhost:8080/getProduct?seq=${seq}`)
@@ -128,15 +152,23 @@ const Products = () => {
         axios.get(`http://localhost:8080/getBuyBidsList?seq=${seq}`)
              .then(res => res.data.length !== 0 && setBuyBidsListForm(res.data))
              .catch(error => console.log(error))
-        
-        axios.get('http://localhost:8080/used/itemLike?seq=' + seq + '&id=' + id + '&shopKind=' + shopKind)
-             .then(res => res.data ? setLikeForm(res.data) : '')
-             .catch(error => console.log(error))
 
         axios.get('http://localhost:8080/likeCount?seq=' + seq + '&shopKind=' + shopKind)
              .then(res => setCount(res.data))
              .catch(err => console.log(err))
+
+        if (token !== null) {
+                const tokenJson = jwt_decode(token);
+                setSub(tokenJson['sub']);
+            }
+
     }, []);
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/used/itemLike?seq=' + seq + '&id=' + id + '&shopKind=' + shopKind)
+             .then(res => res.data ? setLikeForm(res.data) : '')
+             .catch(error => console.log(error))
+    }, [id]);
 
     useEffect(() => {
         axios.get(`http://localhost:8080/getBrandList?seq=${seq}&brand=${form.brand}`)
@@ -233,13 +265,13 @@ const Products = () => {
     }
 
     const onInterest = () => {
+        if(id!=="ROLE_GUEST"){
         setLikeForm({...likeForm, userLike:!likeForm.userLike})
-
         axios.post(`http://localhost:8080/used/productLikeSet?seq=`+ seq + '&id=' + id + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
         .then()
         .catch(error => console.log(error))
-
         {likeForm.userLike === false ? setCount(count+1) : setCount(count-1)}  
+        }else { navigate(`/login`) }
     }
 
 
@@ -270,6 +302,10 @@ const Products = () => {
         else if(id == 3) setMainImg(subImg3)
     }
 
+    const photoshop = (itemImg) => {
+        const img = (itemImg.split(','))
+        return img[0]
+    }
 
     return (
         <>
@@ -283,14 +319,14 @@ const Products = () => {
                         <S.ColumnIsFixed>
                             <S.ColumnBox ScrollActive={ ScrollActive }>
                                 <U.ImgBody2>
-                                    <U.MainImg src={`/storage/${mainImg}`} alt={mainImg}></U.MainImg>
-                                    {subImg1&&<U.SmallImg2 src={`/storage/${subImg0}`} id="0" onClick={e=>changImg(e)}></U.SmallImg2>}
-                                    {subImg1&&<U.SmallImg2 src={`/storage/${subImg1}`} id="1" onClick={e=>changImg(e)}></U.SmallImg2>}
-                                    {subImg2&&<U.SmallImg2 src={`/storage/${subImg2}`} id="2" onClick={e=>changImg(e)}></U.SmallImg2>}
-                                    {subImg3&&<U.SmallImg2 src={`/storage/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    <U.MainImg src={`/resellList/${mainImg}`} alt={mainImg}></U.MainImg>
+                                    {subImg1&&<U.SmallImg2 src={`/resellList/${subImg0}`} id="0" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg1&&<U.SmallImg2 src={`/resellList/${subImg1}`} id="1" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg2&&<U.SmallImg2 src={`/resellList/${subImg2}`} id="2" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg3&&<U.SmallImg2 src={`/resellList/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg2>}
                                 </U.ImgBody2>
                                 {/* <div className="spread">
-                                    <S.Image src={form.img} ></S.Image>
+                                    <S.Image src={form.imgName} ></S.Image>
                                 </div> */}
                                 {/* <div className="column_box">
                                     <div className="detail_banner_area">
@@ -423,7 +459,7 @@ const Products = () => {
                                     <S.DeliveryWay>
                                         <S.WayInfo>
                                             <S.WayStatusThumb>
-                                                <img src="https://kream-phinf.pstatic.net/MjAyMTExMjFfMjU5/MDAxNjM3NDczNzU0MjA1.ON3pvFYAq_xSSaNWDgUWe1YfIx-C0fm91PDtcsUn3AEg.Q4EbbNWl_ua916jg0NQ0dWOS3h7W9eiiI2kK9YPWlgwg.PNG/a_120a84f036724d0d97a2343aafff4ecf.png" width="40px" height="40px"/>
+                                                <img src="/image/product/a_120a84f036724d0d97a2343aafff4ecf.png" width="40px" height="40px"/>
                                             </S.WayStatusThumb>
                                             <S.WayDesc>
                                                 <S.Company>
@@ -716,7 +752,7 @@ const Products = () => {
                                         <S.FloatingPriceProductArea>
                                             <S.FloatingPriceProductThumb>
                                                 <S.PictureProductImg>
-                                                    <S.Image src={`/storage/${subImg0}`} width="65px" height="65px"></S.Image>
+                                                    <S.Image src={`/resellList/${subImg0}`} width="65px" height="65px"></S.Image>
                                                 </S.PictureProductImg>
                                             </S.FloatingPriceProductThumb>
                                             <S.FloatingProductInfo>
@@ -785,43 +821,15 @@ const Products = () => {
                         <S.BrandProducts>
                             <S.BrandProductList>
                             {
-                                brandListForm.length < 10 ? 
-                                brandListForm.map((item, index) => (
-                                    <S.ProductItem key={index}>
-                                        <S.ItemInner onClick={() => brandNavigate(item.seq)}>
-                                            <div className='thumb_box'>
-                                                <S.Product>
-                                                    <S.PictureBrandProductImg>
-                                                        <S.BrandProductImg src={item.img}/>
-                                                    </S.PictureBrandProductImg>
-                                                </S.Product>
-                                            </div>
-                                            <S.ProductItemInfoBox>
-                                            <div className='info_box'>
-                                                <div className='brand'>
-                                                    <S.BrandTextWithOutWish>{item.brand}</S.BrandTextWithOutWish>
-                                                </div>
-                                                <S.BrandProductInfoBoxName>{item.title}</S.BrandProductInfoBoxName>
-                                                <S.BrandProductInfoBoxPrice>
-                                                    <S.BrandProductInfoBoxPriceAmount>
-                                                        <S.BrandProductInfoBoxPriceAmountNum>{item.price}</S.BrandProductInfoBoxPriceAmountNum>
-                                                    </S.BrandProductInfoBoxPriceAmount>
-                                                    <S.BrandProductInfoBoxPriceDesc>즉시 구매가</S.BrandProductInfoBoxPriceDesc>
-                                                </S.BrandProductInfoBoxPrice>
-                                            </div>
-                                        </S.ProductItemInfoBox>
-                                        </S.ItemInner>
-                                    </S.ProductItem>))
+                                brandListForm.length > 10 ? 
 
-                                    :
-                       
                                     [...Array(parseInt(10))].map((n, index) => {
                                         return <S.ProductItem key={index}>
                                         <S.ItemInner onClick={() => brandNavigate(brandListForm[index].seq)}>
                                             <div className='thumb_box'>
                                                 <S.Product>
                                                     <S.PictureBrandProductImg>
-                                                        <S.BrandProductImg src={brandListForm[index].img}/>
+                                                        <S.BrandProductImg src={`/resellList/${photoshop(brandListForm[index].img_name)}`}/>
                                                     </S.PictureBrandProductImg>
                                                 </S.Product>
                                             </div>
@@ -841,7 +849,39 @@ const Products = () => {
                                         </S.ProductItemInfoBox>
                                         </S.ItemInner>
                                     </S.ProductItem>
-                                })
+                                    })
+
+                                    :
+
+                                    brandListForm[0].img_name !== '' &&
+
+                                    brandListForm.map((item, index) => (
+                                        <S.ProductItem key={index}>
+                                            <S.ItemInner onClick={() => brandNavigate(item.seq)}>
+                                                <div className='thumb_box'>
+                                                    <S.Product>
+                                                        <S.PictureBrandProductImg>
+                                                            <S.BrandProductImg src={`/resellList/${photoshop(item.img_name)}`}/>
+                                                        </S.PictureBrandProductImg>
+                                                    </S.Product>
+                                                </div>
+                                                <S.ProductItemInfoBox>
+                                                <div className='info_box'>
+                                                    <div className='brand'>
+                                                        <S.BrandTextWithOutWish>{item.brand}</S.BrandTextWithOutWish>
+                                                    </div>
+                                                    <S.BrandProductInfoBoxName>{item.title}</S.BrandProductInfoBoxName>
+                                                    <S.BrandProductInfoBoxPrice>
+                                                        <S.BrandProductInfoBoxPriceAmount>
+                                                            <S.BrandProductInfoBoxPriceAmountNum>{item.price}</S.BrandProductInfoBoxPriceAmountNum>
+                                                        </S.BrandProductInfoBoxPriceAmount>
+                                                        <S.BrandProductInfoBoxPriceDesc>즉시 구매가</S.BrandProductInfoBoxPriceDesc>
+                                                    </S.BrandProductInfoBoxPrice>
+                                                </div>
+                                            </S.ProductItemInfoBox>
+                                            </S.ItemInner>
+                                        </S.ProductItem>))
+                                    
                             }
                             </S.BrandProductList>
                         </S.BrandProducts>
