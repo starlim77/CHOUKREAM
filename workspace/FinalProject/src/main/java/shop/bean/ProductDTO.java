@@ -19,6 +19,7 @@ public class ProductDTO {
 	@Column(name="seq",length=30)
    private int seq;
    
+   
    @Column(name="brand", length = 30)
    private String brand;
    

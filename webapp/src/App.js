@@ -52,6 +52,7 @@ import NewProductPage from './component/Shop/newProduct/NewProductPage';
 import ReList from './component/Shop/resell/ReList';
 import ReUpdate from './component/Shop/resell/ReUpdate';
 import ReWrite from './component/Shop/register/ReWrite';
+import Following from './component/Lookbook/Following';
 
 function App() {
     const token = localStorage.getItem('accessToken');
@@ -163,6 +164,7 @@ function App() {
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
                     <Route path="/lookbook/detail" element={<Detail />} />
+                    <Route path="/lookbook/following" element={<Following />} />
                     <Route
                         path="/lookbook/styleComment/:styleSeq"
                         element={<StyleComment />}

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import lookbook.bean.StyleDTO;
+import lookbook.bean.StyleLikesDTO;
 
 public interface StyleService {
 
@@ -23,11 +24,10 @@ public interface StyleService {
 	public List<StyleDTO> findAll();
 
 	public StyleDTO findMyListDetail(int seq);
-
-	public int saveLikes(String id,int style_seq);
-	public int findLikes(String id, int style_seq);
 	
-	public Long findCountById(String id);
+	public Long findCountById(String id);  //게시글 카운트
+
+
 
 		
 }

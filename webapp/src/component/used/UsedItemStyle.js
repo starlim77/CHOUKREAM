@@ -71,13 +71,18 @@ export const MainImg2=styled.img`
     object-fit: cover;
     border: 0.5px solid #ececec;
 `;
+export const SmallImgBody=styled.div`
+    display: flex;
+    margin-top: 20px;
+`
 
 export const SmallImg=styled.img`
-    width:100px;
-    height:100px;
-    padding:25px;
+    width:175px;
+    height:175px;
     object-fit: cover;
     border: 0.5px solid #ececec;
+    margin-right: 5px;
+    margin-left: 5px;
 `;
 
 export const SmallImg2=styled.img`
@@ -123,7 +128,7 @@ export const SizeWrapper=styled.div`
 
 export const Sizetitle=styled.span`
     font-size: 10pt;
-    margin-top: 9.5px;
+    margin-top: 14.5px;
 `
 
 export const SizeSpan=styled.span`
@@ -131,10 +136,13 @@ export const SizeSpan=styled.span`
 `;
 
 export const PriceWrapper=styled.div`
-    width:560px;
+    width:550px;
     font-size:30px;
     text-align: left;
     padding: 15px 0 15px 0;
+
+    display: flex;
+    justify-content: space-between;
 
 `;
 export const PriceSpan=styled.span`
@@ -142,7 +150,7 @@ export const PriceSpan=styled.span`
 `;
 
 export const InterestWrapper=styled.p`
-    width:560px;
+    width:550px;
     text-align: center;
     border:1px solid rgba(236,236,236);
     font-size:25px;
@@ -150,6 +158,7 @@ export const InterestWrapper=styled.p`
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 50px;
 
     :hover{
         cursor: pointer;
@@ -181,7 +190,7 @@ export const ItemSpan=styled.span`
 
 export const ItemContents=styled.pre`
     border:1px solid rgba(236,236,236);
-    width:560px;
+    width:550px;
     min-height:250px;
     font-size: 20px;
     white-space: pre-wrap;
@@ -192,6 +201,7 @@ export const ItemContents=styled.pre`
 export const ChatButton=styled.button`
     width:560px;
     font-size:50px;
+    margin-bottom: 100px;
 
     :hover{
         cursor: pointer;

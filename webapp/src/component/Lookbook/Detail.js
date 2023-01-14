@@ -9,9 +9,9 @@ import Container from '@mui/material/Container';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import * as S from './style';
 import { Link } from 'react-router-dom';
+import StyleCommentList from './StyleCommentList';
 
-const Detail = () => {
-    
+const Detail = () => {    
    
     //게시물 뿌리기
     const [list, setList] = useState([]);
@@ -19,17 +19,18 @@ const Detail = () => {
     useEffect( ()=> {
         axios.get('http://localhost:8080/lookbook/getStyleList')
              .then(res => setList(res.data))
+            //.then(res => console.log(res.data))
+                
              .catch(error => console.log(error))
              console.log("list",list) 
-    }, []) 
-    //댓글 뿌리기
-    const [comment, setComment] = useState([]);
-
-    useEffect(() => {
-        axios.get('http://localhost:8080/lookbook/getComment')
-             .then(res => setComment(res.data))
-             .catch(error => console.log(error))
-    },[])
+    }, [])   
+    
+    //댓글삭제
+    const onCommentDelete =(id) => {
+        //item.id가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듦
+        //=item.id 가 id 인 것을 제거한다
+        
+    }
     
 
     return (
@@ -39,7 +40,7 @@ const Detail = () => {
             <Container fixed>
                 <S.DeTopDiv> 
                 {
-                    list.map((item, index) => {
+                    list.map((item,index) => {
                         return (
                             <div>
                             <Card key={item.seq}>
@@ -48,7 +49,10 @@ const Detail = () => {
                                     title={item.id}
                                     subheader={item.logtime}
                                 />
-                                {item.seq}
+
+                                <Button variant="contained" style={{backgroundColor: 'black'}}>팔로우</Button>
+                                <Button variant="outlined"  style={{color: 'black'}}>언팔로우</Button>
+                               
                                 <CardMedia 
                                     component="img"
                                     height="500"
@@ -62,13 +66,17 @@ const Detail = () => {
                                     <IconButton aria-label="add to favorites">
                                         <FavoriteIcon />
                                     </IconButton>
+                                    <div>
                                     <IconButton >
                                         
                                         <Link to ={`/lookbook/StyleComment/${item.seq}`} >
-                                        <ChatBubbleOutlineIcon />    
+                                        <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
                                         </Link>
+                                        
                                     </IconButton> 
-                                                          
+                                    <span>{item.commentCount}</span>  
+                                    
+                                    </div>                   
                                 </CardActions>
 
             
@@ -77,21 +85,7 @@ const Detail = () => {
                                 <CardContent>       
                                     <Typography variant="body2" color="text.secondary" >
                                     <S.TrTypoDiv>
-                                     
-                                    {
-                                    comment.map((item, index )=> {
-                                        return(
-                                            <div>
-                                                {/* <Chip
-                                                    avatar={<Avatar alt="" src="" />}
-                                                    label=  ''                             
-                                                /> */}
-                                                댓글수
-                                                {item.commentContents}
-                                            </div>
-                                        )
-                                    })
-                                    }
+                                     <StyleCommentList styleSeq={item.seq}  onCommentDelete={onCommentDelete}  />                                
                                     
                                     </S.TrTypoDiv>                      
                                     </Typography>     

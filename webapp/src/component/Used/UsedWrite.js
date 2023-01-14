@@ -227,7 +227,7 @@ const UsedWrite = () => {
                 
                 <S.Information>
                     <S.Necessary>* 필수 입력</S.Necessary>
-                    <S.Subject>* 제목</S.Subject>
+                    <S.Subject>제목</S.Subject>
                     <S.Title type='text' name= 'title' onChange={ onInput }/>
 
 
@@ -263,7 +263,7 @@ const UsedWrite = () => {
                             (form.hashTag).map((item,index) =>
                             <S.HashTagDiv key={index}>
                                 <S.HasgTagSpan>{item}</S.HasgTagSpan>
-                                <S.HasgTagX name={index} onClick={e => onHashX(e.currentTarget.getAttribute("name"))}>X</S.HasgTagX>
+                                <S.HasgTagX name={index} onClick={e => onHashX(e.currentTarget.getAttribute("name"))}>x</S.HasgTagX>
                             </S.HashTagDiv>
                             
                             )
