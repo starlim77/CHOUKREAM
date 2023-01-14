@@ -41,4 +41,6 @@ public interface UsedItemService {
 
 	public boolean reportHistory(int seq,String reportId);
 
+	public List<UsedItemDTO> getAdminItem();
+
 }

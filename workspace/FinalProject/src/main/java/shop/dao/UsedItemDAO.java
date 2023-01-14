@@ -39,6 +39,9 @@ public interface UsedItemDAO extends JpaRepository<UsedItemDTO, Integer>{
 	
 	@Query("SELECT memberDTO.email FROM MemberDto memberDTO WHERE memberDTO.id = :seq")
 	public String getId(int seq);
+
+	@Query(value="select * from used_item left join (select seq,count(*) as report_num from used_item_report group by seq) as report on used_item.seq = report.seq", nativeQuery = true )
+	public List<UsedItemDTO> getAdminItem();
 	
 //	
 //	@Modifying

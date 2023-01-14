@@ -146,13 +146,20 @@ public class UsedItemServiceImpl implements UsedItemService {
 
 	@Override
 	public boolean reportHistory(int seq, String reportId) {
-		System.out.println("컨트롤러 옴? "+reportId + "  " +seq);
+
 //		boolean result = usedItemReportDAO.reportHistory(seq, reportId);
 		
 		UsedItemReportDTO result = usedItemReportDAO.reportHistory(seq, reportId);
 		System.out.println(result);
 		if(result!=null) return true;
 		else return false; 
+	}
+
+
+	@Override
+	public List<UsedItemDTO> getAdminItem() {
+		//어드민에 뿌릴 값 가져오기
+		return usedItemDAO.getAdminItem();
 	}
 
 

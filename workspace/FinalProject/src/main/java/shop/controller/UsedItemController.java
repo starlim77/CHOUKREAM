@@ -222,7 +222,7 @@ public class UsedItemController {
 	 @GetMapping("search")
 	public List<UsedItemDTO> search(@RequestParam Map<String, String> map) { // searchOption, keyword
 	 	//System.out.println(map);
-		return usedItemService.search(map);
+		return usedItemService.search(map); 
 	}
 	 
 	@GetMapping("getId")
@@ -241,5 +241,10 @@ public class UsedItemController {
 	public boolean reportHistory(@RequestParam int seq, @RequestParam String reportId) {
 		
 		return usedItemService.reportHistory(seq, reportId );
+	}
+	
+	@GetMapping(path="getAdminItem")
+	public List<UsedItemDTO> getAdminItem() {
+		return usedItemService.getAdminItem();
 	}
 }

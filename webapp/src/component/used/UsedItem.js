@@ -61,9 +61,6 @@ const UsedItem = () => {
 
         axios.get('http://localhost:8080/used/viewItem?seq=' + searchParams.get('seq'))
             .then(res => setForm(res.data))
-            .then(axios.get('http://localhost:8080/used/itemLike?seq=' + searchParams.get('seq') + '&id=' + 'asd' + '&shopKind=' + shopKind)
-                        .then(res => res.data ? setLikeForm(res.data) : '')
-                        .catch(error => console.log(error)))
             .catch(error => console.log(error))
 
     },[])
@@ -82,6 +79,10 @@ const UsedItem = () => {
         axios.get(`http://localhost:8080/used/reportHistory?seq=${searchParams.get('seq')}&reportId=${currentId}`)
             .then(res=>setReportHistory(res.data))
             .catch(err=>console.log(err))
+
+        axios.get('http://localhost:8080/used/itemLike?seq=' + searchParams.get('seq') + '&id=' + currentId + '&shopKind=' + shopKind)
+            .then(res => res.data ? setLikeForm(res.data) : '')
+            .catch(error => console.log(error))
     },[currentId])
 
 
@@ -125,7 +126,7 @@ const UsedItem = () => {
         // // 데이터가 없어서 강제 주입
         // setLikeForm({...likeForm , seq:searchParams.get('seq'),id:'asd'})
 
-        axios.post(`http://localhost:8080/used/likeSet?seq=`+searchParams.get('seq') + '&id=' + 'asd' + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
+        axios.post(`http://localhost:8080/used/likeSet?seq=`+searchParams.get('seq') + '&id=' + currentId + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
         // axios.post('http://localhost:8080/used/likeSet',null,{params:likeForm})
         // axios.get('http://localhost:8080/used/likeSet'+   likeForm) 나중에 다시 해보기
         .then()
@@ -190,7 +191,7 @@ const UsedItem = () => {
     }
 
     const onSettle=()=>{
-        navigate(`pay/payForm?shopKind=${form.shopKind}&seq=${form.seq}`)
+        navigate(`/pay/payForm?type=${form.shopKind}&productNum=${form.seq}`)
     }
 
     return (

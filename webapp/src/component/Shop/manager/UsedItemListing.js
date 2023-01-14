@@ -7,7 +7,7 @@ const UsedItemListing = ({item}) => {
     const[img,setImg]=useState();
     const navigate=useNavigate();
     const [data,setData] = useState(item)
-    const {seq, id, title , imgName, productName , kind , size , price , contents , likes, hashTag,sellingState}=data
+    const {seq, id, title , imgName, productName , kind , size , price , contents , likes, hashTag,sellingState,reportNum}=data
     
     useEffect(()=>{
             const img = ((imgName).split(','))
@@ -58,7 +58,7 @@ const UsedItemListing = ({item}) => {
                         ))}
                     </select>
                     </Li.Td2>
-                    <Li.Td2>신고수</Li.Td2>
+                    <Li.Td2>{reportNum}</Li.Td2>
                     <Li.Td2><button onClick={e=>onDelete(e)}>삭제</button></Li.Td2>
             </Li.Tr2>
         
