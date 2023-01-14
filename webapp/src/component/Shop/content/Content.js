@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import categoryData from './CategoryData';
 import MenuList from './MenuList';
 
-const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModal, tagLive }) => {
+const Content = ({ dummy, setDummy, dummyFilter, setDummyFilter, sortCheck, setSortCheck,  modalOpen, openModal, closeModal, tagLive }) => {
     const [categoryData2, setCategoryData2] = useState(categoryData);
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
@@ -119,16 +119,29 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
     };
     
     const photoshop = (itemImg) => {
-        
         // console.log(itemImg)
         // console.log(typeof(itemImg))
-        
-        if( itemImg !== null) {
+        if( itemImg !== null && itemImg !== undefined) {
+            //console.log(itemImg);
             const img = itemImg.split(',');
+            // console.log(img[0])
+            // console.log(typeof(img[0]))
             return img[0];
         }
         
     }
+    
+    // const photoshop = itemImg => {
+        
+    //     if (itemImg === undefined){
+    //         console.log('fuck')
+    //     }
+        
+    //     console.log(itemImg);
+    //     console.log(typeof(itemImg));
+    //     const img = itemImg.split(',');
+    //     return img[0];
+    // };
 
     return (
         <>
@@ -228,7 +241,11 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                     인기순
                                 </Co.SortingTitle>
                                 <Modal
+                                    dummy={dummy}
                                     setDummy={setDummy}
+                                    setDummyFilter={setDummyFilter}
+                                    sortCheck={sortCheck}
+                                    setSortCheck={setSortCheck}
                                     open={modalOpen}
                                     close={closeModal}
                                     setPictures={setPictures}
@@ -246,8 +263,10 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                     <Co.SearchResult>
                         <Co.SearchResultList>
                             {/* {console.log('더미더미 ' + f)} */}
-                            {tagLive
-                                ? dummyFilter &&
+                            {/* {console.log('더미더미 ' + dummy)}
+                            {console.log(dummy)}
+                            {console.log(dummy.length)} */}
+                            {tagLive ? dummyFilter &&
                                 dummyFilter.map((item, index) => (
                                     <Co.ProductCard
                                         key={item.seq}
@@ -263,7 +282,7 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                             <Co.ItemInner href="#">
                                                 <Co.Product>
                                                     <Co.ProductImg
-                                                        // src={item.img_web}
+                                                        // src={`/resellList/${item.imgName}`}
                                                         src={`/resellList/${photoshop(
                                                             item.imgName,
                                                         )}`}
@@ -337,23 +356,11 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                                     )}
                                                 </Co.Text>
                                             </Co.WishFigure>
-                                            <Co.ReviewFigure>
-                                                <Co.ReviewLink
-                                                    href="/social/products/51930"
-                                                    aria-label={item.subTitle}
-                                                >
-                                                    <FontAwesomeIcon
-                                                        icon={faHeart}
-                                                    />
-                                                </Co.ReviewLink>
-                                                <Co.Text>
-                                                    {followCalc(item.follow)}
-                                                </Co.Text>
-                                            </Co.ReviewFigure>
                                         </Co.ActionWishReview>
                                     </Co.ProductCard>
                                 ))
-                            : dummy.map((item, index) => (
+                                // 평소에 setDummy를 하면 여기임 
+                            :dummy && dummy.map((item, index) => (
                                     <Co.ProductCard
                                         key={item.seq}
                                         style={{
@@ -368,9 +375,9 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                             <Co.ItemInner href="#">
                                                 <Co.Product>
                                                     <Co.ProductImg
-                                                        // src={item.img_web}
+                                                        //src={`/resellList/${item.imgName}`}
                                                         src={`/resellList/${photoshop(
-                                                            item.imgName,
+                                                            sortCheck ? item.img_name : item.imgName
                                                         )}`}
                                                     >
                                                         {/* picture 태그 사용시 밑에꺼 사용 */}
@@ -399,7 +406,7 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                                             </Co.Name>
                                                             <Co.TranslatedName>
                                                                 {
-                                                                    item.subTitle
+                                                                    !sortCheck ? item.subTitle : item.sub_title
                                                                 }
                                                             </Co.TranslatedName>
                                                         </Co.ProductInfoName>
@@ -416,7 +423,8 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                                 <Co.PriceInfoArea>
                                                     <Co.Amount>
                                                         {addComma(
-                                                            item.releasePrice,
+                                                            !sortCheck ? item.releasePrice : item.min_price
+                                                            //!sortCheck ? item.releasePrice : item.min_price
                                                         )}
                                                     </Co.Amount>
                                                     <Co.Desc>

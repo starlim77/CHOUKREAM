@@ -114,7 +114,7 @@ const NewUpdate = () => {
             console.log('키' + key);
             console.log('formData[key]' + formData[key]);
         });
-       
+        
         if (sw == 1) {
             // null로 하든 formData로 하든 상관없나 ?
             // axios.post('http://localhost:8080/used/writeItem',null,({params:{

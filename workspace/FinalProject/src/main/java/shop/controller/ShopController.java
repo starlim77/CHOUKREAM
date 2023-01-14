@@ -54,25 +54,7 @@ public class ShopController {
 	public List<ProductDTO> sortGetProductList() {
 		return shopService.sortGetProductList();
 	}
-	
-	@GetMapping("favourSort")
-	public List<SortListDTO> favourSort() {
-		System.out.println("ㅎㅇㅎㅇ");
-		System.out.println(shopService.favourSort());
-		return shopService.favourSort();
-	}
-//	@GetMapping("sortGetProductList2")
-//	public List<ProductDTO> sortGetProductList2() {
-//		return shopService.sortGetProductList2();
-//	}
-//	@GetMapping("sortGetProductList3")
-//	public List<ProductDTO> sortGetProductList3() {
-//		return shopService.sortGetProductList3();
-//	}
-	
-	
-	
-	
+
 	@PostMapping("getProductBySeq")
 	public Optional<ProductDTO> getProductBySeq(@RequestParam int seq) {
 		return shopService.getProductBySeq(seq);

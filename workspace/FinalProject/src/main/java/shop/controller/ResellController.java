@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpSession;
 import shop.bean.NewProductDTO;
 import shop.bean.ProductDTO;
+import shop.bean.SortListDTO;
 import shop.service.ShopService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -47,6 +48,24 @@ public class ResellController {
 		System.out.println("map 은 ?> " + map);
 		// System.out.println(" return 전 " + shopService.resellSearch(map));
 		return shopService.resellSearch(map);
+	}
+	
+	@GetMapping("favourSort")
+	public List<SortListDTO> favourSort() {
+		System.out.println("ㅎㅇㅎㅇ");
+		System.out.println(shopService.favourSort());
+		return shopService.favourSort();
+	}
+	@GetMapping("BuySort")
+	public List<ProductDTO> BuySort() {
+		System.out.println("즉시 구매가 낮은순 ");
+		return shopService.BuySort();
+	}
+	
+	@GetMapping("SellSort")
+	public List<ProductDTO> SellSort() {
+		System.out.println("즉시 판매가 높은순 ");
+		return shopService.SellSort();
 	}
 	
 //	@PutMapping(path="reUpdate")

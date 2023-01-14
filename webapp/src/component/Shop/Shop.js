@@ -13,12 +13,15 @@ import axios from 'axios';
 const Shop = () => {
     const [dummy, setDummy] = useState([]);
     const [dummyFilter, setDummyFilter] = useState([]);
+    const [sortCheck, setSortCheck] = useState(false);
 
     
     useEffect(() => {
         axios
             .get('http://localhost:8080/shop/getProductList')
+            //.get('http://localhost:8080/shop/favourSort')
             .then(res => setDummy(res.data))
+            //.then(res => console.log(JSON.stringify(res.data)))
             .catch(error => console.log(error));
     }, []);
     
@@ -129,6 +132,8 @@ const Shop = () => {
                     dummyFilter={dummyFilter}
                     setDummyFilter={setDummyFilter}
                     tagLive={tagLive}
+                    sortCheck={sortCheck}
+                    setSortCheck={setSortCheck}
                     modalOpen={modalOpen}
                     openModal={openModal}
                     closeModal={closeModal}

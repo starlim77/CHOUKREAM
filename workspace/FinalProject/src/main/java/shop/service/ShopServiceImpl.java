@@ -84,6 +84,16 @@ public class ShopServiceImpl implements ShopService {
 		// }
 	}
 
+	@Override
+	public List<ProductDTO> BuySort() {
+		return shopDAO.BuySort();
+	}
+
+	@Override
+	public List<ProductDTO> SellSort() {
+		return shopDAO.SellSort();
+	}
+
 	
 
 	
