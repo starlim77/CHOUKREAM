@@ -7,20 +7,22 @@ import Pagination from './Pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-const NewList = () => {
+const ReList = () => {
     const [newProductList, setNewProductList] = useState([]);
+    const [productList, setProductList] = useState([]);
 
     const getNewProductList = () => {
         axios
-            .get('http://localhost:8080/shop/getNewProductList')
+            .get('http://localhost:8080/shop/getProductList')
             // .then(res =>( setNewProductList(res.data), console.log(newProductList)))
             // .then(res =>( setNewProductList(res.data), setNewProductList([...newProductList, { isChecked: false }])))
             // .then(res =>( setNewProductList(res.data), setNewProductList([{...newProductList, isChecked:false}])))
-            .then(res => setNewProductList(res.data))
+            //.then(res => console.log(JSON.stringify(res.data)))
+            .then(res => setProductList(res.data))
             // .then(setNewProductList([{ ...newProductList, isChecked: false }]))
             // .then(setNewProductList({...newProductList, [isChecked]: false}))
             .catch(error => console.log(error));
-        //.then(res => console.log(JSON.stringify(res.data)))
+        
     };
     useEffect(() => {
         getNewProductList();
@@ -48,7 +50,7 @@ const NewList = () => {
 
     // console.log(newProductList)
     var copy_newProductList = [];
-    newProductList.map(item => {
+    productList.map(item => {
         copy_newProductList.push({ ...item, isChecked: false });
     });
     // console.log(copy_newProductList)
@@ -123,11 +125,11 @@ const NewList = () => {
         // console.log(checkedId + 'ㄴㅇㅎㄴㅇㅎㄴㅇㅎㄴㅇ');
         // axios.delete('http://localhost:8080/shop/delete?id=' + checkedId)
         axios
-            .delete(`http://localhost:8080/shop/delete?seq=${checkedId}`)
-            .then(alert('새상품 삭제 완료'))
+            .delete(`http://localhost:8080/shop/resellDelete?seq=${checkedId}`)
+            .then(alert('리셀 상품 삭제 완료'))
             .catch(error => console.log(error));
 
-        navigate('/admin/newList');
+        navigate('/admin/reList');
         window.location.reload();
     };
     const [disabledCheck, setDisabledCheck] = useState(true);
@@ -138,14 +140,14 @@ const NewList = () => {
         // get select
         e.preventDefault();
         axios
-            .get('http://localhost:8080/shop/search', {
+            .get('http://localhost:8080/shop/resellSearch', {
                 // get방식은 2번째 인자에 null 안써줘도된다
                 params: {
                     searchOption: searchOption,
                     keyword: keyword,
                 },
             })
-            .then(res => setNewProductList(res.data))
+            .then(res => setProductList(res.data))
             //.then(res => console.log(JSON.stringify(res.data)))
             .catch(error => console.error(error));
     };
@@ -205,7 +207,7 @@ const NewList = () => {
     const [updateBool, setUpdateBool] = useState(false);
     const updateSearch = () => {
         setUpdateBool(!updateBool);    
-        setUpdateList(newProductList.filter(item => item.seq === checkedId))
+        setUpdateList(productList.filter(item => item.seq === checkedId))
         // console.log(updateList)
     }
     
@@ -214,7 +216,7 @@ const NewList = () => {
         // console.log(updateList);
         // updateSearch();
         if (updateBool) {
-            navigate('/admin/newUpdate', {
+            navigate('/admin/reUpdate', {
                 state: {
                     name: '현욱',
                     checkedId: checkedId,
@@ -227,7 +229,7 @@ const NewList = () => {
     
     return (
         <>
-            <Link to={'/admin/newWrite'} style={{ textDecoration: 'none' }}>
+            <Link to={'/admin/reWrite'} style={{ textDecoration: 'none' }}>
                 <Li.MenuBtn
                     disabled={!disabledCheck}
                     style={{ backgroundColor: disabledCheck ? '#fce205' : '' }}
@@ -296,7 +298,7 @@ const NewList = () => {
                     }}
                 />
             </Li.MenuBtn>
-            <Li.Title>새 상품 목록</Li.Title>
+            <Li.Title>리셀 상품 목록</Li.Title>
 
             <Li.SearchDiv style={{ display: searchBtn ? '' : 'none' }}>
                 <Li.SearchForm id="searchForm">
@@ -352,18 +354,18 @@ const NewList = () => {
                                 }
                             ></Li.Input> */}
                         </Li.Th>
-                        <Li.Th>상품번호</Li.Th>
+                        <Li.Th>seq</Li.Th>
                         <Li.Th>이미지 </Li.Th>
-                        <Li.Th>브랜드</Li.Th>
-                        <Li.Th>카테고리</Li.Th>
-                        <Li.Th>사업자 번호</Li.Th>
-                        <Li.Th>색상</Li.Th>
-                        <Li.Th>대표자</Li.Th>
-                        <Li.Th>가격</Li.Th>
-                        <Li.Th>등록시간</Li.Th>
-                        <Li.Th>제조회사</Li.Th>
-                        <Li.Th>상품이름</Li.Th>
-                        <Li.Th>상품이름2</Li.Th>
+                        <Li.Th>brand</Li.Th>
+                        <Li.Th>category</Li.Th>
+                        <Li.Th>category_detail</Li.Th>
+                        <Li.Th>color</Li.Th>
+                        <Li.Th>model_num</Li.Th>
+                        <Li.Th>price</Li.Th>
+                        <Li.Th>releaseDate</Li.Th>
+                        <Li.Th>registerProductDate</Li.Th>
+                        <Li.Th>title</Li.Th>
+                        <Li.Th>subTitle</Li.Th>
                     </Li.Tr>
                 </Li.Thead>
                 <Li.Tbody>
@@ -372,7 +374,7 @@ const NewList = () => {
                         .map(item => (
                             <NewProductList
                                 key={item.seq}
-                                newProductList={newProductList}
+                                newProductList={productList}
                                 copy_newProductList={copy_newProductList}
                                 item={item}
                                 offset={offset}
@@ -390,7 +392,7 @@ const NewList = () => {
 
             <Li.Footer>
                 <Pagination
-                    total={newProductList.length}
+                    total={productList.length}
                     limit={limit}
                     page={page}
                     setPage={setPage}
@@ -400,4 +402,4 @@ const NewList = () => {
     );
 };
 
-export default NewList;
+export default ReList;

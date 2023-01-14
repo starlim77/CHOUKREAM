@@ -40,25 +40,27 @@ public class NewProductDTO {
 	@Column(name="imgName",length=3000)
 	private String imgName;
 	
-	// 브랜드 
+	// 브랜드 ok
 	@Column(name="brand", length = 30)
 	private String brand;
 	
-	// 제품 영어이름
+	// 제품 영어이름 ok
 	@Column(name="title", length = 100) 
 	private String title;  
    
-	// 한글이름
+	// 한글이름 ok
 	@Column(name="subTitle", length = 100) 
    	private String subTitle;
 	
+	// ok
 	@Column(name="category", length = 30)
 	private String category;
-
+	
+	// ok
 	@Column(name="categoryDetail", length = 30)
 	private String categoryDetail;
 	
-	// 상품 등록 날짜
+	// 상품 등록 날짜 / 자동
 	@Column(name="registerProductDate", nullable = false)
 	@CreatedDate
 	private String registerProductDate;
@@ -71,38 +73,39 @@ public class NewProductDTO {
 		}
 	}
 	
-	// 상세설명 이미지
+	// 상세설명 이미지 ok
 	@Column(name="descriptionImg")
    	private String descriptionImg;
 	
-	// 판매가
+	// 판매가 ok
 	@Column(name="price")
    	private int price;
 	
-	// 상호명
+	// 상호명 ok
 	@Column(name="businessName")
 	private String businessName;
 	
-	// 사업자 번호
+	// 사업자 번호 o
 	@Column(name="comRegNo")
 	private String comRegNo;
 	
-	// 대표자 
+	// 대표자 o
 	@Column(name="representative")
 	private String representative;
 	
-	// 사업장 소재지
+	// 사업장 소재지o
 	@Column(name="businessLocation")
 	private String businessLocation;
 	
-	// 고객센터
+	// 고객센터o
 	@Column(name="serviceCall")
 	private String serviceCall;
 	
-	// 소재
+	// 소재o
 	@Column(name="material")
 	private String material;
 	
+	// ok
 	@Column(name="color")
 	private String color;
 	

@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import * as S from '.././register/styleWrite';
+import * as S from '../register/styleWrite';
 
-const NewUpdate = () => {
+const ReUpdate = () => {
     const location = useLocation();
     const checkedId = location.state.checkedId;
     // const updateList = location.state.updateList;
@@ -23,7 +23,7 @@ const NewUpdate = () => {
     const [subImg, setSubImg] = useState([]);
     useEffect(() => {
         var img = imgNameSend.split(',');
-        var img2 = img.map(item => '/newProductList/'+item);
+        var img2 = img.map(item => '/resellList/'+item);
         setSubImg(img2);
     }, []);
     
@@ -51,13 +51,10 @@ const NewUpdate = () => {
         subTitle: '',
         brand: '',
         category: '',
-        categoryDetail: '',
         gender: '',
         modelNum: '',
         releaseDate: '',
         color: '',
-        size: '',
-        price: '',
     });
 
     const {
@@ -67,13 +64,10 @@ const NewUpdate = () => {
         subTitle,
         brand,
         category,
-        categoryDetail,
         gender,
         modelNum,
         releaseDate,
         color,
-        size,
-        price,
     } = form;
 
     const onInput = e => {
@@ -120,7 +114,7 @@ const NewUpdate = () => {
             console.log('디비가러 가는길 ~ ' + checkedId )
             axios
                 // .put(`http://localhost:8080/shop/update?seq=${checkedId}`, null, {
-                .put('http://localhost:8080/shop/reUpdate', formData, {
+                .put('http://localhost:8080/shop/update', formData, {
                     params: form,
                 })
                 .then(() => {
@@ -232,92 +226,31 @@ const NewUpdate = () => {
             <S.WriteBody>
                 <S.ImgBody>
                     {/* 이미지 소스 이용방법 2가지 사용해봄 */}
-                    <S.MainImgP setPosition={subImg[0] ? true : false}>
-                        <S.MainImg
-                            name="mainImg"
-                            sizing={subImg[0] ? true : false}
-                            src={
-                                subImg[0]
-                                    ? subImg[0]
-                                    : `${process.env.PUBLIC_URL}/image/used/plusIcon.png`
-                            }
-                            onClick={onSubImg}
-                            alt={subImg[0] ? subImg[0].url : 'nothing'}
-                        ></S.MainImg>
-                        <S.DeleteMainImg
-                            setPosition={subImg[0] ? true : false}
-                            id="0"
-                            onClick={e => deleteImg(e)}
-                        ></S.DeleteMainImg>
+                    <S.MainImgP setPosition={subImg[0]?true:false}>
+                        <S.MainImg name='mainImg' sizing={subImg[0]?true:false} src={subImg[0]?subImg[0]:`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg} alt={subImg[0]?subImg[0].url:"nothing"}></S.MainImg>
+                        <S.DeleteMainImg setPosition={subImg[0]?true:false} id="0" onClick={e=>deleteImg(e)}></S.DeleteMainImg>
                     </S.MainImgP>
-                    <S.SubImgBody>
-                        <S.SubImgP setPosition={subImg[1] ? true : false}>
-                            <S.SubImg
-                                sizing={subImg[1] ? true : false}
-                                name="subImg1"
-                                src={
-                                    subImg[1]
-                                        ? subImg[1]
-                                        : '/image/used/plusIcon.png'
-                                }
-                                onClick={onSubImg}
-                            />
-                            <S.DeleteImg
-                                setPosition={subImg[1] ? true : false}
-                                id="1"
-                                onClick={e => deleteImg(e)}
-                            ></S.DeleteImg>
+                    <S.SubImgBody >
+                        <S.SubImgP setPosition={subImg[1]?true:false}>
+                            <S.SubImg sizing={subImg[1]?true:false} name='subImg1' src={subImg[1]?subImg[1]:'/image/used/plusIcon.png'} onClick={onSubImg}/>
+                            <S.DeleteImg setPosition={subImg[1]?true:false} id="1" onClick={e=>deleteImg(e)}></S.DeleteImg>
                         </S.SubImgP>
-                        <S.SubImgP setPosition={subImg[2] ? true : false}>
-                            <S.SubImg
-                                sizing={subImg[2] ? true : false}
-                                name="subImg2"
-                                src={
-                                    subImg[2]
-                                        ? subImg[2]
-                                        : '/image/used/plusIcon.png'
-                                }
-                                onClick={onSubImg}
-                            />
-                            <S.DeleteImg
-                                setPosition={subImg[2] ? true : false}
-                                id="2"
-                                onClick={e => deleteImg(e)}
-                            ></S.DeleteImg>
+                        <S.SubImgP setPosition={subImg[2]?true:false}>
+                            <S.SubImg sizing={subImg[2]?true:false} name='subImg2' src={subImg[2]?subImg[2]:'/image/used/plusIcon.png'} onClick={onSubImg}/>
+                            <S.DeleteImg setPosition={subImg[2]?true:false} id="2"  onClick={e=>deleteImg(e)}></S.DeleteImg>
                         </S.SubImgP>
-                        <S.SubImgP setPosition={subImg[3] ? true : false}>
-                            <S.SubImg
-                                sizing={subImg[3] ? true : false}
-                                name="subImg3"
-                                src={
-                                    subImg[3]
-                                        ? subImg[3]
-                                        : '/image/used/plusIcon.png'
-                                }
-                                onClick={onSubImg}
-                            />
-                            <S.DeleteImg
-                                setPosition={subImg[3] ? true : false}
-                                id="3"
-                                onClick={e => deleteImg(e)}
-                            ></S.DeleteImg>
+                        <S.SubImgP setPosition={subImg[3]?true:false}>
+                            <S.SubImg sizing={subImg[3]?true:false} name='subImg3' src={subImg[3]?subImg[3]:'/image/used/plusIcon.png'} onClick={onSubImg}/>
+                            <S.DeleteImg setPosition={subImg[3]?true:false} id="3"  onClick={e=>deleteImg(e)}></S.DeleteImg>
                         </S.SubImgP>
                     </S.SubImgBody>
+                    
                     {/* https://blog.munilive.com/posts/input-file-type-accept-attribute.html
                     파일 형식 제한은 accept이용.
                     다만 업로드 하는 사람이 형식을 모든 파일로 받으면 다른 파일로 업로드가 가능해진다.
                     유효성 검사 필요 */}
-                    <input
-                        type="file"
-                        name="img"
-                        style={{ display: 'none' }}
-                        accept=".jpg,.png, .jpeg, .gif"
-                        onChange={e => onImgRead(e)}
-                        ref={imgRef}
-                        multiple
-                    ></input>
-                    *이미지는 1대 1비율이 아니면 잘려서 보일 수 있습니다.
-                    <br></br>
+                    <input type='file' name="img" style={{display: 'none'}} accept=".jpg,.png, .jpeg, .gif" onChange={ e=>onImgRead(e) } ref={imgRef} multiple></input>
+                    *이미지는 1대 1비율이 아니면 잘려서 보일 수 있습니다.<br></br>
                     *이미지 파일만 업로드 가능합니다.
                 </S.ImgBody>
                 {/* onImgRead 함수가 파일 올렸을때 자동으로 땡겨지게해준다 */}
@@ -355,37 +288,33 @@ const NewUpdate = () => {
                         onChange={onInput}
                         placeholder={location.state.updateList[0].category}
                     />
-                    <S.Subject> 제품 카테고리 디테일 </S.Subject>
+                    <S.Subject> 태그 </S.Subject>
                     <S.SubTitle
                         type="text"
-                        name="categoryDetail"
+                        name="tag"
                         onChange={onInput}
-                        placeholder={
-                            location.state.updateList[0].categoryDetail
-                        }
+                        placeholder={location.state.updateList[0].tag}
                     />
-                    <S.Subject> 상세설명 이미지 </S.Subject>
+                    <S.Subject> 성별 </S.Subject>
                     <S.SubTitle
                         type="text"
-                        name="descriptionImg"
+                        name="gender"
                         onChange={onInput}
-                        placeholder={
-                            location.state.updateList[0].descriptionImg
-                        }
+                        placeholder={location.state.updateList[0].gender}
                     />
-                    <S.Subject> 판매가 </S.Subject>
+                    <S.Subject> 제품 모델 번호 </S.Subject>
                     <S.SubTitle
                         type="text"
-                        name="price"
+                        name="modelNum"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].price}
+                        placeholder={location.state.updateList[0].modelNum}
                     />
-                    <S.Subject> 상호명 </S.Subject>
+                    <S.Subject> 발매일 </S.Subject>
                     <S.SubTitle
                         type="text"
-                        name="businessName"
+                        name="releaseDate"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].businessName}
+                        placeholder={location.state.updateList[0].releaseDate}
                     />
                     <S.Subject> 색상 </S.Subject>
                     <S.SubTitle
@@ -394,61 +323,12 @@ const NewUpdate = () => {
                         onChange={onInput}
                         placeholder={location.state.updateList[0].color}
                     />
-                    <S.Subject> 사업자 번호 </S.Subject>
+                    <S.Subject> size </S.Subject>
                     <S.SubTitle
                         type="text"
-                        name="comRegNo"
+                        name="size"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].comRegNo}
-                    />
-                    <S.Subject> 대표자 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="representative"
-                        onChange={onInput}
-                        placeholder={location.state.updateList[0].representative}
-                    />
-                    <S.Subject> 사업장 소재지 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="businessLocation"
-                        onChange={onInput}
-                        placeholder={location.state.updateList[0].businessLocation}
-                    />
-                    <S.Subject> 고객센터 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="serviceCall"
-                        onChange={onInput}
-                        placeholder={location.state.updateList[0].serviceCall}
-                    />
-                    <S.Subject> 소재 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="material"
-                        onChange={onInput}
-                        placeholder={location.state.updateList[0].material}
-                    />
-                    <S.Subject> 제조 회사 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="manufacturer"
-                        onChange={onInput}
-                        placeholder={location.state.updateList[0].manufacturer}
-                    />
-                    <S.Subject> 제조국 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="countryOfManufacturer"
-                        onChange={onInput}
-                        placeholder={location.state.updateList[0].countryOfManufacturer}
-                    />
-                    <S.Subject> 제조 날짜 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="dateOfManufacturer"
-                        onChange={onInput}
-                        placeholder={location.state.updateList[0].dateOfManufacturer}
+                        placeholder={location.state.updateList[0].size}
                     />
 
                     {/* <S.Necessary>* 필수</S.Necessary>
@@ -472,25 +352,26 @@ const NewUpdate = () => {
                         </div>
                     </S.ItemKindPriceDiv> */}
 
-                    {/* <S.Necessary>* 필수</S.Necessary>
+                    <S.Necessary>* 필수</S.Necessary>
                     <S.Subject> 가격</S.Subject>
                     <S.PriceDiv>
                         <S.ItemPrice
                             type="number"
                             name="price"
                             onChange={onInput}
+                            placeholder={location.state.updateList[0].price}
                         />
                         <S.ItemPriceSpan>원</S.ItemPriceSpan>
-                    </S.PriceDiv> */}
+                    </S.PriceDiv>
 
                     {/* <S.Subject> 제품 설명</S.Subject>
                     <S.ItemContent name="contents" onChange={onInput} /> */}
 
-                    <S.WriteBtn onClick={onWrite}>작성 완료</S.WriteBtn>
+                    <S.WriteBtn onClick={onWrite}>새 상품 수정 완료</S.WriteBtn>
                 </S.Information>
             </S.WriteBody>
         </>
     );
 };
 
-export default NewUpdate;
+export default ReUpdate;

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faBoltLightning } from '@fortawesome/free-solid-svg-icons';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
-import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import * as Co from './ContentStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '../modal/Modal';
@@ -120,7 +119,6 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
     
     const photoshop = (itemImg) => {
         const img = itemImg.split(',');
-
         return img[0]
     }
 

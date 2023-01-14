@@ -120,9 +120,15 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
     };
     
     const photoshop = (itemImg) => {
-        const img = itemImg.split(',');
-
-        return img[0]
+        
+        // console.log(itemImg)
+        // console.log(typeof(itemImg))
+        
+        if( itemImg !== null) {
+            const img = itemImg.split(',');
+            return img[0];
+        }
+        
     }
 
     const[menuArray,setMenuArray]=useState([]);
@@ -290,7 +296,7 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                                     <Co.ProductImg
                                                         // src={item.img_web}
                                                         src={`/resellList/${photoshop(
-                                                            item.img,
+                                                            item.imgName,
                                                         )}`}
                                                     >
                                                         {/* picture 태그 사용시 밑에꺼 사용 */}
@@ -395,7 +401,7 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                                     <Co.ProductImg
                                                         // src={item.img_web}
                                                         src={`/resellList/${photoshop(
-                                                            item.img,
+                                                            item.imgName,
                                                         )}`}
                                                     >
                                                         {/* picture 태그 사용시 밑에꺼 사용 */}
