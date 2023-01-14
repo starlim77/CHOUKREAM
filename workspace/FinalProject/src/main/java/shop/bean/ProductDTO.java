@@ -40,7 +40,7 @@ public class ProductDTO {
    
    // 이미지 주소 
    @Column(name="imgName", length = 500)
-   private String img; 
+   private String imgName; 
    
    @Column(name="modelNum")
    private String modelNum;

@@ -282,8 +282,8 @@ const Products = () => {
     const [subImg3,setSubImg3] = useState('')
 
     useEffect(()=>{
-        if((form.img)){
-            const img = ((form.img).split(','))
+        if((form.imgName)){
+            const img = ((form.imgName).split(','))
 
             setMainImg(img[0])
 
