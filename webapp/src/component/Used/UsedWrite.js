@@ -4,12 +4,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './styleWrite';
 import tagData from './TagItem';
+import jwt_decode from 'jwt-decode';
 
 const UsedWrite = () => {
-
+    const[currentId,setCurrentId]=useState('user');
     const navigate = useNavigate();
     const[form,setForm] = useState({
-        id:'홍헌',
+        id:'',
         title : '',
         productName : '',
         kind : '',
@@ -17,12 +18,29 @@ const UsedWrite = () => {
         price : '',
         contents : '',
         hashTag : [],
-        sellingState:true
+        sellingState:true,
+        shopKind:'used'
         //지훈씨한테 들은 내용(홍헌)
         //배열은 데이터 보낼 때 배열로 안보내고 리액트 내에서 Stringify하면 문자열로 보낼 수 있다.
         //데이터를 받아오고 나서는 parse로 데이터를 풀어주면 된다.
     })
 
+    useEffect(()=>{
+        if(localStorage.getItem('accessToken')){
+            const token = localStorage.getItem('accessToken');
+            const tokenJson = jwt_decode(token);
+            const sub = tokenJson['sub'];
+            
+            axios.get(`http://localhost:8080/used/getId?seq=${sub}`)
+                .then(res=>setForm({...form,id:res.data}))
+                .catch(err=>console.log(err))
+        }else{
+            alert("글작성 권한이 없습니다.")
+            navigate("/login")
+        }
+
+    },[])
+   
     const [hashTag2,setHashTag2] = useState()
 
     const [count,setCount] = useState(0)
@@ -253,7 +271,13 @@ const UsedWrite = () => {
                     <S.PriceDiv><S.ItemPrice type='number' name= 'price' onChange={ onInput }/><S.ItemPriceSpan>원</S.ItemPriceSpan></S.PriceDiv>
 
                     <S.Subject> 제품 설명</S.Subject>
-                    <S.ItemContent name= 'contents' onChange={ onInput }/>
+                    <S.ItemContent name= 'contents' onChange={ onInput }
+                                                    placeholder=" 
+                                                                전화번호   : 010-0000-0000
+                                                                제품상태   : 신제품/극미중고/중고
+                                                                거래방법   : 직거래/택배 거래
+                                                                거래지역   : 예)서울 강남구
+                                                                "/>
 
 
                     <S.Subject> Hash Tag </S.Subject>

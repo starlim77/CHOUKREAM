@@ -7,25 +7,16 @@ import jwt_decode from 'jwt-decode';
 
 const UsedItem = () => {
    
-    if(localStorage.getItem('accessToken')){
-    const token = localStorage.getItem('accessToken');
-    const tokenJson = jwt_decode(token);
-    const sub = tokenJson['sub'];
-    
-
-    console.log(token);
-    console.log(tokenJson);
-    console.log(sub);
-    }
-   
-
-    
-
     const navigate = useNavigate();
     // console.log("seq = " + location.seq +" seq = "+ {seq})
     const shopKind = 'used'
 
+    const[currentId,setCurrentId]=useState('user');
+    const[isWriter,setIsWriter]=useState(false);
+
     const [searchParams,setSearchParams] = useSearchParams();
+
+    const[reportHistory,setReportHistory]=useState(false);
 
     const [form,setForm]=useState({
         id:'',
@@ -37,7 +28,8 @@ const UsedItem = () => {
         likes:'',
         contents:'',
         hashTag:[],
-        sellingState:true
+        sellingState:true,
+        shopKind:''
     });
     
 
@@ -50,24 +42,49 @@ const UsedItem = () => {
 
     
     useEffect(()=>{
+
+        if(localStorage.getItem('accessToken')){
+            const token = localStorage.getItem('accessToken');
+            const tokenJson = jwt_decode(token);
+            const sub = tokenJson['sub'];
+            
+            if(tokenJson['auth']==='ROLE_ADMIN'){
+                    setIsWriter(true);
+                    setCurrentId('ADMIN');
+            }else{
+            
+                axios.get(`http://localhost:8080/used/getId?seq=${sub}`)
+                    .then(res=>{setCurrentId(res.data)})
+                    .catch(err=>console.log(err))
+            }
+        }
+
         axios.get('http://localhost:8080/used/viewItem?seq=' + searchParams.get('seq'))
-        .then(res => setForm(res.data))
-        .then(axios.get('http://localhost:8080/used/itemLike?seq=' + searchParams.get('seq') + '&id=' + 'asd' + '&shopKind=' + shopKind)
-                    .then(res => res.data ? setLikeForm(res.data) : '')
-                    .catch(error => console.log(error)))
-        .catch(error => console.log(error))
+            .then(res => setForm(res.data))
+            .catch(error => console.log(error))
 
     },[])
 
     //나중에 세션값 들어오는 거랑 글 작성자랑 맞는지 확인하는 과정
-    const[isWriter,setIsWriter]=useState(false);
+    
     useEffect(()=>{
         //여기서 글로 써놓은 게 나중에 세션을 적어줄 공간
-        setIsWriter(form.id==='홍헌')
+        if(currentId===form.id){
+            setIsWriter(true);
+        }
 
     },[form.id])
-
     
+    useEffect(()=>{
+        axios.get(`http://localhost:8080/used/reportHistory?seq=${searchParams.get('seq')}&reportId=${currentId}`)
+            .then(res=>setReportHistory(res.data))
+            .catch(err=>console.log(err))
+
+        axios.get('http://localhost:8080/used/itemLike?seq=' + searchParams.get('seq') + '&id=' + currentId + '&shopKind=' + shopKind)
+            .then(res => res.data ? setLikeForm(res.data) : '')
+            .catch(error => console.log(error))
+    },[currentId])
+
 
     const [splitImg,setSplitImg] = useState([])
 
@@ -109,7 +126,7 @@ const UsedItem = () => {
         // // 데이터가 없어서 강제 주입
         // setLikeForm({...likeForm , seq:searchParams.get('seq'),id:'asd'})
 
-        axios.post(`http://localhost:8080/used/likeSet?seq=`+searchParams.get('seq') + '&id=' + 'asd' + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
+        axios.post(`http://localhost:8080/used/likeSet?seq=`+searchParams.get('seq') + '&id=' + currentId + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
         // axios.post('http://localhost:8080/used/likeSet',null,{params:likeForm})
         // axios.get('http://localhost:8080/used/likeSet'+   likeForm) 나중에 다시 해보기
         .then()
@@ -139,7 +156,6 @@ const UsedItem = () => {
     useEffect(()=>{
     
         var decoding= decodeURI(form.hashTag).split(',');
-        console.log(decoding);
         setForm({
             ...form,
             hashTag: decoding});
@@ -178,12 +194,16 @@ const UsedItem = () => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원';
     }
 
+    const onSettle=()=>{
+        navigate(`/pay/payForm?type=${form.shopKind}&productNum=${form.seq}`)
+    }
+
     return (
 
         <>
         <U.ModalDiv>
-            <UpdateBtnModal writer={isWriter} form={form} setForm={setForm} onSale={onSale} soldOut={soldOut}
-                        seq={searchParams.get('seq')} imgNameSend={form.imgName}></UpdateBtnModal>
+            <UpdateBtnModal currentId={currentId} isWriter={isWriter} form={form} setForm={setForm} onSale={onSale} soldOut={soldOut}
+                        seq={searchParams.get('seq')} imgNameSend={form.imgName} reportHistory={reportHistory}></UpdateBtnModal>
         </U.ModalDiv>
         <U.BaseBody>
             
@@ -234,14 +254,15 @@ const UsedItem = () => {
             <br></br>
 
 
-                <U.ChatButton>채팅하기</U.ChatButton>
+                {/* <U.ChatButton>채팅하기</U.ChatButton> */}
+                <U.SettlementButton onClick={onSettle}>결제하기</U.SettlementButton>
             </U.BaseDiv>
         </U.BaseBody>
         
         <U.BottomDiv>
             <U.ProfileWrapper>
                 <U.ProfileImg></U.ProfileImg>
-                <U.ProfileSpan>아이디/거래수/거래이슈</U.ProfileSpan>
+                <U.ProfileSpan>작성자:{form.id}/거래수/거래이슈</U.ProfileSpan>
             </U.ProfileWrapper>
         </U.BottomDiv>
 

@@ -7,11 +7,15 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import member.bean.MemberDto;
+import member.dao.MemberDAO;
 import shop.bean.NewProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.bean.UsedItemLikeDTO;
+import shop.bean.UsedItemReportDTO;
 import shop.dao.UsedItemDAO;
 import shop.dao.UsedItemLikeDAO;
+import shop.dao.UsedItemReportDAO;
 
 @Service
 public class UsedItemServiceImpl implements UsedItemService {
@@ -21,6 +25,9 @@ public class UsedItemServiceImpl implements UsedItemService {
 	
 	@Autowired
 	private UsedItemLikeDAO usedItemLikeDAO;
+	
+	@Autowired
+	private UsedItemReportDAO usedItemReportDAO;
 	
 	@Override
 	public void upload2(UsedItemDTO usedItemDTO) {
@@ -120,7 +127,43 @@ public class UsedItemServiceImpl implements UsedItemService {
 		}else
 			return usedItemDAO.getSearchTitle(keyword);
 	}
-	
+
+
+	@Override
+	public String getId(int seq) {
+		
+		return usedItemDAO.getId(seq);
+		
+	}
+
+
+	@Override
+	public void report(UsedItemReportDTO usedItemReport) {
+		
+		usedItemReportDAO.save(usedItemReport);
+	}
+
+
+	@Override
+	public boolean reportHistory(int seq, String reportId) {
+
+//		boolean result = usedItemReportDAO.reportHistory(seq, reportId);
+		
+		UsedItemReportDTO result = usedItemReportDAO.reportHistory(seq, reportId);
+		System.out.println(result);
+		if(result!=null) return true;
+		else return false; 
+	}
+
+
+	@Override
+	public List<UsedItemDTO> getAdminItem() {
+		//어드민에 뿌릴 값 가져오기
+		return usedItemDAO.getAdminItem();
+	}
+
+
+
 
 	
 }
