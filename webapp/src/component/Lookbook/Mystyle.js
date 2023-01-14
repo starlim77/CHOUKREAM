@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as S from './style';
 import { Link } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
+import * as M from '../Products/style';
 
 
 
@@ -14,13 +15,16 @@ const Mystyle = () => {
     const [form, setForm] = useState({
         id: '',    //멤버id = long type....
         content: '',
+        productSeq: ''
     })
-    const {id, content} = form  
+    const {id, content, productSeq} = form  
 
     const imgRef = useRef();
     const [file, setFile] = useState([])
     const [showImgSrc,setShowImgSrc] = useState([]);
     const [styleBoardWriteOpen, setStyleBoardWriteOpen] = useState(false);
+    const [product, setProduct] = useState(false);
+
     const [listCount, setListCount] = useState(0);
     
     const [myList, setMyList] = useState([]);   //등록한 게시물 확인
@@ -156,10 +160,50 @@ const Mystyle = () => {
         }
     }
 
- 
+    const productSearch = (e) => {
+        e.preventDefault();
+        setProduct(true);
+
+    }
+
+    const [keyword, setKeyword] = useState('');
+    const [productList, setProductList] = useState([{
+        seq: "", img: "", price: "", title: "", brand: ""
+    }]);
+    const onSearch = (e) => {
+        e.preventDefault();
+
+        keyword.length > 1 ?
+
+        axios.get( `http://localhost:8080/lookbook/search?keyword=${keyword}`)
+             .then(res => setProductList(res.data))
+             .catch(error => console.log(error))
+
+        : alert('2글자 이상 입력하세요')
+
+       
+    }
+
+    const photoshop = (itemImg) => {
+        const img = (itemImg.split(','))
+        return img[0]
+    }
+
+    const productClick = (seq) => {
+        setForm({
+            ...form, productSeq:seq
+        })
+
+        console.log(seq , productSeq)
+
+
+    }
+
 
     return (
         <Container fixed>
+  
+
             <S.MyDiv>
                 <div>
                     <img name='myProfile' width='130px' src='../image/myProfile.png' alt='마이프로필' 
@@ -211,7 +255,54 @@ const Mystyle = () => {
                             </S.showImgSrcDiv>
                             <S.Button>이전</S.Button>
                             <S.Button>다음</S.Button>
-                            <button>상품검색</button>
+                            <S.Button onClick={(e) => productSearch(e)} >상품검색 
+                                <Dialog open={product}>
+                                    <DialogContent style={{width:'500px', height:'100px'}}>
+                                        
+                                        <input type='text' name='keyword' value={ keyword } onChange={ e=> setKeyword(e.target.value.trim()) }/> &nbsp;
+                                        <button onClick={ onSearch }>검색</button>
+                                        {
+                                            productList[0].img !== '' &&
+
+                                            productList.map((item, index) => (
+                                                <M.ProductItem key={index} onClick={ () => productClick(item.seq) }>
+                                                    <M.ItemInner>
+                                                        <div className='thumb_box'>
+                                                            <M.Product>
+                                                                <M.PictureBrandProductImg>
+                                                                    <M.BrandProductImg src={`/resellList/${photoshop(item.img)}`}/>
+                                                                </M.PictureBrandProductImg>
+                                                            </M.Product>
+                                                        </div>
+                                                        <M.ProductItemInfoBox>
+                                                        <div className='info_box'>
+                                                            <div className='brand'>
+                                                                <M.BrandTextWithOutWish>{item.brand}</M.BrandTextWithOutWish>
+                                                            </div>
+                                                            <M.BrandProductInfoBoxName>{item.title}</M.BrandProductInfoBoxName>
+                                                            <M.BrandProductInfoBoxPrice>
+                                                                <M.BrandProductInfoBoxPriceAmount>
+                                                                    <M.BrandProductInfoBoxPriceAmountNum>{item.price}</M.BrandProductInfoBoxPriceAmountNum>
+                                                                </M.BrandProductInfoBoxPriceAmount>
+                                                                <M.BrandProductInfoBoxPriceDesc>즉시 구매가</M.BrandProductInfoBoxPriceDesc>
+                                                            </M.BrandProductInfoBoxPrice>
+                                                        </div>
+                                                    </M.ProductItemInfoBox>
+                                                    </M.ItemInner>
+                                                </M.ProductItem>))
+                                        }
+
+{/*                                         
+                                        <Button onClick={ ()=>{setStyleBoardWriteOpen(false)} }>닫기</Button> */}
+                                  
+
+                                    </DialogContent>
+  
+                                            
+                                </Dialog>
+                            </S.Button>
+                           
+
                             </S.Container>
 
 

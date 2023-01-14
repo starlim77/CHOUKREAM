@@ -43,7 +43,7 @@ public class StyleDTO {
 	
 	private int likesCount;
 	
-	private int productSeq;
+	private Integer productSeq;
 
 	
 	public static StyleDTO toStyleDTO(StyleEntity styleEntity) {

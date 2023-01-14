@@ -33,6 +33,7 @@ import lookbook.service.StyleFollowingService;
 import lookbook.service.StyleLikesService;
 import lookbook.service.StyleService;
 import member.bean.MemberDto;
+import shop.bean.ProductDTO;
 
 
 @RestController
@@ -134,10 +135,10 @@ public class styleController {
     
     //보드등록시 상품검색하기
 	@GetMapping(value="search")
-	public void search(@RequestParam Map<String, String> map){ //searchOption, keyword
-//		System.out.println(map);  //진짜오는지 찍어보기
-//		return userService.search(map);
+	public List<ProductDTO> search(@RequestParam String keyword){ 
+		System.out.println(keyword + "==============");
 		
+		return styleService.search(keyword);
 	}
 	
 //댓글

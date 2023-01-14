@@ -130,11 +130,11 @@ const UsedItem = () => {
             
             <U.ImgBody>
                 <U.MainImg src={`/storage/${mainImg}`} alt={mainImg}></U.MainImg>
-                <U.SmallImgBody>
+                {/* <U.SmallImgBody>
                     {subImg1&&<U.SmallImg src={`/storage/${subImg1}`} id="1" onClick={e=>changImg(e)}></U.SmallImg>}
                     {subImg2&&<U.SmallImg src={`/storage/${subImg2}`} id="2" onClick={e=>changImg(e)}></U.SmallImg>}
                     {subImg3&&<U.SmallImg src={`/storage/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg>}
-                </U.SmallImgBody>
+                </U.SmallImgBody> */}
             </U.ImgBody>&emsp;
 
 

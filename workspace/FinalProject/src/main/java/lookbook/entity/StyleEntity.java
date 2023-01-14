@@ -55,7 +55,7 @@ public class StyleEntity {
 	private int likesCount;
 	
 	@Column
-	private int productSeq;
+	private Integer productSeq;
 	
 	
 	@OneToMany(mappedBy = "styleEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
