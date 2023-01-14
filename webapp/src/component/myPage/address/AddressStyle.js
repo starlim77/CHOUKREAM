@@ -43,7 +43,6 @@ export const NoneAddress = styled.div`
     height: 50%;
     justify-content: center;
     align-content: center;
-    border: 1px solid black;
     flex-wrap: wrap;
 `;
 export const NoneText = styled.div`

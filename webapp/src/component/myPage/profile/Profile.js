@@ -1,8 +1,10 @@
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import * as S from './ProfileStyle';
 
 const Profile = () => {
+    const memberSeq = jwtDecode(localStorage.getItem("accessToken")).sub
     const [member, setMember] = useState({});
     const [isOpen, setIsOpen] = useState(false);
     const [openedSection, setOpendSection] = useState();
@@ -21,7 +23,7 @@ const Profile = () => {
     // 회원정보 불러옴
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/getMember?id=1`)
+            .get(`http://localhost:8080/getMember?id=${memberSeq}`)
             .then(res => setMember(res.data));
     }, []);
 
@@ -50,7 +52,7 @@ const Profile = () => {
             return;
         }
         axios
-            .post(`http://localhost:8080/updateEmail?id=1&email=${email}`)
+            .post(`http://localhost:8080/updateEmail?id=${memberSeq}&email=${email}`)
             .then(res => setMember(res.data))
             .catch(error => console.log(error))
         setIsOpen(false);

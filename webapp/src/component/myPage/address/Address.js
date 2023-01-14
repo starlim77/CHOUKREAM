@@ -16,7 +16,7 @@ const Address = () => {
             .get('http://localhost:8080/my/getAllAddress', {
                 params: { id },
             })
-            .then(res => {setAddressList(res.data)})
+            .then(res => {setAddressList(res.data);})
             .catch(err => console.log(err));
     }, [modals]);
 

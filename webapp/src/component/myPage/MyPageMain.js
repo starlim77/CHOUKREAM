@@ -1,21 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import * as S from './MyPageMainStyle';
 import HistoryProduct from './HistoryProduct';
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 const MyPageMain = () => {
+    const memberSeq = jwtDecode(localStorage.getItem("accessToken")).sub
     const [member, setMember] = useState({})
     const [point, setPoint] = useState()
 
     //회원정보 불러옴 / 회원 등급 불러옴
     useEffect(() => {
-        axios.get(`http://localhost:8080/getMember?id=1`)
+        axios.get(`http://localhost:8080/getMember?id=${memberSeq}`)
              .then(res => setMember(res.data))
-
-        axios.get(`http://localhost:8080/my/getHavePoint?id=starlim777@naver.com`)
-             .then(res => setPoint(res.data))
     }, [])
 
+    //회원 포인트 가져옴
+    useEffect(() => {
+        axios.get(`http://localhost:8080/my/getHavePoint?id=${member.email}`)
+        .then(res => setPoint(res.data))
+    }, [member])
 
     return (
         <S.MainWrapper>
