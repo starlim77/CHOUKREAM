@@ -7,7 +7,6 @@ import * as S from './AddressStyle';
 const Address = () => {
     const navigate = useNavigate();
     const [modals, setModals] = useState([false, false]);
-    // const [id, setId] = useState()
     const [shipInfo, setShipInfo] = useState();
     const [addressList, setAddressList] = useState([]);
     const id = 'hong@gmail.com';
@@ -17,11 +16,9 @@ const Address = () => {
             .get('http://localhost:8080/my/getAllAddress', {
                 params: { id },
             })
-            .then(res => {
-                setAddressList(res.data);
-            })
+            .then(res => {setAddressList(res.data)})
             .catch(err => console.log(err));
-    }, []);
+    }, [modals]);
 
     const onAddressDelete = seq => {
         window.confirm('정말로 삭제 하시겠습니까?') &&
