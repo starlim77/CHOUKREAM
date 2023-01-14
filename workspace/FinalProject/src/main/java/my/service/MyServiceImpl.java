@@ -59,4 +59,12 @@ public class MyServiceImpl implements MyService{
 	public Optional<GradeDTO> getGrade(String id) {
 		return gradeDAO.findById(id);
 	}
+	@Override
+	public void saveGradeNewMember(String email) {
+		GradeDTO gradeDTO = new GradeDTO();
+		gradeDTO.setId(email);
+		gradeDTO.setGrade("일반회원");
+		gradeDAO.save(gradeDTO);
+		
+	}
 }

@@ -26,16 +26,17 @@ const PayForm = () => {
 
     const type = searchParams.get('type');
     const productNum = searchParams.get('productNum');
-    const size = searchParams.get('size');
+    const [size, setSize] = useState(searchParams.get('size'));
     const orderNum = searchParams.get('orderNum');
 
     const [imgName, setImgName] = useState('');
     const [modelNum, setModelNum] = useState('');
-    const [productName, setProductName] = useState('');
+    const [productName, setProductName] = useState('샘플 이름');
     const [productSubName, setProductSubName] = useState('');
 
     const [productPrice, setProductPrice] = useState(0);
     const [payPrice, setPayPrice] = useState(0);
+    const [fee, setFee] = useState(0);
 
     const [shipInfo, setShipInfo] = useState({
         shipName: '',
@@ -98,8 +99,19 @@ const PayForm = () => {
                 .catch(err => console.log(err));
         } else if (type === 'used') {
             axios
-                .get('http://local')
-                .then()
+                .get('http://localhost:8080/used/viewItem?seq=' + productNum)
+                .then(res => {
+                    setImgName(res.data.imgName);
+                    setProductName(res.data.productName);
+                    setSize(res.data.size);
+                    setFee(Math.floor(res.data.price * 0.1));
+                    setPayPrice(
+                        res.data.price + Math.floor(res.data.price * 0.1),
+                    );
+                    setProductPrice(res.data.price);
+
+                    console.log(JSON.stringify(res.data));
+                })
                 .catch(err => console.log(err));
         }
     }, []);
@@ -219,7 +231,8 @@ const PayForm = () => {
                 pg: 'html5_inicis',
                 pay_method: 'card',
                 merchant_uid: orderNumber,
-                name: /*productName*/ 'asdf',
+                name: productName,
+                // name: 'asdf',
                 amount: payPrice,
                 buyer_email: id,
                 buyer_name: '',
@@ -446,6 +459,12 @@ const PayForm = () => {
                                 : '-' + addComma(usePoint) + 'P'}
                         </S.PriceDD>
                     </S.PriceDL>
+                    {type === 'used' ? (
+                        <S.PriceDL>
+                            <S.PriceDT>수수료</S.PriceDT>
+                            <S.PriceDD>{'+' + addComma(fee) + '원'}</S.PriceDD>
+                        </S.PriceDL>
+                    ) : null}
                     <S.PriceDL>
                         <S.PriceDT>배송비</S.PriceDT>
                         <S.PriceDD>무료</S.PriceDD>
@@ -458,9 +477,9 @@ const PayForm = () => {
                     <S.OrderNormalTitle>일반 결제</S.OrderNormalTitle>
                     <S.OrderNormalDesc>일시불・할부</S.OrderNormalDesc>
                 </S.OrderNormal>
-                <S.PayWay>
+                {/* <S.PayWay>
                     <S.PayWayImg src="/image/payment/kg_inisis_logo.png"></S.PayWayImg>
-                </S.PayWay>
+                </S.PayWay> */}
                 <S.PayWayAlert>
                     ※ 신용카드, 카카오페이, 네이버페이, PAYCO 등 결제수단은 결제
                     버튼 클릭 후 선택 가능합니다.

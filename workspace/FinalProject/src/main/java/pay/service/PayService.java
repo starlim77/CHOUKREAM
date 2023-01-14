@@ -19,5 +19,7 @@ public interface PayService {
 	public Optional<OrderDTO> getOrderTableBySeq(int seq);
 
 	public void checkAndChangeGrade(String id);
+
+	public void cancelPay(String orderNumber);
 	
 }

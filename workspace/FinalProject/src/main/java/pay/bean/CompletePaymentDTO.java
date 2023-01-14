@@ -71,4 +71,6 @@ public class CompletePaymentDTO {
 	@CreationTimestamp
 	private LocalDateTime logTime;
 	
+	@Column
+	private int accuralPoint;
 }

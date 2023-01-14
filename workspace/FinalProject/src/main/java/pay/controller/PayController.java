@@ -36,6 +36,12 @@ public class PayController {
 	public void completePay(@ModelAttribute CompletePaymentDTO completePaymentDTO) {
 		payService.completePay(completePaymentDTO);
 	}
+	@RequestMapping(path = "cancelPay")
+	public void cancelPay(@RequestParam String orderNumber) {
+		payService.cancelPay(orderNumber);
+	}
+	
+	
 	@GetMapping(path = "getSellBidsPriceMin")
 	public Optional<BidsListDTO> getSellBidsPriceMin(String size, int seq){
 		return payService.getSellBidsPriceMin(size, seq);
@@ -45,6 +51,7 @@ public class PayController {
 	public Optional<BidsListDTO> getBuyBidsPriceMax(String size, int seq){
 		return payService.getBuyBidsPriceMax(size, seq);
 	}
+	
 	
 	
 	

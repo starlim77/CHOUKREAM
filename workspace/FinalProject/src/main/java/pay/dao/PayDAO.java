@@ -24,4 +24,11 @@ public interface PayDAO<T> extends JpaRepository<CompletePaymentDTO, Integer> {
 	@Query(nativeQuery = true, value = "select sum(pay_price) as totalPrice from complete_payment where id = :id and status = '결제완료' group by id")
 	public int getAllPayPrice(String id);
 
+	@Query(nativeQuery = true, value = "select * from complete_payment where order_number = :orderNumber")
+	public Optional<CompletePaymentDTO> findByOrderNumber(String orderNumber);
+
+	@Query(nativeQuery = true, value = "update complete_payment set status = '결제취소' where order_number = :orderNumber")
+	public void ChangeStatusColumn(String orderNumber);
+	
+
 }
