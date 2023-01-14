@@ -7,6 +7,7 @@ import java.util.Optional;
 import shop.bean.NewProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.bean.UsedItemLikeDTO;
+import shop.bean.UsedItemReportDTO;
 
 public interface UsedItemService {
 
@@ -35,5 +36,9 @@ public interface UsedItemService {
 	public List<UsedItemDTO> search(Map<String, String> map);
 
 	public String getId(int seq);
+
+	public void report(UsedItemReportDTO usedItemReport);
+
+	public boolean reportHistory(int seq,String reportId);
 
 }

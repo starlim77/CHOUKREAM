@@ -12,8 +12,10 @@ import member.dao.MemberDAO;
 import shop.bean.NewProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.bean.UsedItemLikeDTO;
+import shop.bean.UsedItemReportDTO;
 import shop.dao.UsedItemDAO;
 import shop.dao.UsedItemLikeDAO;
+import shop.dao.UsedItemReportDAO;
 
 @Service
 public class UsedItemServiceImpl implements UsedItemService {
@@ -23,6 +25,9 @@ public class UsedItemServiceImpl implements UsedItemService {
 	
 	@Autowired
 	private UsedItemLikeDAO usedItemLikeDAO;
+	
+	@Autowired
+	private UsedItemReportDAO usedItemReportDAO;
 	
 	@Override
 	public void upload2(UsedItemDTO usedItemDTO) {
@@ -126,12 +131,32 @@ public class UsedItemServiceImpl implements UsedItemService {
 
 	@Override
 	public String getId(int seq) {
-		String sending=usedItemDAO.getId(seq);
-		System.out.println(sending);
-		return sending;
+		
+		return usedItemDAO.getId(seq);
 		
 	}
-	
+
+
+	@Override
+	public void report(UsedItemReportDTO usedItemReport) {
+		
+		usedItemReportDAO.save(usedItemReport);
+	}
+
+
+	@Override
+	public boolean reportHistory(int seq, String reportId) {
+		System.out.println("컨트롤러 옴? "+reportId + "  " +seq);
+//		boolean result = usedItemReportDAO.reportHistory(seq, reportId);
+		
+		UsedItemReportDTO result = usedItemReportDAO.reportHistory(seq, reportId);
+		System.out.println(result);
+		if(result!=null) return true;
+		else return false; 
+	}
+
+
+
 
 	
 }

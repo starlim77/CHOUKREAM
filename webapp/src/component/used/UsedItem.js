@@ -13,9 +13,10 @@ const UsedItem = () => {
 
     const[currentId,setCurrentId]=useState('user');
     const[isWriter,setIsWriter]=useState(false);
-    
-    
+
     const [searchParams,setSearchParams] = useSearchParams();
+
+    const[reportHistory,setReportHistory]=useState(false);
 
     const [form,setForm]=useState({
         id:'',
@@ -49,6 +50,7 @@ const UsedItem = () => {
             
             if(tokenJson['auth']==='ROLE_ADMIN'){
                     setIsWriter(true);
+                    setCurrentId('ADMIN');
             }else{
             
                 axios.get(`http://localhost:8080/used/getId?seq=${sub}`)
@@ -73,9 +75,15 @@ const UsedItem = () => {
         if(currentId===form.id){
             setIsWriter(true);
         }
-    },[form.id])
 
+    },[form.id])
     
+    useEffect(()=>{
+        axios.get(`http://localhost:8080/used/reportHistory?seq=${searchParams.get('seq')}&reportId=${currentId}`)
+            .then(res=>setReportHistory(res.data))
+            .catch(err=>console.log(err))
+    },[currentId])
+
 
     const [splitImg,setSplitImg] = useState([])
 
@@ -189,8 +197,8 @@ const UsedItem = () => {
 
         <>
         <U.ModalDiv>
-            <UpdateBtnModal writer={isWriter} form={form} setForm={setForm} onSale={onSale} soldOut={soldOut}
-                        seq={searchParams.get('seq')} imgNameSend={form.imgName}></UpdateBtnModal>
+            <UpdateBtnModal currentId={currentId} isWriter={isWriter} form={form} setForm={setForm} onSale={onSale} soldOut={soldOut}
+                        seq={searchParams.get('seq')} imgNameSend={form.imgName} reportHistory={reportHistory}></UpdateBtnModal>
         </U.ModalDiv>
         <U.BaseBody>
             <U.ImgBody>

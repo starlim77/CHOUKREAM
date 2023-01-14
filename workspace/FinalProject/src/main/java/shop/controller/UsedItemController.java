@@ -27,6 +27,7 @@ import jakarta.servlet.http.HttpSession;
 import shop.bean.NewProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.bean.UsedItemLikeDTO;
+import shop.bean.UsedItemReportDTO;
 import shop.dao.UsedItemDAO;
 import shop.service.UsedItemService;
 
@@ -229,5 +230,16 @@ public class UsedItemController {
 		
 		
 		return usedItemService.getId(seq);
+	}
+	
+	@PostMapping("report")
+	public void report(@ModelAttribute UsedItemReportDTO usedItemReport) {
+		usedItemService.report(usedItemReport);
+	}
+	
+	@GetMapping("reportHistory")
+	public boolean reportHistory(@RequestParam int seq, @RequestParam String reportId) {
+		
+		return usedItemService.reportHistory(seq, reportId );
 	}
 }
