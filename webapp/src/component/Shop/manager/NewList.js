@@ -225,6 +225,9 @@ const NewList = () => {
     }, [updateBool]);
     
     
+    console.log('카피 ' + copy_newProductList)
+    console.log('뉴 ' + newProductList)
+    
     return (
         <>
             <Link to={'/admin/newWrite'} style={{ textDecoration: 'none' }}>
@@ -367,6 +370,7 @@ const NewList = () => {
                     </Li.Tr>
                 </Li.Thead>
                 <Li.Tbody>
+                    
                     {copy_newProductList
                         .slice(offset, offset + limit)
                         .map(item => (

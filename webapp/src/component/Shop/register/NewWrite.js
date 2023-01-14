@@ -11,11 +11,7 @@ const NewWrite = () => {
         brand: '',
         category: '',
         categoryDetail: '',
-        gender: '',
-        modelNum: '',
         releaseDate: '',
-        color: '',
-        size: '',
         price: '',
     });
 
@@ -25,11 +21,7 @@ const NewWrite = () => {
         brand,
         category,
         categoryDetail,
-        gender,
-        modelNum,
         releaseDate,
-        color,
-        size,
         price,
     } = form;
 
@@ -58,13 +50,13 @@ const NewWrite = () => {
         // console.log(--sw);
         file[0] || (--sw && alert('이미지 파일을 등록해주세요'));
         // false ||
-        if (!title) {
-            sw = 0;
-        } else if (category === '상품 종류' || !category) {
-            sw = 0;
-        } else if (!price) {
-            sw = 0;
-        }
+        // if (!title) {
+        //     sw = 0;
+        // } else if (category === '상품 종류' || !category) {
+        //     sw = 0;
+        // } else if (!price) {
+        //     sw = 0;
+        // }
 
         var formData = new FormData();
         file.map(files => formData.append('img', files)); // 무조건 문자열로 반환된다

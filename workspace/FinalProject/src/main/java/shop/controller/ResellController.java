@@ -196,6 +196,7 @@ public class ResellController {
 			 System.out.println("imgName " + imgName);
 			 productDTO.setImgName(imgName);
 		} catch (IOException e) {
+			System.out.println("업로드 에러 ");
 			e.printStackTrace();
 		}//복사
 				 

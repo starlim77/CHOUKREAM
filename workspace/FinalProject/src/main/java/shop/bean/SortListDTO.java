@@ -1,5 +1,8 @@
 package shop.bean;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public interface SortListDTO {
 	String getBrand();
 	String getTitle();

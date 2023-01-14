@@ -13,9 +13,9 @@ const NewProductList = ({
 }) => {
     //
 
-    // console.log('ㅎㅎㅇ')
+    console.log('ㅎㅎㅇ')
     // 왜 2번이 나올까 처음엔 [] 그다음엔 [객체]
-    // console.log(copy_newProductList);
+    console.log(copy_newProductList);
 
     const arr = JSON.stringify(item.imgName).split(',');
     const str = arr[0].slice(1);
@@ -83,7 +83,9 @@ const NewProductList = ({
             }
         });
     };
-
+    
+    // 1/13 여기가 문제임 
+    
     return (
         <>
             {/* map 오류 뜰때 && 연산자 씀으로 list가 있을때만 돌릴수 있다 */}
