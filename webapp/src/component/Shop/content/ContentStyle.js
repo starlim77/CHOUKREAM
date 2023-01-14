@@ -367,7 +367,7 @@ export const Product = styled.div`
     padding-top: 100%;
     display: block;
 `;
-export const ProductImg = styled.picture`
+export const ProductImg = styled.img`
     display: flex;
     width: 100%;
     height: auto;
@@ -616,6 +616,7 @@ export const ReviewLink = styled.a`
     box-sizing: border-box;
     cursor: pointer;
 `;
+
 // export const  = styled.div`
 
 // `;

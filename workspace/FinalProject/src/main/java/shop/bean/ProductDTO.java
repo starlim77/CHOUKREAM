@@ -28,20 +28,19 @@ public class ProductDTO {
    @Column(name="brand", length = 30)
    private String brand;
    
-   @Column(name="title", length = 100) // 제품 영어이름
-   private String title;  
-   
-   @Column(name="subTitle", length = 100) // 한글이름
-   private String subTitle;
-   
    @Column(name="category", length = 30)
    private String category;
-
-   @Column(name="categoryDetail", length = 30)
-   private String categoryDetail;
    
+   // 0남자 1여자 2무관
    @Column(name="gender")
    private int gender;
+   
+   @Column(name="color")
+   private String color;
+   
+   // 이미지 주소 
+   @Column(name="imgName", length = 500)
+   private String img; 
    
    @Column(name="modelNum")
    private String modelNum;
@@ -52,18 +51,15 @@ public class ProductDTO {
    @Column(name="releasePrice")
    private int releasePrice;
    
-   @Column(name="color")
-   private String color;
+   @Column(name="subTitle", length = 100) // 한글이름
+   private String subTitle;
    
-   
-//   @CreationTimestamp // 엔티티가 생성되는 시점의 시간 등록
-//   private Timestamp logtime;
-   
-//   @Column(name="interest" , length = 20)
-//   private int interest;
-//   
-//   @Column(name="follow" , length = 20)
-//   private int follow;
+   @Column(name="title", length = 100) // 제품 영어이름
+   private String title;  
+ 
+   // tag 신발 ~ 기타 
+   @Column(name="tag", length = 30)
+   private String tag;
 }
 
 

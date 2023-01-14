@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Layout from './component/Layout/Layout';
 
@@ -48,6 +48,7 @@ import MyPageMain from './component/myPage/MyPageMain';
 import MyPageApp from './component/myPage/MyPageApp';
 import NewUpdate from './component/Shop/manager/NewUpdate';
 import Following from './component/Lookbook/Following';
+import jwt_decode from 'jwt-decode';
 
 function App() {
     return (

@@ -47,4 +47,16 @@ public class CompletedOrderDTO {
 	
 	@Column(name="tradeDate", length = 30)
 	private Date tradeDate; 
+	
+	@Column(name="shipName")
+	private String shipName;
+	
+	@Column(name="shipPhone")
+	private String shipPhone;
+	
+	@Column(name="shipAddress")
+	private String shipAddress;
+	
+	@Column(name="ask")
+	private String ask;
 }
