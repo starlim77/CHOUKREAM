@@ -93,6 +93,7 @@ margin: 16px 0 20px;
 padding: 15px 43px 15px 12px;
 font-size: 12px;
 outline: none;
+
 `
 export const NoResult = styled.div`
     position: relative;
@@ -174,5 +175,33 @@ align-content: center;
 
 font-size :20px;
 justify-content: space-around;
+
+`
+export const CategoryButtonClick =styled.button`
+border: none;
+background-color : transparent;
+margin-top : 25px;
+align-items: center;
+align-content: center;
+font-color : black;
+font-size :20px;
+justify-content: space-around;
+
+`
+
+export const SearchReset = styled.span`
+
+`
+export const  UpdownIcon = styled.div`
+margin-left: auto;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+
+`
+export const StrongCategory = styled.strong`
+font-weight :bold;
+`
+export const TitleDiv =styled.div`
 
 `

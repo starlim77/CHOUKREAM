@@ -24,14 +24,16 @@ const CsFaqUpdateForm = () => {
     const [img1, setImg1] = useState();
 
     const [form, setForm] = useState({
+        id : '',
         category: '',
         title: '',
         content: '',
         filename:''
     });
-    const { category, title, content,filename } = form;
+    const { id,category, title, content,filename } = form;
     const editorRef = useRef();
     useEffect(() => {
+        
         axios
             .get(`http://localhost:8080/cs/getBoard?seq=${seq}`) //
 

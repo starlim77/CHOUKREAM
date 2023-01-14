@@ -5,16 +5,33 @@ import CsNav from './Csnav/CsNav';
 import { SearchInpt } from './style';
 
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
-import CsFaqWriteForm from './CsFaqWriteForm';
+
 import axios from 'axios';
 import { Viewer } from '@toast-ui/react-editor';
 import Paging from './Paging.js';
 import * as C from './CsFaqStyle';
+import jwt_decode from 'jwt-decode';
+import { IconName, RxChevronDown, RxChevronUp, RxCrossCircled } from "react-icons/rx";
+import { icon } from '@fortawesome/fontawesome-svg-core';
 
 
 
 
 const CsFaq = () => {
+    const token = localStorage.getItem('accessToken');
+    const [auth, setAuth] = useState('ROLE_GUEST');
+    const [tokenId, settokenId] = useState('')
+    useEffect(() => {
+        if (token !== null) {
+            const tokenJson = jwt_decode(token);
+            setAuth(tokenJson['auth']);
+            //localStorage.setItem('userInfo', JSON.stringify(tokenJson));
+            settokenId(tokenJson['sub']);
+            // setForm({...form, id:tokenId})
+        }
+    }, [token]);
+
+
     
     const [list, setList] =useState([])
     const [style, setStyle] = useState('');
@@ -83,10 +100,21 @@ const CsFaq = () => {
     const setPage = (error) => {
         setCurrentPage(error);
       };
+  
+    const [visibleReset ,setVisibleRest] = useState(false)  
    const onInput = (e) =>{
     setKeyword (e.target.value) 
-    setStyle('')
-   }
+    console.log(keyword)
+   
+    setVisibleRest(true)
+
+}
+const onReset =(e)=>{
+    setKeyword('')
+    setVisibleRest(false)
+}
+ 
+   
     const onClickCategory = (e) => {
        // e.preventDefault();
        setCategory(e.target.value); 
@@ -108,20 +136,17 @@ const CsFaq = () => {
         
         
     }
- /*
-    list = useMemo(()=> {
-        return list.filter(item =>  item.name.toLowerCase().includes(text.toLowerCase())) //data값이 직접 받는 것이라서 return이 setDAta가 아니라 바로 ???
 
-    },[search])
-    
-    search 다시 하기
-   */
-
-    const handleClickItem = id => {
+    const [upanddown ,setUpanddown] =useState(true)
+    const handleClickItem =(id)  => {
         setVisible({
-            ...visible, //이전까지  visible은 그대로 
+         //   ...visible, //이전까지  visible은 그대로 
+            
             [id]: !visible[id],  //[변수명] : 값  //  !visilble(false) -> true  만약  true면 반대로 false :  토글??
+            
         });
+      
+     
     };
 
     const onDelete =(e) =>{
@@ -149,32 +174,41 @@ const CsFaq = () => {
         <>
            
        
-           
-            <C.SearchInput type ='text' value={keyword} onChange = { onInput} onKeyPress={onKeyPress} placeholder='검색'/>
+            <div>
+              
+            {tokenId}
+            {visibleReset ?
+            <C.SearchReset  onClick={onReset}><RxCrossCircled/></C.SearchReset>  : <C.SearchReset ></C.SearchReset>     }
+            
+            <C.SearchInput type ='search' value={keyword} onChange = { onInput} onKeyPress={onKeyPress} placeholder='검색'/>
+          
+            </div>
           
            
             <C.CsCategoryTable>
                 <C.CsCategoryTbody>
                 <C.CsCategoryTr>
-                    <C.CsCategoryTd ><C.CategoryButton onClick={onClickCategory}  value='buying'> buying</C.CategoryButton></C.CsCategoryTd>
-                    <C.CsCategoryTd ><C.CategoryButton onClick={onClickCategory}  value='policy'>policy</C.CategoryButton></C.CsCategoryTd>
-                    <C.CsCategoryTd><C.CategoryButton onClick={onClickCategory} value='common'> common</C.CategoryButton></C.CsCategoryTd>
+                    <C.CsCategoryTd ><C.CategoryButton onClick={onClickCategory}  style={category==="buying"? {fontWeight: "bold"}:{} }value='buying'> buying</C.CategoryButton></C.CsCategoryTd>
+                    <C.CsCategoryTd ><C.CategoryButton onClick={onClickCategory}  style={category==="policy"? {fontWeight: "bold"}:{} }value='policy'>policy</C.CategoryButton></C.CsCategoryTd>
+                    <C.CsCategoryTd><C.CategoryButton onClick={onClickCategory}   style={category==="common"? {fontWeight: "bold"}:{} }value='common'> common</C.CategoryButton></C.CsCategoryTd>
                 </C.CsCategoryTr>
                 <C.CsCategoryTr>
-                    <C.CsCategoryTd> <C.CategoryButton  onClick={onClickCategory} value='4'  >4</C.CategoryButton></C.CsCategoryTd>
-                    <C.CsCategoryTd > <C.CategoryButton onClick={onClickCategory} value='5' >5</C.CategoryButton></C.CsCategoryTd>
+                    <C.CsCategoryTd> <C.CategoryButton  onClick={onClickCategory}  style={category==="4"? {fontWeight: "bold"}:{} }value='4'  >4</C.CategoryButton></C.CsCategoryTd>
+                    <C.CsCategoryTd > <C.CategoryButton onClick={onClickCategory} style={category==="5"? {fontWeight: "bold"}:{} }value='5' >5</C.CategoryButton></C.CsCategoryTd>
                     <C.CsCategoryTd  ></C.CsCategoryTd>
                    
                 </C.CsCategoryTr>
                 </C.CsCategoryTbody>
             </C.CsCategoryTable>
             <p>
-                <Link to='/cs/CsFaqWriteForm'><button>글쓰기</button></Link>
+              
+                 
+               {tokenId === '14' &&  <Link to='/cs/CsFaqWriteForm'><button>글쓰기</button></Link>}
                
             </p>
             
                 {list.length===0 && <C.NoResult>검색결과가 없습니다
-                                        <p>  <C.ChatButton>채팅하기</C.ChatButton></p>
+                                  <p>  <C.ChatButton>채팅하기</C.ChatButton></p>
                                     </C.NoResult>
                                     }
                 
@@ -188,8 +222,9 @@ const CsFaq = () => {
                                 onClick={() => handleClickItem(item.seq)}
                             >
                                 {/* {' '} */}
-                               {item.category} &nbsp;&nbsp;&nbsp;
+                              <C.StrongCategory> [{item.category}]</C.StrongCategory> &nbsp;&nbsp;&nbsp;
                                 {item.title}
+                             <C.UpdownIcon> {visible[item.seq] ? <RxChevronUp/>  :   <RxChevronDown/> }</C.UpdownIcon>  
                             </C.NoticeLi>
                             {visible[item.seq] && (
                             
@@ -198,9 +233,12 @@ const CsFaq = () => {
                                       {/*   <div dangerouslySetInnerHTML={{ __html: item.content }}></div> */} 
                                         <Viewer initialValue={(item.content).replace('<img src="blob:http://localhost:3000/'+item.filename+'" contenteditable="false">', '<img src="/storage/'+item.filename+'.png" contenteditable="false">') } />
                                         <p>
-                                         <Link to={'/cs/CsFaqUpdateForm/'+item.seq}><C.ModifiedButton  value ={item.seq}>수정</C.ModifiedButton></Link> {/*param 가져가기 */}
-                                         <C.ModifiedButton  value ={item.seq} onClick={onDelete}>삭제</C.ModifiedButton>
-                                         </p>
+                                         {tokenId === '14' && 
+                                         <Link to={'/cs/CsFaqUpdateForm/'+item.seq}><C.ModifiedButton  value ={item.seq}>수정</C.ModifiedButton></Link> } {/*param 가져가기 */}
+                                         {tokenId === '14' &&  <C.ModifiedButton  value ={item.seq} onClick={onDelete}>삭제</C.ModifiedButton> }
+                                      
+                                       
+                                           </p>
                                     </C.NoticeContent>
                          
                                
