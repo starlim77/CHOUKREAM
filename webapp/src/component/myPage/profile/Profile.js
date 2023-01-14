@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { id } from 'date-fns/locale';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as S from './ProfileStyle';
 
@@ -9,14 +8,15 @@ const Profile = () => {
     const [openedSection, setOpendSection] = useState();
     const [smsOption, setSmsOption] = useState();
     const [emailOption, setEmailOption] = useState();
+    const [smsOptionNum, setSmsOptionNum] = useState(smsOption ? 1 : 0);
+    const [emailOptionNum, setEmailOptionNum] = useState(emailOption ? 1 : 0);
     const [email, SetEmail] = useState();
-    const emailRef = useRef()
-    const [password, setPassword] = useState()
-    const passwordRef = useRef()
-    const [rePassword, setRePassword] = useState()
-    const RePasswordRef = useRef()
-    const [passwordText, setPasswordText] = useState()
-    
+    const emailRef = useRef();
+    const [password, setPassword] = useState();
+    const passwordRef = useRef();
+    const [rePassword, setRePassword] = useState();
+    const RePasswordRef = useRef();
+    const [phone, setPhone] = useState()
 
     // 회원정보 불러옴
     useEffect(() => {
@@ -39,44 +39,88 @@ const Profile = () => {
     //이메일 변경 입력
     const inputEmail = e => {
         SetEmail(e.target.value);
-    }
+    };
 
     const onChangeEmail = e => {
-        const emailRegex =
-            /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
         if (!emailRegex.test(email)) {
             alert('이메일 주소를 정확히 입력해주세요');
-            emailRef.current.focus()
+            emailRef.current.focus();
             return;
         }
         axios
             .post(`http://localhost:8080/updateEmail?id=1&email=${email}`)
-            .then(res => setMember(res.data));
+            .then(res => setMember(res.data))
+            .catch(error => console.log(error))
         setIsOpen(false);
     };
 
     //비밀번호 변경 입력
     const inputPassword = e => {
-        setPassword(e.target.value)
-    }
+        setPassword(e.target.value);
+    };
     const inputRePassword = e => {
-        setRePassword(e.target.value)
-    }
+        setRePassword(e.target.value);
+    };
     const onChangePassword = () => {
-        const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/
-        if(!passwordRegex.test(password) || !passwordRegex.test(rePassword)){
-            alert('영문, 숫자, 특수문자를 조합해서 입력해주세요. (8-16자)')
+        const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+        if (!passwordRegex.test(password) || !passwordRegex.test(rePassword)) {
+            alert('영문, 숫자, 특수문자를 조합해서 입력해주세요. (8-16자)');
+            return;
+        }
+        if (password !== rePassword) {
+            alert('비밀번호가 일치하지 않습니다');
+            return;
+        }
+        axios
+            .post(
+                `http://localhost:8080/updatePassword?email=${member.email}&password=${password}`,
+            )
+            .then(res => setMember(res.data))
+            .catch(error => console.log(error))
+        setIsOpen(false);
+    };
+
+    // 전화번호 변경 입력
+    const inputPhone = e => {
+        setPhone(e.target.value)
+    }
+    const onPhoneChange = () => {
+        const phoneRegex = /01[016789][^0][0-9]{3,4}[0-9]{4}$/
+        if(!phoneRegex.test(phone)){
+            alert("휴대폰 번호를 숫자만 정확히 입력해주세요")
             return
         }
-        if(password !== rePassword){
-            alert("비밀버호가 일치하지 않습니다")
-            return
-        }
-        axios.post(`http://localhost:8080/updatePassword?id=1&email=${member.email}&password=${password}`)
-             .then(res => setMember(res.data))
+        axios
+        .post(
+            `http://localhost:8080/updatePhone?email=${member.email}&phone=${phone}`,
+        )
+        .then(res => setMember(res.data))
+        .catch(error => console.log(error))
         setIsOpen(false)
     }
+
+    // 마케팅 정보 수신
+    const onMarketing = e => {
+        e.target.name === "sms" && setSmsOption(!smsOption)
+        e.target.name === "email" && setEmailOption(!emailOption)
+    }
+    useEffect(() => {
+        smsOption ? setSmsOptionNum(1) : setSmsOptionNum(0)
+        emailOption ? setEmailOptionNum(1) : setEmailOptionNum(0)
+    }, [smsOption, emailOption])
+    useEffect(() => {
+        console.log("smsOptionNum", smsOptionNum)
+        console.log("emailOptionNum", emailOptionNum)
+
+        axios.post(
+            `http://localhost:8080/updateMarketingOption?email=${member.email}&smsOption=${smsOptionNum}&emailOption=${emailOptionNum}`,
+        )
+        .then(res => setMember(res.data))
+        .catch(error => console.log(error))
+    },[smsOptionNum, emailOptionNum])
+
 
     return (
         <S.ProfileWrapper>
@@ -137,7 +181,9 @@ const Profile = () => {
                                 onChange={inputRePassword}
                                 ref={RePasswordRef}
                             />
-                            <S.ChangeButton onClick={onChangePassword}>변경</S.ChangeButton>
+                            <S.ChangeButton onClick={onChangePassword}>
+                                변경
+                            </S.ChangeButton>
                         </>
                     ) : (
                         <>
@@ -146,17 +192,35 @@ const Profile = () => {
                                 value={member.password}
                                 readOnly
                             />
-                            <S.ChangeButton name='password' onClick={onOpen}>변경</S.ChangeButton>
+                            <S.ChangeButton name="password" onClick={onOpen}>
+                                변경
+                            </S.ChangeButton>
                         </>
                     )}
                 </S.Unit>
                 <S.GroupTitle>개인정보</S.GroupTitle>
                 <S.Unit>
-                    <S.Title>이름</S.Title>
-                    <S.Email>{member.name}</S.Email>
                     <S.Title>휴대폰 번호</S.Title>
-                    <S.Email>{member.phone}</S.Email>
-                    <S.ChangeButton>변경</S.ChangeButton>
+                    {isOpen && openedSection === 'phone' ? (
+                        <>
+                            <S.NewEmail
+                                type="text"
+                                placeholder="새로운 전화번호를 입력하세요"
+                                onChange={inputPhone}
+                                // ref={RePasswordRef}
+                            />
+                            <S.ChangeButton onClick={onPhoneChange}>
+                                변경
+                            </S.ChangeButton>
+                        </>
+                    ) : (
+                        <>
+                            <S.Email>{member.phone}</S.Email>
+                            <S.ChangeButton name="phone" onClick={onOpen}>
+                                변경
+                            </S.ChangeButton>
+                        </>
+                    )}
                 </S.Unit>
                 <S.GroupTitle>광고성 정보 수신</S.GroupTitle>
                 <S.Unit>
@@ -165,22 +229,26 @@ const Profile = () => {
                         수신동의
                         <input
                             type="checkbox"
-                            checked={smsOption}
+                            name='sms'
+                            checked={smsOption === true}
                             style={{ marginRight: '20px' }}
+                            onClick={onMarketing}
                         />
                         수신거부
-                        <input type="checkbox" checked={!smsOption}/>
+                        <input type="checkbox" name='sms' checked={smsOption === false}  onClick={onMarketing}/>
                     </S.CheckBox>
                     <S.CheckBox>
                         <S.CheckBoxText>이메일</S.CheckBoxText>
                         수신동의
                         <input
                             type="checkbox"
-                            checked={emailOption}
+                            name='email'
+                            checked={emailOption === true}
                             style={{ marginRight: '20px' }}
+                            onClick={onMarketing}
                         />
                         수신거부
-                        <input type="checkbox" checked={!emailOption} />
+                        <input type="checkbox" name="email" checked={emailOption === false} onClick={onMarketing}/>
                     </S.CheckBox>
                 </S.Unit>
             </S.Bottom>

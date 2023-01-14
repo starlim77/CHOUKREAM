@@ -31,14 +31,6 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.findById(id);
 	}
 
-//	@Override
-//	public Optional<MemberDto> updatePassword(String email, String password) {
-//		
-//
-//
-//		return Optional.empty();
-//	}
-
 	@Override
 	public Optional<MemberDto> updatePassword(String email, String password) {
 		MemberDto memberDto = memberDAO.findByEmail(email).get();		
@@ -46,6 +38,27 @@ public class MemberServiceImpl implements MemberService {
 		
 		memberDto.setPassword(passwordEncoder.encode(password));
 		System.out.println(memberDto);
+		memberDAO.save(memberDto);
+		return memberDAO.findByEmail(email);
+	}
+
+	@Override
+	public Optional<MemberDto> updatePhone(String email, String phone) {
+		MemberDto memberDto = memberDAO.findByEmail(email).get();
+		
+		memberDto.setPhone(phone);
+		memberDAO.save(memberDto);
+		
+		return memberDAO.findByEmail(email);
+	}
+
+	@Override
+	public Optional<MemberDto> updateMarketingOption(String email, String smsOption, String emailOption) {
+		MemberDto memberDto = memberDAO.findByEmail(email).get();
+		
+		memberDto.setSmsOption(Integer.parseInt(smsOption));
+		memberDto.setEmailOption(Integer.parseInt(emailOption));
+		
 		memberDAO.save(memberDto);
 		return memberDAO.findByEmail(email);
 	}

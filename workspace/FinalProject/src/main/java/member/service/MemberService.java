@@ -13,4 +13,8 @@ public interface MemberService {
 
 	Optional<MemberDto> updatePassword(String email, String password);
 
+	Optional<MemberDto> updatePhone(String email, String phone);
+
+	Optional<MemberDto> updateMarketingOption(String email, String smsOption, String emailOption);
+
 }

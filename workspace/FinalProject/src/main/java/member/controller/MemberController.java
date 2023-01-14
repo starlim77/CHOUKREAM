@@ -44,4 +44,20 @@ public class MemberController {
 		System.out.println(password);
 		return memberService.updatePassword(email, password);
 	}
+	
+	@PostMapping(path = "updatePhone")
+	public Optional<MemberDto> updatePhone(@RequestParam String email, String phone) {
+		
+		System.out.println(email);
+		System.out.println(phone);
+		return memberService.updatePhone(email, phone);
+	}
+	
+	@PostMapping(path = "updateMarketingOption")
+	public Optional<MemberDto> updateMarketingOption(@RequestParam String email, String smsOption, String emailOption) {
+		
+		System.out.println("smsOption = " + smsOption);
+		System.out.println("emailOption = " + emailOption);
+		return memberService.updateMarketingOption(email, smsOption, emailOption);
+	}
 }

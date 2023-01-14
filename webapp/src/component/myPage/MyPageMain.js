@@ -6,10 +6,14 @@ import axios from 'axios';
 const MyPageMain = () => {
     const [member, setMember] = useState({})
 
+    //회원정보 불러옴 / 회원 등급 불러옴
     useEffect(() => {
         axios.get(`http://localhost:8080/getMember?id=1`)
              .then(res => setMember(res.data))
+
+        // axios.get(`http://localhost:8080/getMember?id=1`)
     }, [])
+
 
     return (
         <S.MainWrapper>
