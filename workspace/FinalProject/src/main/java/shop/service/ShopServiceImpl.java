@@ -94,6 +94,12 @@ public class ShopServiceImpl implements ShopService {
 		return shopDAO.SellSort();
 	}
 
+	@Override
+	public void reUpdate(ProductDTO productDTO) {
+		System.out.println(productDTO);
+		shopDAO.save(productDTO);
+	}
+
 	
 
 	

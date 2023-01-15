@@ -35,6 +35,27 @@ public class ResellController {
 	@Autowired
 	private ShopService shopService;
 	
+	@GetMapping("getProductList")
+	public List<ProductDTO> getProductList() {
+		return shopService.getProductList();
+	}
+	
+	@GetMapping("sortGetProductList")
+	public List<ProductDTO> sortGetProductList() {
+		return shopService.sortGetProductList();
+	}
+
+	@PostMapping("getProductBySeq")
+	public Optional<ProductDTO> getProductBySeq(@RequestParam int seq) {
+		return shopService.getProductBySeq(seq);
+	}
+	
+	@GetMapping("getShoesList")
+	public List<ProductDTO> getShoesList(@RequestParam String shoes)  {
+		System.out.println("슈즈 " + shoes);
+		return shopService.getShoesList(shoes);
+	}
+	
 	@DeleteMapping(value="resellDelete")
 	//@ResponseBody // void로 잡혀있어서 // 디스패쳐로 가지마라 
 	public void resellDelete(@RequestParam int seq) {
@@ -68,9 +89,11 @@ public class ResellController {
 		return shopService.SellSort();
 	}
 	
-//	@PutMapping(path="reUpdate")
-//	@ResponseBody
-//	public void reUpdate(@RequestBody List<MultipartFile> img, HttpSession session, @ModelAttribute ProductDTO productDTO ) {
+	@PutMapping(path="reUpdate")
+	@ResponseBody
+	public void reUpdate(@RequestBody List<MultipartFile> img, HttpSession session, @ModelAttribute ProductDTO productDTO ) {
+		System.out.println("reUpdate" + productDTO );
+		
 //		 String path = System.getProperty("user.dir");
 //		 System.out.println("현욱 작업 경로 " + path);
 //		 
@@ -91,7 +114,7 @@ public class ResellController {
 //		
 //		 //실제 저장될 경로 지정
 //		 //ex) pathModified	= F:\project\finalProject\final\final1zo 뒤에 webapp경로 지정
-//		 String filePath=pathModified+"/webapp/public/resellList";
+//		 String filePath=pathModified+"/webapp/public/newProductList";
 //	 	 System.out.println("실제폴더 : " + filePath);
 //	 	
 //		 try {
@@ -128,9 +151,9 @@ public class ResellController {
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}//복사
-//			
-//		newProductService.update(newProductDTO);
-//	}
+//		
+		shopService.reUpdate(productDTO);
+	}
 	
 //	@GetMapping(value="updateNewProductInfo")
 //	public Optional<NewProductDTO> updateNewProductInfo(@RequestParam int seq) { 

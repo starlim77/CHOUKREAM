@@ -34,6 +34,8 @@ public interface ShopService {
 
 	public List<ProductDTO> SellSort();
 
+	public void reUpdate(ProductDTO productDTO);
+
 
 	
 }

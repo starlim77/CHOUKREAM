@@ -44,27 +44,7 @@ public class ShopController {
 	
 	@Autowired
 	private NewProductService newProductService;
-	
-	@GetMapping("getProductList")
-	public List<ProductDTO> getProductList() {
-		return shopService.getProductList();
-	}
-	
-	@GetMapping("sortGetProductList")
-	public List<ProductDTO> sortGetProductList() {
-		return shopService.sortGetProductList();
-	}
 
-	@PostMapping("getProductBySeq")
-	public Optional<ProductDTO> getProductBySeq(@RequestParam int seq) {
-		return shopService.getProductBySeq(seq);
-	}
-	
-	@GetMapping("getShoesList")
-	public List<ProductDTO> getShoesList(@RequestParam String shoes)  {
-		System.out.println("슈즈 " + shoes);
-		return shopService.getShoesList(shoes);
-	}
 	
 	@GetMapping("getNewProductList")
 	public List<NewProductDTO> getNewProductList() {
