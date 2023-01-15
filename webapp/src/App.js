@@ -53,6 +53,7 @@ import ReList from './component/Shop/resell/ReList';
 import ReUpdate from './component/Shop/resell/ReUpdate';
 import ReWrite from './component/Shop/register/ReWrite';
 import Following from './component/Lookbook/Following';
+import RequireAuth from './component/Require/RequireAuth';
 
 function App() {
     const token = localStorage.getItem('accessToken');
@@ -67,6 +68,10 @@ function App() {
             setSub(tokenJson['sub']);
         }
     }, []);
+    // ROLE_GUEST, ROLE_USER, ROLE_ADMIN
+
+    // user or admin => //
+    // admin => //
 
     console.log(auth);
 
