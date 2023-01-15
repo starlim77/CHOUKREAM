@@ -50,6 +50,7 @@ import NewUpdate from './component/Shop/manager/NewUpdate';
 import UsedItemList from './component/Shop/manager/UsedItemList';
 import jwt_decode from 'jwt-decode';
 import NewProductPage from './component/Shop/newProduct/NewProductPage';
+import RequireAuth from './component/Require/RequireAuth';
 
 function App() {
     const token = localStorage.getItem('accessToken');
@@ -64,6 +65,10 @@ function App() {
             setSub(tokenJson['sub']);
         }
     }, []);
+    // ROLE_GUEST, ROLE_USER, ROLE_ADMIN
+
+    // user or admin => //
+    // admin => //
 
     console.log(auth);
 
