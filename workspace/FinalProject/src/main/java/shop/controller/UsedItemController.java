@@ -247,4 +247,16 @@ public class UsedItemController {
 	public List<UsedItemDTO> getAdminItem() {
 		return usedItemService.getAdminItem();
 	}
+	
+	@GetMapping(path="getFinishedTrade")
+	public int getFinishedTrade(String id) {
+		
+		return usedItemService.getFinishedTrade(id);
+	}
+	
+	@GetMapping(path="totalReport")
+	public int totalReport(String id) {
+	
+		return usedItemService.totalReport(id);
+	}
 }

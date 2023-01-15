@@ -30,11 +30,6 @@ const UsedMain = () => {
         }
     },[])
 
-
-    // console.log(data[0])
-
-    
-
     const [hash,setHash] = useState()
 
     const navigate = useNavigate()

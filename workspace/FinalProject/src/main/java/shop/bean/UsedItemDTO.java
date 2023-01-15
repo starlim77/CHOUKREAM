@@ -65,7 +65,7 @@ public class UsedItemDTO {
 	private String shopKind;
 	
 	@Column(name="reportNum")
-	private String reportNum;
+	private int reportNum;
 	
 	//jpa관련 기본 개념
 	//https://data-make.tistory.com/610
