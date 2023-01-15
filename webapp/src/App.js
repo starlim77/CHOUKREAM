@@ -7,7 +7,7 @@ import PaymentTerms from './component/payment/PaymentTerms';
 import PayHeader from './component/payment/PayHeader';
 import SizePage from './component/payment/SizePage';
 import OrderType from './component/payment/OrderType';
-
+import Main from './component/Main/Main';
 import Shop from './component/Shop/Shop';
 import UserWrite from './component/Shop/register/NewWrite';
 import UsedMain from './component/Used/UsedMain';
@@ -76,7 +76,7 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route element={<Layout />}>
-                    <Route path="/" element="" />
+                    <Route path="/" element={<Main />} />
 
                     {/* shop */}
                     <Route path="shop" element={<Shop />} />
