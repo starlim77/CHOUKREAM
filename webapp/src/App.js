@@ -135,7 +135,7 @@ function App() {
                         element={
                             <>
                                 <ManagerPage />
-                                <NewSearch />
+                                {/* <NewSearch /> */}
                             </>
                         }
                     />
