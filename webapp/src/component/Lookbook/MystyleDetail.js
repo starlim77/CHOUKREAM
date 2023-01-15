@@ -1,18 +1,18 @@
 import axios from 'axios';
 import React, {  useEffect,  useRef,  useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
-import { Avatar, Button, CardActions, CardContent, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from '@mui/material';
+import { Avatar, Button, CardActions, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Container from '@mui/material/Container';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import * as S from './style';
-import { FiMoreHorizontal } from "react-icons/fi";
 
 const MystyleDetail = () => {
     const { seq , id } = useParams();  //주소값 파라미터 seq id가져오기
     const updateRef = useRef();
     const [commentOpen, setCommentOpen] = useState(false)
+    
 
     //게시물 뿌리기
     const [list, setList] = useState([]);
@@ -23,30 +23,44 @@ const MystyleDetail = () => {
                 // res => console.log("디테일 확인 "+res.data)  
              )
              .catch(error => console.log(error))
+
+         //좋아요 여부 보여주기
+         axios.get(`http://localhost:8080/lookbook/findLikes?memberId=${id}&styleSeq=${seq}`)
+              .then(res => setIsLike(res.data)  )
+              .catch(error => console.log(error))
+
+        //좋아요 갯수 확인
+         axios.get(`http://localhost:8080/lookbook/likescount?styleSeq=${seq}`)
+              .then(res => setLikesCount(res.data))
+              .catch(error => console.log(error))
     }, []) 
 
     const updateBtn = () =>{
         updateRef.current.click();        
     }
 
-    const [likes, setLikes] = useState(0)  //기본0, 좋아요 누르면 1
+    const [likesForm, setLikesForm] = useState({   //좋아요 있으면 1리턴, 없으면 0 리턴
+        styleSeq: seq,
+        memberId: id,
+        likesId: ''
+    })  
+
+    const [isLike, setIsLike] = useState(0);
+    const [likesCount, setLikesCount] = useState('');   // 좋아요 갯수 카운트
+    //const navigate = useNavigate()
 
     //좋아요 클릭
     const onLikes = () => {
-        axios.post('http://localhost8080/lookbook/likes', null, {
-            params : {
-                likes: '',   //누르면 1로 셋팅
-                id:id,     //로그인한 id
-                seq:seq    //좋아요 할 글번호
-            }}
-           )
-     .then( setLikes(1), alert("좋아요 클릭"+likes+id+seq))
-     .catch(error => console.log(error))
-        
+        // setLikesForm({...likesForm, });
+
+        axios.post('http://localhost:8080/lookbook/likebutton', null, {params:likesForm})
+            .then( res =>  
+                        setIsLike(res.data), 
+                        window.location.replace(`/lookbook/mystyledetail/${seq}/${id}`)//새로고침 넘느료..
+                        //navigate(`/lookbook/mystyledetail/${seq}/${id}`)                        
+                )
+            .catch(error => console.log(error))
     }
-
-    
-
 
 
     return (
@@ -72,7 +86,7 @@ const MystyleDetail = () => {
 
                                         <S.MyDeIcon>                                
                                             <Link to={`/lookbook/mystyleUpdate/${item.seq}/${id}`} ref={updateRef} >
-                                            <img src='/image/style/menu.png' width={24}></img>
+                                            <img src='/image/style/menu.png' alt='메뉴.png' width={24}></img>
                                             </Link>
                                            
                                         </S.MyDeIcon>
@@ -81,7 +95,7 @@ const MystyleDetail = () => {
                                     {
                                         item.storedFileName.map( (item, index) => (
                                             <p key={index}>
-                                                <img src={'/storage/'+item} />
+                                                <img src={'/storage/'+item} alt='list사진' />
                                             </p>
                                         ))
                                     }
@@ -95,9 +109,14 @@ const MystyleDetail = () => {
 
                                     <CardActions >                                    
                                         <IconButton aria-label="add to favorites" onClick={onLikes}>
-                                            <FavoriteIcon />  
+                                            {/* <FavoriteIcon />  //react Icon */}
+                                            <img src={ isLike === 1 ?  '/image/style/likes.png'  : '/image/style/unlikes.png'  }
+                                            style={{ width:'28px'}}/>
+                                           <p>{likesCount}</p>
+
                                         </IconButton>
 
+                                        
 
 
 

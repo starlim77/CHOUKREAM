@@ -12,18 +12,13 @@ import lombok.Data;
 @Data
 @Table(name="productTable")
 @Entity
-@SequenceGenerator(
-         name="PRODUCT_SEQ_GENERATOR"
-         , sequenceName="PRODUCT_SEQ"
-         , initialValue = 1
-         , allocationSize = 1
-      )
 public class ProductDTO {
    
-   @Id // pk 설정
-   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUCT_SEQ_GENERATOR")
-   @Column(name="seq", length = 30)
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="seq",length=30)
    private int seq;
+   
    
    @Column(name="brand", length = 30)
    private String brand;

@@ -7,10 +7,11 @@ export const H2 = styled.h2`
     display: flex;
     justify-content: center;
     font-size: 28px;
+    font-weight: bold;
 `;
 
 export const TagImg = styled.ul`
-    margin: 16px auto 0px auto;
+    margin: 16px auto 20px auto;
     width: 1200px;
     display: flex;
     justify-content: space-between;
@@ -29,6 +30,7 @@ export const TagImgLi = styled.li`
     :hover{
         background-color: #E1ECF4;
         border-radius: 50px;
+        cursor: pointer;
     }
 `;
 
@@ -40,6 +42,8 @@ export const TagImgItem = styled.img`
 
 export const TagImgSpan = styled.span`
     font-size: 14px;
+    font-family: sans-serif;
+    font-weight: 600;
 `;
 
 export const TagReset = styled.div`
@@ -71,7 +75,8 @@ export const SearchHashTag = styled.div`
 export const SearchInput = styled.input`
     width: 140px;
     border: none;
-    font-size: 11px;
+    height: 20px;
+    font-size: 14px;
     background-color: #d5d6ec4d;
     border-radius: 10px;
 
@@ -83,13 +88,16 @@ export const SearchInput = styled.input`
 export const SearchBtn = styled.div`
     border: 0.5px solid #ececec;
     background-color: #c7fbfb;
+    height: 20px;
     border-radius: 15px;
     font-size: 10pt;
-    height: 15px;
     width: 35px;
     display: flex;
     justify-content: space-around;
     margin-left: 5px;
+    font-weight: 700;
+    align-items: center;
+
     :hover{
         cursor: pointer;
     }
@@ -136,12 +144,30 @@ export const ItemLayer = styled.img.attrs({
 export const ItemTitle = styled.h2`
     margin-top: 7px;
     font-weight: 700;
-    height: 20px;
+    font-size: 15pt;
+    height: 25px;
+    overflow: hidden;
+    word-break: break-word;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
 `;
 export const ItemSubTitle = styled.h2`
     margin-top: 5px;
     font-weight: 500;
-    height: 20px;
+    font-size: 12pt;
+    color: #999;
+    word-break: break-all;
+    white-space: pre-wrap;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
 `;
 
 export const ItemContent = styled.pre`
@@ -151,19 +177,22 @@ export const ItemContent = styled.pre`
     word-break: break-all;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: normal;
+    white-space: pre-wrap;
     width: 17em;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+
+    font-weight: 600;
+    font-size: 10pt;
 `;
 
 export const ItemPrice = styled.h2`
-    margin-top: 15px;
+    margin-top: 10px;
     font-weight: 700;
 `;
 
 export const ItemLike = styled.div`
-    margin-top: 5px;
+    margin-top: 10px;
     display: flex;
     align-items: center;
 `
@@ -172,6 +201,7 @@ export const ItemLikeImg = styled.img`
 
 export const ItemLikeSpan = styled.span`
     margin-left: 5px;
+    font-weight: 500;
 `;
 
 

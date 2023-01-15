@@ -36,7 +36,6 @@ import ManagerPage from './component/Shop/manager/ManagerPage';
 import List from './component/Shop/manager/NewList';
 import AdminWrite from './component/Shop/register/NewWrite';
 import NewList from './component/Shop/manager/NewList';
-import NewSearch from './component/Shop/manager/NewSearch';
 import NewProducts from './component/Products/NewProducts';
 import UsedUpdate from './component/Used/UsedUpdate';
 import FindEmail from './component/User/FindEmail';
@@ -50,6 +49,10 @@ import NewUpdate from './component/Shop/manager/NewUpdate';
 import UsedItemList from './component/Shop/manager/UsedItemList';
 import jwt_decode from 'jwt-decode';
 import NewProductPage from './component/Shop/newProduct/NewProductPage';
+import ReList from './component/Shop/resell/ReList';
+import ReUpdate from './component/Shop/resell/ReUpdate';
+import ReWrite from './component/Shop/register/ReWrite';
+import Following from './component/Lookbook/Following';
 import RequireAuth from './component/Require/RequireAuth';
 
 function App() {
@@ -75,8 +78,8 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route element={<Layout />}>
-                    <Route path="/" element={<Main />} />
+                <Route element={<Layout auth={auth} />}>
+                    <Route path="/" element="" />
 
                     {/* shop */}
                     <Route path="shop" element={<Shop />} />
@@ -110,7 +113,7 @@ function App() {
                         element={
                             <>
                                 <ManagerPage />
-                                <NewSearch />
+                                {/* <NewSearch /> */}
                             </>
                         }
                     />
@@ -137,7 +140,7 @@ function App() {
                         element={
                             <>
                                 <ManagerPage />
-                                <NewSearch />
+                                {/* <NewSearch /> */}
                             </>
                         }
                     />
@@ -147,6 +150,67 @@ function App() {
                             <>
                                 <ManagerPage />
                                 <NewUpdate />
+                            </>
+                        }
+                    />
+
+                    <Route
+                        path="shop/newProduct"
+                        element={<NewProductPage />}
+                    />
+                    <Route path="admin" element={<ManagerPage />} />
+                    <Route
+                        path="admin/newWrite"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <AdminWrite />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newList"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewList />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newUpdate"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewUpdate />
+                            </>
+                        }
+                    />
+
+                    <Route
+                        path="admin/reWrite"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <ReWrite />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/reList"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <ReList />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/reUpdate"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <ReUpdate />
                             </>
                         }
                     />
@@ -226,6 +290,7 @@ function App() {
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
                     <Route path="/lookbook/detail" element={<Detail />} />
+                    <Route path="/lookbook/following" element={<Following />} />
                     <Route
                         path="/lookbook/styleComment/:styleSeq"
                         element={<StyleComment />}
