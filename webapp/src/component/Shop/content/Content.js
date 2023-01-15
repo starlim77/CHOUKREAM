@@ -120,38 +120,44 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
     };
     
     const photoshop = (itemImg) => {
-        const img = itemImg.split(',');
-
-        return img[0]
-    }
-
-    const[menuArray,setMenuArray]=useState([]);
-    
-    const dataSetting=(menu)=>{
         
-        var sw=0
-        var isExist=menuArray.filter(item=>item===menu);
-        isExist.length!==0&&sw++;
-        if(sw===1){
-    
-            var arrayTemp=menuArray.filter(item=>item!==menu);
-            setMenuArray(arrayTemp);
-            var dummyTemp=dummyOriginal.filter(item=>item.category===menu);
-            // var dummy2=dummy
-            //console.log(dummy)
-            // setDummy([...dummy,dummyTemp]) 최상단에서 넘겨준 dummy라 스프레드 안됨.
-            // setDummy(dummy,dummy2)
-            var dummyTemp2=dummy.concat(dummyTemp)
-            setDummy(dummyTemp2);
-            
-        }else{
-            setMenuArray([...menuArray,menu]);
-            //console.log(menuArray);
-            var dummyTemp=dummy.filter(item=>item.category!==menu);
-            //console.log(dummyTemp);
-            setDummy(dummyTemp);
+        // console.log(itemImg)
+        // console.log(typeof(itemImg))
+        
+        if( itemImg !== null) {
+            const img = itemImg.split(',');
+            return img[0];
         }
+        
     }
+
+    // const[menuArray,setMenuArray]=useState([]);
+    
+    // const dataSetting=(menu)=>{
+        
+    //     var sw=0
+    //     var isExist=menuArray.filter(item=>item===menu);
+    //     isExist.length!==0&&sw++;
+    //     if(sw===1){
+    
+    //         var arrayTemp=menuArray.filter(item=>item!==menu);
+    //         setMenuArray(arrayTemp);
+    //         var dummyTemp=dummyOriginal.filter(item=>item.category===menu);
+    //         // var dummy2=dummy
+    //         //console.log(dummy)
+    //         // setDummy([...dummy,dummyTemp]) 최상단에서 넘겨준 dummy라 스프레드 안됨.
+    //         // setDummy(dummy,dummy2)
+    //         var dummyTemp2=dummy.concat(dummyTemp)
+    //         setDummy(dummyTemp2);
+            
+    //     }else{
+    //         setMenuArray([...menuArray,menu]);
+    //         //console.log(menuArray);
+    //         var dummyTemp=dummy.filter(item=>item.category!==menu);
+    //         //console.log(dummyTemp);
+    //         setDummy(dummyTemp);
+    //     }
+    // }
     return (
         <>
             {/* Content */}
@@ -185,19 +191,19 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                     display: item.checked ? 'block' : 'none',
                                 }}
                             >
-                                {/* <MenuList
+                                <MenuList
                                     item={item}
                                     dummy={dummy}
                                     setDummy={setDummy}
                                     setPictures={setPictures}
-                                ></MenuList> */}
-                                <MenuList2
+                                ></MenuList>
+                                {/* <MenuList2
                                     item={item}
                                     dummy={dummy}
                                     setDummy={setDummy}
                                     setPictures={setPictures}
                                     dataSetting={dataSetting}
-                                ></MenuList2>
+                                ></MenuList2> */}
                             </Co.FilterMenu>
                         </Co.FilterList>
                     ))}
@@ -228,7 +234,11 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                             <Co.FilterBrand>
                                 <Co.BrandBtn>
                                     <Co.Text>
-                                        <Link to={'/shop/newProduct'}>
+                                        <Link to={'/shop/newProduct'}
+                                        state={{
+                                            name: '현욱',
+                                            dummyFilter: dummyFilter
+                                        }}>
                                             새상품 버튼
                                         </Link>
                                     </Co.Text>
@@ -290,7 +300,7 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                                     <Co.ProductImg
                                                         // src={item.img_web}
                                                         src={`/resellList/${photoshop(
-                                                            item.img,
+                                                            item.imgName,
                                                         )}`}
                                                     >
                                                         {/* picture 태그 사용시 밑에꺼 사용 */}
@@ -395,7 +405,7 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                                     <Co.ProductImg
                                                         // src={item.img_web}
                                                         src={`/resellList/${photoshop(
-                                                            item.img,
+                                                            item.imgName,
                                                         )}`}
                                                     >
                                                         {/* picture 태그 사용시 밑에꺼 사용 */}

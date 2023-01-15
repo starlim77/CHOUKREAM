@@ -1,6 +1,7 @@
 package shop.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import shop.bean.NewProductDTO;
@@ -21,6 +22,14 @@ public interface ShopService {
 	public void delete(int seq);
 	List<ProductSizeDTO> findBySeq(int seq);
 
-	public List<SortListDTO> sortGetProductList1();
+	public List<SortListDTO> favourSort();
+
+	public void resellDelete(int seq);
+
+	public List<ProductDTO> resellSearch(Map<String, String> map);
+
+	public void resellUpload(ProductDTO productDTO);
+
+
 	
 }

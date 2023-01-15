@@ -20,6 +20,7 @@ import { grey } from '@mui/material/colors';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { MasonryInfiniteGrid } from '@egjs/react-infinitegrid';
+import TrendingItem from './TrendingItem';
 
 const Trending = () => {
     const [list, setList] = useState([
@@ -60,6 +61,33 @@ const Trending = () => {
     //     gap: 5,
     //   });
 
+
+    const [itemLength,setItemLength] = useState(12) // 처음에 가져올 아이템 갯수
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll); //clean up
+        };
+    }, []);
+
+    
+    const handleScroll = () => {
+        var heightTop = window.scrollY; // 화면의 Y축의 상단값
+
+        const heightBottom = window.scrollY + window.innerHeight; // 화면의 Y축의 하단값
+        const innerHeight = window.innerHeight;
+
+        const scrollHeight = document.body.scrollHeight;
+        // console.log('scrollHeight 스크롤 전체길이 ' + scrollHeight); // 불변
+
+        if (heightBottom >= scrollHeight - 80) {
+            // console.log( '하단높이 '+ heightBottom + ' , ' + (scrollHeight - 100));
+
+            setItemLength(itemLength => itemLength + 8)
+        }
+    };
+
     return (
         <>
             <Social />
@@ -82,72 +110,42 @@ const Trending = () => {
 
             <Container fixed>
                 <S.TrGridContainer>
-                    {list.map(item => {
-                        return (
-                            <S.TrGridBox key={item.seq}>
-                                <Card sx={{ width: 250 }}>
-                                    <Link to={'/lookbook/detail' + item.seq}>
-                                        <S.TrGridBoxImg
-                                            src={
-                                                '../storage/' +
-                                                item.storedFileName[0]
-                                            }
-                                        ></S.TrGridBoxImg>
+                    <S.TrGridContainerSub>
+                    {list.map((item,index) => 
+                        index % 4 === 0 ? 
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        :
+                        ''
+                    )}
+                    </S.TrGridContainerSub>
 
-                                        {item.storedFileName.map(
-                                            (index, item) => {
-                                                return (
-                                                    <img
-                                                        src={
-                                                            '../storage/' + item
-                                                        }
-                                                    />
-                                                );
-                                            },
-                                        )}
+                    <S.TrGridContainerSub>
+                    {list.map((item,index) => 
+                        index % 4 === 1 ? 
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        :
+                        ''
+                    )}
+                    </S.TrGridContainerSub>
 
-                                        <CardHeader
-                                            avatar={
-                                                <Avatar
-                                                    sx={{ bgcolor: grey }}
-                                                ></Avatar>
-                                            }
-                                            title={item.id}
-                                        />
-                                    </Link>
-                                    <CardContent>
-                                        <Typography
-                                            variant="body2"
-                                            color="text.secondary"
-                                        >
-                                            <S.TrTypoDiv>
-                                                {item.content}
-                                                <br />
-                                                seq={item.seq}
-                                            </S.TrTypoDiv>
-                                        </Typography>
-                                    </CardContent>
+                    <S.TrGridContainerSub>
+                    {list.map((item,index) => 
+                        index % 4 === 2 ? 
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        :
+                        ''
+                    )}
+                    </S.TrGridContainerSub>
 
-                                    <CardActions disableSpacing>
-                                        <Typography
-                                            variant="body2"
-                                            color="text.secondary"
-                                        >
-                                            <IconButton aria-label="add to favorites">
-                                                <FavoriteBorderOutlinedIcon />
-                                                <FavoriteIcon />
-                                            </IconButton>
-                                            <span>35 </span>
-                                            <IconButton aria-label="add to favorites">
-                                                <MessageOutlinedIcon />
-                                            </IconButton>
-                                            <span>15</span>
-                                        </Typography>
-                                    </CardActions>
-                                </Card>
-                            </S.TrGridBox>
-                        );
-                    })}
+                    <S.TrGridContainerSub>
+                    {list.map((item,index) => 
+                        index % 4 === 3 ? 
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        :
+                        ''
+                    )}
+                    </S.TrGridContainerSub>
+
                 </S.TrGridContainer>
             </Container>
             {/* </MasonryInfiniteGrid> */}

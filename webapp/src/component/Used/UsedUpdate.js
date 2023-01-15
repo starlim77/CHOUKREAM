@@ -32,7 +32,7 @@ const UsedUpdate = () => {
         const [subImg,setSubImg] = useState([]);
          // 2. location.state 에서 파라미터 취득
          const seq = location.state.seq;
-         const writer = location.state.writer;
+         const isWriter = location.state.isWriter;
          const imgNameSend=location.state.imgNameSend;
         
        

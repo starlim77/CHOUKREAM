@@ -1,6 +1,7 @@
 package shop.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,11 +53,41 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public List<SortListDTO> sortGetProductList1() {
-		
-		return shopDAO.sortGetProductList1();
+	public List<SortListDTO> favourSort() {
+		return shopDAO.favourSort();
 	}
 
+	@Override
+	public void resellDelete(int seq) {
+		shopDAO.resellDelete(seq);
+	}
+
+	@Override
+	public List<ProductDTO> resellSearch(Map<String, String> map) {
+		String searchOption = map.get("searchOption");
+		String keyword = map.get("keyword");
+		
+		System.out.println("searchOption " + searchOption);
+		System.out.println("keyword " + keyword);
+		
+		if(searchOption.equals("brand"))
+			return shopDAO.getSearchBrand(keyword);
+		else
+			return shopDAO.getSearchCategory(keyword);
+		
+	}
+
+	@Override
+	public void resellUpload(ProductDTO productDTO) {
+		//if (shopDAO.findbySeq(productDTO.getSeq()) == null) {
+			shopDAO.save(productDTO);
+		// }
+	}
+
+	
+
+	
+	
 
 	
 }

@@ -5,18 +5,29 @@ import tagData from './TagItem';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Banner from '../Shop/banner/Banner';
+import jwt_decode from 'jwt-decode';
 
 const UsedMain = () => {
 
     const [data,setData] = useState([])
     const [dataFilter,setDataFilter] = useState([])   
-
+    const[currentId,setCurrentId]=useState('user');//현재 아이디값
     
 
     useEffect(()=> {
         axios.get('http://localhost:8080/used/getItem')
          .then(res => setData(res.data))
          .catch(error => console.log(error))
+
+        if(localStorage.getItem('accessToken')){
+            const token = localStorage.getItem('accessToken');
+            const tokenJson = jwt_decode(token);
+            const sub = tokenJson['sub'];
+            
+            axios.get(`http://localhost:8080/used/getId?seq=${sub}`)
+                .then(res=>{setCurrentId(res.data)})
+                .catch(err=>console.log(err))
+        }
     },[])
 
 
@@ -105,7 +116,12 @@ const UsedMain = () => {
 
 
     const onWrite = () => {
-            navigate('/Used/usedWrite');
+            if(currentId==='user'){
+                alert("먼저 로그인 해주세요")
+                navigate('/login');
+            }else{
+                navigate(`/Used/usedWrite`);
+            }
     }
 
 
@@ -117,6 +133,10 @@ const UsedMain = () => {
             <S.H2>중고 상품</S.H2>
                 
             <S.TagImg>
+                <S.TagImgLi onClick={tagReset}>
+                    <S.TagImgItem src='../image/used/ALL.png'/>
+                    <S.TagImgSpan>전체</S.TagImgSpan>
+                </S.TagImgLi>
                 {
                     tagData.map(item => <S.TagImgLi key={item.id} onClick={ e => onTag(item.title)}>
                                              <S.TagImgItem src={item.img}/>
@@ -125,7 +145,7 @@ const UsedMain = () => {
                 }
                    
             </S.TagImg>
-            <S.TagReset><S.TagResetSpan onClick={tagReset}>[모든 상품보기]</S.TagResetSpan></S.TagReset>
+            {/* <S.TagReset><S.TagResetSpan onClick={tagReset}>[모든 상품보기]</S.TagResetSpan></S.TagReset> */}
 
             <Banner/>
 

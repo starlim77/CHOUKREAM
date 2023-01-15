@@ -2,16 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faBoltLightning } from '@fortawesome/free-solid-svg-icons';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
-import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import * as Co from './ContentStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '../modal/Modal';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import categoryData from './CategoryData';
 import MenuList from './MenuList';
 
-const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModal, tagLive }) => {
+const NewContent2 = ({
+    dummy,
+    setDummy,
+    dummyFilter,
+    modalOpen,
+    openModal,
+    closeModal,
+    tagLive,
+}) => {
     const [categoryData2, setCategoryData2] = useState(categoryData);
+    const location = useLocation();
+    // console.log(location.state.name)
+    // console.log(dummyFilter)
+
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => {
@@ -117,12 +128,12 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
             return num / 10000 + '만';
         }
     };
-    
-    const photoshop = (itemImg) => {
-        const img = itemImg.split(',');
 
-        return img[0]
-    }
+    const photoshop = itemImg => {
+        // console.log(itemImg);
+        const img = itemImg.split(',');
+        return img[0];
+    };
 
     return (
         <>
@@ -194,7 +205,7 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                 <Co.BrandBtn>
                                     <Co.Text>
                                         <Link to={'/shop/newProduct'}>
-                                            새상품 버튼
+                                            새상푸움 버튼
                                         </Link>
                                     </Co.Text>
                                 </Co.BrandBtn>
@@ -236,30 +247,31 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                     <Co.SearchResult>
                         <Co.SearchResultList>
                             {/* {console.log('더미더미 ' + f)} */}
+                            {/* {console.log('더미더미 ' + dummyFilter)} */}
                             {tagLive
                                 ? dummyFilter &&
-                                dummyFilter.map((item, index) => (
-                                    <Co.ProductCard
-                                        key={item.seq}
-                                        style={{
-                                            display:
-                                                pictures > index
-                                                    ? 'block'
-                                                    : 'none',
-                                        }}
-                                        // 사진 8개씩 출력 idx는 0부터 시작
-                                    >
-                                        <Link to={`/products/${item.seq}`}>
-                                            <Co.ItemInner href="#">
-                                                <Co.Product>
-                                                    <Co.ProductImg
-                                                        // src={item.img_web}
-                                                        src={`/newProductList/${photoshop(
-                                                            item.imgName,
-                                                        )}`}
-                                                    >
-                                                        {/* picture 태그 사용시 밑에꺼 사용 */}
-                                                        {/* <Co.Source
+                                  dummyFilter.map((item, index) => (
+                                      <Co.ProductCard
+                                          key={item.seq}
+                                          style={{
+                                              display:
+                                                  pictures > index
+                                                      ? 'block'
+                                                      : 'none',
+                                          }}
+                                          // 사진 8개씩 출력 idx는 0부터 시작
+                                      >
+                                          <Link to={`/products/${item.seq}`}>
+                                              <Co.ItemInner href="#">
+                                                  <Co.Product>
+                                                      <Co.ProductImg
+                                                      //src={item.imgName}
+                                                      src={`/newProductList/${photoshop(
+                                                          item.imgName,
+                                                      )}`}
+                                                      >
+                                                          {/* picture 태그 사용시 밑에꺼 사용 */}
+                                                          {/* <Co.Source
                                                         type="image/webp"
                                                         srcSet={item.img_web}
                                                     ></Co.Source>
@@ -271,87 +283,87 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                                         src={item.img}
                                                         loading="lazy"
                                                     ></Co.Image> */}
-                                                    </Co.ProductImg>
-                                                </Co.Product>
-                                                <Co.ProductInfoArea>
-                                                    <Co.Title>
-                                                        <Co.ProductInfoBrand>
-                                                            {item.brand}
-                                                        </Co.ProductInfoBrand>
-                                                        <Co.ProductInfoName>
-                                                            <Co.Name>
-                                                                {item.title}
-                                                            </Co.Name>
-                                                            <Co.TranslatedName>
-                                                                {
-                                                                    item.subTitle
-                                                                }
-                                                            </Co.TranslatedName>
-                                                        </Co.ProductInfoName>
-                                                    </Co.Title>
-                                                    <Co.ProductExpress>
-                                                        <FontAwesomeIcon
-                                                            icon={
-                                                                faBoltLightning
-                                                            }
-                                                        />
-                                                        빠른배송
-                                                    </Co.ProductExpress>
-                                                </Co.ProductInfoArea>
-                                                <Co.PriceInfoArea>
-                                                    <Co.Amount>
-                                                        {addComma(
-                                                            item.releasePrice,
-                                                        )}
-                                                    </Co.Amount>
-                                                    <Co.Desc>
-                                                        즉시 구매가
-                                                    </Co.Desc>
-                                                </Co.PriceInfoArea>
-                                            </Co.ItemInner>
-                                        </Link>
-                                        <Co.ActionWishReview>
-                                            <Co.WishFigure>
-                                                <Co.BtnWish
-                                                    href="#"
-                                                    aria-label="관심상품"
-                                                    icon-name="ico-wish-grey"
-                                                >
-                                                    <FontAwesomeIcon
-                                                        icon={faBookmark}
-                                                    />
-                                                </Co.BtnWish>
-                                                <Co.Text>
-                                                    {followCalc(
-                                                        item.interest,
-                                                    )}
-                                                </Co.Text>
-                                            </Co.WishFigure>
-                                        </Co.ActionWishReview>
-                                    </Co.ProductCard>
-                                ))
-                            : dummy.map((item, index) => (
-                                    <Co.ProductCard
-                                        key={item.seq}
-                                        style={{
-                                            display:
-                                                pictures > index
-                                                    ? 'block'
-                                                    : 'none',
-                                        }}
-                                        // 사진 8개씩 출력 idx는 0부터 시작
-                                    >
-                                        <Link to={`/products/${item.seq}`}>
-                                            <Co.ItemInner href="#">
-                                                <Co.Product>
-                                                    <Co.ProductImg
-                                                        // src={item.img_web}
-                                                        src={`/newProductList/${photoshop(
-                                                            item.imgName,
-                                                        )}`}
-                                                    >
-                                                        {/* picture 태그 사용시 밑에꺼 사용 */}
-                                                        {/* <Co.Source
+                                                      </Co.ProductImg>
+                                                  </Co.Product>
+                                                  <Co.ProductInfoArea>
+                                                      <Co.Title>
+                                                          <Co.ProductInfoBrand>
+                                                              {item.brand}
+                                                          </Co.ProductInfoBrand>
+                                                          <Co.ProductInfoName>
+                                                              <Co.Name>
+                                                                  {item.title}
+                                                              </Co.Name>
+                                                              <Co.TranslatedName>
+                                                                  {
+                                                                      item.subTitle
+                                                                  }
+                                                              </Co.TranslatedName>
+                                                          </Co.ProductInfoName>
+                                                      </Co.Title>
+                                                      <Co.ProductExpress>
+                                                          <FontAwesomeIcon
+                                                              icon={
+                                                                  faBoltLightning
+                                                              }
+                                                          />
+                                                          빠른배송
+                                                      </Co.ProductExpress>
+                                                  </Co.ProductInfoArea>
+                                                  <Co.PriceInfoArea>
+                                                      <Co.Amount>
+                                                          {addComma(
+                                                              item.releasePrice,
+                                                          )}
+                                                      </Co.Amount>
+                                                      <Co.Desc>
+                                                          즉시 구매가
+                                                      </Co.Desc>
+                                                  </Co.PriceInfoArea>
+                                              </Co.ItemInner>
+                                          </Link>
+                                          <Co.ActionWishReview>
+                                              <Co.WishFigure>
+                                                  <Co.BtnWish
+                                                      href="#"
+                                                      aria-label="관심상품"
+                                                      icon-name="ico-wish-grey"
+                                                  >
+                                                      <FontAwesomeIcon
+                                                          icon={faBookmark}
+                                                      />
+                                                  </Co.BtnWish>
+                                                  <Co.Text>
+                                                      {followCalc(
+                                                          item.interest,
+                                                      )}
+                                                  </Co.Text>
+                                              </Co.WishFigure>
+                                          </Co.ActionWishReview>
+                                      </Co.ProductCard>
+                                  ))
+                                : dummy.map((item, index) => (
+                                      <Co.ProductCard
+                                          key={item.seq}
+                                          style={{
+                                              display:
+                                                  pictures > index
+                                                      ? 'block'
+                                                      : 'none',
+                                          }}
+                                          // 사진 8개씩 출력 idx는 0부터 시작
+                                      >
+                                          <Link to={`/products/${item.seq}`}>
+                                              <Co.ItemInner href="#">
+                                                  <Co.Product>
+                                                      <Co.ProductImg
+                                                      // src={item.imgName}
+                                                      src={`/newProductList/${photoshop(
+                                                          item.imgName,
+                                                      )}`}
+                                                      >
+                                                          {/* picture 태그 사용시 밑에꺼 사용 */}
+                                                          {/* <Co.Source
                                                         type="image/webp"
                                                         srcSet={item.img_web}
                                                     ></Co.Source>
@@ -363,63 +375,63 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                                         src={item.img}
                                                         loading="lazy"
                                                     ></Co.Image> */}
-                                                    </Co.ProductImg>
-                                                </Co.Product>
-                                                <Co.ProductInfoArea>
-                                                    <Co.Title>
-                                                        <Co.ProductInfoBrand>
-                                                            {item.brand}
-                                                        </Co.ProductInfoBrand>
-                                                        <Co.ProductInfoName>
-                                                            <Co.Name>
-                                                                {item.title}
-                                                            </Co.Name>
-                                                            <Co.TranslatedName>
-                                                                {
-                                                                    item.subTitle
-                                                                }
-                                                            </Co.TranslatedName>
-                                                        </Co.ProductInfoName>
-                                                    </Co.Title>
-                                                    <Co.ProductExpress>
-                                                        <FontAwesomeIcon
-                                                            icon={
-                                                                faBoltLightning
-                                                            }
-                                                        />
-                                                        빠른배송
-                                                    </Co.ProductExpress>
-                                                </Co.ProductInfoArea>
-                                                <Co.PriceInfoArea>
-                                                    <Co.Amount>
-                                                        {addComma(
-                                                            item.releasePrice,
-                                                        )}
-                                                    </Co.Amount>
-                                                    <Co.Desc>
-                                                        즉시 구매가
-                                                    </Co.Desc>
-                                                </Co.PriceInfoArea>
-                                            </Co.ItemInner>
-                                        </Link>
-                                        <Co.ActionWishReview>
-                                            <Co.WishFigure>
-                                                <Co.BtnWish
-                                                    href="#"
-                                                    aria-label="관심상품"
-                                                    icon-name="ico-wish-grey"
-                                                >
-                                                    <FontAwesomeIcon
-                                                        icon={faBookmark}
-                                                    />
-                                                </Co.BtnWish>
-                                                <Co.Text>
-                                                    {followCalc(
-                                                        item.interest,
-                                                    )}
-                                                </Co.Text>
-                                            </Co.WishFigure>
-                                            {/* <Co.ReviewFigure>
+                                                      </Co.ProductImg>
+                                                  </Co.Product>
+                                                  <Co.ProductInfoArea>
+                                                      <Co.Title>
+                                                          <Co.ProductInfoBrand>
+                                                              {item.brand}
+                                                          </Co.ProductInfoBrand>
+                                                          <Co.ProductInfoName>
+                                                              <Co.Name>
+                                                                  {item.title}
+                                                              </Co.Name>
+                                                              <Co.TranslatedName>
+                                                                  {
+                                                                      item.subTitle
+                                                                  }
+                                                              </Co.TranslatedName>
+                                                          </Co.ProductInfoName>
+                                                      </Co.Title>
+                                                      <Co.ProductExpress>
+                                                          <FontAwesomeIcon
+                                                              icon={
+                                                                  faBoltLightning
+                                                              }
+                                                          />
+                                                          빠른배송
+                                                      </Co.ProductExpress>
+                                                  </Co.ProductInfoArea>
+                                                  <Co.PriceInfoArea>
+                                                      <Co.Amount>
+                                                          {addComma(
+                                                              item.price,
+                                                          )}
+                                                      </Co.Amount>
+                                                      <Co.Desc>
+                                                          즉시 구매가
+                                                      </Co.Desc>
+                                                  </Co.PriceInfoArea>
+                                              </Co.ItemInner>
+                                          </Link>
+                                          <Co.ActionWishReview>
+                                              <Co.WishFigure>
+                                                  <Co.BtnWish
+                                                      href="#"
+                                                      aria-label="관심상품"
+                                                      icon-name="ico-wish-grey"
+                                                  >
+                                                      <FontAwesomeIcon
+                                                          icon={faBookmark}
+                                                      />
+                                                  </Co.BtnWish>
+                                                  <Co.Text>
+                                                      {followCalc(
+                                                          item.interest,
+                                                      )}
+                                                  </Co.Text>
+                                              </Co.WishFigure>
+                                              {/* <Co.ReviewFigure>
                                                 <Co.ReviewLink
                                                     href="/social/products/51930"
                                                     aria-label={item.subTitle}
@@ -432,9 +444,9 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                                     {followCalc(item.follow)}
                                                 </Co.Text>
                                             </Co.ReviewFigure> */}
-                                        </Co.ActionWishReview>
-                                    </Co.ProductCard>
-                                ))}
+                                          </Co.ActionWishReview>
+                                      </Co.ProductCard>
+                                  ))}
                         </Co.SearchResultList>
                     </Co.SearchResult>
                 </Co.SearchContent>
@@ -443,4 +455,4 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
     );
 };
 
-export default Content;
+export default NewContent2;

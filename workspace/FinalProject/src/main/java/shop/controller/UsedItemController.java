@@ -27,6 +27,7 @@ import jakarta.servlet.http.HttpSession;
 import shop.bean.NewProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.bean.UsedItemLikeDTO;
+import shop.bean.UsedItemReportDTO;
 import shop.dao.UsedItemDAO;
 import shop.service.UsedItemService;
 
@@ -221,6 +222,29 @@ public class UsedItemController {
 	 @GetMapping("search")
 	public List<UsedItemDTO> search(@RequestParam Map<String, String> map) { // searchOption, keyword
 	 	//System.out.println(map);
-		return usedItemService.search(map);
+		return usedItemService.search(map); 
+	}
+	 
+	@GetMapping("getId")
+	public String getId(@RequestParam int seq) {
+		
+		
+		return usedItemService.getId(seq);
+	}
+	
+	@PostMapping("report")
+	public void report(@ModelAttribute UsedItemReportDTO usedItemReport) {
+		usedItemService.report(usedItemReport);
+	}
+	
+	@GetMapping("reportHistory")
+	public boolean reportHistory(@RequestParam int seq, @RequestParam String reportId) {
+		
+		return usedItemService.reportHistory(seq, reportId );
+	}
+	
+	@GetMapping(path="getAdminItem")
+	public List<UsedItemDTO> getAdminItem() {
+		return usedItemService.getAdminItem();
 	}
 }
