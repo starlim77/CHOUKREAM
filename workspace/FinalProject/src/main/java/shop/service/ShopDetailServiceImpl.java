@@ -1,9 +1,12 @@
 package shop.service;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Service;
 
 import shop.bean.BidsListDTO;
@@ -117,4 +120,5 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	public Long likeCount(int seq, String shopKind) {
 		return useItemLikeDAO.likeCount(seq, shopKind);
 	}
+
 }

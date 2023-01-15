@@ -3,6 +3,8 @@ package shop.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
+
 import shop.bean.NewProductDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
@@ -19,5 +21,6 @@ public interface ShopService {
 
 	public void delete(int seq);
 	List<ProductSizeDTO> findBySeq(int seq);
+
 	
 }

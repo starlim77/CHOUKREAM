@@ -1,6 +1,9 @@
 package my.controller;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import my.bean.AddressDTO;
 import my.bean.PointDTO;
 import my.service.MyService;
+import shop.bean.CompletedOrderDTO;
+import shop.bean.ProductDTO;
 
 @RestController
 @CrossOrigin
@@ -62,4 +67,13 @@ public class MyController {
 		return myService.deleteAddress(id ,seq);
 	}
 	
+	@GetMapping(path = "getBuy")
+	public List<ProductDTO> getBuy(@RequestParam long id){
+		return myService.getBuy(id);
+	}
+	
+	@GetMapping(path = "getDoneBuy")
+	public List<ProductDTO> getDoneBuy(@RequestParam long id){
+		return myService.getDoneBuy(id);
+	}
 }

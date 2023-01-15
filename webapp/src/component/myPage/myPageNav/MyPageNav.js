@@ -85,7 +85,7 @@ const MyPageNav = () => {
                 <S.NavDiv>
                     <S.Title>마이 페이지</S.Title>
                     <S.NavUl>
-                        <S.NavLi onClick={onclick}>
+                    <S.NavLi onClick={onclick}>
                             <Link
                                 id="BUYHISTORY"
                                 to="buyHistory"

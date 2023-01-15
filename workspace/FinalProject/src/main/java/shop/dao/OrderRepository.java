@@ -3,11 +3,15 @@ package shop.dao;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.fasterxml.jackson.annotation.JacksonInject.Value;
+
+import lombok.val;
 import shop.bean.BidsListDTO;
 import shop.bean.OrderDTO;
 import shop.bean.SizeMinDTO;
@@ -59,6 +63,10 @@ public interface OrderRepository extends JpaRepository<OrderDTO, Integer> {
 	@Query(nativeQuery =true,
 			value = "select size, order_price as price, count(order_price) as count from order_table where buy_sell = 0 and size = :size and seq = :seq group by (order_price) order by order_price desc")
 	public List<BidsListDTO> getBuyBidsListBySize(@Param("seq") int seq, @Param("size") String size);
+
+	public List<OrderDTO> findAllBySellOrderUser(String sellOrderUser);
+
+	public List<OrderDTO> findAllByBuyOrderUser(String buyOrderUser);
 	
 //	@Query(value = "select min(order_price) as order_price from order_table where seq= :seq and size = :size  group by seq", nativeQuery=true)
 //	public Optional<Integer> getProductMin(@Param("seq") int seq, @Param("size") String size);

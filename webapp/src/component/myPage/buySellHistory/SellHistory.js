@@ -1,11 +1,11 @@
 import React from 'react';
 
-const BuyHistory = () => {
+const SellHistory = () => {
     return (
         <div>
-            BuyHistory
+            
         </div>
     );
 };
 
-export default BuyHistory;
+export default SellHistory;

@@ -3,6 +3,8 @@ package shop.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
+
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;

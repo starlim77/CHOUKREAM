@@ -1,11 +1,14 @@
 package shop.service;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Service;
 
 import shop.dao.ProductSizeRepository;
@@ -49,8 +52,6 @@ public class ShopServiceImpl implements ShopService {
 	public List<ProductSizeDTO> findBySeq(int seq) {
 		return sizeRepository.findBySeq(seq);
 	}
-
-
 	
 }
 

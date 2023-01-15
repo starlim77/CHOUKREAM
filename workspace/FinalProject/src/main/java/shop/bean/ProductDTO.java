@@ -55,6 +55,9 @@ public class ProductDTO {
    @Column(name="color")
    private String color;
    
+   @Column(name="imgName", length = 500)
+   private String imgName;
+   
    
 //   @CreationTimestamp // 엔티티가 생성되는 시점의 시간 등록
 //   private Timestamp logtime;
