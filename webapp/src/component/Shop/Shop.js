@@ -12,6 +12,7 @@ import axios from 'axios';
 
 const Shop = () => {
     const [dummy, setDummy] = useState([]);
+    const [dummy2, setDummy2] = useState([]);
     const [dummyFilter, setDummyFilter] = useState([]);
     const [sortCheck, setSortCheck] = useState(false);
 
@@ -20,7 +21,7 @@ const Shop = () => {
         axios
             .get('http://localhost:8080/shop/getProductList')
             //.get('http://localhost:8080/shop/favourSort')
-            .then(res => setDummy(res.data))
+            .then(res => {setDummy(res.data); setDummy2(res.data)})
             //.then(res => console.log(JSON.stringify(res.data)))
             .catch(error => console.log(error));
     }, []);
@@ -129,6 +130,7 @@ const Shop = () => {
                 <Content
                     dummy={dummy}
                     setDummy={setDummy}
+                    dummy2={dummy2}
                     dummyFilter={dummyFilter}
                     setDummyFilter={setDummyFilter}
                     tagLive={tagLive}
