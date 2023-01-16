@@ -2,7 +2,12 @@
 import Pagination from "react-js-pagination";
 import "./Paging.css"
 
+
+
 const Paging = ({ page, count, setPage }) => {
+
+ 
+
   return (
     <div>
            
@@ -16,7 +21,9 @@ const Paging = ({ page, count, setPage }) => {
                     prevPageText={"<"}
                     nextPageText={">"}
                     onChange={setPage}
+                 
                    />
+                  
               
               
      

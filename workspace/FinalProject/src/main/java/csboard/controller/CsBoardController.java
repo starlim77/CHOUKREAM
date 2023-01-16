@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.apache.tomcat.util.buf.StringUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,11 +24,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import csboard.bean.CsBoarNoticeDTO;
 import csboard.bean.CsBoardDTO;
 import csboard.service.CsBoardService;
 import jakarta.servlet.http.HttpSession;
-import lookbook.bean.StyleDTO;
+
 
 
 
@@ -38,30 +39,31 @@ import lookbook.bean.StyleDTO;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping(path="cs")
+@RequestMapping(path="csfaq")
 public class CsBoardController {
 	
 	@Autowired
 	private CsBoardService csBoardService;
 	
-	@PostMapping(path="write")	
-	public void write(@ModelAttribute CsBoardDTO csBoardDTO) {
-		String path = System.getProperty("user.dir");
-		 int index = path.lastIndexOf("\\");
-		 System.out.println(index +"index" + "filepath"+csBoardDTO.getFilepath());
-		 //	\FinalProject를 자르고 앞부분만 남김. ex)F:\project\finalProject\final\final1zo\workspace
-		 String pathModified=path.substring(0, index);
-		 System.out.println("pathModified"+ pathModified);
-		System.out.println(csBoardDTO);
-		csBoardService.write(csBoardDTO);		
-	}
+//	@PostMapping(path="write")	
+//	public void write(@ModelAttribute CsBoardDTO csBoardDTO) {
+//		String path = System.getProperty("user.dir");
+//		 int index = path.lastIndexOf("\\");
+//		 System.out.println(index +"index" + "filepath"+csBoardDTO.getFilepath());
+//		 //	\FinalProject를 자르고 앞부분만 남김. ex)F:\project\finalProject\final\final1zo\workspace
+//		 String pathModified=path.substring(0, index);
+//		 System.out.println("pathModified"+ pathModified);
+//		System.out.println(csBoardDTO);
+//		csBoardService.write(csBoardDTO);		
+//	}
 	
-	@PostMapping(path = "writeTest" , produces="text/html; charset=UTF-8")
+	@PostMapping(path = "write" , produces="text/html; charset=UTF-8")
 	@ResponseBody
 	public void writeTest(@RequestBody List<MultipartFile> img, @ModelAttribute CsBoardDTO csBoardDTO, HttpSession session) {
 		System.out.println(img);
 		System.out.println(csBoardDTO);
 		if(img!=null) {
+			
 		String path = System.getProperty("user.dir");
 		 int index = path.lastIndexOf("\\");
 		 System.out.println(index +"index" + "filepath"+csBoardDTO.getFilepath());
@@ -108,6 +110,7 @@ public class CsBoardController {
 		csBoardDTO.setFilepath(filePath); 
 		csBoardService.write(csBoardDTO);
 		}else {
+		
 			csBoardService.write(csBoardDTO);
 		}
 	 	 
@@ -228,7 +231,11 @@ public class CsBoardController {
 	//카테고리 버튼 클릭 시 클릭한 카테고리만 보이게 
 	@GetMapping(path="getCategoryList")	
 	public List<CsBoardDTO>  getCategoryList(@RequestParam String category) {
-		return csBoardService.getCategory(category);
+		if(category=="") {
+			List<CsBoardDTO> list = csBoardService.getList();
+			return list;
+		}else {
+		return csBoardService.getCategory(category);}
 	}
 	//content 검색 
 	@GetMapping(value="getKeywordSearchList")	

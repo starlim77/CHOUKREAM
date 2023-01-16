@@ -43,7 +43,7 @@ const CsFaq = () => {
    
     const onSearch =(e) => {
         e.preventDefault()
-        axios.get('http://localhost:8080/cs/getKeywordSearchList',{
+        axios.get('http://localhost:8080/csfaq/getKeywordSearchList',{
             params : {
                  
                  keyword : keyword
@@ -75,7 +75,7 @@ const CsFaq = () => {
    
    
     useEffect(()=>{
-        axios.get('http://localhost:8080/cs/getList')//포트 다르니가 풀주소
+        axios.get('http://localhost:8080/csfaq/getList')//포트 다르니가 풀주소
 
         .then((res) => {//주소가서 res 받아오기
            
@@ -121,7 +121,7 @@ const onReset =(e)=>{
        console.log(e.target.value)
       
        
-        axios.get('http://localhost:8080/cs/getCategoryList',{
+        axios.get('http://localhost:8080/csfaq/getCategoryList',{
             params : {
              
                 category :  e.target.value
@@ -152,9 +152,9 @@ const onReset =(e)=>{
     const onDelete =(e) =>{
     const seq = e.target.value;
     console.log(seq)
-    axios.get(`http://localhost:8080/cs/getBoard?seq=${seq}`)
+    axios.get(`http://localhost:8080/csfaq/getBoard?seq=${seq}`)
          .then(
-             axios.delete(`http://localhost:8080/cs/deleteBoard?seq=${seq}`)
+             axios.delete(`http://localhost:8080/csfaq/deleteBoard?seq=${seq}`)
                         .then(() =>{
                             alert("글 삭제");
                             navigate(0);
@@ -176,7 +176,7 @@ const onReset =(e)=>{
        
             <div>
               
-            {tokenId}
+           
             {visibleReset ?
             <C.SearchReset  onClick={onReset}><RxCrossCircled/></C.SearchReset>  : <C.SearchReset ></C.SearchReset>     }
             
@@ -188,24 +188,20 @@ const onReset =(e)=>{
             <C.CsCategoryTable>
                 <C.CsCategoryTbody>
                 <C.CsCategoryTr>
-                    <C.CsCategoryTd ><C.CategoryButton onClick={onClickCategory}  style={category==="buying"? {fontWeight: "bold"}:{} }value='buying'> buying</C.CategoryButton></C.CsCategoryTd>
-                    <C.CsCategoryTd ><C.CategoryButton onClick={onClickCategory}  style={category==="policy"? {fontWeight: "bold"}:{} }value='policy'>policy</C.CategoryButton></C.CsCategoryTd>
-                    <C.CsCategoryTd><C.CategoryButton onClick={onClickCategory}   style={category==="common"? {fontWeight: "bold"}:{} }value='common'> common</C.CategoryButton></C.CsCategoryTd>
+                    <C.CsCategoryTd ><C.CategoryButton onClick={onClickCategory}  style={category===''? {fontWeight: "bold"}:{} }value=''> 전체</C.CategoryButton></C.CsCategoryTd>
+                    <C.CsCategoryTd ><C.CategoryButton onClick={onClickCategory}  style={category==="policy"? {fontWeight: "bold"}:{} }value='policy'>이용정책</C.CategoryButton></C.CsCategoryTd>
+                    <C.CsCategoryTd><C.CategoryButton onClick={onClickCategory}   style={category==="common"? {fontWeight: "bold"}:{} }value='common'> 공통</C.CategoryButton></C.CsCategoryTd>
                 </C.CsCategoryTr>
                 <C.CsCategoryTr>
-                    <C.CsCategoryTd> <C.CategoryButton  onClick={onClickCategory}  style={category==="4"? {fontWeight: "bold"}:{} }value='4'  >4</C.CategoryButton></C.CsCategoryTd>
-                    <C.CsCategoryTd > <C.CategoryButton onClick={onClickCategory} style={category==="5"? {fontWeight: "bold"}:{} }value='5' >5</C.CategoryButton></C.CsCategoryTd>
-                    <C.CsCategoryTd  ></C.CsCategoryTd>
+                <C.CsCategoryTd><C.CategoryButton onClick={onClickCategory}   style={category==="buying"? {fontWeight: "bold"}:{} }value='buying'> 구매</C.CategoryButton></C.CsCategoryTd>
+                    <C.CsCategoryTd> <C.CategoryButton  onClick={onClickCategory}  style={category==="selling"? {fontWeight: "bold"}:{} }value='selling'  >판매</C.CategoryButton></C.CsCategoryTd>
+                    <C.CsCategoryTd ></C.CsCategoryTd>
+                    
                    
                 </C.CsCategoryTr>
                 </C.CsCategoryTbody>
             </C.CsCategoryTable>
-            <p>
-              
-                 
-               {tokenId === '14' &&  <Link to='/cs/CsFaqWriteForm'><button>글쓰기</button></Link>}
-               
-            </p>
+            
             
                 {list.length===0 && <C.NoResult>검색결과가 없습니다
                                   <p>  <C.ChatButton>채팅하기</C.ChatButton></p>
@@ -222,7 +218,14 @@ const onReset =(e)=>{
                                 onClick={() => handleClickItem(item.seq)}
                             >
                                 {/* {' '} */}
-                              <C.StrongCategory> [{item.category}]</C.StrongCategory> &nbsp;&nbsp;&nbsp;
+                              <C.StrongCategory> {item.category==='' ? '전체':
+                                                   item.category==='policy' ? '구매정책' :
+                                                   item.category==='common' ? '공통' :
+                                                   item.category==='buying' ? '구매' :
+                                                   item.category==='selling' ? '판매' :
+                                                   ''}
+                             </C.StrongCategory>
+                                 &nbsp;&nbsp;&nbsp;                   
                                 {item.title}
                              <C.UpdownIcon> {visible[item.seq] ? <RxChevronUp/>  :   <RxChevronDown/> }</C.UpdownIcon>  
                             </C.NoticeLi>
@@ -232,13 +235,13 @@ const onReset =(e)=>{
                                       
                                       {/*   <div dangerouslySetInnerHTML={{ __html: item.content }}></div> */} 
                                         <Viewer initialValue={(item.content).replace('<img src="blob:http://localhost:3000/'+item.filename+'" contenteditable="false">', '<img src="/storage/'+item.filename+'.png" contenteditable="false">') } />
-                                        <p>
+                                        <C.ButtonRight>
                                          {tokenId === '14' && 
                                          <Link to={'/cs/CsFaqUpdateForm/'+item.seq}><C.ModifiedButton  value ={item.seq}>수정</C.ModifiedButton></Link> } {/*param 가져가기 */}
                                          {tokenId === '14' &&  <C.ModifiedButton  value ={item.seq} onClick={onDelete}>삭제</C.ModifiedButton> }
                                       
                                        
-                                           </p>
+                                           </C.ButtonRight>
                                     </C.NoticeContent>
                          
                                
@@ -253,7 +256,10 @@ const onReset =(e)=>{
 
             {/*  PAGINATION * 검색결과 있을 때만 페이지 띄우기 */}
             {list.length >1 &&
-            <Paging page={currentPage} count={count} setPage={setPage} />}
+            <Paging page={currentPage} count={count} setPage={setPage} /> }
+            <C.WriteBtn>{tokenId === '14' &&  <Link to='/cs/CsFaqWriteForm'><C.Button>글쓰기</C.Button></Link>}</C.WriteBtn>
+          
+               
            
 
         </>

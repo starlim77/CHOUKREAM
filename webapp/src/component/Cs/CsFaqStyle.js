@@ -12,6 +12,8 @@ export const NoticeLi = styled.div`
     width: 100%;
     height: 50px;
     border-bottom: 1px solid #ebebeb;
+    padding-bottom : 15px;
+    padding-top : 15px;
 `
 
 export const NoticeWrapper = styled.div`
@@ -29,6 +31,7 @@ export const NoticeTitle = styled.div`
     font-weight: 550;
     font-size: large;
     border-bottom: 1px solid #ebebeb;
+    
     `
 export const NoticeContent = styled.div`
     display: flex;
@@ -175,6 +178,7 @@ align-content: center;
 
 font-size :20px;
 justify-content: space-around;
+color: rgba(34,34,34,.8);
 
 `
 export const CategoryButtonClick =styled.button`
@@ -205,3 +209,48 @@ font-weight :bold;
 export const TitleDiv =styled.div`
 
 `
+export const CategorySelect = styled.select`
+text-align:center;
+width : 7pt;
+border-radius: 5px;
+margin-right : 5px;
+background-color: #f4f4f4;
+border : none;
+outline: none;
+height :20pt;
+
+`
+export const TitleInput =styled.input`
+background-color: #f4f4f4;
+border : none;
+border-radius: 5px;
+
+height: 5px;
+margin: 16px 0 20px;
+
+font-size: 12px;
+outline: none;
+width : 950px;
+height : 20pt;
+`
+
+export const ButtonRight =styled.p`
+margin-left: auto;
+
+`
+export const Validation =styled.div`
+font-size : 6pt;
+color : red;
+`
+export const WriteBtn =styled.div`
+margin-left: auto;
+`
+export const ButtonWrapper =styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+flex-wrap: wrap;
+margin : 20px;
+
+`
+

@@ -8,9 +8,9 @@ const CsHeader = () => {
     const [titleKor, setTitleKor] = useState()
     useEffect(() => {
         console.log(title)
-        title === "csNotice"
+        title === "csNotice" |"csNoticeWrite"
             ?setTitleKor("공지사항")
-            :title === "CsFaq"
+            :title === "CsFaq"|'CsFaqUpdateForm'|'CsFaqWriteForm'
             ?setTitleKor("자주 묻는 질문")
             :title === "csInspection"
             &&setTitleKor("검수 기준")

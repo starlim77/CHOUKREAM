@@ -46,7 +46,7 @@ public class CsBoarNoticeDTO {
 	
 	@Column(name="title")
 	private String title;
-	@Column(name="content")
+	@Column(name="content", length=100000)
 	private String content;
 	@Column(name="id")
 	private String id;

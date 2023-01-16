@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
-import * as S from './CsNoticeStyle';
-
+import * as C from './CsNoticeStyle';
+import jwt_decode from 'jwt-decode';
 const CsNoticeDetail = () => {
     const location = useLocation();
     const [notice, setNotice] = useState(location.state.noticeList);
@@ -12,6 +12,19 @@ const CsNoticeDetail = () => {
     const navigate = useNavigate()
     let content = notice.content;
     const [seq,setSeq ]= useState()
+
+    const token = localStorage.getItem('accessToken');
+    const [auth, setAuth] = useState('ROLE_GUEST');
+    const [tokenId, settokenId] = useState('')
+    useEffect(() => {
+        if (token !== null) {
+            const tokenJson = jwt_decode(token);
+            setAuth(tokenJson['auth']);
+            //localStorage.setItem('userInfo', JSON.stringify(tokenJson));
+            settokenId(tokenJson['sub']);
+            // setForm({...form, id:tokenId})
+        }
+    }, [token]);
 
     useEffect(() => {
         axios
@@ -47,18 +60,19 @@ const CsNoticeDetail = () => {
      
     return (
         <>
-             <S.DateSpan>{notice.createdate}</S.DateSpan>
-            <S.NoticeWrapper>
+             <C.DateSpan>{notice.createdate}</C.DateSpan>
+            <C.NoticeWrapper>
                
-                <S.NoticeTitle>{notice.title}</S.NoticeTitle>
-                <S.NoticeContent>
+                <C.NoticeTitle>{notice.title}</C.NoticeTitle>
+                <C.NoticeContent>
                     
                     <div dangerouslySetInnerHTML={{ __html: content }}></div>
-                </S.NoticeContent>
-                <S.Button onClick={onList}>목록으로</S.Button>
-                <Link to={'/cs/csNoticeUpdateForm/'+seq}>    <S.Button onClick={onUpdate}>수정</S.Button></Link>
-                <S.Button onClick={onDelete}>삭제</S.Button>
-            </S.NoticeWrapper>
+                </C.NoticeContent>
+                <C.Button onClick={onList}>목록으로</C.Button>
+                    {tokenId === '14' &&   <Link to={'/cs/csNoticeUpdateForm/'+seq}>    <C.Button onClick={onUpdate}>수정</C.Button></Link>}
+                    
+                    { tokenId === '14' && <C.Button onClick={onDelete}>삭제</C.Button> }
+            </C.NoticeWrapper>
         </>
     );
 };

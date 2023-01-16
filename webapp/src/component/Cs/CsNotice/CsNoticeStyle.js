@@ -48,7 +48,7 @@ export const Button = styled.button`
     border-radius: 10px;
 `
 export const DateSpan = styled.span`
-argin-bottom: 1px;
+    margin-bottom: 1px;
    
     display: inline-flex;
     font-size: 12px;
@@ -56,4 +56,44 @@ argin-bottom: 1px;
     justify-content: space-between;
     align-items: center;
     padding: 5px 5px 5px 0px;
+`
+
+
+
+export const TitleInput =styled.input`
+background-color: #f4f4f4;
+border : none;
+border-radius: 5px;
+
+height: 5px;
+margin: 16px 0 20px;
+
+font-size: 12px;
+outline: none;
+width : 950px;
+height : 20pt;
+`
+export const ButtonWrapper =styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+flex-wrap: wrap;
+margin : 20px;
+
+`
+
+export const CategorySelect = styled.select`
+text-align:center;
+width : 100px;
+border-radius: 5px;
+margin-right : 5px;
+background-color: #f4f4f4;
+border : none;
+outline: none;
+height :20pt;
+
+`
+export const Validation =styled.div`
+font-size : 6pt;
+color : red;
 `
