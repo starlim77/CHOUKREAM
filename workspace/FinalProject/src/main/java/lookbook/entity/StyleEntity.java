@@ -78,6 +78,7 @@ public class StyleEntity {
 		styleEntity.setLogtime(styleDTO.getLogtime());
 		styleEntity.setHit(0);
 		styleEntity.setFileAttached(0);
+		styleEntity.setProductSeq(styleDTO.getProductSeq());
 		
 		System.out.println("여기"+styleEntity);
 		return styleEntity;

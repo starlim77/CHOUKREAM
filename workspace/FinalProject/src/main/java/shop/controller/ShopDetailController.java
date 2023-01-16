@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import lookbook.bean.StyleDTO;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
@@ -85,6 +86,12 @@ public class ShopDetailController {
 	@GetMapping(path="likeCount")
 	public Long likeCount(@RequestParam int seq, @RequestParam String shopKind) {
 		return shopDetailService.likeCount(seq, shopKind);  
+	}
+	
+	@GetMapping(path="getBrandStyleList")
+	public List<StyleDTO> getBrandStyleList(@RequestParam int seq) {
+		System.out.println(shopDetailService.getBrandStyleList(seq));
+		return shopDetailService.getBrandStyleList(seq);  
 	}
 	
 	
