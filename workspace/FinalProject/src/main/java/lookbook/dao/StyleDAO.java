@@ -3,7 +3,9 @@ package lookbook.dao;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -34,8 +36,15 @@ public interface StyleDAO extends JpaRepository<StyleEntity, String> {
 	value= "select a.seq, a.comment_count, a.content, a.id, a.likes_count, a.logtime, ifnull(b.member_id, 'false') as isLikes , c.stored_file_name from style_table as a left outer join (select member_id, style_seq from style_likes_table where member_id=:id) as b on b.style_seq = a.seq left outer join (select id, group_concat(stored_file_name) as stored_file_name, style_seq from style_file_table group by style_seq) as c on c.style_seq = a.seq where a.id=:id")
 	List<LikesDTO> findLikes(@Param("id") String id);
 
+//	StyleEntity findAllById(String string);//팔로우 목록 가져오기
+//
+//	@Modifying
+//	@Qualifier
+//	//@Query(nativeQuery = true,value = "select * from style_table where id = 1 OR id = 2 OR id = 12")
+//	@Query(nativeQuery = true,value = "select * from style_table where id =(:str)") 
+//	public List<StyleEntity> getFollowing(String str);
+
+	public List<StyleEntity> findAllByIdIn(List<String> idList);
 
 	
-	 
-	   
 }

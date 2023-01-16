@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import Card from '@mui/material/Card';
 import {
     CardActions,
@@ -14,15 +15,14 @@ import * as S from './style';
 import { grey } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 
+const FollowingItem = ({item,index,itemLength}) => {
 
-const TrendingItem = ({item,index,itemLength}) => {
-    //
     const [isLike, setIsLike] = useState(0);
 
     return (
         <S.TrGridBox style={{display : index < itemLength ? '':'none'}}>
             <Card sx={{ width: 250 }} >
-                <Link to={'/lookbook/detail' + item.seq}>
+                <Link to={'/lookbook/following' + item.seq}>
                     <S.TrGridBoxImg src={'../storage/' + item.storedFileName[0]}/>
                 </Link>
                 
@@ -57,4 +57,4 @@ const TrendingItem = ({item,index,itemLength}) => {
     );
 };
 
-export default TrendingItem;
+export default FollowingItem;
