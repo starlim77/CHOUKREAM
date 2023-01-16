@@ -242,6 +242,4 @@ public class ShopController {
 		newProductService.upload(newProductDTO);
 
 	 }
-
 }
-
