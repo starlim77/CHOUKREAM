@@ -53,6 +53,9 @@ import ReList from './component/Shop/resell/ReList';
 import ReUpdate from './component/Shop/resell/ReUpdate';
 import ReWrite from './component/Shop/register/ReWrite';
 import Following from './component/Lookbook/Following';
+import Following from './component/Lookbook/Following';
+import jwt_decode from 'jwt-decode';
+
 
 function App() {
     const token = localStorage.getItem('accessToken');
@@ -163,14 +166,14 @@ function App() {
                     <Route path="/lookbook/trending" element={<Trending />} />
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
-                    <Route path="/lookbook/detail" element={<Detail />} />
-                    <Route path="/lookbook/following" element={<Following />} />
+                    <Route path="/lookbook/detail" element={<Detail />} />                    
                     <Route
                         path="/lookbook/styleComment/:styleSeq"
                         element={<StyleComment />}
                     />
                     <Route
-                        path="/lookbook/mystyledetail/:seq/:id"
+                        // path="/lookbook/mystyledetail/:seq/:id"
+                        path="/lookbook/mystyledetail/:id"
                         element={<MystyleDetail />}
                     />
                     <Route
@@ -186,6 +189,7 @@ function App() {
                             </>
                         }
                     />
+                    
                 </Route>
 
                 <Route path="/Search/SearchForm" element={<SearchForm />} />

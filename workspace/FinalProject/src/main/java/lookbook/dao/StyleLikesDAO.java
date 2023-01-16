@@ -1,5 +1,6 @@
 package lookbook.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,6 +19,8 @@ public interface StyleLikesDAO extends JpaRepository<StyleLikesEntity, String> {
 	
 	//쿼리 select COUNT(*) from style_likes_table where style_seq = 2;
 	public int countByStyleEntity_Seq(int styleSeq);
+
+	public List<StyleLikesEntity> findByMemberDto_Id(String id);
 
 	
 	

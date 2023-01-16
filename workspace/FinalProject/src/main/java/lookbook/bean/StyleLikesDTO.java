@@ -21,7 +21,7 @@ public class StyleLikesDTO {
 	
 	private int styleSeq;  //게시글번호
 
-	public static StyleLikesDTO  toStyleLikesDTO(StyleLikesEntity styleLikesEntity, int styleSeq) {
+	public static StyleLikesDTO  toStyleLikesDTO(StyleLikesEntity styleLikesEntity) {
 		StyleLikesDTO styleLikesDTO = new StyleLikesDTO();
 //		styleLikesDTO.setLikesId(styleLikesEntity.isLikesId());
 		styleLikesDTO.setLikesId(styleLikesEntity.getLikesId());

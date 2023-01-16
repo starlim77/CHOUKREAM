@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
+import lookbook.bean.LikesDTO;
 import lookbook.bean.StyleCommentDTO;
 import lookbook.bean.StyleDTO;
 import lookbook.bean.StyleLikesDTO;
+import lookbook.dao.StyleFileDAO;
 import lookbook.service.StyleCommentService;
+import lookbook.service.StyleFollowingService;
 import lookbook.service.StyleLikesService;
 import lookbook.service.StyleService;
 import member.bean.MemberDto;
+import shop.bean.ProductDTO;
+import member.dao.MemberDAO;
+
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -40,6 +47,11 @@ public class styleController {
 	private StyleCommentService styleCommentService;
 	@Autowired
 	private StyleLikesService styleLikesService;
+	@Autowired
+	private StyleFollowingService styleFollowingService;
+	@Autowired 
+	private MemberDAO memberDAO;
+	
 	
 	//스타일 게시물 입력	
 	@PostMapping(path="upload" , produces="text/html; charset=UTF-8")
@@ -47,14 +59,16 @@ public class styleController {
 	public void upload(@RequestBody List<MultipartFile> list, @ModelAttribute StyleDTO styleDTO, HttpSession session) {
 		//System.out.println("list= " + list);	
 		//System.out.println("컨드롤러 dto="+ styleDTO);
+		System.out.println(styleDTO.getId()+"////와라");
 		styleService.save(list, styleDTO);
 
 	}
 	
 	
-	//내 id를 들고가서 내 게시글만 뿌리기
+	//내 id를 들고가서 내 게시글만 뿌리기    @AuthenticationPrincipal
 	@GetMapping(path="findAllMyList/{id}")
 	public List<StyleDTO> findAllMyList(@PathVariable String id) {
+		System.out.println(id + " 아이디받기----------------------");
 		//좋아요조회 styleService.findLikes(id,style_seq);
 		return styleService.findAllMyList(id);
 	}
@@ -103,29 +117,33 @@ public class styleController {
 	
 
 	
-	//좋아요
+	//좋아요 포함 전체 리스트 받아오기
     @PostMapping(path="likebutton")
-    public int likes(@ModelAttribute StyleLikesDTO styleLikesDTO) {
-    	//System.out.println("컨트롤러 styleLikesDTO ==== "+ styleLikesDTO);
-    	return styleLikesService.save(styleLikesDTO);
+    public List<LikesDTO> likes(@ModelAttribute StyleLikesDTO styleLikesDTO, @RequestParam boolean isLike) { //1,0값 받는거 추가 void로 형태 변환
+    	
+    	styleLikesService.save(styleLikesDTO, isLike);
+    	
+    	return styleLikesService.findLikes(Long.toString(styleLikesDTO.getMemberId()));
+  
 
     }
     
     //좋아요 확인
     @GetMapping(path="findLikes")
-    public int findLikes(@ModelAttribute StyleLikesDTO styleLikesDTO) {
+    public List<LikesDTO> findLikes(@RequestParam String id) {
     	//System.out.println("컨트롤러 조아요 확인 styleLikesDTO ==== "+ styleLikesDTO);
-    	return styleLikesService.findLikes(styleLikesDTO);
+    	return styleLikesService.findLikes(id);
 
     }
-		
-    //좋아요 카운트
-    @GetMapping(path="likescount")
-    public int likescount(@ModelAttribute StyleLikesDTO styleLikesDTO) {
-    	return styleLikesService.findAll(styleLikesDTO);
-    }
-
     
+    //보드등록시 상품검색하기
+	@GetMapping(value="search")
+	public List<ProductDTO> search(@RequestParam String keyword){ 
+		System.out.println(keyword + "==============");
+		
+		return styleService.search(keyword);
+	}
+	
 //댓글
     
 	//상세에서 댓글 등록기능
@@ -150,7 +168,7 @@ public class styleController {
 	@GetMapping(path="getComment")	
 	public ResponseEntity getComment(@ModelAttribute StyleCommentDTO styleCommentDTO) {
 		System.out.println(styleCommentDTO);
-				
+			
 		List<StyleCommentDTO> styleCommentDTOList = styleCommentService.findAll(styleCommentDTO.getStyleSeq());
 		return new ResponseEntity<>(styleCommentDTOList, HttpStatus.OK);//내가 전달하려는 바디값(styleCommentDTOList)과 상태값(HttpStatus.OK)
 		
@@ -164,20 +182,41 @@ public class styleController {
 	}
 	
 	
-//팔로잉
+//팔로잉	
+	
 	//팔로우
-	@PutMapping(path="saveFollow")
-	public void saveFollow(@ModelAttribute StyleDTO styleDTO, @RequestParam MemberDto fromUser ) {
-		System.out.println("toUser 글쓴사람 아이디"+styleDTO.getId());
-		System.out.println("fromUser 현재 로그인한 아이디"+ fromUser);
+	@PostMapping(path="saveFollow/{followerId}/{followeeId}")
+	@ResponseBody
+	public void follow(@PathVariable int followerId, @PathVariable int followeeId) {
 		
+		System.out.println("followee 글쓴사람 아이디"+followeeId);
+		System.out.println("follower 현재 로그인한 아이디"+ followerId);		
 		
+		MemberDto followerDto = memberDAO.findById(followerId);
+		MemberDto followeeDto = memberDAO.findById(followeeId);
+		//id로 일단은 수정???
+		//스타일에서는 member의 name을 아이디로 쓴다
+		
+		styleFollowingService.save(followerDto, followeeDto);	
 		
 	}
+	
 	//언팔
+	@DeleteMapping(path="unFollow/{followerid}/{followeeId}")
+	@ResponseBody
+	public void unFollow(@PathVariable int followerId, @PathVariable int followeeId) {
 	
-	
-
-
+		System.out.println("followee 글쓴사람 아이디"+followeeId);
+		System.out.println("follower 현재 로그인한 아이디"+ followerId);	
+		
+		//MemberDto followerDto = memberDAO.findById(followerId);
+		//MemberDto followeeDto = memberDAO.findById(followeeId);
+		//id로 일단은 수정???
+		//스타일에서는 member의 name을 아이디로 쓴다
+		
+		styleFollowingService.delete(followerId, followeeId);
+		//styleFollowingService.delete(followerDto, followeeDto);
+		
+	}
 
 }

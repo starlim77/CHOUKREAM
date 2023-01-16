@@ -24,23 +24,23 @@ public class StyleFollowingEntity {
 	//toUser가 fromUser를 팔로워로
 	
 	@ManyToOne
-	@JoinColumn(name="fromUserId")
-	private MemberDto fromUser;
+	@JoinColumn(name="followerId")
+	private MemberDto follower;
 	
 	@ManyToOne
-	@JoinColumn(name="toUserId")
-	private MemberDto toUser;
+	@JoinColumn(name="followeeId")
+	private MemberDto followee;
 	
 	
-	public static StyleFollowingEntity toFollowingEntity(MemberDto memberDto, StyleEntity styleEntity ) {
+	public static StyleFollowingEntity toFollowingEntity(MemberDto follower, MemberDto followee) {
 		//DTO -> Entity
 		StyleFollowingEntity styleFollowingEntity = new StyleFollowingEntity();
 		
-		//현재 로그인한 멤버
-		styleFollowingEntity.setFromUser(memberDto);
+		//현재 로그인한 멤버 팔로워
+		styleFollowingEntity.setFollower(follower);
 		
-		//글에 묶여있는 멤버
-		//styleFollowingEntity.setToUser(memberDto.getName(styleEntity.getId()));
+		//글에 묶여있는 멤버 팔로이
+		styleFollowingEntity.setFollowee(followee);
 		
 		return styleFollowingEntity;
 		
