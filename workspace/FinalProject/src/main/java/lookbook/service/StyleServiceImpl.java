@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lookbook.bean.StyleDTO;
+import lookbook.bean.StyleLikesDTO;
 import lookbook.dao.StyleDAO;
 import lookbook.dao.StyleFileDAO;
 import lookbook.dao.StyleLikesDAO;
@@ -85,8 +86,8 @@ public class StyleServiceImpl implements StyleService {
     @Override
     public Long findCountById(String id) {
     	//System.out.println("서비스임플에 id" + id);
-       //return styleDAO.findCountById(id);
-    	return null;
+       return styleDAO.countById(id);
+    	
        
     }
 
@@ -183,52 +184,7 @@ public class StyleServiceImpl implements StyleService {
 	    }
 
 
-
 	 
-	 
-	//좋아요 했는지 찾기
-		 @Override
-		    public int findLikes(String id, int style_seq) {
-		        
-			 // 저장된 좋아요가 없다면 0, 있다면 1 //게시물 seq와 로그인아이디를 같이 가져가서 조회
-		        Optional<StyleLikesEntity> findLikes = styleLikesDAO.findByMemberDto_idAndStyleEntity_seq(id, style_seq);
-		        if (findLikes.isEmpty()){
-		            return 0;
-		        }else {
-		            return 1;
-		        }
-		    }
-
-
-	//좋아요 저장하기
-	//참고 : https://velog.io/@hellocdpa/220220-SpringBoot%EC%A2%8B%EC%95%84%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0
-			@Transactional
-		    @Override
-		    public int saveLikes(String id,int style_seq) {
-		       // Optional<StyleLikesEntity> findLikes = likesDAO.findByStyleEntity_IdAndMemberDto_Id(boardId, id);
-
-		        //System.out.println(findLike.isEmpty());
-
-		       // if (findLike.isEmpty()){
-		     //       MemberDto memberDto = memberDAO.findById(id).get();
-		            StyleEntity styleEntity = styleDAO.findBySeq(style_seq).get();
-		            //System.out.println("서비스임플의 memberDto "+ memberDto);
-		            //System.out.println("서비스임플의 styleEntity" + styleEntity);
-
-		 //           StyleLikesEntity styleLikesEntity = StyleLikesEntity.toLikesEntity(memberDto, styleEntity);
-		//            styleLikesDAO.save(styleLikesEntity);
-		            //styleDAO.plusLike(boardId);
-		            return 1;
-//		        }else {
-//		        	likesDAO.deleteByStyleEntity_IdAndMemberDto_Id(boardId, id);
-//		            //styleDAO.minusLike(boardId);
-//		            return 0;
-//
-//		        }
-
-		    }
-		
-	
 
 
 	

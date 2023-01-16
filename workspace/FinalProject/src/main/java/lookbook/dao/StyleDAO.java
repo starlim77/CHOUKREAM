@@ -23,6 +23,7 @@ public interface StyleDAO extends JpaRepository<StyleEntity, String> {
 	void deleteBySeq(int seq);
 	
 	//SELECT COUNT(*) FROM style_table where id= 'id'?
-	Long findCountById(String id);
+	Long countById(String id);
+
 	   
 }

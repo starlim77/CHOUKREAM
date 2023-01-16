@@ -1,15 +1,21 @@
 package shop.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import member.bean.MemberDto;
+import member.dao.MemberDAO;
+import shop.bean.NewProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.bean.UsedItemLikeDTO;
+import shop.bean.UsedItemReportDTO;
 import shop.dao.UsedItemDAO;
 import shop.dao.UsedItemLikeDAO;
+import shop.dao.UsedItemReportDAO;
 
 @Service
 public class UsedItemServiceImpl implements UsedItemService {
@@ -19,6 +25,9 @@ public class UsedItemServiceImpl implements UsedItemService {
 	
 	@Autowired
 	private UsedItemLikeDAO usedItemLikeDAO;
+	
+	@Autowired
+	private UsedItemReportDAO usedItemReportDAO;
 	
 	@Override
 	public void upload2(UsedItemDTO usedItemDTO) {
@@ -88,7 +97,87 @@ public class UsedItemServiceImpl implements UsedItemService {
 	public void updateItem(UsedItemDTO usedItemDTO) {
 		usedItemDAO.save(usedItemDTO);
 	}
-	
+
+
+	@Override
+	public void soldOut(UsedItemDTO usedItemDTO) {
+		
+		usedItemDAO.save(usedItemDTO);
+	}
+
+
+	@Override
+	public void updateState(int seq, boolean sellingState) {
+		System.out.println("여기 오냐?");
+		usedItemDAO.saveByIdAndSellingState(seq,sellingState);
+	}
+
+
+	@Override
+	public List<UsedItemDTO> search(Map<String, String> map) {
+		String searchOption = map.get("searchOption");
+		String keyword = map.get("keyword");
+		
+		System.out.println("searchOption " + searchOption);
+		System.out.println("keyword " + keyword);
+		
+		if(searchOption.equals("id")) {
+			System.out.println("얘 실행");
+			return usedItemDAO.getSearchId(keyword);
+		}else
+			return usedItemDAO.getSearchTitle(keyword);
+	}
+
+
+	@Override
+	public String getId(int seq) {
+		
+		return usedItemDAO.getId(seq);
+		
+	}
+
+
+	@Override
+	public void report(UsedItemReportDTO usedItemReport) {
+		usedItemDAO.reportUp(usedItemReport.getSeq());		
+		usedItemReportDAO.save(usedItemReport);
+	}
+
+
+	@Override
+	public boolean reportHistory(int seq, String reportId) {
+
+//		boolean result = usedItemReportDAO.reportHistory(seq, reportId);
+		
+		UsedItemReportDTO result = usedItemReportDAO.reportHistory(seq, reportId);
+		System.out.println(result);
+		if(result!=null) return true;
+		else return false; 
+	}
+
+
+	@Override
+	public List<UsedItemDTO> getAdminItem() {
+		//어드민에 뿌릴 값 가져오기
+		return usedItemDAO.getAdminItem();
+	}
+
+
+	@Override
+	public int totalReport(String id) {
+		// TODO Auto-generated method stub
+		return usedItemDAO.getTotalReport(id);
+	}
+
+
+	@Override
+	public int getFinishedTrade(String id) {
+		// TODO Auto-generated method stub
+		return usedItemDAO.getFinishedTrade(id);
+	}
+
+
+
 
 	
 }

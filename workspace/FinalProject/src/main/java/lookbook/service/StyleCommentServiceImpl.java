@@ -22,7 +22,8 @@ public class StyleCommentServiceImpl implements StyleCommentService {
 	private StyleDAO styleDAO;
 	@Autowired
 	private StyleCommentDAO styleCommentDAO;
-		
+	
+	//등록
 	@Transactional
 	public Long save(StyleCommentDTO styleCommentDTO) {
 		//부모엔티티( StyleEntity ) 조회
@@ -36,6 +37,9 @@ public class StyleCommentServiceImpl implements StyleCommentService {
 			//클래스 메소드로 사용하는이유- 엔티티를 외부에 노출안시키고 보호해/엔티티는 DB연결하니까
 			//builder를 쓰기도 한다
 			
+			//댓글수 +1 저장
+			styleEntity.setCommentCount(styleEntity.getCommentCount()+1);
+			
 			return styleCommentDAO.save(styleCommentEntity).getId();//댓글 저장
 		} else {
 			return null;
@@ -43,6 +47,8 @@ public class StyleCommentServiceImpl implements StyleCommentService {
 		
 	}
 	
+	
+	//글에 달린 댓글 가져오기
 	@Transactional
 	public List<StyleCommentDTO> findAll(int styleSeq) {
 		//select * from style_comment_table where styleSeq=? order by seq desc;
@@ -55,10 +61,31 @@ public class StyleCommentServiceImpl implements StyleCommentService {
 	        for (StyleCommentEntity styleCommentEntity : styleCommentEntityList) {
 	            StyleCommentDTO styleCommentDTO = StyleCommentDTO.toStyleCommentDTO(styleCommentEntity, styleSeq);
 	            styleCommentDTOList.add(styleCommentDTO);
+	            
+	            System.out.println(styleCommentDTO);
 	        }
 		
 		
 		return styleCommentDTOList;
 	}
+
+	//댓글 삭제
+	@Transactional
+	public void delete(String id, String styleSeq) {
+		styleCommentDAO.deleteById(id);
+		
+		//댓글수 -1
+		int seq = Integer.parseInt(styleSeq);
+		Optional<StyleEntity> optionalStyleEntity = styleDAO.findBySeq(seq);
+		StyleEntity styleEntity = optionalStyleEntity.get(); 
+		styleEntity.setCommentCount(styleEntity.getCommentCount()-1);	
+		
+		
+	}
+
+
+
+
+	
 	
 }

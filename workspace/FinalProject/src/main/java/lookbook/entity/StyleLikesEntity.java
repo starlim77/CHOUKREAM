@@ -21,15 +21,17 @@ public class StyleLikesEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="likes_id")
-	private Long likesId;  //string -> long 
+	private Long likesId; //좋아요 1 또는 0
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id")
     private MemberDto memberDto;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "style_seq")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name ="style_seq")
 	private StyleEntity styleEntity;  //부모 부르는데 알아서 id값만 들어감
+	
 	
 	public static StyleLikesEntity toLikesEntity(MemberDto memberDto, StyleEntity styleEntity){
 		StyleLikesEntity likesEntity = new StyleLikesEntity();

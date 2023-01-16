@@ -10,4 +10,6 @@ public interface StyleCommentService {
 
 	public List<StyleCommentDTO> findAll(int styleSeq);
 
+	public void delete(String id, String styleSeq);
+
 }
