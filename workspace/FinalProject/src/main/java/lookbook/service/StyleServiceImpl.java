@@ -22,6 +22,8 @@ import lookbook.entity.StyleFileEntity;
 import lookbook.entity.StyleLikesEntity;
 import member.bean.MemberDto;
 import member.dao.MemberDAO;
+import shop.bean.ProductDTO;
+import shop.dao.ShopDAO;
 
 
 //DTO  -->  Entity
@@ -38,6 +40,8 @@ public class StyleServiceImpl implements StyleService {
 	private MemberDAO memberDAO;
 	@Autowired
 	private StyleLikesDAO styleLikesDAO;
+	@Autowired
+	private ShopDAO shopDAO;
 
 	//내 글 list 
 	@Transactional
@@ -182,6 +186,14 @@ public class StyleServiceImpl implements StyleService {
 	            return null;
 	        }
 	    }
+
+
+	 //상품검색
+	@Override
+	public List<ProductDTO> search(String keyword) {
+		
+		return shopDAO.search(keyword);
+	}
 
 
 	 

@@ -42,25 +42,7 @@ const Trending = () => {
             .catch(error => console.log(error));
     }, []);
 
-    //네이버
-    // function getItems(nextGroupKey, count) {
-    //     const nextItems = [];
-
-    //     for (let i = 0; i < count; ++i) {
-    //       const num = nextGroupKey * count + i;
-    //       nextItems.push(`<div class="item">
-    //     <div class="thumbnail">
-    //         <img src="https://naver.github.io/egjs-infinitegrid/assets/image/${(num % 33) + 1}.jpg" alt="egjs" />
-    //     </div>
-    //     <div class="info">egjs ${num}</div>
-    //   </div>`);
-    //     }
-    //     return nextItems;
-    //   }
-    //   const ig = new MasonryInfiniteGrid(".container", {
-    //     gap: 5,
-    //   });
-
+  
 
     const [itemLength,setItemLength] = useState(12) // 처음에 가져올 아이템 갯수
 
@@ -91,23 +73,8 @@ const Trending = () => {
     return (
         <>
             <Social />
+            <br/><br/><br/><br/>
             <div>태그</div>
-
-            {/* <MasonryInfiniteGrid
-                className='products'
-               
-                gap={25}
-                threshold={1000}
-                onRequestAppend={(e) => {
-                    const nextGroupKey = (+e.groupKey! || 0) + 1;
-              
-                    setItems([
-                      ...items,
-                      ...getItems(nextGroupKey, 10),    
-                    ]);
-                  }}
-                > */}
-
             <Container fixed>
                 <S.TrGridContainer>
                     <S.TrGridContainerSub>

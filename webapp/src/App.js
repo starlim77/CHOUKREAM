@@ -163,14 +163,14 @@ function App() {
                     <Route path="/lookbook/trending" element={<Trending />} />
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
-                    <Route path="/lookbook/detail" element={<Detail />} />
-                    <Route path="/lookbook/following" element={<Following />} />
+                    <Route path="/lookbook/detail" element={<Detail />} />                    
                     <Route
                         path="/lookbook/styleComment/:styleSeq"
                         element={<StyleComment />}
                     />
                     <Route
-                        path="/lookbook/mystyledetail/:seq/:id"
+                        // path="/lookbook/mystyledetail/:seq/:id"
+                        path="/lookbook/mystyledetail/:id"
                         element={<MystyleDetail />}
                     />
                     <Route
@@ -186,6 +186,7 @@ function App() {
                             </>
                         }
                     />
+                    
                 </Route>
 
                 <Route path="/Search/SearchForm" element={<SearchForm />} />
