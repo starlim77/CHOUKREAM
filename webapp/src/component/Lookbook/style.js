@@ -38,16 +38,26 @@ export const TrTypoDiv = styled.pre`
 `
 export const TrBox = styled.div`
     display: flex;
+    -webkit-box-align: center;
     align-items: center;
 `
 export const TrUsernameBox = styled.div`
+    -webkit-box-flex: 1;
+    flex: 1;
+    padding-left: 4px;
+    padding-right: 6px;
+    white-space: nowrap;
+    font-size: 15px;
+    letter-spacing: -.15px;
+    color: rgba(34,34,34,.8);
 
 `
 
 export const TrlikeBox = styled.div`
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
+    float: right;
+    padding: 0 12px;
 `
 
 
@@ -139,7 +149,7 @@ export const MyPhotoMini = styled.div`
     width: 200px;
     height: 220px;
     display: inline-block;
-    padding: 20px;
+    padding: 20px 30px 50px 30px;
 
 `
 
@@ -161,6 +171,7 @@ export const showImgSrcImg = styled.img`
     width: 100%;  
     height: '100%';
     Overflow: hidden;  
+    position: relative;
     
 `
 
@@ -175,7 +186,18 @@ export const Button = styled.button`
         background-color: coral;
         color: #fff;
     }
-`;
+`
+
+//styleProduct.js
+export const ProductItem = styled.div`
+    margin: 10px 0 10px;
+    padding: 0 10px;
+    width: 20%;
+    position: relative;
+    // display: inline-block;
+    vertical-align: top;
+`
+;
 
 
 

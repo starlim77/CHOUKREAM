@@ -99,7 +99,7 @@ public class StyleServiceImpl implements StyleService {
 	public void save(List<MultipartFile> list, StyleDTO styleDTO) {		
 			
 		styleDTO.setStyleFile(list);			
-		System.out.println("리스트 담겻나"+styleDTO);
+		//System.out.println("리스트 담겻나"+styleDTO);
 		
 		if(styleDTO.getStyleFile() == null || styleDTO.getStyleFile().isEmpty()) {
 	    	//첨부파일 없음
@@ -111,15 +111,15 @@ public class StyleServiceImpl implements StyleService {
 	 		//String filePath = session.getServletContext().getRealPath("/webapp/public/storage");  //저장할경로설정
 	 		
 	 		 String path = System.getProperty("user.dir");
-	 	     System.out.println(path);
+//	 	     System.out.println(path);
 	 	     int index = path.lastIndexOf("\\");
-	 	     System.out.println(index);
+//	 	     System.out.println(index);
 	 	     String pathModified=path.substring(0, index);
-	 	     System.out.println(pathModified);
+//	 	     System.out.println(pathModified);
 	 	     index=pathModified.lastIndexOf("\\");
-	 	     System.out.println(index);
+//	 	     System.out.println(index);
 	 	     pathModified = pathModified.substring(0,index);
-	 	     System.out.println("경로확인"+pathModified);
+//	 	     System.out.println("경로확인"+pathModified);
 	    	 
 	 	     StyleEntity styleEntity = StyleEntity.toSaveFileEntity(styleDTO);
 	 	     int savedSeq = styleDAO.save(styleEntity).getSeq();
@@ -142,7 +142,7 @@ public class StyleServiceImpl implements StyleService {
 					e.printStackTrace();
 				}//경로에 실제파일 저장 
 	 	    	StyleFileEntity styleFileEntity = StyleFileEntity.toStyleFileEntity(style, originalFileName, storedFileName);//boardFileEntity로 전환
-	 	    	System.out.println("최종"+styleFileEntity);
+	 	    	//System.out.println("최종"+styleFileEntity);
 	 	    	styleFileDAO.save(styleFileEntity);//저장
 	 	     }//for
 	 	    
@@ -190,9 +190,14 @@ public class StyleServiceImpl implements StyleService {
 
 	 //상품검색
 	@Override
-	public List<ProductDTO> search(String keyword) {
-		
+	public List<ProductDTO> search(String keyword) {	
 		return shopDAO.search(keyword);
+	}
+	
+	@Override
+	public Optional<ProductDTO> styleProductSearch(int seq) {
+		return shopDAO.findById(seq);
+ 
 	}
 
 

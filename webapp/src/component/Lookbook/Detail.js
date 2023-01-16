@@ -10,58 +10,45 @@ import { Link, useNavigate } from 'react-router-dom';
 import StyleCommentList from './StyleCommentList';
 import jwt_decode from 'jwt-decode';
 
-const Detail = () => {        
-
-   
+const Detail = () => {    
    
     //게시물 뿌리기
     const [list, setList] = useState([]);
     const [isLike, setIsLike] = useState(0);
     const navigate = useNavigate();
-
-
-    //아이디
+    
+    const [id] = useState('')   //아이디값 로그인한걸로 가져오는거로 변경해야됨
+    
+    //로그인
     const token = localStorage.getItem('accessToken');
     const [auth, setAuth] = useState('ROLE_GUEST');
+    const [tokenId, settokenId] = useState('')
     useEffect(() => {
         if (token !== null) {
             const tokenJson = jwt_decode(token);
             setAuth(tokenJson['auth']);
-            //localStorage.setItem('userInfo', JSON.stringify(tokenJson));
             settokenId(tokenJson['sub']);
+            // setForm({...form, id:tokenId})
         }
-    }, []);
-    const [tokenId, settokenId] = useState('')
-    console.log(auth);
-    console.log(tokenId)
-    
-    
-    //const [id] = useState(3)   //아이디값 로그인한걸로 가져오는거로 변경해야됨
+    }, [token]);
 
-    
 
-    
 
     useEffect( ()=> {
-        axios.get('http://localhost:8080/lookbook/getStyleList')
-             .then(res => setList(res.data))
-             //.then( () => {             
-                // axios.get(`http://localhost:8080/lookbook/getLikes/${tokenId}`)
-                //      .then(res => setLikes(res))
-                //      .catch(error => console.log(error))
+        // axios.get('http://localhost:8080/lookbook/getStyleList')
+        //      .then(res => setList(res.data))
+        //      .catch(error => console.log(error))
+        //      console.log("list",list) 
 
-                // axios.get()
-                //      .then()
-                //      .catch(error => console.log(error))
-              //  }  
-               // )
-             .catch(error => console.log(error))
-             console.log("list",list) 
-
-        //좋아요 여부 보여주기
-        // axios.get(`http://localhost:8080/lookbook/findLikes?memberId=${id}&styleSeq=${seq}`)
+        //좋아요 포함 전체 리스트 가져오기
+        // axios.get(`http://localhost:8080/lookbook/list?memberId=${id}&styleSeq=${seq}`)
         //      .then(res => setIsLike(res.data)  )
         //      .catch(error => console.log(error))
+
+        //좋아요 포함 전체 리스트 가져오기 : 테이블 조인 쿼리 사용
+        axios.get('http://localhost:8080/lookbook/list')
+             .then( res => setList(res.data)  )
+             .catch(error => console.log(error))
     }, [])   
     
     //댓글삭제
@@ -71,19 +58,13 @@ const Detail = () => {
         
     }
 
-    //좋아요 있으면 1리턴, 없으면 0 리턴
-    const [likesForm, setLikesForm] = useState({   
-        memberId: '',
-        likesId: ''
-    }) 
-
 
     //좋아요 클릭 로그인했을때만 가능하게 변경해야함
     const onLikes = (seq) => {
         axios.post('http://localhost:8080/lookbook/likebutton', null, {
             params: {
                 styleSeq: seq,
-                memberId: '',
+                memberId: id,
                 likesId: ''
             }})
             .then( res =>  setIsLike(res.data), 
@@ -92,25 +73,38 @@ const Detail = () => {
                 )
             .catch(error => console.log(error))
     }
+        
+    //팔로우
+    const onFollow = (id) => {
+        //id //followee id
+        axios.get('http://localhost:8080/lookbook/saveFollow')
+    }
     
-     //팔로우
-     const onFollow = (followeeId) => {
-        //console.log(tokenId+"+"+followeeId)
-        axios.post(`http://localhost:8080/lookbook/saveFollow/${tokenId}/${followeeId}`) 
-             .then(alert("팔로우 성공"))
-             .catch(error => console.log(error))
+    const photoShop1 = (storedImg) => {
+        const img = ((storedImg).split(','))
+        return img[0]
     }
 
-    //언팔로우
-    const onUnFollow = (followeeId) => {
-        //console.log(tokenId+"+"+followeeId)
-        axios.delete(`http://localhost:8080/lookbook/unFollow/${tokenId}/${followeeId}`) 
-             .then(alert("언팔로우 성공"))
-             .catch(error => console.log(error))
+    const photoShop2 = (storedImg) => {
+        const img = ((storedImg).split(','))
+        return img[1]
     }
 
-    
-    
+    const photoShop3 = (storedImg) => {
+        const img = ((storedImg).split(','))
+        return img[2]
+    }
+
+    const photoShop4 = (storedImg) => {
+        const img = ((storedImg).split(','))
+        return img[3]
+    }
+
+    const photoShop5 = (storedImg) => {
+        const img = ((storedImg).split(','))
+        return img[4]
+    }
+
 
     return (
         <div>            
@@ -122,6 +116,7 @@ const Detail = () => {
                     list.map((item,index) => {
                         return (
                             <div>
+                               
                             <Card key={item.seq}>
                                 <CardHeader
                                     avatar={ <Avatar> 프로필</Avatar> }
@@ -130,14 +125,16 @@ const Detail = () => {
                                 />
 
                                 <Button variant="contained" style={{backgroundColor: 'black'}} onClick={() => onFollow (item.id)} >팔로우</Button>
-                                <Button variant="outlined"  style={{color: 'black', borderColor:'black'}}  onClick={() => onUnFollow (item.id)}>언팔로우</Button>
+                                <Button variant="outlined"  style={{color: 'black'}}>언팔로우</Button>
                                
-                                <CardMedia 
-                                    component="img"
-                                    height="500"
-                                    image={'../storage/'+item.storedFileName[0]}  //여러장보이게해야함
-                                    alt=""
-                                />
+                                <S.MyStdiv>
+                                    <img src={`/storage/${photoShop1(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />
+                                    {photoShop2(item.stored_file_name) && <img src={`/storage/${photoShop2(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                                    {photoShop3(item.stored_file_name) && <img src={`/storage/${photoShop3(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                                    {photoShop4(item.stored_file_name) && <img src={`/storage/${photoShop4(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                                    {photoShop5(item.stored_file_name) && <img src={`/storage/${photoShop5(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                                 </S.MyStdiv>
+
                                 <CardContent>
                                     {item.content}
                                 </CardContent>
@@ -145,16 +142,21 @@ const Detail = () => {
                                
                                 <CardActions >
                                     <div>
-                                    <IconButton aria-label="add to favorites" onClick={ () => onLikes(item.seq)}>
-                                        <img src={ isLike === 1 ?  '/image/style/likes.png'  : '/image/style/unlikes.png'  }
-                                            style={{ width:'28px'}} />
-                                           
-                                    </IconButton>
-                                    <span>{item.likesCount}</span>
+                                        <IconButton aria-label="add to favorites" onClick={(e) => onLikes(e, item.seq ,item.islikes,index)} >
+                                            
+                                            <img src={
+                                                    (!tokenId) ? '/image/style/unlikes.png' :
+                                                    item.islikes === "false"  ? '/image/style/unlikes.png' : '/image/style/likes.png' 
+                                                    } 
+                                                style={{ width:'28px'}} />
+                                               
+                                        </IconButton>
+                                            
+                                         <span>{item.likes_count}</span>
                                     </div>
+
                                     <div>
                                     <IconButton >
-                                        
                                         <Link to ={`/lookbook/StyleComment/${item.seq}`} >
                                         <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
                                         </Link>

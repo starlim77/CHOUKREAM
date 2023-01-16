@@ -34,7 +34,6 @@ import lookbook.service.StyleLikesService;
 import lookbook.service.StyleService;
 import member.bean.MemberDto;
 import shop.bean.ProductDTO;
-import member.dao.MemberDAO;
 
 
 @RestController
@@ -49,8 +48,6 @@ public class styleController {
 	private StyleLikesService styleLikesService;
 	@Autowired
 	private StyleFollowingService styleFollowingService;
-	@Autowired 
-	private MemberDAO memberDAO;
 	
 	
 	//스타일 게시물 입력	
@@ -59,7 +56,7 @@ public class styleController {
 	public void upload(@RequestBody List<MultipartFile> list, @ModelAttribute StyleDTO styleDTO, HttpSession session) {
 		//System.out.println("list= " + list);	
 		//System.out.println("컨드롤러 dto="+ styleDTO);
-		System.out.println(styleDTO.getId()+"////와라");
+		System.out.println(styleDTO.getProductSeq()+" :  상품번호 ================");
 		styleService.save(list, styleDTO);
 
 	}
@@ -68,7 +65,7 @@ public class styleController {
 	//내 id를 들고가서 내 게시글만 뿌리기    @AuthenticationPrincipal
 	@GetMapping(path="findAllMyList/{id}")
 	public List<StyleDTO> findAllMyList(@PathVariable String id) {
-		System.out.println(id + " 아이디받기----------------------");
+		//System.out.println(id + " 아이디받기----------------------");
 		//좋아요조회 styleService.findLikes(id,style_seq);
 		return styleService.findAllMyList(id);
 	}
@@ -99,6 +96,16 @@ public class styleController {
 		
 	}
 	
+	//trending,detail => 좋아요 포함 전체 목록 가져오기
+	@GetMapping(path="list")
+	public List<LikesDTO> list() {
+		//DB에서 전체 게시글 데이터 를 가져온다				
+		return styleLikesService.list();		
+		
+	}
+	
+	
+	
 	//피드 내용만 업데이트
 	@PutMapping(path="update", produces="text/html; charset=UTF-8")
 	@ResponseBody
@@ -115,20 +122,14 @@ public class styleController {
 		styleService.delete(seq);
 	}
 	
-
-	
-	//좋아요 포함 전체 리스트 받아오기
+	//좋아요버튼클릭
     @PostMapping(path="likebutton")
     public List<LikesDTO> likes(@ModelAttribute StyleLikesDTO styleLikesDTO, @RequestParam boolean isLike) { //1,0값 받는거 추가 void로 형태 변환
-    	
     	styleLikesService.save(styleLikesDTO, isLike);
-    	
     	return styleLikesService.findLikes(Long.toString(styleLikesDTO.getMemberId()));
-  
-
     }
     
-    //좋아요 확인
+    //좋아요 확인 -> mystyle에서 좋아요 포함 전체 리스트 받아오기
     @GetMapping(path="findLikes")
     public List<LikesDTO> findLikes(@RequestParam String id) {
     	//System.out.println("컨트롤러 조아요 확인 styleLikesDTO ==== "+ styleLikesDTO);
@@ -136,12 +137,25 @@ public class styleController {
 
     }
     
+    //좋아요만 확인
+//    @GetMapping(path="checkLikes")
+//    public boolean checkLikes(@ModelAttribute StyleLikesDTO styleLikesDTO) {
+//    	//System.out.println("컨트롤러 조아요 확인 styleLikesDTO ==== "+ styleLikesDTO);
+//    	return styleLikesService.checkLikes(styleLikesDTO);
+//
+//    }
+    
     //보드등록시 상품검색하기
 	@GetMapping(value="search")
 	public List<ProductDTO> search(@RequestParam String keyword){ 
-		System.out.println(keyword + "==============");
-		
+		//System.out.println(keyword + "==============");
 		return styleService.search(keyword);
+	}
+	
+	//
+	@GetMapping(value="styleProductSearch")
+	public Optional<ProductDTO> search(@RequestParam int seq){ 
+		return styleService.styleProductSearch(seq);
 	}
 	
 //댓글
@@ -182,40 +196,13 @@ public class styleController {
 	}
 	
 	
-//팔로잉	
-	
-	//팔로우
-	@PostMapping(path="saveFollow/{followerId}/{followeeId}")
-	@ResponseBody
-	public void follow(@PathVariable int followerId, @PathVariable int followeeId) {
-		
-		System.out.println("followee 글쓴사람 아이디"+followeeId);
-		System.out.println("follower 현재 로그인한 아이디"+ followerId);		
-		
-		MemberDto followerDto = memberDAO.findById(followerId);
-		MemberDto followeeDto = memberDAO.findById(followeeId);
-		//id로 일단은 수정???
-		//스타일에서는 member의 name을 아이디로 쓴다
-		
-		styleFollowingService.save(followerDto, followeeDto);	
-		
-	}
-	
+//팔로잉
+
 	//언팔
-	@DeleteMapping(path="unFollow/{followerid}/{followeeId}")
-	@ResponseBody
-	public void unFollow(@PathVariable int followerId, @PathVariable int followeeId) {
+	@DeleteMapping(path="follow/{id}")
+	public void unFollow(@AuthenticationPrincipal MemberDto follower, @ModelAttribute StyleDTO styleDTO) {
 	
-		System.out.println("followee 글쓴사람 아이디"+followeeId);
-		System.out.println("follower 현재 로그인한 아이디"+ followerId);	
 		
-		//MemberDto followerDto = memberDAO.findById(followerId);
-		//MemberDto followeeDto = memberDAO.findById(followeeId);
-		//id로 일단은 수정???
-		//스타일에서는 member의 name을 아이디로 쓴다
-		
-		styleFollowingService.delete(followerId, followeeId);
-		//styleFollowingService.delete(followerDto, followeeDto);
 		
 	}
 

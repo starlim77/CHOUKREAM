@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import lookbook.bean.LikesDTO;
+import lookbook.bean.StyleLikesDTO;
 import lookbook.entity.StyleEntity;
 import lookbook.entity.StyleFileEntity;
 
@@ -28,11 +29,25 @@ public interface StyleDAO extends JpaRepository<StyleEntity, String> {
 	//SELECT COUNT(*) FROM style_table where id= 'id'?
 	Long countById(String id);
 
-	
+	//좋아요포함 내 id만 불러오기
 	@Query(nativeQuery = true,
-//			value = "select a.seq, a.comment_count, a.content, a.id, a.likes_count, a.logtime, ifnull(b.member_id, 'false') as isLikes from style_table as a left outer join (select member_id, style_seq from style_likes_table where member_id=12) as b on b.style_seq = a.seq where a.id= 12 ;")
-	value= "select a.seq, a.comment_count, a.content, a.id, a.likes_count, a.logtime, ifnull(b.member_id, 'false') as isLikes , c.stored_file_name from style_table as a left outer join (select member_id, style_seq from style_likes_table where member_id=:id) as b on b.style_seq = a.seq left outer join (select id, group_concat(stored_file_name) as stored_file_name, style_seq from style_file_table group by style_seq) as c on c.style_seq = a.seq where a.id=:id")
+			value= "select a.seq, a.comment_count, a.content, a.id, a.likes_count, a.logtime, a.product_seq, ifnull(b.member_id, 'false') as isLikes , c.stored_file_name from style_table as a "
+			+ "left outer join (select member_id, style_seq from style_likes_table where member_id=:id) as b on b.style_seq = a.seq "
+			+ "left outer join (select id, group_concat(stored_file_name) as stored_file_name, style_seq from style_file_table group by style_seq) as c on c.style_seq = a.seq "
+			+ "where a.id=:id "
+			+ "Order By Seq Desc")
 	List<LikesDTO> findLikes(@Param("id") String id);
+	
+	//좋아요포함 전체list 불러오기. 로그인 안했을 때 
+	@Query(nativeQuery = true,
+			value="select a.seq, a.comment_count, a.content, a.id, a.likes_count, a.logtime, a.product_seq, ifnull(b.member_id, 'false') as isLikes , c.stored_file_name \r\n"
+					+ "from style_table as a \r\n"
+					+ "left outer join (select member_id, style_seq from style_likes_table) as b on b.style_seq = a.seq \r\n"
+					+ "left outer join (select id, group_concat(stored_file_name) as stored_file_name, style_seq from style_file_table group by style_seq) as c on c.style_seq = a.seq \r\n"
+					+ "Order By Seq Desc ")
+	public List<LikesDTO> list();
+
+	
 
 
 	

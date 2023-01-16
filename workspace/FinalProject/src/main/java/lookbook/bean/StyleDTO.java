@@ -54,6 +54,7 @@ public class StyleDTO {
 		styleDTO.setContent(styleEntity.getContent());
 		styleDTO.setLogtime(styleEntity.getLogtime());
 		
+		
 		if(styleEntity.getFileAttached() == 0) {
 			styleDTO.setFileAttached(styleEntity.getFileAttached()); //0
 		} else {
@@ -83,7 +84,7 @@ public class StyleDTO {
 		
 		styleDTO.setCommentCount(styleEntity.getCommentCount());
 		styleDTO.setLikesCount(styleEntity.getLikesCount());
-		
+		styleDTO.setProductSeq(styleEntity.getProductSeq());
 		
 		return styleDTO;
 	}
