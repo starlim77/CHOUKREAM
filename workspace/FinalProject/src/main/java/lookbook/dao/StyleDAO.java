@@ -3,7 +3,9 @@ package lookbook.dao;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -53,8 +55,15 @@ public interface StyleDAO extends JpaRepository<StyleEntity, String> {
 
 	
 
+//	StyleEntity findAllById(String string);//팔로우 목록 가져오기
+//
+//	@Modifying
+//	@Qualifier
+//	//@Query(nativeQuery = true,value = "select * from style_table where id = 1 OR id = 2 OR id = 12")
+//	@Query(nativeQuery = true,value = "select * from style_table where id =(:str)") 
+//	public List<StyleEntity> getFollowing(String str);
+
+	public List<StyleEntity> findAllByIdIn(List<String> idList);
 
 	
-	 
-	   
 }

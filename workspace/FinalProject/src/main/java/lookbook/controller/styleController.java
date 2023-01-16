@@ -33,6 +33,7 @@ import lookbook.service.StyleFollowingService;
 import lookbook.service.StyleLikesService;
 import lookbook.service.StyleService;
 import member.bean.MemberDto;
+import member.dao.MemberDAO;
 import shop.bean.ProductDTO;
 
 
@@ -204,5 +205,29 @@ public class styleController {
 		
 		
 	}
+	
+	//팔로잉 페이지 팔로우 목록 불러오기
+	@GetMapping(path="getFollowing/{id}")
+	public List<StyleDTO> getFollowing(@PathVariable int id){
+		System.out.println(id);
+		
+		return styleFollowingService.getFollowing(id);
+	}
+	
+	// 팔로워 개수 가져오기
+	@GetMapping(path="getFollower/{id}")
+	public Long getFollower(@PathVariable Long id) {
+		return styleFollowingService.followerCount(id);
+	}
+	
+	
+	//팔로이 개수 가져오기
+	@GetMapping(path="getFollowee/{id}")
+	public Long getFollowee(@PathVariable Long id) {
+		return styleFollowingService.followeeCount(id);
+	}
+	
+	
+	
 
 }

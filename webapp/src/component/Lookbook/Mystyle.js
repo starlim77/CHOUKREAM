@@ -46,6 +46,8 @@ const Mystyle = () => {
     // console.log(auth);
     // console.log(tokenId)
 
+    const[follower,setFollowerNum] = useState()
+    const[followee,setFolloweeNum] = useState()
 
     useEffect( ()=> {
 
@@ -56,15 +58,21 @@ const Mystyle = () => {
             setForm({id:tokenId})
 
                 axios.get(`http://localhost:8080/lookbook/findAllMyList/${tokenId}`)
-                    .then( //res => console.log(res.data)
-                        res => setMyList(res.data)
-                        )
+                    .then( res => setMyList(res.data))
                     .catch(error => console.log(error))
 
                 axios.get(`http://localhost:8080/lookbook/findCountById?id=${tokenId}`)
                     .then(res => setListCount(res.data))
                     .catch(error => console.log(error))
-        }   
+        
+                               
+                axios.get(`http://localhost:8080/lookbook/getFollower/${tokenId}`)
+                     .then(res => setFollowerNum(res.data))                        
+                     .catch(error => console.log(error))
+                axios.get(`http://localhost:8080/lookbook/getFollowee/${tokenId}`)
+                     .then(res => setFolloweeNum(res.data))
+                     .catch(error => console.log(error))
+        }
     }, [tokenId]) 
 
 
@@ -217,8 +225,8 @@ const Mystyle = () => {
             <S.MyDiv>
                 <ul>
                     <S.MyLi>게시물<span>{listCount}</span></S.MyLi>
-                    <S.MyLi>팔로워<span>0</span></S.MyLi>
-                    <S.MyLi>팔로잉<span>0</span></S.MyLi>
+                    <S.MyLi>팔로워<span>{follower}</span></S.MyLi>
+                    <S.MyLi>팔로잉<span>{followee}</span></S.MyLi>
                     <S.MyLi><span onClick={()=>{setStyleBoardWriteOpen(true)}}>게시물등록하기</span></S.MyLi>
                 </ul>
             </S.MyDiv>
