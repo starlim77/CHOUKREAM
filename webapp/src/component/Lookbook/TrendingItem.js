@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import Card from '@mui/material/Card';
-import {
-    CardActions,
+import { 
     CardContent,
     CardHeader,
-    Container,
-    Grid,
-    IconButton,
-    Typography,
+    IconButton, 
 } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import * as S from './style';
@@ -28,21 +24,18 @@ const TrendingItem = ({item,index,itemLength}) => {
                 
                 <S.TrBox>
                         <CardHeader 
-                                avatar={ <Avatar sx={{ bgcolor: grey }} />    } // 개인프로필사진 넣을곳
+                                avatar={ <Avatar sx={{ bgcolor: grey }} mr={'3'}/>    } // 개인프로필사진 넣을곳
                                 />
                         <S.TrUsernameBox>
                         {item.id}
                         </S.TrUsernameBox>
 
                     <S.TrlikeBox>
-                        <IconButton aria-label="add to favorites"
-                        // onClick={ () => onLikes(item.seq)}
-                        >
+                        <IconButton aria-label="add to favorites">
                             <img src={ isLike === 1 ?  '/image/style/likes.png'  : '/image/style/unlikes.png'  }
                                 style={{ width:'28px'}} />
-                                {item.likesCount}
-                                
                         </IconButton>
+                        {item.likesCount}
                     </S.TrlikeBox>
                 </S.TrBox>
 

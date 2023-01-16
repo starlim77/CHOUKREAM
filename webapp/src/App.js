@@ -212,7 +212,7 @@ function App() {
                         element={<MystyleDetail />}
                     />
                     <Route
-                        path="/lookbook/mystyleUpdate/:seq/:id"
+                        path="/lookbook/mystyleUpdate/:seq/:id/:product_seq"
                         element={<MystyleUpdate />}
                     />
                     

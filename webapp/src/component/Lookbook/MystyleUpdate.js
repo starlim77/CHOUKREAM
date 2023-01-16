@@ -3,23 +3,21 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as S from './style';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import StyleProduct from './StyleProduct';
 
 const MystyleUpdate = () => {
-    const { seq } = useParams();  //주소값 파라미터 seq 가져오기
+    const { seq, product_seq } = useParams();  //주소값 파라미터 seq 가져오기
     const imgRef = useRef();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     
-    //const [file, setFile] = useState([])
-    // const [showImgSrc,setShowImgSrc] = useState([]);
-    // const [ list, setList] = useState();
-
     const [form, setForm] = useState({
         id: '',
         content: '',
-        seq :''
+        seq :'',
+        productSeq:''
 
     })
-    const {id, content} = form  
+    const {id, content, productSeq} = form  
 
     const onInput = (e) => {
         const { name, value} = e.target
@@ -40,7 +38,8 @@ const MystyleUpdate = () => {
                 params:{
                     seq : seq, // seq 필수로 들어가야 함 .그래야 insert가 아닌 update가  (seq가 pk) 
                     content : content,
-                    id : id   
+                    id : id ,
+                    productSeq : productSeq  
                 }
             })      
              .then(
@@ -88,15 +87,8 @@ const MystyleUpdate = () => {
                             />   
 
 
-                        <input type="text" name="seq" value={seq} readOnly />
                             <S.Container>
-                                <S.showImgSrcDiv>  {/*  가로로정렬   */}
-                                        {/* <div>
-                                            <S.showImgSrcImg src={item}  />
-                                            <ClearIcon onClick={() => onImgRemove(index)}>삭제</ClearIcon>
-                                                                                    
-                                        </div> */}
-
+                                <S.showImgSrcDiv>  {/* 사진은 수정불가 */}
                                         {
                                           form.storedFileName?
                                             form.storedFileName.map( (item, index) => (
@@ -107,13 +99,14 @@ const MystyleUpdate = () => {
                                             :
                                             ''
                                          }
-
                                 </S.showImgSrcDiv>
-
-                                <S.Button>이전</S.Button>
-                                <S.Button>다음</S.Button>
                             </S.Container>
 
+                            <div>    {/* 태그 상품 수정불가 보이기만함 */}
+                                { 
+                                    (product_seq) && <StyleProduct productSeq={product_seq}></StyleProduct>
+                                }
+                            </div> 
 
                             <textarea 
                                     type='text-area'
@@ -128,7 +121,9 @@ const MystyleUpdate = () => {
                             <DialogActions>
                                     <Button onClick={ onUpdate }>수정</Button>
                                     <Button onClick={ onDelete }>삭제</Button>
-                                    <Button><Link to={`/lookbook/mystyleDetail/${seq}/${id}`}>취소</Link></Button>
+                                    <Button><Link to={`/lookbook/mystyleDetail/${id}`}>취소</Link></Button>
+                                    {/* <Button onclick={navigate(-1) }>취소</Button> */}
+                                         
                             </DialogActions> 
 
                         </Card>

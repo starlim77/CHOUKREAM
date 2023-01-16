@@ -2,74 +2,51 @@ import axios from 'axios';
 import React, {  useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
-import { Avatar, Button, CardActions, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from '@mui/material';
+import { Avatar, CardActions, CardContent, CardHeader,  IconButton } from '@mui/material';
 import Container from '@mui/material/Container';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import * as S from './style';
-import MyPhoto from './MyPhoto';
+import StyleProduct from './StyleProduct';
+import StyleCommentList from './StyleCommentList';
 
 const MystyleDetail = () => {
     const { id } = useParams();  //주소값 파라미터 seq id가져오기
-    const [commentOpen, setCommentOpen] = useState(false)
 
-    //좋아요 전체 리스트
+    //좋아요 포함 dto 전체 리스트
     const [likeAll, setLikeAll] = useState([]);
     
-   
     //게시물 뿌리기
     const [list, setList] = useState([]);
+ 
 
-    //좋아요 있으면 1리턴, 없으면 0 리턴
-    // const [likesForm, setLikesForm] = useState({   
-    //     styleSeq: seq,
-    //     memberId: id,
-    //     likesId: ''
-    // })  
+    useEffect( ()=> {     
+        axios.get(`http://localhost:8080/lookbook/findLikes?id=${id}`)
+            .then(
+                //  res=> console.log(res.data)
+                res => setLikeAll(res.data)  
+            )
+            .catch(error => console.log(error))
 
-    useEffect( ()=> {
-        // axios.get(`http://localhost:8080/lookbook/findAllMyList/${id}`)
-        //      .then(res => setList(res.data))
-
-        //      .then(
-                
-                axios.get(`http://localhost:8080/lookbook/findLikes?id=${id}`)
-                    .then(
-                        //  res=> console.log(res.data)
-                        res => setLikeAll(res.data)  
-                    )
-                    .catch(error => console.log(error))
-
-            //  )
-            //  .catch(error => console.log(error))
-
-        //좋아요 여부 보여주기
-        //  axios.get(`http://localhost:8080/lookbook/findLikes?memberId=${id}&styleSeq=${seq}`)
-        //       .then(res => setIsLike(res.data)  )
-        //       .catch(error => console.log(error))
     }, []) 
 
-    useEffect(()=>{
-
-    },[])
-   
  
     //좋아요 클릭
-    const onLikes = (e,seq,checkLike,index) => {
+    const onLikes = (e, seq, checkLike, index) => {
         e.preventDefault();
         checkLike = checkLike === 'false' ? false : true
         
-        //console.log(seq, id , checkLike , index )
-        
-        // setIsLike()
-
-        axios.post('http://localhost:8080/lookbook/likebutton?styleSeq='+seq+'&memberId='+id+"&isLike="+checkLike) //1, 0  같이 보내준다
+        axios.post('http://localhost:8080/lookbook/likebutton?styleSeq='+seq+'&memberId='+id+"&isLike="+checkLike)
             .then(res => setLikeAll(res.data) )
             .catch(error => console.log(error))
     }
 
-    // const onfilter = (seq) => {
-    //     likeAll.filter(item => item.seq === seq)
-    // }
+    //댓글삭제
+    const onCommentDelete =(id) => {
+        //item.id가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듦
+        //=item.id 가 id 인 것을 제거한다
+        
+    }
+
 
     const photoShop1 = (storedImg) => {
         const img = ((storedImg).split(','))
@@ -102,13 +79,14 @@ const MystyleDetail = () => {
 
     return (
         <div>
-            {console.log(likeAll )}
+            {/* {console.log(likeAll)} */}
             <Container fixed>
                 <S.DeTopDiv> {/* outer */}
                 {
                     likeAll.map((item, index) => {
                         return (
-                             <S.DeDiv key={index}>  
+                            <S.DeDiv key={index}>  
+                           
                                 <Card >
                                     <S.MyDeheadercontainer>
                                         
@@ -123,7 +101,7 @@ const MystyleDetail = () => {
                                         {/* <input type="text" name="seq" value={item.seq} readOnly /> */}
 
                                         <S.MyDeIcon>                                
-                                            <Link to={`/lookbook/mystyleUpdate/${item.seq}/${id}`} >
+                                            <Link to={`/lookbook/mystyleUpdate/${item.seq}/${id}/${item.product_seq}`} >
                                             <img src='/image/style/menu.png' alt='메뉴.png' width={24}></img>
                                             </Link>
                                            
@@ -132,67 +110,55 @@ const MystyleDetail = () => {
                                    </S.MyDeheadercontainer>
                                    
 
-                                   <S.MyStdiv>
+                                <S.MyStdiv>
                                
                                     <img src={`/storage/${photoShop1(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />
                                     {photoShop2(item.stored_file_name) && <img src={`/storage/${photoShop2(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
                                     {photoShop3(item.stored_file_name) && <img src={`/storage/${photoShop3(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
                                     {photoShop4(item.stored_file_name) && <img src={`/storage/${photoShop4(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
                                     {photoShop5(item.stored_file_name) && <img src={`/storage/${photoShop5(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
-                                   {/* <MyPhoto seq={item.seq} />        */}
 
-                                        {/* {
-                                            item.storedFileName.map( (item, index) => (
-                                                <p key={index} >
-                                                    <img src={'/storage/'+item} alt='list사진' style={{width:'100%'}} />
-                                                </p>
-                                            ))
-                                        } */}
-                                    </S.MyStdiv>
-                                    글번호: {item.seq}
-
+                                 </S.MyStdiv>
                                     
+                                <StyleProduct productSeq={item.product_seq}></StyleProduct>
                                 
-                                    <S.MyStContent>
+                                <S.MyStContent>
                                         {item.content}
-                                    </S.MyStContent>
+                                </S.MyStContent>
 
 
-                                    <CardActions >   
+                                <CardActions >   
                                         
                                  
-                                        <IconButton aria-label="add to favorites" onClick={(e) => onLikes(e, item.seq ,item.islikes,index)} >
+                                    <IconButton aria-label="add to favorites" onClick={(e) => onLikes(e, item.seq ,item.islikes ,index)} >
                                             
-                                            <img src={  item.islikes === "false"  ? '/image/style/unlikes.png' : '/image/style/likes.png' } style={{ width:'28px'}} />
+                                        <img src={  item.islikes === "false"  ? '/image/style/unlikes.png' : '/image/style/likes.png' } style={{ width:'28px'}} />
                                            
-                                        </IconButton>
+                                    </IconButton>
                                         
-                                        <span>{item.likes_count}</span>
+                                     <span>{item.likes_count}</span>
 
 
-                                        <IconButton onClick={()=>{setCommentOpen(true)}}>
-                                            <ChatBubbleOutlineIcon />
-                                        </IconButton>                        
-                                    </CardActions>
+                                <div>
+                                    <IconButton >
+                                        
+                                        <Link to ={`/lookbook/StyleComment/${item.seq}`} >
+                                        <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
+                                        </Link>
+                                        
+                                    </IconButton> 
+                                    <span>{item.comment_count}</span>  
+                                    
+                                </div> 
+                                </CardActions>
 
-                
-                                    <Dialog open={commentOpen}> 
-                                        <S.DeComment>
-                                            <DialogTitle sx={{mt:5}}>댓글</DialogTitle>
-                                            <DialogContent>
-                                                <DialogContentText>
-                                                    <TextField
-                                                        multiline 
-                                                        fullWidth
-                                                    />
-                                                </DialogContentText>
-                                            </DialogContent>
-                                            <DialogActions>
-                                                <Button >등록</Button>
-                                                <Button onClick={ ()=>{setCommentOpen(false)}}>취소</Button>
-                                            </DialogActions>
-                                        </S.DeComment>
-                                    </Dialog>
+                                <CardContent> 
+                                     <div variant="body2" color="text.secondary" >
+                                        <S.TrTypoDiv>
+                                            <StyleCommentList styleSeq={item.seq}  onCommentDelete={ onCommentDelete }  />                                
+                                        </S.TrTypoDiv>                      
+                                    </div>  
+                                </CardContent>
 
 
                                 </Card>

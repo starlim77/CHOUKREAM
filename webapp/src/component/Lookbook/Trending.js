@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Social from '../Lookbook/Social';
 import {
-    CardActions,
-    CardContent,
-    CardHeader,
     Container,
-    Grid,
-    IconButton,
-    Typography,
 } from '@mui/material';
 import * as S from './style';
 import axios from 'axios';
@@ -66,7 +60,6 @@ const Trending = () => {
         <>
             <Social />
             <br/><br/><br/><br/>
-            
             <Container fixed>
                 <S.TrGridContainer>
                     <S.TrGridContainerSub>

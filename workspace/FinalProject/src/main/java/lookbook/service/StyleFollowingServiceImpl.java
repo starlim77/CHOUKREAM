@@ -25,9 +25,6 @@ public class StyleFollowingServiceImpl implements StyleFollowingService {
 	private StyleDAO styleDAO;
 	@Autowired
 	private StyleFollowingDAO styleFollowingDAO;
-	
-	
-	
 
 	
 	//팔로우하기

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import lookbook.entity.StyleEntity;
 import lookbook.entity.StyleFollowingEntity;
-import member.bean.MemberDto;
 
 @Repository
 public interface StyleFollowingDAO extends JpaRepository<StyleFollowingEntity, String>{
