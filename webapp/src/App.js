@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Layout from './component/Layout/Layout';
 
@@ -46,16 +46,34 @@ import Logout from './component/User/Logout';
 import MyPageMain from './component/myPage/MyPageMain';
 import MyPageApp from './component/myPage/MyPageApp';
 import NewUpdate from './component/Shop/manager/NewUpdate';
+import UsedItemList from './component/Shop/manager/UsedItemList';
+import jwt_decode from 'jwt-decode';
 import NewProductPage from './component/Shop/newProduct/NewProductPage';
 import ReList from './component/Shop/resell/ReList';
 import ReUpdate from './component/Shop/resell/ReUpdate';
 import ReWrite from './component/Shop/register/ReWrite';
+import Following from './component/Lookbook/Following';
 
 function App() {
+    const token = localStorage.getItem('accessToken');
+
+    const [auth, setAuth] = useState('ROLE_GUEST');
+    const [sub, setSub] = useState('');
+
+    useEffect(() => {
+        if (token !== null) {
+            const tokenJson = jwt_decode(token);
+            setAuth(tokenJson['auth']);
+            setSub(tokenJson['sub']);
+        }
+    }, []);
+
+    console.log(auth);
+
     return (
         <BrowserRouter>
             <Routes>
-                <Route element={<Layout />}>
+                <Route element={<Layout auth={auth} />}>
                     <Route path="/" element="" />
 
                     {/* shop */}
@@ -146,6 +164,7 @@ function App() {
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
                     <Route path="/lookbook/detail" element={<Detail />} />
+                    <Route path="/lookbook/following" element={<Following />} />
                     <Route
                         path="/lookbook/styleComment/:styleSeq"
                         element={<StyleComment />}
@@ -158,9 +177,19 @@ function App() {
                         path="/lookbook/mystyleUpdate/:seq/:id"
                         element={<MystyleUpdate />}
                     />
+                    <Route
+                        path="admin/UsedItemList"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <UsedItemList/>
+                            </>
+                        }
+                    />
                 </Route>
 
                 <Route path="/Search/SearchForm" element={<SearchForm />} />
+                
             </Routes>
         </BrowserRouter>
     );

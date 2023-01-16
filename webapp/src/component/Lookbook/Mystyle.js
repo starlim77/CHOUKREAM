@@ -22,7 +22,7 @@ const Mystyle = () => {
         imgRef.current.click()
     }
     const [form, setForm] = useState({
-        id: 'testid',
+        id: '2',    //멤버id = long type....
         content: '',
     })
     const {id, content} = form  
@@ -46,7 +46,7 @@ const Mystyle = () => {
             imageUrlLists.push(currentImageUrl);
         }
 
-        if (imageUrlLists.length > 5) {
+       if (imageUrlLists.length > 5) {
             imageUrlLists = imageUrlLists.slice(0, 5);
             alert("사진은 최대 5장만 등록 가능합니다");
             
@@ -91,11 +91,9 @@ const Mystyle = () => {
                    )
              .catch(error => console.log(error))
     }, []) 
-
     useEffect( ()=> {
-        // axios.get(`http://localhost:8080/lookbook/findCountById/${id}`)
-        axios.get(`http://localhost:8080/lookbook/findCountById?id=${id}`)
-        .then(res => console.log(res.data))
+         axios.get(`http://localhost:8080/lookbook/findCountById?id=${id}`)
+        .then(res => setListCount(res.data))
         .catch(error => console.log(error))
         
     })

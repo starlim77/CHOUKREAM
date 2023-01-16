@@ -6,14 +6,12 @@ import styled from "styled-components"
 export const TrGridContainer = styled.div`
     width: 1200px;
     margin: 0px auto;
-    columns: 4;
-    column-gap: 10 px;
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    grid-auto-rows: auto;
-    
-
+    display: flex;
 `  
+export const TrGridContainerSub = styled.div`
+    width: 350px;
+`
+
 export const TrGridBox = styled.div`
     width: 235px;
     padding: 20px;   
@@ -24,11 +22,11 @@ export const TrGridBox = styled.div`
 export const TrGridBoxImg = styled.img`
     width: 100%;   
     height: 100%;
-    border-radius: 20%; 
+    border-radius: 20px; 
     object-fit: contain;
 `
-export const TrTypoDiv = styled.div`
-    white-space: normal;
+export const TrTypoDiv = styled.pre`
+    /* white-space: normal; */
     line-height: 1.2;
     height: 3.6em;
     text-align: left;
@@ -36,6 +34,7 @@ export const TrTypoDiv = styled.div`
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+    overflow: hidden;
 `
 
 //Detail.js 
@@ -82,6 +81,15 @@ export const MyStContent = styled.pre`
     white-space: pre-wrap;   //text 줄바꿈허용
     word-break: break-all;   //text 줄바꿈허용
     padding: 20px 0 15px 0;
+`
+
+//StyleCommentList
+export const SCLdeletebutton= styled.div`
+    float: right;
+`
+
+export const SCLcomment = styled.div`
+    margin-bottom: 10px;
 `
 
 //Social.js 

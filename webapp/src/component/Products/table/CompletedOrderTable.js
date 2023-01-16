@@ -4,7 +4,7 @@ import * as S from '../style';
 const CompletedOrderTable = ({completedOrderForm}) => {
     const time = (a) => {
         var date = new Date(a)
-        var b = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate()
+        var b = date.getFullYear() + "/" + date.getMonth()+1 + "/" + date.getDate()
         return b
     }
 

@@ -105,7 +105,7 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
         });
         setCategoryData2(copyStatus);
     };
-
+    
     // 3자리마다 콤마 넣어서 문자열로 변환
     const addComma = num => {
         num = String(num);
@@ -231,6 +231,33 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
         }
     }
 
+    // const[menuArray,setMenuArray]=useState([]);
+    
+    // const dataSetting=(menu)=>{
+        
+    //     var sw=0
+    //     var isExist=menuArray.filter(item=>item===menu);
+    //     isExist.length!==0&&sw++;
+    //     if(sw===1){
+    
+    //         var arrayTemp=menuArray.filter(item=>item!==menu);
+    //         setMenuArray(arrayTemp);
+    //         var dummyTemp=dummyOriginal.filter(item=>item.category===menu);
+    //         // var dummy2=dummy
+    //         //console.log(dummy)
+    //         // setDummy([...dummy,dummyTemp]) 최상단에서 넘겨준 dummy라 스프레드 안됨.
+    //         // setDummy(dummy,dummy2)
+    //         var dummyTemp2=dummy.concat(dummyTemp)
+    //         setDummy(dummyTemp2);
+            
+    //     }else{
+    //         setMenuArray([...menuArray,menu]);
+    //         //console.log(menuArray);
+    //         var dummyTemp=dummy.filter(item=>item.category!==menu);
+    //         //console.log(dummyTemp);
+    //         setDummy(dummyTemp);
+    //     }
+    // }
     return (
         <>
             {/* Content */}

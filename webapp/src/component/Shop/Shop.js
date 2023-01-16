@@ -25,7 +25,7 @@ const Shop = () => {
             //.then(res => console.log(JSON.stringify(res.data)))
             .catch(error => console.log(error));
     }, []);
-    
+    // console.log(dummyOriginal)
     const [tag, setTag] = useState('');
     const [tagLive, setTagLive] = useState(false);
     
@@ -139,6 +139,7 @@ const Shop = () => {
                     modalOpen={modalOpen}
                     openModal={openModal}
                     closeModal={closeModal}
+                    dummyOriginal={dummyOriginal}
                 />
             </Se.Container>
         </>

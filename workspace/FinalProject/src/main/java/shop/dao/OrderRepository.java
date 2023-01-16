@@ -22,11 +22,8 @@ public interface OrderRepository extends JpaRepository<OrderDTO, Integer> {
 	public List<OrderDTO> getBuyOrderList(@Param("seq") int seq);
 	
 	@Query(nativeQuery = true,
-            value = "select size, max(price) as price from"
-            		+ "(SELECT size, null as price FROM product_size_table where seq=:seq"
-            		+ " UNION distinct "
-            		+ "SELECT size, min(order_price) as price FROM order_table where seq=:seq and buy_sell=1 group by (size) order by size) a"
-            		+ " group by (size)")
+            value = "select a.size_seq, a.seq, a.size, b.price from product_size_table as a \r\n"
+            		+ "left outer join (select seq, size, min(order_price) as price from order_table where buy_sell = 1 group by size, seq) as b on a.seq = b.seq and a.size = b.size where a.seq=:seq")
 	public List<SizeMinDTO> getProductSize(@Param("seq") int seq);
 
 	@Query("select orderDTO from OrderDTO orderDTO where orderDTO.buySell = 1 and orderDTO.seq = :seq and orderDTO.size = :size order by orderDTO.orderPrice asc")
@@ -44,20 +41,20 @@ public interface OrderRepository extends JpaRepository<OrderDTO, Integer> {
 	public List<SizeMinDTO> getProductSizeSell(int seq);
 
 	@Query(nativeQuery =true,
-			value = "select size, order_price as price, count(order_price) as count from order_table where buy_sell = 1 and size = :size and seq = :seq group by (order_price) order by order_price asc")
+			value = "select size, order_price as price, count(order_price) as count from order_table where buy_sell = 1 and size = :size and seq = :seq group by order_price, size order by order_price asc")
 	public List<BidsListDTO> getSellBidsListBySize(@Param("seq") int seq, @Param("size") String size);
 
 	
 	@Query(nativeQuery =true,
-			value = "select size, order_price as price, count(order_price) as count from order_table where buy_sell = 1 and seq = :seq group by (order_price) order by order_price asc")
+			value = "select size, order_price as price, count(order_price) as count from order_table where buy_sell = 1 and seq = :seq group by order_price, size order by order_price asc")
 	public List<BidsListDTO> getSellBidsList(int seq);
 
 	@Query(nativeQuery =true,
-			value = "select size, order_price as price, count(order_price) as count from order_table where buy_sell = 0 and seq = :seq group by (order_price) order by order_price desc")
+			value = "select size, order_price as price, count(order_price) as count from order_table where buy_sell = 0 and seq = :seq group by order_price, size order by order_price desc")
 	public List<BidsListDTO> getBuyBidsList(int seq);
 
 	@Query(nativeQuery =true,
-			value = "select size, order_price as price, count(order_price) as count from order_table where buy_sell = 0 and size = :size and seq = :seq group by (order_price) order by order_price desc")
+			value = "select size, order_price as price, count(order_price) as count from order_table where buy_sell = 0 and size = :size and seq = :seq group by order_price, size order by order_price desc")
 	public List<BidsListDTO> getBuyBidsListBySize(@Param("seq") int seq, @Param("size") String size);
 	
 //	@Query(value = "select min(order_price) as order_price from order_table where seq= :seq and size = :size  group by seq", nativeQuery=true)

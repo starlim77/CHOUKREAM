@@ -22,19 +22,20 @@ const UsedUpdate = () => {
             size : '',
             price : '',
             contents : '',
-            hashTag : []
+            hashTag : [],
+            sellingState:true
             //지훈씨한테 들은 내용(홍헌)
             //배열은 데이터 보낼 때 배열로 안보내고 리액트 내에서 Stringify하면 문자열로 보낼 수 있다.
             //데이터를 받아오고 나서는 parse로 데이터를 풀어주면 된다.
         })
-        const {title , imgName, productName , kind , size , price , contents , hashTag} = form
+        const {title , imgName, productName , kind , size , price , contents , hashTag,sellingState} = form
         const [subImg,setSubImg] = useState([]);
          // 2. location.state 에서 파라미터 취득
          const seq = location.state.seq;
-         const writer = location.state.writer;
+         const isWriter = location.state.isWriter;
          const imgNameSend=location.state.imgNameSend;
         
-        const[num,setNum]=useState('');
+       
         useEffect(()=>{
             axios.get("http://localhost:8080/used/viewItem",{params:{seq:seq}})
                 .then(res=>setForm(res.data))
@@ -42,28 +43,15 @@ const UsedUpdate = () => {
                         var img2=img.map(item=>"/storage/"+item);
                         setSubImg(img2);} )
                 .catch(err=>console.log(err))
-
-            
-           
         },[])
-       
-        //hash태그가 인코딩 되어서 들어갔기 때문에 decode를 먼저해서 해석을 해줌
-        useEffect(()=>{
-
-            var decoding= decodeURI(form.hashTag).split(',');
-            setForm({
-                ...form,
-                hashTag: decoding});
-            
-            //form이 바뀌는 걸로 설정하면 무한 루프도니까 한 번만 돌게 form.title사용
-        },[subImg])
+        
         const [hashTag2,setHashTag2] = useState()
     
         const [count,setCount] = useState(0)
     
         
         const onInput = (e) => {
-            console.log(hashTag);
+            
             const {name,value} = e.target
        
             setForm({
@@ -134,11 +122,22 @@ const UsedUpdate = () => {
                      .catch(error => console.log(error))
             }
     
-           
+            window.location.reload();
             
         }
   
-    
+        useEffect(()=>{
+            console.log("해쉬태그"+hashTag);
+            if(!hashTag){
+                var decoding= decodeURI(hashTag).split(',');
+                console.log(decoding);
+                setForm({
+                    ...form,
+                    hashTag:decoding});
+            }
+            
+            //form이 바뀌는 걸로 설정하면 무한 루프도니까 한 번만 돌게 subImg사용
+        },[subImg])
     
         return (
             <>
