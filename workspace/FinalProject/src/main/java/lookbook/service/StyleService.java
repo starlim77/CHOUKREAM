@@ -1,6 +1,7 @@
 package lookbook.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +30,8 @@ public interface StyleService {
 	public Long findCountById(String id);  //게시글 카운트
 
 	public List<ProductDTO> search(String keyword);
+
+	public Optional<ProductDTO> styleProductSearch(int seq);
 
 
 

@@ -83,6 +83,7 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 	//lookbook 
 	@Query("select productDTO from ProductDTO productDTO where productDTO.title like '%' || :keyword || '%' OR productDTO.subTitle like '%' || :keyword || '%' ")
 	public List<ProductDTO> search(@Param("keyword") String keyword);
+
 	
 
 }

@@ -4,26 +4,26 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { Container } from '@mui/system';
 import React, { useEffect, useRef, useState } from 'react';
 import * as S from './style';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import * as M from '../Products/style';
-
-
 
 const Mystyle = () => {
 
     const [form, setForm] = useState({
         id: '',    //멤버id = long type....
         content: '',
-        productSeq: ''
+        productSeq: '',
+        productTitle:'',
+        productImg:''
     })
-    const {id, content, productSeq} = form  
-
+    const {id, content, productSeq, productTitle, productImg} = form  
+    const navigate = useNavigate()
     const imgRef = useRef();
     const [file, setFile] = useState([])
     const [showImgSrc,setShowImgSrc] = useState([]);
     const [styleBoardWriteOpen, setStyleBoardWriteOpen] = useState(false);
-    const [product, setProduct] = useState(false);
+    const [popUpOpen, setPopUpOpen] = useState(false);
 
     const [listCount, setListCount] = useState(0);
     
@@ -64,7 +64,7 @@ const Mystyle = () => {
                 axios.get(`http://localhost:8080/lookbook/findCountById?id=${tokenId}`)
                     .then(res => setListCount(res.data))
                     .catch(error => console.log(error))
-        }
+        }   
     }, [tokenId]) 
 
 
@@ -162,14 +162,14 @@ const Mystyle = () => {
 
     const productSearch = (e) => {
         e.preventDefault();
-        setProduct(true);
-
+        setPopUpOpen(true);
     }
 
     const [keyword, setKeyword] = useState('');
     const [productList, setProductList] = useState([{
         seq: "", img: "", price: "", title: "", brand: ""
     }]);
+    
     const onSearch = (e) => {
         e.preventDefault();
 
@@ -189,21 +189,23 @@ const Mystyle = () => {
         return img[0]
     }
 
-    const productClick = (seq) => {
-        setForm({
-            ...form, productSeq:seq
-        })
-
-        console.log(seq , productSeq)
-
+    const productClick = (e, seq, img, title) => {
+        
+        console.log("선택한 상품seq"+seq)
+        setForm({...form, productSeq:seq, productTitle:title, productImg:img})
+        console.log("디비로갈 상품seq"+productSeq+ title);
+        setPopUpOpen(false)
 
     }
+
+    const onProductImgRemove = () => {
+        setForm({...form, productSeq:'', productTitle:'', productImg:''})
+    }
+
 
 
     return (
         <Container fixed>
-  
-
             <S.MyDiv>
                 <div>
                     <img name='myProfile' width='130px' src='../image/myProfile.png' alt='마이프로필' 
@@ -236,8 +238,8 @@ const Mystyle = () => {
                                 name='id'
                                 onChange={onInput}
                             />
-                            <Button onClick={ onUploadFile }> 사진등록 +</Button><br/>
-                            
+                            <Button onClick={ onUploadFile }> 사진등록 +</Button>
+
                             <input type='file' name='file' id='file' accept="image/*" multiple  ref={imgRef}   style={ {visibility: 'hidden'}}
                                     //onChange={ e=> readURL( e.target) }  
                                     onChange={readURL}
@@ -246,31 +248,71 @@ const Mystyle = () => {
                             <S.showImgSrcDiv>  {/*  가로로정렬   */}
                                 {showImgSrc.map((item, index) => (
                                     <div key={index}>
+                                        <ClearIcon onClick={() => onImgRemove(index)} style={{ position:'relative' , top:'0px', left:'470px'}}>삭제</ClearIcon>
                                         <S.showImgSrcImg src={item}  />
-                                        <ClearIcon onClick={() => onImgRemove(index)}>삭제</ClearIcon>
                                                                                 
                                     </div>
                                 ))}
 
                             </S.showImgSrcDiv>
-                            <S.Button>이전</S.Button>
-                            <S.Button>다음</S.Button>
-                            <S.Button onClick={(e) => productSearch(e)} >상품검색 
-                                <Dialog open={product}>
-                                    <DialogContent style={{width:'500px', height:'100px'}}>
+                            {/* <S.Buttom>주황색 커스텀버튼</S.Buttom> */}
+                            
+                            {
+                            (!productImg) &&
+                            <Button onClick={(e) => productSearch(e)} >상품태그 +</Button>   
+                            }
+
+                            <div>
+                                { 
+                                (productImg) &&
+                                                <M.ProductItem>
+                                                    <M.ItemInner>
+                                                        <div className='thumb_box' >
+                                                            
+                                                            <M.Product style={{position:'relative'}}>
+                                                                <M.PictureBrandProductImg>
+                                                                    <M.BrandProductImg src={`/resellList/${productImg}`} />
+                                                                </M.PictureBrandProductImg>
+                                                                <ClearIcon onClick={()=>onProductImgRemove()}  style={{width:'17px', position:'relative' , top:'-87px', left:'80px'}}> x </ClearIcon>
+                                                            </M.Product>
+                                                
+                                                        </div>
+                                                    <M.ProductItemInfoBox>
+                                                        <div className='info_box'>
+                                                            <M.BrandProductInfoBoxName>{productTitle}</M.BrandProductInfoBoxName>
+                                                            
+                                                        </div>
+                                                    </M.ProductItemInfoBox>
+                                                    </M.ItemInner>
+                                                </M.ProductItem>
+
+                                
+                                }
+
+                                
+                            </div>
+                           
+                            
+
+
+                            {/* <input type="text">{productSeq}</input> */}
+                             <Dialog open={popUpOpen}>
+                                    <DialogContent style={{width:'500px', height:'300px'}}>
                                         
-                                        <input type='text' name='keyword' value={ keyword } onChange={ e=> setKeyword(e.target.value.trim()) }/> &nbsp;
-                                        <button onClick={ onSearch }>검색</button>
+                                        <input type='text' name='keyword' value={ keyword } placeholder='상품명 또는 브랜드명' onChange={ e=> setKeyword(e.target.value.trim()) }/> &nbsp;
+                                        <Button onClick={ onSearch } >검색</Button>
+                                        <Button onClick={ ()=>{setPopUpOpen(false)}}>취소</Button>
+                                        <div>
                                         {
                                             productList[0].img !== '' &&
 
                                             productList.map((item, index) => (
-                                                <M.ProductItem key={index} onClick={ () => productClick(item.seq) }>
-                                                    <M.ItemInner>
+                                                <M.ProductItem key={index} >
+                                                    <M.ItemInner onClick={ (e) => {productClick(e, item.seq, item.img, item.title)}}>
                                                         <div className='thumb_box'>
                                                             <M.Product>
                                                                 <M.PictureBrandProductImg>
-                                                                    <M.BrandProductImg src={`/resellList/${photoshop(item.img)}`}/>
+                                                                    <M.BrandProductImg src={`/resellList/${photoshop(item.img)}`} />
                                                                 </M.PictureBrandProductImg>
                                                             </M.Product>
                                                         </div>
@@ -291,16 +333,9 @@ const Mystyle = () => {
                                                     </M.ItemInner>
                                                 </M.ProductItem>))
                                         }
-
-{/*                                         
-                                        <Button onClick={ ()=>{setStyleBoardWriteOpen(false)} }>닫기</Button> */}
-                                  
-
+                                        </div>
                                     </DialogContent>
-  
-                                            
                                 </Dialog>
-                            </S.Button>
                            
 
                             </S.Container>

@@ -93,6 +93,7 @@ public class StyleEntity {
 		styleEntity.setHit(0);
 		styleEntity.setFileAttached(1);  // 파일 있음
 		styleEntity.setSeq(styleDTO.getSeq());	
+		styleEntity.setProductSeq(styleDTO.getProductSeq());
 		
 		System.out.println("요기"+styleEntity);
 		return styleEntity;

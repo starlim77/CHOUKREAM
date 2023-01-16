@@ -1,25 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../Header/Header';
 import Social from '../Lookbook/Social';
-import Card from '@mui/material/Card';
 import {
-    CardActions,
-    CardContent,
-    CardHeader,
     Container,
-    Grid,
-    IconButton,
-    Typography,
 } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import MessageOutlinedIcon from '@mui/icons-material/MessageOutlined';
+
 import * as S from './style';
-import { grey } from '@mui/material/colors';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { MasonryInfiniteGrid } from '@egjs/react-infinitegrid';
 import TrendingItem from './TrendingItem';
 
 const Trending = () => {
