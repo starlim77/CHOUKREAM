@@ -1,52 +1,41 @@
-export default [
-    {
-        id: 1,
-        img: '../image/trendImg/wallet.png',
-        text: '지갑',
-    },
-    {
-        id: 2,
-        img: '../image/trendImg/ugg.png',
-        text: '어그',
-    },
-    {
-        id: 3,
-        img: '../image/trendImg/jewelry.png',
-        text: '주얼리',
-    },
-    {
-        id: 4,
-        img: '../image/trendImg/outer.png',
-        text: '눕시',
-    },
-    {
-        id: 5,
-        img: '../image/trendImg/glasses.png',
-        text: '안경',
-    },
-    {
-        id: 6,
-        img: '../image/trendImg/shoes.png',
-        text: '신발',
-    },
-    {
-        id: 7,
-        img: '../image/trendImg/bag.png',
-        text: '가방',
-    },
-    {
-        id: 8,
-        img: '../image/trendImg/jean.png',
-        text: '바지',
-    },
-    {
-        id: 9,
-        img: '../image/trendImg/cap.png',
-        text: '모자',
-    },
-    {
-        id: 10,
-        img: '../image/trendImg/apple.png',
-        text: '애플',
-    },
-];
+export default [{
+    id: '1',
+    img: '../image/used/cap.png',
+    text: '모자'
+},{
+    id: '2',
+    img: '../image/used/outer.png',
+    text: '아우터'
+},{
+    id: '3',
+    img: '../image/used/top.png',
+    text: '상의'
+},{
+    id: '4',
+    img: '../image/used/jean.png',
+    text: '하의'
+},{
+    id: '5',
+    img: '../image/used/shoes.png',
+    text: '신발'
+},{
+    id: '6',
+    img: '../image/used/bag.png',
+    text: '가방'
+},{
+    id: '7',
+    img: '../image/used/wallet.png',
+    text: '지갑'
+},{
+    id: '8',
+    img: '../image/used/glasses.png',
+    text: '안경'
+},{
+    id: '9',
+    img: '../image/used/jewelry.png',
+    text: '쥬얼리'
+},{
+    id: '10',
+    img: '../image/used/stuff.png',
+    text: '기타'
+}]

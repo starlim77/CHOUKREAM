@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import GlobalStyle from './GlobalStyle';
 import ScrollToTop from './ScrollToTop';
 import * as S from './style';
 import NewProductOption from "./NewProductOption";
+import * as U from '../Used/UsedItemStyle';
+import jwt_decode from 'jwt-decode';
 
 const NewProducts = () => {
 
@@ -14,9 +16,23 @@ const NewProducts = () => {
 
     const [modalOpen, setModalOpen] = useState(false);
 
+    const navigate = useNavigate();
+
     const date = new Date();
 
-    const id = 'gong@naver.com'
+    const token = localStorage.getItem('accessToken');
+    const [sub, setSub] = useState('');
+        
+
+    useEffect(() => {
+        if (token !== null) {
+            const tokenJson = jwt_decode(token);
+            setSub(tokenJson['sub']);
+        }
+        console.log(id)
+    }, []);
+
+    const [id, setId] = useState('');
 
     const {seq} = useParams();
 
@@ -56,24 +72,38 @@ const NewProducts = () => {
              .then(res => res.data.length !== 0 && setForm(res.data))
              .catch(error => console.log(error))
 
-        axios.get('http://localhost:8080/used/itemLike?seq=' + seq + '&id=' + id + '&shopKind=' + shopKind)
-             .then(res => res.data ? setLikeForm(res.data) : '')
-             .catch(error => console.log(error))
-
         axios.get('http://localhost:8080/likeCount?seq=' + seq + '&shopKind=' + shopKind)
              .then(res => setCount(res.data))
              .catch(err => console.log(err))
+
+        axios
+             .get('http://localhost:8080/getMemberInfo', {
+                 params: { seq: sub },
+             })
+             .then(res => {
+                 //console.log(JSON.stringify(res.data));
+                 setId(res.data.email);
+ 
+                 //console.log('id = ' + id);
+             })
+             .catch(err => console.log(err));
     }, [])
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/used/itemLike?seq=' + seq + '&id=' + id + '&shopKind=' + shopKind)
+             .then(res => res.data ? setLikeForm(res.data) : '')
+             .catch(error => console.log(error))
+    }, [id]);
     
 
-    const onInterest = () => {   
+    const onInterest = () => {
+        if(id!=="ROLE_GUEST"){
         setLikeForm({...likeForm, userLike:!likeForm.userLike})
-
         axios.post(`http://localhost:8080/used/productLikeSet?seq=`+ seq + '&id=' + id + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
         .then()
         .catch(error => console.log(error))
-
-        {likeForm.userLike === false ? setCount(count+1) : setCount(count-1)}
+        {likeForm.userLike === false ? setCount(count+1) : setCount(count-1)}  
+        }else { navigate(`/login`) }
     }
 
     const [form, setForm] = useState([{}])
@@ -104,6 +134,44 @@ const NewProducts = () => {
         element4.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
+    const [mainImg,setMainImg] = useState('')
+    const [subImg0,setSubImg0] = useState('')
+    const [subImg1,setSubImg1] = useState('')
+    const [subImg2,setSubImg2] = useState('')
+    const [subImg3,setSubImg3] = useState('')
+
+    const [desImg0,setDesImg0] = useState('')
+    const [desImg1,setDesImg1] = useState('')
+    const [desImg2,setDesImg2] = useState('')
+
+    useEffect(()=>{
+        if((form.imgName)){
+            const img = ((form.imgName).split(','))
+
+            setMainImg(img[0])
+
+            img[0] && setSubImg0(img[0]) 
+            img[1] && setSubImg1(img[1]) 
+            img[2] && setSubImg2(img[2]) 
+            img[3] && setSubImg3(img[3]) 
+        }
+
+        if((form.descriptionImg)){
+            const desImg = ((form.descriptionImg).split(','))
+
+            desImg[0] && setDesImg0(desImg[0]) 
+            desImg[1] && setDesImg1(desImg[1]) 
+            desImg[2] && setDesImg2(desImg[2]) 
+        }
+    },[form])
+
+    const changImg=(e)=>{
+        var id = e.target.getAttribute("id");
+        if(id == 0) setMainImg(subImg0)
+        else if(id == 1) setMainImg(subImg1)
+        else if(id == 2) setMainImg(subImg2)
+        else if(id == 3) setMainImg(subImg3)
+    }
 
 
 
@@ -117,10 +185,14 @@ const NewProducts = () => {
                     <h2 hidden={true}>상품상세</h2>
                     <S.ColumnBind>
                         <S.ColumnIsFixed>
-                            <S.ColumnBox>
-                                <div className="spread">
-                                    <img src={form.imgName} width="480px" height="480px"></img>
-                                </div>
+                            <>
+                            <U.ImgBody2>
+                                <U.MainImg2 src={`/storage/${mainImg}`} alt={mainImg}></U.MainImg2>
+                                    {subImg1&&<U.SmallImg2 src={`/storage/${subImg0}`} id="0" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg1&&<U.SmallImg2 src={`/storage/${subImg1}`} id="1" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg2&&<U.SmallImg2 src={`/storage/${subImg2}`} id="2" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg3&&<U.SmallImg2 src={`/storage/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                </U.ImgBody2>
                                 {/* <div className="column_box">
                                     <div className="detail_banner_area">
                                         <div className="banner_slide detail_slide slick-slider slick-initialized">
@@ -131,7 +203,7 @@ const NewProducts = () => {
                                         </div>
                                     </div>
                                 </div> */}
-                            </S.ColumnBox>
+                            </>
                             {/* {modalOpen && <ModalBasic setModalOpen={setModalOpen} getSize={getSize} getAll={getAll} sizeForm={sizeForm} seq={seq}/> } */}
                             {/* <div className="ico_arrow">
                                 <svg>
@@ -158,12 +230,9 @@ const NewProducts = () => {
                                             </S.DetailSizeTitle>
                                             {modalOpen && <NewProductOption setModalOpen={setModalOpen} newProductOption={form.newProductOptionDTO} option={option} newSeq={seq} getOption={getOption}/> }
                                             <S.DetailSizeSize>
-                                                <S.BtnSize>
-                                                    {form.newProductOptionDTO === null ? 'ONE SIZE' : <S.BtnSizeBtnText onClick={e => setModalOpen(true)}>{option}</S.BtnSizeBtnText> }
-                                                    {/* <S.BtnSizeBtnText onClick={e => setModalOpen(true)}>{size}</S.BtnSizeBtnText>
-                                                    {/* <svg>
-                                                        <use></use>
-                                                    </svg> */}
+                                                <S.BtnSize onClick={e => setModalOpen(true)}>
+                                                    {form.newProductOptionDTO === null ? 'ONE SIZE' : <S.BtnSizeBtnText>{option}</S.BtnSizeBtnText> }
+                                                    <img src={'/image/product/4829876_arrow_direction_down_navigation_icon.png'} width="24px" heigh="24px"></img>
                                                 </S.BtnSize>
                                             </S.DetailSizeSize>
                                         </S.DetailSize>
@@ -224,7 +293,7 @@ const NewProducts = () => {
                                         <S.FloatingPriceProductArea>
                                             <S.FloatingPriceProductThumb>
                                                 <S.PictureProductImg>
-                                                    <S.Image src={form.imgName} width="65px" height="65px"></S.Image>
+                                                    <S.Image src={`/storage/${mainImg}`} width="65px" height="65px"></S.Image>
                                                 </S.PictureProductImg>
                                             </S.FloatingPriceProductThumb>
                                             <S.FloatingProductInfo>
@@ -262,7 +331,7 @@ const NewProducts = () => {
                             <div>
                                 <S.DetailTitleHeaderImages>
                                     <S.DetailHeaderImgWrap>
-                                        <S.CoverImg src={form.imgName}></S.CoverImg>
+                                        <S.CoverImg src={`/storage/${mainImg}`}></S.CoverImg>
                                     </S.DetailHeaderImgWrap>
                                     <S.DetailHeaderTitleWrap>
                                         <S.DetailHeaderProductNo>{form.newSeq}</S.DetailHeaderProductNo>
@@ -275,9 +344,10 @@ const NewProducts = () => {
                                     <S.DetailImgWrap>
                                         <S.DetailContentImages>
                                             <div className='images'>
-                                                <S.CoverImg src="https://kream-phinf.pstatic.net/MjAyMjEyMjdfMTMz/MDAxNjcyMTQ1NTg0ODQx.VkXucEwPnoD1A0O7k5-cX3Kuwu0J1MktBCP9ea_EHtAg.Bmjm2fQ6Sf-qSMWXcQVSsON2QfQqWtNXARnI1NkqXs0g.JPEG/p_23e94f985ded4c02aaf7c3928d4ccede.jpg"/>
-                                                <S.CoverImg src="https://kream-phinf.pstatic.net/MjAyMjEyMjdfMTQ5/MDAxNjcyMTQ1NTkwOTA1.PjZ6qPXlQ-0dlfNauwP7CPRAbFWxrwUfKcvtohd-pEYg.HaLCsNKltD_YXqTs7Ua0Zr9lRo7QjHcXRdenDVVjTUMg.JPEG/p_eeacf32d8e98420cae2bcc5fbab31c5e.jpg"/>
-                                            </div>
+                                                {desImg0&&<S.CoverImg src={`/storage/${desImg0}`}></S.CoverImg>}
+                                                {desImg1&&<S.CoverImg src={`/storage/${desImg1}`}></S.CoverImg>}
+                                                {desImg2&&<S.CoverImg src={`/storage/${desImg2}`}></S.CoverImg>}
+                                               </div>
                                         </S.DetailContentImages>
                                     </S.DetailImgWrap>
                                 </S.DetailTitleHeaderImages>

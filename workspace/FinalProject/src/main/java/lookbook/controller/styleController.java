@@ -23,15 +23,18 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
+import lookbook.bean.LikesDTO;
 import lookbook.bean.StyleCommentDTO;
 import lookbook.bean.StyleDTO;
 import lookbook.bean.StyleLikesDTO;
+import lookbook.dao.StyleFileDAO;
 import lookbook.service.StyleCommentService;
 import lookbook.service.StyleFollowingService;
 import lookbook.service.StyleLikesService;
 import lookbook.service.StyleService;
 import member.bean.MemberDto;
 import member.dao.MemberDAO;
+import shop.bean.ProductDTO;
 
 
 @RestController
@@ -56,14 +59,16 @@ public class styleController {
 	public void upload(@RequestBody List<MultipartFile> list, @ModelAttribute StyleDTO styleDTO, HttpSession session) {
 		//System.out.println("list= " + list);	
 		//System.out.println("컨드롤러 dto="+ styleDTO);
+		System.out.println(styleDTO.getId()+"////와라");
 		styleService.save(list, styleDTO);
 
 	}
 	
 	
-	//내 id를 들고가서 내 게시글만 뿌리기
+	//내 id를 들고가서 내 게시글만 뿌리기    @AuthenticationPrincipal
 	@GetMapping(path="findAllMyList/{id}")
 	public List<StyleDTO> findAllMyList(@PathVariable String id) {
+		System.out.println(id + " 아이디받기----------------------");
 		//좋아요조회 styleService.findLikes(id,style_seq);
 		return styleService.findAllMyList(id);
 	}
@@ -112,23 +117,33 @@ public class styleController {
 	
 
 	
-	//좋아요
+	//좋아요 포함 전체 리스트 받아오기
     @PostMapping(path="likebutton")
-    public int likes(@ModelAttribute StyleLikesDTO styleLikesDTO) {
-    	//System.out.println("컨트롤러 styleLikesDTO ==== "+ styleLikesDTO);
-    	return styleLikesService.save(styleLikesDTO);
+    public List<LikesDTO> likes(@ModelAttribute StyleLikesDTO styleLikesDTO, @RequestParam boolean isLike) { //1,0값 받는거 추가 void로 형태 변환
+    	
+    	styleLikesService.save(styleLikesDTO, isLike);
+    	
+    	return styleLikesService.findLikes(Long.toString(styleLikesDTO.getMemberId()));
+  
 
     }
     
     //좋아요 확인
     @GetMapping(path="findLikes")
-    public int findLikes(@ModelAttribute StyleLikesDTO styleLikesDTO) {
+    public List<LikesDTO> findLikes(@RequestParam String id) {
     	//System.out.println("컨트롤러 조아요 확인 styleLikesDTO ==== "+ styleLikesDTO);
-    	return styleLikesService.findLikes(styleLikesDTO);
+    	return styleLikesService.findLikes(id);
 
     }
-
     
+    //보드등록시 상품검색하기
+	@GetMapping(value="search")
+	public List<ProductDTO> search(@RequestParam String keyword){ 
+		System.out.println(keyword + "==============");
+		
+		return styleService.search(keyword);
+	}
+	
 //댓글
     
 	//상세에서 댓글 등록기능
@@ -153,7 +168,7 @@ public class styleController {
 	@GetMapping(path="getComment")	
 	public ResponseEntity getComment(@ModelAttribute StyleCommentDTO styleCommentDTO) {
 		System.out.println(styleCommentDTO);
-				
+			
 		List<StyleCommentDTO> styleCommentDTOList = styleCommentService.findAll(styleCommentDTO.getStyleSeq());
 		return new ResponseEntity<>(styleCommentDTOList, HttpStatus.OK);//내가 전달하려는 바디값(styleCommentDTOList)과 상태값(HttpStatus.OK)
 		
@@ -205,13 +220,13 @@ public class styleController {
 	}
 	
 	//팔로우 페이지 팔로우 목록 불러오기
-	@GetMapping(path="getFollowing")
-	public List<StyleDTO> getFollowing(int id){
-		System.out.println(id);
-		
-		styleFollowingService.getFollowing(id);
-		
-	}
-	
+//	@GetMapping(path="getFollowing")
+//	public List<StyleDTO> getFollowing(int id){
+//		System.out.println(id);
+//		
+//		styleFollowingService.getFollowing(id);
+//		
+//	}
+//	
 
 }

@@ -186,91 +186,32 @@ const NewWrite = () => {
             <S.WriteBody>
                 <S.ImgBody>
                     {/* 이미지 소스 이용방법 2가지 사용해봄 */}
-                    <S.MainImgP setPosition={subImg[0] ? true : false}>
-                        <S.MainImg
-                            name="mainImg"
-                            sizing={subImg[0] ? true : false}
-                            src={
-                                subImg[0]
-                                    ? subImg[0].url
-                                    : `${process.env.PUBLIC_URL}/image/used/plusIcon.png`
-                            }
-                            onClick={onSubImg}
-                            alt={subImg[0] ? subImg[0].url : 'nothing'}
-                        ></S.MainImg>
-                        <S.DeleteMainImg
-                            setPosition={subImg[0] ? true : false}
-                            id="0"
-                            onClick={e => deleteImg(e)}
-                        ></S.DeleteMainImg>
+                    <S.MainImgP setPosition={subImg[0]?true:false}>
+                        <S.MainImg name='mainImg' sizing={subImg[0]?true:false} src={subImg[0]?subImg[0].url:`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg} alt={subImg[0]?subImg[0].url:"nothing"}></S.MainImg>
+                        <S.DeleteMainImg setPosition={subImg[0]?true:false} id="0" onClick={e=>deleteImg(e)}></S.DeleteMainImg>
                     </S.MainImgP>
-                    <S.SubImgBody>
-                        <S.SubImgP setPosition={subImg[1] ? true : false}>
-                            <S.SubImg
-                                sizing={subImg[1] ? true : false}
-                                name="subImg1"
-                                src={
-                                    subImg[1]
-                                        ? subImg[1].url
-                                        : '/image/used/plusIcon.png'
-                                }
-                                onClick={onSubImg}
-                            />
-                            <S.DeleteImg
-                                setPosition={subImg[1] ? true : false}
-                                id="1"
-                                onClick={e => deleteImg(e)}
-                            ></S.DeleteImg>
+                    <S.SubImgBody >
+                        <S.SubImgP setPosition={subImg[1]?true:false}>
+                            <S.SubImg sizing={subImg[1]?true:false} name='subImg1' src={subImg[1]?subImg[1].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
+                            <S.DeleteImg setPosition={subImg[1]?true:false} id="1" onClick={e=>deleteImg(e)}></S.DeleteImg>
                         </S.SubImgP>
-                        <S.SubImgP setPosition={subImg[2] ? true : false}>
-                            <S.SubImg
-                                sizing={subImg[2] ? true : false}
-                                name="subImg2"
-                                src={
-                                    subImg[2]
-                                        ? subImg[2].url
-                                        : '/image/used/plusIcon.png'
-                                }
-                                onClick={onSubImg}
-                            />
-                            <S.DeleteImg
-                                setPosition={subImg[2] ? true : false}
-                                id="2"
-                                onClick={e => deleteImg(e)}
-                            ></S.DeleteImg>
+                        <S.SubImgP setPosition={subImg[2]?true:false}>
+                            <S.SubImg sizing={subImg[2]?true:false} name='subImg2' src={subImg[2]?subImg[2].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
+                            <S.DeleteImg setPosition={subImg[2]?true:false} id="2"  onClick={e=>deleteImg(e)}></S.DeleteImg>
                         </S.SubImgP>
-                        <S.SubImgP setPosition={subImg[3] ? true : false}>
-                            <S.SubImg
-                                sizing={subImg[3] ? true : false}
-                                name="subImg3"
-                                src={
-                                    subImg[3]
-                                        ? subImg[3].url
-                                        : '/image/used/plusIcon.png'
-                                }
-                                onClick={onSubImg}
-                            />
-                            <S.DeleteImg
-                                setPosition={subImg[3] ? true : false}
-                                id="3"
-                                onClick={e => deleteImg(e)}
-                            ></S.DeleteImg>
+                        <S.SubImgP setPosition={subImg[3]?true:false}>
+                            <S.SubImg sizing={subImg[3]?true:false} name='subImg3' src={subImg[3]?subImg[3].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
+                            <S.DeleteImg setPosition={subImg[3]?true:false} id="3"  onClick={e=>deleteImg(e)}></S.DeleteImg>
                         </S.SubImgP>
                     </S.SubImgBody>
-
+                    
                     {/* https://blog.munilive.com/posts/input-file-type-accept-attribute.html
                     파일 형식 제한은 accept이용.
                     다만 업로드 하는 사람이 형식을 모든 파일로 받으면 다른 파일로 업로드가 가능해진다.
                     유효성 검사 필요 */}
-                    <input
-                        type="file"
-                        name="img"
-                        style={{ display: 'none' }}
-                        accept=".jpg,.png, .jpeg, .gif"
-                        onChange={e => onImgRead(e)}
-                        ref={imgRef}
-                        multiple
-                    ></input>
+                    <input type='file' name="img" style={{display: 'none'}} accept=".jpg,.png, .jpeg, .gif" onChange={ e=>onImgRead(e) } ref={imgRef} multiple></input>
+                    *이미지는 1대 1비율이 아니면 잘려서 보일 수 있습니다.<br></br>
+                    *이미지 파일만 업로드 가능합니다.
                 </S.ImgBody>
 
                 <S.Information>

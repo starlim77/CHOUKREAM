@@ -2,10 +2,12 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import * as Co from './ContentStyle';
 
-const MenuList = ({item, setDummy, setPictures}) => {
-    
+const MenuList = ({item, dummy, setDummy, setPictures}) => {
+
     const [checked, setChecked] = useState(false)
     // console.log('처음 체크드 ' + checked)
+    console.log( '1 ' + item)
+    console.log(item)
     
     const sortMenu = (menu) => {
         // checked 누른상태 true면 신발 정렬

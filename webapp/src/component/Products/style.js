@@ -12,7 +12,7 @@ export const ContainerDetail = styled.div`
     display: flex;
     width: 100%;
     height: 100%;
-    border: 1px red dotted;
+    /* border: 1px red dotted; */
     flex-direction: column;
 `;
 
@@ -22,13 +22,13 @@ export const Content = styled.div`
     margin: 0 auto;
     padding: 30px 40px 120px;
     max-width: 1280px;
-    border: 1px blue dotted;
+    /* border: 1px blue dotted; */
 
     display: block;
 `;
 export const ColumnBind = styled.div`
     display: flex;
-    border: 1px green dotted;
+    /* border: 1px green dotted; */
     /* justify-content: space-between; */
     justify-content: center; 
     position: relative;
@@ -69,7 +69,8 @@ export const Column = styled.div`
 `;
 
 export const BannerAlert = styled.div`
-    padding-top: 20px;
+    /* padding-top: 20px; */
+    padding-top: ${(props) => props.subImg1 ? '120px' : "20px"};
 `;
 
 export const BannerAlertContent = styled.div`
@@ -143,7 +144,7 @@ export const DetailSize = styled.div`
     padding-top: 19px;
     padding-bottom: 12px;
     border-bottom: 1px solid #ebebeb;
-    border: 1px red dotted;
+    /* border: 1px red dotted; */
     min-height: 50px;
 `;
 
@@ -164,7 +165,7 @@ export const DetailSizeSize = styled.div`
     float: right;
 `;
 
-export const BtnSize = styled.a`
+export const BtnSize = styled.div`
     display: block;
     font-size: 16px;
     line-height: 24px;
@@ -583,8 +584,7 @@ export const SizeLink = styled.a`
     padding: 10px 36px 12px 15px;
     font-size: 14px;
     color: rgba(34,34,34,.8);
-
-    font-weight: ${(props) => props.size === props.itemSize && "700"};
+    font-weight: ${(props) => props.size === props.itemSize ? "700" : "400"};
     color: #222;
 
     cursor: pointer;
@@ -1250,7 +1250,7 @@ export const FeedArea = styled.div`
 
     display: block;
 
-    border: 1px blue dotted;
+    /* border: 1px blue dotted; */
 `;
 
 export const FeedTitle = styled.h2`
@@ -1720,6 +1720,284 @@ export const NewFloatingLargeBtn = styled.button`
     min-width: fit-content;
     border: 0;
 `;
+
+export const BuyProduct = styled.div`
+    -webkit-box-flex: 0;
+    flex: none;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin: 0 32px;
+    padding-bottom: 11px;
+    background-color: #fff;
+`;
+
+export const BuyProductProduct = styled.div`
+    width: 80px;
+    height: 80px;
+    padding-top: 0;
+    flex-shrink: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+`;
+
+export const BuyProductProductImg = styled.picture`
+    width: 100%;
+    display: flex;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+`;
+
+export const BuyInfo = styled.div`
+    padding-left: 8px;
+    width: calc(100% - 80px);
+`;
+
+export const ModelInfo = styled.div`
+    padding-top: 0;
+`;
+
+export const ModelNumber = styled.strong`
+    display: none;
+    font-size: 0;
+    font-weight: bold;
+`;
+
+export const ModelTitle = styled.p`
+    padding-top: 0;
+    font-size: 15px;
+    letter-spacing: -.15px;
+    line-height: 16px;
+    margin-top: 2px;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`;
+
+export const ModelKo = styled.p`
+    line-height: 16px;
+    font-size: 11px;
+    letter-spacing: 0;
+    color: rgba(34,34,34,.5);
+    margin-top: 2px;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`;
+
+export const SizeSelectWrap = styled.div`
+    padding-top: 5px;
+`;
+
+export const BtnSizeSize = styled.span`
+    display: inline-block;
+    line-height: 24px;
+    font-size: 16px;
+    font-weight: 700;
+    vertical-align: top;
+    
+`;
+
+export const PriceLayerSizeListLayer = styled.div`
+    display: ${(props) => props.listOpen ? "block" : "none"};
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+    z-index: 1;
+`;
+
+export const PriceLayerContainer = styled.div`
+    position: relative;
+    top: 145px;
+    left: 120px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    transform: none;
+    width: 176px;
+    border-radius: 0;
+    background-color: #fff;
+    overflow: hidden;
+    border: 1px solid #d3d3d3;
+    border-radius: 10px;
+`;
+
+export const LayerSizeListBtnLayerClose = styled.a`
+    display: none;
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    cursor: pointer;
+`;
+
+export const LayerSizeListLayerContent = styled.div`
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    height: calc(100% - 60px);
+    border: 1px solid #d3d3d3;
+    border-radius: 10px;
+`;
+
+export const TabInfo = styled.div`
+    -webkit-box-flex: 1;
+    flex: 1;
+    position: relative;
+`;
+
+export const LayerContentTabArea = styled.div`
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    padding-bottom: 32px;
+`;
+
+export const LayerContentTabList = styled.ul`
+    -webkit-box-flex: 0;
+    flex: none;
+    margin: 0 32px 12px;
+    border-radius: 8px;
+    display: flex;
+    background-color: #f4f4f4;
+`;
+
+export const LayerTabContent = styled.div`
+    -webkit-box-flex: 1;
+    flex: 1;
+    display: block;
+    height: auto;
+    overflow: hidden;
+`;
+
+export const LayerPriceTable = styled.div`
+    height: 100%;
+`;
+
+export const LayerMarketPriceTable = styled.div`
+    position: relative;
+    height: 100%;
+`;
+
+export const PriceHead = styled.div`
+    padding: 0 32px;
+`;
+
+export const HeadBox = styled.div`
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ebebeb;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+`;
+
+export const HeadSort1 = styled.div`
+    flex-basis: 30%;
+    text-align: left;
+`;
+export const HeadSort2 = styled.div`
+    flex-basis: 36%;
+    text-align: right;
+`;
+export const HeadSort3 = styled.div`
+    flex-basis: 34%;
+    text-align: right;
+`;
+
+export const SortLinkSort = styled.a`
+    cursor: pointer;
+    position: relative;
+    display: -webkit-inline-box;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 13px;
+    letter-spacing: -.07px;
+    color: rgba(34,34,34,.8);
+`;
+
+export const PriceBody = styled.div`
+    max-height: none;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding-top: 8px;
+    padding: 0 32px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+`;
+
+export const BodyList = styled.div`
+    padding: 5px 0;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+`;
+
+export const ListText1 = styled.div`
+    flex-basis: 30%;
+    text-align: left;
+    position: relative;
+    line-height: 17px;
+    font-size: 14px;
+`;
+export const ListText2 = styled.div`
+    flex-basis: 36%;
+    position: relative;
+    line-height: 17px;
+    font-size: 14px;
+    text-align: right;
+`;
+export const ListText3 = styled.div`
+    flex-basis: 34%;
+    position: relative;
+    line-height: 17px;
+    font-size: 14px;
+    text-align: right;
+`;
+
+export const LayerMarketPriceLayerContent = styled.div`
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    height: calc(100% - 60px);
+`;
+
+export const LayerPriceTabContent = styled.div`
+    display: ${(props) => props.open ? 'block' : 'none'};
+    -webkit-box-flex: 1;
+    flex: 1;
+    height: auto;
+`;
+
+
+
+
+
+
+
+
+
+
 
 
 
