@@ -46,7 +46,7 @@ const Header = ({auth}) => {
                     <S.BottomWrapper>
                         <S.BottomLi active={true}>STYLE</S.BottomLi>
                         <S.BottomLi onClick={onShopModal}>
-                            shop
+                            SHOP
                             {shopModalOpen&&<ShopModal></ShopModal>}
                         </S.BottomLi>
                         <S.BottomLi active={true}>

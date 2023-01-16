@@ -276,11 +276,11 @@ const UsedItem = () => {
                 {/* <U.ChatButton>채팅하기</U.ChatButton> */}
                 {
                     form.sellingState?
-                    <U.SettlementButton onClick={onSettle}>
+                    <U.SettlementButton onClick={onSettle} active={true}>
                         <U.PriceDiv>{form.price}원</U.PriceDiv>
                         결 제 하 기
                     </U.SettlementButton>
-                    :<U.SettlementButton disabled>판 매 완 료</U.SettlementButton>
+                    :<U.SettlementButton active={false} disabled>판 매 완 료</U.SettlementButton>
                 }
             </U.BaseDiv>
         </U.BaseBody>
