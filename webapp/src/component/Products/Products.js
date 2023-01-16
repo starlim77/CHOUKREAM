@@ -809,8 +809,7 @@ const Products = () => {
                     <S.FeedArea>
                         <S.FeedTitle>
                             <S.FeedTitleTitle>스타일</S.FeedTitleTitle>
-                            {/* 스타일 카운트 */}
-                            <S.FeedTitleNum>1234</S.FeedTitleNum> 
+                            {/* <S.FeedTitleNum>1234</S.FeedTitleNum>  */}
                         </S.FeedTitle>
                         <S.SocialFeeds>
                             <Container fixed>

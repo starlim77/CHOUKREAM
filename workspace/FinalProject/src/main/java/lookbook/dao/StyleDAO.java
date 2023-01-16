@@ -46,6 +46,9 @@ public interface StyleDAO extends JpaRepository<StyleEntity, String> {
 					+ "left outer join (select id, group_concat(stored_file_name) as stored_file_name, style_seq from style_file_table group by style_seq) as c on c.style_seq = a.seq \r\n"
 					+ "Order By Seq Desc ")
 	public List<LikesDTO> list();
+	
+	@Query(nativeQuery = true, value = "select * from style_table where product_seq = :seq limit 8")
+	public List<StyleEntity> getBrandStyleList(int seq);
 
 	
 
