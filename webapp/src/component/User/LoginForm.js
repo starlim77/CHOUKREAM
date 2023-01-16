@@ -61,6 +61,7 @@ const LoginForm = () => {
           .catch(error => console.log(error))
     }
 
+
     return (
         <S.Container>
             <S.LoginAreaDiv>
@@ -99,18 +100,23 @@ const LoginForm = () => {
                 </S.LookBox>
 
                 <S.SocialLogin>
-                    <S.Button type='button' className='naverBtn'>
-                        <S.ButtonDiv>
-                            <S.ButtonImg src='../image/naver.png' alt='네이버 로고' />
-                            <S.ButtonSpan>네이버로 로그인</S.ButtonSpan>
-                        </S.ButtonDiv>
-                    </S.Button>
-                    <S.Button type='button' className='kakaoBtn'>
-                        <S.ButtonDiv>
-                            <S.ButtonImg src='../image/kakao.png' alt='카카오 로고' />
-                            <S.ButtonSpan>카카오로 로그인</S.ButtonSpan>
-                        </S.ButtonDiv>
-                    </S.Button>
+                    <a href='http://localhost:8080/oauth2/authorization/naver'>
+                        <S.Button type='button' className='naverBtn'>
+                            <S.ButtonDiv>
+                                <S.ButtonImg src='../image/naver.png' alt='네이버 로고' />
+                                <S.ButtonSpan>네이버로 로그인</S.ButtonSpan>
+                            </S.ButtonDiv>
+                        </S.Button>
+                    </a>
+
+                    <a href='http://localhost:8080/oauth2/authorization/kakao'>
+                        <S.Button type='button' className='kakaoBtn'>
+                            <S.ButtonDiv>
+                                <S.ButtonImg src='../image/kakao.png' alt='카카오 로고' />
+                                <S.ButtonSpan>카카오로 로그인</S.ButtonSpan>
+                            </S.ButtonDiv>
+                        </S.Button>
+                    </a>
                 </S.SocialLogin>
             </S.LoginAreaDiv>
         </S.Container>

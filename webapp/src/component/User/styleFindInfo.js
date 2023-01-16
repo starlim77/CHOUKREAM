@@ -42,6 +42,8 @@ export const NoticeTxt = styled.p`
     height: 38px;
     padding-top: 40px;
     padding-bottom: 30px;
+    font-size: 16px;
+    text-align: center;
 `;
 
 export const SuccessNotice = styled.div`
@@ -57,14 +59,14 @@ export const SuccessNoticeDl = styled.dl`
 export const SuccessNoticeDt = styled.dt`
     height: 16px;
     text-align: center;
-    font-size: 12px;
+    font-size: 16px;
     color: #222;
 `;
 
 export const SuccessNoticeDd = styled.dd`
     height: 22px;
     padding-top: 8px;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
     text-align: center;
 `;
@@ -129,4 +131,31 @@ export const SuccessBtn = styled.button`
     justify-content: center;
     text-align: center;
     margin-left: ${props => props.margin || 0};
+    background-color: ${props => props.margin ? '#222' : '#fff'};
+    color: ${props => props.margin ? '#fff' : '#222'};
+    font-weight: ${props => props.margin ? 'bold' : ''};
+`;
+
+export const HelpPassword = styled.div`
+    width: 400px;
+    height: 154px;
+`;
+
+export const LoginBtnBox = styled.div`
+    padding-top: 22px;
+`;
+
+export const LoginBtn = styled.button`
+    width: 195px;
+    height: 52px;
+    padding: 0 25px;
+    border-radius: 12px;
+    border: 1px solid #d3d3d3;
+    font-size: 16px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #222;
+    color: #fff;
+    font-weight: bold;
 `;

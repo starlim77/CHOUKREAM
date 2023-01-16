@@ -47,6 +47,7 @@ import Logout from './component/User/Logout';
 import MyPageMain from './component/myPage/MyPageMain';
 import MyPageApp from './component/myPage/MyPageApp';
 import NewUpdate from './component/Shop/manager/NewUpdate';
+import SocialLoginRedirect from './component/User/SocialLoginRedirect';
 
 function App() {
     return (
@@ -189,6 +190,7 @@ function App() {
                         element={<FindPasswordResult />}
                     />
                     <Route path="/logout" element={<Logout />} />
+                    <Route path='/oauth2/redirect' element={<SocialLoginRedirect />} />
                     <Route path="/join" element={<WriteForm />} />
                     <Route path="/cs/*" element={<CsMain />} />
 
