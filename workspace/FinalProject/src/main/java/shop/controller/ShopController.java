@@ -3,6 +3,7 @@ package shop.controller;
 import java.io.File;
 import java.io.IOException;
 import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -226,7 +227,6 @@ public class ShopController {
 		newProductService.upload(newProductDTO);
 
 	 }
-
 }
 
 

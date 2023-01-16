@@ -11,7 +11,11 @@ const NewWrite = () => {
         brand: '',
         category: '',
         categoryDetail: '',
+        gender: '',
+        modelNum: '',
         releaseDate: '',
+        color: '',
+        size: '',
         price: '',
     });
 
@@ -21,7 +25,11 @@ const NewWrite = () => {
         brand,
         category,
         categoryDetail,
+        gender,
+        modelNum,
         releaseDate,
+        color,
+        size,
         price,
     } = form;
 
@@ -50,13 +58,13 @@ const NewWrite = () => {
         // console.log(--sw);
         file[0] || (--sw && alert('이미지 파일을 등록해주세요'));
         // false ||
-        // if (!title) {
-        //     sw = 0;
-        // } else if (category === '상품 종류' || !category) {
-        //     sw = 0;
-        // } else if (!price) {
-        //     sw = 0;
-        // }
+        if (!title) {
+            sw = 0;
+        } else if (category === '상품 종류' || !category) {
+            sw = 0;
+        } else if (!price) {
+            sw = 0;
+        }
 
         var formData = new FormData();
         file.map(files => formData.append('img', files)); // 무조건 문자열로 반환된다
@@ -73,8 +81,8 @@ const NewWrite = () => {
             // null로 하든 formData로 하든 상관없나 ?
             // axios.post('http://localhost:8080/used/writeItem',null,({params:{
             axios
-                .post('http://localhost:8080/shop/newProductUpload', formData, {
-                    params: form,
+                .post('http://localhost:8080/shop/newProductUpload1', formData, {
+                    params: JSON.stringify(data),
                 })
                 .then(() => {
                     alert('글작성 완료');
@@ -175,6 +183,7 @@ const NewWrite = () => {
     //읽어볼 자료.https://velog.io/@eeeve/React-07
     return (
         <>
+        {console.log(data)}
             <S.WriteBody>
                 <S.ImgBody>
                     {/* 이미지 소스 이용방법 2가지 사용해봄 */}
@@ -207,46 +216,51 @@ const NewWrite = () => {
                 </S.ImgBody>
 
                 <S.Information>
-                    {/* <S.Necessary>* 필수 입력</S.Necessary> */}
+                    <S.Necessary>* 필수 입력</S.Necessary>
                     {/* <S.Subject>* 제목</S.Subject>
                     <S.Title type="text" name="title" onChange={onInput} /> */}
 
                     <S.Subject> 제품 영어 이름</S.Subject>
                     <S.SubTitle type="text" name="title" onChange={onInput} />
                     <S.Subject> 제품 한글 이름</S.Subject>
-                    <S.SubTitle type="text"name="subTitle"onChange={onInput}/>
+                    <S.SubTitle
+                        type="text"
+                        name="subTitle"
+                        onChange={onInput}
+                    />
                     <S.Subject> 브랜드</S.Subject>
                     <S.SubTitle type="text" name="brand" onChange={onInput} />
                     <S.Subject> 제품 카테고리 </S.Subject>
-                    <S.SubTitle type="text"name="category"onChange={onInput}/>
+                    <S.SubTitle
+                        type="text"
+                        name="category"
+                        onChange={onInput}
+                    />
                     <S.Subject> 제품 카테고리 디테일 </S.Subject>
-                    <S.SubTitle type="text" name="categoryDetail"onChange={onInput}/>
-                    <S.Subject> 상세설명 이미지 </S.Subject>
-                    <S.SubTitle type="text" name="descriptionImg" onChange={onInput} />
-                    <S.Subject> 판매가 </S.Subject>
-                    <S.SubTitle type="text"name="price"onChange={onInput}/>
-                    <S.Subject> 상호명 </S.Subject>
-                    <S.SubTitle type="text"name="businessName"onChange={onInput}/>
+                    <S.SubTitle
+                        type="text"
+                        name="categoryDetail"
+                        onChange={onInput}
+                    />
+                    <S.Subject> 성별 </S.Subject>
+                    <S.SubTitle type="text" name="gender" onChange={onInput} />
+                    <S.Subject> 제품 모델 번호 </S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="modelNum"
+                        onChange={onInput}
+                    />
+                    <S.Subject> 발매일 </S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="releaseDate"
+                        onChange={onInput}
+                    />
                     <S.Subject> 색상 </S.Subject>
                     <S.SubTitle type="text" name="color" onChange={onInput} />
-                    <S.Subject> 사업자 번호 </S.Subject>
-                    <S.SubTitle type="text" name="comRegNo" onChange={onInput} />
-                    <S.Subject> 대표자 </S.Subject>
-                    <S.SubTitle type="text" name="representative" onChange={onInput} />
-                    <S.Subject> 사업장 소재지 </S.Subject>
-                    <S.SubTitle type="text" name="businessLocation" onChange={onInput} />
-                    <S.Subject> 고객센터 </S.Subject>
-                    <S.SubTitle type="text" name="serviceCall" onChange={onInput} />
-                    <S.Subject> 소재 </S.Subject>
-                    <S.SubTitle type="text" name="material" onChange={onInput} />
-                    <S.Subject> 제조 회사 </S.Subject>
-                    <S.SubTitle type="text" name="manufacturer" onChange={onInput} />
-                    <S.Subject> 제조국 </S.Subject>
-                    <S.SubTitle type="text" name="countryOfManufacturer" onChange={onInput} />
-                    <S.Subject> 제조 날짜 </S.Subject>
-                    <S.SubTitle type="text" name="dateOfManufacturer" onChange={onInput} />
-                    
-                    
+                    <S.Subject> size </S.Subject>
+                    <S.SubTitle type="text" name="size" onChange={onInput} />
+
                     {/* <S.Necessary>* 필수</S.Necessary>
                     <S.Subject> 상품 정보</S.Subject> */}
                     {/* <S.ItemKindPriceDiv>
@@ -268,7 +282,7 @@ const NewWrite = () => {
                         </div>
                     </S.ItemKindPriceDiv> */}
 
-                    {/* <S.Necessary>* 필수</S.Necessary>
+                    <S.Necessary>* 필수</S.Necessary>
                     <S.Subject> 가격</S.Subject>
                     <S.PriceDiv>
                         <S.ItemPrice
@@ -277,7 +291,7 @@ const NewWrite = () => {
                             onChange={onInput}
                         />
                         <S.ItemPriceSpan>원</S.ItemPriceSpan>
-                    </S.PriceDiv> */}
+                    </S.PriceDiv>
 
                     {/* <S.Subject> 제품 설명</S.Subject>
                     <S.ItemContent name="contents" onChange={onInput} /> */}
