@@ -137,21 +137,20 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
         console.log(menuArray)
         var sw=0
         var isExist=menuArray.filter(item=>item===menu);
+        var arrayElse=menuArray.filter(item=>item!==menu);
         isExist.length!==0&&sw++;
-        console.log(sw);
+        
         if(sw===1){
-    
             var arrayTemp=menuArray.filter(item=>item!==menu);
             setMenuArray(arrayTemp);
             var dummyTemp=dummy.filter(item=>item.category!==menu); 
-
-            // var dummy2=dummy
-            //console.log(dummy)
-            // setDummy([...dummy,dummyTemp]) 최상단에서 넘겨준 dummy라 스프레드 안됨.
-            // setDummy(dummy,dummy2)
-            //var dummyTemp2=dummy.concat(dummyTemp)
-
-           setDummy(dummyTemp);
+            
+            if(isExist.length!==0&&arrayElse.length===0){
+                setDummy(dummyOriginal);
+            }else{
+                setDummy(dummyTemp);
+            }
+            
             
         }else{
             
@@ -159,10 +158,13 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
             var dummyTemp=dummyOriginal.filter(item=>item.category===menu);
             
             //console.log(dummyTemp);
-            if(menuArray){
-                setDummy(dummyTemp);
-                setNum(1);
+            if(menuArray.length===0){
+                console.log("2로온다")
+                    setDummy(dummyTemp);
+                    setNum(1);
+             
             }else{
+                console.log("3로온다")
                 var dummyTemp2=dummy.concat(dummyTemp)
                 console.log(dummyTemp2)
                 setDummy(dummyTemp2);

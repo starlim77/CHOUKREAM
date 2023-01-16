@@ -52,6 +52,7 @@ import NewProductPage from './component/Shop/newProduct/NewProductPage';
 import ReList from './component/Shop/resell/ReList';
 import ReUpdate from './component/Shop/resell/ReUpdate';
 import ReWrite from './component/Shop/register/ReWrite';
+import SearchForm2 from './component/Search/SearchForm2';
 
 function App() {
     const token = localStorage.getItem('accessToken');
@@ -139,7 +140,8 @@ function App() {
                         element={<FindPassword />}
                     />
                     <Route path="/join" element={<WriteForm />} />
-                    <Route path="/Search/SearchForm" element={<SearchForm />} />
+                    {/* <Route path="/Search/SearchForm" element={<SearchForm />} /> */}
+                    <Route path="/Search/SearchForm" element={<SearchForm2 />} />
                     <Route
                         path="/login/find_email/result"
                         element={<FindEmailResult />}

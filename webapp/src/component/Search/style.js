@@ -188,6 +188,38 @@ text-overflow: ellipsis;
 display: inline-block;
 white-space: nowrap;
     `;
+export const Searched = styled.div `
+width: 100%;
+margin: 0;
+padding-bottom: 16px; 
+border-bottom: 2px solid #000;  
+`;
+
+
+export const CategoryTitle =styled.div`
+font-size:35px;
+font-weight: bold;
+`
+
+export const ContentsWrapper=styled.div`
+width:500px;
+display:flex;
+height:55px;
+line-height: 55px;
+`
+export const ContentsImg=styled.img`
+width:50px;
+height:50px;
+object-fit: cover;
+
+`
+export const ContentsTitle=styled.div`
+width:400px;
+/* font-size:10
+px; */
+`
+export const SearchWrapper=styled.div`
+`
 export const category= styled.div `
 
     `;

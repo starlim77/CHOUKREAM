@@ -5,15 +5,10 @@ import * as S from './style';
 import { Link } from 'react-router-dom';
 import SearchForm from '../Search/SearchForm';
 import ShopModal from './ShopModal';
+import SearchForm2 from '../Search/SearchForm2';
 
 const Header = ({auth}) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const onOpen = () => {
-        setIsOpen(true);
-    };
-    const onClose = () => {
-        setIsOpen(false);
-    };
+   
     const[shopModalOpen,setShopModalOpen]=useState(false)
     const onShopModal=()=>{
         setShopModalOpen(!shopModalOpen)
@@ -56,12 +51,7 @@ const Header = ({auth}) => {
                         <S.BottomLi>SHOP</S.BottomLi>
                         <S.BottomLi>ABOUT</S.BottomLi>
                         <S.BottomLi>
-                            <div>
-                                <div onClick={onOpen}>
-                                    <FontAwesomeIcon icon={faMagnifyingGlass} />
-                                </div>
-                                {isOpen && <SearchForm onClose={onClose} />}
-                            </div>
+                            <SearchForm2 />
                         </S.BottomLi>
                     </S.BottomWrapper>
                 </S.Bottom>
