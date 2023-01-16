@@ -81,16 +81,8 @@ public class MyServiceImpl implements MyService{
 	public List<ProductDTO> getBuy(long id) {
 		String email = memberDAO.findById(id).get().getEmail();
 		
-//		List<OrderDTO> sellList = orderRepository.findAllBySellOrderUser(email);
 		List<OrderDTO> buyList = orderRepository.findAllByBuyOrderUser(email);
-//		System.out.println(sellList);
-		System.out.println(buyList);
 		
-//		List<ProductDTO> sellItemList = new ArrayList<>();
-//		for(int i = 0; i < sellList.size(); i++) {
-//			ProductDTO sellItem = shopServiceImpl.getProductBySeq(sellList.get(i).getSeq()).get();
-//			sellItemList.add(sellItem);
-//		}
 		
 		List<ProductDTO> buyItemList = new ArrayList<>();
 		for(int i = 0; i < buyList.size(); i++) {
@@ -98,9 +90,6 @@ public class MyServiceImpl implements MyService{
 			buyItemList.add(buyItem);
 		}
 		
-		Map<String, Object> sellBuyItems = new HashMap();
-//		sellBuyItems.put("sellingList", sellItemList);
-		sellBuyItems.put("buyingList", buyItemList);
 		return buyItemList;
 	}
 	@Override
@@ -108,15 +97,41 @@ public class MyServiceImpl implements MyService{
 		String email = memberDAO.findById(id).get().getEmail();
 		
 		List<CompletedOrderDTO> boughtList = completedOrderRepository.findSeqByBuyOrderUser(email);
-		System.out.println(boughtList);
 		
 		List<ProductDTO> boughtItemList = new ArrayList<>();
 		for(int i=0; i < boughtList.size(); i++) {
 			ProductDTO boughtItem = shopServiceImpl.getProductBySeq(boughtList.get(i).getSeq()).get();
 			boughtItemList.add(boughtItem);
 		}
-		System.out.println(boughtItemList);
 		return boughtItemList;
+	}
+	@Override
+	public List<ProductDTO> getSell(long id) {
+		String email = memberDAO.findById(id).get().getEmail();
+		
+		List<OrderDTO> sellList = orderRepository.findAllBySellOrderUser(email);
+		
+		List<ProductDTO> sellItemList = new ArrayList<>();
+		for(int i = 0; i < sellList.size(); i++) {
+			ProductDTO sellItem = shopServiceImpl.getProductBySeq(sellList.get(i).getSeq()).get();
+			sellItemList.add(sellItem);
+		}
+
+		return sellItemList;
+	}
+	@Override
+	public List<ProductDTO> getSold(long id) {
+		String email = memberDAO.findById(id).get().getEmail();
+		
+		List<OrderDTO> soldList = orderRepository.findAllBySellOrderUser(email);
+		
+		List<ProductDTO> soldItemList = new ArrayList<>();
+		for(int i = 0; i < soldList.size(); i++) {
+			ProductDTO soldItem = shopServiceImpl.getProductBySeq(soldList.get(i).getSeq()).get();
+			soldItemList.add(soldItem);
+		}
+		
+		return soldItemList;
 	}
 
 }

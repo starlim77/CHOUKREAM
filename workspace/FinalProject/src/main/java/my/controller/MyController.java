@@ -76,4 +76,12 @@ public class MyController {
 	public List<ProductDTO> getDoneBuy(@RequestParam long id){
 		return myService.getDoneBuy(id);
 	}
+	@GetMapping(path = "getSell")
+	public List<ProductDTO> getSell(@RequestParam long id){
+		return myService.getSell(id);
+	}
+	@GetMapping(path = "getSold")
+	public List<ProductDTO> getSold(@RequestParam long id){
+		return myService.getSold(id);
+	}
 }

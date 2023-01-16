@@ -27,4 +27,8 @@ public interface MyService {
 
 	public List<ProductDTO> getDoneBuy(long id);
 
+	public List<ProductDTO> getSell(long id);
+
+	public List<ProductDTO> getSold(long id);
+
 }

@@ -35,7 +35,7 @@ const BuyHistory = () => {
                 <S.SortWrapper>
                     <S.Sort onChange={onPageState}>
                         <option value="buy">구매중</option>
-                        <option value="done">구매 완료</option>
+                        <option value="buyDone">구매 완료</option>
                     </S.Sort>
                 </S.SortWrapper>
                 {pageState === 'buy' &&
@@ -52,7 +52,7 @@ const BuyHistory = () => {
                             </S.ProductText>
                         </S.BuyBox>
                     ))}
-                {pageState === 'done' &&
+                {pageState === 'buyDone' &&
                     boughtList.map(item => (
                         <S.BuyBox key={item.seq} done={true}>
                             <S.Img

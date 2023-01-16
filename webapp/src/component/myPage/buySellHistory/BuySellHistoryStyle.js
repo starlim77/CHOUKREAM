@@ -7,6 +7,13 @@ export const BuyHistory = styled.div`
     width: 910px;
     margin: 40px 0;
 `;
+export const SellHistory = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    width: 910px;
+    margin: 40px 0;
+`;
 export const BuyHistoryTitle = styled.div`
     display: flex;
     width: 100%;
@@ -49,6 +56,7 @@ export const SellBox = styled.div`
     padding: 10px 15px;
     border: 1px solid #ef6253;
     margin-bottom: 20px;
+    cursor: ${props => (props.done || "pointer")};
 `;
 export const Img = styled.img`
     display: flex;
@@ -85,7 +93,7 @@ export const Status = styled.div`
     margin-bottom: 14px;
     color: ${props => (props.status === "buying" ? " rgb(49, 180, 110)"
                                        :"selling" && "#ef6253")}; 
-    color: ${props => (props.status === "done" && "black")};
+    color: ${props => (props.done && "black")};
     text-decoration: ${props => (props.done && "line-through")};
     font-size: 18px;
 `;
