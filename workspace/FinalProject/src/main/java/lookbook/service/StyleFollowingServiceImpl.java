@@ -17,7 +17,7 @@ import member.bean.MemberDto;
 import member.dao.MemberDAO;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class StyleFollowingServiceImpl implements StyleFollowingService {	
 	@Autowired
 	private MemberDAO memberDAO;
@@ -52,8 +52,8 @@ public class StyleFollowingServiceImpl implements StyleFollowingService {
 
 	
 	//내 팔로잉 리스트 불러오기
-	@Transactional
-	public List<StyleDTO> getFollowing(int id){		
+//	@Transactional
+//	public List<StyleDTO> getFollowing(int id){		
 //		// 팔로워가 팔로잉한 목록거 가져오기
 //		List<StyleEntity> followingEntityList= styleFollowingDAO.findAllByFollowerId(id);
 //		///id로 팔로잉 목록 찾아와서 followee 찾기
