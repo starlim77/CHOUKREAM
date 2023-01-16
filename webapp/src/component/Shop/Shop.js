@@ -139,7 +139,6 @@ const Shop = () => {
                     modalOpen={modalOpen}
                     openModal={openModal}
                     closeModal={closeModal}
-                    dummyOriginal={dummyOriginal}
                 />
             </Se.Container>
         </>
