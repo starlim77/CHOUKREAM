@@ -31,4 +31,8 @@ public interface MyService {
 
 	public List<ProductDTO> getSold(long id);
 
+	public Optional<AddressDTO> getAddressBySeq(long seq);
+
+	public AddressDTO addressUpdate(AddressDTO addressDTO);
+
 }

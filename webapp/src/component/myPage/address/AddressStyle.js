@@ -95,7 +95,7 @@ export const Mark = styled.span`
     `;
 export const Tel = styled.div`
     font-size: 16px;
-    width: 87%;
+    width: 76%;
     margin-bottom: 8px;
     `;
 export const AllAddress = styled.div`
@@ -106,6 +106,15 @@ export const AllAddress = styled.div`
 export const Hr = styled.div`
     width: 100%;
     border-bottom: 1px solid black;
+`;
+export const UpdateBtn = styled.button`
+    width: 8%;
+    margin-left: 4%;
+    border-bottom: 1px solid black;
+    background-color: #fff;
+    border: 1px solid #222;
+    border-radius: 10px;
+    cursor: pointer;
 `;
 export const DeleteBtn = styled.button`
     width: 8%;

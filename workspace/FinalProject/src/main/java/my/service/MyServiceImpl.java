@@ -133,5 +133,23 @@ public class MyServiceImpl implements MyService{
 		
 		return soldItemList;
 	}
+	@Override
+	public Optional<AddressDTO> getAddressBySeq(long seq) {
+		return addressDAO.findById(seq);
+	}
+	@Override
+	public AddressDTO addressUpdate(AddressDTO addressDTO) {
+		AddressDTO oldAddressDTO = new AddressDTO();
+		
+		oldAddressDTO = addressDAO.findById(addressDTO.getSeq()).get();
+		oldAddressDTO.setAddr1(addressDTO.getAddr1());
+		oldAddressDTO.setAddr2(addressDTO.getAddr2());
+		oldAddressDTO.setDefaultAddress(addressDTO.getDefaultAddress());
+		oldAddressDTO.setName(addressDTO.getName());
+		oldAddressDTO.setPhone(addressDTO.getPhone());
+		oldAddressDTO.setZipcode(addressDTO.getZipcode());
+		
+		return addressDAO.save(oldAddressDTO);
+	}
 
 }

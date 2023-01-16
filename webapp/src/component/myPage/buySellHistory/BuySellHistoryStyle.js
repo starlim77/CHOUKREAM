@@ -45,7 +45,7 @@ export const BuyBox = styled.div`
     flex-wrap: wrap;
     width: 100%;
     padding: 10px 15px;
-    border: 1px solid rgb(49, 180, 110);
+    border-bottom: 1px solid rgb(49, 180, 110);
     margin-bottom: 20px;
     cursor: ${props => (props.done || "pointer")};
 `;
@@ -54,7 +54,7 @@ export const SellBox = styled.div`
     flex-wrap: wrap;
     width: 100%;
     padding: 10px 15px;
-    border: 1px solid #ef6253;
+    border-bottom: 1px solid #ef6253;
     margin-bottom: 20px;
     cursor: ${props => (props.done || "pointer")};
 `;

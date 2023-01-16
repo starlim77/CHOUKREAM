@@ -3,24 +3,63 @@ import * as S from './MyPageMainStyle';
 import HistoryProduct from './HistoryProduct';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 const MyPageMain = () => {
-    const memberSeq = jwtDecode(localStorage.getItem("accessToken")).sub
-    const [member, setMember] = useState({})
-    const [point, setPoint] = useState()
+    const memberSeq = jwtDecode(localStorage.getItem('accessToken')).sub;
+    const [member, setMember] = useState({});
+    const [point, setPoint] = useState();
+    const navigate = useNavigate();
+
+    const [sellingList, setSellingList] = useState([]);
+    const [soldList, setSoldList] = useState([]);
+    const [sellHis, setSellHis] = useState([]);
+    const [buyingList, setBuyingList] = useState([]);
+    const [boughtList, setBoughtList] = useState([]);
+    const [buyHis, setBuyHis] = useState([]);
 
     //회원정보 불러옴 / 회원 등급 불러옴
+    useEffect(() => {}, []);
+
     useEffect(() => {
-        axios.get(`http://localhost:8080/getMember?id=${memberSeq}`)
-             .then(res => setMember(res.data))
-    }, [])
+        axios
+            .get(`http://localhost:8080/getMember?id=${memberSeq}`)
+            .then(res => setMember(res.data));
+
+        axios
+            .get(`http://localhost:8080/my/getBuy?id=${memberSeq}`)
+            .then(res => setBuyingList(res.data));
+
+        axios
+            .get(`http://localhost:8080/my/getDoneBuy?id=${memberSeq}`)
+            .then(res => setBoughtList(res.data));
+
+        axios
+            .get(`http://localhost:8080/my/getSell?id=${memberSeq}`)
+            .then(res => setSellingList(res.data));
+
+        axios
+            .get(`http://localhost:8080/my/getSold?id=${memberSeq}`)
+            .then(res => setSoldList(res.data));
+    }, []);
+    useEffect(() => {
+        sellHis.push(sellingList);
+        sellHis.push(soldList);
+        buyHis.push(buyingList);
+        buyHis.push(boughtList);
+        // console.log(sellingList)
+    }, [sellingList, soldList, buyingList, boughtList]);
 
     //회원 포인트 가져옴
     useEffect(() => {
-        axios.get(`http://localhost:8080/my/getHavePoint?id=${member.email}`)
-        .then(res => setPoint(res.data))
-    }, [member])
+        axios
+            .get(`http://localhost:8080/my/getHavePoint?id=${member.email}`)
+            .then(res => setPoint(res.data));
+    }, [member]);
 
+    const onProfile = () => {
+        navigate('profile');
+    };
     return (
         <S.MainWrapper>
             {/* 로그인 정보 */}
@@ -33,7 +72,7 @@ const MyPageMain = () => {
                     <S.EmailDIv>email : {member.email}</S.EmailDIv>
                     <S.MemberLevel>일반 회원</S.MemberLevel>
                     <S.ButtonWrapper>
-                        <S.Button>프로필 수정</S.Button>
+                        <S.Button onClick={onProfile}>프로필 수정</S.Button>
                         <S.Button>내 스타일</S.Button>
                     </S.ButtonWrapper>
                 </S.MiddleWrapper>
@@ -63,6 +102,9 @@ const MyPageMain = () => {
             </S.SellSection>
             {/* sell history */}
             <S.History>
+                {buyingList.map(item => (
+                    <HistoryProduct key={item.seq} item={item} />
+                ))}
                 <HistoryProduct />
                 <HistoryProduct />
             </S.History>
@@ -99,31 +141,41 @@ const MyPageMain = () => {
                 <S.ItemWrapper>
                     <S.itemImg src="\image\product\tombrownHoody.png"></S.itemImg>
                     <S.Brand>Hermes</S.Brand>
-                    <S.Name>(W) Hermes Bouncing Sneakers Goatskin & Blanc Noir</S.Name>
+                    <S.Name>
+                        (W) Hermes Bouncing Sneakers Goatskin & Blanc Noir
+                    </S.Name>
                     <S.Price>1,590,000</S.Price>
                 </S.ItemWrapper>
                 <S.ItemWrapper>
                     <S.itemImg src="\image\product\tombrownHoody.png"></S.itemImg>
                     <S.Brand>Hermes</S.Brand>
-                    <S.Name>(W) Hermes Bouncing Sneakers Goatskin & Blanc Noir</S.Name>
+                    <S.Name>
+                        (W) Hermes Bouncing Sneakers Goatskin & Blanc Noir
+                    </S.Name>
                     <S.Price>1,590,000</S.Price>
                 </S.ItemWrapper>
                 <S.ItemWrapper>
                     <S.itemImg src="\image\product\tombrownHoody.png"></S.itemImg>
                     <S.Brand>Hermes</S.Brand>
-                    <S.Name>(W) Hermes Bouncing Sneakers Goatskin & Blanc Noir</S.Name>
+                    <S.Name>
+                        (W) Hermes Bouncing Sneakers Goatskin & Blanc Noir
+                    </S.Name>
                     <S.Price>1,590,000</S.Price>
                 </S.ItemWrapper>
                 <S.ItemWrapper>
                     <S.itemImg src="\image\product\tombrownHoody.png"></S.itemImg>
                     <S.Brand>Hermes</S.Brand>
-                    <S.Name>(W) Hermes Bouncing Sneakers Goatskin & Blanc Noir</S.Name>
+                    <S.Name>
+                        (W) Hermes Bouncing Sneakers Goatskin & Blanc Noir
+                    </S.Name>
                     <S.Price>1,590,000</S.Price>
                 </S.ItemWrapper>
                 <S.ItemWrapper>
                     <S.itemImg src="\image\product\tombrownHoody.png"></S.itemImg>
                     <S.Brand>Hermes</S.Brand>
-                    <S.Name>(W) Hermes Bouncing Sneakers Goatskin & Blanc Noir</S.Name>
+                    <S.Name>
+                        (W) Hermes Bouncing Sneakers Goatskin & Blanc Noir
+                    </S.Name>
                     <S.Price>1,590,000</S.Price>
                 </S.ItemWrapper>
             </S.LikeSection>

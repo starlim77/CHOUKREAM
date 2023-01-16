@@ -3,27 +3,37 @@ import jwtDecode from 'jwt-decode';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import NewAddressModal from '../../payment/NewAddressModal';
+import UpdateAddressModal from './UpdateAddressModal';
 import * as S from './AddressStyle';
 
 const Address = () => {
-    const memberSeq = jwtDecode(localStorage.getItem("accessToken")).sub
+    const memberSeq = jwtDecode(localStorage.getItem('accessToken')).sub;
     const navigate = useNavigate();
     const [modals, setModals] = useState([false, false]);
     const [shipInfo, setShipInfo] = useState();
     const [addressList, setAddressList] = useState([]);
-    const [id, setId] = useState()
+    const [id, setId] = useState();
+    const [updateSeq, setUpdateSeq] = useState();
+    const [updateCheck, setUpdateCheck] = useState()
+
     useEffect(() => {
-        axios.get('http://localhost:8080/getMember', {params: {id: memberSeq}})
-             .then(res => setId(res.data.email))
-    },[])
+        axios
+            .get('http://localhost:8080/getMember', {
+                params: { id: memberSeq },
+            })
+            .then(res => setId(res.data.email));
+    }, []);
+
     useEffect(() => {
         axios
             .get('http://localhost:8080/my/getAllAddress', {
                 params: { id },
             })
-            .then(res => {setAddressList(res.data);})
+            .then(res => {
+                setAddressList(res.data);
+            })
             .catch(err => console.log(err));
-    }, [id, modals]);
+    }, [id, modals, updateCheck]);
 
     const onAddressDelete = seq => {
         window.confirm('정말로 삭제 하시겠습니까?') &&
@@ -49,7 +59,9 @@ const Address = () => {
                         setShipInfo={setShipInfo}
                         setModals={setModals}
                     ></NewAddressModal>
-                ) : null}
+                ) : (
+                    false
+                )}
             </S.AddressTitle>
             <S.AddressContainer>
                 {addressList.length === 0 ? (
@@ -82,6 +94,16 @@ const Address = () => {
                                         ) : null}
                                     </S.Name>
                                     <S.Tel>{item.phone}</S.Tel>
+                                    <S.UpdateBtn
+                                        onClick={() => {
+                                            setModals([false, true, false]);
+                                            setUpdateSeq(item.seq);
+                                            setUpdateCheck(0)
+                                        }}
+                                    >
+                                        수정
+                                    </S.UpdateBtn>
+
                                     <S.DeleteBtn
                                         onClick={() =>
                                             onAddressDelete(item.seq)
@@ -94,6 +116,14 @@ const Address = () => {
                                 </S.Address>
                             );
                         })}
+                        {modals[1] ? (
+                            <UpdateAddressModal
+                                seq={updateSeq}
+                                setShipInfo={setShipInfo}
+                                setModals={setModals}
+                                setUpdateCheck={setUpdateCheck}
+                            ></UpdateAddressModal>
+                        ) : null}
                     </S.AddressList>
                 )}
             </S.AddressContainer>
