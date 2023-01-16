@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import * as Co from './ContentStyle';
 
-const Menu = ({ menu, dataSetting, checked, setChecked }) => {
+const Menu = ({ menu, dataSetting }) => {
     
+    const [checked, setChecked] = useState(false);
 
     return (
         <>
@@ -14,7 +15,7 @@ const Menu = ({ menu, dataSetting, checked, setChecked }) => {
                         onClick={e => {
                             e.stopPropagation();
                             setChecked(!checked);
-                            dataSetting(menu, checked);
+                            dataSetting(menu);
                         }}
                     />
                     &nbsp;

@@ -201,24 +201,6 @@ const NewContent2 = ({
                                     <Co.Text>빠른배송</Co.Text>
                                 </Co.ExpressBtn2>
                             </Co.FilterExpress>
-                            <Co.FilterBrand>
-                                <Co.BrandBtn>
-                                    <Co.Text>
-                                        <Link to={'/shop/newProduct'}>
-                                            새상푸움 버튼
-                                        </Link>
-                                    </Co.Text>
-                                </Co.BrandBtn>
-                            </Co.FilterBrand>
-                            <Co.FilterBrand>
-                                <Co.BrandBtn>
-                                    <Co.Text>
-                                        <Link to={'/Used/usedMain'}>
-                                            중고 버튼
-                                        </Link>
-                                    </Co.Text>
-                                </Co.BrandBtn>
-                            </Co.FilterBrand>
                         </Co.FilterBtns>
                         <div>
                             <Co.FilterSorting>

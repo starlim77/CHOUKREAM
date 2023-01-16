@@ -343,7 +343,7 @@ const ReList = () => {
             <Li.Table>
                 <Li.Thead>
                     <Li.Tr>
-                        <Li.Th style={{ width: '200px' }}>
+                        <Li.Th>
                             {/* <Li.Input
                                 type="checkbox"
                                 checked={isAllChecked}
@@ -358,14 +358,14 @@ const ReList = () => {
                         <Li.Th>이미지 </Li.Th>
                         <Li.Th>brand</Li.Th>
                         <Li.Th>category</Li.Th>
-                        <Li.Th>category_detail</Li.Th>
+                        <Li.Th>representative</Li.Th>
                         <Li.Th>color</Li.Th>
                         <Li.Th>model_num</Li.Th>
                         <Li.Th>price</Li.Th>
                         <Li.Th>releaseDate</Li.Th>
-                        <Li.Th>registerProductDate</Li.Th>
-                        <Li.Th>title</Li.Th>
-                        <Li.Th>subTitle</Li.Th>
+                        <Li.Th style={{ width: '200px' }}>등록시간</Li.Th>
+                        <Li.Th style={{ width: '200px' }}>title</Li.Th>
+                        <Li.Th style={{ width: '200px' }}>subTitle</Li.Th>
                     </Li.Tr>
                 </Li.Thead>
                 <Li.Tbody>

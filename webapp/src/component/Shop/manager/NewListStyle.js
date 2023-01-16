@@ -34,7 +34,6 @@ export const Td = styled.td`
     border-bottom: solid 1px black;
     border-spacing: 20px 20px;
     width: 100px;
-    padding: 10px;
     text-align: center;
 `;
 

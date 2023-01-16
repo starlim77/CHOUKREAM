@@ -144,120 +144,54 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
     //     return img[0];
     // };
     
-    const [checked, setChecked] = useState(true);
-    const [menuArray,setMenuArray] = useState([]);
     
-    useEffect(() => {
-        
-        
-    }, [menuArray]);
+    const [menuArray, setMenuArray] = useState([]);
+    const [num, setNum] = useState(0);
     
-    var menuArray2;
-    
-    const dataSetting=(menu, checked)=>{
-        // menu 체크박스 눌러진 친구들 
-        // console.log(menu)
-        // console.log(checked)
+    const dataSetting = menu => {
+        console.log(menu)
+        console.log(menuArray);
+        var sw = 0;
+        var isExist = menuArray.filter(item => item === menu);
+        isExist.length !== 0 && sw++;
+        console.log('sw' + sw);
         
-        // 체크박스를 눌렀을때 리스트에 추가
-        // if (checked === true) {
-        //     console.log(checked)
-        //     menuArray.push(menu);
-        //     console.log(menuArray)
-            
-        //     var dummyTemp = dummy2.filter(item => item.category === menu);
-        //     console.log(dummyTemp)
-        //     setDummy(dummyTemp);
-        //     // setChecked(!checked)
-        //     // if (menuArray.filter(item=> item !== menu)) {
-        //     //     console.log('gd')
-        //     // }
-            
-        // }
-        
-        
-        // if (checked === false) {
-        //     console.log(checked);
-        //     setDummy(dummy2);
-        //     // 기존 menuArray는 가져와서 넣고 
-        //     // false로 들어온 menu를 삭제해야함 
-        //     if (menuArray.filter(item => item === menu)) {
-        //         // setMenuArray(menuArray.filter(item => item !== menu));
-        //         var test = menuArray.filter(item => item !== menu);
-        //         console.log('test' + test)
-        //         // console.log(menuArray.filter(item => item !== menu));
-        //         menuArray2 = menuArray.filter(item => item !== menu);
-        //     }
-        //     // let filtered = arr.filter(element => element !== 'b');
-        //     console.log(menuArray);
-
-        //     // var dummyTemp = dummy2.filter(item => item.category === menu);
-        //     // console.log(dummyTemp);
-        //     // setDummy(dummyTemp);
-
-        //     // if (menuArray.filter(item=> item !== menu)) {
-        //     //     console.log('gd')
-        //     // }
-        // }
-        
-        
-        var sw=0
-        var isExist=menuArray.filter(item=>item===menu);
-        // list안에 있는 값는지 확인 
-        //console.log(isExist)
-        isExist.length!==0&&sw++;// 값이 0이아니면 list에 무언가있다 sw 1로 
-        
-        if(sw===1){
-    
-            var arrayTemp=menuArray.filter(item=>item!==menu);
-            // menuList안에 menu랑 다른지 확인 다르면 바꿔줌 ?
+        if (sw === 1) {
+            var arrayTemp = menuArray.filter(item => item !== menu);
             setMenuArray(arrayTemp);
-            console.log('sw1' +menuArray)
-            
-            var dummyTemp=dummy2.filter(item=>item.category===menu);
+            let dummyTemp = dummy.filter(item => item.category !== menu);
+
             // var dummy2=dummy
             //console.log(dummy)
             // setDummy([...dummy,dummyTemp]) 최상단에서 넘겨준 dummy라 스프레드 안됨.
             // setDummy(dummy,dummy2)
-            var dummyTemp2=dummy.concat(dummyTemp)
-            setDummy(dummyTemp2);
-            
-        }else{
-            setMenuArray([...menuArray,menu]);
-            console.log('sw0' + menuArray);
-            var dummyTemp=dummy.filter(item=>item.category===menu);
-            console.log(dummyTemp);
-            setDummy(dummyTemp);
-        }
-    }
+            //var dummyTemp2=dummy.concat(dummyTemp)
 
-    // const[menuArray,setMenuArray]=useState([]);
-    
-    // const dataSetting=(menu)=>{
-        
-    //     var sw=0
-    //     var isExist=menuArray.filter(item=>item===menu);
-    //     isExist.length!==0&&sw++;
-    //     if(sw===1){
-    
-    //         var arrayTemp=menuArray.filter(item=>item!==menu);
-    //         setMenuArray(arrayTemp);
-    //         var dummyTemp=dummyOriginal.filter(item=>item.category===menu);
-    //         // var dummy2=dummy
-    //         //console.log(dummy)
-    //         // setDummy([...dummy,dummyTemp]) 최상단에서 넘겨준 dummy라 스프레드 안됨.
-    //         // setDummy(dummy,dummy2)
-    //         var dummyTemp2=dummy.concat(dummyTemp)
-    //         setDummy(dummyTemp2);
+            setDummy(dummyTemp);
             
-    //     }else{
-    //         setMenuArray([...menuArray,menu]);
-    //         //console.log(menuArray);
-    //         var dummyTemp=dummy.filter(item=>item.category!==menu);
-    //         //console.log(dummyTemp);
-    //         setDummy(dummyTemp);
-    //     }
-    // }
+            // 1번 else 로 안나옴
+            // 2번 var 2번은 일부로 한건지 ?
+        } else {
+            console.log('else menuArray ' + menuArray);
+            let dummyTemp = dummy2.filter(
+                item => item.category === menu,
+            );
+            // 1 걸러주고 
+            console.log(dummyTemp);
+            if (menuArray) { // 빈 배열은 true
+                setDummy(dummyTemp);
+                setNum(1);
+            } else {
+                console.log('좀 와라 ')
+                var dummyTemp2 = dummy.concat(dummyTemp);
+                console.log(dummyTemp2);
+                setDummy(dummyTemp2);
+            }
+            setMenuArray([...menuArray, menu]);
+        }
+    };
+
+    
     return (
         <>
             {/* Content */}
@@ -304,8 +238,6 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
                                     setDummy={setDummy}
                                     setPictures={setPictures}
                                     dataSetting={dataSetting}
-                                    checked={checked}
-                                    setChecked={setChecked}
                                 ></MenuList2>
                             </Co.FilterMenu>
                         </Co.FilterList>
@@ -334,30 +266,6 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
                                     <Co.Text>빠른배송</Co.Text>
                                 </Co.ExpressBtn2>
                             </Co.FilterExpress>
-                            <Co.FilterBrand>
-                                <Co.BrandBtn>
-                                    <Co.Text>
-                                        <Link
-                                            to={'/shop/newProduct'}
-                                            state={{
-                                                name: '현욱',
-                                                dummyFilter: dummyFilter,
-                                            }}
-                                        >
-                                            새상품 버튼
-                                        </Link>
-                                    </Co.Text>
-                                </Co.BrandBtn>
-                            </Co.FilterBrand>
-                            <Co.FilterBrand>
-                                <Co.BrandBtn>
-                                    <Co.Text>
-                                        <Link to={'/Used/usedMain'}>
-                                            중고 버튼
-                                        </Link>
-                                    </Co.Text>
-                                </Co.BrandBtn>
-                            </Co.FilterBrand>
                         </Co.FilterBtns>
                         <div>
                             <Co.FilterSorting>
@@ -370,7 +278,6 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
                                 <Modal
                                     dummy={dummy}
                                     setDummy={setDummy}
-                                    setDummyFilter={setDummyFilter}
                                     sortCheck={sortCheck}
                                     setSortCheck={setSortCheck}
                                     open={modalOpen}
@@ -393,6 +300,7 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
                             {/* {console.log('더미더미 ' + dummy)}
                             {console.log(dummy)}
                             {console.log(dummy.length)} */}
+                            {/* {console.log(dummyFilter)} */}
                             {tagLive
                                 ? dummyFilter &&
                                   dummyFilter.map((item, index) => (
@@ -412,7 +320,7 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
                                                       <Co.ProductImg
                                                           // src={`/resellList/${item.imgName}`}
                                                           src={`/resellList/${photoshop(
-                                                              item.imgName,
+                                                              item.img_name,
                                                           )}`}
                                                       >
                                                           {/* picture 태그 사용시 밑에꺼 사용 */}
@@ -506,9 +414,10 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
                                                       <Co.ProductImg
                                                           //src={`/resellList/${item.imgName}`}
                                                           src={`/resellList/${photoshop(
-                                                              sortCheck
-                                                                  ? item.img_name
-                                                                  : item.imgName,
+                                                              // sortCheck
+                                                              //     ? item.img_name
+                                                              //     : item.imgName,
+                                                              item.img_name,
                                                           )}`}
                                                       >
                                                           {/* picture 태그 사용시 밑에꺼 사용 */}
@@ -536,9 +445,12 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
                                                                   {item.title}
                                                               </Co.Name>
                                                               <Co.TranslatedName>
-                                                                  {!sortCheck
-                                                                      ? item.subTitle
-                                                                      : item.sub_title}
+                                                                  {/* {!sortCheck
+                                                                    ? item.subTitle
+                                                                    : item.sub_title} */}
+                                                                  {
+                                                                      item.sub_title
+                                                                  }
                                                               </Co.TranslatedName>
                                                           </Co.ProductInfoName>
                                                       </Co.Title>
@@ -553,10 +465,11 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
                                                   </Co.ProductInfoArea>
                                                   <Co.PriceInfoArea>
                                                       <Co.Amount>
+                                                          {/* sortCheck true = 즉시 판매가순 */}
                                                           {addComma(
-                                                              !sortCheck
-                                                                  ? item.releasePrice
-                                                                  : item.min_price,
+                                                              sortCheck
+                                                                  ? item.min_price
+                                                                  : item.max_price,
                                                               //!sortCheck ? item.releasePrice : item.min_price
                                                           )}
                                                       </Co.Amount>

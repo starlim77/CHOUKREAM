@@ -30,11 +30,13 @@ public interface ShopService {
 
 	public void resellUpload(ProductDTO productDTO);
 
-	public List<ProductDTO> BuySort();
+	public List<SortListDTO> BuySort();
 
-	public List<ProductDTO> SellSort();
+	public List<SortListDTO> SellSort();
 
 	public void reUpdate(ProductDTO productDTO);
+
+	public List<SortListDTO> releaseDateSort();
 
 
 	

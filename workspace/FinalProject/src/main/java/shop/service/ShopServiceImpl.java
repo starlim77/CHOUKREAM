@@ -54,6 +54,10 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	public List<SortListDTO> favourSort() {
+		
+		List<SortListDTO> asd = shopDAO.favourSort();
+		System.out.println("=========================================");
+		System.out.println(asd);
 		return shopDAO.favourSort();
 	}
 
@@ -85,12 +89,12 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public List<ProductDTO> BuySort() {
+	public List<SortListDTO> BuySort() {
 		return shopDAO.BuySort();
 	}
 
 	@Override
-	public List<ProductDTO> SellSort() {
+	public List<SortListDTO> SellSort() {
 		return shopDAO.SellSort();
 	}
 
@@ -98,6 +102,11 @@ public class ShopServiceImpl implements ShopService {
 	public void reUpdate(ProductDTO productDTO) {
 		System.out.println(productDTO);
 		shopDAO.save(productDTO);
+	}
+
+	@Override
+	public List<SortListDTO> releaseDateSort() {
+		return shopDAO.releaseDateSort();
 	}
 
 	
