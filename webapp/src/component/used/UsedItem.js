@@ -17,6 +17,7 @@ const UsedItem = () => {
     const [searchParams,setSearchParams] = useSearchParams();
 
     const[reportHistory,setReportHistory]=useState(false);
+    const[finishedNum, setFinishedNum]=useState(0)
 
     const [form,setForm]=useState({
         id:'',
@@ -40,7 +41,7 @@ const UsedItem = () => {
         registerNo:''
     })
 
-    
+    const[totalReport,setTotalReport]=useState(0);
     useEffect(()=>{
 
         if(localStorage.getItem('accessToken')){
@@ -72,7 +73,20 @@ const UsedItem = () => {
         if(currentId===form.id){
             setIsWriter(true);
         }
+        
+        //strictmode때문에 2번 돌아서 발생하는 오류 방지
+        if(form.id){
+        //거래 완료 수 가져오기
+        axios.get(`http://localhost:8080/used/getFinishedTrade?id=${form.id}`)
+            .then(res=>setFinishedNum(res.data))
+            .catch(err=>console.log(err))
 
+        //신고수 토탈 가져오기
+        axios.get(`http://localhost:8080/used/totalReport?id=${form.id}`)
+            .then(res=>setTotalReport(res.data))
+            .catch(err=>console.log(err))
+
+        }
     },[form.id])
     
     useEffect(()=>{
@@ -115,22 +129,27 @@ const UsedItem = () => {
     const onInterest = () => {
         // likeForm.userLike || setLikeForm({...likeForm, userLike:'false'})
         
-        setLikeForm({...likeForm, userLike:!likeForm.userLike})
-        if(likeForm.userLike){
-            setForm({...form,likes:form.likes-1})
-        }else{
-            setForm({...form,likes:form.likes+1})
-        }
-        // console.log(likeForm)
-    
-        // // 데이터가 없어서 강제 주입
-        // setLikeForm({...likeForm , seq:searchParams.get('seq'),id:'asd'})
+        if(currentId!=='user'){
+            setLikeForm({...likeForm, userLike:!likeForm.userLike})
+            if(likeForm.userLike){
+                setForm({...form,likes:form.likes-1})
+            }else{
+                setForm({...form,likes:form.likes+1})
+            }
+            // console.log(likeForm)
+        
+            // // 데이터가 없어서 강제 주입
+            // setLikeForm({...likeForm , seq:searchParams.get('seq'),id:'asd'})
 
-        axios.post(`http://localhost:8080/used/likeSet?seq=`+searchParams.get('seq') + '&id=' + currentId + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
-        // axios.post('http://localhost:8080/used/likeSet',null,{params:likeForm})
-        // axios.get('http://localhost:8080/used/likeSet'+   likeForm) 나중에 다시 해보기
-        .then()
-        .catch(error => console.log(error))
+            axios.post(`http://localhost:8080/used/likeSet?seq=`+searchParams.get('seq') + '&id=' + currentId + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
+            // axios.post('http://localhost:8080/used/likeSet',null,{params:likeForm})
+            // axios.get('http://localhost:8080/used/likeSet'+   likeForm) 나중에 다시 해보기
+            .then()
+            .catch(error => console.log(error))
+        }else{
+            alert("로그인 후 이용가능 합니다.");
+            navigate("/login");
+        }
         
     }
 
@@ -255,14 +274,21 @@ const UsedItem = () => {
 
 
                 {/* <U.ChatButton>채팅하기</U.ChatButton> */}
-                <U.SettlementButton onClick={onSettle}>결제하기</U.SettlementButton>
+                {
+                    form.sellingState?
+                    <U.SettlementButton onClick={onSettle}>
+                        <U.PriceDiv>{form.price}원</U.PriceDiv>
+                        결 제 하 기
+                    </U.SettlementButton>
+                    :<U.SettlementButton disabled>판 매 완 료</U.SettlementButton>
+                }
             </U.BaseDiv>
         </U.BaseBody>
         
         <U.BottomDiv>
             <U.ProfileWrapper>
-                <U.ProfileImg></U.ProfileImg>
-                <U.ProfileSpan>작성자:{form.id}/거래수/거래이슈</U.ProfileSpan>
+                <U.ProfileImg></U.ProfileImg>&emsp;
+                <U.ProfileSpan>작성자:{form.id}/거래수:{finishedNum}/신고수:{totalReport}</U.ProfileSpan>
             </U.ProfileWrapper>
         </U.BottomDiv>
 
