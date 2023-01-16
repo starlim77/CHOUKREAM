@@ -203,5 +203,15 @@ public class styleController {
 		//styleFollowingService.delete(followerDto, followeeDto);
 		
 	}
+	
+	//팔로우 페이지 팔로우 목록 불러오기
+	@GetMapping(path="getFollowing")
+	public List<StyleDTO> getFollowing(int id){
+		System.out.println(id);
+		
+		styleFollowingService.getFollowing(id);
+		
+	}
+	
 
 }
