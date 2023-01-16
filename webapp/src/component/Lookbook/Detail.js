@@ -8,19 +8,53 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import * as S from './style';
 import { Link, useNavigate } from 'react-router-dom';
 import StyleCommentList from './StyleCommentList';
+import jwt_decode from 'jwt-decode';
 
-const Detail = () => {    
+const Detail = () => {        
+
+   
    
     //게시물 뿌리기
     const [list, setList] = useState([]);
     const [isLike, setIsLike] = useState(0);
     const navigate = useNavigate();
+
+
+    //아이디
+    const token = localStorage.getItem('accessToken');
+    const [auth, setAuth] = useState('ROLE_GUEST');
+    useEffect(() => {
+        if (token !== null) {
+            const tokenJson = jwt_decode(token);
+            setAuth(tokenJson['auth']);
+            //localStorage.setItem('userInfo', JSON.stringify(tokenJson));
+            settokenId(tokenJson['sub']);
+        }
+    }, []);
+    const [tokenId, settokenId] = useState('')
+    console.log(auth);
+    console.log(tokenId)
     
-    const [id] = useState(3)   //아이디값 로그인한걸로 가져오는거로 변경해야됨
+    
+    //const [id] = useState(3)   //아이디값 로그인한걸로 가져오는거로 변경해야됨
+
+    
+
+    
 
     useEffect( ()=> {
         axios.get('http://localhost:8080/lookbook/getStyleList')
              .then(res => setList(res.data))
+             //.then( () => {             
+                // axios.get(`http://localhost:8080/lookbook/getLikes/${tokenId}`)
+                //      .then(res => setLikes(res))
+                //      .catch(error => console.log(error))
+
+                // axios.get()
+                //      .then()
+                //      .catch(error => console.log(error))
+              //  }  
+               // )
              .catch(error => console.log(error))
              console.log("list",list) 
 
@@ -39,7 +73,7 @@ const Detail = () => {
 
     //좋아요 있으면 1리턴, 없으면 0 리턴
     const [likesForm, setLikesForm] = useState({   
-        memberId: id,
+        memberId: '',
         likesId: ''
     }) 
 
@@ -49,7 +83,7 @@ const Detail = () => {
         axios.post('http://localhost:8080/lookbook/likebutton', null, {
             params: {
                 styleSeq: seq,
-                memberId: id,
+                memberId: '',
                 likesId: ''
             }})
             .then( res =>  setIsLike(res.data), 
@@ -58,12 +92,24 @@ const Detail = () => {
                 )
             .catch(error => console.log(error))
     }
-        
-    //팔로우
-    const onFollow = (id) => {
-        //id //followee id
-        axios.get('http://localhost:8080/lookbook/saveFollow')
+    
+     //팔로우
+     const onFollow = (followeeId) => {
+        //console.log(tokenId+"+"+followeeId)
+        axios.post(`http://localhost:8080/lookbook/saveFollow/${tokenId}/${followeeId}`) 
+             .then(alert("팔로우 성공"))
+             .catch(error => console.log(error))
     }
+
+    //언팔로우
+    const onUnFollow = (followeeId) => {
+        //console.log(tokenId+"+"+followeeId)
+        axios.delete(`http://localhost:8080/lookbook/unFollow/${tokenId}/${followeeId}`) 
+             .then(alert("언팔로우 성공"))
+             .catch(error => console.log(error))
+    }
+
+    
     
 
     return (
@@ -84,7 +130,7 @@ const Detail = () => {
                                 />
 
                                 <Button variant="contained" style={{backgroundColor: 'black'}} onClick={() => onFollow (item.id)} >팔로우</Button>
-                                <Button variant="outlined"  style={{color: 'black'}}>언팔로우</Button>
+                                <Button variant="outlined"  style={{color: 'black', borderColor:'black'}}  onClick={() => onUnFollow (item.id)}>언팔로우</Button>
                                
                                 <CardMedia 
                                     component="img"
