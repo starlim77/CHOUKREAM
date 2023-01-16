@@ -34,7 +34,7 @@ public class styleLikesServiceImpl implements StyleLikesService {
 	@Override
 	public List<LikesDTO> findLikes(String id) {		 
 		 List<LikesDTO> likesDTOList= styleDAO.findLikes(id);
-		 //System.out.println("라이크서비스임플 likesDTOList === " + likesDTOList);		 
+		 //System.out.println("라이크서비스임플 likesDTOList === " + likesDTOList);	
 		 return likesDTOList;
     }
 	
@@ -45,6 +45,26 @@ public class styleLikesServiceImpl implements StyleLikesService {
 		 //System.out.println("라이크서비스임플 likesDTOList === " + likesDTOList);		 
 		 return likesDTOList;
     }
+	
+	/*  리스트 데리고와서 좋아요 여부 넣어보기
+	@Override
+	public List<LikesDTO2> findlist() {
+		List<LikesDTO2> likesDTOList= styleDAO.list();
+		System.out.println("******" + likesDTOList);
+		
+		for(LikesDTO2 likesDTO2 : likesDTOList) {
+		
+			 likesDTO2 = StyleLikesDAO.findlist(likesDTO2.getId(),likesDTO2.getSeq());
+			 if(likesDTO2 != null) {
+				 likesDTO2.setIslikes(true);
+			 }else {
+				 likesDTO2.setIslikes(false);
+			 }
+		}
+	
+		return likesDTOList;
+	}
+	*/
 	
 	//detail 좋아요만 확인
 //	@Override
@@ -102,9 +122,6 @@ public class styleLikesServiceImpl implements StyleLikesService {
 		int styleSeq = styleLikesDTO.getStyleSeq();
 		System.out.println("styleSeq ====="  + styleSeq);
 		return styleLikesDAO.countByStyleEntity_Seq(styleSeq);
-		
 	}
-
-
 
 }

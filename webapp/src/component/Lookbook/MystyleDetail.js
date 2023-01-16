@@ -11,7 +11,6 @@ import StyleCommentList from './StyleCommentList';
 
 const MystyleDetail = () => {
     const { id } = useParams();  //주소값 파라미터 seq id가져오기
-    const [commentOpen, setCommentOpen] = useState(false)
 
     //좋아요 포함 dto 전체 리스트
     const [likeAll, setLikeAll] = useState([]);
@@ -20,42 +19,23 @@ const MystyleDetail = () => {
     const [list, setList] = useState([]);
  
 
-    useEffect( ()=> {
-        // axios.get(`http://localhost:8080/lookbook/findAllMyList/${id}`)
-        //      .then(res => setList(res.data))
+    useEffect( ()=> {     
+        axios.get(`http://localhost:8080/lookbook/findLikes?id=${id}`)
+            .then(
+                //  res=> console.log(res.data)
+                res => setLikeAll(res.data)  
+            )
+            .catch(error => console.log(error))
 
-        //      .then(            //  )
-        //      .catch(error => console.log(error))
-                
-            axios.get(`http://localhost:8080/lookbook/findLikes?id=${id}`)
-                .then(
-                    //  res=> console.log(res.data)
-                    res => setLikeAll(res.data)  
-                )
-                .catch(error => console.log(error))
-
-
-        //좋아요 여부 보여주기
-        //  axios.get(`http://localhost:8080/lookbook/findLikes?memberId=${id}&styleSeq=${seq}`)
-        //       .then(res => setIsLike(res.data)  )
-        //       .catch(error => console.log(error))
-
-        // axios.get(`http://localhost:8080/lookbook/findProduct?productSeq=${productSeq}`)
-        //     .then( res => console.log(res.data))
-        //     .catch(error => console.log(error))
     }, []) 
 
  
     //좋아요 클릭
-    const onLikes = (e,seq,checkLike,index) => {
+    const onLikes = (e, seq, checkLike, index) => {
         e.preventDefault();
         checkLike = checkLike === 'false' ? false : true
         
-        //console.log(seq, id , checkLike , index )
-        
-        // setIsLike()
-
-        axios.post('http://localhost:8080/lookbook/likebutton?styleSeq='+seq+'&memberId='+id+"&isLike="+checkLike) //1, 0  같이 보내준다
+        axios.post('http://localhost:8080/lookbook/likebutton?styleSeq='+seq+'&memberId='+id+"&isLike="+checkLike)
             .then(res => setLikeAll(res.data) )
             .catch(error => console.log(error))
     }
@@ -66,7 +46,6 @@ const MystyleDetail = () => {
         //=item.id 가 id 인 것을 제거한다
         
     }
-
 
 
     const photoShop1 = (storedImg) => {
@@ -100,7 +79,7 @@ const MystyleDetail = () => {
 
     return (
         <div>
-            {console.log(likeAll)}
+            {/* {console.log(likeAll)} */}
             <Container fixed>
                 <S.DeTopDiv> {/* outer */}
                 {
@@ -151,7 +130,7 @@ const MystyleDetail = () => {
                                 <CardActions >   
                                         
                                  
-                                    <IconButton aria-label="add to favorites" onClick={(e) => onLikes(e, item.seq ,item.islikes,index)} >
+                                    <IconButton aria-label="add to favorites" onClick={(e) => onLikes(e, item.seq ,item.islikes ,index)} >
                                             
                                         <img src={  item.islikes === "false"  ? '/image/style/unlikes.png' : '/image/style/likes.png' } style={{ width:'28px'}} />
                                            

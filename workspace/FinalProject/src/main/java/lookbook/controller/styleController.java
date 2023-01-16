@@ -89,19 +89,18 @@ public class styleController {
 	
 		
 	//trending,detail 목록 가져오기
-	@GetMapping(path="getStyleList")
-	public List<StyleDTO> findAllByOrderBySeqDesc() {
-		//DB에서 전체 게시글 데이터 를 가져온다				
-		return styleService.findAllByOrderBySeqDesc();		
-		
-	}
-	
-	//trending,detail => 좋아요 포함 전체 목록 가져오기
+//	@GetMapping(path="getStyleList")
+//	public List<StyleDTO> findAllByOrderBySeqDesc() {
+//		//DB에서 전체 게시글 데이터 를 가져온다				
+//		return styleService.findAllByOrderBySeqDesc();		
+//		
+//	}
+   
+   //trending,detail => 좋아요 포함 전체 목록 가져오기
 	@GetMapping(path="list")
-	public List<LikesDTO> list() {
+	public List<LikesDTO> findlist() {
 		//DB에서 전체 게시글 데이터 를 가져온다				
 		return styleLikesService.list();		
-		
 	}
 	
 	

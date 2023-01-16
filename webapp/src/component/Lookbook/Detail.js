@@ -2,13 +2,14 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Social from '../Lookbook/Social';
 import Card from '@mui/material/Card';
-import { Avatar, Button, CardActions, CardContent, CardHeader, CardMedia,  IconButton, Typography } from '@mui/material';
+import { Avatar, Button, CardActions, CardContent, CardHeader,  IconButton, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import * as S from './style';
 import { Link, useNavigate } from 'react-router-dom';
 import StyleCommentList from './StyleCommentList';
 import jwt_decode from 'jwt-decode';
+import StyleProduct from './StyleProduct';
 
 const Detail = () => {    
    
@@ -17,7 +18,7 @@ const Detail = () => {
     const [isLike, setIsLike] = useState(0);
     const navigate = useNavigate();
     
-    const [id] = useState('')   //아이디값 로그인한걸로 가져오는거로 변경해야됨
+    const [id] = useState()   //아이디값 로그인한걸로 가져오는거로 변경해야됨
     
     //로그인
     const token = localStorage.getItem('accessToken');
@@ -28,10 +29,8 @@ const Detail = () => {
             const tokenJson = jwt_decode(token);
             setAuth(tokenJson['auth']);
             settokenId(tokenJson['sub']);
-            // setForm({...form, id:tokenId})
         }
     }, [token]);
-
 
 
     useEffect( ()=> {
@@ -45,33 +44,45 @@ const Detail = () => {
         //      .then(res => setIsLike(res.data)  )
         //      .catch(error => console.log(error))
 
-        //좋아요 포함 전체 리스트 가져오기 : 테이블 조인 쿼리 사용
+        // 좋아요 포함 전체 리스트 가져오기 : 테이블 조인 쿼리 사용
         axios.get('http://localhost:8080/lookbook/list')
              .then( res => setList(res.data)  )
              .catch(error => console.log(error))
+
+
     }, [])   
     
     //댓글삭제
     const onCommentDelete =(id) => {
         //item.id가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듦
-        //=item.id 가 id 인 것을 제거한다
-        
+        //=item.id 가 id 인 것을 제거한다        
     }
 
 
-    //좋아요 클릭 로그인했을때만 가능하게 변경해야함
-    const onLikes = (seq) => {
-        axios.post('http://localhost:8080/lookbook/likebutton', null, {
-            params: {
-                styleSeq: seq,
-                memberId: id,
-                likesId: ''
-            }})
-            .then( res =>  setIsLike(res.data), 
-                           window.location.replace('/lookbook/detail')//새로고침
-                           //navigate('/lookbook/detail')                        
-                )
+    //좋아요 클릭 로그인했을때만 가능
+    const onLikes = (e,seq,checkLike,index) => {
+        e.preventDefault();
+        // alert(tokenId+"////")
+       
+        checkLike = checkLike === 'false' ? false : true
+
+        if( (!tokenId) === true){
+            alert('먼저 로그인 하세요')
+        }else{
+            e.preventDefault();
+
+            axios.post('http://localhost:8080/lookbook/likebutton?styleSeq='+seq+'&memberId='+tokenId+"&isLike="+checkLike) 
+            .then(res => setList(res.data) )
             .catch(error => console.log(error))
+        }
+    }
+
+    const onComment = (seq) => {
+        if( (!tokenId) === true){
+            alert('먼저 로그인 하세요')
+        }else{
+            navigate(`/lookbook/StyleComment/${seq}`)
+       }
     }
         
     //팔로우
@@ -135,6 +146,8 @@ const Detail = () => {
                                     {photoShop5(item.stored_file_name) && <img src={`/storage/${photoShop5(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
                                  </S.MyStdiv>
 
+                                 <StyleProduct productSeq={item.product_seq}></StyleProduct>
+
                                 <CardContent>
                                     {item.content}
                                 </CardContent>
@@ -143,24 +156,20 @@ const Detail = () => {
                                 <CardActions >
                                     <div>
                                         <IconButton aria-label="add to favorites" onClick={(e) => onLikes(e, item.seq ,item.islikes,index)} >
-                                            
                                             <img src={
                                                     (!tokenId) ? '/image/style/unlikes.png' :
                                                     item.islikes === "false"  ? '/image/style/unlikes.png' : '/image/style/likes.png' 
                                                     } 
                                                 style={{ width:'28px'}} />
-                                               
                                         </IconButton>
-                                            
-                                         <span>{item.likes_count}</span>
+                                        <span>{item.likes_count}</span>
                                     </div>
 
                                     <div>
-                                    <IconButton >
-                                        <Link to ={`/lookbook/StyleComment/${item.seq}`} >
+                                    <IconButton onClick={ () => onComment(item.seq)}>
+                                        {/* <Link to ={`/lookbook/StyleComment/${item.seq}`} > */}
                                         <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
-                                        </Link>
-                                        
+                                        {/* </Link> */}
                                     </IconButton> 
                                     <span>{item.commentCount}</span>  
                                     
@@ -171,12 +180,12 @@ const Detail = () => {
 
 
                                 <CardContent>       
-                                    <Typography variant="body2" color="text.secondary" >
+                                    <div variant="body2" color="text.secondary" >
                                     <S.TrTypoDiv>
                                      <StyleCommentList styleSeq={item.seq}  onCommentDelete={ onCommentDelete }  />                                
                                     
                                     </S.TrTypoDiv>                      
-                                    </Typography>     
+                                    </div>     
                                                 
                                 </CardContent> 
                            

@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lookbook.bean.LikesDTO;
 import lookbook.bean.StyleDTO;
 import lookbook.bean.StyleLikesDTO;
 import lookbook.dao.StyleDAO;
@@ -42,6 +43,7 @@ public class StyleServiceImpl implements StyleService {
 	private StyleLikesDAO styleLikesDAO;
 	@Autowired
 	private ShopDAO shopDAO;
+
 
 	//내 글 list 
 	@Transactional
@@ -152,16 +154,16 @@ public class StyleServiceImpl implements StyleService {
 		
 	}
 
-	@Transactional
-	public List<StyleDTO> findAllByOrderBySeqDesc(){
-		List<StyleEntity> styleEntityList = styleDAO.findAllByOrderBySeqDesc();
-		List<StyleDTO> styleDTOList = new ArrayList<>();
-		for (StyleEntity styleEntity: styleEntityList) {
-			styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
-		}
-		return styleDTOList; 
-		
-	}
+//	@Transactional
+//	public List<StyleDTO> findAllByOrderBySeqDesc(){
+//		List<StyleEntity> styleEntityList = styleDAO.findAllByOrderBySeqDesc();
+//		List<StyleDTO> styleDTOList = new ArrayList<>();
+//		for (StyleEntity styleEntity: styleEntityList) {
+//			styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
+//		}
+//		return styleDTOList; 
+//		
+//	}
 
 	
 	  @Transactional
@@ -197,12 +199,7 @@ public class StyleServiceImpl implements StyleService {
 	@Override
 	public Optional<ProductDTO> styleProductSearch(int seq) {
 		return shopDAO.findById(seq);
- 
 	}
-
-
-	 
-
 
 	
 }

@@ -3,6 +3,8 @@ import React, { useState,useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import * as S from './style';
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
+
 const StyleComment = () => {
 
     const {styleSeq}= useParams()   
@@ -26,7 +28,7 @@ const StyleComment = () => {
     }
 
     const [form, setForm] = useState({
-        commentMember: '댓글입력자', //댓글입력아이디
+        commentMember: '댓글아이디', //댓글입력아이디
         commentContents: '',
         styleSeq: styleSeq//게시글 번호
     })
@@ -36,18 +38,19 @@ const StyleComment = () => {
 
     const onUpload = (e) => {    
         //e.preventDefault()      
-        console.log(form)
-        axios
-            .post(`http://localhost:8080/lookbook/commentSave`,null , {
-                params:form
-                //styleSeq: styleSeq
-            })
-            .then(                
-                    alert("댓글등록 성공"),
-                    navigate('/lookbook/detail'),
-                    console.log(form)
-            )
-            .catch( error => console.log(error) )
+        // console.log(form)
+            axios
+                .post(`http://localhost:8080/lookbook/commentSave`,null , {
+                    params:form
+                    //styleSeq: styleSeq
+                })
+                .then(                
+                        alert("댓글등록 성공"),
+                        navigate('/lookbook/detail'),
+                        console.log(form)
+                )
+                .catch( error => console.log(error) )
+        
     }
 
 

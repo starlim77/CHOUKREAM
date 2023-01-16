@@ -60,7 +60,7 @@ const Trending = () => {
         <>
             <Social />
             <br/><br/><br/><br/>
-            <div>태그</div>
+
             <Container fixed>
                 <S.TrGridContainer>
                     <S.TrGridContainerSub>
