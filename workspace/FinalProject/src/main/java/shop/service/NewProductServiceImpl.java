@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import shop.bean.NewProductDTO;
+import shop.bean.NewSortListDTO;
 import shop.dao.NewProductDAO;
 
 @Service
@@ -67,6 +68,26 @@ public class NewProductServiceImpl implements NewProductService {
 	@Override
 	public Optional<NewProductDTO> updateNewProductInfo(int seq) {
 		return newProductDAO.findBySeq(seq);
+	}
+
+	@Override
+	public List<NewSortListDTO> newFavourSort() {
+		return newProductDAO.newFavourSort();
+	}
+
+	@Override
+	public List<NewSortListDTO> newBuySort() {
+		return newProductDAO.newBuySort();
+	}
+
+	@Override
+	public List<NewSortListDTO> newSellSort() {
+		return newProductDAO.newSellSort();
+	}
+
+	@Override
+	public List<NewSortListDTO> newReleaseDateSort() {
+		return newProductDAO.newReleaseDateSort();
 	}
 	
 	

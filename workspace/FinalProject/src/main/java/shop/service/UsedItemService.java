@@ -1,10 +1,13 @@
 package shop.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import shop.bean.NewProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.bean.UsedItemLikeDTO;
+import shop.bean.UsedItemReportDTO;
 
 public interface UsedItemService {
 
@@ -25,5 +28,23 @@ public interface UsedItemService {
 	public void usedlike(UsedItemLikeDTO usedItemLikeDTO);
 
 	public void updateItem(UsedItemDTO usedItemDTO);
+
+	public void soldOut(UsedItemDTO usedItemDTO);
+
+	public void updateState(int seq, boolean sellingState);
+
+	public List<UsedItemDTO> search(Map<String, String> map);
+
+	public String getId(int seq);
+
+	public void report(UsedItemReportDTO usedItemReport);
+
+	public boolean reportHistory(int seq,String reportId);
+
+	public List<UsedItemDTO> getAdminItem();
+
+	public int totalReport(String id);
+
+	public int getFinishedTrade(String id);
 
 }

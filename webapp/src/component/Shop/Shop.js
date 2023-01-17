@@ -12,20 +12,27 @@ import axios from 'axios';
 
 const Shop = () => {
     const [dummy, setDummy] = useState([]);
+    const [dummy2, setDummy2] = useState([]);
     const [dummyFilter, setDummyFilter] = useState([]);
+    const [sortCheck, setSortCheck] = useState(false);
+
+    
 
     useEffect(() => {
         axios
-            .get('http://localhost:8080/shop/getProductList')
-            .then(res => setDummy(res.data))
+            //.get('http://localhost:8080/shop/getProductList')
+            .get('http://localhost:8080/shop/favourSort')
+            .then(res => {setDummy(res.data); setDummy2(res.data)})
+            //.then(res => console.log(JSON.stringify(res.data)))
             .catch(error => console.log(error));
     }, []);
-    
+    // console.log(dummyOriginal)
     const [tag, setTag] = useState('');
     const [tagLive, setTagLive] = useState(false);
     
     useEffect(() => {
         if (tag !== '') {
+            console.log(dummy)
             setDummyFilter(dummy.filter(item => item.tag === tag));
             setTagLive(true);
             // console.log('tag 태그 ' + tag)
@@ -100,14 +107,22 @@ const Shop = () => {
                     </Se.TopBox>
                 </Se.SearchTop>
                 <Se.SearchTrendContainer>
-                    <Se.TagImgLi onClick={tagReset}>
-                    <Se.TagImgItem src='../ShopImage/ALL.png'/>
-                    <Se.TagImgSpan>전체</Se.TagImgSpan>
-                </Se.TagImgLi>
                     <Se.BrandList>
+                        <Se.BrandItem
+                            onClick={tagReset}
+                        >
+                            <Se.BrandBox>
+                                <Se.BrandImg
+                                    src='../ShopImage/ALL.png'
+                                ></Se.BrandImg>
+                                <Se.BrandName>전체</Se.BrandName>
+                            </Se.BrandBox>
+                        </Se.BrandItem>
                         {data.map(item => (
-                            <Se.BrandItem key={item.id} 
-                                onClick={ e => onTag(item.text)}>
+                            <Se.BrandItem
+                                key={item.id}
+                                onClick={e => onTag(item.text)}
+                            >
                                 <Se.BrandBox>
                                     <Se.BrandImg
                                         alt={item.text}
@@ -120,14 +135,16 @@ const Shop = () => {
                     </Se.BrandList>
                 </Se.SearchTrendContainer>
                 {/* Banner */}
-                <Banner/>
-                
+                <Banner />
+
                 <Content
                     dummy={dummy}
                     setDummy={setDummy}
+                    dummy2={dummy2}
                     dummyFilter={dummyFilter}
-                    setDummyFilter={setDummyFilter}
                     tagLive={tagLive}
+                    sortCheck={sortCheck}
+                    setSortCheck={setSortCheck}
                     modalOpen={modalOpen}
                     openModal={openModal}
                     closeModal={closeModal}

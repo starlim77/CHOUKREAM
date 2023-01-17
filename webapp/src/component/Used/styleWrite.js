@@ -78,7 +78,7 @@ export const SubImg = styled.img`
 `;
 
 export const DeleteMainImg = styled.img.attrs({
-    src:'/image/used/deleteIcon.png' 
+    src:'/image/used/deleteIcon.png'
 })`
     width:30px;
     height:30px;

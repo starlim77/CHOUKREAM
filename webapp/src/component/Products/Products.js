@@ -14,6 +14,9 @@ import Graph from './Graph';
 import * as U from '../Used/UsedItemStyle';
 import ListModal from './ListModal';
 import jwt_decode from 'jwt-decode';
+import { Container } from '@mui/material';
+import * as A from '../Lookbook/style';
+import TrendingItem from '../Lookbook/TrendingItem';
 
 const Products = () => {
 
@@ -90,6 +93,8 @@ const Products = () => {
 
     const [isOneSize, setIsOneSize] = useState(true);
 
+    const [brandStyleList, setBrandStyleList] = useState([])
+
     const [dropdown, setDropdown] = useState(true);
     const OpenDrop = () => {  
         setDropdown(!dropdown);
@@ -157,6 +162,12 @@ const Products = () => {
              .then(res => setCount(res.data))
              .catch(err => console.log(err))
 
+        axios
+             .get(`http://localhost:8080/getBrandStyleList?seq=${seq}`)
+             .then(res => setBrandStyleList(res.data))
+             .catch(error => console.log(error));
+            
+             
         if (token !== null) {
                 const tokenJson = jwt_decode(token);
                 setSub(tokenJson['sub']);
@@ -282,8 +293,8 @@ const Products = () => {
     const [subImg3,setSubImg3] = useState('')
 
     useEffect(()=>{
-        if((form.img)){
-            const img = ((form.img).split(','))
+        if((form.imgName)){
+            const img = ((form.imgName).split(','))
 
             setMainImg(img[0])
 
@@ -798,10 +809,49 @@ const Products = () => {
                     <S.FeedArea>
                         <S.FeedTitle>
                             <S.FeedTitleTitle>스타일</S.FeedTitleTitle>
-                            {/* 스타일 카운트 */}
-                            <S.FeedTitleNum>1234</S.FeedTitleNum> 
+                            {/* <S.FeedTitleNum>1234</S.FeedTitleNum>  */}
                         </S.FeedTitle>
                         <S.SocialFeeds>
+                            <Container fixed>
+                                <A.TrGridContainer>
+                                    <A.TrGridContainerSub>
+                                    {brandStyleList.map((item,index) => 
+                                        index % 4 === 0 ? 
+                                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength={8}/>
+                                        :
+                                        ''
+                                    )}
+                                    </A.TrGridContainerSub>
+
+                                    <A.TrGridContainerSub>
+                                    {brandStyleList.map((item,index) => 
+                                        index % 4 === 1 ? 
+                                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength={8}/>
+                                        :
+                                        ''
+                                    )}
+                                    </A.TrGridContainerSub>
+
+                                    <A.TrGridContainerSub>
+                                    {brandStyleList.map((item,index) => 
+                                        index % 4 === 2 ? 
+                                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength={8}/>
+                                        :
+                                        ''
+                                    )}
+                                    </A.TrGridContainerSub>
+
+                                    <A.TrGridContainerSub>
+                                    {brandStyleList.map((item,index) => 
+                                        index % 4 === 3 ? 
+                                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength={8}/>
+                                        :
+                                        ''
+                                    )}
+                                    </A.TrGridContainerSub>
+
+                                </A.TrGridContainer>
+                            </Container>
                             <S.MoreBtnBox>
                                 <S.ButtonOutlineGreyMedium>
                                     더보기

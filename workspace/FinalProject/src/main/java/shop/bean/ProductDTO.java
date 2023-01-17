@@ -1,10 +1,16 @@
 package shop.bean;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import org.springframework.data.annotation.CreatedDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -12,18 +18,13 @@ import lombok.Data;
 @Data
 @Table(name="productTable")
 @Entity
-@SequenceGenerator(
-         name="PRODUCT_SEQ_GENERATOR"
-         , sequenceName="PRODUCT_SEQ"
-         , initialValue = 1
-         , allocationSize = 1
-      )
 public class ProductDTO {
    
-   @Id // pk 설정
-   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUCT_SEQ_GENERATOR")
-   @Column(name="seq", length = 30)
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="seq",length=30)
    private int seq;
+   
    
    @Column(name="brand", length = 30)
    private String brand;
@@ -40,7 +41,7 @@ public class ProductDTO {
    
    // 이미지 주소 
    @Column(name="imgName", length = 500)
-   private String img; 
+   private String imgName; 
    
    @Column(name="modelNum")
    private String modelNum;
@@ -55,7 +56,20 @@ public class ProductDTO {
    private String subTitle;
    
    @Column(name="title", length = 100) // 제품 영어이름
-   private String title;  
+   private String title;
+   
+   	// 상품 등록 날짜 / 자동
+	@Column(name="registerProductDate", nullable = false)
+	@CreatedDate
+	private String registerProductDate;
+	// date 말고 String 으로 바꾸기 
+	
+	@PrePersist
+	public void prePersist() {
+		if (registerProductDate == null) {
+			registerProductDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
+		}
+	}
  
    // tag 신발 ~ 기타 
    @Column(name="tag", length = 30)

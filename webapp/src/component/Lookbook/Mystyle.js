@@ -147,7 +147,7 @@ const Mystyle = () => {
     const onUpload = () => {
         var formData = new FormData()   //가지고가야할 데이터를 넣기
         file.map(files => formData.append('list',files))
-
+ 
         if(file.length === 0 ){
             alert("사진은 1장 이상 등록되어야 합니다")
             window.location.replace("/lookbook/mystyle") //새로고침

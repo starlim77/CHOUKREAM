@@ -8,9 +8,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '../modal/Modal';
 import { Link } from 'react-router-dom';
 import categoryData from './CategoryData';
-import MenuList from './MenuList';
+import MenuList2 from './MenuList2';
 
-const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModal, tagLive }) => {
+const Content = ({
+    dummy,
+    setDummy,
+    dummy2,
+    dummyFilter,
+    setDummyFilter,
+    sortCheck,
+    setSortCheck,
+    modalOpen,
+    openModal,
+    closeModal,
+    tagLive,
+}) => {
     const [categoryData2, setCategoryData2] = useState(categoryData);
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
@@ -117,13 +129,179 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
             return num / 10000 + '만';
         }
     };
-    
-    const photoshop = (itemImg) => {
-        const img = itemImg.split(',');
-        
-        return img[0]
-    }
 
+    const photoshop = itemImg => {
+        // console.log(itemImg)
+        // console.log(typeof(itemImg))
+        if (itemImg !== null && itemImg !== undefined) {
+            //console.log(itemImg);
+            const img = itemImg.split(',');
+            // console.log(img[0])
+            // console.log(typeof(img[0]))
+            return img[0];
+        }
+    };
+
+    // const photoshop = itemImg => {
+
+    //     if (itemImg === undefined){
+    //         console.log('fuck')
+    //     }
+
+    //     console.log(itemImg);
+    //     console.log(typeof(itemImg));
+    //     const img = itemImg.split(',');
+    //     return img[0];
+    // };
+
+
+    const [menuArray, setMenuArray] = useState({
+        // 0 = 체크안된상태 1 = 체크 된 상태 
+        '남자': 0,
+        '여자': 0,
+        '신발': 0,
+        '의류': 0,
+        '잡화': 0,
+        '10만원 이하': 0,
+        '10만원 - 30만원 이하': 0,
+        '30만원 - 50만원 이하': 0,
+        '50만원 이상': 0,
+    }); // 무슨 menu를 눌렀는지
+    const noBrandOptionList = [ // brand는 몇개인지 모르고 // brand가 아닌것들만 정리해둠
+        // 여기 없으면 무조건 brand 임 
+        '남자',
+        '여자',
+        '신발',
+        '의류',
+        '잡화',
+        '10만원 이하',
+        '10만원 - 30만원 이하',
+        '30만원 - 50만원 이하',
+        '50만원 이상',
+    ];
+
+    // dummy , dummy2 68개의 데이터
+    const dataSetting = menu => {
+        let newMenuArray = Object.assign({}, menuArray); // menuArray 객체를 복사함 
+        // 클릭을 했을때 newMenuArray 여기에 없다면 brand 다 
+        // 근데 있어도 brand 일수도 있다 
+        // 없으면 추가 있으면 토글
+        if (menu in newMenuArray) {
+            // 이미 클릭했던 적이 있을 경우
+            if (newMenuArray[menu] === 0) {
+                // 마지막으로 클릭했을 때 해제한 경우
+                newMenuArray[menu] = 1;
+            } else {
+                // 마지막으로 클릭했을 때 선택한 경우
+                newMenuArray[menu] = 0;
+            }
+        } else {
+            // 한 번도 클릭해보지 못한 경우
+            newMenuArray[menu] = 1;
+        }
+        // 아무것도 선택이 안되어있을때 (초기상태)
+        // 각각의 옵션을 true로 둔다
+        console.log(newMenuArray);
+        let noCategoryOption = true;
+        let noBrandOption = true;
+        let noGenderOption = true;
+        let noPriceOption = true;
+        
+        // check 된게 있으면 false로 바꿔준다 
+        // 각각 옵션에 대해서 총 4번한다
+        if (
+            newMenuArray['의류'] +
+                newMenuArray['신발'] +
+                newMenuArray['잡화'] !==
+            0
+        ) {
+            noCategoryOption = false;
+        }
+
+        if (
+            newMenuArray['10만원 이하'] +
+                newMenuArray['10만원 - 30만원 이하'] +
+                newMenuArray['30만원 - 50만원 이하'] +
+                newMenuArray['50만원 이상'] !==
+            0
+        ) {
+            noPriceOption = false;
+        }
+        
+        // 성별은 남 녀 일때 
+        if (newMenuArray['남자'] + newMenuArray['여자'] === 1) {
+            noGenderOption = false;
+        }
+        // console.log(noBrandOptionList);
+        for (const [k, v] of Object.entries(newMenuArray)) {
+            // brand가 아닌 리스트에 없으므로 브랜드가 아닌게 아니다
+            // 2중부정 
+            if (
+                (noBrandOptionList.indexOf(k) === -1) && // 이걸 통과한 순간 k = brand
+                // v === 1 // check가 되어있냐 ? value를 확인 둘이 같음 
+                newMenuArray[k] === 1 // check가 되어있냐 ? value를 확인
+            ) {
+                // console.log('dfddfdsdf', noBrandOptionList.indexOf(k), k, v);
+                noBrandOption = false;
+                break;
+            }
+        }
+        console.log(
+            noCategoryOption,
+            noBrandOption,
+            noGenderOption,
+            noPriceOption,
+        );
+        let temp = dummy2.filter(item => {
+            console.log(item);
+            if (!noCategoryOption && newMenuArray[item.category] === 0) {
+                // 무언가 체크를 했을때 noCategoryOption 가 false 인데 ! 써서 true 됨
+                // true면 newMenuArray 안에 item.category 가 0(체크안됨)을 찾아서 뺴준다
+                
+                // 카테고리 중 무엇인가가 체크가 되어있고,
+                // item의 카테고리가 그 체크된 항목과 맞지 않는 경우
+                return false;
+            } else if (
+                // noPriceOption 만약에 true면 거치질 않는다 조건이 없다
+                // true면 체크가 안되어있는거니까 확인할 필요가 없다 
+                !noPriceOption &&  
+                ((item.price <= 100000 && newMenuArray['10만원 이하'] === 0) ||
+                    (item.price <= 300000 &&
+                        newMenuArray['10만원 - 30만원 이하'] === 0) ||
+                    (item.price <= 500000 &&
+                        newMenuArray['30만원 - 50만원 이하'] === 0) ||
+                    newMenuArray['50만원 이상'] === 0)
+            ) {
+                // 가격 중 무엇인가가 체크가 되어있고, item의 가격이 그 체크된 범위와 맞지 않는 경우
+                return false;
+            } else if (
+                !noGenderOption &&
+                item.gender !== 2 &&
+                newMenuArray[item.gender === 0 ? '남자' : '여자'] === 0
+            ) {
+                // "무관"이 체크 되어있지 않고, 성별 중 무엇인가가 체크되어 있고, item의 성별이 그 체크된 성별과 맞지 않는 경우
+                return false;
+            } else if (!noBrandOption) {
+                if (!(item.brand in newMenuArray)) {
+                    return false;
+                } else if (newMenuArray[item.brand] === 0) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                // 이걸 다 통과 해야만 true
+                // 아닌 것 들을 걸러 준다 
+                // 모든 조건을 만족해야 한다 
+                return true;
+            }
+        });
+
+        setDummy(temp);
+        setMenuArray(newMenuArray);
+    };
+    
+    
     return (
         <>
             {/* Content */}
@@ -157,12 +335,19 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                     display: item.checked ? 'block' : 'none',
                                 }}
                             >
-                                <MenuList
+                                {/* <MenuList
                                     item={item}
                                     dummy={dummy}
                                     setDummy={setDummy}
                                     setPictures={setPictures}
-                                ></MenuList>
+                                ></MenuList> */}
+                                <MenuList2
+                                    item={item}
+                                    dummy={dummy}
+                                    setDummy={setDummy}
+                                    setPictures={setPictures}
+                                    dataSetting={dataSetting}
+                                ></MenuList2>
                             </Co.FilterMenu>
                         </Co.FilterList>
                     ))}
@@ -190,20 +375,6 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                     <Co.Text>빠른배송</Co.Text>
                                 </Co.ExpressBtn2>
                             </Co.FilterExpress>
-                            {/* <Co.FilterBrand>
-                                <Co.BrandBtn>
-                                    <Co.Text>새상품 버튼</Co.Text>
-                                </Co.BrandBtn>
-                            </Co.FilterBrand> */}
-                            <Co.FilterBrand>
-                                <Co.BrandBtn>
-                                    <Co.Text>
-                                        <Link to={'/Used/usedMain'}>
-                                            중고 버튼
-                                        </Link>
-                                    </Co.Text>
-                                </Co.BrandBtn>
-                            </Co.FilterBrand>
                         </Co.FilterBtns>
                         <div>
                             <Co.FilterSorting>
@@ -214,7 +385,10 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                     인기순
                                 </Co.SortingTitle>
                                 <Modal
+                                    dummy={dummy}
                                     setDummy={setDummy}
+                                    sortCheck={sortCheck}
+                                    setSortCheck={setSortCheck}
                                     open={modalOpen}
                                     close={closeModal}
                                     setPictures={setPictures}
@@ -232,25 +406,34 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                     <Co.SearchResult>
                         <Co.SearchResultList>
                             {/* {console.log('더미더미 ' + f)} */}
-                            { tagLive ? 
-                                dummyFilter && dummyFilter.map((item, index) => (
-                                <Co.ProductCard
-                                    key={item.seq}
-                                    style={{
-                                        display:
-                                            pictures > index ? 'block' : 'none',
-                                    }}
-                                    // 사진 8개씩 출력 idx는 0부터 시작
-                                >
-                                    <Link to={`/products/${item.seq}`}>
-                                        <Co.ItemInner href="#">
-                                            <Co.Product>
-                                                <Co.ProductImg
-                                                    // src={item.img_web}
-                                                    src={`/resellList/${photoshop(item.img)}`}
-                                                >
-                                                    {/* picture 태그 사용시 밑에꺼 사용 */}
-                                                    {/* <Co.Source
+                            {/* {console.log('더미더미 ' + dummy)}
+                            {console.log(dummy)}
+                            {console.log(dummy.length)} */}
+                            {/* {console.log(dummyFilter)} */}
+                            {tagLive
+                                ? dummyFilter &&
+                                  dummyFilter.map((item, index) => (
+                                      <Co.ProductCard
+                                          key={item.seq}
+                                          style={{
+                                              display:
+                                                  pictures > index
+                                                      ? 'block'
+                                                      : 'none',
+                                          }}
+                                          // 사진 8개씩 출력 idx는 0부터 시작
+                                      >
+                                          <Link to={`/products/${item.seq}`}>
+                                              <Co.ItemInner href="#">
+                                                  <Co.Product>
+                                                      <Co.ProductImg
+                                                          // src={`/resellList/${item.imgName}`}
+                                                          src={`/resellList/${photoshop(
+                                                              item.img_name,
+                                                          )}`}
+                                                      >
+                                                          {/* picture 태그 사용시 밑에꺼 사용 */}
+                                                          {/* <Co.Source
                                                         type="image/webp"
                                                         srcSet={item.img_web}
                                                     ></Co.Source>
@@ -262,88 +445,96 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                                         src={item.img}
                                                         loading="lazy"
                                                     ></Co.Image> */}
-                                                </Co.ProductImg>
-                                            </Co.Product>
-                                            <Co.ProductInfoArea>
-                                                <Co.Title>
-                                                    <Co.ProductInfoBrand>
-                                                        {item.brand}
-                                                    </Co.ProductInfoBrand>
-                                                    <Co.ProductInfoName>
-                                                        <Co.Name>
-                                                            {item.title}
-                                                        </Co.Name>
-                                                        <Co.TranslatedName>
-                                                            {item.subTitle}
-                                                        </Co.TranslatedName>
-                                                    </Co.ProductInfoName>
-                                                </Co.Title>
-                                                <Co.ProductExpress>
-                                                    <FontAwesomeIcon
-                                                        icon={faBoltLightning}
-                                                    />
-                                                    빠른배송
-                                                </Co.ProductExpress>
-                                            </Co.ProductInfoArea>
-                                            <Co.PriceInfoArea>
-                                                <Co.Amount>
-                                                    {addComma(
-                                                        item.releasePrice,
-                                                    )}
-                                                </Co.Amount>
-                                                <Co.Desc>즉시 구매가</Co.Desc>
-                                            </Co.PriceInfoArea>
-                                        </Co.ItemInner>
-                                    </Link>
-                                    <Co.ActionWishReview>
-                                        <Co.WishFigure>
-                                            <Co.BtnWish
-                                                href="#"
-                                                aria-label="관심상품"
-                                                icon-name="ico-wish-grey"
-                                            >
-                                                <FontAwesomeIcon
-                                                    icon={faBookmark}
-                                                />
-                                            </Co.BtnWish>
-                                            <Co.Text>
-                                                {followCalc(item.interest)}
-                                            </Co.Text>
-                                        </Co.WishFigure>
-                                        <Co.ReviewFigure>
-                                            <Co.ReviewLink
-                                                href="/social/products/51930"
-                                                aria-label={item.subTitle}
-                                            >
-                                                <FontAwesomeIcon
-                                                    icon={faHeart}
-                                                />
-                                            </Co.ReviewLink>
-                                            <Co.Text>
-                                                {followCalc(item.follow)}
-                                            </Co.Text>
-                                        </Co.ReviewFigure>
-                                    </Co.ActionWishReview>
-                                </Co.ProductCard>
-                            )) : 
-                            dummy.map((item, index) => (
-                                <Co.ProductCard
-                                    key={item.seq}
-                                    style={{
-                                        display:
-                                            pictures > index ? 'block' : 'none',
-                                    }}
-                                    // 사진 8개씩 출력 idx는 0부터 시작
-                                >
-                                    <Link to={`/products/${item.seq}`}>
-                                        <Co.ItemInner href="#">
-                                            <Co.Product>
-                                                <Co.ProductImg
-                                                    // src={item.img_web}
-                                                    src={`/resellList/${photoshop(item.img)}`}
-                                                >
-                                                    {/* picture 태그 사용시 밑에꺼 사용 */}
-                                                    {/* <Co.Source
+                                                      </Co.ProductImg>
+                                                  </Co.Product>
+                                                  <Co.ProductInfoArea>
+                                                      <Co.Title>
+                                                          <Co.ProductInfoBrand>
+                                                              {item.brand}
+                                                          </Co.ProductInfoBrand>
+                                                          <Co.ProductInfoName>
+                                                              <Co.Name>
+                                                                  {item.title}
+                                                              </Co.Name>
+                                                              <Co.TranslatedName>
+                                                                  {
+                                                                      item.subTitle
+                                                                  }
+                                                              </Co.TranslatedName>
+                                                          </Co.ProductInfoName>
+                                                      </Co.Title>
+                                                      <Co.ProductExpress>
+                                                          <FontAwesomeIcon
+                                                              icon={
+                                                                  faBoltLightning
+                                                              }
+                                                          />
+                                                          빠른배송
+                                                      </Co.ProductExpress>
+                                                  </Co.ProductInfoArea>
+                                                  <Co.PriceInfoArea>
+                                                      <Co.Amount>
+                                                          {addComma(
+                                                            sortCheck
+                                                                ? item.max_price
+                                                                : item.min_price,
+                                                          )}
+                                                      </Co.Amount>
+                                                      <Co.Desc>
+                                                          즉시 구매가
+                                                      </Co.Desc>
+                                                  </Co.PriceInfoArea>
+                                              </Co.ItemInner>
+                                          </Link>
+                                          <Co.ActionWishReview>
+                                              <Co.WishFigure>
+                                                  <Co.BtnWish
+                                                      href="#"
+                                                      aria-label="관심상품"
+                                                      icon-name="ico-wish-grey"
+                                                  >
+                                                      <FontAwesomeIcon
+                                                          icon={faBookmark}
+                                                      />
+                                                  </Co.BtnWish>
+                                                  <Co.Text>
+                                                      {followCalc(
+                                                          Number(
+                                                              item.like_count,
+                                                          ),
+                                                      )}
+                                                  </Co.Text>
+                                              </Co.WishFigure>
+                                          </Co.ActionWishReview>
+                                      </Co.ProductCard>
+                                  ))
+                                : // 평소에 setDummy를 하면 여기임
+                                  dummy &&
+                                  dummy.map((item, index) => (
+                                      <Co.ProductCard
+                                          key={item.seq}
+                                          style={{
+                                              display:
+                                                  pictures > index
+                                                      ? 'block'
+                                                      : 'none',
+                                          }}
+                                          // 사진 8개씩 출력 idx는 0부터 시작
+                                      >
+                                          <Link to={`/products/${item.seq}`}>
+                                              <Co.ItemInner href="#">
+                                                  <Co.Product>
+                                                      <Co.ProductImg
+                                                          //src={`/resellList/${item.imgName}`}
+                                                          src={`/resellList/${photoshop(
+                                                              // sortCheck
+                                                              //     ? item.img_name
+                                                              //     : item.imgName,
+                                                              item.img_name,
+                                                          )}`}
+                                                      >
+                                                          {/* picture 태그 사용시 밑에꺼 사용 */}
+                                                          {/* <Co.Source
                                                         type="image/webp"
                                                         srcSet={item.img_web}
                                                     ></Co.Source>
@@ -355,71 +546,87 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
                                                         src={item.img}
                                                         loading="lazy"
                                                     ></Co.Image> */}
-                                                </Co.ProductImg>
-                                            </Co.Product>
-                                            <Co.ProductInfoArea>
-                                                <Co.Title>
-                                                    <Co.ProductInfoBrand>
-                                                        {item.brand}
-                                                    </Co.ProductInfoBrand>
-                                                    <Co.ProductInfoName>
-                                                        <Co.Name>
-                                                            {item.title}
-                                                        </Co.Name>
-                                                        <Co.TranslatedName>
-                                                            {item.subTitle}
-                                                        </Co.TranslatedName>
-                                                    </Co.ProductInfoName>
-                                                </Co.Title>
-                                                <Co.ProductExpress>
+                                                      </Co.ProductImg>
+                                                  </Co.Product>
+                                                  <Co.ProductInfoArea>
+                                                      <Co.Title>
+                                                          <Co.ProductInfoBrand>
+                                                              {item.brand}
+                                                          </Co.ProductInfoBrand>
+                                                          <Co.ProductInfoName>
+                                                              <Co.Name>
+                                                                  {item.title}
+                                                              </Co.Name>
+                                                              <Co.TranslatedName>
+                                                                  {/* {!sortCheck
+                                                                    ? item.subTitle
+                                                                    : item.sub_title} */}
+                                                                  {
+                                                                      item.sub_title
+                                                                  }
+                                                              </Co.TranslatedName>
+                                                          </Co.ProductInfoName>
+                                                      </Co.Title>
+                                                      <Co.ProductExpress>
+                                                          <FontAwesomeIcon
+                                                              icon={
+                                                                  faBoltLightning
+                                                              }
+                                                          />
+                                                          빠른배송
+                                                      </Co.ProductExpress>
+                                                  </Co.ProductInfoArea>
+                                                  <Co.PriceInfoArea>
+                                                      <Co.Amount>
+                                                          {/* sortCheck true = 즉시 판매가순 */}
+                                                          {addComma(
+                                                              sortCheck
+                                                                  ? item.max_price
+                                                                  : item.min_price,
+                                                              //!sortCheck ? item.releasePrice : item.min_price
+                                                          )}
+                                                      </Co.Amount>
+                                                      <Co.Desc>
+                                                          즉시 구매가
+                                                      </Co.Desc>
+                                                  </Co.PriceInfoArea>
+                                              </Co.ItemInner>
+                                          </Link>
+                                          <Co.ActionWishReview>
+                                              <Co.WishFigure>
+                                                  <Co.BtnWish
+                                                      href="#"
+                                                      aria-label="관심상품"
+                                                      icon-name="ico-wish-grey"
+                                                  >
+                                                      <FontAwesomeIcon
+                                                          icon={faBookmark}
+                                                      />
+                                                  </Co.BtnWish>
+                                                  <Co.Text>
+                                                      {followCalc(
+                                                          Number(
+                                                              item.like_count,
+                                                          ),
+                                                      )}
+                                                  </Co.Text>
+                                              </Co.WishFigure>
+                                              {/* <Co.ReviewFigure>
+                                                <Co.ReviewLink
+                                                    href="/social/products/51930"
+                                                    aria-label={item.subTitle}
+                                                >
                                                     <FontAwesomeIcon
-                                                        icon={faBoltLightning}
+                                                        icon={faHeart}
                                                     />
-                                                    빠른배송
-                                                </Co.ProductExpress>
-                                            </Co.ProductInfoArea>
-                                            <Co.PriceInfoArea>
-                                                <Co.Amount>
-                                                    {addComma(
-                                                        item.releasePrice,
-                                                    )}
-                                                </Co.Amount>
-                                                <Co.Desc>즉시 구매가</Co.Desc>
-                                            </Co.PriceInfoArea>
-                                        </Co.ItemInner>
-                                    </Link>
-                                    <Co.ActionWishReview>
-                                        <Co.WishFigure>
-                                            <Co.BtnWish
-                                                href="#"
-                                                aria-label="관심상품"
-                                                icon-name="ico-wish-grey"
-                                            >
-                                                <FontAwesomeIcon
-                                                    icon={faBookmark}
-                                                />
-                                            </Co.BtnWish>
-                                            <Co.Text>
-                                                {followCalc(item.interest)}
-                                            </Co.Text>
-                                        </Co.WishFigure>
-                                        <Co.ReviewFigure>
-                                            <Co.ReviewLink
-                                                href="/social/products/51930"
-                                                aria-label={item.subTitle}
-                                            >
-                                                <FontAwesomeIcon
-                                                    icon={faHeart}
-                                                />
-                                            </Co.ReviewLink>
-                                            <Co.Text>
-                                                {followCalc(item.follow)}
-                                            </Co.Text>
-                                        </Co.ReviewFigure>
-                                    </Co.ActionWishReview>
-                                </Co.ProductCard>)) 
-                            }
-                                
+                                                </Co.ReviewLink>
+                                                <Co.Text>
+                                                    {followCalc(item.follow)}
+                                                </Co.Text>
+                                            </Co.ReviewFigure> */}
+                                          </Co.ActionWishReview>
+                                      </Co.ProductCard>
+                                  ))}
                         </Co.SearchResultList>
                     </Co.SearchResult>
                 </Co.SearchContent>
