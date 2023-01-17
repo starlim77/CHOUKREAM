@@ -38,7 +38,7 @@ const StyleProduct = (props) => {
                                     <div className='thumb_box'>
                                         <M.Product>
                                             <M.PictureBrandProductImg>
-                                                <M.BrandProductImg src={`/resellList/${productList.img}`} />
+                                                <M.BrandProductImg src={`/resellList/${productList.imgName}`} />
                                             </M.PictureBrandProductImg>
                                         </M.Product>
                                     </div>
