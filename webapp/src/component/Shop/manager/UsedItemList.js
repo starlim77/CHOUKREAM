@@ -39,8 +39,8 @@ const UsedItemList = () => {
                     </Li.SearchSelect>
                 <Li.SearchingInput value={keyword} onChange={e=>searchingForm(e)}></Li.SearchingInput>
                 <Li.SearchingBTN onClick={e=>searchContent(e)}>검색</Li.SearchingBTN>
-            </Li.SearchingWrapper>
-            <Li.Table>
+            </Li.SearchingWrapper><br></br>
+            <Li.Table2>
                 <Li.Thead>
                     <Li.Tr>
                             <Li.Th2>글번호</Li.Th2>
@@ -62,7 +62,7 @@ const UsedItemList = () => {
                         data.slice(0).reverse().slice(offset, offset + limit).map(item=><UsedItemListing key={item.seq} item={item}></UsedItemListing>)
                     }
                 </Li.Tbody>
-            </Li.Table>
+            </Li.Table2>
             <Li.Footer>
                 <Pagination
                     total={data.length}
