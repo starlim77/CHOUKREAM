@@ -22,6 +22,8 @@ public interface MemberService {
 	public Optional<MemberDto> findEmailByPhone(String phone);
 
 	public String findPasswordByPhoneAndEmail(String phone, String email);
+
+	String getMemberId(Long memberSeq);
 	
 //	public MemberResponseDto changeMemberPassword(String email, String exPassword, String newPassword);
 

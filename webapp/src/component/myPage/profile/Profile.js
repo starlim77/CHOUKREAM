@@ -1,10 +1,16 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react';
 import * as S from './ProfileStyle';
 
 const Profile = () => {
-    const memberSeq = jwtDecode(localStorage.getItem("accessToken")).sub
+    const memberSeq = jwtDecode(localStorage.getItem('accessToken')).sub;
     const [member, setMember] = useState({});
     const [isOpen, setIsOpen] = useState(false);
     const [openedSection, setOpendSection] = useState();
@@ -18,13 +24,17 @@ const Profile = () => {
     const passwordRef = useRef();
     const [rePassword, setRePassword] = useState();
     const RePasswordRef = useRef();
-    const [phone, setPhone] = useState()
+    const [phone, setPhone] = useState();
+    const [id, setId] = useState();
 
     // 회원정보 불러옴
     useEffect(() => {
         axios
             .get(`http://localhost:8080/getMember?id=${memberSeq}`)
             .then(res => setMember(res.data));
+        axios
+            .get(`http://localhost:8080/getMemberId?memberSeq=${memberSeq}`)
+            .then(res => setId(res.data));
     }, []);
 
     //회원정보에서 sms, email 마케팅 동의 추출
@@ -52,9 +62,11 @@ const Profile = () => {
             return;
         }
         axios
-            .post(`http://localhost:8080/updateEmail?id=${memberSeq}&email=${email}`)
+            .post(
+                `http://localhost:8080/updateEmail?id=${memberSeq}&email=${email}`,
+            )
             .then(res => setMember(res.data))
-            .catch(error => console.log(error))
+            .catch(error => console.log(error));
         setIsOpen(false);
     };
 
@@ -80,48 +92,48 @@ const Profile = () => {
                 `http://localhost:8080/updatePassword?email=${member.email}&password=${password}`,
             )
             .then(res => setMember(res.data))
-            .catch(error => console.log(error))
+            .catch(error => console.log(error));
         setIsOpen(false);
     };
 
     // 전화번호 변경 입력
     const inputPhone = e => {
-        setPhone(e.target.value)
-    }
+        setPhone(e.target.value);
+    };
     const onPhoneChange = () => {
-        const phoneRegex = /01[016789][^0][0-9]{3,4}[0-9]{4}$/
-        if(!phoneRegex.test(phone)){
-            alert("휴대폰 번호를 숫자만 정확히 입력해주세요")
-            return
+        const phoneRegex = /01[016789][^0][0-9]{3,4}[0-9]{4}$/;
+        if (!phoneRegex.test(phone)) {
+            alert('휴대폰 번호를 숫자만 정확히 입력해주세요');
+            return;
         }
         axios
-        .post(
-            `http://localhost:8080/updatePhone?email=${member.email}&phone=${phone}`,
-        )
-        .then(res => setMember(res.data))
-        .catch(error => console.log(error))
-        setIsOpen(false)
-    }
+            .post(
+                `http://localhost:8080/updatePhone?email=${member.email}&phone=${phone}`,
+            )
+            .then(res => setMember(res.data))
+            .catch(error => console.log(error));
+        setIsOpen(false);
+    };
 
     // 마케팅 정보 수신
     const onMarketing = e => {
-        e.target.name === "sms" && setSmsOption(!smsOption)
-        e.target.name === "email" && setEmailOption(!emailOption)
-    }
+        e.target.name === 'sms' && setSmsOption(!smsOption);
+        e.target.name === 'email' && setEmailOption(!emailOption);
+    };
 
     useMemo(() => {
-        smsOption ? setSmsOptionNum(1) : setSmsOptionNum(0)
-        emailOption ? setEmailOptionNum(1) : setEmailOptionNum(0)
-    }, [smsOption, emailOption])
+        smsOption ? setSmsOptionNum(1) : setSmsOptionNum(0);
+        emailOption ? setEmailOptionNum(1) : setEmailOptionNum(0);
+    }, [smsOption, emailOption]);
 
     useMemo(() => {
-        axios.post(
-            `http://localhost:8080/updateMarketingOption?email=${member.email}&smsOption=${smsOptionNum}&emailOption=${emailOptionNum}`,
-        )
-        .then(res => setMember(res.data))
-        .catch(error => console.log(error))
-    },[smsOptionNum, emailOptionNum])
-
+        axios
+            .post(
+                `http://localhost:8080/updateMarketingOption?email=${member.email}&smsOption=${smsOptionNum}&emailOption=${emailOptionNum}`,
+            )
+            .then(res => setMember(res.data))
+            .catch(error => console.log(error));
+    }, [smsOptionNum, emailOptionNum]);
 
     return (
         <S.ProfileWrapper>
@@ -132,10 +144,10 @@ const Profile = () => {
                 </S.PicWrapper>
 
                 <S.MiddleWrapper>
-                    <S.IdDIv>id : {member.id}</S.IdDIv>
+                    <S.IdDIv>id : {id}</S.IdDIv>
                     <S.ButtonWrapper>
-                        <S.Button>이미지 변경</S.Button>
-                        <S.Button>이미지 삭제</S.Button>
+                        {/* <S.Button>이미지 변경</S.Button>
+                        <S.Button>이미지 삭제</S.Button> */}
                     </S.ButtonWrapper>
                 </S.MiddleWrapper>
             </S.Top>
@@ -230,28 +242,40 @@ const Profile = () => {
                         수신동의
                         <input
                             type="checkbox"
-                            name='sms'
+                            name="sms"
                             checked={smsOption === true}
                             style={{ marginRight: '20px' }}
                             onClick={onMarketing}
                             readOnly
                         />
                         수신거부
-                        <input type="checkbox" name='sms' checked={smsOption === false}  onClick={onMarketing} readOnly/>
+                        <input
+                            type="checkbox"
+                            name="sms"
+                            checked={smsOption === false}
+                            onClick={onMarketing}
+                            readOnly
+                        />
                     </S.CheckBox>
                     <S.CheckBox>
                         <S.CheckBoxText>이메일</S.CheckBoxText>
                         수신동의
                         <input
                             type="checkbox"
-                            name='email'
+                            name="email"
                             checked={emailOption === true}
                             style={{ marginRight: '20px' }}
                             onClick={onMarketing}
                             readOnly
                         />
                         수신거부
-                        <input type="checkbox" name="email" checked={emailOption === false} onClick={onMarketing} readOnly/>
+                        <input
+                            type="checkbox"
+                            name="email"
+                            checked={emailOption === false}
+                            onClick={onMarketing}
+                            readOnly
+                        />
                     </S.CheckBox>
                 </S.Unit>
             </S.Bottom>

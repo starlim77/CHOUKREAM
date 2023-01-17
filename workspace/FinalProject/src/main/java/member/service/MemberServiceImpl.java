@@ -119,6 +119,13 @@ public class MemberServiceImpl implements MemberService {
 		memberDAO.save(memberDto);
 		return memberDAO.findByEmail(email);
 	}
+
+	@Override
+	public String getMemberId(Long memberSeq) {
+		String id = memberDAO.findById(memberSeq).get().getEmail().split("@")[0];
+		return id;
+	}
+
 	
 	@Override
 	public Optional<MemberDto> getMemberInfo(long seq) {

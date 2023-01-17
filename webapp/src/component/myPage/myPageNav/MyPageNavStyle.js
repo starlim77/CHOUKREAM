@@ -21,7 +21,7 @@ width: 100%;
 `
 export const NavLi =styled.li`
 font-size : 15px;
-margin : 13px;
+margin : 20px 13px;
 height : 100%;
 color: rgba(34,34,34,.5);
 text-decoration: none;

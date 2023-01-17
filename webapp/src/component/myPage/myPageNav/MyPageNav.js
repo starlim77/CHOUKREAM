@@ -23,6 +23,8 @@ const reducer = (state, action) => {
             return 'ADDRESS';
         case 'POINT':
             return 'POINT';
+        case 'STYLE':
+            return 'STYLE';
         default:
             return initialState;
     }
@@ -55,6 +57,12 @@ const fontReducer = (state, action) => {
                 textDecoration: 'none',
             };
         case 'POINT':
+            return {
+                color: 'black',
+                fontWeight: '800',
+                textDecoration: 'none',
+            };
+        case 'STYLE':
             return {
                 color: 'black',
                 fontWeight: '800',
@@ -164,6 +172,22 @@ const MyPageNav = () => {
                                 }
                             >
                                 주소록
+                            </Link>
+                        </S.NavLi>
+                        <S.NavLi onClick={onclick}>
+                            <Link
+                                to="style"
+                                id="STYLE"
+                                style={
+                                    clickedContent === 'STYLE'
+                                        ? fontStyle
+                                        : {
+                                              textDecoration: 'none',
+                                              color: 'rgba(34,34,34,.5)',
+                                          }
+                                }
+                            >
+                                스타일
                             </Link>
                         </S.NavLi>
                         {/* <S.NavLi onClick={onclick}>

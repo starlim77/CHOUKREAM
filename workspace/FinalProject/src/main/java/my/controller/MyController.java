@@ -2,6 +2,8 @@ package my.controller;
 
 import static org.hamcrest.CoreMatchers.nullValue;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -19,9 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import my.bean.AddressDTO;
 import my.bean.PointDTO;
+import my.bean.SellBuyHistory;
 import my.service.MyService;
-import shop.bean.CompletedOrderDTO;
+import pay.bean.CompletePaymentDTO;
 import shop.bean.ProductDTO;
+import shop.service.ShopServiceImpl;
 
 @RestController
 @CrossOrigin
@@ -30,6 +34,8 @@ public class MyController {
 
 	@Autowired
 	private MyService myService;
+	@Autowired
+	private ShopServiceImpl shopServiceImpl;
 	
 	@RequestMapping(path =  "addAddress")
 	public void addAddress(@ModelAttribute AddressDTO addressDTO) {
@@ -69,28 +75,6 @@ public class MyController {
 		return myService.deleteAddress(id ,seq);
 	}
 	
-	@RequestMapping(path = "test")
-	public void test(@RequestBody List<PointDTO> list) {
-		System.out.println(list);
-	}
-	
-	@GetMapping(path = "getBuy")
-	public List<ProductDTO> getBuy(@RequestParam long id){
-		return myService.getBuy(id);
-	}
-	
-	@GetMapping(path = "getDoneBuy")
-	public List<ProductDTO> getDoneBuy(@RequestParam long id){
-		return myService.getDoneBuy(id);
-	}
-	@GetMapping(path = "getSell")
-	public List<ProductDTO> getSell(@RequestParam long id){
-		return myService.getSell(id);
-	}
-	@GetMapping(path = "getSold")
-	public List<ProductDTO> getSold(@RequestParam long id){
-		return myService.getSold(id);
-	}
 	@GetMapping(path = "getAddressBySeq")
 	public Optional<AddressDTO> getAddressBySeq(@RequestParam long seq){
 		return myService.getAddressBySeq(seq);
@@ -99,4 +83,38 @@ public class MyController {
 	public AddressDTO addressUpdate(@ModelAttribute AddressDTO addressDTO){
 		return myService.addressUpdate(addressDTO);
 	}
+	@GetMapping(path = "getBoughtHistory")
+	public List<SellBuyHistory> getBoughtHistorie(@RequestParam long memberSeq) {
+		return myService.getBoughtHistorie(memberSeq);
+	}
+	@GetMapping(path = "getBuyingHistory")
+	public List<SellBuyHistory> getBuyingHistory(@RequestParam long memberSeq) {
+		return myService.getBuyingHistory(memberSeq);
+	}
+	@GetMapping(path = "getSoldHistory")
+	public List<SellBuyHistory> getSoldHistory(@RequestParam long memberSeq) {
+		return myService.getSoldHistory(memberSeq);
+	}
+	@GetMapping(path = "getSellingHistory")
+	public List<SellBuyHistory> getSellingHistory(@RequestParam long memberSeq) {
+		return myService.getSellingHistory(memberSeq);
+	}
+	@GetMapping(path = "getSellingUsed")
+	public List<SellBuyHistory> getSellingUsed(@RequestParam long memberSeq) {
+		return myService.getSellingUsed(memberSeq);
+	}
+	@GetMapping(path = "getSoldUsed")
+	public List<SellBuyHistory> getSoldUsed(@RequestParam long memberSeq) {
+		return myService.getSoldUsed(memberSeq);
+	}
+	@GetMapping(path = "getBuyingUsed")
+	public List<SellBuyHistory> getBuyingUsed(@RequestParam long memberSeq) {
+		return myService.getBuyingUsed(memberSeq);
+	}
+	@GetMapping(path = "getBoughtUsed")
+	public List<SellBuyHistory> getBoughtUsed(@RequestParam long memberSeq) {
+		return myService.getBoughtUsed(memberSeq);
+	}
+	
+	
 }
