@@ -853,9 +853,11 @@ const Products = () => {
                                 </A.TrGridContainer>
                             </Container>
                             <S.MoreBtnBox>
-                                <S.ButtonOutlineGreyMedium>
-                                    더보기
-                                </S.ButtonOutlineGreyMedium>
+                                <Link to={`/styleOneProduct/${seq}`}>
+                                    <S.ButtonOutlineGreyMedium>
+                                        더보기
+                                    </S.ButtonOutlineGreyMedium>
+                                </Link>
                             </S.MoreBtnBox>
                         </S.SocialFeeds>
                     </S.FeedArea>
@@ -864,8 +866,7 @@ const Products = () => {
                             <S.BrandTitleBrand>{form.brand}</S.BrandTitleBrand>
                             <S.BrandTitleText>의 다른 상품</S.BrandTitleText>
                             <S.BtnMore>
-                                <S.BtnText>더 보기</S.BtnText>
-                                {/* <svg></svg> */}
+                                    <S.BtnText>더 보기</S.BtnText>
                             </S.BtnMore>
                         </S.BrandTitle>
                         <S.BrandProducts>
