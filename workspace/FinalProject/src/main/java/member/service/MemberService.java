@@ -16,7 +16,5 @@ public interface MemberService {
 	public MemberResponseDto changeMemberPassword(String email, String exPassword, String newPassword);
 
 	public String findByEmailAndProviderIsNull(String email);
-
-	public Optional<MemberDto> findMyInfo();
 	
 }
