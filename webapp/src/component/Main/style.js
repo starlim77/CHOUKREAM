@@ -4,7 +4,47 @@ export const MainWrap = styled.div``;
 
 export const MainProductWrap = styled.div`
     margin: 0 auto;
-    width: 1280px;
+
+    width: 1200px;
+`;
+
+export const MainTopWrap = styled.div`
+    margin: 0 auto;
+    margin-top: 56px;
+    margin-bottom: 56px;
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+`;
+
+export const MainTop = styled.div`
+    display: flex;
+    gap: 16px 8px;
+`;
+
+export const TopItem = styled.div`
+    width: 234px;
+    img {
+        width: 100%;
+        border-radius: 10px;
+    }
+    p {
+        font-size: 15px;
+        letter-spacing: -0.15px;
+        color: #333;
+        margin-top: 8px;
+        text-align: center;
+    }
+`;
+
+export const MidBanner = styled.div`
+    margin: 36px 0;
+    img {
+        width: 100%;
+        cursor: pointer;
+    }
 `;
 
 export const SectionTitle = styled.h4`
@@ -13,7 +53,11 @@ export const SectionTitle = styled.h4`
     font-weight: 700;
     color: #000;
 `;
-
+export const Divider = styled.div`
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    width: 1280px;
+    margin: 40px auto;
+`;
 export const SubTitle = styled.p`
     font-size: 14px;
     letter-spacing: -0.21px;
@@ -40,6 +84,7 @@ export const MoreButton = styled.button`
     letter-spacing: -0.14px;
     background: none;
     display: block;
+    cursor: pointer;
 `;
 
 export const ProductItemWrap = styled.div`

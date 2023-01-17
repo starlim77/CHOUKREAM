@@ -36,6 +36,16 @@ const SellForm = () => {
     const { shipName, shipPhone, shipAddress } = shipInfo;
     const [ask, setAsk] = useState('배송 시 요청사항을 선택해주세요');
 
+    const [checkedList, setCheckedList] = useState([]);
+
+    const checkedItemHandler = (id, checked) => {
+        if (checked) {
+            setCheckedList([...checkedList, id]);
+        } else {
+            setCheckedList(checkedList.filter(checked => checked !== id));
+        }
+    };
+
     useEffect(() => {
         axios
             .get('http://localhost:8080/getMemberInfo', {
@@ -106,6 +116,9 @@ const SellForm = () => {
             .then()
             .catch();
     };
+
+    const isShipInfoEmpty = object =>
+        !Object.values(object).every(x => x !== null && x !== '');
 
     return (
         <S.PayForm>
@@ -256,7 +269,15 @@ const SellForm = () => {
                         <S.Notice>
                             검수 기준과 페널티 및 이용 정책을 확인하였습니다.
                         </S.Notice>
-                        <S.Checkbox type="checkbox"></S.Checkbox>
+                        <S.Checkbox
+                            type="checkbox"
+                            onChange={e =>
+                                checkedItemHandler('check1', e.target.checked)
+                            }
+                            checked={
+                                checkedList.includes('check1') ? true : false
+                            }
+                        ></S.Checkbox>
                     </S.AgreeItem>
                     <S.HrAgree></S.HrAgree>
                     <S.AgreeItem>
@@ -264,21 +285,45 @@ const SellForm = () => {
                             신청이 완료되면 휴일을 제외하고 48시간 내에 발송을
                             완료해야 합니다.
                         </S.Notice>
-                        <S.Checkbox type="checkbox"></S.Checkbox>
+                        <S.Checkbox
+                            type="checkbox"
+                            onChange={e =>
+                                checkedItemHandler('check2', e.target.checked)
+                            }
+                            checked={
+                                checkedList.includes('check2') ? true : false
+                            }
+                        ></S.Checkbox>
                     </S.AgreeItem>
                     <S.HrAgree></S.HrAgree>
                     <S.AgreeItem>
                         <S.Notice>
                             '판매하기'를 선택하시면 판매 입찰 내역이 등록됩니다.
                         </S.Notice>
-                        <S.Checkbox type="checkbox"></S.Checkbox>
+                        <S.Checkbox
+                            type="checkbox"
+                            onChange={e =>
+                                checkedItemHandler('check3', e.target.checked)
+                            }
+                            checked={
+                                checkedList.includes('check3') ? true : false
+                            }
+                        ></S.Checkbox>
                     </S.AgreeItem>
                     <S.HrAgree></S.HrAgree>
                     <S.AgreeItem>
                         <S.Notice style={{ fontWeight: 700 }}>
                             판매 조건을 모두 확인하였으며, 진행에 동의합니다.
                         </S.Notice>
-                        <S.Checkbox type="checkbox"></S.Checkbox>
+                        <S.Checkbox
+                            type="checkbox"
+                            onChange={e =>
+                                checkedItemHandler('check4', e.target.checked)
+                            }
+                            checked={
+                                checkedList.includes('check4') ? true : false
+                            }
+                        ></S.Checkbox>
                     </S.AgreeItem>
                 </S.AgreeList>
                 <S.PayPriceShow>
@@ -287,7 +332,13 @@ const SellForm = () => {
                         <S.PriceFont>{/*addComma(payPrice)*/}</S.PriceFont>원
                     </S.SellPriceShowDiv>
                 </S.PayPriceShow>
-                <S.PayBtn onClick={sellOrder} disabled={false}>
+                <S.PayBtn
+                    onClick={sellOrder}
+                    style={{ background: '#31b46e' }}
+                    disabled={
+                        isShipInfoEmpty(shipInfo) || checkedList.length !== 4
+                    }
+                >
                     <span>판매하기</span>
                 </S.PayBtn>
             </S.Agree>

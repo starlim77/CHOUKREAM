@@ -49,6 +49,16 @@ const PayForm = () => {
     const [usePoint, setUsePoint] = useState(0);
     const [havePoint, setHavePoint] = useState('');
 
+    const [checkedList, setCheckedList] = useState([]);
+
+    const checkedItemHandler = (id, checked) => {
+        if (checked) {
+            setCheckedList([...checkedList, id]);
+        } else {
+            setCheckedList(checkedList.filter(checked => checked !== id));
+        }
+    };
+
     useEffect(() => {
         axios
             .get('http://localhost:8080/getMemberInfo', {
@@ -269,6 +279,9 @@ const PayForm = () => {
             setPayPrice(productPrice);
         }
     };
+
+    const isShipInfoEmpty = object =>
+        !Object.values(object).every(x => x !== null && x !== '');
 
     return (
         <S.PayForm>
@@ -492,19 +505,43 @@ const PayForm = () => {
                             제휴 사업자가 직접 배송하며, 재고 부족 등 사업자의
                             상황에 따라 거래가 취소될 수 있습니다.
                         </S.Notice>
-                        <S.Checkbox type="checkbox"></S.Checkbox>
+                        <S.Checkbox
+                            type="checkbox"
+                            onChange={e =>
+                                checkedItemHandler('check1', e.target.checked)
+                            }
+                            checked={
+                                checkedList.includes('check1') ? true : false
+                            }
+                        ></S.Checkbox>
                     </S.AgreeItem>
                     <S.HrAgree></S.HrAgree>
                     <S.AgreeItem>
                         <S.Notice>개인정보의 제3자 제공에 동의합니다.</S.Notice>
-                        <S.Checkbox type="checkbox"></S.Checkbox>
+                        <S.Checkbox
+                            type="checkbox"
+                            onChange={e =>
+                                checkedItemHandler('check2', e.target.checked)
+                            }
+                            checked={
+                                checkedList.includes('check2') ? true : false
+                            }
+                        ></S.Checkbox>
                     </S.AgreeItem>
                     <S.HrAgree></S.HrAgree>
                     <S.AgreeItem>
                         <S.Notice>
                             '결제하기'를 선택하시면 즉시 결제가 진행됩니다.
                         </S.Notice>
-                        <S.Checkbox type="checkbox"></S.Checkbox>
+                        <S.Checkbox
+                            type="checkbox"
+                            onChange={e =>
+                                checkedItemHandler('check3', e.target.checked)
+                            }
+                            checked={
+                                checkedList.includes('check3') ? true : false
+                            }
+                        ></S.Checkbox>
                     </S.AgreeItem>
                     <S.HrAgree></S.HrAgree>
                     <S.AgreeItem>
@@ -512,7 +549,15 @@ const PayForm = () => {
                             구매 조건을 모두 확인하였으며, 거래진행에
                             동의합니다.
                         </S.Notice>
-                        <S.Checkbox type="checkbox"></S.Checkbox>
+                        <S.Checkbox
+                            type="checkbox"
+                            onChange={e =>
+                                checkedItemHandler('check4', e.target.checked)
+                            }
+                            checked={
+                                checkedList.includes('check4') ? true : false
+                            }
+                        ></S.Checkbox>
                     </S.AgreeItem>
                 </S.AgreeList>
                 <S.PayPriceShow>
@@ -521,7 +566,12 @@ const PayForm = () => {
                         <S.PriceFont>{addComma(payPrice)}</S.PriceFont>원
                     </S.PayPriceShowDiv>
                 </S.PayPriceShow>
-                <S.PayBtn onClick={payment} disabled={false}>
+                <S.PayBtn
+                    onClick={payment}
+                    disabled={
+                        isShipInfoEmpty(shipInfo) || checkedList.length !== 4
+                    }
+                >
                     <span>결제하기</span>
                 </S.PayBtn>
             </S.Agree>

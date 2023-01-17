@@ -15,14 +15,27 @@ const MainProduct = ({ title, subTitle }) => {
     };
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:8080/shop/getRecentReleaseList?rn=${page}`)
-            .then(
-                res =>
-                    res.data.length !== 0 &&
-                    setProducts([...products, ...res.data]),
-            )
-            .catch(error => console.log(error));
+        if (subTitle === '발매 상품') {
+            axios
+                .get(
+                    `http://localhost:8080/shop/getRecentReleaseList?rn=${page}`,
+                )
+                .then(
+                    res =>
+                        res.data.length !== 0 &&
+                        setProducts([...products, ...res.data]),
+                )
+                .catch(error => console.log(error));
+        } else if (subTitle === '인기 상품') {
+            axios
+                .get(`http://localhost:8080/shop/getPopularList?rn=${page}`)
+                .then(
+                    res =>
+                        res.data.length !== 0 &&
+                        setProducts([...products, ...res.data]),
+                )
+                .catch(error => console.log(error));
+        }
     }, [page]);
     console.log('product', products);
     return (

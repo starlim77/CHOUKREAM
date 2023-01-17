@@ -302,9 +302,13 @@ public class ShopController {
 	 }
 	
 	@GetMapping(path = "getRecentReleaseList")
-	public List<ProductDTO> getRecentReleaseList(@RequestParam int rn){
-		System.out.println("size == " + shopService.getRecentReleaseList(rn).size());
+	public List<SortListDTO> getRecentReleaseList(@RequestParam int rn){
+		//System.out.println("size == " + shopService.getRecentReleaseList(rn).size());
 		return shopService.getRecentReleaseList(rn);
+	}
+	@GetMapping(path = "getPopularList")
+	public List<SortListDTO> getPopularList(@RequestParam int rn){
+		return shopService.getPopularList(rn);
 	}
 	
 

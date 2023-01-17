@@ -34,7 +34,7 @@ const Header = ({ auth }) => {
                             {/*나중에 뒷 부분 NULL처리 할 것! */}
                         </Link>
                         <Link to="/cs/CsNotice">
-                            x<S.TopLi>고객센터</S.TopLi>
+                            <S.TopLi>고객센터</S.TopLi>
                         </Link>
                         <S.TopLi>관심상품</S.TopLi>
                         <S.TopLi>
@@ -52,7 +52,6 @@ const Header = ({ auth }) => {
                     </Link>
 
                     <S.BottomWrapper>
-                        <S.BottomLi active={true}>STYLE</S.BottomLi>
                         <S.BottomLi onClick={onShopModal}>
                             SHOP
                             {shopModalOpen && <ShopModal></ShopModal>}

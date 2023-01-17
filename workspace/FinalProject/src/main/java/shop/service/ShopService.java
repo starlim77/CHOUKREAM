@@ -33,7 +33,8 @@ public interface ShopService {
 
 	public void resellUpload(ProductDTO productDTO);
 
-	public List<ProductDTO> getRecentReleaseList(int rn);
+	public List<SortListDTO> getRecentReleaseList(int rn);
+	
 	public List<SortListDTO> BuySort();
 
 	public List<SortListDTO> SellSort();
@@ -41,6 +42,8 @@ public interface ShopService {
 	public void reUpdate(ProductDTO productDTO);
 
 	public List<SortListDTO> releaseDateSort();
+
+	public List<SortListDTO> getPopularList(int rn);
 
 
 }

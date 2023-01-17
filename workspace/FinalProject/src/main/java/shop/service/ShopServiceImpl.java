@@ -93,7 +93,7 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public List<ProductDTO> getRecentReleaseList(int rn) {
+	public List<SortListDTO> getRecentReleaseList(int rn) {
 		int start = 0;
 		int end = 0;
 		if(rn==0) {
@@ -131,12 +131,24 @@ public class ShopServiceImpl implements ShopService {
 		return shopDAO.releaseDateSort();
 	}
 
-	
-
-	
-	
-
-	
+	@Override
+	public List<SortListDTO> getPopularList(int rn) {
+		int start = 0;
+		int end = 0;
+		if(rn==0) {
+			start = 1;
+			end = 4;
+		}
+		else if(rn==1) {
+			start = 5;
+			end = 8;
+		}
+		else if(rn==2) {
+			start = 9;
+			end = 12;
+		}
+		return shopDAO.getPopularList(start,end);
+	}
 }
 
 
