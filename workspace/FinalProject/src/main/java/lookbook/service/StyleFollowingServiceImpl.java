@@ -80,16 +80,13 @@ public class StyleFollowingServiceImpl implements StyleFollowingService {
 //		System.out.println("00000000000000000000000000000000000000");
 		
 		//List<StyleEntity> fstyleEntityList = new ArrayList<>();
-		
+		List<String> idList = new ArrayList<>();
 		List<StyleEntity> fstyleEntityList = new ArrayList<>();
-		for(MemberDto memDto: followeeDtoList) {	
-			List<String> idList = new ArrayList<>();
-			idList.add(memDto.getId().toString());
-			fstyleEntityList = styleDAO.findAllByIdIn(idList);
-			
-			
+		for(MemberDto memDto: followeeDtoList) {				
+			idList.add(memDto.getId().toString());	
 		}	
-			
+		
+		fstyleEntityList = styleDAO.findAllByIdInOrderBySeqDesc(idList);
 		
 		
 		//entity->dto

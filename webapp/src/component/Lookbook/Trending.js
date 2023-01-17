@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import * as S from './style';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import TrendingItem from './TrendingItem';
 
 const Trending = () => {
@@ -56,12 +56,14 @@ const Trending = () => {
         }
     };
 
+   
+
     return (
         <>
             <Social />
             <br/><br/><br/><br/>
             <Container fixed>
-                <S.TrGridContainer>
+                <S.TrGridContainer >
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 0 ? 

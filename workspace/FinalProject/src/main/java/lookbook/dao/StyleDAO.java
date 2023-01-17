@@ -63,7 +63,7 @@ public interface StyleDAO extends JpaRepository<StyleEntity, String> {
 //	@Query(nativeQuery = true,value = "select * from style_table where id =(:str)") 
 //	public List<StyleEntity> getFollowing(String str);
 
-	public List<StyleEntity> findAllByIdIn(List<String> idList);
+	public List<StyleEntity> findAllByIdInOrderBySeqDesc(List<String> idList);
 
 	
 }

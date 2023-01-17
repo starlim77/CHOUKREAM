@@ -85,10 +85,21 @@ const Detail = () => {
        }
     }
         
-    //팔로우
-    const onFollow = (id) => {
-        //id //followee id
-        axios.get('http://localhost:8080/lookbook/saveFollow')
+ 
+     //팔로우
+     const onFollow = (followeeId) => {
+        //console.log(tokenId+"+"+followeeId)
+        axios.post(`http://localhost:8080/lookbook/saveFollow/${tokenId}/${followeeId}`) 
+             .then(alert("팔로우 성공"))
+             .catch(error => console.log(error))
+    }
+
+    //언팔로우
+    const onUnFollow = (followeeId) => {
+        //console.log(tokenId+"+"+followeeId)
+        axios.delete(`http://localhost:8080/lookbook/unFollow/${tokenId}/${followeeId}`) 
+             .then(alert("언팔로우 성공"))
+             .catch(error => console.log(error))
     }
     
     const photoShop1 = (storedImg) => {
@@ -136,7 +147,7 @@ const Detail = () => {
                                 />
 
                                 <Button variant="contained" style={{backgroundColor: 'black'}} onClick={() => onFollow (item.id)} >팔로우</Button>
-                                <Button variant="outlined"  style={{color: 'black'}}>언팔로우</Button>
+                                <Button variant="outlined"  style={{color: 'black', borderColor:'black'}} onClick={() => onFollow (item.id)}>언팔로우</Button>
                                
                                 <S.MyStdiv>
                                     <img src={`/storage/${photoShop1(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />

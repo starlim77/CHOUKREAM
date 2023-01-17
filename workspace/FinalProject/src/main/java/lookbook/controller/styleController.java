@@ -49,6 +49,9 @@ public class styleController {
 	private StyleLikesService styleLikesService;
 	@Autowired
 	private StyleFollowingService styleFollowingService;
+	@Autowired
+	private MemberDAO memberDAO;
+	
 	
 	
 	//스타일 게시물 입력	
@@ -90,12 +93,12 @@ public class styleController {
 	
 		
 	//trending,detail 목록 가져오기
-//	@GetMapping(path="getStyleList")
-//	public List<StyleDTO> findAllByOrderBySeqDesc() {
-//		//DB에서 전체 게시글 데이터 를 가져온다				
-//		return styleService.findAllByOrderBySeqDesc();		
-//		
-//	}
+	@GetMapping(path="getStyleList")
+	public List<StyleDTO> findAllByOrderBySeqDesc() {
+		//DB에서 전체 게시글 데이터 를 가져온다				
+		return styleService.findAllByOrderBySeqDesc();		
+		
+	}
    
    //trending,detail => 좋아요 포함 전체 목록 가져오기
 	@GetMapping(path="list")
@@ -197,13 +200,37 @@ public class styleController {
 	
 	
 //팔로잉
-
-	//언팔
-	@DeleteMapping(path="follow/{id}")
-	public void unFollow(@AuthenticationPrincipal MemberDto follower, @ModelAttribute StyleDTO styleDTO) {
 	
+	//팔로우
+	@PostMapping(path="saveFollow/{followerId}/{followeeId}")
+	@ResponseBody
+	public void follow(@PathVariable int followerId, @PathVariable int followeeId) {
+		System.out.println("followee 글쓴사람 아이디"+followeeId);
+		System.out.println("follower 현재 로그인한 아이디"+ followerId);	
 		
+		MemberDto followerDto = memberDAO.findById(followerId);
+		MemberDto followeeDto = memberDAO.findById(followeeId);
+		//id로 일단은 수정???
+		//스타일에서는 member의 name을 아이디로 쓴다
 		
+		styleFollowingService.save(followerDto, followeeDto);	
+	}
+	//언팔
+	@DeleteMapping(path="unFollow/{followerid}/{followeeId}")
+	@ResponseBody
+	public void unFollow(@PathVariable int followerId, @PathVariable int followeeId) {
+
+		System.out.println("followee 글쓴사람 아이디"+followeeId);
+		System.out.println("follower 현재 로그인한 아이디"+ followerId);	
+
+		//MemberDto followerDto = memberDAO.findById(followerId);
+		//MemberDto followeeDto = memberDAO.findById(followeeId);
+		//id로 일단은 수정???
+		//스타일에서는 member의 name을 아이디로 쓴다
+
+		styleFollowingService.delete(followerId, followeeId);
+		//styleFollowingService.delete(followerDto, followeeDto);
+
 	}
 	
 	//팔로잉 페이지 팔로우 목록 불러오기
