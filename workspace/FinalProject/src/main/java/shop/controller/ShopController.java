@@ -31,6 +31,7 @@ import jakarta.servlet.http.HttpSession;
 import shop.bean.NewProductDTO;
 import shop.bean.NewProductOptionDTO;
 import shop.bean.NewSortListDTO;
+import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.dao.ShopDAO;
@@ -316,6 +317,8 @@ public class ShopController {
 	public void getSellingItem(@RequestParam int seq) {
 		System.out.println(seq);
 	}
+
+	
 }
 
 

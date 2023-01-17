@@ -98,7 +98,7 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 			+ "left outer join (select seq, count(*) AS order_count from completed_order_table group by seq) as e on a.seq = e.seq\r\n"
 			+ "order by release_date desc")
 	List<SortListDTO> releaseDateSort();
-
+	
 	//lookbook 
 	@Query("select productDTO from ProductDTO productDTO where productDTO.title like '%' || :keyword || '%' OR productDTO.subTitle like '%' || :keyword || '%' ")
 	public List<ProductDTO> search(@Param("keyword") String keyword);

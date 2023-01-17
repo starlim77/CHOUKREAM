@@ -164,4 +164,10 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 		newProductOptionRepository.save(newProductOptionDTO);
 		
 	}
+
+	@Override
+	public void addBuyOrder(OrderDTO orderDTO) {
+		orderRepository.save(orderDTO);
+	}
+	
 }

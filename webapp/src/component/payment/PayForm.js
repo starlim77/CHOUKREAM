@@ -26,6 +26,10 @@ const PayForm = () => {
 
     const type = searchParams.get('type');
     const productNum = searchParams.get('productNum');
+    const bidPrice = searchParams.get('bid');
+    if (bidPrice) {
+        Number(bidPrice.replaceAll(',', ''));
+    }
     const [size, setSize] = useState(searchParams.get('size'));
     const orderNum = searchParams.get('orderNum');
 
@@ -73,6 +77,17 @@ const PayForm = () => {
             })
             .catch(err => console.log(err));
     }, []);
+    const photoshop = itemImg => {
+        // console.log(itemImg)
+        // console.log(typeof(itemImg))
+        if (itemImg !== null && itemImg !== undefined) {
+            //console.log(itemImg);
+            const img = itemImg.split(',');
+            // console.log(img[0])
+            // console.log(typeof(img[0]))
+            return img[0];
+        }
+    };
 
     useEffect(() => {
         if (type === 'new') {
@@ -91,7 +106,7 @@ const PayForm = () => {
                         productNum,
                 )
                 .then(res => {
-                    setImgName(res.data.imgName);
+                    setImgName('/resellList/' + photoshop(res.data.imgName));
                     setModelNum(res.data.modelNum);
                     setProductName(res.data.title);
                     setProductSubName(res.data.subTitle);
@@ -105,18 +120,23 @@ const PayForm = () => {
                 .then(res => {
                     setProductPrice(res.data.orderPrice);
                     setPayPrice(res.data.orderPrice);
+                    if (bidPrice) {
+                        setProductPrice(bidPrice);
+                        setPayPrice(bidPrice);
+                        console.log('haha' + bidPrice);
+                    }
                 })
                 .catch(err => console.log(err));
         } else if (type === 'used') {
             axios
                 .get('http://localhost:8080/used/viewItem?seq=' + productNum)
                 .then(res => {
-                    setImgName(res.data.imgName);
+                    setImgName('/storage/' + res.data.imgName);
                     setProductName(res.data.productName);
                     setSize(res.data.size);
                     setFee(Math.floor(res.data.price * 0.05));
                     setPayPrice(
-                        res.data.price + Math.floor(res.data.price * 0.1),
+                        res.data.price + Math.floor(res.data.price * 0.05),
                     );
                     setProductPrice(res.data.price);
 
@@ -231,43 +251,66 @@ const PayForm = () => {
     // console.log(finalOrderNumber);
 
     const payment = () => {
-        const { IMP } = window;
-        IMP.init('imp11755173');
-        // IMP.request_pay(param, callback) 결제창 호출
+        if (bidPrice) {
+            axios
+                .post('http://localhost:8080/addBuyOrder', null, {
+                    params: {
+                        buyOrderUser: id,
+                        buy_sell: 0,
+                        orderPrice: Number(bidPrice.replaceAll(',', '')),
+                        seq: productNum,
+                        shipAddress,
+                        shipName,
+                        shipPhone,
+                        ask:
+                            ask !== '배송 시 요청사항을 선택해주세요' &&
+                            ask !== '요청사항 없음'
+                                ? ask
+                                : '',
+                        size,
+                    },
+                })
+                .then(alert('구매 입찰 완료'))
+                .catch();
+        } else {
+            const { IMP } = window;
+            IMP.init('imp11755173');
+            // IMP.request_pay(param, callback) 결제창 호출
 
-        IMP.request_pay(
-            {
-                // param
-                pg: 'html5_inicis',
-                pay_method: 'card',
-                merchant_uid: orderNumber,
-                name: productName,
-                // name: 'asdf',
-                amount: payPrice,
-                buyer_email: id,
-                buyer_name: '',
-                buyer_tel: phone,
-                buyer_addr: '',
-                buyer_postcode: '',
-            },
-            res => {
-                // callback
-                if (res.success) {
-                    // 결제 성공 시 로직,
-                    //alert('결제 완료');
-                    completePay();
-                    // changePoint(
-                    //     id,
-                    //     havePoint -
-                    //         Number(usePoint.replaceAll(',', '')) +
-                    //         Math.ceil(payPrice / 100),
-                    // );
-                } else {
-                    // 결제 실패 시 로직,
-                    alert('결제 취소');
-                }
-            },
-        );
+            IMP.request_pay(
+                {
+                    // param
+                    pg: 'html5_inicis',
+                    pay_method: 'card',
+                    merchant_uid: orderNumber,
+                    name: productName,
+                    // name: 'asdf',
+                    amount: payPrice,
+                    buyer_email: id,
+                    buyer_name: '',
+                    buyer_tel: phone,
+                    buyer_addr: '',
+                    buyer_postcode: '',
+                },
+                res => {
+                    // callback
+                    if (res.success) {
+                        // 결제 성공 시 로직,
+                        //alert('결제 완료');
+                        completePay();
+                        // changePoint(
+                        //     id,
+                        //     havePoint -
+                        //         Number(usePoint.replaceAll(',', '')) +
+                        //         Math.ceil(payPrice / 100),
+                        // );
+                    } else {
+                        // 결제 실패 시 로직,
+                        alert('결제 취소');
+                    }
+                },
+            );
+        }
     };
 
     const pointBtn = e => {
@@ -320,7 +363,7 @@ const PayForm = () => {
             ) : null}
             <S.Product>
                 <S.ProductInfo>
-                    <S.ProductImg src={'/storage/' + imgName}></S.ProductImg>
+                    <S.ProductImg src={imgName}></S.ProductImg>
                     <S.ProductEachInfo>
                         <S.ProductSerial>{modelNum}</S.ProductSerial>
                         <S.ProductName>{productName}</S.ProductName>

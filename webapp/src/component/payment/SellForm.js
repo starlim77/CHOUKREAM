@@ -16,12 +16,15 @@ const SellForm = () => {
 
     const [searchParams] = useSearchParams();
     const [modals, setModals] = useState([false, false, false]);
+    const [accountModal, setAccountModal] = useState(false);
 
     const [id, setId] = useState('');
     const [phone, setPhone] = useState('');
 
     const productNum = searchParams.get('productNum');
     const [size, setSize] = useState(searchParams.get('size'));
+    const bidPrice = Number(searchParams.get('bid').replaceAll(',', ''));
+    const orderPrice = bidPrice + Math.floor(bidPrice * 0.05);
 
     const [imgName, setImgName] = useState('');
     const [modelNum, setModelNum] = useState('');
@@ -45,6 +48,13 @@ const SellForm = () => {
             setCheckedList(checkedList.filter(checked => checked !== id));
         }
     };
+
+    const [account, setAccount] = useState({
+        bankName: '',
+        accountNumber: '',
+        accountName: '',
+    });
+    const { bankName, accountNumber, accountName } = account;
 
     useEffect(() => {
         axios
@@ -92,7 +102,6 @@ const SellForm = () => {
     const addComma = num => {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
-
     const sellOrder = () => {
         axios
             .post('http://localhost:8080/addSellOrder', null, {
@@ -100,9 +109,8 @@ const SellForm = () => {
                     seq: productNum,
                     buySell: 1,
                     size: size,
-                    orderPrice: 132000,
+                    orderPrice: orderPrice,
                     sellOrderUser: id,
-                    //uploadDate: new Date(),
                     shipName,
                     shipPhone,
                     shipAddress,
@@ -120,6 +128,17 @@ const SellForm = () => {
     const isShipInfoEmpty = object =>
         !Object.values(object).every(x => x !== null && x !== '');
 
+    const photoshop = itemImg => {
+        // console.log(itemImg)
+        // console.log(typeof(itemImg))
+        if (itemImg !== null && itemImg !== undefined) {
+            //console.log(itemImg);
+            const img = itemImg.split(',');
+            // console.log(img[0])
+            // console.log(typeof(img[0]))
+            return img[0];
+        }
+    };
     return (
         <S.PayForm>
             {modals[0] && (
@@ -157,7 +176,9 @@ const SellForm = () => {
             ) : null}
             <S.Product>
                 <S.ProductInfo>
-                    <S.ProductImg src={'/storage/' + imgName}></S.ProductImg>
+                    <S.ProductImg
+                        src={'/resellList/' + photoshop(imgName)}
+                    ></S.ProductImg>
                     <S.ProductEachInfo>
                         <S.ProductSerial>{modelNum}</S.ProductSerial>
                         <S.ProductName>{productName}</S.ProductName>
@@ -166,6 +187,28 @@ const SellForm = () => {
                     </S.ProductEachInfo>
                 </S.ProductInfo>
             </S.Product>
+            <S.OrderInfo>
+                <S.AddressText>판매 정산 계좌</S.AddressText>
+                <S.AddressDeleveryInfo>
+                    <S.AddressInfo>
+                        <S.AddressInfoBox>
+                            <S.AddressInfoTitle>계좌</S.AddressInfoTitle>
+                            <S.AddressInfoDesc>
+                                {bankName + '' + accountNumber}
+                            </S.AddressInfoDesc>
+                        </S.AddressInfoBox>
+                        <S.AddressInfoBox>
+                            <S.AddressInfoTitle>예금주</S.AddressInfoTitle>
+                            <S.AddressInfoDesc>{accountName}</S.AddressInfoDesc>
+                        </S.AddressInfoBox>
+                    </S.AddressInfo>
+                    <S.AddressChangeBtn
+                        type="button"
+                        value="변경"
+                        onClick={() => {}}
+                    ></S.AddressChangeBtn>
+                </S.AddressDeleveryInfo>
+            </S.OrderInfo>
             <S.Address>
                 <S.AddressTitle>
                     <S.AddressText>반송 주소</S.AddressText>
@@ -232,7 +275,7 @@ const SellForm = () => {
                 <S.AddressText>최종 주문 정보</S.AddressText>
                 <S.PriceTitle>정산금액</S.PriceTitle>
                 <S.PriceGreen>
-                    <S.PriceFont>{/*addComma(payPrice)*/}</S.PriceFont>원
+                    <S.PriceFont>{addComma(orderPrice)}</S.PriceFont>원
                 </S.PriceGreen>
                 <S.Hr></S.Hr>
                 <S.PriceInfo>
@@ -243,10 +286,7 @@ const SellForm = () => {
                         <S.PriceDD
                             style={{ fontWeight: 700, fontSize: '14px' }}
                         >
-                            <S.PriceFont>
-                                {/*addComma(productPrice)*/}
-                            </S.PriceFont>
-                            원
+                            <S.PriceFont>{addComma(bidPrice)}</S.PriceFont>원
                         </S.PriceDD>
                     </S.PriceDL>
                     <S.PriceDL>
@@ -255,7 +295,9 @@ const SellForm = () => {
                     </S.PriceDL>
                     <S.PriceDL>
                         <S.PriceDT>수수료</S.PriceDT>
-                        <S.PriceDD>{'+' + 0 + '원'}</S.PriceDD>
+                        <S.PriceDD>
+                            {'+' + addComma(Math.floor(bidPrice * 0.05)) + '원'}
+                        </S.PriceDD>
                     </S.PriceDL>
                     <S.PriceDL>
                         <S.PriceDT>배송비</S.PriceDT>
