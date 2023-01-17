@@ -39,6 +39,7 @@ public class MyServiceImpl implements MyService{
 	private PointDAO pointDAO;
 	@Autowired
 	private GradeDAO gradeDAO;
+	@Autowired
 	private MemberDAO memberDAO;
 	@Autowired
 	private ShopDAO shopDAO;
@@ -153,7 +154,6 @@ public class MyServiceImpl implements MyService{
 	@Override
 	public List<SellBuyHistory> getBoughtUsed(long memberSeq) {
 		String email = memberDAO.findById(memberSeq).get().getEmail();
-		
 		return shopDAO.getBoughtUsed(email);
 	}
 	

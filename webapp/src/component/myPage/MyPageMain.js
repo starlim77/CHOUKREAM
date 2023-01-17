@@ -11,8 +11,8 @@ const MyPageMain = () => {
     const [id, setId] = useState();
     const [point, setPoint] = useState();
     const navigate = useNavigate();
-    const [sellingList, setSellingList] = useState([]);
-    const [buyingList, setBuyingList] = useState([]);
+    const [soldList, setSoldList] = useState([]);
+    const [boughtList, setBoughtList] = useState([]);
 
     //회원정보 불러옴 / 회원 등급 불러옴
     useEffect(() => {
@@ -26,14 +26,14 @@ const MyPageMain = () => {
         //거래 내역 가져옴
         axios
             .get(
-                `http://localhost:8080/my/getSellingHistory?memberSeq=${memberSeq}`,
+                `http://localhost:8080/my/getSoldHistory?memberSeq=${memberSeq}`,
             )
-            .then(res => setSellingList(res.data));
-        axios
+            .then(res => setSoldList(res.data));
+            axios
             .get(
-                `http://localhost:8080/my/getBuyingHistory?memberSeq=${memberSeq}`,
+                `http://localhost:8080/my/getBoughtHistory?memberSeq=${memberSeq}`,
             )
-            .then(res => setBuyingList(res.data));
+            .then(res => setBoughtList(res.data));
     }, []);
 
     useEffect(() => {
@@ -76,12 +76,12 @@ const MyPageMain = () => {
             <S.SellSection>
                
                 <S.History onClick={onSellingHistory}>
-                    {buyingList.length === 0 ? (
+                    {boughtList.length === 0 ? (
                         <S.History>
                             <S.NoneHistory>거래 내역이 없습니다</S.NoneHistory>
                         </S.History>
                     ) : (
-                        buyingList.map(item => (
+                        boughtList.map((item) => (
                             <HistoryProduct key={item.seq} item={item} />
                         ))
                     )}
@@ -92,13 +92,13 @@ const MyPageMain = () => {
             <S.SectionTitle>판매내역</S.SectionTitle>
             <S.BuySection>
                
-                {sellingList.length === 0 ? (
+                {soldList.length === 0 ? (
                     <S.History>
                         <S.NoneHistory>거래 내역이 없습니다</S.NoneHistory>
                     </S.History>
                 ) : (
                     <S.History onClick={onBuyHistory}>
-                        {sellingList.map(item => (
+                        {soldList.map((item) => (
                             <HistoryProduct key={item.seq} item={item} />
                         ))}
                     </S.History>
