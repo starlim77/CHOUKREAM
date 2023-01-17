@@ -16,13 +16,15 @@ const MainProduct = ({ title, subTitle }) => {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/getRecentReleaseList?rn=${page}`)
+            .get(`http://localhost:8080/shop/getRecentReleaseList?rn=${page}`)
             .then(
                 res =>
-                    res.data.length !== 0 && setProducts(...products, res.data),
+                    res.data.length !== 0 &&
+                    setProducts([...products, ...res.data]),
             )
             .catch(error => console.log(error));
     }, [page]);
+    console.log('product', products);
     return (
         <S.MainProductWrap>
             <S.SectionTitle>{title}</S.SectionTitle>
@@ -32,9 +34,11 @@ const MainProduct = ({ title, subTitle }) => {
                     return <ProductItem key={idx} item={product} />;
                 })}
             </S.ItemtWrap>
-            <S.MoreButton onClick={() => handleMoreClick()}>
-                더보기
-            </S.MoreButton>
+            {page < 2 && (
+                <S.MoreButton onClick={() => handleMoreClick()}>
+                    더보기
+                </S.MoreButton>
+            )}
         </S.MainProductWrap>
     );
 };

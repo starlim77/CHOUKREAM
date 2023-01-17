@@ -1,5 +1,7 @@
 package shop.service;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -82,6 +84,26 @@ public class ShopServiceImpl implements ShopService {
 		//if (shopDAO.findbySeq(productDTO.getSeq()) == null) {
 			shopDAO.save(productDTO);
 		// }
+	}
+
+	@Override
+	public List<ProductDTO> getRecentReleaseList(int rn) {
+		int start = 0;
+		int end = 0;
+		if(rn==0) {
+			start = 1;
+			end = 4;
+		}
+		else if(rn==1) {
+			start = 5;
+			end = 8;
+		}
+		else if(rn==2) {
+			start = 9;
+			end = 12;
+		}
+		
+		return shopDAO.getRecentReleaseList(start,end);
 	}
 
 	

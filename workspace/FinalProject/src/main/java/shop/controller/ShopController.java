@@ -24,11 +24,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+//import apple.laf.JRSUIConstants.Size;
 import jakarta.servlet.http.HttpSession;
 import shop.bean.NewProductDTO;
 import shop.bean.NewProductOptionDTO;
 import shop.bean.ProductDTO;
 import shop.bean.UsedItemDTO;
+import shop.dao.ShopDAO;
 import shop.service.NewProductService;
 import shop.bean.ProductSizeDTO;
 import shop.bean.SortListDTO;
@@ -265,6 +267,13 @@ public class ShopController {
 		newProductService.upload(newProductDTO);
 
 	 }
+	
+	@GetMapping(path = "getRecentReleaseList")
+	public List<ProductDTO> getRecentReleaseList(@RequestParam int rn){
+		System.out.println("size == " + shopService.getRecentReleaseList(rn).size());
+		return shopService.getRecentReleaseList(rn);
+	}
+	
 
 }
 

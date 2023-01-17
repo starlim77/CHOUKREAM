@@ -60,6 +60,9 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 	
 	@Query("SELECT u FROM ProductDTO u WHERE u.category like %:keyword%")
 	List<ProductDTO> getSearchCategory(String keyword);
+	
+	@Query(nativeQuery = true, value = "select * from (select row_number() over(order by seq desc) as rn, seq, brand, category, color, gender, img_name, model_num, release_date, release_price, sub_title, tag, title, category_detail from product_table) t where rn >= :start and rn <= :end")
+	public List<ProductDTO> getRecentReleaseList(int start, int end);
 
 
 }

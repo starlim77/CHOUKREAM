@@ -104,7 +104,7 @@ const PayForm = () => {
                     setImgName(res.data.imgName);
                     setProductName(res.data.productName);
                     setSize(res.data.size);
-                    setFee(Math.floor(res.data.price * 0.1));
+                    setFee(Math.floor(res.data.price * 0.05));
                     setPayPrice(
                         res.data.price + Math.floor(res.data.price * 0.1),
                     );

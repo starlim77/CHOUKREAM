@@ -79,7 +79,7 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route element={<Layout auth={auth} />}>
-                    <Route path="/" element="" />
+                    <Route path="/" element={<Main />} />
 
                     {/* shop */}
                     <Route path="shop" element={<Shop />} />
@@ -242,9 +242,12 @@ function App() {
                     <Route path="products/:seq" element={<Products />} />
                     <Route
                         path="pay/payForm"
-                        element={<PayForm></PayForm>}
+                        element={
+                            <RequireAuth auth={auth}>
+                                <PayForm></PayForm>
+                            </RequireAuth>
+                        }
                     ></Route>
-                    <Route path="pay/payForm" element={<PayForm />}></Route>
                     <Route path="Used/usedMain" element={<UsedMain />} />
                     <Route path="Used/usedItem" element={<UsedItem />} />
                     <Route path="Used/usedWrite" element={<UsedWrite />} />

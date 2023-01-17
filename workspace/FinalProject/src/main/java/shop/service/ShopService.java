@@ -30,6 +30,8 @@ public interface ShopService {
 
 	public void resellUpload(ProductDTO productDTO);
 
+	public List<ProductDTO> getRecentReleaseList(int rn);
+
 
 	
 }
