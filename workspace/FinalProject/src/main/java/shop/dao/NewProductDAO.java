@@ -39,41 +39,29 @@ public interface NewProductDAO extends JpaRepository<NewProductDTO, Integer> {
 	public Optional<NewProductDTO> findBySeq(int seq);
 
 	
-	@Query( nativeQuery = true, value= "select a.seq, a.brand, ifnull(b.order_price, '-') as min_price ,ifnull(c.order_price, '-') \r\n"
-			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count, a.category, a.tag, a.gender from new_product as a \r\n"
-			+ "left outer join (select seq, min(order_price) AS order_price from order_table where buy_sell = 1 group by seq ) as b on a.seq = b.seq\r\n"
-			+ "left outer join (select seq, max(order_price) AS order_price from order_table where buy_sell = 0 group by seq ) as c on a.seq = c.seq\r\n"
-			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'resell' group by seq) as d on a.seq = d.seq\r\n"
-			+ "left outer join (select seq, count(*) AS order_count from completed_order_table group by seq) as e on a.seq = e.seq\r\n"
+	@Query( nativeQuery = true, value= "select a.seq, a.brand, a.price, a.title, a.sub_title, a.img_name, b.like_count, c.order_count, a.category, a.tag, a.gender, a.release_date from new_product as a \r\n"
+			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'new' group by seq) as b on a.seq = b.seq\r\n"
+			+ "left outer join (select product_num, type, count(*) AS order_count from complete_payment where type = 'new' group by product_num) as c on a.seq = c.product_num\r\n"
 			+ "order by order_count desc")
 	public List<NewSortListDTO> newFavourSort();
 	
-	@Query( nativeQuery = true, value= "select a.seq, a.brand, ifnull(b.order_price, '-') as min_price ,ifnull(c.order_price, '-') \r\n"
-			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count, a.category, a.tag, a.gender from new_product as a \r\n"
-			+ "left outer join (select seq, min(order_price) AS order_price from order_table where buy_sell = 1 group by seq ) as b on a.seq = b.seq\r\n"
-			+ "left outer join (select seq, max(order_price) AS order_price from order_table where buy_sell = 0 group by seq ) as c on a.seq = c.seq\r\n"
-			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'resell' group by seq) as d on a.seq = d.seq\r\n"
-			+ "left outer join (select seq, count(*) AS order_count from completed_order_table group by seq) as e on a.seq = e.seq\r\n"
-			+ "order by (min_price + 0) asc")
+	@Query( nativeQuery = true, value= "select a.seq, a.brand, a.price, a.title, a.sub_title, a.img_name, b.like_count, c.order_count, a.category, a.tag, a.gender, a.release_date from new_product as a \r\n"
+			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'new' group by seq) as b on a.seq = b.seq\r\n"
+			+ "left outer join (select product_num, type, count(*) AS order_count from complete_payment where type = 'new' group by product_num) as c on a.seq = c.product_num\r\n"
+			+ "order by price asc")
 	public List<NewSortListDTO> newBuySort(); // 즉시 구매가 낮은순 
 
 	
-	@Query(nativeQuery = true, value = "select a.seq, a.brand, ifnull(b.order_price, '-') as min_price ,ifnull(c.order_price, '-') \r\n"
-			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count, a.category, a.tag, a.release_date from new_product as a \r\n"
-			+ "left outer join (select seq, min(order_price) AS order_price from order_table where buy_sell = 1 group by seq ) as b on a.seq = b.seq\r\n"
-			+ "left outer join (select seq, max(order_price) AS order_price from order_table where buy_sell = 0 group by seq ) as c on a.seq = c.seq\r\n"
-			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'resell' group by seq) as d on a.seq = d.seq\r\n"
-			+ "left outer join (select seq, count(*) AS order_count from completed_order_table group by seq) as e on a.seq = e.seq\r\n"
-			+ "order by (max_price + 0) desc")
+	@Query(nativeQuery = true, value = "select a.seq, a.brand, a.price, a.title, a.sub_title, a.img_name, b.like_count, c.order_count, a.category, a.tag, a.gender, a.release_date from new_product as a \r\n"
+			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'new' group by seq) as b on a.seq = b.seq\r\n"
+			+ "left outer join (select product_num, type, count(*) AS order_count from complete_payment where type = 'new' group by product_num) as c on a.seq = c.product_num\r\n"
+			+ "order by price desc")
 	public List<NewSortListDTO> newSellSort(); // 즉시 판매가 높은순
 	
 	
-	@Query(nativeQuery = true, value = "select a.seq, a.brand, ifnull(b.order_price, '-') as min_price ,ifnull(c.order_price, '-') \r\n"
-			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count, a.category, a.tag, a.gender, a.release_date from new_product as a \r\n"
-			+ "left outer join (select seq, min(order_price) AS order_price from order_table where buy_sell = 1 group by seq ) as b on a.seq = b.seq\r\n"
-			+ "left outer join (select seq, max(order_price) AS order_price from order_table where buy_sell = 0 group by seq ) as c on a.seq = c.seq\r\n"
-			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'resell' group by seq) as d on a.seq = d.seq\r\n"
-			+ "left outer join (select seq, count(*) AS order_count from completed_order_table group by seq) as e on a.seq = e.seq\r\n"
+	@Query(nativeQuery = true, value = "select a.seq, a.brand, a.price, a.title, a.sub_title, a.img_name, b.like_count, c.order_count, a.category, a.tag, a.gender, a.release_date from new_product as a \r\n"
+			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'new' group by seq) as b on a.seq = b.seq\r\n"
+			+ "left outer join (select product_num, type, count(*) AS order_count from complete_payment where type = 'new' group by product_num) as c on a.seq = c.product_num\r\n"
 			+ "order by release_date desc")
 	public List<NewSortListDTO> newReleaseDateSort(); // 발매일순 
 	

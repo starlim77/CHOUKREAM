@@ -3,6 +3,7 @@ import * as Ma from './ManagerStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import ReList from '../resell/ReList';
 
 const ManagerPage = () => {
     
