@@ -17,6 +17,6 @@ width: 70%;
 `
 export const MainRight = styled.div`
 display: flex;
-flex-direction: column;
+flex-direction: row;
 width: 100%;
 `

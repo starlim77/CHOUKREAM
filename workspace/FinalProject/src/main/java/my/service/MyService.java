@@ -1,10 +1,14 @@
 package my.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import my.bean.AddressDTO;
+import my.bean.GradeDTO;
 import my.bean.PointDTO;
+import shop.bean.CompletedOrderDTO;
+import shop.bean.ProductDTO;
 
 public interface MyService {
 	
@@ -17,5 +21,23 @@ public interface MyService {
 	public void changePoint(PointDTO pointDTO);
 	
 	public Optional<AddressDTO> getDefaultAddress(String id);
+
+	public Optional<GradeDTO> getGrade(String id);
+
+	public void saveGradeNewMember(String email);
 	
+	public List<AddressDTO> deleteAddress(String id, long seq);
+
+	public List<ProductDTO> getBuy(long id);
+
+	public List<ProductDTO> getDoneBuy(long id);
+
+	public List<ProductDTO> getSell(long id);
+
+	public List<ProductDTO> getSold(long id);
+
+	public Optional<AddressDTO> getAddressBySeq(long seq);
+
+	public AddressDTO addressUpdate(AddressDTO addressDTO);
+
 }

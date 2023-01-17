@@ -1,22 +1,25 @@
 package member.bean;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@AllArgsConstructor @NoArgsConstructor  //lookbook
 @Data
 @Entity
 @Table(name = "member")
-@NoArgsConstructor
 @SequenceGenerator(name = "MEMBER_SEQ_GENERATOR", sequenceName = "MEMBER_SEQ", initialValue = 1, allocationSize = 1)
 public class MemberDto {
 	@Id
@@ -72,4 +75,5 @@ public class MemberDto {
         this.emailOption = emailOption;
         this.provider = provider;
     }
+
 }

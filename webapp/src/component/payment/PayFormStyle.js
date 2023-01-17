@@ -13,11 +13,58 @@ export const Address = styled.section`
     width: 700px;
     box-sizing: border-box;
     margin: 0 auto;
+    /* margin-top: 20px; */
+    padding: 32px;
+    background-color: white;
+`;
+export const Product = styled.section`
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+    box-sizing: border-box;
+    margin: 0 auto;
     margin-top: 20px;
     padding: 32px;
     background-color: white;
 `;
-
+export const ProductInfo = styled.div`
+    display: flex;
+    align-items: center;
+`;
+export const ProductImg = styled.img`
+    height: 80px;
+    width: 80px;
+    border: none;
+    border-radius: 5px;
+`;
+export const ProductEachInfo = styled.div`
+    height: 80px;
+    margin-left: 18px;
+    padding: 2px 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`;
+export const ProductSerial = styled.span`
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: -10px;
+`;
+export const ProductName = styled.span`
+    font-size: 15px;
+    font-weight: 350;
+    margin-bottom: -6px;
+`;
+export const ProductSubName = styled.span`
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(34, 34, 34, 0.5);
+`;
+export const ProductSize = styled.span`
+    font-size: 15px;
+    font-weight: 700;
+`;
 export const AddressTitle = styled.div`
     display: flex;
     width: 100%;
@@ -228,6 +275,13 @@ export const Price = styled.dd`
     font-size: 20px;
     font-weight: 700;
 `;
+export const PriceGreen = styled.dd`
+    display: flex;
+    justify-content: flex-end;
+    color: #31b46e;
+    font-size: 20px;
+    font-weight: 700;
+`;
 export const PriceInfo = styled.div`
     display: flex;
     flex-direction: column;
@@ -334,6 +388,11 @@ export const PayPriceShow = styled.dl`
 `;
 export const PayPriceShowDiv = styled.div`
     color: #f15746;
+    font-size: 20px;
+    font-weight: 700;
+`;
+export const SellPriceShowDiv = styled.div`
+    color: #31b46e;
     font-size: 20px;
     font-weight: 700;
 `;

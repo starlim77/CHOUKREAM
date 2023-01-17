@@ -1,22 +1,25 @@
 package shop.service;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Service;
 
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
-import shop.bean.NewNewProductDTO;
+import shop.bean.NewProductDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
 import shop.bean.SizeMinDTO;
 import shop.bean.UsedItemLikeDTO;
 import shop.dao.CompletedOrderRepository;
-import shop.dao.NewNewProductRepository;
+import shop.dao.NewProductDAO;
 import shop.dao.OrderRepository;
 import shop.dao.ProductSizeRepository;
 import shop.dao.ShopDAO;
@@ -33,7 +36,7 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	@Autowired
 	private ProductSizeRepository productSizeRepository; 
 	@Autowired
-	private NewNewProductRepository newNewProductRepository;
+	private NewProductDAO newProductDAO;
 	@Autowired
 	private UsedItemLikeDAO useItemLikeDAO;
 	
@@ -109,12 +112,13 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	}
 	
 	@Override
-	public Optional<NewNewProductDTO> getNewProduct(int seq) {
-		return newNewProductRepository.findById(seq);
+	public Optional<NewProductDTO> getNewProduct(int seq) {
+		return newProductDAO.findById(seq);
 	}
 	
 	@Override
 	public Long likeCount(int seq, String shopKind) {
 		return useItemLikeDAO.likeCount(seq, shopKind);
 	}
+
 }

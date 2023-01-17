@@ -1,14 +1,22 @@
 import axios from 'axios';
 import React, { useEffect, useState} from 'react';
-import {useParams, useSearchParams } from 'react-router-dom';
+import {useNavigate, useSearchParams } from 'react-router-dom';
 import UpdateBtnModal from './UpdateBtnModal';
 import * as U from './UsedItemStyle';
-const UsedItem = () => {
+import jwt_decode from 'jwt-decode';
 
+const UsedItem = () => {
+   
+    const navigate = useNavigate();
     // console.log("seq = " + location.seq +" seq = "+ {seq})
     const shopKind = 'used'
 
+    const[currentId,setCurrentId]=useState('user');
+    const[isWriter,setIsWriter]=useState(false);
+
     const [searchParams,setSearchParams] = useSearchParams();
+
+    const[reportHistory,setReportHistory]=useState(false);
 
     const [form,setForm]=useState({
         id:'',
@@ -19,8 +27,11 @@ const UsedItem = () => {
         price:'',
         likes:'',
         contents:'',
-        hashtag:[]
+        hashTag:[],
+        sellingState:true,
+        shopKind:''
     });
+    
 
     const [likeForm, setLikeForm] = useState({
         seq:'',
@@ -31,22 +42,49 @@ const UsedItem = () => {
 
     
     useEffect(()=>{
+
+        if(localStorage.getItem('accessToken')){
+            const token = localStorage.getItem('accessToken');
+            const tokenJson = jwt_decode(token);
+            const sub = tokenJson['sub'];
+            
+            if(tokenJson['auth']==='ROLE_ADMIN'){
+                    setIsWriter(true);
+                    setCurrentId('ADMIN');
+            }else{
+            
+                axios.get(`http://localhost:8080/used/getId?seq=${sub}`)
+                    .then(res=>{setCurrentId(res.data)})
+                    .catch(err=>console.log(err))
+            }
+        }
+
         axios.get('http://localhost:8080/used/viewItem?seq=' + searchParams.get('seq'))
-        .then(res => setForm(res.data))
-        .then(axios.get('http://localhost:8080/used/itemLike?seq=' + searchParams.get('seq') + '&id=' + 'asd' + '&shopKind=' + shopKind)
-                    .then(res => res.data ? setLikeForm(res.data) : '')
-                    .catch(error => console.log(error)))
-        .catch(error => console.log(error))
+            .then(res => setForm(res.data))
+            .catch(error => console.log(error))
 
     },[])
 
     //나중에 세션값 들어오는 거랑 글 작성자랑 맞는지 확인하는 과정
-    const[isWriter,setIsWriter]=useState(false);
+    
     useEffect(()=>{
         //여기서 글로 써놓은 게 나중에 세션을 적어줄 공간
-        setIsWriter(form.id==='홍헌')
+        if(currentId===form.id){
+            setIsWriter(true);
+        }
 
     },[form.id])
+    
+    useEffect(()=>{
+        axios.get(`http://localhost:8080/used/reportHistory?seq=${searchParams.get('seq')}&reportId=${currentId}`)
+            .then(res=>setReportHistory(res.data))
+            .catch(err=>console.log(err))
+
+        axios.get('http://localhost:8080/used/itemLike?seq=' + searchParams.get('seq') + '&id=' + currentId + '&shopKind=' + shopKind)
+            .then(res => res.data ? setLikeForm(res.data) : '')
+            .catch(error => console.log(error))
+    },[currentId])
+
 
     const [splitImg,setSplitImg] = useState([])
 
@@ -88,7 +126,7 @@ const UsedItem = () => {
         // // 데이터가 없어서 강제 주입
         // setLikeForm({...likeForm , seq:searchParams.get('seq'),id:'asd'})
 
-        axios.post(`http://localhost:8080/used/likeSet?seq=`+searchParams.get('seq') + '&id=' + 'asd' + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
+        axios.post(`http://localhost:8080/used/likeSet?seq=`+searchParams.get('seq') + '&id=' + currentId + '&userLike=' + likeForm.userLike + '&shopKind=' + shopKind)
         // axios.post('http://localhost:8080/used/likeSet',null,{params:likeForm})
         // axios.get('http://localhost:8080/used/likeSet'+   likeForm) 나중에 다시 해보기
         .then()
@@ -98,6 +136,7 @@ const UsedItem = () => {
 
     //이미지 순서 바꾸기
     const changImg=(e)=>{
+        console.log(form.hashTag);
         var id = e.target.getAttribute("id");
         //진영씨 방법
         //1. if로 아이디 값 걸러서 바꿔주기
@@ -114,24 +153,73 @@ const UsedItem = () => {
 
     }
 
+    useEffect(()=>{
+    
+        var decoding= decodeURI(form.hashTag).split(',');
+        setForm({
+            ...form,
+            hashTag: decoding});
+        
+        //form이 바뀌는 걸로 설정하면 무한 루프도니까 한 번만 돌게 form.title사용
+    },[form.title])
+    
+    const soldOut=()=>{
+       
+        
+        axios.put('http://localhost:8080/used/soldOut','',({params:{
+            ...form,
+             hashTag : encodeURI(form.hashTag)
+         }}))
+        .then(alert('판매완료 처리되었습니다.'))
+        .then(window.location.reload())
+        .catch(err=>console.log(err))
+       
+    }
+
+    const onSale=()=>{
+        // setForm({...form, title:form.title.substr(6)})
+       
+        axios.put('http://localhost:8080/used/onSale','',({params:{
+            ...form,
+             hashTag : encodeURI(form.hashTag)
+         }}))
+        .then(alert('판매중 처리되었습니다.'))
+        .then(window.location.reload())
+        .catch(err=>console.log(err))
+    }     
+        
+
+    const addComma = (price) => {
+        price = String(price);
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원';
+    }
+
+    const onSettle=()=>{
+        navigate(`/pay/payForm?type=${form.shopKind}&productNum=${form.seq}`)
+    }
+
     return (
 
         <>
         <U.ModalDiv>
-            <UpdateBtnModal writer={isWriter} seq={searchParams.get('seq')} imgNameSend={form.imgName}></UpdateBtnModal>
+            <UpdateBtnModal currentId={currentId} isWriter={isWriter} form={form} setForm={setForm} onSale={onSale} soldOut={soldOut}
+                        seq={searchParams.get('seq')} imgNameSend={form.imgName} reportHistory={reportHistory}></UpdateBtnModal>
         </U.ModalDiv>
         <U.BaseBody>
+            
             <U.ImgBody>
                 <U.MainImg src={`/storage/${mainImg}`} alt={mainImg}></U.MainImg>
-                {subImg1&&<U.SmallImg src={`/storage/${subImg1}`} id="1" onClick={e=>changImg(e)}></U.SmallImg>}
-                {subImg2&&<U.SmallImg src={`/storage/${subImg2}`} id="2" onClick={e=>changImg(e)}></U.SmallImg>}
-                {subImg3&&<U.SmallImg src={`/storage/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg>}
+                <U.SmallImgBody>
+                    {subImg1&&<U.SmallImg src={`/storage/${subImg1}`} id="1" onClick={e=>changImg(e)}></U.SmallImg>}
+                    {subImg2&&<U.SmallImg src={`/storage/${subImg2}`} id="2" onClick={e=>changImg(e)}></U.SmallImg>}
+                    {subImg3&&<U.SmallImg src={`/storage/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg>}
+                </U.SmallImgBody>
             </U.ImgBody>&emsp;
 
 
             <U.BaseDiv>
             <U.TitleWrapper>
-                <U.TitleSpan>{form.title}</U.TitleSpan>
+                <U.TitleSpan>{!form.sellingState&&<span>[판매완료]</span>}{form.title}</U.TitleSpan>
             </U.TitleWrapper>
             
 
@@ -141,13 +229,13 @@ const UsedItem = () => {
             <br/>
 
             <U.SizeWrapper>
-                <U.SizeSpan>사이즈 : </U.SizeSpan>
+                <U.Sizetitle>사이즈</U.Sizetitle>
                 <U.SizeSpan>{form.size}</U.SizeSpan>
             </U.SizeWrapper>
 
             <U.PriceWrapper>
-                <U.PriceSpan>가격 : </U.PriceSpan>
-                <U.PriceSpan>{form.price}</U.PriceSpan>
+                <U.PriceSpan>거래가</U.PriceSpan>
+                <U.PriceSpan>{addComma(form.price)}</U.PriceSpan>
             </U.PriceWrapper>
 
             <U.InterestWrapper onClick={onInterest}>
@@ -166,14 +254,15 @@ const UsedItem = () => {
             <br></br>
 
 
-                <U.ChatButton>채팅하기</U.ChatButton>
+                {/* <U.ChatButton>채팅하기</U.ChatButton> */}
+                <U.SettlementButton onClick={onSettle}>결제하기</U.SettlementButton>
             </U.BaseDiv>
         </U.BaseBody>
         
         <U.BottomDiv>
             <U.ProfileWrapper>
                 <U.ProfileImg></U.ProfileImg>
-                <U.ProfileSpan>아이디/거래수/거래이슈</U.ProfileSpan>
+                <U.ProfileSpan>작성자:{form.id}/거래수/거래이슈</U.ProfileSpan>
             </U.ProfileWrapper>
         </U.BottomDiv>
 

@@ -3,6 +3,7 @@ package lookbook.bean;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,13 +31,18 @@ public class StyleDTO {
 	
 	private Timestamp logtime;	
 	
-	private int hit;
+	private int hit;	
 	
 	private List<MultipartFile> styleFile;//controller에 파일 담는용도
 	private List<String> originalFileName; // 원본파일 이름
 	private List<String> storedFileName;   //서버 저장용 파일 이름
 	private int fileAttached; // 파일 첨부 여부 (첨부1, 미첨부 0)
+	
+	private int commentCount;
+	
+	private int likesCount;
 
+	
 	public static StyleDTO toStyleDTO(StyleEntity styleEntity) {
 		StyleDTO styleDTO = new StyleDTO();
 		
@@ -71,6 +77,9 @@ public class StyleDTO {
 			
 			
 		}
+		
+		styleDTO.setCommentCount(styleEntity.getCommentCount());
+		
 		
 		return styleDTO;
 	}

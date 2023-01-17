@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {} from 'react';
 import * as Li from './NewListStyle';
 
 const NewProductList = ({
@@ -13,9 +13,9 @@ const NewProductList = ({
 }) => {
     //
 
-    // console.log('ㅎㅎㅇ')
+    console.log('ㅎㅎㅇ')
     // 왜 2번이 나올까 처음엔 [] 그다음엔 [객체]
-    // console.log(copy_newProductList);
+    console.log(copy_newProductList);
 
     const arr = JSON.stringify(item.imgName).split(',');
     const str = arr[0].slice(1);
@@ -31,16 +31,6 @@ const NewProductList = ({
     // if(copy_newProductList !== ''){
     //     const arr = JSON.stringify(copy_newProductList.imgName).split(',');
     // }
-
-    if (copy_newProductList == undefined) {
-        console.log(copy_newProductList);
-        if (copy_newProductList !== '') {
-            const arr = copy_newProductList.map(item =>
-                item.imgName.split(','),
-            );
-        }
-        //console.log(copy_newProductList.imgName[0]);
-    }
 
     // console.log('copy_newProductList ' + copy_newProductList);
     // var check = copy_newProductList !== undefined ? true : false;
@@ -66,37 +56,36 @@ const NewProductList = ({
     // }
 
     const checkHandler = e => {
-        console.log('e.target.id ' + e.target.id);
-        console.log('e.target.isChecked ' + e.target.checked);
+        // console.log('e.target.id ' + e.target.id);
+        // console.log('e.target.isChecked ' + e.target.checked);
         // console.log('copy_newProductList !!  ' + copy_newProductList);
 
         copy_newProductList.map((item, index) => {
-            console.log('e.target.id ' + e.target.id);
-            console.log('item.seq ' + item.seq);
+            // console.log('e.target.id ' + e.target.id);
+            // console.log('item.seq ' + item.seq);
             if (e.target.id == item.seq) {
                 copy_newProductList[index].isChecked = !checked;
                 setChecked(!checked);
                 setDisabledCheck(!disabledCheck);
             }
-            // const test = e.target.id === item.seq ? item.seq : '';
 
-            // console.log("테스트 " + test)
-            // copy_newProductList[e.target.id - 1].isChecked;
-            console.log(copy_newProductList);
+            // console.log(copy_newProductList); 잠깐주석
             // 사용자가 checkbox 클릭할때마다 isChecked 속성을 true false로 바꿔줌
         });
         copy_newProductList.map(item => {
             if (item.isChecked === true) {
-                console.log('제발요 ㅠㅠ ');
+                // console.log('제발요 ㅠㅠ ');
                 setCheckedId(
                     copy_newProductList.find(item2 => item2.isChecked === true).seq,
                 );
-                console.log(checkedId);
-                console.log(copy_newProductList);
+                // console.log(checkedId);
+                // console.log(copy_newProductList);
             }
         });
     };
-
+    
+    // 1/13 여기가 문제임 
+    
     return (
         <>
             {/* map 오류 뜰때 && 연산자 씀으로 list가 있을때만 돌릴수 있다 */}
@@ -119,12 +108,12 @@ const NewProductList = ({
                 </Li.Td>
                 <Li.Td>{item.brand}</Li.Td>
                 <Li.Td>{item.category}</Li.Td>
-                <Li.Td>{item.categoryDetail}</Li.Td>
+                <Li.Td>{item.comRegNo}</Li.Td>
                 <Li.Td>{item.color}</Li.Td>
-                <Li.Td>{item.modelNum}</Li.Td>
+                <Li.Td>{item.representative}</Li.Td>
                 <Li.Td>{item.price}</Li.Td>
-                <Li.Td>{item.releaseDate}</Li.Td>
                 <Li.Td>{item.registerProductDate}</Li.Td>
+                <Li.Td>{item.manufacturer}</Li.Td>
                 <Li.Td>{item.title}</Li.Td>
                 <Li.Td>{item.subTitle}</Li.Td>
             </Li.Tr>

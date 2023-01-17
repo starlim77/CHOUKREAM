@@ -1,5 +1,9 @@
 package pay.bean;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,10 +17,10 @@ import lombok.Data;
 @Data
 public class CompletePaymentDTO {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
-	private Long seq;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@Column
+//	private Long seq;
 	
 	@Column
 	private String id;
@@ -28,8 +32,12 @@ public class CompletePaymentDTO {
 	private int productNum;
 	
 	@Column
+	private int orderTableSeq;
+	
+	@Column
 	private String size;
 	
+	@Id
 	@Column
 	private String orderNumber;
 	
@@ -57,4 +65,12 @@ public class CompletePaymentDTO {
 	@Column
 	private String status;
 	
+	@Column
+	private int seq=0;
+	
+	@CreationTimestamp
+	private LocalDateTime logTime;
+	
+	@Column
+	private int accuralPoint;
 }

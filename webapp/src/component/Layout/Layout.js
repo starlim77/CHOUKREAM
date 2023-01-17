@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 import * as S from './style';
 
-const Layout = () => {
+const Layout = ({auth}) => {
     return (
         <>
-            <Header />
+            <Header auth={auth}/>
             <S.LayoutWraaper>
                 <Outlet />
             </S.LayoutWraaper>
-            <footer></footer>   
+            <Footer />
         </>
     );
 };

@@ -3,10 +3,12 @@ package shop.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
+
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
-import shop.bean.NewNewProductDTO;
+import shop.bean.NewProductDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
@@ -43,7 +45,7 @@ public interface ShopDetailService {
 
 	public List<BrandListDTO> getBrandList(int seq, String brand);
 
-	public Optional<NewNewProductDTO> getNewProduct(int seq);
+	public Optional<NewProductDTO> getNewProduct(int seq);
 
 	public Long likeCount(int seq, String shopKind);
 

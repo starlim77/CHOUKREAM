@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import jakarta.transaction.Transactional;
+import shop.bean.NewProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.bean.UsedItemLikeDTO;
 
@@ -24,6 +25,23 @@ public interface UsedItemDAO extends JpaRepository<UsedItemDTO, Integer>{
 	@Modifying
 	@Query("update UsedItemDTO usedItemDTO set usedItemDTO.likes = usedItemDTO.likes - 1 where usedItemDTO.seq = :seq")
 	public void likeDown(int seq);
+	
+	@Transactional
+	@Modifying
+	@Query("update UsedItemDTO usedItemDTO set usedItemDTO.sellingState =?2 where usedItemDTO.seq = ?1")
+	public void saveByIdAndSellingState(int seq, boolean sellingState);
+
+	@Query("SELECT usedItemDTO FROM UsedItemDTO usedItemDTO WHERE usedItemDTO.id like %:keyword%")
+	public List<UsedItemDTO> getSearchId(@Param("keyword") String keyword);
+
+	@Query("SELECT usedItemDTO FROM UsedItemDTO usedItemDTO WHERE usedItemDTO.title like %:keyword%")
+	public List<UsedItemDTO> getSearchTitle(@Param("keyword") String keyword);
+	
+	@Query("SELECT memberDTO.email FROM MemberDto memberDTO WHERE memberDTO.id = :seq")
+	public String getId(int seq);
+
+	@Query(value="select * from used_item left join (select seq,count(*) as report_num from used_item_report group by seq) as report on used_item.seq = report.seq", nativeQuery = true )
+	public List<UsedItemDTO> getAdminItem();
 	
 //	
 //	@Modifying

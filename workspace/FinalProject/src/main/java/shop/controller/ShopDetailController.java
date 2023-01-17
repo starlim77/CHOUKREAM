@@ -1,18 +1,22 @@
 package shop.controller;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
-import shop.bean.NewNewProductDTO;
+import shop.bean.NewProductDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
@@ -77,7 +81,7 @@ public class ShopDetailController {
 	}
 	
 	@GetMapping(path="getNewProduct")
-	public Optional<NewNewProductDTO> getNewProduct(@RequestParam int seq) {
+	public Optional<NewProductDTO> getNewProduct(@RequestParam int seq) {
 		System.out.println(shopDetailService.getNewProduct(seq));
 		return shopDetailService.getNewProduct(seq);  
 	}
@@ -93,7 +97,5 @@ public class ShopDetailController {
 //		System.out.println(shopDetailService.getProductSizeMin(seq, size));
 //		return shopDetailService.getProductSizeMin(seq, size);
 //	}
-	
-	
-	
+
 }
