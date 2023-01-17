@@ -7,7 +7,7 @@ import jwt_decode from 'jwt-decode';
 
 const StyleComment = () => {
 
-    const {styleSeq}= useParams()   
+    const {styleSeq,id}= useParams()   
     const navigate = useNavigate()
 
 
@@ -28,7 +28,7 @@ const StyleComment = () => {
     }
 
     const [form, setForm] = useState({
-        commentMember: '댓글아이디', //댓글입력아이디
+        commentMember: id, //댓글입력아이디
         commentContents: '',
         styleSeq: styleSeq//게시글 번호
     })
@@ -36,7 +36,7 @@ const StyleComment = () => {
     const {commentMember, commentContents} = form
 
 
-    const onUpload = (e) => {    
+    const onUpload = (e, id) => {    
         //e.preventDefault()      
         // console.log(form)
             axios
@@ -46,7 +46,8 @@ const StyleComment = () => {
                 })
                 .then(                
                         alert("댓글등록 성공"),
-                        navigate('/lookbook/detail'),
+                        // navigate('/lookbook/detail' ,{ state: id }),
+                        navigate(-1),
                         console.log(form)
                 )
                 .catch( error => console.log(error) )
@@ -56,13 +57,13 @@ const StyleComment = () => {
 
 
     return (
-        <div>            
+         
             <Dialog open={true} > 
                 <S.DeComment>
                     <DialogTitle sx={{mt:5}}>댓글</DialogTitle>
                     <DialogContent >
                     
-                        <DialogContentText >
+                        <div >
                             <TextField                                                          
                                 multiline
                                 fullWidth                       
@@ -71,7 +72,7 @@ const StyleComment = () => {
                                 onChange={onInput}
                             />
                         
-                        </DialogContentText>
+                        </div>
                     </DialogContent>
                      <DialogActions>                         
                         <Button onClick={onUpload}>등록</Button>
@@ -80,7 +81,7 @@ const StyleComment = () => {
                     
                 </S.DeComment>
         </Dialog>
-        </div>
+
     );
 };
 

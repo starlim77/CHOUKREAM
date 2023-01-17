@@ -66,11 +66,11 @@ const Detail = () => {
         }
     }
 
-    const onComment = (seq) => {
+    const onComment = (seq, id) => {
         if( (!id) === true){
             alert('먼저 로그인 하세요')
         }else{
-            navigate(`/lookbook/StyleComment/${seq}`)
+            navigate(`/lookbook/StyleComment/${seq}/${id}`)
        }
     }
         
@@ -116,12 +116,13 @@ const Detail = () => {
                 {
                     list.map((item,index) => {
                         return (
-                            <div>
-                               
-                            <Card key={item.seq}>
+                            
+                        <S.DeDiv key={index.seq}>  
+                            <Card >
                                 <CardHeader
                                     avatar={ <Avatar> 프로필</Avatar> }
                                     title={item.id}
+                                    // title={item.name}
                                     subheader={item.logtime}
                                 />
 
@@ -156,7 +157,7 @@ const Detail = () => {
                                     </div>
 
                                     <div>
-                                    <IconButton onClick={ () => onComment(item.seq)}>
+                                    <IconButton onClick={ () => onComment(item.seq, id)}>
                                         {/* <Link to ={`/lookbook/StyleComment/${item.seq}`} > */}
                                         <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
                                         {/* </Link> */}
@@ -181,7 +182,8 @@ const Detail = () => {
                            
 
                             </Card>
-                        </div>
+                        </S.DeDiv>
+                       
                         )
                     })
                 }

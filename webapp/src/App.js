@@ -49,6 +49,7 @@ import MyPageApp from './component/myPage/MyPageApp';
 import NewUpdate from './component/Shop/manager/NewUpdate';
 import jwt_decode from 'jwt-decode';
 import Following from './component/Lookbook/Following';
+import StyleOneProduct from './component/Lookbook/StyleOneProduct';
 
 function App() {
     return (
@@ -198,12 +199,13 @@ function App() {
                     <Route path="/my/*" element={<MyPageApp />} />
 
                     <Route path="/lookbook/trending" element={<Trending />} />
+                    <Route path="/styleOneProduct/:seq" element={<StyleOneProduct />} />
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
                     <Route path="/lookbook/detail" element={<Detail />} />
                     <Route path="/lookbook/following" element={<Following />}/>                
                     <Route
-                        path="/lookbook/styleComment/:styleSeq"
+                        path="/lookbook/styleComment/:styleSeq/:id"
                         element={<StyleComment />}
                     />
                     <Route
@@ -215,7 +217,7 @@ function App() {
                         path="/lookbook/mystyleUpdate/:seq/:id/:product_seq"
                         element={<MystyleUpdate />}
                     />
-                    
+                     
                 </Route>
 
                 <Route path="/Search/SearchForm" element={<SearchForm />} />

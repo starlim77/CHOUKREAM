@@ -172,6 +172,13 @@ public class styleController {
 		return styleService.styleProductSearch(seq);
 	}
 	
+	//상품번호로 sytleDTO 뽑기
+	@GetMapping(value="styleOneProduct")
+	public List<StyleDTO> styleOneProduct(@RequestParam int productSeq){ 
+		System.out.println("ddddd" + productSeq);
+		return styleService.styleOneProduct(productSeq);
+	}
+	
 //댓글
     
 	//상세에서 댓글 등록기능

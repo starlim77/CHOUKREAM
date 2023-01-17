@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, {  useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import { Avatar, CardActions, CardContent, CardHeader,  IconButton } from '@mui/material';
 import Container from '@mui/material/Container';
@@ -11,6 +11,7 @@ import StyleCommentList from './StyleCommentList';
 
 const MystyleDetail = () => {
     const { id } = useParams();  //주소값 파라미터 seq id가져오기
+    const navigate = useNavigate();
 
     //좋아요 포함 dto 전체 리스트
     const [likeAll, setLikeAll] = useState([]);
@@ -45,6 +46,10 @@ const MystyleDetail = () => {
         //item.id가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듦
         //=item.id 가 id 인 것을 제거한다
         
+    }
+
+    const onComment = (seq, id) => {
+            navigate(`/lookbook/StyleComment/${seq}/${id}`)
     }
 
 
@@ -140,12 +145,10 @@ const MystyleDetail = () => {
 
 
                                 <div>
-                                    <IconButton >
-                                        
-                                        <Link to ={`/lookbook/StyleComment/${item.seq}`} >
+                                    <IconButton onClick={ () => onComment(item.seq, id)}>    
+                                        {/* <Link to ={`/lookbook/StyleComment/${item.seq}`} > */}
                                         <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
-                                        </Link>
-                                        
+                                        {/* </Link> */}
                                     </IconButton> 
                                     <span>{item.comment_count}</span>  
                                     

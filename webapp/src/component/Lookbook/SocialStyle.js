@@ -8,6 +8,7 @@ export const SoTopDiv = styled.div`
     width: 100%;
     align-items: center;
     background: white;
+    z-index: 5; 
 
 `
 
