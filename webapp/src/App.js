@@ -54,6 +54,7 @@ import ReUpdate from './component/Shop/resell/ReUpdate';
 import ReWrite from './component/Shop/register/ReWrite';
 import Following from './component/Lookbook/Following';
 import StyleOneProduct from './component/Lookbook/StyleOneProduct';
+import SearchForm2 from './component/Search/SearchForm2';
 
 function App() {
     const token = localStorage.getItem('accessToken');
@@ -69,7 +70,7 @@ function App() {
         }
     }, []);
 
-    console.log(auth);
+    //console.log(auth);
 
     return (
         <BrowserRouter>
@@ -141,7 +142,8 @@ function App() {
                         element={<FindPassword />}
                     />
                     <Route path="/join" element={<WriteForm />} />
-                    <Route path="/Search/SearchForm" element={<SearchForm />} />
+                    {/* <Route path="/Search/SearchForm" element={<SearchForm />} /> */}
+                    <Route path="/Search/SearchForm" element={<SearchForm2 />} />
                     <Route
                         path="/login/find_email/result"
                         element={<FindEmailResult />}

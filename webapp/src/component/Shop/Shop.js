@@ -17,10 +17,11 @@ const Shop = () => {
     const [sortCheck, setSortCheck] = useState(false);
 
     
+
     useEffect(() => {
         axios
-            .get('http://localhost:8080/shop/getProductList')
-            //.get('http://localhost:8080/shop/favourSort')
+            //.get('http://localhost:8080/shop/getProductList')
+            .get('http://localhost:8080/shop/favourSort')
             .then(res => {setDummy(res.data); setDummy2(res.data)})
             //.then(res => console.log(JSON.stringify(res.data)))
             .catch(error => console.log(error));
@@ -31,6 +32,7 @@ const Shop = () => {
     
     useEffect(() => {
         if (tag !== '') {
+            console.log(dummy)
             setDummyFilter(dummy.filter(item => item.tag === tag));
             setTagLive(true);
             // console.log('tag 태그 ' + tag)
@@ -71,7 +73,7 @@ const Shop = () => {
                 <Se.SearchTop>
                     <Se.TopBox>
                         <Se.SearchTitle>
-                            <Se.TitleTxt>RESELL SHOP</Se.TitleTxt>
+                            <Se.TitleTxt>SHOP</Se.TitleTxt>
                         </Se.SearchTitle>
                         <Se.QuickFilter>
                             <Se.QuickFilterBox>
@@ -105,14 +107,22 @@ const Shop = () => {
                     </Se.TopBox>
                 </Se.SearchTop>
                 <Se.SearchTrendContainer>
-                    <Se.TagImgLi onClick={tagReset}>
-                    <Se.TagImgItem src='../ShopImage/ALL.png'/>
-                    <Se.TagImgSpan>전체</Se.TagImgSpan>
-                </Se.TagImgLi>
                     <Se.BrandList>
+                        <Se.BrandItem
+                            onClick={tagReset}
+                        >
+                            <Se.BrandBox>
+                                <Se.BrandImg
+                                    src='../ShopImage/ALL.png'
+                                ></Se.BrandImg>
+                                <Se.BrandName>전체</Se.BrandName>
+                            </Se.BrandBox>
+                        </Se.BrandItem>
                         {data.map(item => (
-                            <Se.BrandItem key={item.id} 
-                                onClick={ e => onTag(item.text)}>
+                            <Se.BrandItem
+                                key={item.id}
+                                onClick={e => onTag(item.text)}
+                            >
                                 <Se.BrandBox>
                                     <Se.BrandImg
                                         alt={item.text}
@@ -125,14 +135,13 @@ const Shop = () => {
                     </Se.BrandList>
                 </Se.SearchTrendContainer>
                 {/* Banner */}
-                <Banner/>
-                
+                <Banner />
+
                 <Content
                     dummy={dummy}
                     setDummy={setDummy}
                     dummy2={dummy2}
                     dummyFilter={dummyFilter}
-                    setDummyFilter={setDummyFilter}
                     tagLive={tagLive}
                     sortCheck={sortCheck}
                     setSortCheck={setSortCheck}

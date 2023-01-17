@@ -11,12 +11,15 @@ import NewContent2 from '../newContent/NewContent2';
 
 const NewProductPage = () => {
     const [dummy, setDummy] = useState([]);
+    const [dummy2, setDummy2] = useState([]);
     const [dummyFilter, setDummyFilter] = useState([]);
+    const [sortCheck, setSortCheck] = useState(false);
 
     useEffect(() => {
         axios
-            .get('http://localhost:8080/shop/getNewProductList')
-            .then(res => setDummy(res.data))
+            //.get('http://localhost:8080/shop/getNewProductList')
+            .get('http://localhost:8080/shop/newFavourSort')
+            .then(res => {setDummy(res.data); setDummy2(res.data)})
             .catch(error => console.log(error));
     }, []);
 
@@ -65,7 +68,7 @@ const NewProductPage = () => {
                 <Se.SearchTop>
                     <Se.TopBox>
                         <Se.SearchTitle>
-                            <Se.TitleTxt>NEW PRODUCT SHOP</Se.TitleTxt>
+                            <Se.TitleTxt>BRAND SHOP</Se.TitleTxt>
                         </Se.SearchTitle>
                         <Se.QuickFilter>
                             <Se.QuickFilterBox>
@@ -126,8 +129,11 @@ const NewProductPage = () => {
                 <NewContent2
                     dummy={dummy}
                     setDummy={setDummy}
+                    dummy2={dummy2}
+                    sortCheck={sortCheck}
                     dummyFilter={dummyFilter}
                     setDummyFilter={setDummyFilter}
+                    setSortCheck={setSortCheck}
                     tagLive={tagLive}
                     modalOpen={modalOpen}
                     openModal={openModal}

@@ -74,19 +74,24 @@ public class ResellController {
 	@GetMapping("favourSort")
 	public List<SortListDTO> favourSort() {
 		System.out.println("ㅎㅇㅎㅇ");
-		System.out.println(shopService.favourSort());
+		
 		return shopService.favourSort();
 	}
 	@GetMapping("BuySort")
-	public List<ProductDTO> BuySort() {
+	public List<SortListDTO> BuySort() {
 		System.out.println("즉시 구매가 낮은순 ");
 		return shopService.BuySort();
 	}
 	
 	@GetMapping("SellSort")
-	public List<ProductDTO> SellSort() {
+	public List<SortListDTO> SellSort() {
 		System.out.println("즉시 판매가 높은순 ");
 		return shopService.SellSort();
+	}
+	@GetMapping("releaseDateSort")
+	public List<SortListDTO> releaseDateSort() {
+		System.out.println("발매일 최신순 ");
+		return shopService.releaseDateSort();
 	}
 	
 	@PutMapping(path="reUpdate")
