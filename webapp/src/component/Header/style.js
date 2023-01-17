@@ -31,6 +31,9 @@ export const TopWrapper = styled.ul`
 
 export const TopLi = styled.li`
     display: flex;
+    :hover{
+        cursor: pointer;
+    }
 `;
 
 export const Bottom = styled.div`
@@ -62,6 +65,9 @@ export const BottomLi = styled.li`
     /* img {
         width: 28px;
     } */
+    :hover{
+        cursor: pointer;
+    }
 `;
 
 export const ShopModalWrapper = styled.div`
