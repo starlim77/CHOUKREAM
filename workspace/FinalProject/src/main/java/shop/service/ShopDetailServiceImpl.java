@@ -1,11 +1,15 @@
 package shop.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lookbook.bean.StyleDTO;
+import lookbook.dao.StyleDAO;
+import lookbook.entity.StyleEntity;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
@@ -36,6 +40,8 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	private NewProductDAO newProductDAO;
 	@Autowired
 	private UsedItemLikeDAO useItemLikeDAO;
+	@Autowired
+	private StyleDAO styleDAO;
 	
 	@Override
 	public Optional<ProductDTO> getProduct(int seq) {
@@ -116,5 +122,17 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	@Override
 	public Long likeCount(int seq, String shopKind) {
 		return useItemLikeDAO.likeCount(seq, shopKind);
+	}
+	
+	@Override
+	public List<StyleDTO> getBrandStyleList(int seq) {
+		List<StyleEntity> styleEntityList = styleDAO.getBrandStyleList(seq);
+		List<StyleDTO> styleDTOList = new ArrayList<>();
+		
+		for (StyleEntity styleEntity: styleEntityList) {
+	         styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
+	      }
+		
+		return styleDTOList;
 	}
 }

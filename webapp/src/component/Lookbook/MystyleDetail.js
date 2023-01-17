@@ -1,76 +1,113 @@
 import axios from 'axios';
-import React, {  useEffect,  useRef,  useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React, {  useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
-import { Avatar, Button, CardActions, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Avatar, CardActions, CardContent, CardHeader,  IconButton } from '@mui/material';
 import Container from '@mui/material/Container';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import * as S from './style';
+import StyleProduct from './StyleProduct';
+import StyleCommentList from './StyleCommentList';
 
 const MystyleDetail = () => {
-    const { seq , id } = useParams();  //주소값 파라미터 seq id가져오기
-    const updateRef = useRef();
+    const { id } = useParams();  //주소값 파라미터 seq id가져오기
     const [commentOpen, setCommentOpen] = useState(false)
-    
 
+    //좋아요 포함 dto 전체 리스트
+    const [likeAll, setLikeAll] = useState([]);
+    
     //게시물 뿌리기
     const [list, setList] = useState([]);
+ 
 
     useEffect( ()=> {
-        axios.get(`http://localhost:8080/lookbook/findAllMyList/${id}`)
-             .then(res => setList(res.data)
-                // res => console.log("디테일 확인 "+res.data)  
-             )
-             .catch(error => console.log(error))
+        // axios.get(`http://localhost:8080/lookbook/findAllMyList/${id}`)
+        //      .then(res => setList(res.data))
 
-         //좋아요 여부 보여주기
-         axios.get(`http://localhost:8080/lookbook/findLikes?memberId=${id}&styleSeq=${seq}`)
-              .then(res => setIsLike(res.data)  )
-              .catch(error => console.log(error))
+        //      .then(            //  )
+        //      .catch(error => console.log(error))
+                
+            axios.get(`http://localhost:8080/lookbook/findLikes?id=${id}`)
+                .then(
+                    //  res=> console.log(res.data)
+                    res => setLikeAll(res.data)  
+                )
+                .catch(error => console.log(error))
 
-        //좋아요 갯수 확인
-         axios.get(`http://localhost:8080/lookbook/likescount?styleSeq=${seq}`)
-              .then(res => setLikesCount(res.data))
-              .catch(error => console.log(error))
+
+        //좋아요 여부 보여주기
+        //  axios.get(`http://localhost:8080/lookbook/findLikes?memberId=${id}&styleSeq=${seq}`)
+        //       .then(res => setIsLike(res.data)  )
+        //       .catch(error => console.log(error))
+
+        // axios.get(`http://localhost:8080/lookbook/findProduct?productSeq=${productSeq}`)
+        //     .then( res => console.log(res.data))
+        //     .catch(error => console.log(error))
     }, []) 
 
-    const updateBtn = () =>{
-        updateRef.current.click();        
-    }
-
-    const [likesForm, setLikesForm] = useState({   //좋아요 있으면 1리턴, 없으면 0 리턴
-        styleSeq: seq,
-        memberId: id,
-        likesId: ''
-    })  
-
-    const [isLike, setIsLike] = useState(0);
-    const [likesCount, setLikesCount] = useState('');   // 좋아요 갯수 카운트
-    //const navigate = useNavigate()
-
+ 
     //좋아요 클릭
-    const onLikes = () => {
-        // setLikesForm({...likesForm, });
+    const onLikes = (e,seq,checkLike,index) => {
+        e.preventDefault();
+        checkLike = checkLike === 'false' ? false : true
+        
+        //console.log(seq, id , checkLike , index )
+        
+        // setIsLike()
 
-        axios.post('http://localhost:8080/lookbook/likebutton', null, {params:likesForm})
-            .then( res =>  
-                        setIsLike(res.data), 
-                        window.location.replace(`/lookbook/mystyledetail/${seq}/${id}`)//새로고침 넘느료..
-                        //navigate(`/lookbook/mystyledetail/${seq}/${id}`)                        
-                )
+        axios.post('http://localhost:8080/lookbook/likebutton?styleSeq='+seq+'&memberId='+id+"&isLike="+checkLike) //1, 0  같이 보내준다
+            .then(res => setLikeAll(res.data) )
             .catch(error => console.log(error))
     }
+
+    //댓글삭제
+    const onCommentDelete =(id) => {
+        //item.id가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듦
+        //=item.id 가 id 인 것을 제거한다
+        
+    }
+
+
+
+    const photoShop1 = (storedImg) => {
+        const img = ((storedImg).split(','))
+        return img[0]
+    }
+
+    const photoShop2 = (storedImg) => {
+        const img = ((storedImg).split(','))
+        return img[1]
+    }
+
+    const photoShop3 = (storedImg) => {
+        const img = ((storedImg).split(','))
+        return img[2]
+    }
+
+    const photoShop4 = (storedImg) => {
+        const img = ((storedImg).split(','))
+        return img[3]
+    }
+
+    const photoShop5 = (storedImg) => {
+        const img = ((storedImg).split(','))
+        return img[4]
+    }
+
+        
+
 
 
     return (
         <div>
+            {console.log(likeAll)}
             <Container fixed>
                 <S.DeTopDiv> {/* outer */}
                 {
-                    list.map((item, index) => {
+                    likeAll.map((item, index) => {
                         return (
-                             <S.DeDiv key={index}>  
+                            <S.DeDiv key={index}>  
+                           
                                 <Card >
                                     <S.MyDeheadercontainer>
                                         
@@ -78,72 +115,71 @@ const MystyleDetail = () => {
                                             <CardHeader
                                                 avatar={ <Avatar> 프로필</Avatar> }
                                                 title={item.id}
-                                                subheader={item.logtime}
+                                                subheader={item.logTime}
                                             /> 
                                         </S.MyDeprofile>
                                         
                                         {/* <input type="text" name="seq" value={item.seq} readOnly /> */}
 
                                         <S.MyDeIcon>                                
-                                            <Link to={`/lookbook/mystyleUpdate/${item.seq}/${id}`} ref={updateRef} >
+                                            <Link to={`/lookbook/mystyleUpdate/${item.seq}/${id}/${item.product_seq}`} >
                                             <img src='/image/style/menu.png' alt='메뉴.png' width={24}></img>
                                             </Link>
                                            
                                         </S.MyDeIcon>
-                                   </S.MyDeheadercontainer>
-
-                                    {
-                                        item.storedFileName.map( (item, index) => (
-                                            <p key={index}>
-                                                <img src={'/storage/'+item} alt='list사진' />
-                                            </p>
-                                        ))
-                                    }
-
-                                    
-                                
-                                    <S.MyStContent>
-                                        {item.content}
-                                    </S.MyStContent>
-
-
-                                    <CardActions >                                    
-                                        <IconButton aria-label="add to favorites" onClick={onLikes}>
-                                            {/* <FavoriteIcon />  //react Icon */}
-                                            <img src={ isLike === 1 ?  '/image/style/likes.png'  : '/image/style/unlikes.png'  }
-                                            style={{ width:'28px'}}/>
-                                           <p>{likesCount}</p>
-
-                                        </IconButton>
-
                                         
+                                   </S.MyDeheadercontainer>
+                                   
+
+                                <S.MyStdiv>
+                               
+                                    <img src={`/storage/${photoShop1(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />
+                                    {photoShop2(item.stored_file_name) && <img src={`/storage/${photoShop2(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                                    {photoShop3(item.stored_file_name) && <img src={`/storage/${photoShop3(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                                    {photoShop4(item.stored_file_name) && <img src={`/storage/${photoShop4(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                                    {photoShop5(item.stored_file_name) && <img src={`/storage/${photoShop5(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+
+                                 </S.MyStdiv>
+                                    
+                                <StyleProduct productSeq={item.product_seq}></StyleProduct>
+                                
+                                <S.MyStContent>
+                                        {item.content}
+                                </S.MyStContent>
 
 
+                                <CardActions >   
+                                        
+                                 
+                                    <IconButton aria-label="add to favorites" onClick={(e) => onLikes(e, item.seq ,item.islikes,index)} >
+                                            
+                                        <img src={  item.islikes === "false"  ? '/image/style/unlikes.png' : '/image/style/likes.png' } style={{ width:'28px'}} />
+                                           
+                                    </IconButton>
+                                        
+                                     <span>{item.likes_count}</span>
 
 
-                                        <IconButton onClick={()=>{setCommentOpen(true)}}>
-                                            <ChatBubbleOutlineIcon />
-                                        </IconButton>                        
-                                    </CardActions>
+                                <div>
+                                    <IconButton >
+                                        
+                                        <Link to ={`/lookbook/StyleComment/${item.seq}`} >
+                                        <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
+                                        </Link>
+                                        
+                                    </IconButton> 
+                                    <span>{item.comment_count}</span>  
+                                    
+                                </div> 
+                                </CardActions>
 
-                
-                                    <Dialog open={commentOpen}> 
-                                        <S.DeComment>
-                                            <DialogTitle sx={{mt:5}}>댓글</DialogTitle>
-                                            <DialogContent>
-                                                <DialogContentText>
-                                                    <TextField
-                                                        multiline 
-                                                        fullWidth
-                                                    />
-                                                </DialogContentText>
-                                            </DialogContent>
-                                            <DialogActions>
-                                                <Button >등록</Button>
-                                                <Button onClick={ ()=>{setCommentOpen(false)}}>취소</Button>
-                                            </DialogActions>
-                                        </S.DeComment>
-                                    </Dialog>
+                                <CardContent> 
+                                     <div variant="body2" color="text.secondary" >
+                                        <S.TrTypoDiv>
+                                            <StyleCommentList styleSeq={item.seq}  onCommentDelete={ onCommentDelete }  />                                
+                                        </S.TrTypoDiv>                      
+                                    </div>  
+                                </CardContent>
 
 
                                 </Card>

@@ -34,6 +34,7 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 //	List<ProductDTO> getShoesList(@Param("shoes") String shoes);
 	@Query(nativeQuery = true, value = "select a.seq, a.brand, ifnull(b.order_price, '-') as price, a.title, a.sub_title, a.img_name from product_table as a left outer join (select seq, min(order_price) AS order_price from order_table where buy_sell = 1 group by seq ) as b on a.seq = b.seq where brand = :brand and a.seq not in(:seq) order by a.seq")
 	List<BrandListDTO> getBrandList(@Param("seq") int seq, @Param("brand") String brand);
+
 	
 	
 	// 반환타입을 interface 로 
@@ -88,5 +89,9 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 			+ "order by release_date desc")
 	List<SortListDTO> releaseDateSort();
 
+	//lookbook 
+	@Query("select productDTO from ProductDTO productDTO where productDTO.title like '%' || :keyword || '%' OR productDTO.subTitle like '%' || :keyword || '%' ")
+	public List<ProductDTO> search(@Param("keyword") String keyword);
+	
 
 }

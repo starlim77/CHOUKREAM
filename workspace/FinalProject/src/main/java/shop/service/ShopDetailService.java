@@ -3,6 +3,7 @@ package shop.service;
 import java.util.List;
 import java.util.Optional;
 
+import lookbook.bean.StyleDTO;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
@@ -46,6 +47,8 @@ public interface ShopDetailService {
 	public Optional<NewProductDTO> getNewProduct(int seq);
 
 	public Long likeCount(int seq, String shopKind);
+
+	public List<StyleDTO> getBrandStyleList(int seq);
 
 //	public Optional<Integer> getProductSizeMin(int seq, String size);
 }

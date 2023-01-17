@@ -154,7 +154,6 @@ const Content = ({
     //     return img[0];
     // };
 
-    // dummy , dummy2 68개의 데이터
 
     const [menuArray, setMenuArray] = useState({
         // 0 = 체크안된상태 1 = 체크 된 상태 
@@ -301,7 +300,8 @@ const Content = ({
         setDummy(temp);
         setMenuArray(newMenuArray);
     };
-
+    
+    
     return (
         <>
             {/* Content */}
@@ -340,7 +340,6 @@ const Content = ({
                                     dummy={dummy}
                                     setDummy={setDummy}
                                     setPictures={setPictures}
-                                    dataSetting={dataSetting}
                                 ></MenuList> */}
                                 <MenuList2
                                     item={item}

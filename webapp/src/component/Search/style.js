@@ -51,7 +51,6 @@ overflow: hidden;
 display: flex;
 `;
 export const searchArea = styled.div `
-   
 `;
 export const search = styled.div `
 width: 100%;
@@ -188,6 +187,42 @@ text-overflow: ellipsis;
 display: inline-block;
 white-space: nowrap;
     `;
+export const Searched = styled.div `
+width: 100%;
+max-height:300px;
+background-color:white;
+margin: 0;
+padding-bottom: 16px; 
+border-bottom: 2px solid #000;
+overflow: hidden;
+`;
+
+export const CategoryTitle =styled.div`
+height: 35px;
+font-size:35px;
+font-weight: bold;
+`
+
+export const ContentsWrapper=styled.div`
+width:500px;
+display:flex;
+height:53px;
+line-height: 55px;
+`
+export const ContentsImg=styled.img`
+width:48px;
+height:50px;
+object-fit: cover;
+
+`
+export const ContentsTitle=styled.div`
+
+/* font-size:10
+px; */
+`
+export const SearchWrapper=styled.div`
+
+`
 export const category= styled.div `
 
     `;

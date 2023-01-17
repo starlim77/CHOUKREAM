@@ -28,7 +28,7 @@ const UsedUpdate = () => {
             //배열은 데이터 보낼 때 배열로 안보내고 리액트 내에서 Stringify하면 문자열로 보낼 수 있다.
             //데이터를 받아오고 나서는 parse로 데이터를 풀어주면 된다.
         })
-        const {title , imgName, productName , kind , size , price , contents , hashTag,sellingState} = form
+        const {title , imgName, productName , kind , size , price , contents , hashTag, sellingState} = form
         const [subImg,setSubImg] = useState([]);
          // 2. location.state 에서 파라미터 취득
          const seq = location.state.seq;
@@ -45,6 +45,16 @@ const UsedUpdate = () => {
                 .catch(err=>console.log(err))
         },[])
         
+        useEffect(()=>{
+    
+            var decoding= decodeURI(form.hashTag).split(',');
+            setForm({
+                ...form,
+                hashTag: decoding});
+            
+            //form이 바뀌는 걸로 설정하면 무한 루프도니까 한 번만 돌게 form.title사용
+        },[form.title])
+
         const [hashTag2,setHashTag2] = useState()
     
         const [count,setCount] = useState(0)
@@ -126,18 +136,6 @@ const UsedUpdate = () => {
             
         }
   
-        useEffect(()=>{
-            console.log("해쉬태그"+hashTag);
-            if(!hashTag){
-                var decoding= decodeURI(hashTag).split(',');
-                console.log(decoding);
-                setForm({
-                    ...form,
-                    hashTag:decoding});
-            }
-            
-            //form이 바뀌는 걸로 설정하면 무한 루프도니까 한 번만 돌게 subImg사용
-        },[subImg])
     
         return (
             <>

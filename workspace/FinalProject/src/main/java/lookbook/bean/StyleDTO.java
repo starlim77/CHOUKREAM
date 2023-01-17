@@ -1,6 +1,7 @@
 package lookbook.bean;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,9 +28,9 @@ public class StyleDTO {
 	
 	private String id;	
 		
-	private String content;	
+	private String content;		
 	
-	private Timestamp logtime;	
+	private Timestamp logtime;
 	
 	private int hit;	
 	
@@ -41,6 +42,8 @@ public class StyleDTO {
 	private int commentCount;
 	
 	private int likesCount;
+	
+	private Integer productSeq;
 
 	
 	public static StyleDTO toStyleDTO(StyleEntity styleEntity) {
@@ -50,6 +53,7 @@ public class StyleDTO {
 		styleDTO.setId(styleEntity.getId());		
 		styleDTO.setContent(styleEntity.getContent());
 		styleDTO.setLogtime(styleEntity.getLogtime());
+		
 		
 		if(styleEntity.getFileAttached() == 0) {
 			styleDTO.setFileAttached(styleEntity.getFileAttached()); //0
@@ -79,7 +83,8 @@ public class StyleDTO {
 		}
 		
 		styleDTO.setCommentCount(styleEntity.getCommentCount());
-		
+		styleDTO.setLikesCount(styleEntity.getLikesCount());
+		styleDTO.setProductSeq(styleEntity.getProductSeq());
 		
 		return styleDTO;
 	}

@@ -52,7 +52,7 @@ import NewProductPage from './component/Shop/newProduct/NewProductPage';
 import ReList from './component/Shop/resell/ReList';
 import ReUpdate from './component/Shop/resell/ReUpdate';
 import ReWrite from './component/Shop/register/ReWrite';
-import Following from './component/Lookbook/Following';
+import SearchForm2 from './component/Search/SearchForm2';
 
 function App() {
     const token = localStorage.getItem('accessToken');
@@ -140,7 +140,8 @@ function App() {
                         element={<FindPassword />}
                     />
                     <Route path="/join" element={<WriteForm />} />
-                    <Route path="/Search/SearchForm" element={<SearchForm />} />
+                    {/* <Route path="/Search/SearchForm" element={<SearchForm />} /> */}
+                    <Route path="/Search/SearchForm" element={<SearchForm2 />} />
                     <Route
                         path="/login/find_email/result"
                         element={<FindEmailResult />}
@@ -164,17 +165,17 @@ function App() {
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
                     <Route path="/lookbook/detail" element={<Detail />} />
-                    <Route path="/lookbook/following" element={<Following />} />
                     <Route
                         path="/lookbook/styleComment/:styleSeq"
                         element={<StyleComment />}
                     />
                     <Route
-                        path="/lookbook/mystyledetail/:seq/:id"
+                        // path="/lookbook/mystyledetail/:seq/:id"
+                        path="/lookbook/mystyledetail/:id"
                         element={<MystyleDetail />}
                     />
                     <Route
-                        path="/lookbook/mystyleUpdate/:seq/:id"
+                        path="/lookbook/mystyleUpdate/:seq/:id/:product_seq"
                         element={<MystyleUpdate />}
                     />
                     <Route
@@ -186,6 +187,7 @@ function App() {
                             </>
                         }
                     />
+                    
                 </Route>
 
                 <Route path="/Search/SearchForm" element={<SearchForm />} />
