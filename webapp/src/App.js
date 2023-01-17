@@ -54,6 +54,7 @@ import ReUpdate from './component/Shop/resell/ReUpdate';
 import ReWrite from './component/Shop/register/ReWrite';
 import Following from './component/Lookbook/Following';
 import RequireAuth from './component/Require/RequireAuth';
+import SellForm from './component/payment/SellForm';
 
 function App() {
     const token = localStorage.getItem('accessToken');
@@ -247,6 +248,10 @@ function App() {
                                 <PayForm></PayForm>
                             </RequireAuth>
                         }
+                    ></Route>
+                    <Route
+                        path="sell/sellForm"
+                        element={<SellForm></SellForm>}
                     ></Route>
                     <Route path="Used/usedMain" element={<UsedMain />} />
                     <Route path="Used/usedItem" element={<UsedItem />} />

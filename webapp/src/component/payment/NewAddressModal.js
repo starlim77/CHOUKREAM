@@ -40,83 +40,83 @@ const NewAddressModal = props => {
 
     return (
         <>
-        <S.ModalWrapper></S.ModalWrapper>
-        <S.NewAddress>
-            <S.NewAddressTitle>
-                <S.HeaderTitle>새 주소 추가</S.HeaderTitle>
-                <S.HeaderCloseBtn></S.HeaderCloseBtn>
-            </S.NewAddressTitle>
-            <S.InputInfo>
-                <S.InputTitle>이름</S.InputTitle>
-                <S.Input
-                    placeholder="수령인의 이름"
-                    name="name"
-                    value={name}
-                    onChange={changeAddress}
-                ></S.Input>
-                <S.InputTitle>휴대폰 번호</S.InputTitle>
-                <S.Input
-                    placeholder="- 없이 입력"
-                    name="phone"
-                    value={phone}
-                    onChange={changeAddress}
-                ></S.Input>
-                <S.InputTitle>우편번호</S.InputTitle>
-                <S.ZipCode>
+            {/* <S.ModalWrapper></S.ModalWrapper> */}
+            <S.NewAddress>
+                <S.NewAddressTitle>
+                    <S.HeaderTitle>새 주소 추가</S.HeaderTitle>
+                    <S.HeaderCloseBtn></S.HeaderCloseBtn>
+                </S.NewAddressTitle>
+                <S.InputInfo>
+                    <S.InputTitle>이름</S.InputTitle>
                     <S.Input
-                        placeholder="우편 번호를 검색하세요"
-                        readOnly
-                        name="zipcode"
-                        value={zipcode}
+                        placeholder="수령인의 이름"
+                        name="name"
+                        value={name}
                         onChange={changeAddress}
                     ></S.Input>
-                    <Postcode
-                        address={address}
-                        setAddress={setAddress}
-                        addr2Ref={addr2Ref}
-                    ></Postcode>
-                </S.ZipCode>
-                <S.InputTitle>주소</S.InputTitle>
-                <S.Input
-                    placeholder="우편 번호 검색 후, 자동입력 됩니다"
-                    readOnly
-                    name="addr1"
-                    value={addr1}
-                    onChange={changeAddress}
-                ></S.Input>
-                <S.InputTitle>상세 주소</S.InputTitle>
-                <S.Input
-                    placeholder="건물, 아파트, 동/호수 입력"
-                    name="addr2"
-                    ref={addr2Ref}
-                    value={addr2}
-                    onChange={changeAddress}
-                ></S.Input>
-            </S.InputInfo>
-            <S.DefaltAddress>
-                <S.DefaultCheckBox
-                    checked={defaultAddress}
-                    onChange={() => setDefaultAddress(!defaultAddress)}
-                    type="checkbox"
-                ></S.DefaultCheckBox>
-                <S.DefaultSpan>기본 배송지로 설정</S.DefaultSpan>
-            </S.DefaltAddress>
-            <S.Buttons>
-                <S.CancelBtn
-                    type="button"
-                    value="취소"
-                    onClick={() => setModals([false, false, false])}
-                ></S.CancelBtn>
-                <S.SaveBtn
-                    type="button"
-                    value="저장하기"
-                    onClick={() => {
-                        addAddress();
-                        setModals([false, false, false]);
-                    }}
-                ></S.SaveBtn>
-            </S.Buttons>
-        </S.NewAddress>
+                    <S.InputTitle>휴대폰 번호</S.InputTitle>
+                    <S.Input
+                        placeholder="- 없이 입력"
+                        name="phone"
+                        value={phone}
+                        onChange={changeAddress}
+                    ></S.Input>
+                    <S.InputTitle>우편번호</S.InputTitle>
+                    <S.ZipCode>
+                        <S.Input
+                            placeholder="우편 번호를 검색하세요"
+                            readOnly
+                            name="zipcode"
+                            value={zipcode}
+                            onChange={changeAddress}
+                        ></S.Input>
+                        <Postcode
+                            address={address}
+                            setAddress={setAddress}
+                            addr2Ref={addr2Ref}
+                        ></Postcode>
+                    </S.ZipCode>
+                    <S.InputTitle>주소</S.InputTitle>
+                    <S.Input
+                        placeholder="우편 번호 검색 후, 자동입력 됩니다"
+                        readOnly
+                        name="addr1"
+                        value={addr1}
+                        onChange={changeAddress}
+                    ></S.Input>
+                    <S.InputTitle>상세 주소</S.InputTitle>
+                    <S.Input
+                        placeholder="건물, 아파트, 동/호수 입력"
+                        name="addr2"
+                        ref={addr2Ref}
+                        value={addr2}
+                        onChange={changeAddress}
+                    ></S.Input>
+                </S.InputInfo>
+                <S.DefaltAddress>
+                    <S.DefaultCheckBox
+                        checked={defaultAddress}
+                        onChange={() => setDefaultAddress(!defaultAddress)}
+                        type="checkbox"
+                    ></S.DefaultCheckBox>
+                    <S.DefaultSpan>기본 배송지로 설정</S.DefaultSpan>
+                </S.DefaltAddress>
+                <S.Buttons>
+                    <S.CancelBtn
+                        type="button"
+                        value="취소"
+                        onClick={() => setModals([false, false, false])}
+                    ></S.CancelBtn>
+                    <S.SaveBtn
+                        type="button"
+                        value="저장하기"
+                        onClick={() => {
+                            addAddress();
+                            setModals([false, false, false]);
+                        }}
+                    ></S.SaveBtn>
+                </S.Buttons>
+            </S.NewAddress>
         </>
     );
 };

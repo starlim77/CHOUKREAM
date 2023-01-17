@@ -275,6 +275,13 @@ export const Price = styled.dd`
     font-size: 20px;
     font-weight: 700;
 `;
+export const PriceGreen = styled.dd`
+    display: flex;
+    justify-content: flex-end;
+    color: #31b46e;
+    font-size: 20px;
+    font-weight: 700;
+`;
 export const PriceInfo = styled.div`
     display: flex;
     flex-direction: column;
@@ -384,6 +391,11 @@ export const PayPriceShowDiv = styled.div`
     font-size: 20px;
     font-weight: 700;
 `;
+export const SellPriceShowDiv = styled.div`
+    color: #31b46e;
+    font-size: 20px;
+    font-weight: 700;
+`;
 export const PayPriceShowTitle = styled.dt`
     font-size: 15px;
     font-weight: 600;
@@ -398,14 +410,14 @@ export const PayBtn = styled.button`
     cursor: ${props => (props.disabled ? 'default' : 'pointer')};
 `;
 
-// export const ModalBackground = styled.div`
-//     position: absolute;
-//     top: 0;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     width: 100%;
-//     height: 100vh;
-//     z-index: 998;
-//     background-color: rgba(34, 34, 34, 0.5);
-// `;
+export const ModalBackground = styled.div`
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    z-index: 998;
+    background-color: rgba(34, 34, 34, 0.5);
+`;
