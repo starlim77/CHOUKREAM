@@ -146,9 +146,12 @@ const Detail = () => {
                                     subheader={item.logtime}
                                 />
 
-                                <Button variant="contained" style={{backgroundColor: 'black'}} onClick={() => onFollow (item.id)} >팔로우</Button>
-                                <Button variant="outlined"  style={{color: 'black', borderColor:'black'}} onClick={() => onFollow (item.id)}>언팔로우</Button>
-                               
+                                {
+                              //   !tokenId ? <Button variant="contained" style={{backgroundColor: 'black'}} onClick={ alert('먼저 로그인 하세요')}>팔로우</Button> :
+                              //   /* 팔로우체크?*/ ? <Button variant="contained" style={{backgroundColor: 'black'}} onClick={() => onFollow (item.id)} >팔로우</Button> :                          
+                              //  <Button variant="outlined"  style={{color: 'black', borderColor:'black'}} onClick={() => onFollow (item.id)}>언팔로우</Button>
+                                }
+                                 
                                 <S.MyStdiv>
                                     <img src={`/storage/${photoShop1(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />
                                     {photoShop2(item.stored_file_name) && <img src={`/storage/${photoShop2(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
