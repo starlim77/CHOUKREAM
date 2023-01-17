@@ -56,5 +56,10 @@ public class MemberController {
 	public void sendSms(@RequestParam String phone, @RequestParam String content) {
 		smsService.sendSms(phone, content);
 	}
+	
+	@GetMapping(path="isExistEmail")
+	public String isExistEmail(@RequestParam String email) {
+		return memberService.findByEmailAndProviderIsNull(email);
+	}
 
 }

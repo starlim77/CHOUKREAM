@@ -65,4 +65,14 @@ public class MemberServiceImpl implements MemberService {
         return MemberResponseDto.of(memberDAO.save(memberDto));
 	}
 
+	@Override
+	public String findByEmailAndProviderIsNull(String email) {
+		MemberDto memberDto = memberDAO.findByEmailAndProviderIsNull(email);
+		if(memberDto != null) {
+			return "exist";
+		} else {
+			return "non_exist";
+		}
+	}
+
 }

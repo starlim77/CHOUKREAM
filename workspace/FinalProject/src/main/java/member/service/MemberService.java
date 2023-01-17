@@ -14,5 +14,7 @@ public interface MemberService {
 	public String findPasswordByPhoneAndEmail(String phone, String email);
 	
 	public MemberResponseDto changeMemberPassword(String email, String exPassword, String newPassword);
+
+	public String findByEmailAndProviderIsNull(String email);
 	
 }

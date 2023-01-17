@@ -20,5 +20,7 @@ public interface MemberDAO extends JpaRepository<MemberDto, Long> {
 	public void save(Optional<MemberDto> memberDto);
 
 	public MemberDto findByEmailAndProvider(String email, String provider);
+
+	public MemberDto findByEmailAndProviderIsNull(String email);
 	
 }

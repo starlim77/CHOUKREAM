@@ -138,6 +138,18 @@ const WriteForm = () => {
         }
       }, [eventItems, marketing])
 
+    const onEmailCheck = () => {
+        axios.get(`http://localhost:8080/isExistEmail?email=${email}`)
+        .then(res => {
+            if(res.data === 'non_exist') {
+                onClickCertification()
+            } else {
+                alert('사용할 수 없는 이메일입니다.')
+            }
+        })
+        .catch(error => console.log(error))
+    }  
+
     //Iamport 핸드폰 본인 인증
     const onClickCertification = () => {
         const { IMP } = window;
@@ -199,7 +211,7 @@ const WriteForm = () => {
                 <S.InputBox>
                     <S.InputTitle>이메일 주소 *</S.InputTitle>
                     <div className='inputItem'>
-                        <S.InputText type='email' name='email' value={email} onChange={onChangeEmail} placeholder='예) kream@kream.co.kr' />
+                        <S.InputText type='email' name='email' value={email} onChange={onChangeEmail} placeholder='예) kream@kream.co.kr'/>
                     </div>
                     {email.length > 0 && <S.ErrorMessage className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</S.ErrorMessage>}
                 </S.InputBox>
@@ -307,7 +319,7 @@ const WriteForm = () => {
                 </S.JoinTerms>
                 
                 <S.JoinBtnBox>
-                    <S.JoinBtn type='button' onClick={onClickCertification} disabled={!(isEmail && isPassword && isPhone && isAllChecked)}>가입하기</S.JoinBtn>
+                    <S.JoinBtn type='button' onClick={onEmailCheck} disabled={!(isEmail && isPassword && isPhone && isAllChecked)}>가입하기</S.JoinBtn>
                 </S.JoinBtnBox>
             </S.JoinAreaDiv>
         </S.Container>
