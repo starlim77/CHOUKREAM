@@ -22,7 +22,10 @@ import member.service.MemberService;
 @RequiredArgsConstructor
 @RestController
 public class MemberController {
-	private final MemberService memberService;
+//	private final MemberService memberService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@PostMapping(path="certifications")
 	public void certifications(@RequestBody String imp_uid) {
@@ -30,6 +33,15 @@ public class MemberController {
 		System.out.println("본인 인증 성공");
 	}
 	
+	@GetMapping(path="getMember")
+	public Optional<MemberDto> getMember(@RequestParam Long id) {
+		return memberService.getMember(id);
+	}
+	
+	@PostMapping(path="updateEmail")
+	public Optional<MemberDto> updateEmail(@RequestParam Long id, String email) {
+		return memberService.updateEmail(id, email);
+	}
 	@GetMapping(path="findEmail")
 	public Optional<MemberDto> findEmailByPhone(@RequestParam String phone) { 
 		return memberService.findEmailByPhone(phone);
@@ -40,10 +52,10 @@ public class MemberController {
 		return memberService.findPasswordByPhoneAndEmail(phone,email);
 	}
 	
-	@PostMapping(path="changePassword")
-    public ResponseEntity<MemberResponseDto> setMemberPassword(@RequestBody ChangePasswordRequestDto request) {
-        return ResponseEntity.ok(memberService.changeMemberPassword(request.getEmail() ,request.getExPassword(), request.getNewPassword()));
-    }
+//	@PostMapping(path="changePassword")
+//    public ResponseEntity<MemberResponseDto> setMemberPassword(@RequestBody ChangePasswordRequestDto request) {
+//        return ResponseEntity.ok(memberService.changeMemberPassword(request.getEmail() ,request.getExPassword(), request.getNewPassword()));
+//    }
 
 	@GetMapping(path = "getMemberInfo")
 	public Optional<MemberDto> getMemberInfo(@RequestParam long seq) {
@@ -51,4 +63,21 @@ public class MemberController {
 		return memberService.getMemberInfo(seq);
 	}
 	
+	@PostMapping(path = "updatePassword")
+	public Optional<MemberDto> updatePassword(@RequestParam String email, String password) {
+		
+		return memberService.updatePassword(email, password);
+	}
+	
+	@PostMapping(path = "updatePhone")
+	public Optional<MemberDto> updatePhone(@RequestParam String email, String phone) {
+		
+		return memberService.updatePhone(email, phone);
+	}
+	
+	@PostMapping(path = "updateMarketingOption")
+	public Optional<MemberDto> updateMarketingOption(@RequestParam String email, String smsOption, String emailOption) {
+		
+		return memberService.updateMarketingOption(email, smsOption, emailOption);
+	}
 }

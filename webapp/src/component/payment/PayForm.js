@@ -272,7 +272,7 @@ const PayForm = () => {
 
     return (
         <S.PayForm>
-            {modals[0] && (
+            {/* {modals[0] && (
                 <S.ModalBackground
                     onClick={() => setModals([false, false, false])}
                 ></S.ModalBackground>
@@ -287,7 +287,7 @@ const PayForm = () => {
                 <S.ModalBackground
                     onClick={() => setModals([false, false, false])}
                 ></S.ModalBackground>
-            )}
+            )} */}
             {modals[0] ? (
                 <NewAddressModal
                     id={id}

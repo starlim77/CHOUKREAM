@@ -398,14 +398,14 @@ export const PayBtn = styled.button`
     cursor: ${props => (props.disabled ? 'default' : 'pointer')};
 `;
 
-export const ModalBackground = styled.div`
-    position: absolute;
-    top: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
-    z-index: 998;
-    background-color: rgba(34, 34, 34, 0.5);
-`;
+// export const ModalBackground = styled.div`
+//     position: absolute;
+//     top: 0;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     width: 100%;
+//     height: 100vh;
+//     z-index: 998;
+//     background-color: rgba(34, 34, 34, 0.5);
+// `;

@@ -39,6 +39,8 @@ const NewAddressModal = props => {
     };
 
     return (
+        <>
+        <S.ModalWrapper></S.ModalWrapper>
         <S.NewAddress>
             <S.NewAddressTitle>
                 <S.HeaderTitle>새 주소 추가</S.HeaderTitle>
@@ -115,6 +117,7 @@ const NewAddressModal = props => {
                 ></S.SaveBtn>
             </S.Buttons>
         </S.NewAddress>
+        </>
     );
 };
 

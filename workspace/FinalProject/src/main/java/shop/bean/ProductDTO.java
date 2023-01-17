@@ -55,6 +55,16 @@ public class ProductDTO {
    // tag 신발 ~ 기타 
    @Column(name="tag", length = 30)
    private String tag;
+   
+   
+//   @CreationTimestamp // 엔티티가 생성되는 시점의 시간 등록
+//   private Timestamp logtime;
+   
+//   @Column(name="interest" , length = 20)
+//   private int interest;
+//   
+//   @Column(name="follow" , length = 20)
+//   private int follow;
 }
 
 

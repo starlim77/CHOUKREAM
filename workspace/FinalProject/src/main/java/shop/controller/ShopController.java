@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import org.aspectj.weaver.patterns.IScope;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -275,6 +276,10 @@ public class ShopController {
 	}
 	
 
+	@GetMapping(path = "getSellingItem")
+	public void getSellingItem(@RequestParam int seq) {
+		System.out.println(seq);
+	}
 }
 
 
