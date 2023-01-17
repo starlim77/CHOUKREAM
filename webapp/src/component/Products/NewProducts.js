@@ -25,14 +25,23 @@ const NewProducts = () => {
         
 
     useEffect(() => {
-        if (token !== null) {
-            const tokenJson = jwt_decode(token);
-            setSub(tokenJson['sub']);
-        }
-        console.log(id)
-    }, []);
+        if(sub!==""){
+            axios
+            .get('http://localhost:8080/getMemberInfo', {
+                params: { seq: sub },
+            })
+            .then(res => {
+                //console.log(JSON.stringify(res.data));
+                setId(res.data.email);
 
-    const [id, setId] = useState('');
+                //console.log('id = ' + id);
+            })
+            .catch(err => console.log(err));
+        }
+       
+    }, [sub]);
+
+    const [id, setId] = useState('ROLE_GUEST');
 
     const {seq} = useParams();
 
@@ -76,17 +85,6 @@ const NewProducts = () => {
              .then(res => setCount(res.data))
              .catch(err => console.log(err))
 
-        axios
-             .get('http://localhost:8080/getMemberInfo', {
-                 params: { seq: sub },
-             })
-             .then(res => {
-                 //console.log(JSON.stringify(res.data));
-                 setId(res.data.email);
- 
-                 //console.log('id = ' + id);
-             })
-             .catch(err => console.log(err));
     }, [])
 
     useEffect(() => {
@@ -271,7 +269,7 @@ const NewProducts = () => {
                                     <S.DeliveryWay>
                                         <S.WayInfo>
                                             <S.WayStatusThumb>
-                                                <img src='https://kream-phinf.pstatic.net/MjAyMTExMjFfMjU5/MDAxNjM3NDczNzU0MjA1.ON3pvFYAq_xSSaNWDgUWe1YfIx-C0fm91PDtcsUn3AEg.Q4EbbNWl_ua916jg0NQ0dWOS3h7W9eiiI2kK9YPWlgwg.PNG/a_120a84f036724d0d97a2343aafff4ecf.png' width="40px" height="40px"/>
+                                                <img src='/image/product/a_120a84f036724d0d97a2343aafff4ecf.png' width="40px" height="40px"/>
                                             </S.WayStatusThumb>
                                             <S.WayDesc>
                                                 <S.Company>

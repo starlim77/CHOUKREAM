@@ -144,4 +144,15 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	public List<NewProductOptionDTO> getNewProductOption(int seq) {
 		return newProductOptionRepository.findBySeq(seq);
 	}
+	
+	@Override
+	public void addNewProductOption(int seq, String option) {
+		NewProductOptionDTO newProductOptionDTO = new NewProductOptionDTO();
+		newProductOptionDTO.setInventory(0);
+		newProductOptionDTO.setSeq(seq);
+		newProductOptionDTO.setProductOption(option);
+		
+		newProductOptionRepository.save(newProductOptionDTO);
+		
+	}
 }

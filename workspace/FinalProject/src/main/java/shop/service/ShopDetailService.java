@@ -53,5 +53,7 @@ public interface ShopDetailService {
 
 	public List<NewProductOptionDTO> getNewProductOption(int seq);
 
+	public void addNewProductOption(int seq, String option);
+
 //	public Optional<Integer> getProductSizeMin(int seq, String size);
 }

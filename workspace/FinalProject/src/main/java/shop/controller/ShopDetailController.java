@@ -101,6 +101,11 @@ public class ShopDetailController {
 		return shopDetailService.getNewProductOption(seq);
 	}
 	
+	@GetMapping(path="addNewProductOption")
+	public void addNewProductOption(@RequestParam int seq, @RequestParam String option) {
+		shopDetailService.addNewProductOption(seq, option);
+	}
+	
 	
 	
 }
