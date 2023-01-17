@@ -13,6 +13,12 @@ export const Table = styled.table`
     width: 80%;
     height: 100%;
 `;
+export const Table2 = styled.table`
+    margin: 0 auto;
+    display: block;
+    width: 1300px;
+    height: 100%;
+`;
 export const Thead  = styled.thead`
 `;
 export const Tbody = styled.tbody`
@@ -114,7 +120,9 @@ export const Td2 = styled.td`
     vertical-align: middle;
 `;
 export const SearchingWrapper=styled.div`
+    margin:0 auto;
     display:flex;
+    width:1300px;
     justify-content: flex-end;
 `
 export const SearchingInput=styled.input`
