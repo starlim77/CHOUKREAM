@@ -44,6 +44,9 @@ public class StyleDTO {
 	private int likesCount;
 	
 	private Integer productSeq;
+	
+	private String email;
+	
 
 	
 	public static StyleDTO toStyleDTO(StyleEntity styleEntity) {
@@ -85,6 +88,7 @@ public class StyleDTO {
 		styleDTO.setCommentCount(styleEntity.getCommentCount());
 		styleDTO.setLikesCount(styleEntity.getLikesCount());
 		styleDTO.setProductSeq(styleEntity.getProductSeq());
+		styleDTO.setEmail(styleEntity.getEmail());
 		
 		return styleDTO;
 	}
