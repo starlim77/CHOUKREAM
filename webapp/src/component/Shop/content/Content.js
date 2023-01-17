@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '../modal/Modal';
 import { Link } from 'react-router-dom';
 import categoryData from './CategoryData';
-import MenuList from './MenuList';
 import MenuList2 from './MenuList2';
 
 const Content = ({
@@ -477,7 +476,9 @@ const Content = ({
                                                   <Co.PriceInfoArea>
                                                       <Co.Amount>
                                                           {addComma(
-                                                              item.releasePrice,
+                                                            sortCheck
+                                                                ? item.max_price
+                                                                : item.min_price,
                                                           )}
                                                       </Co.Amount>
                                                       <Co.Desc>

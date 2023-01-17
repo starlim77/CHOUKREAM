@@ -31,7 +31,7 @@ import lombok.Data;
 @Table(name = "newProduct")
 public class NewProductDTO {
 	
-	@Id
+	@Id // 자동
 	@GeneratedValue(strategy = GenerationType.IDENTITY )
 	@Column
 	private int seq;
@@ -59,6 +59,13 @@ public class NewProductDTO {
 	// tag 신발 ~ 기타 
 	@Column(name="tag", length = 30)
 	private String tag;
+	
+	// 0남자 1여자 2무관
+   @Column(name="gender")
+   private String gender;
+   
+   @Column(name="releaseDate")
+   private String releaseDate;
 	
 	// 상품 등록 날짜 / 자동
 	@Column(name="registerProductDate", nullable = false)

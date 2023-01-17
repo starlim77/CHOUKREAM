@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpSession;
 import shop.bean.NewProductDTO;
 import shop.bean.NewProductOptionDTO;
+import shop.bean.NewSortListDTO;
 import shop.bean.ProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.service.NewProductService;
@@ -52,6 +53,37 @@ public class ShopController {
 		System.out.println(" 리턴 하기전에 " + newProductService.getNewProductList());
 		return newProductService.getNewProductList();
 	}
+	
+	
+	// sort 정렬
+	@GetMapping("newFavourSort")
+	public List<NewSortListDTO> newFavourSort() {
+		System.out.println("ㅎㅇㅎㅇ");
+		
+		return newProductService.newFavourSort();
+	}
+	
+	@GetMapping("newBuySort")
+	public List<NewSortListDTO> newBuySort() {
+		System.out.println("ㅎㅇㅎㅇ");
+		
+		return newProductService.newBuySort();
+	}
+	@GetMapping("newSellSort")
+	public List<NewSortListDTO> newSellSort() {
+		System.out.println("여기 오니 ?? ");
+		
+		return newProductService.newSellSort();
+	}
+	@GetMapping("newReleaseDateSort")
+	public List<NewSortListDTO> newReleaseDateSort() {
+		System.out.println("새상품 발매일 ");
+		
+		return newProductService.newReleaseDateSort();
+	}
+	
+	
+	
 	
 	
 	

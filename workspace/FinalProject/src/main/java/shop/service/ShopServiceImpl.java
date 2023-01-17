@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import shop.dao.ProductSizeRepository;
 import shop.dao.ShopDAO;
 import shop.bean.NewProductDTO;
+import shop.bean.NewSortListDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
 import shop.bean.SortListDTO;

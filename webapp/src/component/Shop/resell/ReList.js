@@ -354,18 +354,17 @@ const ReList = () => {
                                 }
                             ></Li.Input> */}
                         </Li.Th>
-                        <Li.Th>seq</Li.Th>
-                        <Li.Th>이미지 </Li.Th>
-                        <Li.Th>brand</Li.Th>
-                        <Li.Th>category</Li.Th>
-                        <Li.Th>representative</Li.Th>
-                        <Li.Th>color</Li.Th>
-                        <Li.Th>model_num</Li.Th>
-                        <Li.Th>price</Li.Th>
-                        <Li.Th>releaseDate</Li.Th>
-                        <Li.Th style={{ width: '200px' }}>등록시간</Li.Th>
-                        <Li.Th style={{ width: '200px' }}>title</Li.Th>
-                        <Li.Th style={{ width: '200px' }}>subTitle</Li.Th>
+                        <Li.Th style={{ width: '200px' }}>글 번호</Li.Th>
+                        <Li.Th style={{ width: '150px' }}>이미지</Li.Th>
+                        <Li.Th style={{ width: '200px' }}>브랜드</Li.Th>
+                        <Li.Th style={{ width: '240px' }}>카테고리</Li.Th>
+                        <Li.Th style={{ width: '100px' }}>색상</Li.Th>
+                        <Li.Th style={{ width: '200px' }}>모델 번호</Li.Th>
+                        <Li.Th style={{ width: '200px' }}>발매가</Li.Th>
+                        <Li.Th style={{ width: '200px' }}>발매일</Li.Th>
+                        <Li.Th style={{ width: '250px' }}>등록시간</Li.Th>
+                        <Li.Th style={{ width: '200px' }}>상품명</Li.Th>
+                        <Li.Th style={{ width: '200px' }}>이름</Li.Th>
                     </Li.Tr>
                 </Li.Thead>
                 <Li.Tbody>

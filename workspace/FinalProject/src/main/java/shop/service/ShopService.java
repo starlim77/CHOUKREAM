@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import shop.bean.NewProductDTO;
+import shop.bean.NewSortListDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
 import shop.bean.SortListDTO;
@@ -39,5 +40,4 @@ public interface ShopService {
 	public List<SortListDTO> releaseDateSort();
 
 
-	
 }

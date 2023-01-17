@@ -217,10 +217,15 @@ const NewWrite = () => {
                     <S.SubTitle type="text"name="subTitle"onChange={onInput}/>
                     <S.Subject> 브랜드</S.Subject>
                     <S.SubTitle type="text" name="brand" onChange={onInput} />
+                    <S.Subject> 성별</S.Subject>
+                    <S.SubTitle type="text" name="gender" onChange={onInput} />
+                    <S.Subject> 발매일</S.Subject>
+                    <S.SubTitle type="text" name="releaseDate" onChange={onInput} />
+                    <S.Subject> 태그</S.Subject>
+                    <S.SubTitle type="text" name="tag" onChange={onInput} />
+                    
                     <S.Subject> 제품 카테고리 </S.Subject>
                     <S.SubTitle type="text"name="category"onChange={onInput}/>
-                    <S.Subject> 제품 카테고리 디테일 </S.Subject>
-                    <S.SubTitle type="text" name="categoryDetail"onChange={onInput}/>
                     <S.Subject> 상세설명 이미지 </S.Subject>
                     <S.SubTitle type="text" name="descriptionImg" onChange={onInput} />
                     <S.Subject> 판매가 </S.Subject>

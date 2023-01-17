@@ -73,7 +73,7 @@ const Shop = () => {
                 <Se.SearchTop>
                     <Se.TopBox>
                         <Se.SearchTitle>
-                            <Se.TitleTxt>RESELL SHOP</Se.TitleTxt>
+                            <Se.TitleTxt>SHOP</Se.TitleTxt>
                         </Se.SearchTitle>
                         <Se.QuickFilter>
                             <Se.QuickFilterBox>
