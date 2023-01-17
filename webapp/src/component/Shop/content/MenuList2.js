@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import * as Co from './ContentStyle';
 import Menu from './Menu';
 
-const MenuList2 = ({ item, id, dummy, setDummy, setPictures, dataSetting, checked, setChecked }) => {
+const MenuList2 = ({ item, id, dummy, setDummy, setPictures, dataSetting }) => {
+    
     return (
         <>
             <Co.MenuList>
@@ -13,8 +14,6 @@ const MenuList2 = ({ item, id, dummy, setDummy, setPictures, dataSetting, checke
                         key={index}
                         menu={menu}
                         dataSetting={dataSetting}
-                        checked={checked}
-                        setChecked={setChecked}
                     ></Menu>
                 ))}
             </Co.MenuList>

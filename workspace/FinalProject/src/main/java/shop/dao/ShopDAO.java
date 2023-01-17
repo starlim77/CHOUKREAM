@@ -38,8 +38,8 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 	
 	
 	// 반환타입을 interface 로 
-	@Query( nativeQuery = true, value= "select a.seq, a.brand, ifnull(b.order_price, '구매입찰') as min_price ,ifnull(c.order_price, '구매입찰') \r\n"
-			+ "as max_price, a.title, a.sub_title, a.img_name, e.order_count from product_table as a \r\n"
+	@Query( nativeQuery = true, value= "select a.seq, a.brand, ifnull(b.order_price, '-') as min_price ,ifnull(c.order_price, '-') \r\n"
+			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count, a.category, a.tag from product_table as a \r\n"
 			+ "left outer join (select seq, min(order_price) AS order_price from order_table where buy_sell = 1 group by seq ) as b on a.seq = b.seq\r\n"
 			+ "left outer join (select seq, max(order_price) AS order_price from order_table where buy_sell = 0 group by seq ) as c on a.seq = c.seq\r\n"
 			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'resell' group by seq) as d on a.seq = d.seq\r\n"
@@ -62,28 +62,36 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 	@Query("SELECT u FROM ProductDTO u WHERE u.category like %:keyword%")
 	List<ProductDTO> getSearchCategory(String keyword);
 	
-	@Query(nativeQuery= true, value= "select a.seq, a.brand, ifnull(b.order_price, '구매입찰') as min_price ,ifnull(c.order_price, '구매입찰') \r\n"
-			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count from product_table as a \r\n"
+	@Query(nativeQuery= true, value= "select a.seq, a.brand, ifnull(b.order_price, '-') as min_price ,ifnull(c.order_price, '-') \r\n"
+			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count, a.category, a.tag, a.release_date from product_table as a \r\n"
 			+ "left outer join (select seq, min(order_price) AS order_price from order_table where buy_sell = 1 group by seq ) as b on a.seq = b.seq\r\n"
 			+ "left outer join (select seq, max(order_price) AS order_price from order_table where buy_sell = 0 group by seq ) as c on a.seq = c.seq\r\n"
 			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'resell' group by seq) as d on a.seq = d.seq\r\n"
 			+ "left outer join (select seq, count(*) AS order_count from completed_order_table group by seq) as e on a.seq = e.seq\r\n"
-			+ "order by (max_price + 0) asc")
-	List<ProductDTO> BuySort();
+			+ "order by (min_price + 0) asc")
+	List<SortListDTO> BuySort();  // 즉시구매가 낮은순
 	
-	@Query(nativeQuery = true, value = "select a.seq, a.brand, ifnull(b.order_price, '구매입찰') as min_price ,ifnull(c.order_price, '구매입찰') \r\n"
-			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count from product_table as a \r\n"
+	@Query(nativeQuery = true, value = "select a.seq, a.brand, ifnull(b.order_price, '-') as min_price ,ifnull(c.order_price, '-') \r\n"
+			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count, a.category, a.tag, a.release_date from product_table as a \r\n"
 			+ "left outer join (select seq, min(order_price) AS order_price from order_table where buy_sell = 1 group by seq ) as b on a.seq = b.seq\r\n"
 			+ "left outer join (select seq, max(order_price) AS order_price from order_table where buy_sell = 0 group by seq ) as c on a.seq = c.seq\r\n"
 			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'resell' group by seq) as d on a.seq = d.seq\r\n"
 			+ "left outer join (select seq, count(*) AS order_count from completed_order_table group by seq) as e on a.seq = e.seq\r\n"
-			+ "order by (min_price + 0) desc")
-	List<ProductDTO> SellSort();
+			+ "order by (max_price + 0) desc")
+	List<SortListDTO> SellSort(); // 즉시판매가 높은순 
+	
+	@Query(nativeQuery = true, value = "select a.seq, a.brand, ifnull(b.order_price, '-') as min_price ,ifnull(c.order_price, '-') \r\n"
+			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count, a.category, a.tag, a.release_date from product_table as a \r\n"
+			+ "left outer join (select seq, min(order_price) AS order_price from order_table where buy_sell = 1 group by seq ) as b on a.seq = b.seq\r\n"
+			+ "left outer join (select seq, max(order_price) AS order_price from order_table where buy_sell = 0 group by seq ) as c on a.seq = c.seq\r\n"
+			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'resell' group by seq) as d on a.seq = d.seq\r\n"
+			+ "left outer join (select seq, count(*) AS order_count from completed_order_table group by seq) as e on a.seq = e.seq\r\n"
+			+ "order by release_date desc")
+	List<SortListDTO> releaseDateSort();
 
 	//lookbook 
 	@Query("select productDTO from ProductDTO productDTO where productDTO.title like '%' || :keyword || '%' OR productDTO.subTitle like '%' || :keyword || '%' ")
 	public List<ProductDTO> search(@Param("keyword") String keyword);
-
 	
 
 }

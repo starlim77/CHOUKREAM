@@ -101,6 +101,7 @@ export const SearchTrendContainer = styled.div`
 export const BrandList = styled.ul`
     display: flex;
     margin: 0 auto;
+    margin-bottom: 15px;
     padding: 0 0 16px;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import shop.bean.NewProductDTO;
+import shop.bean.NewSortListDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
 import shop.bean.SortListDTO;
@@ -30,12 +31,13 @@ public interface ShopService {
 
 	public void resellUpload(ProductDTO productDTO);
 
-	public List<ProductDTO> BuySort();
+	public List<SortListDTO> BuySort();
 
-	public List<ProductDTO> SellSort();
+	public List<SortListDTO> SellSort();
 
 	public void reUpdate(ProductDTO productDTO);
 
+	public List<SortListDTO> releaseDateSort();
 
-	
+
 }

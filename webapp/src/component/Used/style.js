@@ -121,6 +121,9 @@ export const MainItem = styled.div`
    margin-left: 15px;
    margin-right: 10px;
    position: relative;
+   :hover{
+    cursor: pointer;
+   }
 `;
 
 export const ItemImg = styled.img`

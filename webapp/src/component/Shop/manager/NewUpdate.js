@@ -1,3 +1,4 @@
+import { Description } from '@mui/icons-material';
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -53,17 +54,25 @@ const NewUpdate = () => {
         seq: checkedId,
         registerProductDate: dateStr + timeStr,
         imgName: imgNameSend,
-        title: '',
-        subTitle: '',
-        brand: '',
-        category: '',
-        categoryDetail: '',
-        gender: '',
-        modelNum: '',
-        releaseDate: '',
-        color: '',
-        size: '',
-        price: '',
+        title: location.state.updateList[0].title,
+        subTitle: location.state.updateList[0].subTitle,
+        brand: location.state.updateList[0].brand,
+        releaseDate: location.state.updateList[0].releaseDate,
+        tag: location.state.updateList[0].tag,
+        category: location.state.updateList[0].category,
+        gender: location.state.updateList[0].gender,
+        descriptionImg: location.state.updateList[0].descriptionImg,
+        price: location.state.updateList[0].price,
+        businessName: location.state.updateList[0].businessName,
+        color: location.state.updateList[0].color,
+        comRegNo: location.state.updateList[0].comRegNo,
+        representative: location.state.updateList[0].representative,
+        businessLocation: location.state.updateList[0].businessLocation,
+        serviceCall: location.state.updateList[0].serviceCall,
+        material: location.state.updateList[0].material,
+        manufacturer: location.state.updateList[0].manufacturer,
+        countryOfManufacturer: location.state.updateList[0].countryOfManufacturer,
+        dateOfManufacturer: location.state.updateList[0].dateOfManufacturer,
     });
 
     const {
@@ -73,14 +82,22 @@ const NewUpdate = () => {
         title,
         subTitle,
         brand,
-        category,
-        categoryDetail,
-        gender,
-        modelNum,
         releaseDate,
-        color,
-        size,
+        tag,
+        category,
+        gender,
+        descriptionImg,
         price,
+        businessName,
+        color,
+        comRegNo,
+        representative,
+        businessLocation,
+        serviceCall,
+        material,
+        manufacturer,
+        countryOfManufacturer,
+        dateOfManufacturer,
     } = form;
 
     const onInput = e => {
@@ -339,123 +356,133 @@ const NewUpdate = () => {
                         type="text"
                         name="title"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].title}
+                        value={title}
                     />
                     <S.Subject> 제품 한글 이름</S.Subject>
                     <S.SubTitle
                         type="text"
                         name="subTitle"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].subTitle}
+                        value={subTitle}
                     />
                     <S.Subject> 브랜드</S.Subject>
                     <S.SubTitle
                         type="text"
                         name="brand"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].brand}
+                        value={brand}
+                    />
+                    <S.Subject> 성별</S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="gender"
+                        onChange={onInput}
+                        value={gender}
+                    />
+                    <S.Subject> 발매일</S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="releaseDate"
+                        onChange={onInput}
+                        value={releaseDate}
+                    />
+                    <S.Subject> 태그</S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="tag"
+                        onChange={onInput}
+                        value={tag}
                     />
                     <S.Subject> 제품 카테고리 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="category"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].category}
-                    />
-                    <S.Subject> 제품 카테고리 디테일 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="categoryDetail"
-                        onChange={onInput}
-                        placeholder={
-                            location.state.updateList[0].categoryDetail
-                        }
+                        value={category}
                     />
                     <S.Subject> 상세설명 이미지 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="descriptionImg"
                         onChange={onInput}
-                        placeholder={
-                            location.state.updateList[0].descriptionImg
-                        }
+                        value={descriptionImg}
                     />
                     <S.Subject> 판매가 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="price"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].price}
+                        value={price}
                     />
                     <S.Subject> 상호명 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="businessName"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].businessName}
+                        value={businessName}
                     />
                     <S.Subject> 색상 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="color"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].color}
+                        value={color}
                     />
                     <S.Subject> 사업자 번호 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="comRegNo"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].comRegNo}
+                        value={comRegNo}
                     />
                     <S.Subject> 대표자 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="representative"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].representative}
+                        value={representative}
                     />
                     <S.Subject> 사업장 소재지 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="businessLocation"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].businessLocation}
+                        value={businessLocation}
                     />
                     <S.Subject> 고객센터 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="serviceCall"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].serviceCall}
+                        value={serviceCall}
                     />
                     <S.Subject> 소재 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="material"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].material}
+                        value={material}
                     />
                     <S.Subject> 제조 회사 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="manufacturer"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].manufacturer}
+                        value={manufacturer}
                     />
                     <S.Subject> 제조국 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="countryOfManufacturer"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].countryOfManufacturer}
+                        value={countryOfManufacturer}
                     />
                     <S.Subject> 제조 날짜 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="dateOfManufacturer"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].dateOfManufacturer}
+                        value={dateOfManufacturer}
                     />
 
                     {/* <S.Necessary>* 필수</S.Necessary>

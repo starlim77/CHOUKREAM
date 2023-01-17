@@ -110,10 +110,9 @@ const NewProductList = ({
                 </Li.Td>
                 <Li.Td>{item.brand}</Li.Td>
                 <Li.Td>{item.category}</Li.Td>
-                <Li.Td>{item.categoryDetail}</Li.Td>
                 <Li.Td>{item.color}</Li.Td>
                 <Li.Td>{item.modelNum}</Li.Td>
-                <Li.Td>{item.price}</Li.Td>
+                <Li.Td>{item.releasePrice}</Li.Td>
                 <Li.Td>{item.releaseDate}</Li.Td>
                 <Li.Td>{item.registerProductDate}</Li.Td>
                 <Li.Td>{item.title}</Li.Td>

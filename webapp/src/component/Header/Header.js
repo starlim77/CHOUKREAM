@@ -5,15 +5,10 @@ import * as S from './style';
 import { Link } from 'react-router-dom';
 import SearchForm from '../Search/SearchForm';
 import ShopModal from './ShopModal';
+import SearchForm2 from '../Search/SearchForm2';
 
 const Header = ({auth}) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const onOpen = () => {
-        setIsOpen(true);
-    };
-    const onClose = () => {
-        setIsOpen(false);
-    };
+   
     const[shopModalOpen,setShopModalOpen]=useState(false)
     const onShopModal=()=>{
         setShopModalOpen(!shopModalOpen)
@@ -28,7 +23,7 @@ const Header = ({auth}) => {
                         {/*나중에 뒷 부분 NULL처리 할 것! */}
                         </Link>
                         <Link to="/cs/CsNotice">
-                            x<S.TopLi>고객센터</S.TopLi>
+                            <S.TopLi>고객센터</S.TopLi>
                         </Link>
                         <S.TopLi>관심상품</S.TopLi>
                         <S.TopLi>마이페이지</S.TopLi>
@@ -44,7 +39,6 @@ const Header = ({auth}) => {
                     </Link>
 
                     <S.BottomWrapper>
-                        <S.BottomLi active={true}>STYLE</S.BottomLi>
                         <S.BottomLi onClick={onShopModal}>
                             SHOP
                             {shopModalOpen&&<ShopModal></ShopModal>}
@@ -53,15 +47,9 @@ const Header = ({auth}) => {
                             <Link to="/lookbook/trending">STYLE</Link>
                         </S.BottomLi>
                         {/* <S.BottomLi active={true}><Link to="/lookbook/detail">STYLE</Link></S.BottomLi> */}
-                        <S.BottomLi>SHOP</S.BottomLi>
                         <S.BottomLi>ABOUT</S.BottomLi>
                         <S.BottomLi>
-                            <div>
-                                <div onClick={onOpen}>
-                                    <FontAwesomeIcon icon={faMagnifyingGlass} />
-                                </div>
-                                {isOpen && <SearchForm onClose={onClose} />}
-                            </div>
+                            <SearchForm2 />
                         </S.BottomLi>
                     </S.BottomWrapper>
                 </S.Bottom>
