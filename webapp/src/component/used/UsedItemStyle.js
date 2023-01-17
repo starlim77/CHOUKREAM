@@ -210,22 +210,39 @@ export const ChatButton=styled.button`
 
 export const SettlementButton=styled.button`
     width:560px;
-    font-size:50px;
+    height: ${props=>props.active?'':'80px'};
+    font-size:${props=>props.active?'20px':'40px'};
+    border-radius: 20px;
+    color:white;
+    background:${props=>props.active?'black':'gray'};
+    -webkit-animation:${props=>props.active? 'blink 2.0s linear infinite':'none'};
 
+    @keyframes blink {
+    /*0% 부터 100% 까지*/ 
+    50% {color:#fff;}
+    100% {color:#000; }
+    }
     :hover{
         cursor: pointer;
     }
 `;
+//https://blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=bo_mini1222&logNo=221453065190&redirect=Dlog&widgetTypeCall=true&directAccess=false
+
+export const PriceDiv=styled.div`
+    font-size:30px;
+`;
 
 export const ProfileWrapper=styled.div`
-    line-height:30px;
+    /* line-height:30px; */
     //border-top:1px solid rgba(236,236,236);
     border-bottom:1px solid rgba(236,236,236);
     padding: 15px 0 15px 0;
+    display: flex;
+    align-content: center;
 `;
 
 export const ProfileImg=styled.img.attrs({
-    src:"/image/profileDefault2.jpg"
+    src:"/image/used/profileDefault2.jpg"
 })`
 
     width:55px;
@@ -235,8 +252,9 @@ export const ProfileImg=styled.img.attrs({
 `;
 
 export const ProfileSpan=styled.span`
-    font-size:15px;
-    
+    font-size:20px;
+    line-height: 57px;
+    height:57px;
 `;
 
 export const ModalDiv=styled.div`   

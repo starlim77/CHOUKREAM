@@ -3,6 +3,7 @@ package shop.controller;
 import java.io.File;
 import java.io.IOException;
 import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -29,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpSession;
 import shop.bean.NewProductDTO;
 import shop.bean.NewProductOptionDTO;
+import shop.bean.NewSortListDTO;
 import shop.bean.ProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.dao.ShopDAO;
@@ -49,51 +51,44 @@ public class ShopController {
 	
 	@Autowired
 	private NewProductService newProductService;
-	
-	@GetMapping("getProductList")
-	public List<ProductDTO> getProductList() {
-		return shopService.getProductList();
-	}
-	
-	@GetMapping("sortGetProductList")
-	public List<ProductDTO> sortGetProductList() {
-		return shopService.sortGetProductList();
-	}
-	
-	@GetMapping("favourSort")
-	public List<SortListDTO> favourSort() {
-		System.out.println("ㅎㅇㅎㅇ");
-		System.out.println(shopService.favourSort());
-		return shopService.favourSort();
-	}
-//	@GetMapping("sortGetProductList2")
-//	public List<ProductDTO> sortGetProductList2() {
-//		return shopService.sortGetProductList2();
-//	}
-//	@GetMapping("sortGetProductList3")
-//	public List<ProductDTO> sortGetProductList3() {
-//		return shopService.sortGetProductList3();
-//	}
-	
-	
-	
-	
-	@PostMapping("getProductBySeq")
-	public Optional<ProductDTO> getProductBySeq(@RequestParam int seq) {
-		return shopService.getProductBySeq(seq);
-	}
-	
-	@GetMapping("getShoesList")
-	public List<ProductDTO> getShoesList(@RequestParam String shoes)  {
-		System.out.println("슈즈 " + shoes);
-		return shopService.getShoesList(shoes);
-	}
+
 	
 	@GetMapping("getNewProductList")
 	public List<NewProductDTO> getNewProductList() {
 		System.out.println(" 리턴 하기전에 " + newProductService.getNewProductList());
 		return newProductService.getNewProductList();
 	}
+	
+	
+	// sort 정렬
+	@GetMapping("newFavourSort")
+	public List<NewSortListDTO> newFavourSort() {
+		System.out.println("ㅎㅇㅎㅇ");
+		
+		return newProductService.newFavourSort();
+	}
+	
+	@GetMapping("newBuySort")
+	public List<NewSortListDTO> newBuySort() {
+		System.out.println("ㅎㅇㅎㅇ");
+		
+		return newProductService.newBuySort();
+	}
+	@GetMapping("newSellSort")
+	public List<NewSortListDTO> newSellSort() {
+		System.out.println("여기 오니 ?? ");
+		
+		return newProductService.newSellSort();
+	}
+	@GetMapping("newReleaseDateSort")
+	public List<NewSortListDTO> newReleaseDateSort() {
+		System.out.println("새상품 발매일 ");
+		
+		return newProductService.newReleaseDateSort();
+	}
+	
+	
+	
 	
 	
 	
@@ -189,7 +184,7 @@ public class ShopController {
 	
 	@PostMapping(path="newProductUpload", produces="text/html;charset-UTF-8")
 	 @ResponseBody
-	 public void upload(@RequestBody List<MultipartFile> img, HttpSession session, @ModelAttribute NewProductDTO newProductDTO) {
+	 public void upload(@RequestBody List<MultipartFile> img,@RequestBody List<MultipartFile> img2, HttpSession session, @ModelAttribute NewProductDTO newProductDTO) {
 		System.out.println(newProductDTO);
 		System.out.println(newProductDTO.getNewProductOptionDTO());
 		System.out.println(" 현욱 ");
@@ -264,7 +259,44 @@ public class ShopController {
 			System.out.println("업로드 에러 ");
 			e.printStackTrace();
 		}//복사
+		 
+		 try {
+				
+			 String fileName=null;
+			 
+			 //원래는 img가 list형태라서 iterator를 사용하는 것이 더 올바른 방법이긴 함.
+			 for(MultipartFile sendImg:img2) {
+				
+				//사진을 webapp쪽에 실제로 등록할 때 사용할 이름을 위한 변수
+				String sendName=null;
+				
+				//사진에 고유 값을 만들어 주는 기능.
+				//사용 이유. 룩북파트 혹은 중고매물 파트는 고객들이 사진을 등록하는데 고객들이 사진의 명칭을 똑같이 해놓은 경우가 존재할 수 있음.
+				//사진명이 중복되면 사진이 사라질 수 있기때문에 고유값을 만들어 사진이 삭제되는 경우를 방지
+				//https://dev-gorany.tistory.com/123
+				String uuid= UUID.randomUUID().toString();
+				sendName=uuid + "_" +sendImg.getOriginalFilename();
+				
+				
+				File file = new File(filePath, sendName);
+				
+				//db에 저장할 때 컬럼에 사진명을 배열로 저장할 수 없기 때문에 한줄로 저장후 ","를 사용하여 사진명을 분리할 예정
+				fileName=fileName+sendName+",";
+				sendImg.transferTo(file);
+				System.out.println("fileName " +fileName);
+			 }
+			 
+			 //DTO에 사진명 수정 후 DTO에 세팅
+			 String imgName;
+			 imgName=fileName.substring(4, fileName.length()-1);
+			 System.out.println("imgName " + imgName);
+			 newProductDTO.setDescriptionImg(imgName);
+		} catch (IOException e) {
+			System.out.println("업로드 에러 ");
+			e.printStackTrace();
+		}//복사
 				 
+		System.out.println(newProductDTO);
 		newProductService.upload(newProductDTO);
 
 	 }

@@ -343,7 +343,7 @@ const ReList = () => {
             <Li.Table>
                 <Li.Thead>
                     <Li.Tr>
-                        <Li.Th style={{ width: '200px' }}>
+                        <Li.Th>
                             {/* <Li.Input
                                 type="checkbox"
                                 checked={isAllChecked}
@@ -354,18 +354,17 @@ const ReList = () => {
                                 }
                             ></Li.Input> */}
                         </Li.Th>
-                        <Li.Th>seq</Li.Th>
-                        <Li.Th>이미지 </Li.Th>
-                        <Li.Th>brand</Li.Th>
-                        <Li.Th>category</Li.Th>
-                        <Li.Th>category_detail</Li.Th>
-                        <Li.Th>color</Li.Th>
-                        <Li.Th>model_num</Li.Th>
-                        <Li.Th>price</Li.Th>
-                        <Li.Th>releaseDate</Li.Th>
-                        <Li.Th>registerProductDate</Li.Th>
-                        <Li.Th>title</Li.Th>
-                        <Li.Th>subTitle</Li.Th>
+                        <Li.Th style={{ width: '200px' }}>글 번호</Li.Th>
+                        <Li.Th style={{ width: '150px' }}>이미지</Li.Th>
+                        <Li.Th style={{ width: '200px' }}>브랜드</Li.Th>
+                        <Li.Th style={{ width: '240px' }}>카테고리</Li.Th>
+                        <Li.Th style={{ width: '100px' }}>색상</Li.Th>
+                        <Li.Th style={{ width: '200px' }}>모델 번호</Li.Th>
+                        <Li.Th style={{ width: '200px' }}>발매가</Li.Th>
+                        <Li.Th style={{ width: '200px' }}>발매일</Li.Th>
+                        <Li.Th style={{ width: '250px' }}>등록시간</Li.Th>
+                        <Li.Th style={{ width: '200px' }}>상품명</Li.Th>
+                        <Li.Th style={{ width: '200px' }}>이름</Li.Th>
                     </Li.Tr>
                 </Li.Thead>
                 <Li.Tbody>

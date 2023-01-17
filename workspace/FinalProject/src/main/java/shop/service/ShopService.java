@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 
 import shop.bean.NewProductDTO;
+import shop.bean.NewSortListDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
 import shop.bean.SortListDTO;
@@ -33,7 +34,13 @@ public interface ShopService {
 	public void resellUpload(ProductDTO productDTO);
 
 	public List<ProductDTO> getRecentReleaseList(int rn);
+	public List<SortListDTO> BuySort();
+
+	public List<SortListDTO> SellSort();
+
+	public void reUpdate(ProductDTO productDTO);
+
+	public List<SortListDTO> releaseDateSort();
 
 
-	
 }

@@ -43,4 +43,8 @@ public interface UsedItemService {
 
 	public List<UsedItemDTO> getAdminItem();
 
+	public int totalReport(String id);
+
+	public int getFinishedTrade(String id);
+
 }

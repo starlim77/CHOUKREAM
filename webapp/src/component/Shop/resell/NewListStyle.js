@@ -8,9 +8,9 @@ export const Title = styled.h1`
     font-weight: 500px;
 `;
 export const Table = styled.table`
-    margin-left: 80px;
+    margin: 0 auto;
     display: block;
-    width: 80%;
+    width: 1300px; /* 80% */
     height: 100%;
 `;
 export const Thead  = styled.thead`
@@ -26,7 +26,6 @@ export const Tr = styled.tr`
 export const Th = styled.th`
     border-top: solid 1px black;
     border-bottom: solid 1px black;
-    width: 100px;
     padding: 15px;
 `;
 export const Td = styled.td`
@@ -34,8 +33,8 @@ export const Td = styled.td`
     border-bottom: solid 1px black;
     border-spacing: 20px 20px;
     width: 100px;
-    padding: 10px;
     text-align: center;
+    vertical-align: middle;
 `;
 export const Input = styled.input`
     zoom: 1.5;
@@ -50,9 +49,9 @@ export const MenuBtn = styled.button`
     text-decoration: none;
 `;
 export const Label = styled.label`
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     box-sizing: border-box;
     position: absolute;
     bottom: 5px;

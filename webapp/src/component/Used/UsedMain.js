@@ -30,11 +30,6 @@ const UsedMain = () => {
         }
     },[])
 
-
-    // console.log(data[0])
-
-    
-
     const [hash,setHash] = useState()
 
     const navigate = useNavigate()
@@ -110,7 +105,7 @@ const UsedMain = () => {
 
         if (heightBottom >= scrollHeight - 80) {
             // console.log( '하단높이 '+ heightBottom + ' , ' + (scrollHeight - 100));
-            setItemLength(itemLength => itemLength + 4)
+            setItemLength(itemLength => itemLength + 8)
         }
     };
 

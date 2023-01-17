@@ -46,28 +46,37 @@ const ReUpdate = () => {
     
     const [form, setForm] = useState({
         seq: checkedId,
-        registerProductDate: dateStr+timeStr,
-        title: '',
-        subTitle: '',
-        brand: '',
-        category: '',
-        gender: '',
-        modelNum: '',
-        releaseDate: '',
-        color: '',
+        registerProductDate: dateStr + timeStr,
+        imgName: imgNameSend,
+        title: location.state.updateList[0].title,
+        subTitle: location.state.updateList[0].subTitle,
+        brand: location.state.updateList[0].brand,
+        category: location.state.updateList[0].category,
+        tag: location.state.updateList[0].tag,
+        gender: location.state.updateList[0].gender,
+        modelNum: location.state.updateList[0].modelNum,
+        releaseDate: location.state.updateList[0].releaseDate,
+        color: location.state.updateList[0].color,
+        size: location.state.updateList[0].size,
+        price: location.state.updateList[0].price,
+        releasePrice: location.state.updateList[0].releasePrice,
     });
 
     const {
         seq,
         registerProductDate,
+        imgName,
         title,
         subTitle,
         brand,
         category,
+        tag,
         gender,
         modelNum,
         releaseDate,
         color,
+        releasePrice,
+        price
     } = form;
 
     const onInput = e => {
@@ -93,7 +102,7 @@ const ReUpdate = () => {
         var sw = 1;
         console.log('file[0] ', file[0]);
         // console.log(--sw);
-        file[0] || (--sw && alert('이미지 파일을 등록해주세요'));
+        // file[0] || (--sw && alert('이미지 파일을 등록해주세요'));
         // false ||
 
         var formData = new FormData();
@@ -106,6 +115,7 @@ const ReUpdate = () => {
             console.log('키' + key);
             console.log('formData[key]' + formData[key]);
         });
+        
         console.log('스위치 찍어라' + 1);
         if (sw == 1) {
             // null로 하든 formData로 하든 상관없나 ?
@@ -114,15 +124,15 @@ const ReUpdate = () => {
             console.log('디비가러 가는길 ~ ' + checkedId )
             axios
                 // .put(`http://localhost:8080/shop/update?seq=${checkedId}`, null, {
-                .put('http://localhost:8080/shop/update', formData, {
+                .put('http://localhost:8080/shop/reUpdate', formData, {
                     params: form,
                 })
                 .then(() => {
-                    alert('글 수정 완료')
+                    alert('리셀 상품 수정 완료')
                 })
                 .catch(error => console.log(error))
         }
-        navigate('/admin/newList');
+        navigate('/admin/ReList');
         window.location.reload();
     };
     // ---------------
@@ -264,71 +274,73 @@ const ReUpdate = () => {
                     <S.SubTitle
                         type="text"
                         name="title"
+                        value={title}
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].title}
+                        // placeholder={location.state.updateList[0].title}
                     />
                     <S.Subject> 제품 한글 이름</S.Subject>
                     <S.SubTitle
                         type="text"
                         name="subTitle"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].subTitle}
+                        value={subTitle}
                     />
                     <S.Subject> 브랜드</S.Subject>
                     <S.SubTitle
                         type="text"
                         name="brand"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].brand}
+                        value={brand}
+                        
                     />
                     <S.Subject> 제품 카테고리 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="category"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].category}
+                        value={category}
                     />
                     <S.Subject> 태그 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="tag"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].tag}
+                        value={tag}
                     />
                     <S.Subject> 성별 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="gender"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].gender}
+                        value={gender}
                     />
                     <S.Subject> 제품 모델 번호 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="modelNum"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].modelNum}
+                        value={modelNum}
                     />
                     <S.Subject> 발매일 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="releaseDate"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].releaseDate}
+                        value={releaseDate}
                     />
                     <S.Subject> 색상 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="color"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].color}
+                        value={color}
                     />
-                    <S.Subject> size </S.Subject>
+                    <S.Subject> 발매가 </S.Subject>
                     <S.SubTitle
                         type="text"
-                        name="size"
+                        name="releasePrice"
                         onChange={onInput}
-                        placeholder={location.state.updateList[0].size}
+                        value={releasePrice}
                     />
 
                     {/* <S.Necessary>* 필수</S.Necessary>
@@ -359,7 +371,7 @@ const ReUpdate = () => {
                             type="number"
                             name="price"
                             onChange={onInput}
-                            placeholder={location.state.updateList[0].price}
+                            value={price}
                         />
                         <S.ItemPriceSpan>원</S.ItemPriceSpan>
                     </S.PriceDiv>

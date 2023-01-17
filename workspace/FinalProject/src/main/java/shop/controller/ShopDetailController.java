@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import lookbook.bean.StyleDTO;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
 import shop.bean.NewProductDTO;
+import shop.bean.NewProductOptionDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
@@ -106,4 +108,23 @@ public class ShopDetailController {
 //		return shopDetailService.getProductSizeMin(seq, size);
 //	}
 
+	@GetMapping(path="getBrandStyleList")
+	public List<StyleDTO> getBrandStyleList(@RequestParam int seq) {
+		System.out.println(shopDetailService.getBrandStyleList(seq));
+		return shopDetailService.getBrandStyleList(seq);  
+	}
+	
+	
+	@GetMapping(path="getNewProductOption")
+	public List<NewProductOptionDTO> getNewProductOption(@RequestParam int seq) {
+		return shopDetailService.getNewProductOption(seq);
+	}
+	
+	@GetMapping(path="addNewProductOption")
+	public void addNewProductOption(@RequestParam int seq, @RequestParam String option) {
+		shopDetailService.addNewProductOption(seq, option);
+	}
+	
+	
+	
 }

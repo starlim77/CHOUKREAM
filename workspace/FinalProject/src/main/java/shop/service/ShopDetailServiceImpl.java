@@ -2,6 +2,7 @@ package shop.service;
 
 import static org.hamcrest.CoreMatchers.nullValue;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,10 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Service;
 
+import lookbook.bean.StyleDTO;
+import lookbook.dao.StyleDAO;
+import lookbook.entity.StyleEntity;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
 import shop.bean.NewProductDTO;
+import shop.bean.NewProductOptionDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
@@ -20,6 +25,7 @@ import shop.bean.SizeMinDTO;
 import shop.bean.UsedItemLikeDTO;
 import shop.dao.CompletedOrderRepository;
 import shop.dao.NewProductDAO;
+import shop.dao.NewProductOptionRepository;
 import shop.dao.OrderRepository;
 import shop.dao.ProductSizeRepository;
 import shop.dao.ShopDAO;
@@ -39,6 +45,10 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	private NewProductDAO newProductDAO;
 	@Autowired
 	private UsedItemLikeDAO useItemLikeDAO;
+	@Autowired
+	private StyleDAO styleDAO;
+	@Autowired
+	private NewProductOptionRepository newProductOptionRepository;
 	
 	@Override
 	public Optional<ProductDTO> getProduct(int seq) {
@@ -126,4 +136,32 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 		orderRepository.save(orderDTO);
 	}
 
+	
+	@Override
+	public List<StyleDTO> getBrandStyleList(int seq) {
+		List<StyleEntity> styleEntityList = styleDAO.getBrandStyleList(seq);
+		List<StyleDTO> styleDTOList = new ArrayList<>();
+		
+		for (StyleEntity styleEntity: styleEntityList) {
+	         styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
+	      }
+		
+		return styleDTOList;
+	}
+	
+	@Override
+	public List<NewProductOptionDTO> getNewProductOption(int seq) {
+		return newProductOptionRepository.findBySeq(seq);
+	}
+	
+	@Override
+	public void addNewProductOption(int seq, String option) {
+		NewProductOptionDTO newProductOptionDTO = new NewProductOptionDTO();
+		newProductOptionDTO.setInventory(0);
+		newProductOptionDTO.setSeq(seq);
+		newProductOptionDTO.setProductOption(option);
+		
+		newProductOptionRepository.save(newProductOptionDTO);
+		
+	}
 }

@@ -6,7 +6,7 @@ import styled from "styled-components"
 export const TrGridContainer = styled.div`
     width: 1200px;
     margin: 0px auto;
-    display: flex;
+    display: flex;     
 `  
 export const TrGridContainerSub = styled.div`
     width: 350px;
@@ -34,8 +34,33 @@ export const TrTypoDiv = styled.pre`
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    overflow: hidden;
+    /* overflow: hidden; */
+    height: auto;
 `
+export const TrBox = styled.div`
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+`
+export const TrUsernameBox = styled.div`
+    -webkit-box-flex: 1;
+    flex: 1;
+    padding-left: 4px;
+    padding-right: 6px;
+    white-space: nowrap;
+    font-size: 15px;
+    letter-spacing: -.15px;
+    color: rgba(34,34,34,.8);
+
+`
+
+export const TrlikeBox = styled.div`
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    float: right;
+    padding: 0 12px;
+`
+
 
 //Detail.js 
 export const DeComment = styled.div`
@@ -51,7 +76,6 @@ export const DeTopDiv = styled.div`
 export const DeDiv = styled.div`
     width: 500px;
     display: inline-block;
-    padding-top: 50px;
     padding-bottom: 50px;
 `
 
@@ -76,7 +100,9 @@ export const MyDeIcon = styled.div`
     padding-top: 16px;
 
 `
-
+export const MyStdiv = styled.div`
+    width: 500px;
+`
 export const MyStContent = styled.pre`
     white-space: pre-wrap;   //text 줄바꿈허용
     word-break: break-all;   //text 줄바꿈허용
@@ -90,28 +116,6 @@ export const SCLdeletebutton= styled.div`
 
 export const SCLcomment = styled.div`
     margin-bottom: 10px;
-`
-
-//Social.js 
-export const SoHeader = styled.div`
-    padding: 20px 0 20px 0;
-    text-align: center;
-    font-size: 20px;
-`;
-
-export const SoOnHeader = styled.a`
-    background-color: #222;
-    color: #fff;
-    font-weight: 700;
-    border-radius: 19px;
-`;
-
-export const SoWrapper = styled.div`
-    
-`;
-
-export const SoTopDiv = styled.div`
-    padding-top: 90px;
 `
 
 //Mystyle.js 
@@ -140,18 +144,19 @@ export const MyLi = styled.li`
     font-weight: bolder;
 `;
 
+
 export const MyPhotoMini = styled.div`
     width: 200px;
     height: 220px;
     display: inline-block;
-    padding: 20px;
+    padding: 20px 30px 50px 30px;
 
 `
 
 
 export const showImgSrcDiv = styled.div`
-     /* width: 500px;
-     height: 400px;    */
+    width: 500px;
+
     // Overflow: hidden;        
     /* display: flex;   //사진 가로로 정렬 */
     /* width: 100vw; */
@@ -163,9 +168,10 @@ export const Container = styled.div`
 `;
 
 export const showImgSrcImg = styled.img`
-    width: 500px;
-    height: 400px; 
-    
+    width: 100%;  
+    height: '100%';
+    Overflow: hidden;  
+    position: relative;
     
 `
 
@@ -180,7 +186,34 @@ export const Button = styled.button`
         background-color: coral;
         color: #fff;
     }
-`;
+`
+
+//styleProduct.js
+export const ProductItem = styled.div`
+    margin: 10px 0 10px;
+    padding: 0 10px;
+    width: 20%;
+    position: relative;
+    // display: inline-block;
+    vertical-align: top;
+`
+
+//styleOneProduct.js
+export const OneContainer = styled.div`
+    width: 1200px;
+    margin: 0px auto;
+    display: flex;    
+`
+
+export const OneItem = styled.div`
+    margin: auto;
+    padding: 50px;
+    width: 20%;
+    position: relative;
+    vertical-align: top;
+`
+
+;
 
 
 

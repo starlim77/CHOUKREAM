@@ -139,7 +139,7 @@ public class UsedItemServiceImpl implements UsedItemService {
 
 	@Override
 	public void report(UsedItemReportDTO usedItemReport) {
-		
+		usedItemDAO.reportUp(usedItemReport.getSeq());		
 		usedItemReportDAO.save(usedItemReport);
 	}
 
@@ -160,6 +160,20 @@ public class UsedItemServiceImpl implements UsedItemService {
 	public List<UsedItemDTO> getAdminItem() {
 		//어드민에 뿌릴 값 가져오기
 		return usedItemDAO.getAdminItem();
+	}
+
+
+	@Override
+	public int totalReport(String id) {
+		// TODO Auto-generated method stub
+		return usedItemDAO.getTotalReport(id);
+	}
+
+
+	@Override
+	public int getFinishedTrade(String id) {
+		// TODO Auto-generated method stub
+		return usedItemDAO.getFinishedTrade(id);
 	}
 
 

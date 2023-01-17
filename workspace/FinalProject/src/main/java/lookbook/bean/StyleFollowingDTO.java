@@ -17,16 +17,16 @@ public class StyleFollowingDTO {
 	
 	private String styleSeq;
 	
-	private MemberDto fromUser;//팔로우 클릭한사람
+	private MemberDto follower;//팔로우 클릭한사람
 	
-	private MemberDto toUser;//팔로우 클릭당한사람-글번호로 찾기??
+	private MemberDto followee;//팔로우 클릭당한사람
 	
 	public static StyleFollowingDTO toStyleFollowingDTO(StyleFollowingEntity styleFollowingEntity) {
 	//entity -> DTO
 		StyleFollowingDTO styleFollowingDTO = new StyleFollowingDTO();
 		styleFollowingDTO.setId(styleFollowingEntity.getId());
-		styleFollowingDTO.setFromUser(styleFollowingEntity.getFromUser());
-		styleFollowingDTO.setToUser(styleFollowingEntity.getToUser());
+		styleFollowingDTO.setFollower(styleFollowingEntity.getFollower());
+		styleFollowingDTO.setFollowee(styleFollowingEntity.getFollowee());
 		
 		return styleFollowingDTO;
 	}

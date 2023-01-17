@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import shop.dao.ProductSizeRepository;
 import shop.dao.ShopDAO;
 import shop.bean.NewProductDTO;
+import shop.bean.NewSortListDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
 import shop.bean.SortListDTO;
@@ -57,6 +58,10 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	public List<SortListDTO> favourSort() {
+		
+		List<SortListDTO> asd = shopDAO.favourSort();
+		System.out.println("=========================================");
+		System.out.println(asd);
 		return shopDAO.favourSort();
 	}
 
@@ -105,6 +110,25 @@ public class ShopServiceImpl implements ShopService {
 		}
 		
 		return shopDAO.getRecentReleaseList(start,end);
+	}
+	public List<SortListDTO> BuySort() {
+		return shopDAO.BuySort();
+	}
+
+	@Override
+	public List<SortListDTO> SellSort() {
+		return shopDAO.SellSort();
+	}
+
+	@Override
+	public void reUpdate(ProductDTO productDTO) {
+		System.out.println(productDTO);
+		shopDAO.save(productDTO);
+	}
+
+	@Override
+	public List<SortListDTO> releaseDateSort() {
+		return shopDAO.releaseDateSort();
 	}
 
 	

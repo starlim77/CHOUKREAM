@@ -11,7 +11,11 @@ const NewWrite = () => {
         brand: '',
         category: '',
         categoryDetail: '',
+        gender: '',
+        modelNum: '',
         releaseDate: '',
+        color: '',
+        size: '',
         price: '',
     });
 
@@ -21,7 +25,11 @@ const NewWrite = () => {
         brand,
         category,
         categoryDetail,
+        gender,
+        modelNum,
         releaseDate,
+        color,
+        size,
         price,
     } = form;
 
@@ -50,16 +58,17 @@ const NewWrite = () => {
         // console.log(--sw);
         file[0] || (--sw && alert('이미지 파일을 등록해주세요'));
         // false ||
-        // if (!title) {
-        //     sw = 0;
-        // } else if (category === '상품 종류' || !category) {
-        //     sw = 0;
-        // } else if (!price) {
-        //     sw = 0;
-        // }
+        if (!title) {
+            sw = 0;
+        } else if (category === '상품 종류' || !category) {
+            sw = 0;
+        } else if (!price) {
+            sw = 0;
+        }
 
         var formData = new FormData();
         file.map(files => formData.append('img', files)); // 무조건 문자열로 반환된다
+        file2.map(files => formData.append('img2', files));
         // formData.append('item', 'hi'); // <input name="item" value="hi"> 와 같다.
         // FormData 객체 만들어서 담아서 보낸다
         // 하지만 HTML이 아닌 자바스크립트 단 에서 form 전송 동작이 필요한 경우가 있는데, 이미지 같은 멀티미디어 파일을 페이지 전환 없이 폼 데이터를 비동기로 제출 하고 싶을 때나,
@@ -81,19 +90,26 @@ const NewWrite = () => {
                 })
                 .catch(error => console.log(error));
         }
-        navigate('/admin/newList');
-        window.location.reload();
+        // navigate('/admin/newList');
+        // window.location.reload();
     };
     // ---------------
     const [subImg, setSubImg] = useState([]);
+    const [subImg2, setSubImg2] = useState([]);
 
     const imgRef = useRef();
+    const imgRef2 = useRef();
 
     const [file, setFile] = useState([]);
+    const [file2, setFile2] = useState([]);
 
     const onSubImg = () => {
         imgRef.current.click();
         console.log(imgRef); // { current : input}이 저장됨
+    };
+    const onSubImg2 = () => {
+        imgRef2.current.click();
+        console.log(imgRef2); // { current : input}이 저장됨
     };
     //const[forRendering,setForRendering]=useState('');
     const [random, setRandom] = useState();
@@ -124,6 +140,32 @@ const NewWrite = () => {
         //동일한 파일을 넣어주는 경우에 발생하는 버그 방지
         e.target.value = '';
     };
+    const onImgRead2 = e => {
+        console.log('하이루');
+        //유효성 검사
+        //https://velog.io/@fxoco/image-input-%EC%9C%A0%ED%9A%A8%EC%84%B1-%EA%B2%80%EC%82%AC
+        let sw = 0;
+        var fileForm = /(.*?)\.(jpg|jpeg|png|gif)$/;
+        Array.from(e.target.files).map(
+            item =>
+                item.name.match(fileForm) ||
+                (++sw &&
+                    alert("'.jpeg, .jpg, .png, .gif ' 형식만 사용해주세요")),
+        );
+
+        if (sw === 0) {
+            //이미지 세팅 함수 호출
+            addFile2(e);
+        }
+        //push로 넣어줬기 때문에 별도의 렌더링이 되지 않는다
+        //따라서 onImgRead함수가 종료될 때 강제로 렌더링이 될 수 있도록 한다.
+        //굳이 Math.random을 사용하여 렌더링을 하는 이유는 렌더링 값이 기존 값과 같다면 렌더링이 되지 않기 때문이다.
+        setRandom(Math.random);
+        //setForRendering(`${random}`);
+
+        //동일한 파일을 넣어주는 경우에 발생하는 버그 방지
+        e.target.value = '';
+    };
 
     const addFile = e => {
         //Array.from 사용 이유.
@@ -141,6 +183,22 @@ const NewWrite = () => {
             file.push(items);
         });
     };
+    const addFile2 = e => {
+        //Array.from 사용 이유.
+        //e.target.files는 배열의 형태처럼 보이긴 하나 실제 배열이 아니라서 배열형태로 만들어서 map을 돌리는 것이다.
+        //https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/types%20%26%20grammar/ch2.md#array-likes
+        Array.from(e.target.files).map((items, index) => {
+            console.log('ㅎㅇㅎㅇ items ' + items);
+            var urlTemp = window.URL.createObjectURL(items);
+            console.log('ㅎㅇㅎㅇ urlTemp' + urlTemp);
+            //var urlTemp=reader.readAsDataURL(items);
+            //var url=urlTemp.slice(5);
+            subImg2.push({ url: urlTemp });
+
+            //setSubImg(urlTemp);
+            file2.push(items);
+        });
+    };
 
     const deleteImg = e => {
         console.log(e.target.getAttribute('id'));
@@ -156,6 +214,22 @@ const NewWrite = () => {
         console.log(fileTemp); // 빈배열을 넣어줘서 삭제한다
         setSubImg([...imgTemp]);
         setFile([...fileTemp]);
+        //console.log(file);
+    };
+    const deleteImg2 = e => {
+        console.log(e.target.getAttribute('id'));
+        console.log(e.target);
+        console.log(e.target.id);
+        var id = e.target.getAttribute('id');
+
+        //https://forum.freecodecamp.org/t/how-to-filter-using-array-index-in-react/403524
+        //index값은 숫자인데 그냥 id값을 주면 id를 받아 문자열로 인식을 하기때문에 parseInt를 이용해 숫자로 바꿔준다.
+        var imgTemp = subImg2.filter((item, index) => index !== parseInt(id));
+        var fileTemp = file2.filter((item, index) => index !== parseInt(id));
+        console.log(imgTemp);
+        console.log(fileTemp); // 빈배열을 넣어줘서 삭제한다
+        setSubImg2([...imgTemp]);
+        setFile2([...fileTemp]);
         //console.log(file);
     };
 
@@ -176,7 +250,8 @@ const NewWrite = () => {
     return (
         <>
             <S.WriteBody>
-                <S.ImgBody>
+                <S.ImgBody2>
+                    메인 이미지<br/>
                     {/* 이미지 소스 이용방법 2가지 사용해봄 */}
                     <S.MainImgP setPosition={subImg[0]?true:false}>
                         <S.MainImg name='mainImg' sizing={subImg[0]?true:false} src={subImg[0]?subImg[0].url:`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg} alt={subImg[0]?subImg[0].url:"nothing"}></S.MainImg>
@@ -203,50 +278,87 @@ const NewWrite = () => {
                     유효성 검사 필요 */}
                     <input type='file' name="img" style={{display: 'none'}} accept=".jpg,.png, .jpeg, .gif" onChange={ e=>onImgRead(e) } ref={imgRef} multiple></input>
                     *이미지는 1대 1비율이 아니면 잘려서 보일 수 있습니다.<br></br>
+                    *이미지 파일만 업로드 가능합니다.<br/><br/>
+
+                    <br/>상세 이미지<br/>
+                    {/* 이미지 소스 이용방법 2가지 사용해봄 */}
+                    <S.MainImgP setPosition={subImg2[0]?true:false}>
+                        <S.MainImg name='mainImg' sizing={subImg2[0]?true:false} src={subImg2[0]?subImg2[0].url:`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg2} alt={subImg2[0]?subImg2[0].url:"nothing"}></S.MainImg>
+                        <S.DeleteMainImg setPosition={subImg2[0]?true:false} id="0" onClick={e=>deleteImg2(e)}></S.DeleteMainImg>
+                    </S.MainImgP>
+                    <S.SubImgBody >
+                        <S.SubImgP setPosition={subImg2[1]?true:false}>
+                            <S.SubImg sizing={subImg2[1]?true:false} name='subImg1' src={subImg2[1]?subImg2[1].url:'/image/used/plusIcon.png'} onClick={onSubImg2}/>
+                            <S.DeleteImg setPosition={subImg2[1]?true:false} id="1" onClick={e=>deleteImg2(e)}></S.DeleteImg>
+                        </S.SubImgP>
+                        <S.SubImgP setPosition={subImg2[2]?true:false}>
+                            <S.SubImg sizing={subImg2[2]?true:false} name='subImg2' src={subImg2[2]?subImg2[2].url:'/image/used/plusIcon.png'} onClick={onSubImg2}/>
+                            <S.DeleteImg setPosition={subImg2[2]?true:false} id="2"  onClick={e=>deleteImg2(e)}></S.DeleteImg>
+                        </S.SubImgP>
+                        <S.SubImgP setPosition={subImg2[3]?true:false}>
+                            <S.SubImg sizing={subImg2[3]?true:false} name='subImg3' src={subImg2[3]?subImg2[3].url:'/image/used/plusIcon.png'} onClick={onSubImg2}/>
+                            <S.DeleteImg setPosition={subImg2[3]?true:false} id="3"  onClick={e=>deleteImg2(e)}></S.DeleteImg>
+                        </S.SubImgP>
+                    </S.SubImgBody>
+                    
+                    {/* https://blog.munilive.com/posts/input-file-type-accept-attribute.html
+                    파일 형식 제한은 accept이용.
+                    다만 업로드 하는 사람이 형식을 모든 파일로 받으면 다른 파일로 업로드가 가능해진다.
+                    유효성 검사 필요 */}
+                    <input type='file' name="img2" style={{display: 'none'}} accept=".jpg,.png, .jpeg, .gif" onChange={ e=>onImgRead2(e) } ref={imgRef2} multiple></input>
+                    *이미지는 1대 1비율이 아니면 잘려서 보일 수 있습니다.<br></br>
                     *이미지 파일만 업로드 가능합니다.
-                </S.ImgBody>
+                </S.ImgBody2>
+
+                
 
                 <S.Information>
-                    {/* <S.Necessary>* 필수 입력</S.Necessary> */}
+                    <S.Necessary>* 필수 입력</S.Necessary>
                     {/* <S.Subject>* 제목</S.Subject>
                     <S.Title type="text" name="title" onChange={onInput} /> */}
 
                     <S.Subject> 제품 영어 이름</S.Subject>
                     <S.SubTitle type="text" name="title" onChange={onInput} />
                     <S.Subject> 제품 한글 이름</S.Subject>
-                    <S.SubTitle type="text"name="subTitle"onChange={onInput}/>
+                    <S.SubTitle
+                        type="text"
+                        name="subTitle"
+                        onChange={onInput}
+                    />
                     <S.Subject> 브랜드</S.Subject>
                     <S.SubTitle type="text" name="brand" onChange={onInput} />
-                    <S.Subject> 제품 카테고리 </S.Subject>
+                    <S.Subject> 성별</S.Subject>
+                    <S.SubTitle type="text" name="gender" onChange={onInput} />
+                    <S.Subject> 발매일</S.Subject>
+                    <S.SubTitle type="text" name="releaseDate" onChange={onInput} />
+                    <S.Subject> 태그</S.Subject>
+                    <S.SubTitle type="text" name="tag" onChange={onInput} />
+                    
+                    <S.Subject> 카테고리 </S.Subject>
                     <S.SubTitle type="text"name="category"onChange={onInput}/>
-                    <S.Subject> 제품 카테고리 디테일 </S.Subject>
-                    <S.SubTitle type="text" name="categoryDetail"onChange={onInput}/>
                     <S.Subject> 상세설명 이미지 </S.Subject>
                     <S.SubTitle type="text" name="descriptionImg" onChange={onInput} />
-                    <S.Subject> 판매가 </S.Subject>
-                    <S.SubTitle type="text"name="price"onChange={onInput}/>
                     <S.Subject> 상호명 </S.Subject>
                     <S.SubTitle type="text"name="businessName"onChange={onInput}/>
+                    <S.Subject> 성별 </S.Subject>
+                    <S.SubTitle type="text" name="gender" onChange={onInput} />
+                    <S.Subject> 제품 모델 번호 </S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="modelNum"
+                        onChange={onInput}
+                    />
+                    <S.Subject> 발매일 </S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="releaseDate"
+                        onChange={onInput}
+                    />
                     <S.Subject> 색상 </S.Subject>
                     <S.SubTitle type="text" name="color" onChange={onInput} />
-                    <S.Subject> 사업자 번호 </S.Subject>
-                    <S.SubTitle type="text" name="comRegNo" onChange={onInput} />
-                    <S.Subject> 대표자 </S.Subject>
-                    <S.SubTitle type="text" name="representative" onChange={onInput} />
-                    <S.Subject> 사업장 소재지 </S.Subject>
-                    <S.SubTitle type="text" name="businessLocation" onChange={onInput} />
-                    <S.Subject> 고객센터 </S.Subject>
-                    <S.SubTitle type="text" name="serviceCall" onChange={onInput} />
-                    <S.Subject> 소재 </S.Subject>
-                    <S.SubTitle type="text" name="material" onChange={onInput} />
-                    <S.Subject> 제조 회사 </S.Subject>
-                    <S.SubTitle type="text" name="manufacturer" onChange={onInput} />
-                    <S.Subject> 제조국 </S.Subject>
-                    <S.SubTitle type="text" name="countryOfManufacturer" onChange={onInput} />
-                    <S.Subject> 제조 날짜 </S.Subject>
-                    <S.SubTitle type="text" name="dateOfManufacturer" onChange={onInput} />
-                    
-                    
+                    <S.Subject> size </S.Subject>
+                    <S.SubTitle type="text" name="size" onChange={onInput} />
+
                     {/* <S.Necessary>* 필수</S.Necessary>
                     <S.Subject> 상품 정보</S.Subject> */}
                     {/* <S.ItemKindPriceDiv>
@@ -268,7 +380,7 @@ const NewWrite = () => {
                         </div>
                     </S.ItemKindPriceDiv> */}
 
-                    {/* <S.Necessary>* 필수</S.Necessary>
+                    <S.Necessary>* 필수</S.Necessary>
                     <S.Subject> 가격</S.Subject>
                     <S.PriceDiv>
                         <S.ItemPrice
@@ -277,7 +389,7 @@ const NewWrite = () => {
                             onChange={onInput}
                         />
                         <S.ItemPriceSpan>원</S.ItemPriceSpan>
-                    </S.PriceDiv> */}
+                    </S.PriceDiv>
 
                     {/* <S.Subject> 제품 설명</S.Subject>
                     <S.ItemContent name="contents" onChange={onInput} /> */}

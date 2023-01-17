@@ -55,6 +55,8 @@ import ReWrite from './component/Shop/register/ReWrite';
 import Following from './component/Lookbook/Following';
 import RequireAuth from './component/Require/RequireAuth';
 import SellForm from './component/payment/SellForm';
+import StyleOneProduct from './component/Lookbook/StyleOneProduct';
+import SearchForm2 from './component/Search/SearchForm2';
 
 function App() {
     const token = localStorage.getItem('accessToken');
@@ -74,7 +76,7 @@ function App() {
     // user or admin => //
     // admin => //
 
-    console.log(auth);
+    //console.log(auth);
 
     return (
         <BrowserRouter>
@@ -281,7 +283,11 @@ function App() {
                         element={<FindPassword />}
                     />
                     <Route path="/join" element={<WriteForm />} />
-                    <Route path="/Search/SearchForm" element={<SearchForm />} />
+                    {/* <Route path="/Search/SearchForm" element={<SearchForm />} /> */}
+                    <Route
+                        path="/Search/SearchForm"
+                        element={<SearchForm2 />}
+                    />
                     <Route
                         path="/login/find_email/result"
                         element={<FindEmailResult />}
@@ -302,20 +308,25 @@ function App() {
                     <Route path="/my/*" element={<MyPageApp />} />
 
                     <Route path="/lookbook/trending" element={<Trending />} />
+                    <Route
+                        path="/styleOneProduct/:seq"
+                        element={<StyleOneProduct />}
+                    />
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
                     <Route path="/lookbook/detail" element={<Detail />} />
                     <Route path="/lookbook/following" element={<Following />} />
                     <Route
-                        path="/lookbook/styleComment/:styleSeq"
+                        path="/lookbook/styleComment/:styleSeq/:id"
                         element={<StyleComment />}
                     />
                     <Route
-                        path="/lookbook/mystyledetail/:seq/:id"
+                        // path="/lookbook/mystyledetail/:seq/:id"
+                        path="/lookbook/mystyledetail/:id"
                         element={<MystyleDetail />}
                     />
                     <Route
-                        path="/lookbook/mystyleUpdate/:seq/:id"
+                        path="/lookbook/mystyleUpdate/:seq/:id/:product_seq"
                         element={<MystyleUpdate />}
                     />
                     <Route

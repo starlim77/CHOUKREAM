@@ -3,15 +3,18 @@ import React, { useState } from 'react';
 import * as Co from './ContentStyle';
 import Menu from './Menu';
 
-
-const MenuList2 = ({item, dummy, setDummy, setPictures, dataSetting}) => {
-     
+const MenuList2 = ({ item, id, dummy, setDummy, setPictures, dataSetting }) => {
     
     return (
         <>
             <Co.MenuList>
+                {/* {console.log(item)} */}
                 {item.menuList.map((menu, index) => (
-                    <Menu key={index} menu={menu} dataSetting={dataSetting}></Menu>
+                    <Menu
+                        key={index}
+                        menu={menu}
+                        dataSetting={dataSetting}
+                    ></Menu>
                 ))}
             </Co.MenuList>
         </>
@@ -19,3 +22,4 @@ const MenuList2 = ({item, dummy, setDummy, setPictures, dataSetting}) => {
 };
 
 export default MenuList2;
+

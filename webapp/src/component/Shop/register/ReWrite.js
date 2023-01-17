@@ -293,11 +293,11 @@ const ReWrite = () => {
                         name="category"
                         onChange={onInput}
                     />
+                    <S.Subject> 태그 </S.Subject>
+                    <S.SubTitle type="text" name="tag" onChange={onInput} />
                     <S.Subject> 성별 </S.Subject>
                     <S.SubTitle type="text" name="gender" onChange={onInput} />
-                    <S.Subject> 판매가 </S.Subject>
-                    <S.SubTitle type="text" name="price" onChange={onInput} />
-                    <S.Subject> 모델 번호 </S.Subject>
+                    <S.Subject> 제품 모델 번호 </S.Subject>
                     <S.SubTitle
                         type="text"
                         name="modelNum"

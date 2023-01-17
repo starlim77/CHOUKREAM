@@ -1,26 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../Header/Header';
 import Social from '../Lookbook/Social';
-import Card from '@mui/material/Card';
 import {
-    CardActions,
-    CardContent,
-    CardHeader,
     Container,
-    Grid,
-    IconButton,
-    Typography,
 } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import MessageOutlinedIcon from '@mui/icons-material/MessageOutlined';
 import * as S from './style';
-import { grey } from '@mui/material/colors';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { MasonryInfiniteGrid } from '@egjs/react-infinitegrid';
 import TrendingItem from './TrendingItem';
+import jwt_decode from 'jwt-decode';
 
 const Trending = () => {
     const [list, setList] = useState([
@@ -42,25 +29,18 @@ const Trending = () => {
             .catch(error => console.log(error));
     }, []);
 
-    //네이버
-    // function getItems(nextGroupKey, count) {
-    //     const nextItems = [];
-
-    //     for (let i = 0; i < count; ++i) {
-    //       const num = nextGroupKey * count + i;
-    //       nextItems.push(`<div class="item">
-    //     <div class="thumbnail">
-    //         <img src="https://naver.github.io/egjs-infinitegrid/assets/image/${(num % 33) + 1}.jpg" alt="egjs" />
-    //     </div>
-    //     <div class="info">egjs ${num}</div>
-    //   </div>`);
-    //     }
-    //     return nextItems;
-    //   }
-    //   const ig = new MasonryInfiniteGrid(".container", {
-    //     gap: 5,
-    //   });
-
+    //아이디
+    const token = localStorage.getItem('accessToken');
+    const [auth, setAuth] = useState('ROLE_GUEST');
+    useEffect(() => {
+        if (token !== null) {
+            const tokenJson = jwt_decode(token);
+            setAuth(tokenJson['auth']);
+            settokenId(tokenJson['sub']);
+        }
+    }, []);
+    const [tokenId, settokenId] = useState('')
+    
 
     const [itemLength,setItemLength] = useState(12) // 처음에 가져올 아이템 갯수
 
@@ -91,29 +71,15 @@ const Trending = () => {
     return (
         <>
             <Social />
-            <div>태그</div>
+            <br/><br/><br/><br/>
 
-            {/* <MasonryInfiniteGrid
-                className='products'
-               
-                gap={25}
-                threshold={1000}
-                onRequestAppend={(e) => {
-                    const nextGroupKey = (+e.groupKey! || 0) + 1;
-              
-                    setItems([
-                      ...items,
-                      ...getItems(nextGroupKey, 10),    
-                    ]);
-                  }}
-                > */}
-
+            
             <Container fixed>
                 <S.TrGridContainer>
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 0 ? 
-                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId}/>
                         :
                         ''
                     )}
@@ -122,7 +88,7 @@ const Trending = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 1 ? 
-                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId}/>
                         :
                         ''
                     )}
@@ -131,7 +97,7 @@ const Trending = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 2 ? 
-                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId}/>
                         :
                         ''
                     )}
@@ -140,7 +106,7 @@ const Trending = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 3 ? 
-                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId}/>
                         :
                         ''
                     )}
@@ -148,7 +114,7 @@ const Trending = () => {
 
                 </S.TrGridContainer>
             </Container>
-            {/* </MasonryInfiniteGrid> */}
+          
         </>
     );
 };

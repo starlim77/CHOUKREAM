@@ -1,5 +1,5 @@
 import React, {} from 'react';
-import * as Li from './NewListStyle';
+import * as Li from '../resell/NewListStyle';
 
 const NewProductList = ({
     copy_newProductList,

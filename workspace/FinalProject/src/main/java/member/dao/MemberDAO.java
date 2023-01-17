@@ -20,4 +20,12 @@ public interface MemberDAO extends JpaRepository<MemberDto, Long> {
 
 	public void save(Optional<MemberDto> memberDto);
 	
+	
+	//팔로우
+	public MemberDto findByName(int followeeId);
+
+	public MemberDto findById(int followerId);
+	
+	
+	
 }

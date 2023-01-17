@@ -135,8 +135,6 @@ public class UsedItemController {
 		 
 		 try {
 			
-			 
-			 
 			 String fileName=null;
 			 
 			 //원래는 img가 list형태라서 iterator를 사용하는 것이 더 올바른 방법이긴 함.
@@ -246,5 +244,17 @@ public class UsedItemController {
 	@GetMapping(path="getAdminItem")
 	public List<UsedItemDTO> getAdminItem() {
 		return usedItemService.getAdminItem();
+	}
+	
+	@GetMapping(path="getFinishedTrade")
+	public int getFinishedTrade(String id) {
+		
+		return usedItemService.getFinishedTrade(id);
+	}
+	
+	@GetMapping(path="totalReport")
+	public int totalReport(String id) {
+	
+		return usedItemService.totalReport(id);
 	}
 }

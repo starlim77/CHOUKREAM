@@ -25,14 +25,23 @@ const NewProducts = () => {
         
 
     useEffect(() => {
-        if (token !== null) {
-            const tokenJson = jwt_decode(token);
-            setSub(tokenJson['sub']);
-        }
-        console.log(id)
-    }, []);
+        if(sub!==""){
+            axios
+            .get('http://localhost:8080/getMemberInfo', {
+                params: { seq: sub },
+            })
+            .then(res => {
+                //console.log(JSON.stringify(res.data));
+                setId(res.data.email);
 
-    const [id, setId] = useState('');
+                //console.log('id = ' + id);
+            })
+            .catch(err => console.log(err));
+        }
+       
+    }, [sub]);
+
+    const [id, setId] = useState('ROLE_GUEST');
 
     const {seq} = useParams();
 
@@ -76,17 +85,6 @@ const NewProducts = () => {
              .then(res => setCount(res.data))
              .catch(err => console.log(err))
 
-        axios
-             .get('http://localhost:8080/getMemberInfo', {
-                 params: { seq: sub },
-             })
-             .then(res => {
-                 //console.log(JSON.stringify(res.data));
-                 setId(res.data.email);
- 
-                 //console.log('id = ' + id);
-             })
-             .catch(err => console.log(err));
     }, [])
 
     useEffect(() => {
@@ -187,11 +185,11 @@ const NewProducts = () => {
                         <S.ColumnIsFixed>
                             <>
                             <U.ImgBody2>
-                                <U.MainImg2 src={`/storage/${mainImg}`} alt={mainImg}></U.MainImg2>
-                                    {subImg1&&<U.SmallImg2 src={`/storage/${subImg0}`} id="0" onClick={e=>changImg(e)}></U.SmallImg2>}
-                                    {subImg1&&<U.SmallImg2 src={`/storage/${subImg1}`} id="1" onClick={e=>changImg(e)}></U.SmallImg2>}
-                                    {subImg2&&<U.SmallImg2 src={`/storage/${subImg2}`} id="2" onClick={e=>changImg(e)}></U.SmallImg2>}
-                                    {subImg3&&<U.SmallImg2 src={`/storage/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                <U.MainImg2 src={`/newProductList/${mainImg}`} alt={mainImg}></U.MainImg2>
+                                    {subImg1&&<U.SmallImg2 src={`/newProductList/${subImg0}`} id="0" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg1&&<U.SmallImg2 src={`/newProductList/${subImg1}`} id="1" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg2&&<U.SmallImg2 src={`/newProductList/${subImg2}`} id="2" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg3&&<U.SmallImg2 src={`/newProductList/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg2>}
                                 </U.ImgBody2>
                                 {/* <div className="column_box">
                                     <div className="detail_banner_area">
@@ -271,7 +269,7 @@ const NewProducts = () => {
                                     <S.DeliveryWay>
                                         <S.WayInfo>
                                             <S.WayStatusThumb>
-                                                <img src='https://kream-phinf.pstatic.net/MjAyMTExMjFfMjU5/MDAxNjM3NDczNzU0MjA1.ON3pvFYAq_xSSaNWDgUWe1YfIx-C0fm91PDtcsUn3AEg.Q4EbbNWl_ua916jg0NQ0dWOS3h7W9eiiI2kK9YPWlgwg.PNG/a_120a84f036724d0d97a2343aafff4ecf.png' width="40px" height="40px"/>
+                                                <img src='/image/product/a_120a84f036724d0d97a2343aafff4ecf.png' width="40px" height="40px"/>
                                             </S.WayStatusThumb>
                                             <S.WayDesc>
                                                 <S.Company>
@@ -293,7 +291,7 @@ const NewProducts = () => {
                                         <S.FloatingPriceProductArea>
                                             <S.FloatingPriceProductThumb>
                                                 <S.PictureProductImg>
-                                                    <S.Image src={`/storage/${mainImg}`} width="65px" height="65px"></S.Image>
+                                                    <S.Image src={`/newProductList/${mainImg}`} width="65px" height="65px"></S.Image>
                                                 </S.PictureProductImg>
                                             </S.FloatingPriceProductThumb>
                                             <S.FloatingProductInfo>
@@ -331,7 +329,7 @@ const NewProducts = () => {
                             <div>
                                 <S.DetailTitleHeaderImages>
                                     <S.DetailHeaderImgWrap>
-                                        <S.CoverImg src={`/storage/${mainImg}`}></S.CoverImg>
+                                        <S.CoverImg src={`/newProductList/${mainImg}`}></S.CoverImg>
                                     </S.DetailHeaderImgWrap>
                                     <S.DetailHeaderTitleWrap>
                                         <S.DetailHeaderProductNo>{form.newSeq}</S.DetailHeaderProductNo>
@@ -344,9 +342,9 @@ const NewProducts = () => {
                                     <S.DetailImgWrap>
                                         <S.DetailContentImages>
                                             <div className='images'>
-                                                {desImg0&&<S.CoverImg src={`/storage/${desImg0}`}></S.CoverImg>}
-                                                {desImg1&&<S.CoverImg src={`/storage/${desImg1}`}></S.CoverImg>}
-                                                {desImg2&&<S.CoverImg src={`/storage/${desImg2}`}></S.CoverImg>}
+                                                {desImg0&&<S.CoverImg src={`/newProductList/${desImg0}`}></S.CoverImg>}
+                                                {desImg1&&<S.CoverImg src={`/newProductList/${desImg1}`}></S.CoverImg>}
+                                                {desImg2&&<S.CoverImg src={`/newProductList/${desImg2}`}></S.CoverImg>}
                                                </div>
                                         </S.DetailContentImages>
                                     </S.DetailImgWrap>
