@@ -18,7 +18,8 @@ const MystyleDetail = () => {
     
     //게시물 뿌리기
     const [list, setList] = useState([]);
- 
+    const [currentId, setCurrentId] = useState();
+
 
     useEffect( ()=> {     
         axios.get(`http://localhost:8080/lookbook/findLikes?id=${id}`)
@@ -27,8 +28,9 @@ const MystyleDetail = () => {
                 res => setLikeAll(res.data)  
             )
             .catch(error => console.log(error))
-
     }, []) 
+
+
 
  
     //좋아요 클릭

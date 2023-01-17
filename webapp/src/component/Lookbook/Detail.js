@@ -114,10 +114,9 @@ const Detail = () => {
             <Container fixed>
                 <S.DeTopDiv> 
                 {
-                    list.map((item,index) => {
-                        return (
-                            
-                        <S.DeDiv key={index.seq}>  
+                    list.map((item,index) => 
+                          
+                        <S.DeDiv key={index}>  
                             <Card >
                                 <CardHeader
                                     avatar={ <Avatar> 프로필</Avatar> }
@@ -184,8 +183,8 @@ const Detail = () => {
                             </Card>
                         </S.DeDiv>
                        
-                        )
-                    })
+                        
+                    )
                 }
                </S.DeTopDiv>
             </Container>

@@ -191,11 +191,12 @@ export const Button = styled.button`
 //styleProduct.js
 export const ProductItem = styled.div`
     margin: 10px 0 10px;
-    padding: 0 10px;
+    padding: 10px;
     width: 20%;
     position: relative;
     // display: inline-block;
     vertical-align: top;
+    border: 0.5px solid #e2e2e2;
 `
 
 //styleOneProduct.js
@@ -211,9 +212,17 @@ export const OneItem = styled.div`
     width: 20%;
     position: relative;
     vertical-align: top;
-`
+`;
 
-;
+export const PictureBrandProductImg = styled.img`
+
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    image-rendering: auto;
+    background: #ddcece4a;
+    /* margin-top: 17px; */
+`
 
 
 

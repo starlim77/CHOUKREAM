@@ -70,8 +70,16 @@ const StyleOneProduct = () => {
         }
     };
 
+    // const photoshop = (itemImg) => {
+        
+    //     const img = itemImg.split(',');
+        
+    //     return img[0]
+    // }
+
     return (
         <>
+
             <S.OneContainer>
                 <S.OneItem >
                     <Link to={`/products/${productList.seq}`}>

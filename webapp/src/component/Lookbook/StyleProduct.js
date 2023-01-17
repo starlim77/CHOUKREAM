@@ -28,8 +28,6 @@ const StyleProduct = (props) => {
         <div>
 
             {
-                // productList.map((item, index) => {
-                //     return(
                         <S.ProductItem >
                            
                             <Link to={`/products/${productList.seq}`}>
@@ -38,7 +36,7 @@ const StyleProduct = (props) => {
                                     <div className='thumb_box'>
                                         <M.Product>
                                             <M.PictureBrandProductImg>
-                                                <M.BrandProductImg src={`/resellList/${productList.imgName}`} />
+                                                <S.PictureBrandProductImg src={`/resellList/${productList.imgName}`} />
                                             </M.PictureBrandProductImg>
                                         </M.Product>
                                     </div>
@@ -59,9 +57,7 @@ const StyleProduct = (props) => {
                                 </M.ItemInner>
                             </Link>
                         </S.ProductItem>
-                        
 
-            //      )})
             } 
         
         </div>
