@@ -3,6 +3,8 @@ package member.service;
 import java.util.Optional;
 import java.util.Random;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,6 +75,18 @@ public class MemberServiceImpl implements MemberService {
 		} else {
 			return "non_exist";
 		}
+	}
+
+	@Override
+	public Optional<MemberDto> findMyInfo() {
+//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//		System.out.println(authentication);
+//		Optional<MemberDto> memberDto = memberDAO.findById(Long.parseLong(authentication.getName())); 
+		
+//		if(memberDto != null) {
+//			return memberDto;
+//		}
+		return null;
 	}
 
 }

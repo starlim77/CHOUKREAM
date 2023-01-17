@@ -45,13 +45,6 @@ public class MemberController {
         return ResponseEntity.ok(memberService.changeMemberPassword(request.getEmail() ,request.getExPassword(), request.getNewPassword()));
     }
 	
-	@GetMapping(path="my")
-    public ResponseEntity<MemberResponseDto> getMyMemberInfo() {
-        MemberResponseDto myInfoBySecurity = memberService.getMyInfoBySecurity();
-        System.out.println(myInfoBySecurity.getEmail());
-        return ResponseEntity.ok((myInfoBySecurity));
-    }
-	
 	@GetMapping(path="sendSms")
 	public void sendSms(@RequestParam String phone, @RequestParam String content) {
 		smsService.sendSms(phone, content);
@@ -60,6 +53,11 @@ public class MemberController {
 	@GetMapping(path="isExistEmail")
 	public String isExistEmail(@RequestParam String email) {
 		return memberService.findByEmailAndProviderIsNull(email);
+	}
+	
+	@GetMapping(path="myInfo")
+	public Optional<MemberDto> findMyInfo() {
+		return memberService.findMyInfo();
 	}
 
 }
