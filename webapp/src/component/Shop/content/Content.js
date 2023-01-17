@@ -154,7 +154,7 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
     
     var menuArray2;
     
-    const dataSetting=(menu, checked)=>{
+    // const dataSetting=(menu, checked)=>{
         // menu 체크박스 눌러진 친구들 
         // console.log(menu)
         // console.log(checked)
@@ -200,75 +200,45 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
         //     // }
         // }
         
-        
-        var sw=0
-        var isExist=menuArray.filter(item=>item===menu);
-        // list안에 있는 값는지 확인 
-        //console.log(isExist)
-        isExist.length!==0&&sw++;// 값이 0이아니면 list에 무언가있다 sw 1로 
-        
-        if(sw===1){
-    
-            var arrayTemp=menuArray.filter(item=>item!==menu);
-            // menuList안에 menu랑 다른지 확인 다르면 바꿔줌 ?
-            setMenuArray(arrayTemp);
-            console.log('sw1' +menuArray)
-            
-            var dummyTemp=dummy2.filter(item=>item.category===menu);
-            // var dummy2=dummy
-            //console.log(dummy)
-            // setDummy([...dummy,dummyTemp]) 최상단에서 넘겨준 dummy라 스프레드 안됨.
-            // setDummy(dummy,dummy2)
-            var dummyTemp2=dummy.concat(dummyTemp)
-            setDummy(dummyTemp2);
-            
-        }else{
-            setMenuArray([...menuArray,menu]);
-            console.log('sw0' + menuArray);
-            var dummyTemp=dummy.filter(item=>item.category===menu);
-            console.log(dummyTemp);
-            setDummy(dummyTemp);
-        }
-    }
-
-    const[menuArray,setMenuArray]=useState([]);
+      
+    // }
     const[num,setNum]=useState(0);
     const dataSetting=(menu)=>{
 
-        var sw=0
-        var isExist=menuArray.filter(item=>item===menu);
-        var arrayElse=menuArray.filter(item=>item!==menu);
-        isExist.length!==0&&sw++;
+        // var sw=0
+        // var isExist=menuArray.filter(item=>item===menu);
+        // var arrayElse=menuArray.filter(item=>item!==menu);
+        // isExist.length!==0&&sw++;
         
-        if(sw===1){
-            var arrayTemp=menuArray.filter(item=>item!==menu);
-            setMenuArray(arrayTemp);
-            var dummyTemp=dummy.filter(item=>item.category!==menu); 
+        // if(sw===1){
+        //     var arrayTemp=menuArray.filter(item=>item!==menu);
+        //     setMenuArray(arrayTemp);
+        //     var dummyTemp=dummy.filter(item=>item.category!==menu); 
             
-            if(isExist.length!==0&&arrayElse.length===0){
-                setDummy(dummyOriginal);
-            }else{
-                setDummy(dummyTemp);
-            }
+        //     if(isExist.length!==0&&arrayElse.length===0){
+        //         setDummy(dummyOriginal);
+        //     }else{
+        //         setDummy(dummyTemp);
+        //     }
             
             
-        }else{
+        // }else{
     
-            var dummyTemp=dummyOriginal.filter(item=>item.category===menu);
+        //     var dummyTemp=dummyOriginal.filter(item=>item.category===menu);
             
-            if(menuArray.length===0){
-                console.log("2로온다")
-                    setDummy(dummyTemp);
-                    setNum(1);
+        //     if(menuArray.length===0){
+        //         console.log("2로온다")
+        //             setDummy(dummyTemp);
+        //             setNum(1);
              
-            }else{
-                console.log("3로온다")
-                var dummyTemp2=dummy.concat(dummyTemp)
-                console.log(dummyTemp2)
-                setDummy(dummyTemp2);
-            }
-            setMenuArray([...menuArray,menu])
-        }
+        //     }else{
+        //         console.log("3로온다")
+        //         var dummyTemp2=dummy.concat(dummyTemp)
+        //         console.log(dummyTemp2)
+        //         setDummy(dummyTemp2);
+        //     }
+        //     setMenuArray([...menuArray,menu])
+        // }
     }
     return (
         <>
