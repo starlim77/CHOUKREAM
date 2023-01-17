@@ -11,7 +11,19 @@ import categoryData from './CategoryData';
 import MenuList from './MenuList';
 import MenuList2 from './MenuList2';
 
-const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortCheck, setSortCheck,  modalOpen, openModal, closeModal, tagLive }) => {
+const Content = ({
+    dummy,
+    setDummy,
+    dummy2,
+    dummyFilter,
+    setDummyFilter,
+    sortCheck,
+    setSortCheck,
+    modalOpen,
+    openModal,
+    closeModal,
+    tagLive,
+}) => {
     const [categoryData2, setCategoryData2] = useState(categoryData);
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
@@ -105,7 +117,7 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
         });
         setCategoryData2(copyStatus);
     };
-    
+
     // 3자리마다 콤마 넣어서 문자열로 변환
     const addComma = num => {
         num = String(num);
@@ -118,80 +130,179 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
             return num / 10000 + '만';
         }
     };
-    
-    const photoshop = (itemImg) => {
+
+    const photoshop = itemImg => {
         // console.log(itemImg)
         // console.log(typeof(itemImg))
-        if( itemImg !== null && itemImg !== undefined) {
+        if (itemImg !== null && itemImg !== undefined) {
             //console.log(itemImg);
             const img = itemImg.split(',');
             // console.log(img[0])
             // console.log(typeof(img[0]))
             return img[0];
         }
-        
-    }
-    
+    };
+
     // const photoshop = itemImg => {
-        
+
     //     if (itemImg === undefined){
     //         console.log('fuck')
     //     }
-        
+
     //     console.log(itemImg);
     //     console.log(typeof(itemImg));
     //     const img = itemImg.split(',');
     //     return img[0];
     // };
-    
-    
-    const [menuArray, setMenuArray] = useState([]);
-    const [num, setNum] = useState(0);
-    
+
+    // dummy , dummy2 68개의 데이터
+
+    const [menuArray, setMenuArray] = useState({
+        // 0 = 체크안된상태 1 = 체크 된 상태 
+        '남자': 0,
+        '여자': 0,
+        '신발': 0,
+        '의류': 0,
+        '잡화': 0,
+        '10만원 이하': 0,
+        '10만원 - 30만원 이하': 0,
+        '30만원 - 50만원 이하': 0,
+        '50만원 이상': 0,
+    }); // 무슨 menu를 눌렀는지
+    const noBrandOptionList = [ // brand는 몇개인지 모르고 // brand가 아닌것들만 정리해둠
+        // 여기 없으면 무조건 brand 임 
+        '남자',
+        '여자',
+        '신발',
+        '의류',
+        '잡화',
+        '10만원 이하',
+        '10만원 - 30만원 이하',
+        '30만원 - 50만원 이하',
+        '50만원 이상',
+    ];
+
+    // dummy , dummy2 68개의 데이터
     const dataSetting = menu => {
-        console.log(menu)
-        console.log(menuArray);
-        var sw = 0;
-        var isExist = menuArray.filter(item => item === menu);
-        isExist.length !== 0 && sw++;
-        console.log('sw' + sw);
-        
-        if (sw === 1) {
-            var arrayTemp = menuArray.filter(item => item !== menu);
-            setMenuArray(arrayTemp);
-            let dummyTemp = dummy.filter(item => item.category !== menu);
-
-            // var dummy2=dummy
-            //console.log(dummy)
-            // setDummy([...dummy,dummyTemp]) 최상단에서 넘겨준 dummy라 스프레드 안됨.
-            // setDummy(dummy,dummy2)
-            //var dummyTemp2=dummy.concat(dummyTemp)
-
-            setDummy(dummyTemp);
-            
-            // 1번 else 로 안나옴
-            // 2번 var 2번은 일부로 한건지 ?
-        } else {
-            console.log('else menuArray ' + menuArray);
-            let dummyTemp = dummy2.filter(
-                item => item.category === menu,
-            );
-            // 1 걸러주고 
-            console.log(dummyTemp);
-            if (menuArray) { // 빈 배열은 true
-                setDummy(dummyTemp);
-                setNum(1);
+        let newMenuArray = Object.assign({}, menuArray); // menuArray 객체를 복사함 
+        // 클릭을 했을때 newMenuArray 여기에 없다면 brand 다 
+        // 근데 있어도 brand 일수도 있다 
+        // 없으면 추가 있으면 토글
+        if (menu in newMenuArray) {
+            // 이미 클릭했던 적이 있을 경우
+            if (newMenuArray[menu] === 0) {
+                // 마지막으로 클릭했을 때 해제한 경우
+                newMenuArray[menu] = 1;
             } else {
-                console.log('좀 와라 ')
-                var dummyTemp2 = dummy.concat(dummyTemp);
-                console.log(dummyTemp2);
-                setDummy(dummyTemp2);
+                // 마지막으로 클릭했을 때 선택한 경우
+                newMenuArray[menu] = 0;
             }
-            setMenuArray([...menuArray, menu]);
+        } else {
+            // 한 번도 클릭해보지 못한 경우
+            newMenuArray[menu] = 1;
         }
+        // 아무것도 선택이 안되어있을때 (초기상태)
+        // 각각의 옵션을 true로 둔다
+        console.log(newMenuArray);
+        let noCategoryOption = true;
+        let noBrandOption = true;
+        let noGenderOption = true;
+        let noPriceOption = true;
+        
+        // check 된게 있으면 false로 바꿔준다 
+        // 각각 옵션에 대해서 총 4번한다
+        if (
+            newMenuArray['의류'] +
+                newMenuArray['신발'] +
+                newMenuArray['잡화'] !==
+            0
+        ) {
+            noCategoryOption = false;
+        }
+
+        if (
+            newMenuArray['10만원 이하'] +
+                newMenuArray['10만원 - 30만원 이하'] +
+                newMenuArray['30만원 - 50만원 이하'] +
+                newMenuArray['50만원 이상'] !==
+            0
+        ) {
+            noPriceOption = false;
+        }
+        
+        // 성별은 남 녀 일때 
+        if (newMenuArray['남자'] + newMenuArray['여자'] === 1) {
+            noGenderOption = false;
+        }
+        // console.log(noBrandOptionList);
+        for (const [k, v] of Object.entries(newMenuArray)) {
+            // brand가 아닌 리스트에 없으므로 브랜드가 아닌게 아니다
+            // 2중부정 
+            if (
+                (noBrandOptionList.indexOf(k) === -1) && // 이걸 통과한 순간 k = brand
+                // v === 1 // check가 되어있냐 ? value를 확인 둘이 같음 
+                newMenuArray[k] === 1 // check가 되어있냐 ? value를 확인
+            ) {
+                // console.log('dfddfdsdf', noBrandOptionList.indexOf(k), k, v);
+                noBrandOption = false;
+                break;
+            }
+        }
+        console.log(
+            noCategoryOption,
+            noBrandOption,
+            noGenderOption,
+            noPriceOption,
+        );
+        let temp = dummy2.filter(item => {
+            console.log(item);
+            if (!noCategoryOption && newMenuArray[item.category] === 0) {
+                // 무언가 체크를 했을때 noCategoryOption 가 false 인데 ! 써서 true 됨
+                // true면 newMenuArray 안에 item.category 가 0(체크안됨)을 찾아서 뺴준다
+                
+                // 카테고리 중 무엇인가가 체크가 되어있고,
+                // item의 카테고리가 그 체크된 항목과 맞지 않는 경우
+                return false;
+            } else if (
+                // noPriceOption 만약에 true면 거치질 않는다 조건이 없다
+                // true면 체크가 안되어있는거니까 확인할 필요가 없다 
+                !noPriceOption &&  
+                ((item.price <= 100000 && newMenuArray['10만원 이하'] === 0) ||
+                    (item.price <= 300000 &&
+                        newMenuArray['10만원 - 30만원 이하'] === 0) ||
+                    (item.price <= 500000 &&
+                        newMenuArray['30만원 - 50만원 이하'] === 0) ||
+                    newMenuArray['50만원 이상'] === 0)
+            ) {
+                // 가격 중 무엇인가가 체크가 되어있고, item의 가격이 그 체크된 범위와 맞지 않는 경우
+                return false;
+            } else if (
+                !noGenderOption &&
+                item.gender !== 2 &&
+                newMenuArray[item.gender === 0 ? '남자' : '여자'] === 0
+            ) {
+                // "무관"이 체크 되어있지 않고, 성별 중 무엇인가가 체크되어 있고, item의 성별이 그 체크된 성별과 맞지 않는 경우
+                return false;
+            } else if (!noBrandOption) {
+                if (!(item.brand in newMenuArray)) {
+                    return false;
+                } else if (newMenuArray[item.brand] === 0) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                // 이걸 다 통과 해야만 true
+                // 아닌 것 들을 걸러 준다 
+                // 모든 조건을 만족해야 한다 
+                return true;
+            }
+        });
+
+        setDummy(temp);
+        setMenuArray(newMenuArray);
     };
 
-    
     return (
         <>
             {/* Content */}
@@ -388,7 +499,9 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
                                                   </Co.BtnWish>
                                                   <Co.Text>
                                                       {followCalc(
-                                                          item.interest,
+                                                          Number(
+                                                              item.like_count,
+                                                          ),
                                                       )}
                                                   </Co.Text>
                                               </Co.WishFigure>
@@ -468,8 +581,8 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
                                                           {/* sortCheck true = 즉시 판매가순 */}
                                                           {addComma(
                                                               sortCheck
-                                                                  ? item.min_price
-                                                                  : item.max_price,
+                                                                  ? item.max_price
+                                                                  : item.min_price,
                                                               //!sortCheck ? item.releasePrice : item.min_price
                                                           )}
                                                       </Co.Amount>
@@ -492,7 +605,9 @@ const Content = ({ dummy, setDummy, dummy2, dummyFilter, setDummyFilter, sortChe
                                                   </Co.BtnWish>
                                                   <Co.Text>
                                                       {followCalc(
-                                                          item.interest,
+                                                          Number(
+                                                              item.like_count,
+                                                          ),
                                                       )}
                                                   </Co.Text>
                                               </Co.WishFigure>

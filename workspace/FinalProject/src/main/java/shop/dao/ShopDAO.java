@@ -67,7 +67,7 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 			+ "left outer join (select seq, max(order_price) AS order_price from order_table where buy_sell = 0 group by seq ) as c on a.seq = c.seq\r\n"
 			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'resell' group by seq) as d on a.seq = d.seq\r\n"
 			+ "left outer join (select seq, count(*) AS order_count from completed_order_table group by seq) as e on a.seq = e.seq\r\n"
-			+ "order by (max_price + 0) asc")
+			+ "order by (min_price + 0) asc")
 	List<SortListDTO> BuySort();  // 즉시구매가 낮은순
 	
 	@Query(nativeQuery = true, value = "select a.seq, a.brand, ifnull(b.order_price, '-') as min_price ,ifnull(c.order_price, '-') \r\n"
@@ -76,7 +76,7 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 			+ "left outer join (select seq, max(order_price) AS order_price from order_table where buy_sell = 0 group by seq ) as c on a.seq = c.seq\r\n"
 			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'resell' group by seq) as d on a.seq = d.seq\r\n"
 			+ "left outer join (select seq, count(*) AS order_count from completed_order_table group by seq) as e on a.seq = e.seq\r\n"
-			+ "order by (min_price + 0) desc")
+			+ "order by (max_price + 0) desc")
 	List<SortListDTO> SellSort(); // 즉시판매가 높은순 
 	
 	@Query(nativeQuery = true, value = "select a.seq, a.brand, ifnull(b.order_price, '-') as min_price ,ifnull(c.order_price, '-') \r\n"

@@ -56,9 +56,9 @@ public class NewProductDTO {
 	@Column(name="category", length = 30)
 	private String category;
 	
-	// ok
-	@Column(name="categoryDetail", length = 30)
-	private String categoryDetail;
+	// tag 신발 ~ 기타 
+	@Column(name="tag", length = 30)
+	private String tag;
 	
 	// 상품 등록 날짜 / 자동
 	@Column(name="registerProductDate", nullable = false)

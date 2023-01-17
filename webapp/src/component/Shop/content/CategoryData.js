@@ -9,7 +9,7 @@ export default [
         id: 2,
         title: '브랜드',
         subTitle: '모든 브랜드',
-        menuList: ['Nike', 'Apple','Jordan'],
+        menuList: ['Nike', 'Apple','Jordan','Adidas'],
         
     },
     {

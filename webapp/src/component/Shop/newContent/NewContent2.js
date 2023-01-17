@@ -130,9 +130,15 @@ const NewContent2 = ({
     };
 
     const photoshop = itemImg => {
-        // console.log(itemImg);
-        const img = itemImg.split(',');
-        return img[0];
+        // console.log(itemImg)
+        // console.log(typeof(itemImg))
+        if (itemImg !== null && itemImg !== undefined) {
+            //console.log(itemImg);
+            const img = itemImg.split(',');
+            // console.log(img[0])
+            // console.log(typeof(img[0]))
+            return img[0];
+        }
     };
 
     return (
@@ -249,7 +255,8 @@ const NewContent2 = ({
                                                       <Co.ProductImg
                                                       //src={item.imgName}
                                                       src={`/newProductList/${photoshop(
-                                                          item.imgName,
+                                                        // item.img_name,
+                                                        item.imgName
                                                       )}`}
                                                       >
                                                           {/* picture 태그 사용시 밑에꺼 사용 */}
@@ -341,6 +348,7 @@ const NewContent2 = ({
                                                       <Co.ProductImg
                                                       // src={item.imgName}
                                                       src={`/newProductList/${photoshop(
+                                                          //item.img_name,
                                                           item.imgName,
                                                       )}`}
                                                       >

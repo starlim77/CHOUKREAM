@@ -67,7 +67,6 @@ const Modal = props => {
                 .get('http://localhost:8080/shop/releaseDateSort')
                 // .then(res => console.log(JSON.stringify(res.data)))
                 .then(res => setDummy(res.data))
-
                 .catch(error => console.log(error));
                 setPictures(8);
                 setSortCheck(false);    
