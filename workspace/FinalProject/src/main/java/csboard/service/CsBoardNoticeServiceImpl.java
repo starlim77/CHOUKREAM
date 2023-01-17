@@ -24,9 +24,9 @@ public class CsBoardNoticeServiceImpl implements CsBoardNoticeService {
 	}
 
 	@Override
-	public List<CsBoarNoticeDTO> getNotices(String string) {
+	public List<CsBoarNoticeDTO> getNotices() {
 		
-		return csBoardNoticeDAO.findAll();
+		return csBoardNoticeDAO.findAllByOrderBySeqDesc();
 			
 	}
 

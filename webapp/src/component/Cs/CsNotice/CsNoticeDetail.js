@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import * as C from './CsNoticeStyle';
 import jwt_decode from 'jwt-decode';
+import { category } from '../../Search/style';
 const CsNoticeDetail = () => {
     const location = useLocation();
     const [notice, setNotice] = useState(location.state.noticeList);
@@ -11,6 +12,7 @@ const CsNoticeDetail = () => {
     const [noticeNum, setNoticeNum] = useState(noticeArr[noticeArr.length - 1]);
     const navigate = useNavigate()
     let content = notice.content;
+
     const [seq,setSeq ]= useState()
 
     const token = localStorage.getItem('accessToken');
@@ -43,7 +45,9 @@ const CsNoticeDetail = () => {
 
     const onDelete =( ) => {
              
-             console.log(seq)
+        if(!window.confirm('정말로 삭제하시겠습니까?'))
+        return;
+      
              axios.delete(`http://localhost:8080/csnotice/deleteNotice?seqString=${noticeNum}`)
                         .then(() =>{
                             alert("글 삭제");
@@ -63,7 +67,10 @@ const CsNoticeDetail = () => {
              <C.DateSpan>{notice.createdate}</C.DateSpan>
             <C.NoticeWrapper>
                
-                <C.NoticeTitle>{notice.title}</C.NoticeTitle>
+                <C.NoticeTitle> [  {notice.category==='anouncement' ? '공지':
+                                    notice.category==='event' ? '이벤트 발표' :
+                                   notice.category==='etc' ? '기타' :
+                        ''} ] &nbsp; {notice.title}</C.NoticeTitle>
                 <C.NoticeContent>
                     
                     <div dangerouslySetInnerHTML={{ __html: content }}></div>

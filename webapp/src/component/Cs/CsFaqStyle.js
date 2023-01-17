@@ -240,7 +240,7 @@ margin-left: auto;
 `
 export const Validation =styled.div`
 font-size : 6pt;
-color : red;
+color : #CD7676;
 `
 export const WriteBtn =styled.div`
 margin-left: auto;
@@ -253,4 +253,21 @@ flex-wrap: wrap;
 margin : 20px;
 
 `
+export const Form =styled.form`
 
+`
+export const ResultNum =styled.p`
+border-bottom: 1px solid #ebebeb;
+padding-bottom: 12px;
+font-size: 12px;
+display: block;
+margin-block-start: 1em;
+margin-block-end: 1em;
+margin-inline-start: 0px;
+margin-inline-end: 0px;
+
+`
+export const StrongNum =styled.strong`
+font-size: 14px;
+font-weight : bold;
+`

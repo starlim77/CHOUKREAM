@@ -1,11 +1,13 @@
+//Toast
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
+
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as C from './CsNoticeStyle';
 import jwt_decode from 'jwt-decode';
 const CsNoticeWrite = () => {
@@ -40,11 +42,12 @@ const CsNoticeWrite = () => {
     const [categoryValidateCheck,setCategoryValidateCheck] =useState(false)
     const [titleValidateCheck,setTitleValidateCheck]=useState(false)
     const[contentValidateCheck ,setContentValidateCheck]=useState(false)
+    const[data ,setData] =useState('')
 
     useEffect(() => {   
         setCategoryValidateCheck(false)
         setTitleValidateCheck(false)
-        setContentValidateCheck(false)},[title,content,category])
+        setContentValidateCheck(false)},[title,data,category])
     
     const navigate = useNavigate('');
 
@@ -57,8 +60,11 @@ const CsNoticeWrite = () => {
         });
         console.log(content);
     };
-
-    
+  
+    const onChange = () => {
+        setData(editorRef.current.getInstance().getHTML()) 
+      
+      };
    const [img1, setImg1] = useState();
    
     const [fileName,setFileName]=useState([]) 
@@ -76,9 +82,12 @@ const CsNoticeWrite = () => {
         file.push(img); //파일로 저장 
         callback(url)
     }
+//글 등록
     const onCsFaqWriteFormSubmit = (e) => {
-        
-        console.log(file)
+        e.preventDefault()
+        console.log('글등록 버튼 누름')
+
+        // console.log(file)
         var formData = new FormData();
         file.map(files=>formData.append('img',files));
         for (let key of formData.keys()) {
@@ -86,15 +95,14 @@ const CsNoticeWrite = () => {
         }
         if(category===''){
             setCategoryValidateCheck(true)
-            e.preventDefault()
-    
+         
         }else if(title===''){
             setTitleValidateCheck(true)
-            e.preventDefault()
+         
     
         }else if(editorRef.current?.getInstance().getHTML()==='<p><br></p>'){
            setContentValidateCheck(true)
-           e.preventDefault()
+       
     
         }else{
         axios
@@ -110,19 +118,25 @@ const CsNoticeWrite = () => {
             }
         )
         .then(() => {
+            // callback(data.imgUrl);
+
+            // console.log(content + '성공');
+            alert('  공지  등록');
+            navigate('/cs/csNotice')
+        
          
-            console.log(content + '성공');
-            alert('공지  등록');
-            navigate(-1)
         })
         .catch(error => {
             console.log(content);
-            // console.log(formData)
+           
             console.log(error + '완전에러');
         });
+
+       
       }
     }
-        const onReset = e => {
+        
+    const onReset = e => {
             e.preventDefault(); 
     
             setForm({
@@ -136,7 +150,7 @@ const CsNoticeWrite = () => {
     return (
         <>
         
-            <form>
+            <C.Form>
             <C.CategorySelect name="category"   onChange={onInput}>
                 <option value=''>선택</option>
                 <option value="anouncement"> 공지</option>
@@ -144,8 +158,7 @@ const CsNoticeWrite = () => {
                 <option value="etc">기타</option>
                                
             </C.CategorySelect>    
-            {categoryValidateCheck ? <C.Validation>'카테고리를 선택해주세요'</C.Validation>:''}
-
+          
             <C.TitleInput
                                 type="text"
                                 name="title"
@@ -154,6 +167,7 @@ const CsNoticeWrite = () => {
                                 onChange={onInput}
                                 value={title}
                             />
+                {categoryValidateCheck ? <C.Validation>'카테고리를 선택해주세요'</C.Validation>:''}
                 {titleValidateCheck ? <C.Validation>'제목을 입력 해주세요'</C.Validation> : ''} 
         
        
@@ -164,7 +178,7 @@ const CsNoticeWrite = () => {
                                 previewStyle="vertical" // 미리보기 스타일 지정
                                 height="500px" // 에디터 창 높이
                                 initialEditType="wysiwyg" // 초기 입력모드 설정(디폴트 markdown)
-                                
+                                onChange={onChange}
                                 toolbarItems={[
                                     // 툴바 옵션 설정
                                     ['heading', 'bold', 'italic', 'strike'],
@@ -185,7 +199,7 @@ const CsNoticeWrite = () => {
                     <C.Button onClick={onCsFaqWriteFormSubmit}>등록</C.Button>
                     <C.Button onClick={onReset}>취소</C.Button>
          </C.ButtonWrapper>
-         </form>
+         </C.Form>
                
         </>
     );

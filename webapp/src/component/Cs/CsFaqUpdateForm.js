@@ -9,6 +9,10 @@ import { useRef } from 'react';
 
 import { Editor, Viewer } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import 'tui-color-picker/dist/tui-color-picker.css';
+import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
+import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
+
 import * as C from './CsFaqStyle';
 import jwt_decode from 'jwt-decode';
 
@@ -102,7 +106,7 @@ const CsFaqUpdateForm = () => {
         setContentValidateCheck(false)},[title,content,category])
 
     const onUpdate = e => {
-    alert(img1 +' 이름 ->'+fileName)
+   
     console.log(file)
     var formData = new FormData();
     file.map(files=>formData.append('img',files));
@@ -138,7 +142,7 @@ const CsFaqUpdateForm = () => {
             // callback(data.imgUrl);
 
             console.log(content + '성공');
-            alert(' 자주 묻는 질문 글 등록');
+            alert(' 자주 묻는 질문 글 수정 등록');
             console.log(editorRef.current?.getInstance().getHTML())
             navigate(-1)
         })
@@ -164,11 +168,11 @@ const CsFaqUpdateForm = () => {
             .catch(error => console.log(error));
     };
     const onList = e => {
-        navigate('/cs/CsFaq');
+        navigate('/cs/csFaq');
     };
     return (
         <>
-            <form>
+            <C.Form>
                 
                                 <C.CategorySelect
                                     name="category"
@@ -178,8 +182,9 @@ const CsFaqUpdateForm = () => {
                                 >
                                     <option value=''>선택</option>
                                     <option value="common"> 공통</option>
-                                    <option value="policy">정책</option>
+                                    <option value="policy">이용정책</option>
                                     <option value="buying">구매</option>
+                                    <option value="selling">판매</option>
                                 </C.CategorySelect>
                                 {categoryValidateCheck ? <C.Validation>'카테고리를 선택해주세요'</C.Validation>:''}
                             
@@ -213,6 +218,7 @@ const CsFaqUpdateForm = () => {
                                         ['table', 'image', 'link'],
                                         ['code', 'codeblock'],
                                     ]}
+                                    plugins={[colorSyntax]}
                                     hooks={{
                                         //사진 등록 버튼 눌렀을 때.
                                         addImageBlobHook: onUploadImage,
@@ -221,7 +227,7 @@ const CsFaqUpdateForm = () => {
                                 
                                 {/* <textarea name ='content' placeholder='내용' style={{width :'350px' , height:'350px' }} onChange={onInput} value={content}/> */}
                             
-            </form>
+            </C.Form>
            
          
                

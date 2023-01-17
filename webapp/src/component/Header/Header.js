@@ -22,8 +22,8 @@ const Header = () => {
                         <Link to="/admin">
                             <S.TopLi>관리자페이지</S.TopLi>
                         </Link>
-                        <Link to="/cs/CsNotice">
-                            x<S.TopLi>고객센터</S.TopLi>
+                        <Link to="/cs/csNotice">
+                            <S.TopLi>고객센터</S.TopLi>
                         </Link>
                         <S.TopLi>관심상품</S.TopLi>
                         <S.TopLi>마이페이지</S.TopLi>

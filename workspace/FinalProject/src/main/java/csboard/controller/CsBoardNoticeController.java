@@ -95,7 +95,7 @@ public class CsBoardNoticeController {
 	
 	@GetMapping(path = "getNotices")
 	public List<CsBoarNoticeDTO> getNotices() {
-		return csBoardNoticeService.getNotices("buying");
+		return csBoardNoticeService.getNotices();
 	}
 	@GetMapping(path = "getNotice")
 	public Optional<CsBoarNoticeDTO> getNotice(@RequestParam String seqString) {

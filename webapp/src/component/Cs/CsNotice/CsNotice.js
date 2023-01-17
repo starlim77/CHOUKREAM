@@ -57,20 +57,18 @@ const CsNotice = () => {
     };
     return (
         <>
-          {tokenId === '14'&& <Link to='/cs/csNoticeWrite'> <S.Button> 글쓰기 </S.Button></Link>}
+         {tokenId === '14'&& <S.ButtonWriteWrapper><Link to='/cs/csNoticeWrite'> <S.Button> 글쓰기 </S.Button></Link> </S.ButtonWriteWrapper>   }
             <S.NoticeUl>
                 {
                     noticeList.map(item => 
                         <S.NoticeLi key={item.seq} id={item.seq} onClick={onClick}>
                          [  {item.category==='anouncement' ? '공지':
-                        item.category==='event' ? '이벤트 발표' :
-                        item.category==='etc' ? '기타' :
+                              item.category==='event' ? '이벤트 발표' :
+                              item.category==='etc' ? '기타' :
                         ''} ]  &nbsp;&nbsp;&nbsp; {item.title}</S.NoticeLi>
                     )
                 }
-                {/* <S.NoticeLi>[이벤트 발표] 발표 1번</S.NoticeLi> */}
-                {/* <S.NoticeLi>[이벤트 발표] 발표 2번</S.NoticeLi> */}
-                {/* <S.NoticeLi>[이벤트 발표] 발표 3번</S.NoticeLi> */}
+           
             </S.NoticeUl>
         </>
     );

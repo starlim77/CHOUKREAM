@@ -22,18 +22,18 @@ public class CsBoardServiceImpl implements CsBoardService {
 	@Override
 	public List<CsBoardDTO> getList() {
 		
-		return csBoardDAO.findAll();
+		return csBoardDAO.findAllByOrderBySeqDesc();
 	}
 
 	@Override
 	public List<CsBoardDTO> getCategory(String category) {
 		// TODO Auto-generated method stub
-		return csBoardDAO.findByCategory(category);
+		return csBoardDAO.findAllByCategoryOrderBySeqDesc(category);
 	}
 
 	@Override
 	public List<CsBoardDTO> getKeywordSearch(String keyword) {
-		return csBoardDAO.findByContentContaining(keyword);
+		return csBoardDAO.findByContentContainingOrderBySeqDesc(keyword);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class CsBoardServiceImpl implements CsBoardService {
 
 	@Override
 	public List<CsBoardDTO> getNotices(String category) {
-		return csBoardDAO.findAllByCategory(category);
+		return csBoardDAO.findAllByCategoryOrderBySeqDesc(category);
 	}
 
 	@Override

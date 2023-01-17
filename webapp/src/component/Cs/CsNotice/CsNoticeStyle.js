@@ -95,5 +95,14 @@ height :20pt;
 `
 export const Validation =styled.div`
 font-size : 6pt;
-color : red;
+color : #CD7676;
+`
+export const Form = styled.form`
+`
+export const ButtonWriteWrapper =styled.div`
+display: flex;
+justify-content: right;
+align-items: right;
+flex-wrap: wrap;
+margin : 20px;
 `

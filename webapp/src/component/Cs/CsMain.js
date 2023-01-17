@@ -31,13 +31,13 @@ const CsMain = () => {
                         />
                         <Route path ='/csNoticeWrite' element={<CsNoticeWrite/>}/>
 
-                        <Route path="/CsFaq" element={<CsFaq />} />
+                        <Route path="/csFaq" element={<CsFaq />} />
                         <Route
-                            path="/CsFaqUpdateForm/:seq"
+                            path="/csFaqUpdateForm/:seq"
                             element={<CsFaqUpdateForm />}
                         />
                         <Route
-                            path="/CsFaqWriteForm/"
+                            path="/csFaqWriteForm/"
                             element={<CsFaqWriteForm />}
                         />
                         <Route

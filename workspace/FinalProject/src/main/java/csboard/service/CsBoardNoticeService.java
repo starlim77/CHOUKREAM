@@ -10,7 +10,7 @@ public interface CsBoardNoticeService {
 
 	public void write(CsBoarNoticeDTO csBoardNoticeDTO);
 
-	public List<CsBoarNoticeDTO> getNotices(String string);
+	public List<CsBoarNoticeDTO> getNotices();
 
 	public Optional<CsBoarNoticeDTO> getNotice(int seq);
 

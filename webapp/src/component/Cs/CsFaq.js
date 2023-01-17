@@ -14,7 +14,7 @@ import jwt_decode from 'jwt-decode';
 import { IconName, RxChevronDown, RxChevronUp, RxCrossCircled } from "react-icons/rx";
 import { icon } from '@fortawesome/fontawesome-svg-core';
 
-
+// npm install @toast-ui/editor-plugin-color-syntax --force
 
 
 const CsFaq = () => {
@@ -39,8 +39,9 @@ const CsFaq = () => {
     const [keyword ,setKeyword]=useState('')
     const [search ,setSearch] =useState('')
     const [visible, setVisible] = useState(false);
+    const [listnumber ,setListnumber] =useState('');
     const navigate = useNavigate();
-   
+   const [searchVisible ,setSearchVisible]=useState(false)
     const onSearch =(e) => {
         e.preventDefault()
         axios.get('http://localhost:8080/csfaq/getKeywordSearchList',{
@@ -54,6 +55,11 @@ const CsFaq = () => {
           
             setList(res.data)
             console.log(list)
+            setListnumber(res.data.length)
+            console.log(res.data.length)
+           
+           if(res.data.length>0) setSearchVisible(true)
+
             })//setList에 담기  
               .catch(error=> console.log(error))
     }
@@ -72,14 +78,16 @@ const CsFaq = () => {
    const [indexOfLastPost, setIndexOfLastPost] = useState(0); // 현재 페이지의 마지막 아이템 인덱스
    const [indexOfFirstPost, setIndexOfFirstPost] = useState(0); // 현재 페이지의 첫번째 아이템 인덱스
    const [currentPosts, setCurrentPosts] = useState(0); // 현재 페이지에서 보여지는 아이템들
+  
    
    
     useEffect(()=>{
+  
         axios.get('http://localhost:8080/csfaq/getList')//포트 다르니가 풀주소
 
         .then((res) => {//주소가서 res 받아오기
            
-          
+            console.log(res.data)
             setList(res.data)
             })//setList에 담기  
         
@@ -106,7 +114,7 @@ const CsFaq = () => {
     setKeyword (e.target.value) 
     console.log(keyword)
    
-    setVisibleRest(true)
+   
 
 }
 const onReset =(e)=>{
@@ -117,6 +125,8 @@ const onReset =(e)=>{
    
     const onClickCategory = (e) => {
        // e.preventDefault();
+       setKeyword('')
+       setSearchVisible(false)
        setCategory(e.target.value); 
        console.log(e.target.value)
       
@@ -139,6 +149,8 @@ const onReset =(e)=>{
 
     const [upanddown ,setUpanddown] =useState(true)
     const handleClickItem =(id)  => {
+        setKeyword('')
+       
         setVisible({
          //   ...visible, //이전까지  visible은 그대로 
             
@@ -151,9 +163,12 @@ const onReset =(e)=>{
 
     const onDelete =(e) =>{
     const seq = e.target.value;
-    console.log(seq)
+  
+    if(!window.confirm('게시글을 삭제하시겠습니까?'))
+        return;
     axios.get(`http://localhost:8080/csfaq/getBoard?seq=${seq}`)
          .then(
+            
              axios.delete(`http://localhost:8080/csfaq/deleteBoard?seq=${seq}`)
                         .then(() =>{
                             alert("글 삭제");
@@ -176,15 +191,15 @@ const onReset =(e)=>{
        
             <div>
               
-           
-            {visibleReset ?
-            <C.SearchReset  onClick={onReset}><RxCrossCircled/></C.SearchReset>  : <C.SearchReset ></C.SearchReset>     }
+           {/*  {visibleReset ?
+            <C.SearchReset  onClick={onReset}><RxCrossCircled/></C.SearchReset>  : <C.SearchReset ></C.SearchReset>     } */}
+          
             
-            <C.SearchInput type ='search' value={keyword} onChange = { onInput} onKeyPress={onKeyPress} placeholder='검색'/>
+            <C.SearchInput type ='search' value={keyword} onChange = { onInput} onKeyPress={onKeyPress} placeholder='내용으로 검색'/>
           
             </div>
           
-           
+          
             <C.CsCategoryTable>
                 <C.CsCategoryTbody>
                 <C.CsCategoryTr>
@@ -202,24 +217,25 @@ const onReset =(e)=>{
                 </C.CsCategoryTbody>
             </C.CsCategoryTable>
             
+                {searchVisible  ? <C.ResultNum><C.StrongNum>{listnumber}</C.StrongNum>개의 검색 결과가 있습니다.</C.ResultNum> : ''}
             
                 {list.length===0 && <C.NoResult>검색결과가 없습니다
                                   <p>  <C.ChatButton>채팅하기</C.ChatButton></p>
                                     </C.NoResult>
                                     }
                 
-                { list.slice(indexOfFirstPost, indexOfLastPost).map((item) => { //10개씩 글목록이 뜨게?? 하기 위해서 map을 list(전체)가 아닌 {list.slice(indexOfFirst, indexOfLast) 으로 돌리기..그냥 이렇게 해야 그렇게 되어서 ,,,
+                { list.slice(indexOfFirstPost, indexOfLastPost).map((item,index) => { //10개씩 글목록이 뜨게?? 하기 위해서 map을 list(전체)가 아닌 {list.slice(indexOfFirst, indexOfLast) 으로 돌리기..그냥 이렇게 해야 그렇게 되어서 ,,,
                     return (
                         
                         
-                        <C.NoticeUl key={item.seq}>
+                        <C.NoticeUl key={index}>
                             <C.NoticeLi
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => handleClickItem(item.seq)}
                             >
                                 {/* {' '} */}
                               <C.StrongCategory> {item.category==='' ? '전체':
-                                                   item.category==='policy' ? '구매정책' :
+                                                   item.category==='policy' ? '이용정책' :
                                                    item.category==='common' ? '공통' :
                                                    item.category==='buying' ? '구매' :
                                                    item.category==='selling' ? '판매' :
@@ -237,7 +253,7 @@ const onReset =(e)=>{
                                         <Viewer initialValue={(item.content).replace('<img src="blob:http://localhost:3000/'+item.filename+'" contenteditable="false">', '<img src="/storage/'+item.filename+'.png" contenteditable="false">') } />
                                         <C.ButtonRight>
                                          {tokenId === '14' && 
-                                         <Link to={'/cs/CsFaqUpdateForm/'+item.seq}><C.ModifiedButton  value ={item.seq}>수정</C.ModifiedButton></Link> } {/*param 가져가기 */}
+                                         <Link to={'/cs/csFaqUpdateForm/'+item.seq}><C.ModifiedButton  value ={item.seq}>수정</C.ModifiedButton></Link> } {/*param 가져가기 */}
                                          {tokenId === '14' &&  <C.ModifiedButton  value ={item.seq} onClick={onDelete}>삭제</C.ModifiedButton> }
                                       
                                        
@@ -257,7 +273,7 @@ const onReset =(e)=>{
             {/*  PAGINATION * 검색결과 있을 때만 페이지 띄우기 */}
             {list.length >1 &&
             <Paging page={currentPage} count={count} setPage={setPage} /> }
-            <C.WriteBtn>{tokenId === '14' &&  <Link to='/cs/CsFaqWriteForm'><C.Button>글쓰기</C.Button></Link>}</C.WriteBtn>
+            <C.WriteBtn>{tokenId === '14' &&  <Link to='/cs/csFaqWriteForm'><C.Button>글쓰기</C.Button></Link>}</C.WriteBtn>
           
                
            

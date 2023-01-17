@@ -1,4 +1,8 @@
 import { Editor } from '@toast-ui/react-editor';
+import 'tui-color-picker/dist/tui-color-picker.css';
+import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
+import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
+
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -93,7 +97,7 @@ const CsNoticeUpdateForm = () => {
     };
     
     const onUpdate = e => {
-     alert(img1 +' 이름 ->'+fileName)
+    
     console.log(file)
     var formData = new FormData();
     file.map(files=>formData.append('img',files));
@@ -157,17 +161,21 @@ const CsNoticeUpdateForm = () => {
             })
             .catch(error => console.log(error));
     };
+    const[editorData ,setEditorData] =useState('')
     const [categoryValidateCheck,setCategoryValidateCheck] =useState(false)
     const [titleValidateCheck,setTitleValidateCheck]=useState(false)
     const[contentValidateCheck ,setContentValidateCheck]=useState(false)
     useEffect(() => {   
         setCategoryValidateCheck(false)
         setTitleValidateCheck(false)
-        setContentValidateCheck(false)},[title,content,category])
-    
+        setContentValidateCheck(false)},[title,editorData,category])
+     const onChange = () => {
+        setEditorData(editorRef.current.getInstance().getHTML()) 
+          
+          };
     return (
         <>
-       <form>
+       <C.Form>
   
                             <C.CategorySelect
                                     name="category"
@@ -179,7 +187,7 @@ const CsNoticeUpdateForm = () => {
                                     <option value="event">이벤트발표</option>
                                     <option value="etc">기타</option>
                              </C.CategorySelect>
-                             {categoryValidateCheck ? <C.Validation>'카테고리를 선택해주세요'</C.Validation>:''}
+                            
                             
                                 <C.TitleInput
                                     type="text"
@@ -189,6 +197,7 @@ const CsNoticeUpdateForm = () => {
                                     onChange={onInput}
                                     value={form.title}
                                 />
+                                 {categoryValidateCheck ? <C.Validation>'카테고리를 선택해주세요'</C.Validation>:''}
                                   {titleValidateCheck ? <C.Validation>'제목을 입력 해주세요'</C.Validation> : ''} 
                       
                                 {/* {content} */}
@@ -197,7 +206,8 @@ const CsNoticeUpdateForm = () => {
                                     previewStyle="vertical" // 미리보기 스타일 지정
                                     height="500px" // 에디터 창 높이
                                     initialEditType="wysiwyg" // 초기 입력모드 설정(디폴트 markdown)
-                                  //  initialValue={(form.content) }   
+                                    onChange={onChange}
+                                    //  initialValue={(form.content) }   
                                     toolbarItems={[
                                         // 툴바 옵션 설정
                                         ['heading', 'bold', 'italic', 'strike'],
@@ -211,6 +221,7 @@ const CsNoticeUpdateForm = () => {
                                         ['table', 'image', 'link'],
                                         ['code', 'codeblock'],
                                     ]}
+                                    plugins={[colorSyntax]}//color pulgins
                                     hooks={{
                                         //사진 등록 버튼 눌렀을 때.
                                         addImageBlobHook: onUploadImage,
@@ -218,7 +229,7 @@ const CsNoticeUpdateForm = () => {
                                 ></Editor>
                                   {contentValidateCheck ?<C.Validation>내용을 입력해주세요</C.Validation>  : '' }
                               
-            </form>
+            </C.Form>
            
             <C.ButtonWrapper>
                 <C.Button onClick={onList}>목록</C.Button>  

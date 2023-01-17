@@ -16,7 +16,7 @@ public interface CsBoardDAO extends JpaRepository<CsBoardDTO, Integer> {
 	List<CsBoardDTO> findByCategory(String category);
 
 	
-	List<CsBoardDTO> findByContentContaining(String keyword);
+	List<CsBoardDTO> findByContentContainingOrderBySeqDesc(String keyword);
 
 
 	Optional<CsBoardDTO> findBySeq(int seq);
@@ -25,7 +25,10 @@ public interface CsBoardDAO extends JpaRepository<CsBoardDTO, Integer> {
 	void deleteBySeq(int seq);
 
 
-	List<CsBoardDTO> findAllByCategory(String category);
+	List<CsBoardDTO> findAllByCategoryOrderBySeqDesc(String category);
+
+
+	List<CsBoardDTO> findAllByOrderBySeqDesc();
 
 	//완전 에러 --  keyword 하나로 내용 과 제목 둘다 한꺼번에 찾아서 하는것......ㅠㅠㅠㅠㅠ모르겠음 
 //	@Query("csBoardDTO from CsBoardDTO csBoardDTO where csBoardDTO.title like '%' || :keyword || '%' or csBoardDTO.content like '%' || :keyword || '%'")

@@ -7,7 +7,10 @@ import { useRef } from 'react';
 
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import { UploadFile } from '@mui/icons-material';
+import 'tui-color-picker/dist/tui-color-picker.css';
+import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
+import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
+
 import jwt_decode from 'jwt-decode';
 
 import * as C from './CsFaqStyle';
@@ -60,17 +63,22 @@ const CsFaqWriteForm = props => {
     const [categoryValidateCheck,setCategoryValidateCheck] =useState(false)
     const [titleValidateCheck,setTitleValidateCheck]=useState(false)
     const[contentValidateCheck ,setContentValidateCheck]=useState(false)
-  useEffect(() =>{editorRef.current?.getInstance().setHTML((content))
+    const[editorData ,setEditorData] =useState('')
+    
+     useEffect(() =>{editorRef.current?.getInstance().setHTML((content))
                  
                 }
-  ,[])  
-  useEffect(() => {   
+        ,[])  
+    useEffect(() => {   
     setCategoryValidateCheck(false)
     setTitleValidateCheck(false)
-    setContentValidateCheck(false)},[title,content,category])
-   
+    setContentValidateCheck(false)},[title,editorData,category])
+    const onChange = () => {
+    setEditorData(editorRef.current.getInstance().getHTML()) 
+          
+          };
     const [img1, setImg1] = useState();
-   const [url, setUrl] = useState([]);
+    const [url, setUrl] = useState([]);
    
     const [fileName,setFileName]=useState([]) 
     const[file , setFile] =useState([])
@@ -89,20 +97,16 @@ const CsFaqWriteForm = props => {
     setImg1(split[3])
  //   const imageSrc =split[3]+'.png';
 
-
-
    alert(url)
     file.push(img);
    
-    
     callback(url); //callback 에  blob 를  넣으면 글 쓰는 페이지에 사진이 안뜸
     // return randomName;
-
-    
+ 
 };
 
    const onCsFaqWriteFormSubmit = () => {
-    alert(img1 +' 이름 ->'+fileName)
+    
     console.log(file)
     var formData = new FormData();
     file.map(files=>formData.append('img',files));
@@ -165,7 +169,7 @@ const CsFaqWriteForm = props => {
 
     return (
         <>
-            <form>
+            <C.Form>
                
                   
   
@@ -174,13 +178,13 @@ const CsFaqWriteForm = props => {
                                 style={{ width: '100px' }}
                                 onChange={onInput}
                             >
-                                <option>선택</option>
+                                <option value=''>선택</option>
                                 <option value="common"> 공통</option>
-                                <option value="policy">정책</option>
+                                <option value="policy">이용정책</option>
                                 <option value="buying">구매</option>
                                 <option value="selling"> 판매</option>
                             </C.CategorySelect>
-                            {categoryValidateCheck ? <C.Validation>'카테고리를 선택해주세요'</C.Validation>:''}
+                         
                            
                        
                             < C.TitleInput style
@@ -191,6 +195,7 @@ const CsFaqWriteForm = props => {
                                 onChange={onInput}
                                 value={title}
                             />
+                            {categoryValidateCheck ? <C.Validation>'카테고리를 선택해주세요'</C.Validation>:''}
                             {titleValidateCheck ? <C.Validation>'제목을 입력 해주세요'</C.Validation> : ''} 
        
                     {/*Toast------------ */}
@@ -210,15 +215,17 @@ const CsFaqWriteForm = props => {
                                     ['table', 'image', 'link'],
                                     ['code', 'codeblock'],
                                 ]}
+                                plugins={[colorSyntax]}
                                 hooks={{
                                     //사진 등록 버튼 눌렀을 때.
                                     addImageBlobHook: onUploadImage,
                                 }} //
+                                onChange={onChange}
                             ></Editor>
                             {contentValidateCheck ?<C.Validation>내용을 입력해주세요</C.Validation>  : '' }
                                      
            
-            </form>
+            </C.Form>
             <C.ButtonWrapper>
               
                     <C.Button onClick={onCsFaqWriteFormSubmit}>등록</C.Button>
