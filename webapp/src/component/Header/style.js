@@ -75,7 +75,7 @@ export const ShopModalWrapper = styled.div`
     z-index:999;
     height:50px;
     top:80px;
-    right:250px;
+    right:180px;
     border:1px solid #ebebeb;
     line-height: 50px;
     padding:0 12px;
