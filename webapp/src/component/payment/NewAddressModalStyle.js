@@ -20,11 +20,10 @@ export const NewAddress = styled.div`
     width: 520px;
     padding: 20px 30px;
     transform: translate(-50%, -50%);
-
-    opacity: 1.0;
+    z-index: 999;
+    opacity: 1;
     display: flex;
     flex-wrap: wrap;
-
 `;
 
 export const NewAddressTitle = styled.div`
@@ -59,6 +58,8 @@ export const Input = styled.input`
 `;
 export const DefaltAddress = styled.div`
     display: flex;
+    align-items: center;
+    margin-top: 20px;
 `;
 export const DefaultCheckBox = styled.input``;
 export const DefaultSpan = styled.span``;

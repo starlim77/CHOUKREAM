@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import my.bean.AddressDTO;
+import my.bean.GradeDTO;
 import my.bean.PointDTO;
 import my.bean.SellBuyHistory;
 import pay.bean.CompletePaymentDTO;
@@ -23,6 +24,10 @@ public interface MyService {
 	
 	public Optional<AddressDTO> getDefaultAddress(String id);
 
+	public Optional<GradeDTO> getGrade(String id);
+
+	public void saveGradeNewMember(String email);
+	
 	public List<AddressDTO> deleteAddress(String id, long seq);
 
 	public Optional<AddressDTO> getAddressBySeq(long seq);

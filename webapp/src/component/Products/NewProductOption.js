@@ -17,7 +17,6 @@ const newProductOption = ({ setModalOpen, option, newProductOption, getOption })
                 <S.LayerContent>
                     <S.SelectArea>
                         <S.SelectList>
-                            {console.log(newProductOption)}
                             {
                                 newProductOption.map((item, index) => (
                                 <S.SelectItem style={{border: option === item.productOption && "1px solid black", pointerEvents: item.inventory === 0 && 'none'}} key={index}>

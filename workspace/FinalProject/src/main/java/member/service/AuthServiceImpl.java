@@ -21,6 +21,7 @@ import member.bean.TokenDto;
 import member.bean.TokenRequestDto;
 import member.dao.MemberDAO;
 import member.dao.RefreshTokenRepository;
+import my.service.MyService;
 
 @Service
 @RequiredArgsConstructor
@@ -30,14 +31,17 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     //private final RefreshTokenRepository refreshTokenRepository;
-
+    @Autowired
+    private MyService myService;
+    
     @Transactional
     public MemberResponseDto join(MemberRequestDto memberRequestDto) {
         if (memberDAO.existsByEmail(memberRequestDto.getEmail())) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
-
+        
         MemberDto memberDto = memberRequestDto.toMember(passwordEncoder);
+        myService.saveGradeNewMember(memberRequestDto.getEmail());
         return MemberResponseDto.of(memberDAO.save(memberDto));
     }
 

@@ -5,10 +5,12 @@ import java.util.Optional;
 
 import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 
+import lookbook.bean.StyleDTO;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
-import shop.bean.NewNewProductDTO;
+import shop.bean.NewProductDTO;
+import shop.bean.NewProductOptionDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
@@ -45,9 +47,18 @@ public interface ShopDetailService {
 
 	public List<BrandListDTO> getBrandList(int seq, String brand);
 
-	public Optional<NewNewProductDTO> getNewProduct(int seq);
+	public Optional<NewProductDTO> getNewProduct(int seq);
 
 	public Long likeCount(int seq, String shopKind);
+
+	public void addSellOrder(OrderDTO orderDTO);
+	public List<StyleDTO> getBrandStyleList(int seq);
+
+	public List<NewProductOptionDTO> getNewProductOption(int seq);
+
+	public void addNewProductOption(int seq, String option);
+
+	public void addBuyOrder(OrderDTO orderDTO);
 
 //	public Optional<Integer> getProductSizeMin(int seq, String size);
 }

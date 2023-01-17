@@ -9,14 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import lookbook.bean.StyleDTO;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
-import shop.bean.NewNewProductDTO;
+import shop.bean.NewProductDTO;
+import shop.bean.NewProductOptionDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
@@ -81,7 +86,7 @@ public class ShopDetailController {
 	}
 	
 	@GetMapping(path="getNewProduct")
-	public Optional<NewNewProductDTO> getNewProduct(@RequestParam int seq) {
+	public Optional<NewProductDTO> getNewProduct(@RequestParam int seq) {
 		System.out.println(shopDetailService.getNewProduct(seq));
 		return shopDetailService.getNewProduct(seq);  
 	}
@@ -91,6 +96,12 @@ public class ShopDetailController {
 		return shopDetailService.likeCount(seq, shopKind);  
 	}
 	
+	@RequestMapping(path = "addSellOrder")
+	public void addSellOrder(@ModelAttribute OrderDTO orderDTO) {
+		shopDetailService.addSellOrder(orderDTO);
+	}
+	
+	
 	
 //	@GetMapping(path="getProductSizeMin")
 //	public Optional<Integer> getProductSizeMin(@RequestParam int seq,@RequestParam String size) {
@@ -98,4 +109,27 @@ public class ShopDetailController {
 //		return shopDetailService.getProductSizeMin(seq, size);
 //	}
 
+	@GetMapping(path="getBrandStyleList")
+	public List<StyleDTO> getBrandStyleList(@RequestParam int seq) {
+		System.out.println(shopDetailService.getBrandStyleList(seq));
+		return shopDetailService.getBrandStyleList(seq);  
+	}
+	
+	
+	@GetMapping(path="getNewProductOption")
+	public List<NewProductOptionDTO> getNewProductOption(@RequestParam int seq) {
+		return shopDetailService.getNewProductOption(seq);
+	}
+	
+	@GetMapping(path="addNewProductOption")
+	public void addNewProductOption(@RequestParam int seq, @RequestParam String option) {
+		shopDetailService.addNewProductOption(seq, option);
+	}
+	
+	
+	@PostMapping(path = "addBuyOrder")
+	public void addBuyOrder(@ModelAttribute OrderDTO orderDTO) {
+		shopDetailService.addBuyOrder(orderDTO);
+	}
+	
 }

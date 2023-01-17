@@ -27,10 +27,18 @@ export const TopWrapper = styled.ul`
     gap: 24px;
     color: rgba(34, 34, 34, 0.8);
     font-size: 12px;
+    li,
+    a {
+        color: rgba(34, 34, 34, 0.8);
+        text-decoration: none;
+    }
 `;
 
 export const TopLi = styled.li`
     display: flex;
+    :hover {
+        cursor: pointer;
+    }
 `;
 
 export const Bottom = styled.div`
@@ -62,4 +70,25 @@ export const BottomLi = styled.li`
     /* img {
         width: 28px;
     } */
+    :hover{
+        cursor: pointer;
+    }
+    a {
+       color: rgba(34,34,34,0.8);
+       text-decoration: none;
+    }
+`;
+
+export const ShopModalWrapper = styled.div`
+    position: absolute;
+    z-index: 999;
+    height: 50px;
+    top: 80px;
+    right: 250px;
+    border: 1px solid #ebebeb;
+    line-height: 50px;
+    padding: 0 12px;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 10%);
 `;

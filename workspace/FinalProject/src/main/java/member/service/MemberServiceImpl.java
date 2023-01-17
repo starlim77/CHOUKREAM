@@ -58,7 +58,6 @@ public class MemberServiceImpl implements MemberService {
 		} else {
 			return "non_exist";
 		}
-		
 	}
 
 //	@Override
@@ -127,4 +126,11 @@ public class MemberServiceImpl implements MemberService {
 		return id;
 	}
 
+	
+	@Override
+	public Optional<MemberDto> getMemberInfo(long seq) {
+		System.out.println(memberDAO.findById(seq));
+		return memberDAO.findById(seq);
+	}
+	
 }

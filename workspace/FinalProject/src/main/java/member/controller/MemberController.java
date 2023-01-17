@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import member.bean.MemberDto;
 import lombok.RequiredArgsConstructor;
 import member.bean.ChangePasswordRequestDto;
 import member.bean.MemberDto;
@@ -56,6 +57,12 @@ public class MemberController {
 //        return ResponseEntity.ok(memberService.changeMemberPassword(request.getEmail() ,request.getExPassword(), request.getNewPassword()));
 //    }
 
+	@GetMapping(path = "getMemberInfo")
+	public Optional<MemberDto> getMemberInfo(@RequestParam long seq) {
+		
+		return memberService.getMemberInfo(seq);
+	}
+	
 	@PostMapping(path = "updatePassword")
 	public Optional<MemberDto> updatePassword(@RequestParam String email, String password) {
 		

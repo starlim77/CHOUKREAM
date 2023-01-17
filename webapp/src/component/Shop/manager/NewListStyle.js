@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Title = styled.h1`
     display: flex;
     justify-content: center;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
     font-size: 50px;
     font-weight: 500px;
 `;
@@ -11,6 +11,12 @@ export const Table = styled.table`
     margin-left: 80px;
     display: block;
     width: 80%;
+    height: 100%;
+`;
+export const Table2 = styled.table`
+    margin: 0 auto;
+    display: block;
+    width: 1300px;
     height: 100%;
 `;
 export const Thead  = styled.thead`
@@ -34,9 +40,9 @@ export const Td = styled.td`
     border-bottom: solid 1px black;
     border-spacing: 20px 20px;
     width: 100px;
-    padding: 10px;
     text-align: center;
 `;
+
 export const Input = styled.input`
     zoom: 1.5;
 `;
@@ -56,7 +62,6 @@ export const Label = styled.label`
     box-sizing: border-box;
     position: absolute;
     bottom: 5px;
-    
 `;
 export const LabelDiv = styled.div`
     display: flex;
@@ -82,15 +87,50 @@ export const SmallImg = styled.img`
 `;
 export const SearchDiv = styled.div`
     text-align: center;
-    border: 1px solid red;
     display: inline-block;
     margin-left: 80px;
     box-sizing: border-box;
 `;
-
 export const SearchForm = styled.form`
 `;
 
+export const Th2 = styled.th`
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+    width: 100px;
+    padding: 15px;
+`;
+
+export const MainImg=styled.img`
+    width:100px;
+    height:100px;
+    object-fit:cover;
+`;
+
+export const Tr2 = styled.tr`
+    border-spacing: 20px 20px;
+
+`;
+export const Td2 = styled.td`
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+    text-align: center;
+    width: ${props=>props.width?"400px":"100px"};
+    height:100px;
+    vertical-align: middle;
+`;
+export const SearchingWrapper=styled.div`
+    margin:0 auto;
+    display:flex;
+    width:1300px;
+    justify-content: flex-end;
+`
+export const SearchingInput=styled.input`
+
+`
+export const SearchingBTN=styled.button`
+
+`
 export const SearchSelect = styled.select``;
 export const SearchOption = styled.option``;
 export const SearchInput = styled.input``;

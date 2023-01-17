@@ -29,8 +29,9 @@ const MainItem = ({data,onItem,index,itemLength}) => {
     return (
         <>      
             <S.MainItem name={data.seq} onClick= {e => onItem(e.currentTarget.getAttribute("name"))} style={{display : index < itemLength ? '':'none'}}>
-
+                    {/* {data.sellingState&&<h3>판매중</h3>} */}
                     <S.ItemImg src={`../storage/${str2 ? str2:str}`}/>
+                    {!data.sellingState&&<S.ItemLayer></S.ItemLayer>}
                     <S.ItemTitle>{data.title}</S.ItemTitle>
                     <S.ItemSubTitle>{data.productName}</S.ItemSubTitle>
                     <S.ItemContent>{data.contents}</S.ItemContent>

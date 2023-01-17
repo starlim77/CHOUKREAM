@@ -14,16 +14,16 @@ import lombok.Data;
 @Entity
 @Table(name="completedOrderTable")
 @Data
-@SequenceGenerator(
-	      name = "COMPLETED_ORDER_SEQ_GENERATOR"
-	       , sequenceName = "COMPLETED_ORDER_SEQ"
-	       , initialValue = 1
-	       , allocationSize = 1
-	   )
+//@SequenceGenerator(
+//	      name = "COMPLETED_ORDER_SEQ_GENERATOR"
+//	       , sequenceName = "COMPLETED_ORDER_SEQ"
+//	       , initialValue = 1
+//	       , allocationSize = 1
+//	   )
 public class CompletedOrderDTO {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COMPLETED_ORDER_SEQ_GENERATOR")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="completedOrderSeq", length = 30)
 	private int completedOrderSeq;
 	
@@ -47,4 +47,16 @@ public class CompletedOrderDTO {
 	
 	@Column(name="tradeDate", length = 30)
 	private Date tradeDate; 
+	
+	@Column(name="shipName")
+	private String shipName;
+	
+	@Column(name="shipPhone")
+	private String shipPhone;
+	
+	@Column(name="shipAddress")
+	private String shipAddress;
+	
+	@Column(name="ask")
+	private String ask;
 }

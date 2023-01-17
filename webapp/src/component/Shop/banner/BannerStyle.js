@@ -137,7 +137,7 @@ export const BannerCountBox = styled.div`
     width: 55px;
     height: 30px;
     position: absolute;
-    // right: 36px; 원래 이거임
+    right: 36px;  // 원래 이거임
     bottom: 8px;
     padding: 4px 15px 5px;
     text-align: center;

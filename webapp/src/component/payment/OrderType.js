@@ -16,6 +16,11 @@ const OrderType = () => {
     const [sellBids, setSellBids] = useState([{price: "-"}])
     const [buyBids, setBuyBids] = useState([{price: "-"}])
 
+    const addComma = num => {
+        let str = String(num)
+        return (str.replace(/\B(?=(\d{3})+(?!\d))/g, ','))
+    };
+
     //order type 선택
     const onClick =(e) => {
           setClickedBtn(e.target.innerText) 
@@ -38,11 +43,11 @@ const OrderType = () => {
                 <O.Price>
                     <O.DirectPrice>
                         <O.DirectText>즉시 구매가</O.DirectText>
-                        <O.DirectPriceText>{ buyBids.price === null ? "-" : buyBids.price }</O.DirectPriceText>
+                        <O.DirectPriceText>{ sellBids.price === null ? "-" : addComma(sellBids.price) }</O.DirectPriceText>
                     </O.DirectPrice>
                     <O.DirectPrice style={{borderRight: "0"}}>
                         <O.DirectText>즉시 판매가</O.DirectText>
-                        <O.DirectPriceText>{ sellBids.price === null ? "-" : sellBids.price }</O.DirectPriceText>
+                        <O.DirectPriceText>{ buyBids.price === null ? "-" : addComma(buyBids.price) }</O.DirectPriceText>
                     </O.DirectPrice>
                     <O.TypeBtn>
                         {
@@ -65,7 +70,7 @@ const OrderType = () => {
                         }
                     </O.TypeBtn>
                 </O.Price>
-                <BuyBid clickedBtn={clickedBtn} sellPrice={sellBids.price} buyPrice={buyBids.price} orderNum={sellOrBuy === "sell" ? sellBids.orderSeq : buyBids.orderSeq}/>
+                <BuyBid clickedBtn={clickedBtn} sellPrice={sellBids.price} buyPrice={buyBids.price} orderNum={sellOrBuy === "sell" ? buyBids.orderSeq : sellBids.orderSeq}/>
             </O.OrderBody>
         </O.OrderWrapper>
     );

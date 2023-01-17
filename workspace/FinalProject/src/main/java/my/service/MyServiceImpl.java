@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import member.dao.MemberDAO;
 import my.bean.AddressDTO;
+import my.bean.GradeDTO;
 import my.bean.PointDTO;
 import my.bean.SellBuyHistory;
 import my.dao.AddressDAO;
+import my.dao.GradeDAO;
 import my.dao.PointDAO;
 import pay.bean.CompletePaymentDTO;
 import pay.dao.PayDAO;
@@ -36,6 +38,7 @@ public class MyServiceImpl implements MyService{
 	@Autowired
 	private PointDAO pointDAO;
 	@Autowired
+	private GradeDAO gradeDAO;
 	private MemberDAO memberDAO;
 	@Autowired
 	private ShopDAO shopDAO;
@@ -72,6 +75,17 @@ public class MyServiceImpl implements MyService{
 		pointDAO.save(pointDTO);
 	}
 	@Override
+	public Optional<GradeDTO> getGrade(String id) {
+		return gradeDAO.findById(id);
+	}
+	@Override
+	public void saveGradeNewMember(String email) {
+		GradeDTO gradeDTO = new GradeDTO();
+		gradeDTO.setId(email);
+		gradeDTO.setGrade("일반회원");
+		gradeDAO.save(gradeDTO);
+		
+	}
 	public List<AddressDTO> deleteAddress(String id, long seq) {
 		addressDAO.deleteByIdAndSeq(id, seq);
 		

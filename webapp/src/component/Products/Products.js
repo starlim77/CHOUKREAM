@@ -11,14 +11,19 @@ import SellBidsTable from './table/SellBidsTable';
 import BuyBidsTable from './table/BuyBidsTable';
 import EmptyTable from './table/EmptyTable';
 import Graph from './Graph';
-import { noAuto } from '@fortawesome/fontawesome-svg-core';
+import * as U from '../Used/UsedItemStyle';
+import ListModal from './ListModal';
+import jwt_decode from 'jwt-decode';
+import { Container } from '@mui/material';
+import * as A from '../Lookbook/style';
+import TrendingItem from '../Lookbook/TrendingItem';
 
 const Products = () => {
+    const [listOpen, setListOpen] = useState(false);
+
     const [count, setCount] = useState('');
 
     const date = new Date();
-
-    const id = 'kim@gmail.com';
 
     const shopKind = 'resell';
 
@@ -87,6 +92,7 @@ const Products = () => {
     const navigate = useNavigate();
 
     const [modalOpen, setModalOpen] = useState(false);
+    const [modalOpen2, setModalOpen2] = useState(false);
 
     const [form, setForm] = useState({});
 
@@ -114,7 +120,15 @@ const Products = () => {
         registerNo: '',
     });
 
-    const [brandListForm, setBrandListForm] = useState([]);
+    const [brandListForm, setBrandListForm] = useState([
+        {
+            seq: '',
+            img_name: '',
+            price: '',
+            title: '',
+            brand: '',
+        },
+    ]);
 
     const [sizeForm, setSizeForm] = useState([{}]);
 
@@ -126,23 +140,42 @@ const Products = () => {
 
     const [isOneSize, setIsOneSize] = useState(true);
 
+    const [brandStyleList, setBrandStyleList] = useState([]);
+
     const [dropdown, setDropdown] = useState(true);
     const OpenDrop = () => {
         setDropdown(!dropdown);
-        console.log(completedOrderForm);
-        console.log(form.brand);
         console.log(brandListForm);
     };
     const [dropdown1, setDropdown1] = useState(true);
     const OpenDrop1 = () => {
         setDropdown1(!dropdown1);
-        console.log(sellBidsListForm);
     };
     const [dropdown2, setDropdown2] = useState(true);
     const OpenDrop2 = () => {
         setDropdown2(!dropdown2);
-        console.log(buyBidsListForm);
     };
+
+    const token = localStorage.getItem('accessToken');
+    const [sub, setSub] = useState('');
+
+    useEffect(() => {
+        if (sub !== '') {
+            axios
+                .get('http://localhost:8080/getMemberInfo', {
+                    params: { seq: sub },
+                })
+                .then(res => {
+                    //console.log(JSON.stringify(res.data));
+                    setId(res.data.email);
+
+                    //console.log('id = ' + id);
+                })
+                .catch(err => console.log(err));
+        }
+    }, [sub]);
+
+    const [id, setId] = useState('ROLE_GUEST');
 
     useEffect(() => {
         axios
@@ -183,6 +216,28 @@ const Products = () => {
 
         axios
             .get(
+                'http://localhost:8080/likeCount?seq=' +
+                    seq +
+                    '&shopKind=' +
+                    shopKind,
+            )
+            .then(res => setCount(res.data))
+            .catch(err => console.log(err));
+
+        axios
+            .get(`http://localhost:8080/getBrandStyleList?seq=${seq}`)
+            .then(res => setBrandStyleList(res.data))
+            .catch(error => console.log(error));
+
+        if (token !== null) {
+            const tokenJson = jwt_decode(token);
+            setSub(tokenJson['sub']);
+        }
+    }, []);
+
+    useEffect(() => {
+        axios
+            .get(
                 'http://localhost:8080/used/itemLike?seq=' +
                     seq +
                     '&id=' +
@@ -192,17 +247,7 @@ const Products = () => {
             )
             .then(res => (res.data ? setLikeForm(res.data) : ''))
             .catch(error => console.log(error));
-
-        axios
-            .get(
-                'http://localhost:8080/likeCount?seq=' +
-                    seq +
-                    '&shopKind=' +
-                    shopKind,
-            )
-            .then(res => setCount(res.data))
-            .catch(err => console.log(err));
-    }, []);
+    }, [id]);
 
     useEffect(() => {
         axios
@@ -250,6 +295,7 @@ const Products = () => {
             .catch(error => console.log(error));
 
         setModalOpen(false);
+        setListOpen(false);
     };
 
     const getAll = seq => {
@@ -283,6 +329,7 @@ const Products = () => {
             .catch(error => console.log(error));
 
         setModalOpen(false);
+        setListOpen(false);
     };
 
     const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
@@ -343,27 +390,61 @@ const Products = () => {
     };
 
     const onInterest = () => {
-        setLikeForm({ ...likeForm, userLike: !likeForm.userLike });
-
-        axios
-            .post(
-                `http://localhost:8080/used/productLikeSet?seq=` +
-                    seq +
-                    '&id=' +
-                    id +
-                    '&userLike=' +
-                    likeForm.userLike +
-                    '&shopKind=' +
-                    shopKind,
-            )
-            .then()
-            .catch(error => console.log(error));
-
-        {
-            likeForm.userLike === false
-                ? setCount(count + 1)
-                : setCount(count - 1);
+        if (id !== 'ROLE_GUEST') {
+            setLikeForm({ ...likeForm, userLike: !likeForm.userLike });
+            axios
+                .post(
+                    `http://localhost:8080/used/productLikeSet?seq=` +
+                        seq +
+                        '&id=' +
+                        id +
+                        '&userLike=' +
+                        likeForm.userLike +
+                        '&shopKind=' +
+                        shopKind,
+                )
+                .then()
+                .catch(error => console.log(error));
+            {
+                likeForm.userLike === false
+                    ? setCount(count + 1)
+                    : setCount(count - 1);
+            }
+        } else {
+            navigate(`/login`);
         }
+    };
+
+    const [mainImg, setMainImg] = useState('');
+    const [subImg0, setSubImg0] = useState('');
+    const [subImg1, setSubImg1] = useState('');
+    const [subImg2, setSubImg2] = useState('');
+    const [subImg3, setSubImg3] = useState('');
+
+    useEffect(() => {
+        if (form.imgName) {
+            const img = form.imgName.split(',');
+
+            setMainImg(img[0]);
+
+            img[0] && setSubImg0(img[0]);
+            img[1] && setSubImg1(img[1]);
+            img[2] && setSubImg2(img[2]);
+            img[3] && setSubImg3(img[3]);
+        }
+    }, [form]);
+
+    const changImg = e => {
+        var id = e.target.getAttribute('id');
+        if (id == 0) setMainImg(subImg0);
+        else if (id == 1) setMainImg(subImg1);
+        else if (id == 2) setMainImg(subImg2);
+        else if (id == 3) setMainImg(subImg3);
+    };
+
+    const photoshop = itemImg => {
+        const img = itemImg.split(',');
+        return img[0];
     };
 
     return (
@@ -377,9 +458,43 @@ const Products = () => {
                         <S.ColumnBind>
                             <S.ColumnIsFixed>
                                 <S.ColumnBox ScrollActive={ScrollActive}>
-                                    <div className="spread">
-                                        <S.Image src={form.img}></S.Image>
-                                    </div>
+                                    <U.ImgBody2>
+                                        <U.MainImg
+                                            src={`/resellList/${mainImg}`}
+                                            alt={mainImg}
+                                        ></U.MainImg>
+                                        {subImg1 && (
+                                            <U.SmallImg2
+                                                src={`/resellList/${subImg0}`}
+                                                id="0"
+                                                onClick={e => changImg(e)}
+                                            ></U.SmallImg2>
+                                        )}
+                                        {subImg1 && (
+                                            <U.SmallImg2
+                                                src={`/resellList/${subImg1}`}
+                                                id="1"
+                                                onClick={e => changImg(e)}
+                                            ></U.SmallImg2>
+                                        )}
+                                        {subImg2 && (
+                                            <U.SmallImg2
+                                                src={`/resellList/${subImg2}`}
+                                                id="2"
+                                                onClick={e => changImg(e)}
+                                            ></U.SmallImg2>
+                                        )}
+                                        {subImg3 && (
+                                            <U.SmallImg2
+                                                src={`/resellList/${subImg3}`}
+                                                id="3"
+                                                onClick={e => changImg(e)}
+                                            ></U.SmallImg2>
+                                        )}
+                                    </U.ImgBody2>
+                                    {/* <div className="spread">
+                                    <S.Image src={form.imgName} ></S.Image>
+                                </div> */}
                                     {/* <div className="column_box">
                                     <div className="detail_banner_area">
                                         <div className="banner_slide detail_slide slick-slider slick-initialized">
@@ -390,7 +505,7 @@ const Products = () => {
                                         </div>
                                     </div>
                                 </div> */}
-                                    <S.BannerAlert>
+                                    <S.BannerAlert subImg1={subImg1}>
                                         <S.BannerAlertContent>
                                             <div>
                                                 <S.AlertTitleCareMark>
@@ -450,24 +565,25 @@ const Products = () => {
                                                     </S.DetailSizeTitleText>
                                                 </S.DetailSizeTitle>
                                                 <S.DetailSizeSize>
-                                                    <S.BtnSize>
+                                                    <S.BtnSize
+                                                        onClick={e =>
+                                                            setModalOpen(true)
+                                                        }
+                                                    >
                                                         {isOneSize ? (
                                                             'ONE SIZE'
                                                         ) : (
-                                                            <S.BtnSizeBtnText
-                                                                onClick={e =>
-                                                                    setModalOpen(
-                                                                        true,
-                                                                    )
-                                                                }
-                                                            >
+                                                            <S.BtnSizeBtnText>
                                                                 {size}
                                                             </S.BtnSizeBtnText>
                                                         )}
-                                                        {/* <S.BtnSizeBtnText onClick={e => setModalOpen(true)}>{size}</S.BtnSizeBtnText> */}
-                                                        {/* <svg>
-                                                        <use></use>
-                                                    </svg> */}
+                                                        <img
+                                                            src={
+                                                                '/image/product/4829876_arrow_direction_down_navigation_icon.png'
+                                                            }
+                                                            width="24px"
+                                                            heigh="24px"
+                                                        ></img>
                                                     </S.BtnSize>
                                                 </S.DetailSizeSize>
                                             </S.DetailSize>
@@ -597,7 +713,11 @@ const Products = () => {
                                                         발매가
                                                     </S.DetailBoxProductTitle>
                                                     <S.DetailBoxProductInfo>
-                                                        {form.releasePrice}
+                                                        {Number(
+                                                            form.releasePrice,
+                                                        ).toLocaleString(
+                                                            'ko-KR',
+                                                        ) + '원'}
                                                     </S.DetailBoxProductInfo>
                                                 </S.DetailBox>
                                             </S.DetailProduct>
@@ -611,7 +731,7 @@ const Products = () => {
                                             <S.WayInfo>
                                                 <S.WayStatusThumb>
                                                     <img
-                                                        src="https://kream-phinf.pstatic.net/MjAyMTExMjFfMjU5/MDAxNjM3NDczNzU0MjA1.ON3pvFYAq_xSSaNWDgUWe1YfIx-C0fm91PDtcsUn3AEg.Q4EbbNWl_ua916jg0NQ0dWOS3h7W9eiiI2kK9YPWlgwg.PNG/a_120a84f036724d0d97a2343aafff4ecf.png"
+                                                        src="/image/product/a_120a84f036724d0d97a2343aafff4ecf.png"
                                                         width="40px"
                                                         height="40px"
                                                     />
@@ -626,7 +746,8 @@ const Products = () => {
                                                         지금 결제시
                                                         <em
                                                             style={{
-                                                                color: '#297dcb',
+                                                                color:
+                                                                    '#297dcb',
                                                             }}
                                                         >
                                                             &nbsp; 모레{' '}
@@ -666,6 +787,23 @@ const Products = () => {
                                                                 {isOneSize
                                                                     ? 'ONE SIZE'
                                                                     : size}
+                                                                {openLayer ? (
+                                                                    <img
+                                                                        src={
+                                                                            '/image/product/211687_down_arrow_icon.png'
+                                                                        }
+                                                                        width="15px"
+                                                                        heigh="15px"
+                                                                    ></img>
+                                                                ) : (
+                                                                    <img
+                                                                        src={
+                                                                            '/image/product/211690_up_arrow_icon.png'
+                                                                        }
+                                                                        width="15px"
+                                                                        heigh="15px"
+                                                                    ></img>
+                                                                )}
                                                             </S.SelectTextLayerOpen>
                                                         </S.BtnBtnSelect>
                                                         <S.LayerSizeListLayer
@@ -874,63 +1012,16 @@ const Products = () => {
                                                                     }
                                                                 />
                                                             )}
-                                                            <S.Table>
-                                                                <S.TableCaption>
-                                                                    <S.TableBlind>
-                                                                        데이터
-                                                                        테이블
-                                                                    </S.TableBlind>
-                                                                </S.TableCaption>
-                                                                <S.ColGroup>
-                                                                    <col
-                                                                        style={{
-                                                                            width: '29.76%',
-                                                                        }}
-                                                                    />
-                                                                    <col
-                                                                        style={{
-                                                                            width: '36.52%',
-                                                                        }}
-                                                                    />
-                                                                    <col
-                                                                        style={{
-                                                                            width: '33.72%',
-                                                                        }}
-                                                                    />
-                                                                </S.ColGroup>
-                                                                <thead>
-                                                                    <tr>
-                                                                        <S.TableTh>
-                                                                            사이즈
-                                                                        </S.TableTh>
-                                                                        <S.TableThAlignRight>
-                                                                            거래가
-                                                                        </S.TableThAlignRight>
-                                                                        <S.TableThAlignRight>
-                                                                            거래일
-                                                                        </S.TableThAlignRight>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    {/* {[...Array(parseInt(5))].map((n, index) => {
-                                                                    return <tr>
-                                                                    <td className="table_td">
-                                                                        {completedOrderForm[index].size}
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        {completedOrderForm[index].size}
-                                                                    </td>
-                                                                    <td className="table_td align_right">
-                                                                        {completedOrderForm[index].size}
-                                                                    </td>
-                                                                </tr>
-                                                            })} */}
-                                                                </tbody>
-                                                            </S.Table>
                                                         </S.TableWrap>
                                                         {completedOrderForm[0]
                                                             .price !== '-' && (
-                                                            <S.BtnOutLineGrey>
+                                                            <S.BtnOutLineGrey
+                                                                onClick={() =>
+                                                                    setModalOpen2(
+                                                                        true,
+                                                                    )
+                                                                }
+                                                            >
                                                                 체결 내역 더보기
                                                             </S.BtnOutLineGrey>
                                                         )}
@@ -955,7 +1046,13 @@ const Products = () => {
                                                         </S.TableWrap>
                                                         {sellBidsListForm[0]
                                                             .price !== '-' && (
-                                                            <S.BtnOutLineGrey>
+                                                            <S.BtnOutLineGrey
+                                                                onClick={() =>
+                                                                    setModalOpen2(
+                                                                        true,
+                                                                    )
+                                                                }
+                                                            >
                                                                 입찰 내역 더보기
                                                             </S.BtnOutLineGrey>
                                                         )}
@@ -980,7 +1077,13 @@ const Products = () => {
                                                         </S.TableWrap>
                                                         {buyBidsListForm[0]
                                                             .price !== '-' && (
-                                                            <S.BtnOutLineGrey>
+                                                            <S.BtnOutLineGrey
+                                                                onClick={() =>
+                                                                    setModalOpen2(
+                                                                        true,
+                                                                    )
+                                                                }
+                                                            >
                                                                 입찰 내역 더보기
                                                             </S.BtnOutLineGrey>
                                                         )}
@@ -988,6 +1091,33 @@ const Products = () => {
                                                 </S.TabArea>
                                             </S.WrapBids>
                                         </S.ProductSalesGraph>
+                                        {modalOpen2 && (
+                                            <ListModal
+                                                setModalOpen={setModalOpen2}
+                                                completedOrderForm={
+                                                    completedOrderForm
+                                                }
+                                                sellBidsListForm={
+                                                    sellBidsListForm
+                                                }
+                                                buyBidsListForm={
+                                                    buyBidsListForm
+                                                }
+                                                form={form}
+                                                mainImg={mainImg}
+                                                sizeForm={sizeForm}
+                                                onOpen2={onOpen2}
+                                                open6={open6}
+                                                open7={open7}
+                                                open={open8}
+                                                getSize={getSize}
+                                                getAll={getAll}
+                                                setListOpen={setListOpen}
+                                                listOpen={listOpen}
+                                                size={size}
+                                                seq={seq}
+                                            />
+                                        )}
                                         <div>
                                             <S.ConfirmWrap>
                                                 <S.ConfirmWrapConfirmTitle>
@@ -1008,52 +1138,6 @@ const Products = () => {
                                                                         안내
                                                                     </S.DropdownHeadTitle>
                                                                     {/* <svg>
-                                            </S.TabArea>
-                                        </S.WrapSales>
-                                        <S.WrapBids>
-                                            <S.TabArea>
-                                                <S.TabList>
-                                                    <S.TabAreaItem>
-                                                        <S.TabAreaItemLink onClick={ onOpen2 } open={ open6 } name='6'>체결 거래</S.TabAreaItemLink>
-                                                    </S.TabAreaItem>
-                                                    <S.TabAreaItem>
-                                                        <S.TabAreaItemLink onClick={ onOpen2 } open={ open7 } name='7'>판매 입찰</S.TabAreaItemLink>
-                                                    </S.TabAreaItem>
-                                                    <S.TabAreaItem>
-                                                        <S.TabAreaItemLink onClick={ onOpen2 } open={ open8 } name='8'>구매 입찰</S.TabAreaItemLink>
-                                                    </S.TabAreaItem>
-                                                </S.TabList>
-                                                <S.TabContent open={ open6 }>
-                                                    <S.TableWrap>
-                                                        {completedOrderForm[0].price !== '-' ? <CompletedOrderTable completedOrderForm={completedOrderForm}/> : <EmptyTable word={'체결된 거래'}/>}
-                                                    </S.TableWrap>
-                                                    {completedOrderForm[0].price !== '-' && <S.BtnOutLineGrey>체결 내역 더보기</S.BtnOutLineGrey>}
-                                                </S.TabContent>
-                                                <S.TabContent open={ open7 }>
-                                                    <S.TableWrap>
-                                                        {sellBidsListForm[0].price !== '-' ? <SellBidsTable sellBidsListForm={sellBidsListForm}/> : <EmptyTable word={'판매 희망가'}/>}
-                                                    </S.TableWrap>
-                                                    {sellBidsListForm[0].price !== '-' && <S.BtnOutLineGrey>입찰 내역 더보기</S.BtnOutLineGrey>}
-                                                </S.TabContent>
-                                                <S.TabContent open={ open8 }>
-                                                    <S.TableWrap>
-                                                        {buyBidsListForm[0].price !== '-' ? <BuyBidsTable buyBidsListForm={buyBidsListForm}/> : <EmptyTable word={'구매 희망가'}/>}   
-                                                    </S.TableWrap>
-                                                    {buyBidsListForm[0].price !== '-' && <S.BtnOutLineGrey>입찰 내역 더보기</S.BtnOutLineGrey>}
-                                                </S.TabContent>
-                                            </S.TabArea>
-                                        </S.WrapBids>
-                                    </S.ProductSalesGraph>
-                                    <div>
-                                        <S.ConfirmWrap>
-                                            <S.ConfirmWrapConfirmTitle>구매 전 꼭 확인해주세요</S.ConfirmWrapConfirmTitle>
-                                            <S.ConfirmWrapConfirmContemt>
-                                                <ul className="dropdown_list">
-                                                    <li>
-                                                        <div className="dropdown">
-                                                            <S.DropdownHead onClick={ OpenDrop }>
-                                                                <S.DropdownHeadTitle>배송 기간 안내</S.DropdownHeadTitle>
-                                                                {/* <svg>
                                                                     <use></use>
                                                                 </svg> */}
                                                                 </S.DropdownHead>
@@ -1295,7 +1379,13 @@ const Products = () => {
                                                         }}
                                                     >
                                                         <S.ThumbArea>
-                                                            <S.ThumbAreaImg></S.ThumbAreaImg>
+                                                            <S.ThumbAreaImg
+                                                                src={
+                                                                    '/image/product/100-percent.png'
+                                                                }
+                                                            >
+                                                                {/* <img src={'/image/product/211690_up_arrow_icon.png'} width="15px" heigh="15px"></img>  */}
+                                                            </S.ThumbAreaImg>
                                                         </S.ThumbArea>
                                                         <div
                                                             className="text_area"
@@ -1323,7 +1413,11 @@ const Products = () => {
                                                         }}
                                                     >
                                                         <S.ThumbArea>
-                                                            <S.ThumbAreaImg></S.ThumbAreaImg>
+                                                            <S.ThumbAreaImg
+                                                                src={
+                                                                    '/image/product/magnifying-glass-with-check-mark.png'
+                                                                }
+                                                            ></S.ThumbAreaImg>
                                                         </S.ThumbArea>
                                                         <div
                                                             className="text_area"
@@ -1355,7 +1449,11 @@ const Products = () => {
                                                         }}
                                                     >
                                                         <S.ThumbArea>
-                                                            <S.ThumbAreaImg></S.ThumbAreaImg>
+                                                            <S.ThumbAreaImg
+                                                                src={
+                                                                    '/image/product/package-box.png'
+                                                                }
+                                                            ></S.ThumbAreaImg>
                                                         </S.ThumbArea>
                                                         <div
                                                             className="text_area"
@@ -1399,7 +1497,7 @@ const Products = () => {
                                                 <S.FloatingPriceProductThumb>
                                                     <S.PictureProductImg>
                                                         <S.Image
-                                                            src={form.img}
+                                                            src={`/resellList/${subImg0}`}
                                                             width="65px"
                                                             height="65px"
                                                         ></S.Image>
@@ -1486,14 +1584,78 @@ const Products = () => {
                         <S.FeedArea>
                             <S.FeedTitle>
                                 <S.FeedTitleTitle>스타일</S.FeedTitleTitle>
-                                {/* 스타일 카운트 */}
-                                <S.FeedTitleNum>1234</S.FeedTitleNum>
+                                {/* <S.FeedTitleNum>1234</S.FeedTitleNum>  */}
                             </S.FeedTitle>
                             <S.SocialFeeds>
+                                <Container fixed>
+                                    <A.TrGridContainer>
+                                        <A.TrGridContainerSub>
+                                            {brandStyleList.map((item, index) =>
+                                                index % 4 === 0 ? (
+                                                    <TrendingItem
+                                                        key={item.seq}
+                                                        item={item}
+                                                        index={index}
+                                                        itemLength={8}
+                                                    />
+                                                ) : (
+                                                    ''
+                                                ),
+                                            )}
+                                        </A.TrGridContainerSub>
+
+                                        <A.TrGridContainerSub>
+                                            {brandStyleList.map((item, index) =>
+                                                index % 4 === 1 ? (
+                                                    <TrendingItem
+                                                        key={item.seq}
+                                                        item={item}
+                                                        index={index}
+                                                        itemLength={8}
+                                                    />
+                                                ) : (
+                                                    ''
+                                                ),
+                                            )}
+                                        </A.TrGridContainerSub>
+
+                                        <A.TrGridContainerSub>
+                                            {brandStyleList.map((item, index) =>
+                                                index % 4 === 2 ? (
+                                                    <TrendingItem
+                                                        key={item.seq}
+                                                        item={item}
+                                                        index={index}
+                                                        itemLength={8}
+                                                    />
+                                                ) : (
+                                                    ''
+                                                ),
+                                            )}
+                                        </A.TrGridContainerSub>
+
+                                        <A.TrGridContainerSub>
+                                            {brandStyleList.map((item, index) =>
+                                                index % 4 === 3 ? (
+                                                    <TrendingItem
+                                                        key={item.seq}
+                                                        item={item}
+                                                        index={index}
+                                                        itemLength={8}
+                                                    />
+                                                ) : (
+                                                    ''
+                                                ),
+                                            )}
+                                        </A.TrGridContainerSub>
+                                    </A.TrGridContainer>
+                                </Container>
                                 <S.MoreBtnBox>
-                                    <S.ButtonOutlineGreyMedium>
-                                        더보기
-                                    </S.ButtonOutlineGreyMedium>
+                                    <Link to={`/styleOneProduct/${seq}`}>
+                                        <S.ButtonOutlineGreyMedium>
+                                            더보기
+                                        </S.ButtonOutlineGreyMedium>
+                                    </Link>
                                 </S.MoreBtnBox>
                             </S.SocialFeeds>
                         </S.FeedArea>
@@ -1507,52 +1669,134 @@ const Products = () => {
                                 </S.BrandTitleText>
                                 <S.BtnMore>
                                     <S.BtnText>더 보기</S.BtnText>
-                                    {/* <svg></svg> */}
                                 </S.BtnMore>
                             </S.BrandTitle>
                             <S.BrandProducts>
                                 <S.BrandProductList>
-                                    {brandListForm.map((item, index) => (
-                                        <S.ProductItem key={index}>
-                                            <S.ItemInner
-                                                onClick={() =>
-                                                    brandNavigate(item.seq)
-                                                }
-                                            >
-                                                <div className="thumb_box">
-                                                    <S.Product>
-                                                        <S.PictureBrandProductImg>
-                                                            <S.BrandProductImg
-                                                                src={item.img}
-                                                            />
-                                                        </S.PictureBrandProductImg>
-                                                    </S.Product>
-                                                </div>
-                                                <S.ProductItemInfoBox>
-                                                    <div className="info_box">
-                                                        <div className="brand">
-                                                            <S.BrandTextWithOutWish>
-                                                                {item.brand}
-                                                            </S.BrandTextWithOutWish>
-                                                        </div>
-                                                        <S.BrandProductInfoBoxName>
-                                                            {item.title}
-                                                        </S.BrandProductInfoBoxName>
-                                                        <S.BrandProductInfoBoxPrice>
-                                                            <S.BrandProductInfoBoxPriceAmount>
-                                                                <S.BrandProductInfoBoxPriceAmountNum>
-                                                                    {item.price}
-                                                                </S.BrandProductInfoBoxPriceAmountNum>
-                                                            </S.BrandProductInfoBoxPriceAmount>
-                                                            <S.BrandProductInfoBoxPriceDesc>
-                                                                즉시 구매가
-                                                            </S.BrandProductInfoBoxPriceDesc>
-                                                        </S.BrandProductInfoBoxPrice>
-                                                    </div>
-                                                </S.ProductItemInfoBox>
-                                            </S.ItemInner>
-                                        </S.ProductItem>
-                                    ))}
+                                    {brandListForm.length > 10
+                                        ? [...Array(parseInt(10))].map(
+                                              (n, index) => {
+                                                  return (
+                                                      <S.ProductItem
+                                                          key={index}
+                                                      >
+                                                          <S.ItemInner
+                                                              onClick={() =>
+                                                                  brandNavigate(
+                                                                      brandListForm[
+                                                                          index
+                                                                      ].seq,
+                                                                  )
+                                                              }
+                                                          >
+                                                              <div className="thumb_box">
+                                                                  <S.Product>
+                                                                      <S.PictureBrandProductImg>
+                                                                          <S.BrandProductImg
+                                                                              src={`/resellList/${photoshop(
+                                                                                  brandListForm[
+                                                                                      index
+                                                                                  ]
+                                                                                      .img_name,
+                                                                              )}`}
+                                                                          />
+                                                                      </S.PictureBrandProductImg>
+                                                                  </S.Product>
+                                                              </div>
+                                                              <S.ProductItemInfoBox>
+                                                                  <div className="info_box">
+                                                                      <div className="brand">
+                                                                          <S.BrandTextWithOutWish>
+                                                                              {
+                                                                                  brandListForm[
+                                                                                      index
+                                                                                  ]
+                                                                                      .brand
+                                                                              }
+                                                                          </S.BrandTextWithOutWish>
+                                                                      </div>
+                                                                      <S.BrandProductInfoBoxName>
+                                                                          {
+                                                                              brandListForm[
+                                                                                  index
+                                                                              ]
+                                                                                  .title
+                                                                          }
+                                                                      </S.BrandProductInfoBoxName>
+                                                                      <S.BrandProductInfoBoxPrice>
+                                                                          <S.BrandProductInfoBoxPriceAmount>
+                                                                              <S.BrandProductInfoBoxPriceAmountNum>
+                                                                                  {
+                                                                                      brandListForm[
+                                                                                          index
+                                                                                      ]
+                                                                                          .price
+                                                                                  }
+                                                                              </S.BrandProductInfoBoxPriceAmountNum>
+                                                                          </S.BrandProductInfoBoxPriceAmount>
+                                                                          <S.BrandProductInfoBoxPriceDesc>
+                                                                              즉시
+                                                                              구매가
+                                                                          </S.BrandProductInfoBoxPriceDesc>
+                                                                      </S.BrandProductInfoBoxPrice>
+                                                                  </div>
+                                                              </S.ProductItemInfoBox>
+                                                          </S.ItemInner>
+                                                      </S.ProductItem>
+                                                  );
+                                              },
+                                          )
+                                        : brandListForm[0].img_name !== '' &&
+                                          brandListForm.map((item, index) => (
+                                              <S.ProductItem key={index}>
+                                                  <S.ItemInner
+                                                      onClick={() =>
+                                                          brandNavigate(
+                                                              item.seq,
+                                                          )
+                                                      }
+                                                  >
+                                                      <div className="thumb_box">
+                                                          <S.Product>
+                                                              <S.PictureBrandProductImg>
+                                                                  <S.BrandProductImg
+                                                                      src={`/resellList/${photoshop(
+                                                                          item.img_name,
+                                                                      )}`}
+                                                                  />
+                                                              </S.PictureBrandProductImg>
+                                                          </S.Product>
+                                                      </div>
+                                                      <S.ProductItemInfoBox>
+                                                          <div className="info_box">
+                                                              <div className="brand">
+                                                                  <S.BrandTextWithOutWish>
+                                                                      {
+                                                                          item.brand
+                                                                      }
+                                                                  </S.BrandTextWithOutWish>
+                                                              </div>
+                                                              <S.BrandProductInfoBoxName>
+                                                                  {item.title}
+                                                              </S.BrandProductInfoBoxName>
+                                                              <S.BrandProductInfoBoxPrice>
+                                                                  <S.BrandProductInfoBoxPriceAmount>
+                                                                      <S.BrandProductInfoBoxPriceAmountNum>
+                                                                          {
+                                                                              item.price
+                                                                          }
+                                                                      </S.BrandProductInfoBoxPriceAmountNum>
+                                                                  </S.BrandProductInfoBoxPriceAmount>
+                                                                  <S.BrandProductInfoBoxPriceDesc>
+                                                                      즉시
+                                                                      구매가
+                                                                  </S.BrandProductInfoBoxPriceDesc>
+                                                              </S.BrandProductInfoBoxPrice>
+                                                          </div>
+                                                      </S.ProductItemInfoBox>
+                                                  </S.ItemInner>
+                                              </S.ProductItem>
+                                          ))}
                                 </S.BrandProductList>
                             </S.BrandProducts>
                         </S.BrandArea>
