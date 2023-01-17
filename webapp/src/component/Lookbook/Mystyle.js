@@ -58,14 +58,14 @@ const Mystyle = () => {
             setForm({id:tokenId})
 
                 axios.get(`http://localhost:8080/lookbook/findAllMyList/${tokenId}`)
-                    .then( //res => console.log(res.data)
-                        res => setMyList(res.data)
-                        )
+                    .then( res => setMyList(res.data))
                     .catch(error => console.log(error))
 
                 axios.get(`http://localhost:8080/lookbook/findCountById?id=${tokenId}`)
                     .then(res => setListCount(res.data))
-                    .catch(error => console.log(error))                 
+                    .catch(error => console.log(error))
+        
+                               
                 axios.get(`http://localhost:8080/lookbook/getFollower/${tokenId}`)
                      .then(res => setFollowerNum(res.data))                        
                      .catch(error => console.log(error))

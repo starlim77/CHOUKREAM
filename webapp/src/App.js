@@ -200,7 +200,7 @@ function App() {
                     <Route path="/lookbook/trending" element={<Trending />} />
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
-                    <Route path="/lookbook/detail" element={<Detail />} />  
+                    <Route path="/lookbook/detail" element={<Detail />} />
                     <Route path="/lookbook/following" element={<Following />}/>                
                     <Route
                         path="/lookbook/styleComment/:styleSeq"
