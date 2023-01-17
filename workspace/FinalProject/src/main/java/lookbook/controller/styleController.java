@@ -89,19 +89,27 @@ public class styleController {
 
 	
 		
-	//trending,detail 목록 가져오기
-//	@GetMapping(path="getStyleList")
-//	public List<StyleDTO> findAllByOrderBySeqDesc() {
-//		//DB에서 전체 게시글 데이터 를 가져온다				
-//		return styleService.findAllByOrderBySeqDesc();		
-//		
-//	}
+	//trending 목록 가져오기
+	@GetMapping(path="getStyleList")
+	public List<StyleDTO> findAllByOrderBySeqDesc() {
+		//DB에서 전체 게시글 데이터 를 가져온다				
+		return styleService.findAllByOrderBySeqDesc();		
+		
+	}
    
-   //trending,detail => 좋아요 포함 전체 목록 가져오기
+   //detail => 좋아요 포함 전체 목록 가져오기 로그인 안했을 때
 	@GetMapping(path="list")
 	public List<LikesDTO> findlist() {
 		//DB에서 전체 게시글 데이터 를 가져온다				
 		return styleLikesService.list();		
+	}
+	
+   //detail => 좋아요 포함 전체 목록 가져오기 로그인했을 때
+	@GetMapping(path="listById")
+	public List<LikesDTO> listById(@RequestParam String id) {
+		System.out.println("dddddddddddddd"+id);
+		//DB에서 전체 게시글 데이터 를 가져온다				
+		return styleLikesService.listById(id);		
 	}
 	
 	
@@ -122,11 +130,18 @@ public class styleController {
 		styleService.delete(seq);
 	}
 	
-	//좋아요버튼클릭
+	//mystyledetail에서 좋아요버튼클릭
     @PostMapping(path="likebutton")
     public List<LikesDTO> likes(@ModelAttribute StyleLikesDTO styleLikesDTO, @RequestParam boolean isLike) { //1,0값 받는거 추가 void로 형태 변환
     	styleLikesService.save(styleLikesDTO, isLike);
     	return styleLikesService.findLikes(Long.toString(styleLikesDTO.getMemberId()));
+    }
+    
+	//detail에서 좋아요버튼클릭
+    @PostMapping(path="likebutton2")
+    public List<LikesDTO> likes2(@ModelAttribute StyleLikesDTO styleLikesDTO, @RequestParam boolean isLike) { //1,0값 받는거 추가 void로 형태 변환
+    	styleLikesService.save(styleLikesDTO, isLike);
+    	return styleLikesService.findLikes2(Long.toString(styleLikesDTO.getMemberId()));
     }
     
     //좋아요 확인 -> mystyle에서 좋아요 포함 전체 리스트 받아오기
@@ -134,7 +149,6 @@ public class styleController {
     public List<LikesDTO> findLikes(@RequestParam String id) {
     	//System.out.println("컨트롤러 조아요 확인 styleLikesDTO ==== "+ styleLikesDTO);
     	return styleLikesService.findLikes(id);
-
     }
     
     //좋아요만 확인
@@ -202,8 +216,6 @@ public class styleController {
 	@DeleteMapping(path="follow/{id}")
 	public void unFollow(@AuthenticationPrincipal MemberDto follower, @ModelAttribute StyleDTO styleDTO) {
 	
-		
-		
 	}
 	
 	//팔로잉 페이지 팔로우 목록 불러오기

@@ -7,6 +7,7 @@ import * as S from './style';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import TrendingItem from './TrendingItem';
+import jwt_decode from 'jwt-decode';
 
 const Trending = () => {
     const [list, setList] = useState([
@@ -28,7 +29,18 @@ const Trending = () => {
             .catch(error => console.log(error));
     }, []);
 
-  
+    //아이디
+    const token = localStorage.getItem('accessToken');
+    const [auth, setAuth] = useState('ROLE_GUEST');
+    useEffect(() => {
+        if (token !== null) {
+            const tokenJson = jwt_decode(token);
+            setAuth(tokenJson['auth']);
+            settokenId(tokenJson['sub']);
+        }
+    }, []);
+    const [tokenId, settokenId] = useState('')
+    
 
     const [itemLength,setItemLength] = useState(12) // 처음에 가져올 아이템 갯수
 
@@ -67,7 +79,7 @@ const Trending = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 0 ? 
-                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId}/>
                         :
                         ''
                     )}
@@ -76,7 +88,7 @@ const Trending = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 1 ? 
-                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId}/>
                         :
                         ''
                     )}
@@ -85,7 +97,7 @@ const Trending = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 2 ? 
-                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId}/>
                         :
                         ''
                     )}
@@ -94,7 +106,7 @@ const Trending = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 3 ? 
-                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId}/>
                         :
                         ''
                     )}

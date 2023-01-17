@@ -30,19 +30,30 @@ public class styleLikesServiceImpl implements StyleLikesService {
 	@Autowired
 	private StyleLikesDAO styleLikesDAO;
 	
-	//mystyle에서 좋아요 포함 전체 list 데리고오기
+	//mystyle에서 좋아요 포함 전체 list 데리고오기 
 	@Override
 	public List<LikesDTO> findLikes(String id) {		 
 		 List<LikesDTO> likesDTOList= styleDAO.findLikes(id);
-		 //System.out.println("라이크서비스임플 likesDTOList === " + likesDTOList);	
 		 return likesDTOList;
     }
 	
-	//detail 좋아요 포함 전체리스트 데리고오기
+	//detail.트랜딩 좋아요 포함 전체리스트 데리고오기 // 로그인햇을때
 	@Override
 	public List<LikesDTO> list() {		 
-		 List<LikesDTO> likesDTOList= styleDAO.list();
-		 //System.out.println("라이크서비스임플 likesDTOList === " + likesDTOList);		 
+		 List<LikesDTO> likesDTOList= styleDAO.list();		 
+		 return likesDTOList;
+    }
+	
+	//detail.트랜딩 좋아요 포함 전체리스트 데리고오기 // 로그인 했을때
+	@Override
+	public List<LikesDTO> listById(String id) {
+		List<LikesDTO> likesDTOList= styleDAO.listById(id);		 
+		 return likesDTOList;
+	}
+	
+	@Override
+	public List<LikesDTO> findLikes2(String id) {		 
+		 List<LikesDTO> likesDTOList= styleDAO.listById(id);
 		 return likesDTOList;
     }
 	
@@ -123,5 +134,7 @@ public class styleLikesServiceImpl implements StyleLikesService {
 		System.out.println("styleSeq ====="  + styleSeq);
 		return styleLikesDAO.countByStyleEntity_Seq(styleSeq);
 	}
+
+
 
 }

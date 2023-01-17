@@ -23,7 +23,7 @@ public interface StyleService {
 	
 	public void delete(int seq);
 
-//	public List<StyleDTO> findAllByOrderBySeqDesc();
+	public List<StyleDTO> findAllByOrderBySeqDesc();
 	public List<StyleDTO> findAll();
 
 	public StyleDTO findMyListDetail(int seq);
@@ -33,7 +33,6 @@ public interface StyleService {
 	public List<ProductDTO> search(String keyword);
 
 	public Optional<ProductDTO> styleProductSearch(int seq);
-	
 
 	
 }

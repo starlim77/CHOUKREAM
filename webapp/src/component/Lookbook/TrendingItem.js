@@ -9,16 +9,26 @@ import Avatar from '@mui/material/Avatar';
 import * as S from './style';
 import { grey } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
+import Detail from './Detail';
 
 
-const TrendingItem = ({item,index,itemLength}) => {
-    //
+const TrendingItem = ({item,index,itemLength,id}) => {
+    
     const [isLike, setIsLike] = useState(0);
 
+
+
     return (
+        
         <S.TrGridBox style={{display : index < itemLength ? '':'none'}}>
+           
             <Card sx={{ width: 250 }} >
-                <Link to={'/lookbook/detail' + item.seq}>
+                
+                {/* <Link to={{
+                    pathname:'/lookbook/detail',
+                    state:{id:id } 
+                    }}> */}
+                <Link to={'/lookbook/detail'} state={{id:id}}>
                     <S.TrGridBoxImg src={'../storage/' + item.storedFileName[0]}/>
                 </Link>
                 

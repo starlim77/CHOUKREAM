@@ -6,9 +6,8 @@ import { Avatar, Button, CardActions, CardContent, CardHeader,  IconButton, Typo
 import Container from '@mui/material/Container';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import * as S from './style';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import StyleCommentList from './StyleCommentList';
-import jwt_decode from 'jwt-decode';
 import StyleProduct from './StyleProduct';
 
 const Detail = () => {    
@@ -17,39 +16,30 @@ const Detail = () => {
     const [list, setList] = useState([]);
     const [isLike, setIsLike] = useState(0);
     const navigate = useNavigate();
-    
-    const [id] = useState()   //아이디값 로그인한걸로 가져오는거로 변경해야됨
-    
-    //로그인
-    const token = localStorage.getItem('accessToken');
-    const [auth, setAuth] = useState('ROLE_GUEST');
-    const [tokenId, settokenId] = useState('')
-    useEffect(() => {
-        if (token !== null) {
-            const tokenJson = jwt_decode(token);
-            setAuth(tokenJson['auth']);
-            settokenId(tokenJson['sub']);
-        }
-    }, [token]);
+    const id = useLocation().state.id;   //trending에서 로그인 후 넘어오는 id값 
 
-
+    
+    
+    // const [id,setId] = useState()   //아이디값 로그인한걸로 가져오는거로 변경해야됨
+    // const { id } = useParams();  //주소값 파라미터 id가져오기
+    
     useEffect( ()=> {
         // axios.get('http://localhost:8080/lookbook/getStyleList')
         //      .then(res => setList(res.data))
         //      .catch(error => console.log(error))
         //      console.log("list",list) 
-
-        //좋아요 포함 전체 리스트 가져오기
-        // axios.get(`http://localhost:8080/lookbook/list?memberId=${id}&styleSeq=${seq}`)
-        //      .then(res => setIsLike(res.data)  )
-        //      .catch(error => console.log(error))
-
-        // 좋아요 포함 전체 리스트 가져오기 : 테이블 조인 쿼리 사용
-        axios.get('http://localhost:8080/lookbook/list')
-             .then( res => setList(res.data)  )
-             .catch(error => console.log(error))
-
-
+       
+        if((!id) === true) {
+            //로인인 안했을 때. 좋아요 포함 전체 리스트 가져오기 : 테이블 조인 쿼리 사용       
+            axios.get('http://localhost:8080/lookbook/list')
+                .then( res => setList(res.data)  )
+                .catch(error => console.log(error))
+        }else{
+            //로인인 했을 때
+             axios.get(`http://localhost:8080/lookbook/listById?id=${id}`)
+                 .then( res => setList(res.data)  )
+                 .catch(error => console.log(error))
+        }
     }, [])   
     
     //댓글삭제
@@ -62,23 +52,22 @@ const Detail = () => {
     //좋아요 클릭 로그인했을때만 가능
     const onLikes = (e,seq,checkLike,index) => {
         e.preventDefault();
-        // alert(tokenId+"////")
        
         checkLike = checkLike === 'false' ? false : true
 
-        if( (!tokenId) === true){
+        if( (!id) === true){
             alert('먼저 로그인 하세요')
         }else{
             e.preventDefault();
 
-            axios.post('http://localhost:8080/lookbook/likebutton?styleSeq='+seq+'&memberId='+tokenId+"&isLike="+checkLike) 
+            axios.post('http://localhost:8080/lookbook/likebutton2?styleSeq='+seq+'&memberId='+id+"&isLike="+checkLike) 
             .then(res => setList(res.data) )
             .catch(error => console.log(error))
         }
     }
 
     const onComment = (seq) => {
-        if( (!tokenId) === true){
+        if( (!id) === true){
             alert('먼저 로그인 하세요')
         }else{
             navigate(`/lookbook/StyleComment/${seq}`)
@@ -118,7 +107,8 @@ const Detail = () => {
 
 
     return (
-        <div>            
+        <div>     
+      
             <Social />
             <br/><br/><br/><br/><br/><br/>
             <Container fixed>
@@ -157,7 +147,7 @@ const Detail = () => {
                                     <div>
                                         <IconButton aria-label="add to favorites" onClick={(e) => onLikes(e, item.seq ,item.islikes,index)} >
                                             <img src={
-                                                    (!tokenId) ? '/image/style/unlikes.png' :
+                                                    (!id) ? '/image/style/unlikes.png' :
                                                     item.islikes === "false"  ? '/image/style/unlikes.png' : '/image/style/likes.png' 
                                                     } 
                                                 style={{ width:'28px'}} />
@@ -171,7 +161,7 @@ const Detail = () => {
                                         <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
                                         {/* </Link> */}
                                     </IconButton> 
-                                    <span>{item.commentCount}</span>  
+                                    <span>{item.comment_count}</span>  
                                     
                                     </div>                   
                                 </CardActions>

@@ -17,6 +17,4 @@ public interface StyleFollowingService {
 	
 	public Long followeeCount(Long id);	
 	
-
-
 }
