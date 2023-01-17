@@ -14,6 +14,7 @@ import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
 import shop.bean.NewProductDTO;
+import shop.bean.NewProductOptionDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
@@ -95,11 +96,10 @@ public class ShopDetailController {
 	}
 	
 	
-//	@GetMapping(path="getProductSizeMin")
-//	public Optional<Integer> getProductSizeMin(@RequestParam int seq,@RequestParam String size) {
-//		System.out.println(shopDetailService.getProductSizeMin(seq, size));
-//		return shopDetailService.getProductSizeMin(seq, size);
-//	}
+	@GetMapping(path="getNewProductOption")
+	public List<NewProductOptionDTO> getNewProductOption(@RequestParam int seq) {
+		return shopDetailService.getNewProductOption(seq);
+	}
 	
 	
 	

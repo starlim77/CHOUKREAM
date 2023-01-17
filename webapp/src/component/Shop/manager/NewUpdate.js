@@ -2,8 +2,13 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as S from '.././register/styleWrite';
+import NewOption from './NewOption';
 
 const NewUpdate = () => {
+
+    const [modalOpen, setModalOpen] = useState(false);
+
+
     const location = useLocation();
     const checkedId = location.state.checkedId;
     // const updateList = location.state.updateList;
@@ -487,8 +492,9 @@ const NewUpdate = () => {
 
                     {/* <S.Subject> 제품 설명</S.Subject>
                     <S.ItemContent name="contents" onChange={onInput} /> */}
-
+                    {modalOpen && <NewOption setModalOpen={setModalOpen} seq={seq}></NewOption>}
                     <S.WriteBtn onClick={onWrite}>작성 완료</S.WriteBtn>
+                    <S.WriteBtn onClick={() => setModalOpen(true)}>사이즈 관리</S.WriteBtn>
                 </S.Information>
             </S.WriteBody>
         </>
