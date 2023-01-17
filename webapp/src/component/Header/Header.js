@@ -5,7 +5,7 @@ import * as S from './style';
 import { Link } from 'react-router-dom';
 import SearchForm from '../Search/SearchForm';
 
-const Header = ({auth}) => {
+const Header = ({ auth }) => {
     const [isOpen, setIsOpen] = useState(false);
     const onOpen = () => {
         setIsOpen(true);
@@ -19,14 +19,20 @@ const Header = ({auth}) => {
                 <S.Top>
                     <S.TopWrapper>
                         <Link to="/admin">
-                        {auth==='ROLE_ADMIN'?<S.TopLi>관리자페이지</S.TopLi>:<S.TopLi>관리자페이지</S.TopLi>}
-                        {/*나중에 뒷 부분 NULL처리 할 것! */}
+                            {auth === 'ROLE_ADMIN' ? (
+                                <S.TopLi>관리자페이지</S.TopLi>
+                            ) : (
+                                <S.TopLi>관리자페이지</S.TopLi>
+                            )}
+                            {/*나중에 뒷 부분 NULL처리 할 것! */}
                         </Link>
                         <Link to="/cs/CsNotice">
                             x<S.TopLi>고객센터</S.TopLi>
                         </Link>
                         <S.TopLi>관심상품</S.TopLi>
-                        <S.TopLi><Link to="/my/profile"> 마이페이지</Link></S.TopLi>
+                        <S.TopLi>
+                            <Link to="/my/profile"> 마이페이지</Link>
+                        </S.TopLi>
                         <S.TopLi>
                             <Link to="/login">로그인</Link>
                             <Link to="/logout">로그아웃</Link>
@@ -35,7 +41,7 @@ const Header = ({auth}) => {
                 </S.Top>
                 <S.Bottom>
                     <Link to="/">
-                        <S.BottomImg src="/image/logo.png" />
+                        <S.BottomImg src="/image/CHOUKREAM.png" />
                     </Link>
 
                     <S.BottomWrapper>

@@ -49,5 +49,7 @@ public interface ShopDetailService {
 
 	public Long likeCount(int seq, String shopKind);
 
+	public void addSellOrder(OrderDTO orderDTO);
+
 //	public Optional<Integer> getProductSizeMin(int seq, String size);
 }

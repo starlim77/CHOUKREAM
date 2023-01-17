@@ -121,4 +121,9 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 		return useItemLikeDAO.likeCount(seq, shopKind);
 	}
 
+	@Override
+	public void addSellOrder(OrderDTO orderDTO) {
+		orderRepository.save(orderDTO);
+	}
+
 }

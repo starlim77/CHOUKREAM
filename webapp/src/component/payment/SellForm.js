@@ -83,6 +83,30 @@ const SellForm = () => {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
+    const sellOrder = () => {
+        axios
+            .post('http://localhost:8080/addSellOrder', null, {
+                params: {
+                    seq: productNum,
+                    buySell: 1,
+                    size: size,
+                    orderPrice: 132000,
+                    sellOrderUser: id,
+                    //uploadDate: new Date(),
+                    shipName,
+                    shipPhone,
+                    shipAddress,
+                    ask:
+                        ask !== '배송 시 요청사항을 선택해주세요' &&
+                        ask !== '요청사항 없음'
+                            ? ask
+                            : '',
+                },
+            })
+            .then()
+            .catch();
+    };
+
     return (
         <S.PayForm>
             {modals[0] && (
@@ -263,7 +287,7 @@ const SellForm = () => {
                         <S.PriceFont>{/*addComma(payPrice)*/}</S.PriceFont>원
                     </S.SellPriceShowDiv>
                 </S.PayPriceShow>
-                <S.PayBtn onClick="" disabled={false}>
+                <S.PayBtn onClick={sellOrder} disabled={false}>
                     <span>판매하기</span>
                 </S.PayBtn>
             </S.Agree>

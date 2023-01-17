@@ -80,7 +80,14 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route element={<Layout auth={auth} />}>
-                    <Route path="/" element={<Main />} />
+                    <Route
+                        path="/"
+                        element={
+                            <>
+                                <Main />
+                            </>
+                        }
+                    />
 
                     {/* shop */}
                     <Route path="shop" element={<Shop />} />
