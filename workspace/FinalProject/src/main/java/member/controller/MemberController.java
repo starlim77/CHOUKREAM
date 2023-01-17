@@ -73,4 +73,9 @@ public class MemberController {
 		
 		return memberService.updateMarketingOption(email, smsOption, emailOption);
 	}
+	@GetMapping(path = "getMemberId")
+	public String getMemberId(@RequestParam Long memberSeq) {
+		
+		return memberService.getMemberId(memberSeq);
+	}
 }

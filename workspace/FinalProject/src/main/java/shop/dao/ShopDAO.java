@@ -37,16 +37,16 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 	@Query(nativeQuery = true, value = "select a.seq, a.brand, ifnull(b.order_price, '-') as price, a.title, a.sub_title, a.img from product_table as a left outer join (select seq, min(order_price) AS order_price from order_table where buy_sell = 1 group by seq ) as b on a.seq = b.seq where brand = :brand and a.seq not in(:seq) order by a.seq")
 	List<BrandListDTO> getBrandList(@Param("seq") int seq, @Param("brand") String brand);
 	
-	@Query(nativeQuery = true, value = "select pro.brand, pro.img_name as imgName, pro.sub_title as subTitle, pay.product_num as productNum, pay.size, pay.log_time as logDate, pay.order_number as orderNumber, pay.type from product_table as pro join (select product_num, comOrd.size, log_time, order_number, type from completed_order_table as comOrd join complete_payment as comPay on comOrd.completed_order_seq = comPay.order_table_seq where comOrd.buy_order_user = :id and comPay.type='resell' ) as pay on pro.seq = pay.product_num;")
+	@Query(nativeQuery = true, value = "select pro.brand, pro.img_name as imgName, pro.sub_title as subTitle, pay.product_num as productNum, pay.size, pay.log_time as logDate, pay.order_number as orderNumber, pay.type from product_table as pro join (select product_num, comOrd.size, log_time, order_number, type from completed_order_table as comOrd join complete_payment as comPay on comOrd.completed_order_seq = comPay.order_table_seq where comPay.id = :id and comPay.type='resell' ) as pay on pro.seq = pay.product_num;")
 	List<SellBuyHistory> getBoughtHistorie(@Param("id") String email);
 
-	@Query(nativeQuery = true, value = "select pro.seq, pro.brand, pro.img_name as imgName, pro.sub_title as subTitle, ord.size from product_table as pro join order_table as ord on ord.seq = pro.seq where ord.buy_order_user = :id" )
+	@Query(nativeQuery = true, value = "select pro.seq, pro.brand, pro.img_name as imgName, pro.sub_title as subTitle, ord.size, ord.order_price as price from product_table as pro join order_table as ord on ord.seq = pro.seq where ord.buy_order_user = :id" )
 	List<SellBuyHistory> getBuyingHistory(@Param("id") String email);
 
-	@Query(nativeQuery = true, value = "select pro.brand, pro.img_name as imgName, pro.sub_title as subTitle, pay.product_num as productNum, pay.size, pay.log_time as logDate, pay.order_number as orderNumber, pay.type from product_table as pro join (select product_num, comOrd.size, log_time, order_number, type from completed_order_table as comOrd join complete_payment as comPay on comOrd.completed_order_seq = comPay.order_table_seq where comOrd.sell_order_user = :id and comPay.type='resell' ) as pay on pro.seq = pay.product_num;")
+	@Query(nativeQuery = true, value = "select pro.seq, pro.brand, pro.img_name as imgName, pro.sub_title as subTitle, comOrd.price as price, comOrd.size from product_table as pro join completed_order_table as comOrd on pro.seq = comOrd.seq where sell_order_user = :id")
 	List<SellBuyHistory> getSoldHistory(@Param("id") String email);
 
-	@Query(nativeQuery = true, value = "select pro.seq, pro.brand, pro.img_name as imgName, pro.sub_title as subTitle, ord.size from product_table as pro join order_table as ord on ord.seq = pro.seq where ord.sell_order_user = :id")
+	@Query(nativeQuery = true, value = "select pro.seq, pro.brand, pro.img_name as imgName, pro.sub_title as subTitle, ord.size, ord.order_price as price from product_table as pro join order_table as ord on ord.seq = pro.seq where ord.sell_order_user = :id")
 	List<SellBuyHistory> getSellingHistory(@Param("id") String email);
 
 	@Query(nativeQuery = true, value = "select seq, img_name as imgName, id, title as subTitle from used_item where id = :id and selling_state=1")

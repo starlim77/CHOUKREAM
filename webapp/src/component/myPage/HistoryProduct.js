@@ -4,27 +4,26 @@ import { itemImg } from './MyPageMainStyle';
 
 const HistoryProduct = (props) => {
     const {item} = props
-
-    useEffect(() => {
-        console.log("item", item)
-    }, [])
+    const addComma = num => {
+        let str = String(num)
+        return (str.replace(/\B(?=(\d{3})+(?!\d))/g, ','))
+    };
     return (
         <S.Product>
             <S.ImgWrapper>
-                <S.ProductImg src="..\image\product\tombrownHoody.png"></S.ProductImg>
+                <S.ProductImg src={item.imgName}></S.ProductImg>
             </S.ImgWrapper>
             <S.TextWrapper>
-                <S.ProductBrand>Brand: {}</S.ProductBrand>
+                <S.ProductBrand>Brand: {item.brand}</S.ProductBrand>
                 <S.ProductName>
-                    Name: Sony Playstation 5 Blu-ray Edition (SIEK 220V)
+                    Name: {item.subTitle}
                 </S.ProductName>
-                <S.ProductSize>Size: one size</S.ProductSize>
+                <S.ProductSize>Size: {item.size}</S.ProductSize>
             </S.TextWrapper>
             <S.PriceText>
-                150,000원
+            {addComma(item.price)}
             </S.PriceText>
             <S.StatusText>
-                기한 만료
             </S.StatusText>
         </S.Product>
     );

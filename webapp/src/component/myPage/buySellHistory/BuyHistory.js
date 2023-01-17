@@ -57,6 +57,7 @@ const BuyHistory = () => {
                         <option value="buyDone">구매 완료</option>
                     </S.Sort>
                 </S.SortWrapper>
+                <S.InnerTitle>리셀 구매 내역</S.InnerTitle>
                 {pageState === 'buy' &&
                     buyingList.map(item => (
                         <S.BuyBox

@@ -97,7 +97,7 @@ export const BuySection = styled.div`
 display: flex;
 flex-wrap: wrap;
 width: 100%;
-border: 1px solid #41b979 ;
+border: 2px solid #41b979 ;
 border-radius: 12px;
 padding: 20px 0;
 margin: 30px 0;
@@ -157,7 +157,10 @@ flex-wrap: wrap;
 align-content: flex-start;
 width: 100%;
 min-height: 200px;
+max-height: 370px;
+overflow-y: hidden;
 margin-bottom: 40px;
+cursor: pointer;
 `
 export const NoneHistory = styled.div`
 display: flex;
