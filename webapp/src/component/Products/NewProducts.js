@@ -187,11 +187,11 @@ const NewProducts = () => {
                         <S.ColumnIsFixed>
                             <>
                             <U.ImgBody2>
-                                <U.MainImg2 src={`/storage/${mainImg}`} alt={mainImg}></U.MainImg2>
-                                    {subImg1&&<U.SmallImg2 src={`/storage/${subImg0}`} id="0" onClick={e=>changImg(e)}></U.SmallImg2>}
-                                    {subImg1&&<U.SmallImg2 src={`/storage/${subImg1}`} id="1" onClick={e=>changImg(e)}></U.SmallImg2>}
-                                    {subImg2&&<U.SmallImg2 src={`/storage/${subImg2}`} id="2" onClick={e=>changImg(e)}></U.SmallImg2>}
-                                    {subImg3&&<U.SmallImg2 src={`/storage/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                <U.MainImg2 src={`/newProductList/${mainImg}`} alt={mainImg}></U.MainImg2>
+                                    {subImg1&&<U.SmallImg2 src={`/newProductList/${subImg0}`} id="0" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg1&&<U.SmallImg2 src={`/newProductList/${subImg1}`} id="1" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg2&&<U.SmallImg2 src={`/newProductList/${subImg2}`} id="2" onClick={e=>changImg(e)}></U.SmallImg2>}
+                                    {subImg3&&<U.SmallImg2 src={`/newProductList/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg2>}
                                 </U.ImgBody2>
                                 {/* <div className="column_box">
                                     <div className="detail_banner_area">
@@ -293,7 +293,7 @@ const NewProducts = () => {
                                         <S.FloatingPriceProductArea>
                                             <S.FloatingPriceProductThumb>
                                                 <S.PictureProductImg>
-                                                    <S.Image src={`/storage/${mainImg}`} width="65px" height="65px"></S.Image>
+                                                    <S.Image src={`/newProductList/${mainImg}`} width="65px" height="65px"></S.Image>
                                                 </S.PictureProductImg>
                                             </S.FloatingPriceProductThumb>
                                             <S.FloatingProductInfo>
@@ -331,7 +331,7 @@ const NewProducts = () => {
                             <div>
                                 <S.DetailTitleHeaderImages>
                                     <S.DetailHeaderImgWrap>
-                                        <S.CoverImg src={`/storage/${mainImg}`}></S.CoverImg>
+                                        <S.CoverImg src={`/newProductList/${mainImg}`}></S.CoverImg>
                                     </S.DetailHeaderImgWrap>
                                     <S.DetailHeaderTitleWrap>
                                         <S.DetailHeaderProductNo>{form.newSeq}</S.DetailHeaderProductNo>
@@ -344,9 +344,9 @@ const NewProducts = () => {
                                     <S.DetailImgWrap>
                                         <S.DetailContentImages>
                                             <div className='images'>
-                                                {desImg0&&<S.CoverImg src={`/storage/${desImg0}`}></S.CoverImg>}
-                                                {desImg1&&<S.CoverImg src={`/storage/${desImg1}`}></S.CoverImg>}
-                                                {desImg2&&<S.CoverImg src={`/storage/${desImg2}`}></S.CoverImg>}
+                                                {desImg0&&<S.CoverImg src={`/newProductList/${desImg0}`}></S.CoverImg>}
+                                                {desImg1&&<S.CoverImg src={`/newProductList/${desImg1}`}></S.CoverImg>}
+                                                {desImg2&&<S.CoverImg src={`/newProductList/${desImg2}`}></S.CoverImg>}
                                                </div>
                                         </S.DetailContentImages>
                                     </S.DetailImgWrap>

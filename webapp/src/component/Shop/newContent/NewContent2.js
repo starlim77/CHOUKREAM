@@ -261,7 +261,7 @@ const NewContent2 = ({
                                           }}
                                           // 사진 8개씩 출력 idx는 0부터 시작
                                       >
-                                          <Link to={`/products/${item.seq}`}>
+                                          <Link to={`/newProducts/${item.seq}`}>
                                               <Co.ItemInner href="#">
                                                   <Co.Product>
                                                       <Co.ProductImg
@@ -353,7 +353,7 @@ const NewContent2 = ({
                                           }}
                                           // 사진 8개씩 출력 idx는 0부터 시작
                                       >
-                                          <Link to={`/products/${item.seq}`}>
+                                          <Link to={`/newProducts/${item.seq}`}>
                                               <Co.ItemInner href="#">
                                                   <Co.Product>
                                                       <Co.ProductImg

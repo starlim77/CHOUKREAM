@@ -82,7 +82,7 @@ const NewWrite = () => {
             // axios.post('http://localhost:8080/used/writeItem',null,({params:{
             axios
                 .post('http://localhost:8080/shop/newProductUpload1', formData, {
-                    params: JSON.stringify(data),
+                    params: form,
                 })
                 .then(() => {
                     alert('글작성 완료');
@@ -183,7 +183,6 @@ const NewWrite = () => {
     //읽어볼 자료.https://velog.io/@eeeve/React-07
     return (
         <>
-        {console.log(data)}
             <S.WriteBody>
                 <S.ImgBody>
                     {/* 이미지 소스 이용방법 2가지 사용해봄 */}
