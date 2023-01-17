@@ -340,7 +340,7 @@ function App() {
                     />
                 </Route>
 
-                <Route path="/Search/SearchForm" element={<SearchForm />} />
+                <Route path="/searchForm" element={<SearchForm2 />} />
             </Routes>
         </BrowserRouter>
     );

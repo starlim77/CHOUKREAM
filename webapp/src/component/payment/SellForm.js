@@ -14,6 +14,8 @@ const SellForm = () => {
     const tokenJson = jwt_decode(token);
     const sub = tokenJson['sub'];
 
+    const navigate = useNavigate();
+
     const [searchParams] = useSearchParams();
     const [modals, setModals] = useState([false, false, false]);
     const [accountModal, setAccountModal] = useState(false);
@@ -24,7 +26,7 @@ const SellForm = () => {
     const productNum = searchParams.get('productNum');
     const [size, setSize] = useState(searchParams.get('size'));
     const bidPrice = Number(searchParams.get('bid').replaceAll(',', ''));
-    const orderPrice = bidPrice + Math.floor(bidPrice * 0.05);
+    const getPrice = bidPrice - Math.floor(bidPrice * 0.05);
 
     const [imgName, setImgName] = useState('');
     const [modelNum, setModelNum] = useState('');
@@ -109,7 +111,7 @@ const SellForm = () => {
                     seq: productNum,
                     buySell: 1,
                     size: size,
-                    orderPrice: orderPrice,
+                    orderPrice: bidPrice,
                     sellOrderUser: id,
                     shipName,
                     shipPhone,
@@ -121,8 +123,11 @@ const SellForm = () => {
                             : '',
                 },
             })
-            .then()
-            .catch();
+            .then(() => {
+                alert('판매 입찰 완료');
+                navigate('/shop');
+            })
+            .catch(err => console.log(err));
     };
 
     const isShipInfoEmpty = object =>
@@ -187,7 +192,7 @@ const SellForm = () => {
                     </S.ProductEachInfo>
                 </S.ProductInfo>
             </S.Product>
-            <S.OrderInfo>
+            {/* <S.OrderInfo>
                 <S.AddressText>판매 정산 계좌</S.AddressText>
                 <S.AddressDeleveryInfo>
                     <S.AddressInfo>
@@ -208,7 +213,7 @@ const SellForm = () => {
                         onClick={() => {}}
                     ></S.AddressChangeBtn>
                 </S.AddressDeleveryInfo>
-            </S.OrderInfo>
+            </S.OrderInfo> */}
             <S.Address>
                 <S.AddressTitle>
                     <S.AddressText>반송 주소</S.AddressText>
@@ -275,7 +280,7 @@ const SellForm = () => {
                 <S.AddressText>최종 주문 정보</S.AddressText>
                 <S.PriceTitle>정산금액</S.PriceTitle>
                 <S.PriceGreen>
-                    <S.PriceFont>{addComma(orderPrice)}</S.PriceFont>원
+                    <S.PriceFont>{addComma(getPrice)}</S.PriceFont>원
                 </S.PriceGreen>
                 <S.Hr></S.Hr>
                 <S.PriceInfo>
@@ -371,12 +376,18 @@ const SellForm = () => {
                 <S.PayPriceShow>
                     <S.PayPriceShowTitle>정산금액</S.PayPriceShowTitle>
                     <S.SellPriceShowDiv>
-                        <S.PriceFont>{/*addComma(payPrice)*/}</S.PriceFont>원
+                        <S.PriceFont>{addComma(getPrice)}</S.PriceFont>원
                     </S.SellPriceShowDiv>
                 </S.PayPriceShow>
                 <S.PayBtn
                     onClick={sellOrder}
-                    style={{ background: '#31b46e' }}
+                    style={{
+                        background:
+                            isShipInfoEmpty(shipInfo) ||
+                            checkedList.length !== 4
+                                ? '#ebebeb'
+                                : '#31b46e',
+                    }}
                     disabled={
                         isShipInfoEmpty(shipInfo) || checkedList.length !== 4
                     }
