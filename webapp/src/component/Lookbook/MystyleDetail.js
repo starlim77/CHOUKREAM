@@ -100,7 +100,8 @@ const MystyleDetail = () => {
                                         <S.MyDeprofile>
                                             <CardHeader
                                                 avatar={ <Avatar> 프로필</Avatar> }
-                                                title={item.id}
+                                                // title={item.id}
+                                                title={item.email}
                                                 subheader={item.logTime}
                                             /> 
                                         </S.MyDeprofile>

@@ -17,6 +17,7 @@ const Detail = () => {
     const [isLike, setIsLike] = useState(0);
     const navigate = useNavigate();
     const id = useLocation().state.id;   //trending에서 로그인 후 넘어오는 id값 
+    const [currentId,setCurrentId] = useState();
 
     
     
@@ -32,15 +33,37 @@ const Detail = () => {
         if((!id) === true) {
             //로인인 안했을 때. 좋아요 포함 전체 리스트 가져오기 : 테이블 조인 쿼리 사용       
             axios.get('http://localhost:8080/lookbook/list')
-                .then( res => setList(res.data)  )
+                .then( 
+                    res => setList(res.data)  )
+                    // res => console.log(res.data)  )
                 .catch(error => console.log(error))
         }else{
             //로인인 했을 때
              axios.get(`http://localhost:8080/lookbook/listById?id=${id}`)
-                 .then( res => setList(res.data)  )
+                 .then( 
+                    res => setList(res.data)  )
+                    //res => console.log(res.data)  )
                  .catch(error => console.log(error))
         }
+
+        //member_id 숫자 보내서 이메일 가져오기
+        // axios.get(`http://localhost:8080/used/getId?seq=${id}`)
+        //      .then(
+        //         res => console.log(res.data))
+        //         // res=>{setCurrentId(res.data)})
+        //      .catch(err=>console.log(err))
     }, [])   
+
+        // const currentId2 = (currentId) => {        
+        //     const currentId2 = currentId.split('@');        
+        //     return currentId2
+        //     console.log("currentId2" +currentId2)
+        //     console.log("currentId"+currentId)
+
+        // }
+
+        // const currentId2 = currentId.split('@')
+
     
     //댓글삭제
     const onCommentDelete =(id) => {
@@ -120,8 +143,8 @@ const Detail = () => {
                             <Card >
                                 <CardHeader
                                     avatar={ <Avatar> 프로필</Avatar> }
-                                    title={item.id}
-                                    // title={item.name}
+                                    // title={item.id}
+                                    title={item.email}
                                     subheader={item.logtime}
                                 />
 

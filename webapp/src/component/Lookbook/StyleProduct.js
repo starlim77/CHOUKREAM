@@ -22,6 +22,18 @@ const StyleProduct = (props) => {
 
     },[])
 
+    const photoshop = itemImg => {
+        // console.log(itemImg)
+        // console.log(typeof(itemImg))
+        if (itemImg !== null && itemImg !== undefined) {
+            //console.log(itemImg);
+            const img = itemImg.split(',');
+            // console.log(img[0])
+            // console.log(typeof(img[0]))
+            return img[0];
+        }
+    };
+
 
     return (
 
@@ -36,7 +48,7 @@ const StyleProduct = (props) => {
                                     <div className='thumb_box'>
                                         <M.Product>
                                             <M.PictureBrandProductImg>
-                                                <S.PictureBrandProductImg src={`/resellList/${productList.imgName}`} />
+                                                <S.PictureBrandProductImg src={`/resellList/${photoshop(productList.imgName)}`} />
                                             </M.PictureBrandProductImg>
                                         </M.Product>
                                     </div>
