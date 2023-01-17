@@ -12,4 +12,6 @@ public interface StyleLikesService {
 	public int findAll(StyleLikesDTO styleLikesDTO);
 //	public boolean checkLikes(StyleLikesDTO styleLikesDTO);
 	public List<LikesDTO> list();
+	public List<LikesDTO> listById(String id);
+	List<LikesDTO> findLikes2(String id);
 }

@@ -23,6 +23,8 @@ public class StyleFollowingEntity {
 	//fromUser가 toUser를 팔로잉 함
 	//toUser가 fromUser를 팔로워로
 	
+	private String styleSeq;
+	
 	@ManyToOne
 	@JoinColumn(name="followerId")
 	private MemberDto follower;

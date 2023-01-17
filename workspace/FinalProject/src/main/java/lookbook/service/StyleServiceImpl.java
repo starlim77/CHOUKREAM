@@ -13,14 +13,11 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lookbook.bean.StyleDTO;
-import lookbook.bean.StyleLikesDTO;
 import lookbook.dao.StyleDAO;
 import lookbook.dao.StyleFileDAO;
 import lookbook.dao.StyleLikesDAO;
 import lookbook.entity.StyleEntity;
 import lookbook.entity.StyleFileEntity;
-import lookbook.entity.StyleLikesEntity;
-import member.bean.MemberDto;
 import member.dao.MemberDAO;
 import shop.bean.ProductDTO;
 import shop.dao.ShopDAO;
@@ -43,13 +40,14 @@ public class StyleServiceImpl implements StyleService {
 	@Autowired
 	private ShopDAO shopDAO;
 
+
 	//내 글 list 
 	@Transactional
 	public List<StyleDTO> findAllMyList(String id) {
       List<StyleEntity> styleEntityList = styleDAO.findAllByIdOrderBySeqDesc(id);
       List<StyleDTO> styleDTOList = new ArrayList<>();
      
-      for (StyleEntity styleEntity: styleEntityList) {
+      for (StyleEntity styleEntity : styleEntityList) {
          styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
       }
       
@@ -197,12 +195,20 @@ public class StyleServiceImpl implements StyleService {
 	@Override
 	public Optional<ProductDTO> styleProductSearch(int seq) {
 		return shopDAO.findById(seq);
- 
 	}
 
 
-	 
+	@Override
+	public List<StyleDTO> styleOneProduct(int productSeq) {		
+//		System.out.println("================================="+productSeq);
+		List<StyleEntity> styleEntityList = styleDAO.findByProductSeqOrderBySeqDesc(productSeq);
+	      List<StyleDTO> styleDTOList = new ArrayList<>();
+	      for (StyleEntity styleEntity: styleEntityList) {
+	         styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
+	      }
+	      return styleDTOList; 
 
+	}
 
 	
 }

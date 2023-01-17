@@ -34,7 +34,8 @@ export const TrTypoDiv = styled.pre`
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    overflow: hidden;
+    /* overflow: hidden; */
+    height: auto;
 `
 export const TrBox = styled.div`
     display: flex;
@@ -75,7 +76,6 @@ export const DeTopDiv = styled.div`
 export const DeDiv = styled.div`
     width: 500px;
     display: inline-block;
-    padding-top: 50px;
     padding-bottom: 50px;
 `
 
@@ -197,6 +197,22 @@ export const ProductItem = styled.div`
     // display: inline-block;
     vertical-align: top;
 `
+
+//styleOneProduct.js
+export const OneContainer = styled.div`
+    width: 1200px;
+    margin: 0px auto;
+    display: flex;    
+`
+
+export const OneItem = styled.div`
+    margin: auto;
+    padding: 50px;
+    width: 20%;
+    position: relative;
+    vertical-align: top;
+`
+
 ;
 
 
