@@ -169,5 +169,5 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	public void addBuyOrder(OrderDTO orderDTO) {
 		orderRepository.save(orderDTO);
 	}
-	
+
 }

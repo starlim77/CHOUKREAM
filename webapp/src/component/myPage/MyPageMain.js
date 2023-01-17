@@ -52,6 +52,9 @@ const MyPageMain = () => {
     const onSellingHistory = () => {
         navigate('sellHistory');
     };
+    const onStyle = () => {
+        navigate('/lookbook/mystyle');
+    };
     return (
         <S.MainWrapper>
             {/* 로그인 정보 */}
@@ -65,7 +68,7 @@ const MyPageMain = () => {
                     <S.MemberLevel>일반 회원</S.MemberLevel>
                     <S.ButtonWrapper>
                         <S.Button onClick={onProfile}>프로필 수정</S.Button>
-                        <S.Button>내 스타일</S.Button>
+                        <S.Button onClick={onStyle}>내 스타일</S.Button>
                     </S.ButtonWrapper>
                 </S.MiddleWrapper>
                 <S.RightWrapper>{point} 포인트</S.RightWrapper>

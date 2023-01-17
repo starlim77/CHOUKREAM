@@ -171,6 +171,9 @@ const NewProducts = () => {
         else if(id == 3) setMainImg(subImg3)
     }
 
+    const buyNavigate = () => {
+        navigate(`/newBuy?productNum=${seq}`)
+    }
 
 
     return (
@@ -253,7 +256,7 @@ const NewProducts = () => {
                                     </div>
                                     <div className="btn-wrap">
                                         <S.DivisionBtnBox>
-                                            <S.NewProductBuyBtn>
+                                            <S.NewProductBuyBtn onClick={buyNavigate}>
                                                 구매하기
                                             </S.NewProductBuyBtn>
                                         </S.DivisionBtnBox>

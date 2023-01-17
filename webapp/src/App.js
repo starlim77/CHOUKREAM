@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PaymentTerms from './component/payment/PaymentTerms';
 import PayHeader from './component/payment/PayHeader';
 import SizePage from './component/payment/SizePage';
+import SizePageNew from './component/payment/SizePageNew';
 import OrderType from './component/payment/OrderType';
 import Main from './component/Main/Main';
 import Shop from './component/Shop/Shop';
@@ -238,6 +239,7 @@ function App() {
                     <Route path="products/:seq" element={<Products />} />
                     <Route path="/payTerms/*" element={<PaymentTerms />} />
                     <Route path="/orderType/*" element={<OrderType />} />
+                    <Route path="/newBuy" element={<SizePageNew />} />
                     <Route path="/buy" element={<SizePage />} />
                     <Route path="buy/payTerms" element={<PaymentTerms />} />
                     <Route path="buy/orderType" element={<OrderType />} />
