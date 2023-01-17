@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import my.bean.AddressDTO;
 import my.bean.PointDTO;
+import pay.bean.CompletePaymentDTO;
 import shop.bean.CompletedOrderDTO;
 import shop.bean.ProductDTO;
 
@@ -23,16 +24,16 @@ public interface MyService {
 
 	public List<AddressDTO> deleteAddress(String id, long seq);
 
-	public List<ProductDTO> getBuy(long id);
-
-	public List<ProductDTO> getDoneBuy(long id);
-
-	public List<ProductDTO> getSell(long id);
-
-	public List<ProductDTO> getSold(long id);
-
 	public Optional<AddressDTO> getAddressBySeq(long seq);
 
 	public AddressDTO addressUpdate(AddressDTO addressDTO);
+
+	public List<ProductDTO> getBought(long memberSeq);
+
+	public List<ProductDTO> getBuying(long memberSeq);
+
+	public List<ProductDTO> getSelling(long memberSeq);
+
+	public List<ProductDTO> getSold(long memberSeq);
 
 }

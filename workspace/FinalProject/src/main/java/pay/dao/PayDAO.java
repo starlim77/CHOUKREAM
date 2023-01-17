@@ -1,6 +1,7 @@
 package pay.dao;
 
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,5 +21,8 @@ public interface PayDAO<T> extends JpaRepository<CompletePaymentDTO, Integer> {
 
 	@Query(nativeQuery = true, value = "select min(order_price) as price, min(order_seq) as orderSeq, size from order_table where buy_sell = 0 and size = :size and seq = :seq")
 	public Optional<BidsListDTO> getBuyBidsPriceMax(@Param("size") String size, @Param("seq") int seq);
+	
+	@Query(nativeQuery = true, value = "select * from complete_payment where id = :id")
+	public List<CompletePaymentDTO> getBuyHistory(@Param("id") String email);
 
 }

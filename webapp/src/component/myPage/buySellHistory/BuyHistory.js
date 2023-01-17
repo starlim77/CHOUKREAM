@@ -7,17 +7,17 @@ import * as S from './BuySellHistoryStyle';
 const BuyHistory = () => {
     const memberSeq = jwtDecode(localStorage.getItem('accessToken')).sub;
     const [pageState, setPageState] = useState("buy");
-    const [buyingList, setBuyingList] = useState([]);
+    const [buyingList, setBuyingList] = useState([])
     const [boughtList, setBoughtList] = useState([]);
     const navigate = useNavigate()
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/my/getBuy?id=${memberSeq}`)
-             .then(res => (setBuyingList(res.data)))
+        axios.get(`http://localhost:8080/my/getBought?memberSeq=${memberSeq}`)
+             .then(res => setBoughtList(res.data))
 
         axios
-            .get(`http://localhost:8080/my/getDoneBuy?id=${memberSeq}`)
-            .then(res => setBoughtList(res.data));
+            .get(`http://localhost:8080/my/getBuying?memberSeq=${memberSeq}`)
+            .then(res => setBuyingList(res.data));
     }, []);
 
     const onPageState = e => {
@@ -66,26 +66,6 @@ const BuyHistory = () => {
                             </S.ProductText>
                         </S.BuyBox>
                     ))}
-                {/* <S.SellBox>
-                    <S.Img src="..\image\product\tombrownHoody.png"></S.Img>
-                    <S.ProductText>
-                        <S.ProductBrand>ProductBrand</S.ProductBrand>
-                        <S.ProductName>ProductName</S.ProductName>
-                        <S.Status status={'selling'}>판매중</S.Status>
-                        <S.Size>Size</S.Size>
-                        <S.DealDate>DealDate</S.DealDate>
-                    </S.ProductText>
-                </S.SellBox>
-                <S.SellBox>
-                    <S.Img src="..\image\product\tombrownHoody.png"></S.Img>
-                    <S.ProductText>
-                        <S.ProductBrand>ProductBrand</S.ProductBrand>
-                        <S.ProductName>ProductName</S.ProductName>
-                        <S.Status status={'done'}>구매완료</S.Status>
-                        <S.Size>Size</S.Size>
-                        <S.DealDate>DealDate</S.DealDate>
-                    </S.ProductText>
-                </S.SellBox> */}
             </S.BuyHistoryWrapper>
         </S.BuyHistory>
     );

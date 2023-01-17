@@ -52,7 +52,7 @@ public class ShopServiceImpl implements ShopService {
 	public List<ProductSizeDTO> findBySeq(int seq) {
 		return sizeRepository.findBySeq(seq);
 	}
-	
+
 }
 
 

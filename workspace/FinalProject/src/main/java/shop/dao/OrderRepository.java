@@ -64,10 +64,6 @@ public interface OrderRepository extends JpaRepository<OrderDTO, Integer> {
 			value = "select size, order_price as price, count(order_price) as count from order_table where buy_sell = 0 and size = :size and seq = :seq group by (order_price) order by order_price desc")
 	public List<BidsListDTO> getBuyBidsListBySize(@Param("seq") int seq, @Param("size") String size);
 
-	public List<OrderDTO> findAllBySellOrderUser(String sellOrderUser);
-
-	public List<OrderDTO> findAllByBuyOrderUser(String buyOrderUser);
-	
 //	@Query(value = "select min(order_price) as order_price from order_table where seq= :seq and size = :size  group by seq", nativeQuery=true)
 //	public Optional<Integer> getProductMin(@Param("seq") int seq, @Param("size") String size);
 

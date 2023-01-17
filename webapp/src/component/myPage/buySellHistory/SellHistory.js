@@ -13,11 +13,11 @@ const SellHistory = () => {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/my/getSell?id=${memberSeq}`)
+            .get(`http://localhost:8080/my/getSelling?memberSeq=${memberSeq}`)
             .then(res => setSellingList(res.data));
 
         axios
-            .get(`http://localhost:8080/my/getSold?id=${memberSeq}`)
+            .get(`http://localhost:8080/my/getSold?memberSeq=${memberSeq}`)
             .then(res => setSoldList(res.data));
     }, []);
     const onPageState = e => {
@@ -46,7 +46,7 @@ const SellHistory = () => {
                             done={false}
                         >
                             <S.Img
-                                src={`..\newProduct\${item.imgName}`}
+                                src={`../newProduct/${item.imgName}`}
                             ></S.Img>
                             <S.ProductText>
                                 <S.ProductBrand>{item.brand}</S.ProductBrand>
@@ -74,26 +74,6 @@ const SellHistory = () => {
                             </S.ProductText>
                         </S.SellBox>
                     ))}
-                {/* <S.SellBox>
-                <S.Img src="..\image\product\tombrownHoody.png"></S.Img>
-                <S.ProductText>
-                    <S.ProductBrand>ProductBrand</S.ProductBrand>
-                    <S.ProductName>ProductName</S.ProductName>
-                    <S.Status status={'selling'}>판매중</S.Status>
-                    <S.Size>Size</S.Size>
-                    <S.DealDate>DealDate</S.DealDate>
-                </S.ProductText>
-            </S.SellBox>
-            <S.SellBox>
-                <S.Img src="..\image\product\tombrownHoody.png"></S.Img>
-                <S.ProductText>
-                    <S.ProductBrand>ProductBrand</S.ProductBrand>
-                    <S.ProductName>ProductName</S.ProductName>
-                    <S.Status status={'done'}>구매완료</S.Status>
-                    <S.Size>Size</S.Size>
-                    <S.DealDate>DealDate</S.DealDate>
-                </S.ProductText>
-            </S.SellBox> */}
             </S.BuyHistoryWrapper>
         </S.BuyHistory>
     );

@@ -1,7 +1,7 @@
 package my.controller;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,8 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import my.bean.AddressDTO;
 import my.bean.PointDTO;
 import my.service.MyService;
-import shop.bean.CompletedOrderDTO;
+import pay.bean.CompletePaymentDTO;
 import shop.bean.ProductDTO;
+import shop.service.ShopServiceImpl;
 
 @RestController
 @CrossOrigin
@@ -29,6 +29,8 @@ public class MyController {
 
 	@Autowired
 	private MyService myService;
+	@Autowired
+	private ShopServiceImpl shopServiceImpl;
 	
 	@RequestMapping(path =  "addAddress")
 	public void addAddress(@ModelAttribute AddressDTO addressDTO) {
@@ -68,23 +70,6 @@ public class MyController {
 		return myService.deleteAddress(id ,seq);
 	}
 	
-	@GetMapping(path = "getBuy")
-	public List<ProductDTO> getBuy(@RequestParam long id){
-		return myService.getBuy(id);
-	}
-	
-	@GetMapping(path = "getDoneBuy")
-	public List<ProductDTO> getDoneBuy(@RequestParam long id){
-		return myService.getDoneBuy(id);
-	}
-	@GetMapping(path = "getSell")
-	public List<ProductDTO> getSell(@RequestParam long id){
-		return myService.getSell(id);
-	}
-	@GetMapping(path = "getSold")
-	public List<ProductDTO> getSold(@RequestParam long id){
-		return myService.getSold(id);
-	}
 	@GetMapping(path = "getAddressBySeq")
 	public Optional<AddressDTO> getAddressBySeq(@RequestParam long seq){
 		return myService.getAddressBySeq(seq);
@@ -93,4 +78,26 @@ public class MyController {
 	public AddressDTO addressUpdate(@ModelAttribute AddressDTO addressDTO){
 		return myService.addressUpdate(addressDTO);
 	}
+	
+	@GetMapping(path = "getBought")
+	public List<ProductDTO> getBought(long memberSeq) {
+		
+		return myService.getBought(memberSeq);
+	}
+	@GetMapping(path = "getBuying")
+	public List<ProductDTO> getBuying(@RequestParam long memberSeq) {
+		
+		return myService.getBuying(memberSeq);
+	}
+	@GetMapping(path = "getSelling")
+	public List<ProductDTO> getSelling(@RequestParam long memberSeq) {
+		
+		return myService.getSelling(memberSeq);
+	}
+	@GetMapping(path = "getSold")
+	public List<ProductDTO> getSold(@RequestParam long memberSeq) {
+		
+		return myService.getSold(memberSeq);
+	}
+	
 }

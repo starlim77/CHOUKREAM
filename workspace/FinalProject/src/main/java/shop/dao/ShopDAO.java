@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import jakarta.transaction.Transactional;
 import lombok.experimental.PackagePrivate;
 import shop.bean.BrandListDTO;
+import shop.bean.CompletedOrderDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 
@@ -35,6 +36,17 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 	@Query(nativeQuery = true, value = "select a.seq, a.brand, ifnull(b.order_price, '-') as price, a.title, a.sub_title, a.img from product_table as a left outer join (select seq, min(order_price) AS order_price from order_table where buy_sell = 1 group by seq ) as b on a.seq = b.seq where brand = :brand and a.seq not in(:seq) order by a.seq")
 	List<BrandListDTO> getBrandList(@Param("seq") int seq, @Param("brand") String brand);
 
+	@Query(nativeQuery = true, value = "select * from product_table where seq = any(select product_num from complete_payment join completed_order_table on complete_payment.order_table_seq = completed_order_table.completed_order_seq where completed_order_table.buy_order_user = :id)")
+	List<ProductDTO> findBoughtList(@Param("id") String email);
+
+	@Query(nativeQuery = true, value = "select * from product_table where product_table.seq = any(select seq from order_table where buy_order_user = :id)")
+	List<ProductDTO> findBuyingList(@Param("id") String email);
+
+	@Query(nativeQuery = true, value = "select * from product_table where seq = any(select product_num from complete_payment join completed_order_table on complete_payment.order_table_seq = completed_order_table.completed_order_seq where completed_order_table.sell_order_user = :id)")
+	List<ProductDTO> findSellingList(@Param("id") String email);
+
+	@Query(nativeQuery = true, value = "select * from product_table where product_table.seq = any(select seq from order_table where sell_order_user = :id)")
+	List<ProductDTO> getSold(@Param("id") String email);
 	
 //	List<BrandListDTO> getBrandList(@Param("seq") int seq, @Param("brand") String brand);
 
