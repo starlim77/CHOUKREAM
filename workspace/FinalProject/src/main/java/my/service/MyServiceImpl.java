@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import member.dao.MemberDAO;
 import my.bean.AddressDTO;
 import my.bean.PointDTO;
+import my.bean.SellBuyHistory;
 import my.dao.AddressDAO;
 import my.dao.PointDAO;
 import pay.bean.CompletePaymentDTO;
@@ -97,27 +98,49 @@ public class MyServiceImpl implements MyService{
 		return addressDAO.save(oldAddressDTO);
 	}
 	@Override
-	public List<ProductDTO> getBought(long memberSeq) {
+	public List<SellBuyHistory> getBoughtHistorie(long memberSeq) {
 		String email = memberDAO.findById(memberSeq).get().getEmail();
 		
-		return shopDAO.findBoughtList(email);
+		return shopDAO.getBoughtHistorie(email);
 	}
 	@Override
-	public List<ProductDTO> getBuying(long memberSeq) {
+	public List<SellBuyHistory> getBuyingHistory(long memberSeq) {
 		String email = memberDAO.findById(memberSeq).get().getEmail();
 		
-		return shopDAO.findBuyingList(email);
+		return shopDAO.getBuyingHistory(email);
 	}
 	@Override
-	public List<ProductDTO> getSelling(long memberSeq) {
+	public List<SellBuyHistory> getSoldHistory(long memberSeq) {
 		String email = memberDAO.findById(memberSeq).get().getEmail();
 		
-		return shopDAO.findSellingList(email);
+		return shopDAO.getSoldHistory(email);
 	}
 	@Override
-	public List<ProductDTO> getSold(long memberSeq) {
+	public List<SellBuyHistory> getSellingHistory(long memberSeq) {
+		String email = memberDAO.findById(memberSeq).get().getEmail();
+		return shopDAO.getSellingHistory(email);
+	}
+	@Override
+	public List<SellBuyHistory> getSellingUsed(long memberSeq) {
+		String email = memberDAO.findById(memberSeq).get().getEmail();
+		return shopDAO.getSellingUsed(email);
+	}
+	@Override
+	public List<SellBuyHistory> getSoldUsed(long memberSeq) {
 		String email = memberDAO.findById(memberSeq).get().getEmail();
 		
-		return shopDAO.getSold(email);
+		return shopDAO.getSoldUsed(email);
 	}
+	@Override
+	public List<SellBuyHistory> getBuyingUsed(long memberSeq) {
+		String email = memberDAO.findById(memberSeq).get().getEmail();
+		return shopDAO.getBuyingUsed(email);
+	}
+	@Override
+	public List<SellBuyHistory> getBoughtUsed(long memberSeq) {
+		String email = memberDAO.findById(memberSeq).get().getEmail();
+		
+		return shopDAO.getBoughtUsed(email);
+	}
+	
 }

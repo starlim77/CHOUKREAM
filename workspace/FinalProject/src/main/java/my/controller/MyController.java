@@ -1,5 +1,7 @@
 package my.controller;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import my.bean.AddressDTO;
 import my.bean.PointDTO;
+import my.bean.SellBuyHistory;
 import my.service.MyService;
 import pay.bean.CompletePaymentDTO;
 import shop.bean.ProductDTO;
@@ -78,26 +81,38 @@ public class MyController {
 	public AddressDTO addressUpdate(@ModelAttribute AddressDTO addressDTO){
 		return myService.addressUpdate(addressDTO);
 	}
+	@GetMapping(path = "getBoughtHistory")
+	public List<SellBuyHistory> getBoughtHistorie(@RequestParam long memberSeq) {
+		return myService.getBoughtHistorie(memberSeq);
+	}
+	@GetMapping(path = "getBuyingHistory")
+	public List<SellBuyHistory> getBuyingHistory(@RequestParam long memberSeq) {
+		return myService.getBuyingHistory(memberSeq);
+	}
+	@GetMapping(path = "getSoldHistory")
+	public List<SellBuyHistory> getSoldHistory(@RequestParam long memberSeq) {
+		return myService.getSoldHistory(memberSeq);
+	}
+	@GetMapping(path = "getSellingHistory")
+	public List<SellBuyHistory> getSellingHistory(@RequestParam long memberSeq) {
+		return myService.getSellingHistory(memberSeq);
+	}
+	@GetMapping(path = "getSellingUsed")
+	public List<SellBuyHistory> getSellingUsed(@RequestParam long memberSeq) {
+		return myService.getSellingUsed(memberSeq);
+	}
+	@GetMapping(path = "getSoldUsed")
+	public List<SellBuyHistory> getSoldUsed(@RequestParam long memberSeq) {
+		return myService.getSoldUsed(memberSeq);
+	}
+	@GetMapping(path = "getBuyingUsed")
+	public List<SellBuyHistory> getBuyingUsed(@RequestParam long memberSeq) {
+		return myService.getBuyingUsed(memberSeq);
+	}
+	@GetMapping(path = "getBoughtUsed")
+	public List<SellBuyHistory> getBoughtUsed(@RequestParam long memberSeq) {
+		return myService.getBoughtUsed(memberSeq);
+	}
 	
-	@GetMapping(path = "getBought")
-	public List<ProductDTO> getBought(long memberSeq) {
-		
-		return myService.getBought(memberSeq);
-	}
-	@GetMapping(path = "getBuying")
-	public List<ProductDTO> getBuying(@RequestParam long memberSeq) {
-		
-		return myService.getBuying(memberSeq);
-	}
-	@GetMapping(path = "getSelling")
-	public List<ProductDTO> getSelling(@RequestParam long memberSeq) {
-		
-		return myService.getSelling(memberSeq);
-	}
-	@GetMapping(path = "getSold")
-	public List<ProductDTO> getSold(@RequestParam long memberSeq) {
-		
-		return myService.getSold(memberSeq);
-	}
 	
 }

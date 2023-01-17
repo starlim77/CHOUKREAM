@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import my.bean.AddressDTO;
 import my.bean.PointDTO;
+import my.bean.SellBuyHistory;
 import pay.bean.CompletePaymentDTO;
 import shop.bean.CompletedOrderDTO;
 import shop.bean.ProductDTO;
@@ -28,12 +29,20 @@ public interface MyService {
 
 	public AddressDTO addressUpdate(AddressDTO addressDTO);
 
-	public List<ProductDTO> getBought(long memberSeq);
+	public List<SellBuyHistory> getBoughtHistorie(long memberSeq);
 
-	public List<ProductDTO> getBuying(long memberSeq);
+	public List<SellBuyHistory> getBuyingHistory(long memberSeq);
 
-	public List<ProductDTO> getSelling(long memberSeq);
+	public List<SellBuyHistory> getSoldHistory(long memberSeq);
 
-	public List<ProductDTO> getSold(long memberSeq);
+	public List<SellBuyHistory> getSellingHistory(long memberSeq);
+
+	public List<SellBuyHistory> getSellingUsed(long memberSeq);
+
+	public List<SellBuyHistory> getSoldUsed(long memberSeq);
+
+	public List<SellBuyHistory> getBuyingUsed(long memberSeq);
+
+	public List<SellBuyHistory> getBoughtUsed(long memberSeq);
 
 }

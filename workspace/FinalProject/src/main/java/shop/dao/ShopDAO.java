@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import jakarta.transaction.Transactional;
 import lombok.experimental.PackagePrivate;
+import my.bean.SellBuyHistory;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
 import shop.bean.OrderDTO;
@@ -35,18 +36,30 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 //	List<ProductDTO> getShoesList(@Param("shoes") String shoes);
 	@Query(nativeQuery = true, value = "select a.seq, a.brand, ifnull(b.order_price, '-') as price, a.title, a.sub_title, a.img from product_table as a left outer join (select seq, min(order_price) AS order_price from order_table where buy_sell = 1 group by seq ) as b on a.seq = b.seq where brand = :brand and a.seq not in(:seq) order by a.seq")
 	List<BrandListDTO> getBrandList(@Param("seq") int seq, @Param("brand") String brand);
+	
+	@Query(nativeQuery = true, value = "select pro.brand, pro.img_name as imgName, pro.sub_title as subTitle, pay.product_num as productNum, pay.size, pay.log_time as logDate, pay.order_number as orderNumber, pay.type from product_table as pro join (select product_num, comOrd.size, log_time, order_number, type from completed_order_table as comOrd join complete_payment as comPay on comOrd.completed_order_seq = comPay.order_table_seq where comOrd.buy_order_user = :id and comPay.type='resell' ) as pay on pro.seq = pay.product_num;")
+	List<SellBuyHistory> getBoughtHistorie(@Param("id") String email);
 
-	@Query(nativeQuery = true, value = "select * from product_table where seq = any(select product_num from complete_payment join completed_order_table on complete_payment.order_table_seq = completed_order_table.completed_order_seq where completed_order_table.buy_order_user = :id)")
-	List<ProductDTO> findBoughtList(@Param("id") String email);
+	@Query(nativeQuery = true, value = "select pro.seq, pro.brand, pro.img_name as imgName, pro.sub_title as subTitle, ord.size from product_table as pro join order_table as ord on ord.seq = pro.seq where ord.buy_order_user = :id" )
+	List<SellBuyHistory> getBuyingHistory(@Param("id") String email);
 
-	@Query(nativeQuery = true, value = "select * from product_table where product_table.seq = any(select seq from order_table where buy_order_user = :id)")
-	List<ProductDTO> findBuyingList(@Param("id") String email);
+	@Query(nativeQuery = true, value = "select pro.brand, pro.img_name as imgName, pro.sub_title as subTitle, pay.product_num as productNum, pay.size, pay.log_time as logDate, pay.order_number as orderNumber, pay.type from product_table as pro join (select product_num, comOrd.size, log_time, order_number, type from completed_order_table as comOrd join complete_payment as comPay on comOrd.completed_order_seq = comPay.order_table_seq where comOrd.sell_order_user = :id and comPay.type='resell' ) as pay on pro.seq = pay.product_num;")
+	List<SellBuyHistory> getSoldHistory(@Param("id") String email);
 
-	@Query(nativeQuery = true, value = "select * from product_table where seq = any(select product_num from complete_payment join completed_order_table on complete_payment.order_table_seq = completed_order_table.completed_order_seq where completed_order_table.sell_order_user = :id)")
-	List<ProductDTO> findSellingList(@Param("id") String email);
+	@Query(nativeQuery = true, value = "select pro.seq, pro.brand, pro.img_name as imgName, pro.sub_title as subTitle, ord.size from product_table as pro join order_table as ord on ord.seq = pro.seq where ord.sell_order_user = :id")
+	List<SellBuyHistory> getSellingHistory(@Param("id") String email);
 
-	@Query(nativeQuery = true, value = "select * from product_table where product_table.seq = any(select seq from order_table where sell_order_user = :id)")
-	List<ProductDTO> getSold(@Param("id") String email);
+	@Query(nativeQuery = true, value = "select seq, img_name as imgName, id, title as subTitle from used_item where id = :id and selling_state=1")
+	List<SellBuyHistory> getSellingUsed(@Param("id") String email);
+
+	@Query(nativeQuery = true, value = "select used.seq, img_name as imgName, used.id, used.title as subTitle, comPay.ship_address as shipAddress, comPay.ship_name as shipName, comPay.ship_phone as shipPhone from used_item as used join complete_payment as comPay on used.seq = comPay.seq where used.id = :id and used.selling_state=0;")
+	List<SellBuyHistory> getSoldUsed(@Param("id")  String email);
+
+	@Query(nativeQuery = true, value = "select seq, img_name as imgName, id, title as subTitle from used_item where id = :id and selling_state=1")
+	List<SellBuyHistory> getBuyingUsed(@Param("id")  String email);
+
+	@Query(nativeQuery = true, value = "select used.seq, img_name as imgName, used.id, used.title as subTitle, comPay.ship_address as shipAddress, comPay.ship_name as shipName, comPay.ship_phone as shipPhone from used_item as used join complete_payment as comPay on used.seq = comPay.seq where used.id = :id and used.selling_state=0;")
+	List<SellBuyHistory> getBoughtUsed(@Param("id")  String email);
 	
 //	List<BrandListDTO> getBrandList(@Param("seq") int seq, @Param("brand") String brand);
 

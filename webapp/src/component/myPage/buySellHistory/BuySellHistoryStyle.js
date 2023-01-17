@@ -32,7 +32,7 @@ export const SortWrapper = styled.div`
     display: flex;
     width: 100%;
     padding: 20px 0;
-    margin-bottom: 40px;
+    margin-bottom:30px;
     border-bottom: 1px solid #ebebeb;
 `;
 export const Sort = styled.select`
@@ -94,7 +94,6 @@ export const Status = styled.div`
     color: ${props => (props.status === "buying" ? " rgb(49, 180, 110)"
                                        :"selling" && "#ef6253")}; 
     color: ${props => (props.done && "black")};
-    text-decoration: ${props => (props.done && "line-through")};
     font-size: 18px;
 `;
 export const Size = styled.div`
@@ -104,5 +103,12 @@ export const Size = styled.div`
 export const DealDate = styled.div`
     display: flex;
     width: 40%;
+`;
+export const InnerTitle = styled.div`
+    display: flex;
+    width: 100%;
+    padding-bottom: 15px;
+    border-bottom: 2px solid black;
+    margin-bottom: 15px;
 `;
 
