@@ -1,52 +1,50 @@
 import React, { useState } from 'react';
+
 import Card from '@mui/material/Card';
-import { 
+import {
+    CardActions,
     CardContent,
     CardHeader,
-    IconButton, 
+    Container,
+    Grid,
+    IconButton,
+    Typography,
 } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import * as S from './style';
 import { grey } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
-import Detail from './Detail';
 
+const FollowingItem = ({item,index,itemLength}) => {
 
-const TrendingItem = ({item,index,itemLength,id}) => {
-    
     const [isLike, setIsLike] = useState(0);
 
-
-
     return (
-        
         <S.TrGridBox style={{display : index < itemLength ? '':'none'}}>
-           
             <Card sx={{ width: 250 }} >
-                
-                <Link to={'/lookbook/detail'} state={{id:id}}>
-
+                <Link to={'/lookbook/following' + item.seq}>
                     <S.TrGridBoxImg src={'../storage/' + item.storedFileName[0]}/>
-
-                    <S.TrBox>
+                </Link>
+                
+                <S.TrBox>
                         <CardHeader 
-                                avatar={ <Avatar sx={{ bgcolor: grey }} mr={'3'}/>    } // 개인프로필사진 넣을곳
+                                avatar={ <Avatar sx={{ bgcolor: grey }} />    } // 개인프로필사진 넣을곳
                                 />
                         <S.TrUsernameBox>
                         {item.id}
-                        {/* {item.name} */}
                         </S.TrUsernameBox>
 
-                        <S.TrlikeBox>
-                            <IconButton aria-label="add to favorites">
-                                <img src={ isLike === 1 ?  '/image/style/likes.png'  : '/image/style/unlikes.png'  }
-                                    style={{ width:'28px'}} />
-                            </IconButton>
-                            {item.likesCount}
-                        </S.TrlikeBox>
-                    </S.TrBox>
-
-                </Link>
+                    <S.TrlikeBox>
+                        <IconButton aria-label="add to favorites"
+                        // onClick={ () => onLikes(item.seq)}
+                        >
+                            <img src={ isLike === 1 ?  '/image/style/likes.png'  : '/image/style/unlikes.png'  }
+                                style={{ width:'28px'}} />
+                                {item.likesCount}
+                                
+                        </IconButton>
+                    </S.TrlikeBox>
+                </S.TrBox>
 
                 <CardContent>
                     <S.TrTypoDiv>
@@ -59,4 +57,4 @@ const TrendingItem = ({item,index,itemLength,id}) => {
     );
 };
 
-export default TrendingItem;
+export default FollowingItem;

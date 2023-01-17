@@ -8,6 +8,7 @@ import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
 import shop.bean.NewProductDTO;
+import shop.bean.NewProductOptionDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
@@ -49,6 +50,10 @@ public interface ShopDetailService {
 	public Long likeCount(int seq, String shopKind);
 
 	public List<StyleDTO> getBrandStyleList(int seq);
+
+	public List<NewProductOptionDTO> getNewProductOption(int seq);
+
+	public void addNewProductOption(int seq, String option);
 
 //	public Optional<Integer> getProductSizeMin(int seq, String size);
 }

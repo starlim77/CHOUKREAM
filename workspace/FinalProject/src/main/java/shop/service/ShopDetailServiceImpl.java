@@ -14,6 +14,7 @@ import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
 import shop.bean.NewProductDTO;
+import shop.bean.NewProductOptionDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
@@ -21,6 +22,7 @@ import shop.bean.SizeMinDTO;
 import shop.bean.UsedItemLikeDTO;
 import shop.dao.CompletedOrderRepository;
 import shop.dao.NewProductDAO;
+import shop.dao.NewProductOptionRepository;
 import shop.dao.OrderRepository;
 import shop.dao.ProductSizeRepository;
 import shop.dao.ShopDAO;
@@ -42,6 +44,8 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	private UsedItemLikeDAO useItemLikeDAO;
 	@Autowired
 	private StyleDAO styleDAO;
+	@Autowired
+	private NewProductOptionRepository newProductOptionRepository;
 	
 	@Override
 	public Optional<ProductDTO> getProduct(int seq) {
@@ -134,5 +138,21 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	      }
 		
 		return styleDTOList;
+	}
+	
+	@Override
+	public List<NewProductOptionDTO> getNewProductOption(int seq) {
+		return newProductOptionRepository.findBySeq(seq);
+	}
+	
+	@Override
+	public void addNewProductOption(int seq, String option) {
+		NewProductOptionDTO newProductOptionDTO = new NewProductOptionDTO();
+		newProductOptionDTO.setInventory(0);
+		newProductOptionDTO.setSeq(seq);
+		newProductOptionDTO.setProductOption(option);
+		
+		newProductOptionRepository.save(newProductOptionDTO);
+		
 	}
 }

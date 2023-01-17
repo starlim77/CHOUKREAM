@@ -1,11 +1,6 @@
 package lookbook.bean;
 
 
-import java.util.List;
-
-import lookbook.entity.StyleEntity;
-import lookbook.entity.StyleLikesEntity;
-
 public interface LikesDTO {
 	String getSeq();
 	Integer getComment_count();

@@ -13,10 +13,7 @@ const StyleCommentList = (props) => {
     
     useEffect(() => {
         axios.get(`http://localhost:8080/lookbook/getComment?styleSeq=${props.styleSeq}`)
-             .then(res => setComment(res.data),
-
-                
-            )
+             .then(res => setComment(res.data))
              .catch(error => console.log(error))
     },[])
     

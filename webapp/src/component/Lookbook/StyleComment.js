@@ -3,9 +3,11 @@ import React, { useState,useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import * as S from './style';
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
+
 const StyleComment = () => {
 
-    const {styleSeq}= useParams()   
+    const {styleSeq,id}= useParams()   
     const navigate = useNavigate()
 
 
@@ -26,7 +28,7 @@ const StyleComment = () => {
     }
 
     const [form, setForm] = useState({
-        commentMember: '댓글입력자', //댓글입력아이디
+        commentMember: id, //댓글입력아이디
         commentContents: '',
         styleSeq: styleSeq//게시글 번호
     })
@@ -34,32 +36,34 @@ const StyleComment = () => {
     const {commentMember, commentContents} = form
 
 
-    const onUpload = (e) => {    
+    const onUpload = (e, id) => {    
         //e.preventDefault()      
-        console.log(form)
-        axios
-            .post(`http://localhost:8080/lookbook/commentSave`,null , {
-                params:form
-                //styleSeq: styleSeq
-            })
-            .then(                
-                    alert("댓글등록 성공"),
-                    navigate('/lookbook/detail'),
-                    console.log(form)
-            )
-            .catch( error => console.log(error) )
+        // console.log(form)
+            axios
+                .post(`http://localhost:8080/lookbook/commentSave`,null , {
+                    params:form
+                    //styleSeq: styleSeq
+                })
+                .then(                
+                        alert("댓글등록 성공"),
+                        // navigate('/lookbook/detail' ,{ state: id }),
+                        navigate(-1),
+                        console.log(form)
+                )
+                .catch( error => console.log(error) )
+        
     }
 
 
 
     return (
-        <div>            
+         
             <Dialog open={true} > 
                 <S.DeComment>
                     <DialogTitle sx={{mt:5}}>댓글</DialogTitle>
                     <DialogContent >
                     
-                        <DialogContentText >
+                        <div >
                             <TextField                                                          
                                 multiline
                                 fullWidth                       
@@ -68,7 +72,7 @@ const StyleComment = () => {
                                 onChange={onInput}
                             />
                         
-                        </DialogContentText>
+                        </div>
                     </DialogContent>
                      <DialogActions>                         
                         <Button onClick={onUpload}>등록</Button>
@@ -77,7 +81,7 @@ const StyleComment = () => {
                     
                 </S.DeComment>
         </Dialog>
-        </div>
+
     );
 };
 

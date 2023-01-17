@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import lookbook.bean.LikesDTO;
 import lookbook.bean.StyleDTO;
 import lookbook.bean.StyleLikesDTO;
 import shop.bean.ProductDTO;
@@ -33,7 +34,7 @@ public interface StyleService {
 
 	public Optional<ProductDTO> styleProductSearch(int seq);
 
+	public List<StyleDTO> styleOneProduct(int seq);
 
-
-		
+	
 }

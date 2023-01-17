@@ -18,6 +18,16 @@ export const ImgBody = styled.div`
     
     /* border: 1px solid black; */
 `;
+export const ImgBody2 = styled.div`
+    width: 560px; 
+    height: 820px;
+    padding:  0 40px 0  0;
+    overflow-y: scroll;
+    ::-webkit-scrollbar{
+        display: none;
+    }
+    /* border: 1px solid black; */
+`;
 
 export const MainImgP=styled.p`
     width: 560px;
