@@ -44,7 +44,7 @@ const Header = () => {
                             <Link to="/shop">shop</Link>
                         </S.BottomLi>
                         <S.BottomLi active={true}>
-                            <Link to="/lookbook/trending">STYLE</Link>
+                            <Link to="/lookbook/trending" >STYLE</Link>
                         </S.BottomLi>
                         {/* <S.BottomLi active={true}><Link to="/lookbook/detail">STYLE</Link></S.BottomLi> */}
                         <S.BottomLi>SHOP</S.BottomLi>

@@ -26,7 +26,7 @@ const Trending = () => {
         axios
             .get('http://localhost:8080/lookbook/getStyleList')
             .then(res => setList(res.data))
-            .catch(error => console.log(error));
+            .catch(error => console.log(error));      
     }, []);
 
     //아이디

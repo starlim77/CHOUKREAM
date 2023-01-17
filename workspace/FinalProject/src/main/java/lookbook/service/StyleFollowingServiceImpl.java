@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lookbook.bean.StyleDTO;
+import lookbook.bean.StyleFollowingDTO;
 import lookbook.dao.StyleDAO;
 import lookbook.dao.StyleFollowingDAO;
 import lookbook.entity.StyleEntity;
@@ -117,7 +118,24 @@ public class StyleFollowingServiceImpl implements StyleFollowingService {
 
 	}
 	
-	
-	
+	//디테일-로그인 후 내 팔로이 불러오기
+	@Transactional
+	public List<String> getMyFollowee(Long followerId){
+		List<StyleFollowingDTO> followeeList = new ArrayList<>();
+		
+		//찾아와서 엔티티리스트에 담기		
+		List<StyleFollowingEntity> followeeEntityList = styleFollowingDAO.findAllIdByFollowerId(followerId);
+		
+		for(StyleFollowingEntity styleFollowingEntity : followeeEntityList ) {
+			followeeList.add(StyleFollowingDTO.toStyleFollowingDTO(styleFollowingEntity));
+		}
+		
+		List<String> followee= new ArrayList<>();
+		for(StyleFollowingDTO styleFollowingDTO : followeeList) {
+			followee.add(styleFollowingDTO.getFollowee().getId()+"");
+		}
+		System.out.println("***************"+followee);
+		return followee;
+	}
 	
 }

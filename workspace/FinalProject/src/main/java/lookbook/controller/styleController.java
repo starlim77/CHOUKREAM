@@ -26,6 +26,7 @@ import jakarta.transaction.Transactional;
 import lookbook.bean.LikesDTO;
 import lookbook.bean.StyleCommentDTO;
 import lookbook.bean.StyleDTO;
+import lookbook.bean.StyleFollowingDTO;
 import lookbook.bean.StyleLikesDTO;
 import lookbook.dao.StyleFileDAO;
 import lookbook.service.StyleCommentService;
@@ -230,12 +231,12 @@ public class styleController {
 		styleFollowingService.save(followerDto, followeeDto);	
 	}
 	//언팔
-	@DeleteMapping(path="unFollow/{followerid}/{followeeId}")
+	@DeleteMapping(path="unFollow/{followerId}/{followeeId}")
 	@ResponseBody
 	public void unFollow(@PathVariable int followerId, @PathVariable int followeeId) {
-
-		System.out.println("followee 글쓴사람 아이디"+followeeId);
-		System.out.println("follower 현재 로그인한 아이디"+ followerId);	
+		
+		System.out.println("111111111111"+followeeId);
+		System.out.println("22222222222222222"+ followerId);	
 
 		//MemberDto followerDto = memberDAO.findById(followerId);
 		//MemberDto followeeDto = memberDAO.findById(followeeId);
@@ -255,7 +256,7 @@ public class styleController {
 		return styleFollowingService.getFollowing(id);
 	}
 	
-	// 팔로워 개수 가져오기
+	// 팔로워 개수 가져오기 
 	@GetMapping(path="getFollower/{id}")
 	public Long getFollower(@PathVariable Long id) {
 		return styleFollowingService.followerCount(id);
@@ -268,7 +269,11 @@ public class styleController {
 		return styleFollowingService.followeeCount(id);
 	}
 	
-	
+	//디테일-로그인 후 내 팔로이 불러오기
+	@GetMapping(path="getMyFollowee/{id}")
+	public List<String> getMyFollowee(@PathVariable Long id){
+		return styleFollowingService.getMyFollowee(id);
+	}
 	
 
 }
