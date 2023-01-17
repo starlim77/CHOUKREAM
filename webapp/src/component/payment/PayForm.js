@@ -270,7 +270,10 @@ const PayForm = () => {
                         size,
                     },
                 })
-                .then(alert('구매 입찰 완료'))
+                .then(() => {
+                    alert('구매 입찰 완료');
+                    navigate('/shop');
+                })
                 .catch();
         } else {
             const { IMP } = window;
