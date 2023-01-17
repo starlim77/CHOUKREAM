@@ -1,6 +1,7 @@
 package shop.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import shop.dao.ShopDAO;
 import shop.bean.NewProductDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
+import shop.bean.SortListDTO;
 
 @Service
 public class ShopServiceImpl implements ShopService {
@@ -50,6 +52,58 @@ public class ShopServiceImpl implements ShopService {
 		return sizeRepository.findBySeq(seq);
 	}
 
+	@Override
+	public List<SortListDTO> favourSort() {
+		return shopDAO.favourSort();
+	}
+
+	@Override
+	public void resellDelete(int seq) {
+		shopDAO.resellDelete(seq);
+	}
+
+	@Override
+	public List<ProductDTO> resellSearch(Map<String, String> map) {
+		String searchOption = map.get("searchOption");
+		String keyword = map.get("keyword");
+		
+		System.out.println("searchOption " + searchOption);
+		System.out.println("keyword " + keyword);
+		
+		if(searchOption.equals("brand"))
+			return shopDAO.getSearchBrand(keyword);
+		else
+			return shopDAO.getSearchCategory(keyword);
+		
+	}
+
+	@Override
+	public void resellUpload(ProductDTO productDTO) {
+		//if (shopDAO.findbySeq(productDTO.getSeq()) == null) {
+			shopDAO.save(productDTO);
+		// }
+	}
+
+	@Override
+	public List<ProductDTO> BuySort() {
+		return shopDAO.BuySort();
+	}
+
+	@Override
+	public List<ProductDTO> SellSort() {
+		return shopDAO.SellSort();
+	}
+
+	@Override
+	public void reUpdate(ProductDTO productDTO) {
+		System.out.println(productDTO);
+		shopDAO.save(productDTO);
+	}
+
+	
+
+	
+	
 
 	
 }

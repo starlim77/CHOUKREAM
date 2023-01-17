@@ -12,15 +12,20 @@ import axios from 'axios';
 
 const Shop = () => {
     const [dummy, setDummy] = useState([]);
+    const [dummy2, setDummy2] = useState([]);
     const [dummyFilter, setDummyFilter] = useState([]);
+    const [sortCheck, setSortCheck] = useState(false);
 
+    
     useEffect(() => {
         axios
             .get('http://localhost:8080/shop/getProductList')
-            .then(res => setDummy(res.data))
+            //.get('http://localhost:8080/shop/favourSort')
+            .then(res => {setDummy(res.data); setDummy2(res.data)})
+            //.then(res => console.log(JSON.stringify(res.data)))
             .catch(error => console.log(error));
     }, []);
-    
+    // console.log(dummyOriginal)
     const [tag, setTag] = useState('');
     const [tagLive, setTagLive] = useState(false);
     
@@ -66,7 +71,7 @@ const Shop = () => {
                 <Se.SearchTop>
                     <Se.TopBox>
                         <Se.SearchTitle>
-                            <Se.TitleTxt>SHOP</Se.TitleTxt>
+                            <Se.TitleTxt>RESELL SHOP</Se.TitleTxt>
                         </Se.SearchTitle>
                         <Se.QuickFilter>
                             <Se.QuickFilterBox>
@@ -125,9 +130,12 @@ const Shop = () => {
                 <Content
                     dummy={dummy}
                     setDummy={setDummy}
+                    dummy2={dummy2}
                     dummyFilter={dummyFilter}
                     setDummyFilter={setDummyFilter}
                     tagLive={tagLive}
+                    sortCheck={sortCheck}
+                    setSortCheck={setSortCheck}
                     modalOpen={modalOpen}
                     openModal={openModal}
                     closeModal={closeModal}

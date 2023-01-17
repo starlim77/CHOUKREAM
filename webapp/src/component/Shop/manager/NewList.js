@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import * as Li from './NewListStyle';
 import NewProductList from './NewProductList';
 import Pagination from './Pagination';
@@ -35,6 +35,16 @@ const NewList = () => {
 
         // console.log('렌더링 1');
     }, []);
+    
+    // 강제로 새로고침 시키기
+    // let currentPath = "";
+    // let location = useLocation();
+    // useEffect (() => {
+    //     if (currentPath === location.pathname) window.location.reload();
+        
+    //     currentPath = location.pathname;
+    // }, [location])
+    
 
     // console.log(newProductList)
     var copy_newProductList = [];
@@ -215,8 +225,20 @@ const NewList = () => {
     }, [updateBool]);
     
     
+    console.log('카피 ' + copy_newProductList)
+    console.log('뉴 ' + newProductList)
+    
     return (
         <>
+            <Link to={'/admin/newWrite'} style={{ textDecoration: 'none' }}>
+                <Li.MenuBtn
+                    disabled={!disabledCheck}
+                    style={{ backgroundColor: disabledCheck ? '#fce205' : '' }}
+                    onClick={updateSearch}
+                >
+                    Create
+                </Li.MenuBtn>
+            </Link>
             <Li.MenuBtn
                 disabled={disabledCheck}
                 style={{ backgroundColor: disabledCheck ? '' : '#fce205' }}
@@ -333,21 +355,22 @@ const NewList = () => {
                                 }
                             ></Li.Input> */}
                         </Li.Th>
-                        <Li.Th>seq</Li.Th>
+                        <Li.Th>상품번호</Li.Th>
                         <Li.Th>이미지 </Li.Th>
-                        <Li.Th>brand</Li.Th>
-                        <Li.Th>category</Li.Th>
-                        <Li.Th>category_detail</Li.Th>
-                        <Li.Th>color</Li.Th>
-                        <Li.Th>model_num</Li.Th>
-                        <Li.Th>price</Li.Th>
-                        <Li.Th>releaseDate</Li.Th>
-                        <Li.Th>registerProductDate</Li.Th>
-                        <Li.Th>title</Li.Th>
-                        <Li.Th>subTitle</Li.Th>
+                        <Li.Th>브랜드</Li.Th>
+                        <Li.Th>카테고리</Li.Th>
+                        <Li.Th>사업자 번호</Li.Th>
+                        <Li.Th>색상</Li.Th>
+                        <Li.Th>대표자</Li.Th>
+                        <Li.Th>가격</Li.Th>
+                        <Li.Th>등록시간</Li.Th>
+                        <Li.Th>제조회사</Li.Th>
+                        <Li.Th>상품이름</Li.Th>
+                        <Li.Th>상품이름2</Li.Th>
                     </Li.Tr>
                 </Li.Thead>
                 <Li.Tbody>
+                    
                     {copy_newProductList
                         .slice(offset, offset + limit)
                         .map(item => (

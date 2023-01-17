@@ -8,6 +8,7 @@ export const H2 = styled.h2`
     justify-content: center;
     font-size: 28px;
     font-weight: bold;
+
 `;
 
 export const TagImg = styled.ul`
@@ -119,6 +120,7 @@ export const MainItem = styled.div`
    height: 430px;
    margin-left: 15px;
    margin-right: 10px;
+   position: relative;
 `;
 
 export const ItemImg = styled.img`
@@ -130,6 +132,16 @@ export const ItemImg = styled.img`
     border: 0.5px solid #ececec;
 `;
 
+export const ItemLayer = styled.img.attrs({
+    src:"/image/used/soldout.jpg"
+})`
+    position:absolute;
+    top:0px;
+    width: 277px;
+    height: 277px;
+    border-radius: 15px;
+    opacity:0.5;
+`;
 export const ItemTitle = styled.h2`
     margin-top: 7px;
     font-weight: 700;
@@ -143,6 +155,8 @@ export const ItemTitle = styled.h2`
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
     white-space: pre-wrap;
+
+    line-height: 25px;
 `;
 export const ItemSubTitle = styled.h2`
     margin-top: 5px;
@@ -151,6 +165,7 @@ export const ItemSubTitle = styled.h2`
     color: #999;
     word-break: break-all;
     white-space: pre-wrap;
+    height: 16px;
 
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -173,6 +188,7 @@ export const ItemContent = styled.pre`
 
     font-weight: 600;
     font-size: 10pt;
+    line-height: 15px;
 `;
 
 export const ItemPrice = styled.h2`

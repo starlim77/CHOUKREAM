@@ -26,13 +26,13 @@ public interface NewProductDAO extends JpaRepository<NewProductDTO, Integer> {
 	// @Query(value = "select * from NewProductDTO newproductDTO where newproductDTO.brand like '%' || :keyword || '%'", nativeQuery = true)
 	// @Query(value= "select * from NewProductDTO newproductDTO  where newproductDTO.brand = :keyword", nativeQuery = true)
 	// @Query("select newProductDTO from NewProductDTO newproductDTO where newproductDTO.brand = :keyword")
-	@Query("SELECT u FROM NewProductDTO u WHERE u.brand = :keyword")
+	@Query("SELECT u FROM NewProductDTO u WHERE u.brand like %:keyword%")
 	public List<NewProductDTO> getSearchBrand(@Param("keyword") String keyword);
 	
 	// @Query(value = "select * from NewProductDTO newproductDTO where newproductDTO.category like '%' || :keyword || '%'", nativeQuery = true)
 	// @Query(value= "select * from NewProductDTO newproductDTO  where newproductDTO.category = :keyword", nativeQuery = true)
 	// @Query("select newProductDTO from NewProductDTO newproductDTO where newproductDTO.category = :keyword")
-	@Query("SELECT u FROM NewProductDTO u WHERE u.category = :keyword")
+	@Query("SELECT u FROM NewProductDTO u WHERE u.category like %:keyword%")
 	public List<NewProductDTO> getSearchCategory(@Param("keyword") String keyword);
 
 	public Optional<NewProductDTO> findBySeq(int seq);
@@ -43,5 +43,9 @@ public interface NewProductDAO extends JpaRepository<NewProductDTO, Integer> {
 //	
 //	@Query("select newProductDTO from NewProductDTO newproductDTO where newproductDTO.category like '%' || :keyword || '%'") // 이런 Query 문을 수행해주세요
 //	public List<NewProductDTO> getSearchCategory(@Param("keyword") String keyword);
-
+	
+	
+	
+	
+	
 }
