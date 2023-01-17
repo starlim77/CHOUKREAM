@@ -135,8 +135,6 @@ public class UsedItemController {
 		 
 		 try {
 			
-			 
-			 
 			 String fileName=null;
 			 
 			 //원래는 img가 list형태라서 iterator를 사용하는 것이 더 올바른 방법이긴 함.

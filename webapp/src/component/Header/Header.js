@@ -53,7 +53,6 @@ const Header = ({auth}) => {
                             <Link to="/lookbook/trending">STYLE</Link>
                         </S.BottomLi>
                         {/* <S.BottomLi active={true}><Link to="/lookbook/detail">STYLE</Link></S.BottomLi> */}
-                        <S.BottomLi>SHOP</S.BottomLi>
                         <S.BottomLi>ABOUT</S.BottomLi>
                         <S.BottomLi>
                             <div>
