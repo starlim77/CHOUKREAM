@@ -119,6 +119,7 @@ const UsedWrite = () => {
                ...form,
                 hashTag : encodeURI(form.hashTag)
             }}))
+            
                  .then(() => {
                     navigate("/used/usedMain");
                  })

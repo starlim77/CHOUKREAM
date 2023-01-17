@@ -134,7 +134,7 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
     const[menuArray,setMenuArray]=useState([]);
     const[num,setNum]=useState(0);
     const dataSetting=(menu)=>{
-        console.log(menuArray)
+
         var sw=0
         var isExist=menuArray.filter(item=>item===menu);
         var arrayElse=menuArray.filter(item=>item!==menu);
@@ -153,11 +153,9 @@ const Content = ({ dummy, setDummy, dummyFilter, modalOpen, openModal, closeModa
             
             
         }else{
-            
-            //console.log(menuArray);
+    
             var dummyTemp=dummyOriginal.filter(item=>item.category===menu);
             
-            //console.log(dummyTemp);
             if(menuArray.length===0){
                 console.log("2로온다")
                     setDummy(dummyTemp);
