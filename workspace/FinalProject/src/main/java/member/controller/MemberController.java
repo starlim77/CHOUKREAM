@@ -17,6 +17,7 @@ import member.bean.ChangePasswordRequestDto;
 import member.bean.MemberDto;
 import member.bean.MemberResponseDto;
 import member.service.MemberService;
+import sms.service.SmsService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
@@ -26,6 +27,8 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	private final SmsService smsService;
 	
 	@PostMapping(path="certifications")
 	public void certifications(@RequestBody String imp_uid) {
@@ -52,10 +55,22 @@ public class MemberController {
 		return memberService.findPasswordByPhoneAndEmail(phone,email);
 	}
 	
-//	@PostMapping(path="changePassword")
-//    public ResponseEntity<MemberResponseDto> setMemberPassword(@RequestBody ChangePasswordRequestDto request) {
-//        return ResponseEntity.ok(memberService.changeMemberPassword(request.getEmail() ,request.getExPassword(), request.getNewPassword()));
-//    }
+	@GetMapping(path="my")
+    public ResponseEntity<MemberResponseDto> getMyMemberInfo() {
+        MemberResponseDto myInfoBySecurity = memberService.getMyInfoBySecurity();
+        System.out.println(myInfoBySecurity.getEmail());
+        return ResponseEntity.ok((myInfoBySecurity));
+    }
+	
+	@GetMapping(path="sendSms")
+	public void sendSms(@RequestParam String phone, @RequestParam String content) {
+		smsService.sendSms(phone, content);
+	}
+	
+	@GetMapping(path="isExistEmail")
+	public String isExistEmail(@RequestParam String email) {
+		return memberService.findByEmailAndProviderIsNull(email);
+	}
 
 	@GetMapping(path = "getMemberInfo")
 	public Optional<MemberDto> getMemberInfo(@RequestParam long seq) {

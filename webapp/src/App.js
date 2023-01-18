@@ -46,6 +46,7 @@ import Logout from './component/User/Logout';
 import MyPageMain from './component/myPage/MyPageMain';
 import MyPageApp from './component/myPage/MyPageApp';
 import NewUpdate from './component/Shop/manager/NewUpdate';
+import SocialLoginRedirect from './component/User/SocialLoginRedirect';
 import UsedItemList from './component/Shop/manager/UsedItemList';
 import jwt_decode from 'jwt-decode';
 import NewProductPage from './component/Shop/newProduct/NewProductPage';
@@ -58,6 +59,7 @@ import SellForm from './component/payment/SellForm';
 import StyleOneProduct from './component/Lookbook/StyleOneProduct';
 import SearchForm2 from './component/Search/SearchForm2';
 import SalesList from './component/Shop/manager/SalesList';
+import MainBanner from './component/Main/MainBanner/MainBanner';
 
 function App() {
     const token = localStorage.getItem('accessToken');
@@ -88,6 +90,7 @@ function App() {
                         path="/"
                         element={
                             <>
+                                <MainBanner />
                                 <Main />
                             </>
                         }
@@ -312,6 +315,10 @@ function App() {
                         element={<FindPasswordResult />}
                     />
                     <Route path="/logout" element={<Logout />} />
+                    <Route
+                        path="/oauth2/redirect"
+                        element={<SocialLoginRedirect />}
+                    />
                     <Route path="/join" element={<WriteForm />} />
                     <Route path="/cs/*" element={<CsMain />} />
 
