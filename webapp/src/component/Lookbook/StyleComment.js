@@ -7,7 +7,7 @@ import jwt_decode from 'jwt-decode';
 
 const StyleComment = () => {
 
-    const {styleSeq,id}= useParams()   
+    const {styleSeq,id,currentId3 }= useParams()   
     const navigate = useNavigate()
 
 
@@ -16,13 +16,26 @@ const StyleComment = () => {
         axios.get(`http://localhost:8080/lookbook/findMyListDetail/${styleSeq}`)
             .then(res => console.log(res.data.seq) )
             .catch(error => console.log(error))
+        // axios.get(`http://localhost:8080/used/getId?seq=${id}`)
+        //     .then(res=>{
+        //         setCurrentId(res.data)
+                
+
+        //     })
+        //     .catch(err=>console.log(err))
        
     }, []) 
+
+    
+    //  //아이디 이메일 앞자리로 변환
+    //  const [currentId,setCurrentId] = useState();
+    //  var currentId2 = (currentId||'').split('@');
+    //  var currentId3 = currentId2[0];
 
      
 
     const [form, setForm] = useState({
-        commentMember: id, //댓글입력아이디
+        commentMember: currentId3, //댓글입력아이디
         commentContents: '',
         styleSeq: styleSeq//게시글 번호
     })

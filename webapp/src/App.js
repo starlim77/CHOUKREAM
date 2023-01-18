@@ -170,7 +170,7 @@ function App() {
                     <Route path="/lookbook/detail" element={<Detail />} />
                     <Route path="/lookbook/following" element={<Following />}/>                
                     <Route
-                        path="/lookbook/styleComment/:styleSeq/:id"
+                        path="/lookbook/styleComment/:styleSeq/:id/:currentId3"
                         element={<StyleComment />}
                     />
                     <Route
