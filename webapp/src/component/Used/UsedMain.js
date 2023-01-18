@@ -45,6 +45,7 @@ const UsedMain = () => {
     const onTag = (title) => {
         setTag(title)
         setItemLength(8)
+        setSearch('')
     }
 
     useEffect(() => {
@@ -61,6 +62,7 @@ const UsedMain = () => {
     const tagReset = () => {
         setTag('')
         setSearchLive(false)
+        setSearch('')
     }
 
     const [search,setSearch] = useState('')
@@ -74,6 +76,7 @@ const UsedMain = () => {
             // console.log(data.map(item => decodeURI(item.hashTag))) 해쉬태그 정체 확인
             setDataFilter(data.filter(item => decodeURI(item.hashTag).includes(search) ? decodeURI(item.hashTag) : ''))
         }
+
     }
 
 
@@ -145,7 +148,7 @@ const UsedMain = () => {
             <Banner/>
 
             <S.SearchHashTag>
-                <S.SearchInput onChange={ (e) => setSearch(e.target.value)} placeholder='Tag 검색을 해보세요!'/>
+                <S.SearchInput value={search} onChange={ (e) => setSearch(e.target.value)} placeholder='Tag 검색을 해보세요!'/>
                 <S.SearchBtn onClick={ onSearch}>검색</S.SearchBtn>
             </S.SearchHashTag>
 
