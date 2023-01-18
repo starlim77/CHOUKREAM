@@ -54,13 +54,13 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 	@Query(nativeQuery = true, value = "select seq, img_name as imgName, id, title as subTitle from used_item where id = :id and selling_state=1")
 	List<SellBuyHistory> getSellingUsed(@Param("id") String email);
 
-	@Query(nativeQuery = true, value = "select used.seq, img_name as imgName, used.id, used.title as subTitle, comPay.ship_address as shipAddress, comPay.ship_name as shipName, comPay.ship_phone as shipPhone from used_item as used join complete_payment as comPay on used.seq = comPay.seq where used.id = :id and used.selling_state=0;")
+	@Query(nativeQuery = true, value = "select used.seq, img_name as imgName, used.id, used.title as subTitle, comPay.ship_address as shipAddress, comPay.ship_name as shipName, comPay.ship_phone as shipPhone from used_item as used join complete_payment as comPay on used.seq = comPay.product_num where used.id = :id and used.selling_state=0;")
 	List<SellBuyHistory> getSoldUsed(@Param("id")  String email);
 
 	@Query(nativeQuery = true, value = "select seq, img_name as imgName, id, title as subTitle from used_item where id = :id and selling_state=1")
 	List<SellBuyHistory> getBuyingUsed(@Param("id")  String email);
 
-	@Query(nativeQuery = true, value = "select used.seq, img_name as imgName, used.id, used.title as subTitle, comPay.ship_address as shipAddress, comPay.ship_name as shipName, comPay.ship_phone as shipPhone from used_item as used join complete_payment as comPay on used.seq = comPay.seq where used.id = :id and used.selling_state=0;")
+	@Query(nativeQuery = true, value = "select used.seq, img_name as imgName, used.id, used.title as subTitle, comPay.ship_address as shipAddress, comPay.ship_name as shipName, comPay.ship_phone as shipPhone from used_item as used join complete_payment as comPay on used.seq = comPay.product_num where comPay.id = :id and used.selling_state=0;")
 	List<SellBuyHistory> getBoughtUsed(@Param("id")  String email);
 	
 	
