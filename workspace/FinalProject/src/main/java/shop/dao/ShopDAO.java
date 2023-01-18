@@ -66,7 +66,7 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 	
 	// 반환타입을 interface 로 
 	@Query( nativeQuery = true, value= "select a.seq, a.brand, ifnull(b.order_price, '-') as min_price ,ifnull(c.order_price, '-') \r\n"
-			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count, a.category, a.tag from product_table as a \r\n"
+			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count, a.category, a.tag, a.release_date, a.gender from product_table as a \r\n"
 			+ "left outer join (select seq, min(order_price) AS order_price from order_table where buy_sell = 1 group by seq ) as b on a.seq = b.seq\r\n"
 			+ "left outer join (select seq, max(order_price) AS order_price from order_table where buy_sell = 0 group by seq ) as c on a.seq = c.seq\r\n"
 			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'resell' group by seq) as d on a.seq = d.seq\r\n"
@@ -99,7 +99,7 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 	public List<SortListDTO> getRecentReleaseList(int start, int end);
 	
 	@Query(nativeQuery= true, value= "select a.seq, a.brand, ifnull(b.order_price, '-') as min_price ,ifnull(c.order_price, '-') \r\n"
-			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count, a.category, a.tag, a.release_date from product_table as a \r\n"
+			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count, a.category, a.tag, a.release_date, a.gender from product_table as a \r\n"
 			+ "left outer join (select seq, min(order_price) AS order_price from order_table where buy_sell = 1 group by seq ) as b on a.seq = b.seq\r\n"
 			+ "left outer join (select seq, max(order_price) AS order_price from order_table where buy_sell = 0 group by seq ) as c on a.seq = c.seq\r\n"
 			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'resell' group by seq) as d on a.seq = d.seq\r\n"
@@ -108,7 +108,7 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 	List<SortListDTO> BuySort();  // 즉시구매가 낮은순
 	
 	@Query(nativeQuery = true, value = "select a.seq, a.brand, ifnull(b.order_price, '-') as min_price ,ifnull(c.order_price, '-') \r\n"
-			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count, a.category, a.tag, a.release_date from product_table as a \r\n"
+			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count, a.category, a.tag, a.release_date, a.gender from product_table as a \r\n"
 			+ "left outer join (select seq, min(order_price) AS order_price from order_table where buy_sell = 1 group by seq ) as b on a.seq = b.seq\r\n"
 			+ "left outer join (select seq, max(order_price) AS order_price from order_table where buy_sell = 0 group by seq ) as c on a.seq = c.seq\r\n"
 			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'resell' group by seq) as d on a.seq = d.seq\r\n"
@@ -117,7 +117,7 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 	List<SortListDTO> SellSort(); // 즉시판매가 높은순 
 	
 	@Query(nativeQuery = true, value = "select a.seq, a.brand, ifnull(b.order_price, '-') as min_price ,ifnull(c.order_price, '-') \r\n"
-			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count, a.category, a.tag, a.release_date from product_table as a \r\n"
+			+ "as max_price, a.title, a.sub_title, a.img_name, d.like_count, e.order_count, a.category, a.tag, a.release_date, a.gender from product_table as a \r\n"
 			+ "left outer join (select seq, min(order_price) AS order_price from order_table where buy_sell = 1 group by seq ) as b on a.seq = b.seq\r\n"
 			+ "left outer join (select seq, max(order_price) AS order_price from order_table where buy_sell = 0 group by seq ) as c on a.seq = c.seq\r\n"
 			+ "left outer join (select seq, count(*) AS like_count from used_item_like where shop_kind = 'resell' group by seq) as d on a.seq = d.seq\r\n"
@@ -148,12 +148,12 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 			+ "select b.seq, b.product_name as brand, b.img_name as imgName, b.title as subTitle, a.size, a.type, a.ship_address as address, a.ship_name as shipName, a.ship_phone as shipPhone, a.pay_price as price, a.log_time  from complete_payment a left join used_item b on a.product_num = b.seq where type = 'used' and a.id = :id) t order by log_time desc limit 3;")
 	List<SellBuyHistory> getSellRecent(@Param("id") String email);
 
-	@Query(nativeQuery = true, value = "select * from(\r\n"
-			+ "select b.seq, b.brand, b.img_name as imgName, b.sub_title as subTitle, a.size,  a.ship_address as address, a.ship_name as shipName, a.ship_phone as shipPhone, a.price as price, trade_date from completed_order_table a left join product_table b on a.seq = b.seq  where a.buy_order_user = :id \r\n"
-			+ "union all\r\n"
-			+ "select b.seq, b.brand, b.img_name as imgName, b.sub_title as subTitle, a.size,  a.ship_address as address, a.ship_name as shipName, a.ship_phone as shipPhone, a.price as price, trade_date from completed_order_table a left join new_product b on a.seq = b.seq  where a.buy_order_user = :id \r\n"
-			+ "union all\r\n"
-			+ "select b.seq, b.product_name as brand, b.img_name as imgName, b.title as subTitle, a.size, a.ship_address as address, a.ship_name as shipName, a.ship_phone as shipPhone, a.price as price, trade_date  from completed_order_table a left join used_item b on a.seq = b.seq where a.buy_order_user = :id) t order by trade_date desc limit 3;")
+	@Query(nativeQuery = true, value = "select * from (\r\n"
+			+ "            select pro.seq, pro.brand, pro.img_name as imgName, pro.sub_title as subTitle, comPay.size, comPay.type, comPay.ship_address as shipAddress, comPay.ship_name as shipName, comPay.ship_phone as shipPhone, comPay.pay_price as price, comPay.log_time from product_table as pro left join complete_payment as comPay on pro.seq = comPay.product_num where comPay.id = :id and comPay.type = 'resell'\r\n"
+			+ "			union all\r\n"
+			+ "            select pro.seq, pro.brand, pro.img_name as imgName, pro.sub_title as subTitle, comPay.size, comPay.type, comPay.ship_address as address, comPay.ship_name as shipName, comPay.ship_phone as shipPhone, comPay.pay_price as price, comPay.log_time from complete_payment comPay left join new_product pro on comPay.product_num = pro.seq  where comPay.id = :id and type = 'new'\r\n"
+			+ "			union all\r\n"
+			+ "            select pro.seq, pro.product_name as brand, pro.img_name as imgName, pro.title as subTitle, comPay.size, comPay.type, comPay.ship_address as address, comPay.ship_name as shipName, comPay.ship_phone as shipPhone, comPay.pay_price as price, comPay.log_time from complete_payment comPay left join used_item pro on comPay.product_num = pro.seq  where comPay.id = :id and type = 'used') t order by log_time desc limit 3;")
 	List<SellBuyHistory> getBuyRecent(@Param("id") String email);
 	
 

@@ -3,10 +3,24 @@ package pay.service;
 
 import static org.hamcrest.CoreMatchers.nullValue;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
 import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import javax.net.ssl.HttpsURLConnection;
+
+import org.json.simple.JSONObject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,7 +34,9 @@ import my.bean.PointDTO;
 import my.dao.GradeDAO;
 import my.dao.PointDAO;
 import my.service.MyService;
+
 import pay.bean.CompletePaymentDTO;
+import pay.bean.SalesDTO;
 import pay.dao.PayDAO;
 import shop.bean.BidsListDTO;
 import shop.bean.CompletedOrderDTO;
@@ -185,9 +201,92 @@ public class PayServiceImpl implements PayService {
 	}
 
 	@Override
-	public void cancelPay(String orderNumber) {
+	public void cancelPay(String orderNumber, int payPrice) {
 		
-		Optional<CompletePaymentDTO> completePaymentDTO = payDAO.findByOrderNumber(orderNumber);
+//		HttpsURLConnection conn = null;
+//		 
+//		URL url = new URL("https://api.iamport.kr/users/getToken");
+//
+//		conn = (HttpsURLConnection) url.openConnection();
+//
+//		conn.setRequestMethod("POST");
+//		conn.setRequestProperty("Content-type", "application/json");
+//		conn.setRequestProperty("Accept", "application/json");
+//		conn.setDoOutput(true);
+//	    JSONObject json = new JSONObject();
+//
+//		json.addProperty("imp_key", "3848862180162752");
+//		json.addProperty("imp_secret", "ABpaLEt7DIbDUefCfP4Hzu5VR4j5kivPYibwQhLJLz3457NS7twNGEITMibfy6TtoFhlPJnMYGz4682Q");
+//		
+//		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+//		
+//		bw.write(json.toString());
+//		bw.flush();
+//		bw.close();
+//
+//		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+//
+//		gson gson = new gson();
+//
+//		String response = gson.fromJson(br.readLine(), Map.class).get("response").toString();
+//		
+//		System.out.println(response);
+//
+//		String token = gson.fromJson(response, Map.class).get("access_token").toString();
+//
+//		br.close();
+//		conn.disconnect();
+//		
+		/*
+		HttpURLConnection conn = null;		
+		String access_token = null;
+		
+		
+		try {
+			URL url = new URL("http://api.iamport.kr/users/getToken");
+			conn= (HttpURLConnection)url.openConnection();
+			conn.setRequestMethod("POST");
+			
+			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setRequestProperty("Accept", "application/json");
+			
+			conn.setDoOutput(true);
+			//
+			JSONObject obj = new JSONObject();
+			obj.put("imp_key", URLEncoder.encode("3848862180162752", "UTF-8"));
+			obj.put("imp_secret", URLEncoder.encode("ABpaLEt7DIbDUefCfP4Hzu5VR4j5kivPYibwQhLJLz3457NS7twNGEITMibfy6TtoFhlPJnMYGz4682Q", "UTF-8"));
+			
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+			
+			int result = 0;
+			int responseCode = conn.getResponseCode();
+			System.out.println("responseCode"+ responseCode);
+			if(responseCode==200) {
+				System.out.println("성공");
+				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				StringBuilder sb = new StringBuilder();
+				String line = null;		
+				while((line=br.readLine())!=null) {
+					sb.append(line+"\n");
+				}
+				br.close();
+				System.out.println(""+sb.toString());
+				result = 1;
+			}else {
+				System.out.println(conn.getResponseMessage());
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		*/
+		
+		
+		
+		
+		/*Optional<CompletePaymentDTO> completePaymentDTO = payDAO.findByOrderNumber(orderNumber);
 		
 		String type = completePaymentDTO.get().getType();
 			
@@ -249,7 +348,7 @@ public class PayServiceImpl implements PayService {
 		payDAO.ChangeStatusColumn(orderNumber);
 		
 		//구매이력 금액 합산액 확인 후 회원 등급 조정
-		checkAndChangeGrade(id);
+		checkAndChangeGrade(id); */
 		
 	}
 	
@@ -272,5 +371,10 @@ public class PayServiceImpl implements PayService {
 			gradeDTO.setGrade("일반회원");
 			gradeDAO.save(gradeDTO);
 		}
+	}
+
+	@Override
+	public List<SalesDTO> getAllSales() {
+		return payDAO.getAllSales();
 	}
 }

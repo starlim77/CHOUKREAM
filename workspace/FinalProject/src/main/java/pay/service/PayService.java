@@ -1,8 +1,10 @@
 package pay.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import pay.bean.CompletePaymentDTO;
+import pay.bean.SalesDTO;
 import shop.bean.BidsListDTO;
 import shop.bean.OrderDTO;
 
@@ -20,6 +22,8 @@ public interface PayService {
 
 	public void checkAndChangeGrade(String id);
 
-	public void cancelPay(String orderNumber);
+	public void cancelPay(String orderNumber, int payPrice);
+
+	public List<SalesDTO> getAllSales();
 	
 }

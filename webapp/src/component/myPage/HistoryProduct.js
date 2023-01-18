@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import * as S from './like/LikeStyle';
-import { itemImg } from './MyPageMainStyle';
 
 const HistoryProduct = (props) => {
     const {item} = props
@@ -8,7 +7,9 @@ const HistoryProduct = (props) => {
         let str = String(num)
         return (str.replace(/\B(?=(\d{3})+(?!\d))/g, ','))
     };
-
+useEffect(() => {
+    console.log(item.type)
+}, [])
     
     const arr = JSON.stringify(item.imgName).split(',')
     
@@ -21,7 +22,12 @@ const HistoryProduct = (props) => {
     return (
         <S.Product>
             <S.ImgWrapper>
-                <S.ProductImg src={`../resellList/${str2 ? str2:str}`}></S.ProductImg>
+                {item.type === "used" && <S.ProductImg src={`../storage/${str2 ? str2 : str}`} />}
+                {item.type === "resell" && <S.ProductImg src={`../resellList/${str2 ? str2 : str}`} />}
+                {item.type === "new" && <S.ProductImg src={`../newProductList/${str2 ? str2 : str}`}/>}
+                {/* <S.ProductImg src={item.type === "used"
+                        ? `../storage/${str2 ? str2 : str}`
+                        : `../resellList/${str2 ? str2 : str}`}></S.ProductImg> */}
             </S.ImgWrapper>
             <S.TextWrapper>
                 <S.ProductBrand>Brand: {item.brand}</S.ProductBrand>

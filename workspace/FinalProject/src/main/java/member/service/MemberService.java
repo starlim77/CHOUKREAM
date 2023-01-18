@@ -8,6 +8,8 @@ import member.bean.MemberDto;
 import member.bean.MemberResponseDto;
 
 public interface MemberService {
+	
+	public MemberResponseDto getMyInfoBySecurity();
 
 	Optional<MemberDto> getMember(Long id);
 
@@ -29,4 +31,6 @@ public interface MemberService {
 
 	public Optional<MemberDto> getMemberInfo(long seq);
 
+	public String findByEmailAndProviderIsNull(String email);
+	
 }

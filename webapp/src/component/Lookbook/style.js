@@ -78,6 +78,17 @@ export const DeDiv = styled.div`
     display: inline-block;
     padding-bottom: 50px;
 `
+export const DeFollowChk =styled.span`
+    float: right; 
+    padding-top: 18px;  
+    margin-right: 10px; 
+`
+export const DEChkprofile= styled.div`
+    float:left;
+`
+export const DeProfile = styled.div`
+    display: inline;    
+`
 
 //MyStyleDetail.js
 export const MyDeContainer = styled.div`
@@ -116,6 +127,7 @@ export const SCLdeletebutton= styled.div`
 
 export const SCLcomment = styled.div`
     margin-bottom: 10px;
+    overflow: hidden;
 `
 
 //Mystyle.js 
@@ -149,7 +161,7 @@ export const MyPhotoMini = styled.div`
     width: 200px;
     height: 220px;
     display: inline-block;
-    padding: 20px 30px 50px 30px;
+    padding: 20px 30px 70px 30px;
 
 `
 
@@ -191,11 +203,12 @@ export const Button = styled.button`
 //styleProduct.js
 export const ProductItem = styled.div`
     margin: 10px 0 10px;
-    padding: 0 10px;
+    padding: 10px;
     width: 20%;
     position: relative;
     // display: inline-block;
     vertical-align: top;
+    border: 0.5px solid #e2e2e2;
 `
 
 //styleOneProduct.js
@@ -211,9 +224,17 @@ export const OneItem = styled.div`
     width: 20%;
     position: relative;
     vertical-align: top;
-`
+`;
 
-;
+export const PictureBrandProductImg = styled.img`
+
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    image-rendering: auto;
+    background: #ddcece4a;
+    /* margin-top: 17px; */
+`
 
 
 

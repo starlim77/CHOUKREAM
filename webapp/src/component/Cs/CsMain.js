@@ -9,6 +9,8 @@ import CsNotice from './CsNotice/CsNotice';
 import CsHeader from './CsHeader';
 import CsFaqWriteForm from './CsFaqWriteForm';
 import CsNoticeDetail from './CsNotice/CsNoticeDetail';
+import CsNoticeWrite from './CsNotice/CsNoticeWrite';
+import CsNoticeUpdateForm from './CsNotice/CsNoticeUpdateForm';
 
 const CsMain = () => {
     return (
@@ -23,13 +25,19 @@ const CsMain = () => {
                             path="/csNotice/:seq"
                             element={<CsNoticeDetail />}
                         />
-                        <Route path="/CsFaq" element={<CsFaq />} />
                         <Route
-                            path="/CsFaqUpdateForm/:seq"
+                            path="/csNoticeUpdateForm/:seq"
+                            element={<CsNoticeUpdateForm />}
+                        />
+                        <Route path ='/csNoticeWrite' element={<CsNoticeWrite/>}/>
+
+                        <Route path="/csFaq" element={<CsFaq />} />
+                        <Route
+                            path="/csFaqUpdateForm/:seq"
                             element={<CsFaqUpdateForm />}
                         />
                         <Route
-                            path="/CsFaqWriteForm/"
+                            path="/csFaqWriteForm/"
                             element={<CsFaqWriteForm />}
                         />
                         <Route

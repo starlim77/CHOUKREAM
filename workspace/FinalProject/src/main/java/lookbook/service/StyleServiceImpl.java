@@ -1,6 +1,7 @@
 package lookbook.service;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import lookbook.dao.StyleFileDAO;
 import lookbook.dao.StyleLikesDAO;
 import lookbook.entity.StyleEntity;
 import lookbook.entity.StyleFileEntity;
+import member.bean.MemberDto;
 import member.dao.MemberDAO;
 import shop.bean.ProductDTO;
 import shop.dao.ShopDAO;
@@ -99,9 +101,23 @@ public class StyleServiceImpl implements StyleService {
 		styleDTO.setStyleFile(list);			
 		//System.out.println("리스트 담겻나"+styleDTO);
 		
+		//아이디로 이메일 불러와서 스타일 디티오에 저장
+			String id = styleDTO.getId();
+			System.out.println(id + "id *******************************************");
+			MemberDto memberDTO = memberDAO.findEmailById(id);
+			String email = memberDTO.getEmail();
+			System.out.println(email + "email *****************************************");
+			styleDTO.setEmail(email);
+		
 		if(styleDTO.getStyleFile() == null || styleDTO.getStyleFile().isEmpty()) {
 	    	//첨부파일 없음
+			
+			
+			
 			StyleEntity styleEntity = StyleEntity.toSaveEntity(styleDTO);
+			
+			
+			styleEntity.setEmail(null);
 	    	styleDAO.save(styleEntity);
 	    }else {
 	    	 //첨부파일 있음
@@ -118,6 +134,8 @@ public class StyleServiceImpl implements StyleService {
 //	 	     System.out.println(index);
 	 	     pathModified = pathModified.substring(0,index);
 //	 	     System.out.println("경로확인"+pathModified);
+	 	     
+	 	     
 	    	 
 	 	     StyleEntity styleEntity = StyleEntity.toSaveFileEntity(styleDTO);
 	 	     int savedSeq = styleDAO.save(styleEntity).getSeq();
@@ -155,7 +173,7 @@ public class StyleServiceImpl implements StyleService {
 		List<StyleEntity> styleEntityList = styleDAO.findAllByOrderBySeqDesc();
 		List<StyleDTO> styleDTOList = new ArrayList<>();
 		for (StyleEntity styleEntity: styleEntityList) {
-			styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
+			styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));			
 		}
 		return styleDTOList; 
 		

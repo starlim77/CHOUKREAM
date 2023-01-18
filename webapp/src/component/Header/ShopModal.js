@@ -7,9 +7,9 @@ const ShopModal = () => {
     return (
         <>                
             <S.ShopModalWrapper>
-                <Link to="/shop">Resell</Link>&emsp;
-                <Link to="/shop/newProduct">Brand Shop</Link>&emsp;
-                <Link to="/used/usedMain">Used</Link>
+                <Link to="/shop" style={{ textDecoration: 'none' }}>Resell</Link>&emsp;
+                <Link to="/shop/newProduct" style={{ textDecoration: 'none' }}>Brand Shop</Link>&emsp;
+                <Link to="/used/usedMain" style={{ textDecoration: 'none' }}>Used</Link>
             </S.ShopModalWrapper>
         </>
     );

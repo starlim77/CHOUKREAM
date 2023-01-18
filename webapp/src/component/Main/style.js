@@ -37,6 +37,7 @@ export const TopItem = styled.div`
         margin-top: 8px;
         text-align: center;
     }
+    cursor: pointer;
 `;
 
 export const MidBanner = styled.div`

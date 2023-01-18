@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import * as S from './CsNoticeStyle';
-
+import { Link } from 'react-router-dom';
+import * as C from './CsNoticeStyle';
+import jwt_decode from 'jwt-decode';
+import { category } from '../../Search/style';
 const CsNoticeDetail = () => {
     const location = useLocation();
     const [notice, setNotice] = useState(location.state.noticeList);
@@ -11,25 +13,73 @@ const CsNoticeDetail = () => {
     const navigate = useNavigate()
     let content = notice.content;
 
+    const [seq,setSeq ]= useState()
+
+    const token = localStorage.getItem('accessToken');
+    const [auth, setAuth] = useState('ROLE_GUEST');
+    const [tokenId, settokenId] = useState('')
+    useEffect(() => {
+        if (token !== null) {
+            const tokenJson = jwt_decode(token);
+            setAuth(tokenJson['auth']);
+            //localStorage.setItem('userInfo', JSON.stringify(tokenJson));
+            settokenId(tokenJson['sub']);
+            // setForm({...form, id:tokenId})
+        }
+    }, [token]);
+
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/cs/getNotice?seqString=${noticeNum}`)
+            .get(`http://localhost:8080/csnotice/getNotice?seqString=${noticeNum}`)
             .then(res => setNotice(res.data))
             .catch(error => console(error));
+            setSeq(noticeNum)
     }, []);
     
     const onList = () => {
         navigate("/cs/csNotice")
     }
+    const onUpdate = () =>{
+        
+    }
+
+    const onDelete =( ) => {
+             
+        if(!window.confirm('정말로 삭제하시겠습니까?'))
+        return;
+      
+             axios.delete(`http://localhost:8080/csnotice/deleteNotice?seqString=${noticeNum}`)
+                        .then(() =>{
+                            alert("글 삭제");
+                            navigate(-1);
+
+                        })
+                        .catch(error=> console.log(error))
+        
+    
+        .catch(error=> console.log(error))
+    }
+      
+
+     
     return (
         <>
-            <S.NoticeWrapper>
-                <S.NoticeTitle>{notice.title}</S.NoticeTitle>
-                <S.NoticeContent>
+             <C.DateSpan>{notice.createdate}</C.DateSpan>
+            <C.NoticeWrapper>
+               
+                <C.NoticeTitle> [  {notice.category==='anouncement' ? '공지':
+                                    notice.category==='event' ? '이벤트 발표' :
+                                   notice.category==='etc' ? '기타' :
+                        ''} ] &nbsp; {notice.title}</C.NoticeTitle>
+                <C.NoticeContent>
+                    
                     <div dangerouslySetInnerHTML={{ __html: content }}></div>
-                </S.NoticeContent>
-                <S.Button onClick={onList}>목록으로</S.Button>
-            </S.NoticeWrapper>
+                </C.NoticeContent>
+                <C.Button onClick={onList}>목록으로</C.Button>
+                    {tokenId === '14' &&   <Link to={'/cs/csNoticeUpdateForm/'+seq}>    <C.Button onClick={onUpdate}>수정</C.Button></Link>}
+                    
+                    { tokenId === '14' && <C.Button onClick={onDelete}>삭제</C.Button> }
+            </C.NoticeWrapper>
         </>
     );
 };

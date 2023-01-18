@@ -7,7 +7,7 @@ import jwt_decode from 'jwt-decode';
 
 const StyleComment = () => {
 
-    const {styleSeq,id}= useParams()   
+    const {styleSeq,id,currentId3 }= useParams()   
     const navigate = useNavigate()
 
 
@@ -16,8 +16,22 @@ const StyleComment = () => {
         axios.get(`http://localhost:8080/lookbook/findMyListDetail/${styleSeq}`)
             .then(res => console.log(res.data.seq) )
             .catch(error => console.log(error))
-    }, []) 
+        // axios.get(`http://localhost:8080/used/getId?seq=${id}`)
+        //     .then(res=>{
+        //         setCurrentId(res.data)
+                
 
+        //     })
+        //     .catch(err=>console.log(err))
+       
+    }, []) 
+     
+
+    const [form, setForm] = useState({
+        commentMember: currentId3, //댓글입력아이디
+        commentContents: '',
+        styleSeq: styleSeq//게시글 번호
+    })
     
     const onInput = (e) =>{
         const { name, value } = e.target
@@ -27,11 +41,7 @@ const StyleComment = () => {
         })
     }
 
-    const [form, setForm] = useState({
-        commentMember: id, //댓글입력아이디
-        commentContents: '',
-        styleSeq: styleSeq//게시글 번호
-    })
+   
 
     const {commentMember, commentContents} = form
 
@@ -54,7 +64,10 @@ const StyleComment = () => {
         
     }
 
-
+    const onCancel = (e) => {
+        e.preventDefault()
+        navigate(-1)
+    }
 
     return (
          
@@ -76,7 +89,7 @@ const StyleComment = () => {
                     </DialogContent>
                      <DialogActions>                         
                         <Button onClick={onUpload}>등록</Button>
-                        <Button ><Link to ={'/lookbook/detail'}>취소</Link></Button> 
+                        <Button onClick={onCancel}>취소</Button> 
                     </DialogActions>  
                     
                 </S.DeComment>

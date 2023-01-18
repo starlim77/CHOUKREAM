@@ -121,7 +121,6 @@ public class MyServiceImpl implements MyService{
 	@Override
 	public List<SellBuyHistory> getBuyingHistory(long memberSeq) {
 		String email = memberDAO.findById(memberSeq).get().getEmail();
-		
 		return shopDAO.getBuyingHistory(email);
 	}
 	@Override

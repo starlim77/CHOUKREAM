@@ -12,4 +12,5 @@ border-bottom: 4px solid black;
 export const HeaderText = styled.span`
 font-size: 25px;
 font-weight: 600;
+
 `

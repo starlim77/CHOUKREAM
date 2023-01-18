@@ -47,6 +47,7 @@ import Logout from './component/User/Logout';
 import MyPageMain from './component/myPage/MyPageMain';
 import MyPageApp from './component/myPage/MyPageApp';
 import NewUpdate from './component/Shop/manager/NewUpdate';
+import SocialLoginRedirect from './component/User/SocialLoginRedirect';
 import UsedItemList from './component/Shop/manager/UsedItemList';
 import jwt_decode from 'jwt-decode';
 import NewProductPage from './component/Shop/newProduct/NewProductPage';
@@ -56,6 +57,8 @@ import ReWrite from './component/Shop/register/ReWrite';
 import Following from './component/Lookbook/Following';
 import RequireAuth from './component/Require/RequireAuth';
 import SellForm from './component/payment/SellForm';
+import SalesList from './component/Shop/manager/SalesList';
+import MainBanner from './component/Main/MainBanner/MainBanner';
 import StyleOneProduct from './component/Lookbook/StyleOneProduct';
 import SearchForm2 from './component/Search/SearchForm2';
 
@@ -72,6 +75,7 @@ function App() {
             setSub(tokenJson['sub']);
         }
     }, []);
+
     // ROLE_GUEST, ROLE_USER, ROLE_ADMIN
 
     // user or admin => //
@@ -87,6 +91,7 @@ function App() {
                         path="/"
                         element={
                             <>
+                                <MainBanner />
                                 <Main />
                             </>
                         }
@@ -164,10 +169,14 @@ function App() {
                             </>
                         }
                     />
-
                     <Route
-                        path="shop/newProduct"
-                        element={<NewProductPage />}
+                        path="admin/salesList"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <SalesList />
+                            </>
+                        }
                     />
                     <Route path="admin" element={<ManagerPage />} />
                     <Route
@@ -303,6 +312,10 @@ function App() {
                         element={<FindPasswordResult />}
                     />
                     <Route path="/logout" element={<Logout />} />
+                    <Route
+                        path="/oauth2/redirect"
+                        element={<SocialLoginRedirect />}
+                    />
                     <Route path="/join" element={<WriteForm />} />
                     <Route path="/cs/*" element={<CsMain />} />
 
@@ -317,9 +330,12 @@ function App() {
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
                     <Route path="/lookbook/detail" element={<Detail />} />
-                    <Route path="/lookbook/following" element={<Following />} />
                     <Route
-                        path="/lookbook/styleComment/:styleSeq/:id"
+                        path="/lookbook/following/:tokenId"
+                        element={<Following />}
+                    />
+                    <Route
+                        path="/lookbook/styleComment/:styleSeq/:id/:currentId3"
                         element={<StyleComment />}
                     />
                     <Route
@@ -342,7 +358,7 @@ function App() {
                     />
                 </Route>
 
-                <Route path="/Search/SearchForm" element={<SearchForm />} />
+                <Route path="/searchForm" element={<SearchForm2 />} />
             </Routes>
         </BrowserRouter>
     );

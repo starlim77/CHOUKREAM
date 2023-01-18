@@ -49,7 +49,7 @@ public class MemberServiceImpl implements MemberService {
 		MemberDto memberDto = memberDAO.findPasswordByPhoneAndEmail(phone, email);
 		
 		if(memberDto != null) {
-			String tempPassword = new GenerateTempPassword().excuteGenerate();
+			String tempPassword = new GenerateTempPassword().randomPassword();
 			
 			memberDto.setPassword(passwordEncoder.encode((tempPassword))); 
 			memberDAO.save(memberDto);
@@ -86,6 +86,16 @@ public class MemberServiceImpl implements MemberService {
 		memberDto.setEmail(email);
 		memberDAO.save(memberDto);
 		return memberDAO.findById(id);
+	}
+
+	@Override
+	public String findByEmailAndProviderIsNull(String email) {
+		MemberDto memberDto = memberDAO.findByEmailAndProviderIsNull(email);
+		if(memberDto != null) {
+			return "exist";
+		} else {
+			return "non_exist";
+		}
 	}
 
 	@Override

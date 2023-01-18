@@ -28,19 +28,22 @@ const Header = ({ auth }) => {
                         <Link to="/admin">
                             {auth === 'ROLE_ADMIN' ? (
                                 <S.TopLi>관리자페이지</S.TopLi>
-                            ) : (
-                                <S.TopLi>관리자페이지</S.TopLi>
-                            )}
+                            ) : null}
                             {/*나중에 뒷 부분 NULL처리 할 것! */}
                         </Link>
-                        <Link to="/cs/CsNotice">
+                        <Link to="/cs/csNotice">
                             <S.TopLi>고객센터</S.TopLi>
                         </Link>
-                        <S.TopLi>관심상품</S.TopLi>
-                        <S.TopLi><Link to="/my/"> 마이페이지</Link></S.TopLi>
                         <S.TopLi>
-                            <Link to="/login">로그인</Link>
-                            <Link to="/logout">로그아웃</Link>
+                            <Link to="/my/"> 마이페이지</Link>
+                        </S.TopLi>
+                        <S.TopLi>
+                            {auth === 'ROLE_GUEST' && (
+                                <Link to="/login">로그인</Link>
+                            )}
+                            {auth === 'ROLE_USER' || auth === 'ROLE_ADMIN' ? (
+                                <Link to="/logout">로그아웃</Link>
+                            ) : null}
                         </S.TopLi>
                     </S.TopWrapper>
                 </S.Top>
@@ -55,7 +58,15 @@ const Header = ({ auth }) => {
                             {shopModalOpen && <ShopModal></ShopModal>}
                         </S.BottomLi>
                         <S.BottomLi active={true}>
-                            <Link to="/lookbook/trending">STYLE</Link>
+                            <Link
+                                to="/lookbook/trending"
+                                style={{
+                                    textDecoration: 'none',
+                                    color: 'inherit',
+                                }}
+                            >
+                                STYLE
+                            </Link>
                         </S.BottomLi>
                         {/* <S.BottomLi active={true}><Link to="/lookbook/detail">STYLE</Link></S.BottomLi> */}
                         <S.BottomLi>ABOUT</S.BottomLi>

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import pay.bean.CompletePaymentDTO;
+import pay.bean.SalesDTO;
 import shop.bean.BidsListDTO;
 
 public interface PayDAO<T> extends JpaRepository<CompletePaymentDTO, Integer> {
@@ -33,6 +34,14 @@ public interface PayDAO<T> extends JpaRepository<CompletePaymentDTO, Integer> {
 
 	@Query(nativeQuery = true, value = "update complete_payment set status = '결제취소' where order_number = :orderNumber")
 	public void ChangeStatusColumn(String orderNumber);
+
+	@Query(nativeQuery = true, value = "select * from(\n"
+			+ "select id, order_number, pay_price, status, type, log_time, img_name, title, a.size from complete_payment a left join product_table b on a.product_num = b.seq  where type = 'resell'\n"
+			+ "union all\n"
+			+ "select id, order_number, pay_price, status, type, log_time, img_name, title, a.size from complete_payment a left join new_product b on a.product_num = b.seq  where type = 'new'\n"
+			+ "union all\n"
+			+ "select a.id, order_number, pay_price, status, type, log_time, img_name, title, a.size from complete_payment a left join used_item b on a.product_num = b.seq where type = 'used') t order by log_time desc")
+	public List<SalesDTO> getAllSales();
 	
 
 }

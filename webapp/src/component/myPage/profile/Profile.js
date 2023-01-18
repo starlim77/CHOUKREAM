@@ -144,7 +144,7 @@ const Profile = () => {
                 </S.PicWrapper>
 
                 <S.MiddleWrapper>
-                    <S.IdDIv>id : {id}</S.IdDIv>
+                    <S.IdDIv>ID : {id}</S.IdDIv>
                     <S.ButtonWrapper>
                         {/* <S.Button>이미지 변경</S.Button>
                         <S.Button>이미지 삭제</S.Button> */}
@@ -165,16 +165,16 @@ const Profile = () => {
                                 onChange={inputEmail}
                                 ref={emailRef}
                             />
-                            <S.ChangeButton onClick={onChangeEmail}>
+                            {/* <S.ChangeButton onClick={onChangeEmail}>
                                 변경
-                            </S.ChangeButton>
+                            </S.ChangeButton> */}
                         </>
                     ) : (
                         <>
                             <S.Email>{member.email}</S.Email>
-                            <S.ChangeButton name="email" onClick={onOpen}>
+                            {/* <S.ChangeButton name="email" onClick={onOpen}>
                                 변경
-                            </S.ChangeButton>
+                            </S.ChangeButton> */}
                         </>
                     )}
 

@@ -50,7 +50,10 @@ public class MemberDto {
 	
 	@Column(name = "email_option")
 	private int emailOption; //0이면 수신x , 1이면 수신o
-
+	
+	@Column(name = "provider")
+	private String provider;
+	
 	@Builder
     public MemberDto(String email, String password, String phone, Authority authority, int smsOption, int emailOption) { 
         this.email = email;
@@ -60,5 +63,19 @@ public class MemberDto {
         this.smsOption = smsOption;
         this.emailOption = emailOption;
     }
+	
+	@Builder(builderClassName = "socialBuilder", builderMethodName = "socialBuilder")
+	public MemberDto(String email, String password, String phone, String name, Authority authority, int smsOption, int emailOption, String provider) { 
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.name = name;
+        this.authority = authority;
+        this.smsOption = smsOption;
+        this.emailOption = emailOption;
+        this.provider = provider;
+    }
+
+	
 	
 }
