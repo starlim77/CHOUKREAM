@@ -57,6 +57,7 @@ import RequireAuth from './component/Require/RequireAuth';
 import SellForm from './component/payment/SellForm';
 import StyleOneProduct from './component/Lookbook/StyleOneProduct';
 import SearchForm2 from './component/Search/SearchForm2';
+import SalesList from './component/Shop/manager/SalesList';
 
 function App() {
     const token = localStorage.getItem('accessToken');
@@ -71,6 +72,7 @@ function App() {
             setSub(tokenJson['sub']);
         }
     }, []);
+
     // ROLE_GUEST, ROLE_USER, ROLE_ADMIN
 
     // user or admin => //
@@ -160,6 +162,15 @@ function App() {
                             <>
                                 <ManagerPage />
                                 <NewUpdate />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/salesList"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <SalesList />
                             </>
                         }
                     />

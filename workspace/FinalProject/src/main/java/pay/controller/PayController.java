@@ -1,6 +1,7 @@
 package pay.controller;
 
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import my.bean.PointDTO;
 import my.service.MyService;
 import pay.bean.CompletePaymentDTO;
+import pay.bean.SalesDTO;
 import pay.service.PayService;
 import sms.service.SmsService;
 import shop.bean.BidsListDTO;
@@ -37,8 +39,8 @@ public class PayController {
 		payService.completePay(completePaymentDTO);
 	}
 	@RequestMapping(path = "cancelPay")
-	public void cancelPay(@RequestParam String orderNumber) {
-		payService.cancelPay(orderNumber);
+	public void cancelPay(@RequestParam String orderNumber, @RequestParam int payPrice) {
+		payService.cancelPay(orderNumber, payPrice);
 	}
 	
 	
@@ -52,12 +54,14 @@ public class PayController {
 		return payService.getBuyBidsPriceMax(size, seq);
 	}
 	
-	
-	
-	
 	@RequestMapping(path = "getOrderTableBySeq")
 	public Optional<OrderDTO> getOrderTableBySeq(@RequestParam int seq) {
 		return payService.getOrderTableBySeq(seq);
+	}
+	
+	@RequestMapping(path = "getAllSales")
+	public List<SalesDTO> getAllSales(){
+		return payService.getAllSales();
 	}
 	
 }
