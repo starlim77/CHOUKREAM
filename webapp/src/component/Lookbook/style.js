@@ -34,7 +34,8 @@ export const TrTypoDiv = styled.pre`
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    overflow: hidden;
+    /* overflow: hidden; */
+    height: auto;
 `
 export const TrBox = styled.div`
     display: flex;
@@ -75,7 +76,6 @@ export const DeTopDiv = styled.div`
 export const DeDiv = styled.div`
     width: 500px;
     display: inline-block;
-    padding-top: 50px;
     padding-bottom: 50px;
 `
 export const DeFollowChk =styled.span`
@@ -160,7 +160,7 @@ export const MyPhotoMini = styled.div`
     width: 200px;
     height: 220px;
     display: inline-block;
-    padding: 20px 30px 50px 30px;
+    padding: 20px 30px 70px 30px;
 
 `
 
@@ -202,13 +202,38 @@ export const Button = styled.button`
 //styleProduct.js
 export const ProductItem = styled.div`
     margin: 10px 0 10px;
-    padding: 0 10px;
+    padding: 10px;
     width: 20%;
     position: relative;
     // display: inline-block;
     vertical-align: top;
+    border: 0.5px solid #e2e2e2;
 `
-;
+
+//styleOneProduct.js
+export const OneContainer = styled.div`
+    width: 1200px;
+    margin: 0px auto;
+    display: flex;    
+`
+
+export const OneItem = styled.div`
+    margin: auto;
+    padding: 50px;
+    width: 20%;
+    position: relative;
+    vertical-align: top;
+`;
+
+export const PictureBrandProductImg = styled.img`
+
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    image-rendering: auto;
+    background: #ddcece4a;
+    /* margin-top: 17px; */
+`
 
 
 

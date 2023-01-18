@@ -210,6 +210,19 @@ public class StyleServiceImpl implements StyleService {
 		return shopDAO.findById(seq);
 	}
 
+
+	@Override
+	public List<StyleDTO> styleOneProduct(int productSeq) {		
+//		System.out.println("================================="+productSeq);
+		List<StyleEntity> styleEntityList = styleDAO.findByProductSeqOrderBySeqDesc(productSeq);
+	      List<StyleDTO> styleDTOList = new ArrayList<>();
+	      for (StyleEntity styleEntity: styleEntityList) {
+	         styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
+	      }
+	      return styleDTOList; 
+
+	}
+
 	
 }
 

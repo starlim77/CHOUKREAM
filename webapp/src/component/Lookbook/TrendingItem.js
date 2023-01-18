@@ -24,30 +24,29 @@ const TrendingItem = ({item,index,itemLength,id}) => {
            
             <Card sx={{ width: 250 }} >
                 
-                {/* <Link to={{
-                    pathname:'/lookbook/detail',
-                    state:{id:id } 
-                    }}> */}
                 <Link to={'/lookbook/detail'} state={{id:id}}>
+
                     <S.TrGridBoxImg src={'../storage/' + item.storedFileName[0]}/>
-                </Link>
-                
-                <S.TrBox>
+
+                    <S.TrBox>
                         <CardHeader 
                                 avatar={ <Avatar sx={{ bgcolor: grey }} mr={'3'}/>    } // 개인프로필사진 넣을곳
                                 />
                         <S.TrUsernameBox>
                         {item.id}
+                        {/* {item.name} */}
                         </S.TrUsernameBox>
 
-                    <S.TrlikeBox>
-                        <IconButton aria-label="add to favorites">
-                            <img src={ isLike === 1 ?  '/image/style/likes.png'  : '/image/style/unlikes.png'  }
-                                style={{ width:'28px'}} />
-                        </IconButton>
-                        {item.likesCount}
-                    </S.TrlikeBox>
-                </S.TrBox>
+                        <S.TrlikeBox>
+                            <IconButton aria-label="add to favorites">
+                                <img src={ isLike === 1 ?  '/image/style/likes.png'  : '/image/style/unlikes.png'  }
+                                    style={{ width:'28px'}} />
+                            </IconButton>
+                            {item.likesCount}
+                        </S.TrlikeBox>
+                    </S.TrBox>
+
+                </Link>
 
                 <CardContent>
                     <S.TrTypoDiv>

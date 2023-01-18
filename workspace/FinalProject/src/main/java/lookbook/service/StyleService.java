@@ -34,5 +34,7 @@ public interface StyleService {
 
 	public Optional<ProductDTO> styleProductSearch(int seq);
 
+	public List<StyleDTO> styleOneProduct(int seq);
+
 	
 }

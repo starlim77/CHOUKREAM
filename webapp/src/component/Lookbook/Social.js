@@ -14,7 +14,6 @@ const social = () => {
             </S.SoHeader>    
             <br></br>
             
-            <button><Link to='/lookbook/detail'>상세보기</Link></button>&nbsp;
             <button><Link to='/lookbook/mystyle'>MY스타일</Link></button> 
         
         </S.SoTopDiv>

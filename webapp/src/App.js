@@ -48,11 +48,12 @@ import MyPageApp from './component/myPage/MyPageApp';
 import NewUpdate from './component/Shop/manager/NewUpdate';
 import UsedItemList from './component/Shop/manager/UsedItemList';
 import jwt_decode from 'jwt-decode';
-import Following from './component/Lookbook/Following';
 import NewProductPage from './component/Shop/newProduct/NewProductPage';
 import ReList from './component/Shop/resell/ReList';
 import ReUpdate from './component/Shop/resell/ReUpdate';
 import ReWrite from './component/Shop/register/ReWrite';
+import Following from './component/Lookbook/Following';
+import StyleOneProduct from './component/Lookbook/StyleOneProduct';
 import SearchForm2 from './component/Search/SearchForm2';
 
 function App() {
@@ -163,12 +164,13 @@ function App() {
                     <Route path="/my/*" element={<MyPageApp />} />
 
                     <Route path="/lookbook/trending" element={<Trending />} />
+                    <Route path="/styleOneProduct/:seq" element={<StyleOneProduct />} />
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
                     <Route path="/lookbook/detail" element={<Detail />} />
                     <Route path="/lookbook/following" element={<Following />}/>                
                     <Route
-                        path="/lookbook/styleComment/:styleSeq"
+                        path="/lookbook/styleComment/:styleSeq/:id"
                         element={<StyleComment />}
                     />
                     <Route

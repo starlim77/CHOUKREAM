@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, {  useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import { Avatar, CardActions, CardContent, CardHeader,  IconButton } from '@mui/material';
 import Container from '@mui/material/Container';
@@ -11,13 +11,15 @@ import StyleCommentList from './StyleCommentList';
 
 const MystyleDetail = () => {
     const { id } = useParams();  //주소값 파라미터 seq id가져오기
+    const navigate = useNavigate();
 
     //좋아요 포함 dto 전체 리스트
     const [likeAll, setLikeAll] = useState([]);
     
     //게시물 뿌리기
     const [list, setList] = useState([]);
- 
+    const [currentId, setCurrentId] = useState();
+
 
     useEffect( ()=> {     
         axios.get(`http://localhost:8080/lookbook/findLikes?id=${id}`)
@@ -27,6 +29,10 @@ const MystyleDetail = () => {
             )
             .catch(error => console.log(error))
 
+        //member_id -> email 가져오기
+        axios.get(`http://localhost:8080/used/getId?seq=${id}`)
+                .then(res=>{setCurrentId(res.data)})
+                .catch(err=>console.log(err))
     }, []) 
 
  
@@ -45,6 +51,10 @@ const MystyleDetail = () => {
         //item.id가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듦
         //=item.id 가 id 인 것을 제거한다
         
+    }
+
+    const onComment = (seq, id) => {
+            navigate(`/lookbook/StyleComment/${seq}/${id}`)
     }
 
 
@@ -93,7 +103,8 @@ const MystyleDetail = () => {
                                         <S.MyDeprofile>
                                             <CardHeader
                                                 avatar={ <Avatar> 프로필</Avatar> }
-                                                title={item.id}
+                                                // title={item.id}
+                                                title={item.email}
                                                 subheader={item.logTime}
                                             /> 
                                         </S.MyDeprofile>
@@ -140,12 +151,10 @@ const MystyleDetail = () => {
 
 
                                 <div>
-                                    <IconButton >
-                                        
-                                        <Link to ={`/lookbook/StyleComment/${item.seq}`} >
+                                    <IconButton onClick={ () => onComment(item.seq, id)}>    
+                                        {/* <Link to ={`/lookbook/StyleComment/${item.seq}`} > */}
                                         <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
-                                        </Link>
-                                        
+                                        {/* </Link> */}
                                     </IconButton> 
                                     <span>{item.comment_count}</span>  
                                     
