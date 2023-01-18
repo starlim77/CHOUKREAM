@@ -44,7 +44,7 @@ const Header = ({auth}) => {
                             {shopModalOpen&&<ShopModal></ShopModal>}
                         </S.BottomLi>
                         <S.BottomLi active={true}>
-                            <Link to="/lookbook/trending" >STYLE</Link>
+                            <Link to="/lookbook/trending" style={{textDecoration: 'none',color: 'inherit'}}>STYLE</Link>
                         </S.BottomLi>
                         {/* <S.BottomLi active={true}><Link to="/lookbook/detail">STYLE</Link></S.BottomLi> */}
                         <S.BottomLi>ABOUT</S.BottomLi>
