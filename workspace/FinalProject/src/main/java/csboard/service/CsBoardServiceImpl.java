@@ -33,7 +33,7 @@ public class CsBoardServiceImpl implements CsBoardService {
 
 	@Override
 	public List<CsBoardDTO> getKeywordSearch(String keyword) {
-		return csBoardDAO.findByContentContainingOrderBySeqDesc(keyword);
+		return csBoardDAO.findByContentContainingOrderBySeqDesc(keyword); //findByContentContainingOrderBySeqDesc(keyword);
 	}
 
 	@Override

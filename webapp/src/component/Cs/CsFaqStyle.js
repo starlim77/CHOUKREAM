@@ -271,3 +271,6 @@ export const StrongNum =styled.strong`
 font-size: 14px;
 font-weight : bold;
 `
+export const ListButtonWrap = styled.p`
+margin : 10px
+`
