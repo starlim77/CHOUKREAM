@@ -41,7 +41,6 @@ export const MenuLi = styled.li`
     text-decoration: none;
     color: lightgray;
     height: 100%;
-    width: 90px;
     display: flex;
     align-items: center;
     box-sizing: border-box;

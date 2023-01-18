@@ -1,10 +1,14 @@
 package lookbook.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import lookbook.bean.LikesDTO;
 import lookbook.bean.StyleDTO;
+import lookbook.bean.StyleLikesDTO;
+import shop.bean.ProductDTO;
 
 public interface StyleService {
 
@@ -23,11 +27,14 @@ public interface StyleService {
 	public List<StyleDTO> findAll();
 
 	public StyleDTO findMyListDetail(int seq);
-
-	public int saveLikes(String id,int style_seq);
-	public int findLikes(String id, int style_seq);
 	
-	public Long findCountById(String id);
+	public Long findCountById(String id);  //게시글 카운트
 
-		
+	public List<ProductDTO> search(String keyword);
+
+	public Optional<ProductDTO> styleProductSearch(int seq);
+
+	public List<StyleDTO> styleOneProduct(int seq);
+
+	
 }

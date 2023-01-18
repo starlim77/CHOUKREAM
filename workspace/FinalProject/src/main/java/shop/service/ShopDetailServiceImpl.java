@@ -1,22 +1,28 @@
 package shop.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lookbook.bean.StyleDTO;
+import lookbook.dao.StyleDAO;
+import lookbook.entity.StyleEntity;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
-import shop.bean.NewNewProductDTO;
+import shop.bean.NewProductDTO;
+import shop.bean.NewProductOptionDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.ProductSizeDTO;
 import shop.bean.SizeMinDTO;
 import shop.bean.UsedItemLikeDTO;
 import shop.dao.CompletedOrderRepository;
-import shop.dao.NewNewProductRepository;
+import shop.dao.NewProductDAO;
+import shop.dao.NewProductOptionRepository;
 import shop.dao.OrderRepository;
 import shop.dao.ProductSizeRepository;
 import shop.dao.ShopDAO;
@@ -33,9 +39,13 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	@Autowired
 	private ProductSizeRepository productSizeRepository; 
 	@Autowired
-	private NewNewProductRepository newNewProductRepository;
+	private NewProductDAO newProductDAO;
 	@Autowired
 	private UsedItemLikeDAO useItemLikeDAO;
+	@Autowired
+	private StyleDAO styleDAO;
+	@Autowired
+	private NewProductOptionRepository newProductOptionRepository;
 	
 	@Override
 	public Optional<ProductDTO> getProduct(int seq) {
@@ -109,12 +119,29 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	}
 	
 	@Override
-	public Optional<NewNewProductDTO> getNewProduct(int seq) {
-		return newNewProductRepository.findById(seq);
+	public Optional<NewProductDTO> getNewProduct(int seq) {
+		return newProductDAO.findById(seq);
 	}
 	
 	@Override
 	public Long likeCount(int seq, String shopKind) {
 		return useItemLikeDAO.likeCount(seq, shopKind);
+	}
+	
+	@Override
+	public List<StyleDTO> getBrandStyleList(int seq) {
+		List<StyleEntity> styleEntityList = styleDAO.getBrandStyleList(seq);
+		List<StyleDTO> styleDTOList = new ArrayList<>();
+		
+		for (StyleEntity styleEntity: styleEntityList) {
+	         styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
+	      }
+		
+		return styleDTOList;
+	}
+	
+	@Override
+	public List<NewProductOptionDTO> getNewProductOption(int seq) {
+		return newProductOptionRepository.findBySeq(seq);
 	}
 }

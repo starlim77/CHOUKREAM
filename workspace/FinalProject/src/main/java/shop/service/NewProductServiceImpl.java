@@ -2,11 +2,13 @@ package shop.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import shop.bean.NewProductDTO;
+import shop.bean.NewSortListDTO;
 import shop.dao.NewProductDAO;
 
 @Service
@@ -47,6 +49,46 @@ public class NewProductServiceImpl implements NewProductService {
 //		else
 //			return newProductDAO.getSearchCategory(keyword);
 //	}
+	
+	// 첫번째 - JPA에서 제공하는 쿼리 메서드 사용 
+	@Override
+	public List<NewProductDTO> search(Map<String, String> map) {
+		String searchOption = map.get("searchOption");
+		String keyword = map.get("keyword");
+		
+		System.out.println("searchOption " + searchOption);
+		System.out.println("keyword " + keyword);
+		
+		if(searchOption.equals("brand"))
+			return newProductDAO.getSearchBrand(keyword);
+		else
+			return newProductDAO.getSearchCategory(keyword);
+	}
+
+	@Override
+	public Optional<NewProductDTO> updateNewProductInfo(int seq) {
+		return newProductDAO.findBySeq(seq);
+	}
+
+	@Override
+	public List<NewSortListDTO> newFavourSort() {
+		return newProductDAO.newFavourSort();
+	}
+
+	@Override
+	public List<NewSortListDTO> newBuySort() {
+		return newProductDAO.newBuySort();
+	}
+
+	@Override
+	public List<NewSortListDTO> newSellSort() {
+		return newProductDAO.newSellSort();
+	}
+
+	@Override
+	public List<NewSortListDTO> newReleaseDateSort() {
+		return newProductDAO.newReleaseDateSort();
+	}
 	
 	
 }

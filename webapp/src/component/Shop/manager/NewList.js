@@ -1,12 +1,11 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import * as Li from './NewListStyle';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import * as Li from '../resell/NewListStyle';
 import NewProductList from './NewProductList';
 import Pagination from './Pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { relativeTimeRounding } from 'moment/moment';
 
 const NewList = () => {
     const [newProductList, setNewProductList] = useState([]);
@@ -36,6 +35,16 @@ const NewList = () => {
 
         // console.log('렌더링 1');
     }, []);
+    
+    // 강제로 새로고침 시키기
+    // let currentPath = "";
+    // let location = useLocation();
+    // useEffect (() => {
+    //     if (currentPath === location.pathname) window.location.reload();
+        
+    //     currentPath = location.pathname;
+    // }, [location])
+    
 
     // console.log(newProductList)
     var copy_newProductList = [];
@@ -124,7 +133,7 @@ const NewList = () => {
     const [disabledCheck, setDisabledCheck] = useState(true);
 
     const [keyword, setKeyword] = useState('');
-    const [searchOption, setSearchOption] = useState('브랜드');
+    const [searchOption, setSearchOption] = useState('brand');
     const onSearch = e => {
         // get select
         e.preventDefault();
@@ -137,16 +146,103 @@ const NewList = () => {
                 },
             })
             .then(res => setNewProductList(res.data))
+            //.then(res => console.log(JSON.stringify(res.data)))
             .catch(error => console.error(error));
     };
 
     const [searchBtn, setSearchBtn] = useState(false);
-
+    
+    
+    // 해야할거 
+    // 1 버튼을 눌렀을때 DB가서 seq 에 맞는 1인분 끌고와서 list에 담아줌
+    // set state 가 비동기적으로 안되는 상황 구글링 ㄱ setState 안됨 / 비동기 동기
+    // 2 list props로 넘겨줘서 뿌려주자 
+    
+    // useCallback 으로 되는지 
+    
+    // const updateSearch2 = useCallback(() => {
+    //     axios
+    //         .get(
+    //             `http://localhost:8080/shop/updateNewProductInfo?seq=${checkedId}`,
+    //         )
+    //         // .then(res => console.log(JSON.stringify(res.data)))
+    //         .then(res => setUpdateList(res.data))
+    //         // .then(console.log('성공'))
+    //         .catch(error => console.error(error));
+    // },[])
+    
+    // sync 스럽게 순차적으로 실행하고 싶을때 해결책은 useEeffect 
+    // useEffect를 잘 작성하면 특정 state가 변경될 때 useEffect를 실행할 수 있음 
+    
+    // const updateSearch = useCallback(() => {
+    //     axios
+    //         .get(`http://localhost:8080/shop/updateNewProductInfo?seq=${checkedId}`)
+    //         // .then(res => console.log(JSON.stringify(res.data)))
+    //         .then(res=> setUpdateList(res.data))
+    //         .catch((error) => console.error(error));
+    // }, [])
+    
+    // const updateSearch = () => {
+    //     axios
+    //         .get(
+    //             `http://localhost:8080/shop/updateNewProductInfo?seq=${checkedId}`,
+    //         )
+    //         .then(res => console.log(JSON.stringify(res.data)))
+    //         .then(res => setUpdateList(res.data))
+    //         // .then(res => updateList2.push({ ...res.data }))
+    //         .then(() =>navigate('/admin/newUpdate', {
+    //                 state: {
+    //                     name: '현욱',
+    //                     checkedId: checkedId,
+    //                     updateList: updateList,
+    //                 },
+    //             }),
+    //         )
+    //         .catch(error => console.error(error));
+    // }
+    
+    const [updateList, setUpdateList] = useState([]);
+    const [updateBool, setUpdateBool] = useState(false);
+    const updateSearch = () => {
+        setUpdateBool(!updateBool);    
+        setUpdateList(newProductList.filter(item => item.seq === checkedId))
+        // console.log(updateList)
+    }
+    
+    useEffect(() => {
+        // console.log('updateList ' + updateList);
+        // console.log(updateList);
+        // updateSearch();
+        if (updateBool) {
+            navigate('/admin/newUpdate', {
+                state: {
+                    name: '현욱',
+                    checkedId: checkedId,
+                    updateList: updateList,
+                },
+            });
+        }
+    }, [updateBool]);
+    
+    
+    console.log('카피 ' + copy_newProductList)
+    console.log('뉴 ' + newProductList)
+    
     return (
         <>
+            <Link to={'/admin/newWrite'} style={{ textDecoration: 'none' }}>
+                <Li.MenuBtn
+                    disabled={!disabledCheck}
+                    style={{ backgroundColor: disabledCheck ? '#fce205' : '' }}
+                    onClick={updateSearch}
+                >
+                    Create
+                </Li.MenuBtn>
+            </Link>
             <Li.MenuBtn
                 disabled={disabledCheck}
                 style={{ backgroundColor: disabledCheck ? '' : '#fce205' }}
+                onClick={updateSearch}
             >
                 {/* <Link 
                     to={{pathname:'/admin/newUpdate',
@@ -166,17 +262,24 @@ const NewList = () => {
                 >
                     Update
                 </Link> */}
-                <Link
+                {/* {console.log(updateList)} */}
+                {/* <Link
                     to={'/admin/newUpdate'}
-                    state={{ name: '현욱', checkedId: checkedId }}
+                    state={{
+                        name: '현욱',
+                        checkedId: checkedId,
+                        updateList: updateList,
+                    }}
                     style={{
                         textDecoration: 'none',
                         pointerEvents: disabledCheck ? 'none' : '',
                     }}
+                    onClick={updateSearch}
                 >
-                    {/* pointerEvents: 'none' Link 태그 버튼 고장내는거거 */}
                     Update
-                </Link>
+                </Link> */}
+                {/* pointerEvents: 'none' Link 태그 버튼 고장내는거거 */}
+                Update
             </Li.MenuBtn>
             <Li.MenuBtn
                 onClick={newProductDelete}
@@ -217,8 +320,7 @@ const NewList = () => {
                         onChange={e => setKeyword(e.target.value)}
                     ></Li.SearchInput>
                     &nbsp; &nbsp;
-                    <Li.SearchBtn>검색</Li.SearchBtn>
-                    {/* onClick={onSearch} */}
+                    <Li.SearchBtn onClick={onSearch}>검색</Li.SearchBtn>
                 </Li.SearchForm>
             </Li.SearchDiv>
             <Li.LabelDiv>
@@ -253,21 +355,22 @@ const NewList = () => {
                                 }
                             ></Li.Input> */}
                         </Li.Th>
-                        <Li.Th>seq</Li.Th>
+                        <Li.Th>상품번호</Li.Th>
                         <Li.Th>이미지 </Li.Th>
-                        <Li.Th>brand</Li.Th>
-                        <Li.Th>category</Li.Th>
-                        <Li.Th>category_detail</Li.Th>
-                        <Li.Th>color</Li.Th>
-                        <Li.Th>model_num</Li.Th>
-                        <Li.Th>price</Li.Th>
-                        <Li.Th>releaseDate</Li.Th>
-                        <Li.Th>registerProductDate</Li.Th>
-                        <Li.Th>title</Li.Th>
-                        <Li.Th>subTitle</Li.Th>
+                        <Li.Th>브랜드</Li.Th>
+                        <Li.Th>카테고리</Li.Th>
+                        <Li.Th>사업자 번호</Li.Th>
+                        <Li.Th>색상</Li.Th>
+                        <Li.Th>대표자</Li.Th>
+                        <Li.Th>가격</Li.Th>
+                        <Li.Th>등록시간</Li.Th>
+                        <Li.Th>제조회사</Li.Th>
+                        <Li.Th>상품이름</Li.Th>
+                        <Li.Th>상품이름2</Li.Th>
                     </Li.Tr>
                 </Li.Thead>
                 <Li.Tbody>
+                    
                     {copy_newProductList
                         .slice(offset, offset + limit)
                         .map(item => (

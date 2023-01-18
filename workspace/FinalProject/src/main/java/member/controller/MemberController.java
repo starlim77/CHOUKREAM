@@ -2,6 +2,7 @@ package member.controller;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import member.bean.MemberDto;
 import lombok.RequiredArgsConstructor;
 import member.bean.ChangePasswordRequestDto;
 import member.bean.MemberDto;
@@ -43,4 +45,10 @@ public class MemberController {
         return ResponseEntity.ok(memberService.changeMemberPassword(request.getEmail() ,request.getExPassword(), request.getNewPassword()));
     }
 
+	@GetMapping(path = "getMemberInfo")
+	public Optional<MemberDto> getMemberInfo(@RequestParam long seq) {
+		
+		return memberService.getMemberInfo(seq);
+	}
+	
 }

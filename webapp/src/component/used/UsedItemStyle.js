@@ -19,6 +19,24 @@ export const ImgBody = styled.div`
     /* border: 1px solid black; */
 `;
 
+export const ImgBody2 = styled.div`
+    width: 560px; 
+    height: 560px;
+    padding:  0 40px 0  0;
+    text-align: center;
+    
+    /* border: 1px solid black; */
+`;
+
+// export const BaseDiv = styled.div`
+//     width:600px;
+//     height:700px;
+//     border-left:1px solid rgba(236,236,236);
+//     border-right:1px solid rgba(236,236,236);
+//     text-align: center;
+//     display: inline-block;
+// `;
+
 export const BaseDiv = styled.div`
     width: 560px;
     height: 820px;
@@ -47,12 +65,33 @@ export const MainImg=styled.img`
     border: 0.5px solid #ececec;
 `;
 
-export const SmallImg=styled.img`
-    width:100px;
-    height:100px;
-    padding:25px;
+export const MainImg2=styled.img`
+    width:560px;
+    height:560px;
     object-fit: cover;
     border: 0.5px solid #ececec;
+`;
+export const SmallImgBody=styled.div`
+    display: flex;
+    margin-top: 20px;
+`
+
+export const SmallImg=styled.img`
+    width:175px;
+    height:175px;
+    object-fit: cover;
+    border: 0.5px solid #ececec;
+    margin-right: 5px;
+    margin-left: 5px;
+`;
+
+export const SmallImg2=styled.img`
+    width:100px;
+    height:100px;
+    padding:5px;
+    object-fit: cover;
+    border: 0.5px solid #ececec;
+    cursor: pointer;
 `;
 
 export const TitleWrapper=styled.div`
@@ -70,26 +109,40 @@ export const ProductNameWrapper=styled.div`
 `;
 
 export const ProdcuctNameSpan=styled.p`
-    font-size:30px;
+    font-size: 24px;
     text-align: left;
+    margin-top: 15px;
 `;
 
 export const SizeWrapper=styled.div`
-    width:560px;
+    width:550px;
     font-size:30px;
     text-align: left;
     padding: 15px 0 15px 0;
+    
+    display: flex;
+    justify-content: space-between;
+
+    border-bottom : 1px solid black;
 `;
 
+export const Sizetitle=styled.span`
+    font-size: 10pt;
+    margin-top: 14.5px;
+`
+
 export const SizeSpan=styled.span`
-    font-size:30px;
+    font-size:30px; 
 `;
 
 export const PriceWrapper=styled.div`
-    width:560px;
+    width:550px;
     font-size:30px;
     text-align: left;
     padding: 15px 0 15px 0;
+
+    display: flex;
+    justify-content: space-between;
 
 `;
 export const PriceSpan=styled.span`
@@ -97,7 +150,7 @@ export const PriceSpan=styled.span`
 `;
 
 export const InterestWrapper=styled.p`
-    width:560px;
+    width:550px;
     text-align: center;
     border:1px solid rgba(236,236,236);
     font-size:25px;
@@ -105,6 +158,7 @@ export const InterestWrapper=styled.p`
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 50px;
 
     :hover{
         cursor: pointer;
@@ -136,7 +190,7 @@ export const ItemSpan=styled.span`
 
 export const ItemContents=styled.pre`
     border:1px solid rgba(236,236,236);
-    width:560px;
+    width:550px;
     min-height:250px;
     font-size: 20px;
     white-space: pre-wrap;
@@ -147,21 +201,48 @@ export const ItemContents=styled.pre`
 export const ChatButton=styled.button`
     width:560px;
     font-size:50px;
+    margin-bottom: 100px;
 
     :hover{
         cursor: pointer;
     }
 `;
 
+export const SettlementButton=styled.button`
+    width:560px;
+    height: ${props=>props.active?'':'80px'};
+    font-size:${props=>props.active?'20px':'40px'};
+    border-radius: 20px;
+    color:white;
+    background:${props=>props.active?'black':'gray'};
+    -webkit-animation:${props=>props.active? 'blink 2.0s linear infinite':'none'};
+
+    @keyframes blink {
+    /*0% 부터 100% 까지*/ 
+    50% {color:#fff;}
+    100% {color:#000; }
+    }
+    :hover{
+        cursor: pointer;
+    }
+`;
+//https://blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=bo_mini1222&logNo=221453065190&redirect=Dlog&widgetTypeCall=true&directAccess=false
+
+export const PriceDiv=styled.div`
+    font-size:30px;
+`;
+
 export const ProfileWrapper=styled.div`
-    line-height:30px;
+    /* line-height:30px; */
     //border-top:1px solid rgba(236,236,236);
     border-bottom:1px solid rgba(236,236,236);
     padding: 15px 0 15px 0;
+    display: flex;
+    align-content: center;
 `;
 
 export const ProfileImg=styled.img.attrs({
-    src:"/image/profileDefault2.jpg"
+    src:"/image/used/profileDefault2.jpg"
 })`
 
     width:55px;
@@ -171,8 +252,9 @@ export const ProfileImg=styled.img.attrs({
 `;
 
 export const ProfileSpan=styled.span`
-    font-size:15px;
-    
+    font-size:20px;
+    line-height: 57px;
+    height:57px;
 `;
 
 export const ModalDiv=styled.div`   

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Layout from './component/Layout/Layout';
 
@@ -36,7 +36,6 @@ import ManagerPage from './component/Shop/manager/ManagerPage';
 import List from './component/Shop/manager/NewList';
 import AdminWrite from './component/Shop/register/NewWrite';
 import NewList from './component/Shop/manager/NewList';
-import NewSearch from './component/Shop/manager/NewSearch';
 import NewProducts from './component/Products/NewProducts';
 import UsedUpdate from './component/Used/UsedUpdate';
 import FindEmail from './component/User/FindEmail';
@@ -47,82 +46,50 @@ import Logout from './component/User/Logout';
 import MyPageMain from './component/myPage/MyPageMain';
 import MyPageApp from './component/myPage/MyPageApp';
 import NewUpdate from './component/Shop/manager/NewUpdate';
+import UsedItemList from './component/Shop/manager/UsedItemList';
+import jwt_decode from 'jwt-decode';
+import Following from './component/Lookbook/Following';
+import NewProductPage from './component/Shop/newProduct/NewProductPage';
+import ReList from './component/Shop/resell/ReList';
+import ReUpdate from './component/Shop/resell/ReUpdate';
+import ReWrite from './component/Shop/register/ReWrite';
+import StyleOneProduct from './component/Lookbook/StyleOneProduct';
+import SearchForm2 from './component/Search/SearchForm2';
 
 function App() {
+    const token = localStorage.getItem('accessToken');
+
+    const [auth, setAuth] = useState('ROLE_GUEST');
+    const [sub, setSub] = useState('');
+
+    useEffect(() => {
+        if (token !== null) {
+            const tokenJson = jwt_decode(token);
+            setAuth(tokenJson['auth']);
+            setSub(tokenJson['sub']);
+        }
+    }, []);
+
+    //console.log(auth);
+
     return (
         <BrowserRouter>
             <Routes>
-                <Route element={<Layout />}>
+                <Route element={<Layout auth={auth} />}>
                     <Route path="/" element="" />
 
                     {/* shop */}
                     <Route path="shop" element={<Shop />} />
-
+                    
+                    <Route path="shop/newProduct" element={<NewProductPage />} />
                     <Route path="admin" element={<ManagerPage />} />
-                    <Route
-                        path="admin/newWrite"
-                        element={
-                            <>
-                                <ManagerPage />
-                                <AdminWrite />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="admin/newList"
-                        element={
-                            <>
-                                <ManagerPage />
-                                <NewList />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="admin/newSearch"
-                        element={
-                            <>
-                                <ManagerPage />
-                                <NewSearch />
-                            </>
-                        }
-                    />
-
-                    <Route
-                        path="admin/newWrite"
-                        element={
-                            <>
-                                <ManagerPage />
-                                <AdminWrite />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="admin/newList"
-                        element={
-                            <>
-                                <ManagerPage />
-                                <NewList />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="admin/newSearch"
-                        element={
-                            <>
-                                <ManagerPage />
-                                <NewSearch />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="admin/newUpdate"
-                        element={
-                            <>
-                                <ManagerPage />
-                                <NewUpdate />
-                            </>
-                        }
-                    />
+                    <Route path="admin/newWrite"element={<><ManagerPage /><AdminWrite /></>}/>
+                    <Route path="admin/newList"element={<><ManagerPage /><NewList /></>}/>
+                    <Route path="admin/newUpdate"element={<><ManagerPage /><NewUpdate /></>}/>
+                    
+                    <Route path="admin/reWrite"element={<><ManagerPage /><ReWrite /></>}/>
+                    <Route path="admin/reList"element={<><ManagerPage /><ReList /></>}/>
+                    <Route path="admin/reUpdate"element={<><ManagerPage /><ReUpdate /></>}/>
 
                     <Route path="Used/usedMain" element={<UsedMain />} />
                     <Route path="Used/usedWrite" element={<UsedWrite />} />
@@ -175,7 +142,8 @@ function App() {
                         element={<FindPassword />}
                     />
                     <Route path="/join" element={<WriteForm />} />
-                    <Route path="/Search/SearchForm" element={<SearchForm />} />
+                    {/* <Route path="/Search/SearchForm" element={<SearchForm />} /> */}
+                    <Route path="/Search/SearchForm" element={<SearchForm2 />} />
                     <Route
                         path="/login/find_email/result"
                         element={<FindEmailResult />}
@@ -196,24 +164,38 @@ function App() {
                     <Route path="/my/*" element={<MyPageApp />} />
 
                     <Route path="/lookbook/trending" element={<Trending />} />
+                    <Route path="/styleOneProduct/:seq" element={<StyleOneProduct />} />
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
                     <Route path="/lookbook/detail" element={<Detail />} />
+                    <Route path="/lookbook/following/:tokenId" element={<Following />}/>                
                     <Route
-                        path="/lookbook/styleComment/:styleSeq"
+                        path="/lookbook/styleComment/:styleSeq/:id/:currentId3"
                         element={<StyleComment />}
                     />
                     <Route
-                        path="/lookbook/mystyledetail/:seq/:id"
+                        // path="/lookbook/mystyledetail/:seq/:id"
+                        path="/lookbook/mystyledetail/:id"
                         element={<MystyleDetail />}
                     />
                     <Route
-                        path="/lookbook/mystyleUpdate/:seq/:id"
+                        path="/lookbook/mystyleUpdate/:seq/:id/:product_seq"
                         element={<MystyleUpdate />}
                     />
+                    <Route
+                        path="admin/UsedItemList"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <UsedItemList/>
+                            </>
+                        }
+                    />
+                    
                 </Route>
 
                 <Route path="/Search/SearchForm" element={<SearchForm />} />
+                
             </Routes>
         </BrowserRouter>
     );

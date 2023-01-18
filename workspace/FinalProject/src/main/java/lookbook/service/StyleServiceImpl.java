@@ -18,9 +18,10 @@ import lookbook.dao.StyleFileDAO;
 import lookbook.dao.StyleLikesDAO;
 import lookbook.entity.StyleEntity;
 import lookbook.entity.StyleFileEntity;
-import lookbook.entity.StyleLikesEntity;
 import member.bean.MemberDto;
 import member.dao.MemberDAO;
+import shop.bean.ProductDTO;
+import shop.dao.ShopDAO;
 
 
 //DTO  -->  Entity
@@ -37,6 +38,9 @@ public class StyleServiceImpl implements StyleService {
 	private MemberDAO memberDAO;
 	@Autowired
 	private StyleLikesDAO styleLikesDAO;
+	@Autowired
+	private ShopDAO shopDAO;
+
 
 	//내 글 list 
 	@Transactional
@@ -44,7 +48,7 @@ public class StyleServiceImpl implements StyleService {
       List<StyleEntity> styleEntityList = styleDAO.findAllByIdOrderBySeqDesc(id);
       List<StyleDTO> styleDTOList = new ArrayList<>();
      
-      for (StyleEntity styleEntity: styleEntityList) {
+      for (StyleEntity styleEntity : styleEntityList) {
          styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
       }
       
@@ -85,8 +89,8 @@ public class StyleServiceImpl implements StyleService {
     @Override
     public Long findCountById(String id) {
     	//System.out.println("서비스임플에 id" + id);
-       //return styleDAO.findCountById(id);
-    	return null;
+       return styleDAO.countById(id);
+    	
        
     }
 
@@ -94,11 +98,25 @@ public class StyleServiceImpl implements StyleService {
 	public void save(List<MultipartFile> list, StyleDTO styleDTO) {		
 			
 		styleDTO.setStyleFile(list);			
-		System.out.println("리스트 담겻나"+styleDTO);
+		//System.out.println("리스트 담겻나"+styleDTO);
+		
+		//아이디로 이메일 불러와서 스타일 디티오에 저장
+			String id = styleDTO.getId();
+			System.out.println(id + "id *******************************************");
+			MemberDto memberDTO = memberDAO.findEmailById(id);
+			String email = memberDTO.getEmail();
+			System.out.println(email + "email *****************************************");
+			styleDTO.setEmail(email);
 		
 		if(styleDTO.getStyleFile() == null || styleDTO.getStyleFile().isEmpty()) {
 	    	//첨부파일 없음
+			
+			
+			
 			StyleEntity styleEntity = StyleEntity.toSaveEntity(styleDTO);
+			
+			
+			styleEntity.setEmail(null);
 	    	styleDAO.save(styleEntity);
 	    }else {
 	    	 //첨부파일 있음
@@ -106,15 +124,17 @@ public class StyleServiceImpl implements StyleService {
 	 		//String filePath = session.getServletContext().getRealPath("/webapp/public/storage");  //저장할경로설정
 	 		
 	 		 String path = System.getProperty("user.dir");
-	 	     System.out.println(path);
+//	 	     System.out.println(path);
 	 	     int index = path.lastIndexOf("\\");
-	 	     System.out.println(index);
+//	 	     System.out.println(index);
 	 	     String pathModified=path.substring(0, index);
-	 	     System.out.println(pathModified);
+//	 	     System.out.println(pathModified);
 	 	     index=pathModified.lastIndexOf("\\");
-	 	     System.out.println(index);
+//	 	     System.out.println(index);
 	 	     pathModified = pathModified.substring(0,index);
-	 	     System.out.println("경로확인"+pathModified);
+//	 	     System.out.println("경로확인"+pathModified);
+	 	     
+	 	     
 	    	 
 	 	     StyleEntity styleEntity = StyleEntity.toSaveFileEntity(styleDTO);
 	 	     int savedSeq = styleDAO.save(styleEntity).getSeq();
@@ -137,7 +157,7 @@ public class StyleServiceImpl implements StyleService {
 					e.printStackTrace();
 				}//경로에 실제파일 저장 
 	 	    	StyleFileEntity styleFileEntity = StyleFileEntity.toStyleFileEntity(style, originalFileName, storedFileName);//boardFileEntity로 전환
-	 	    	System.out.println("최종"+styleFileEntity);
+	 	    	//System.out.println("최종"+styleFileEntity);
 	 	    	styleFileDAO.save(styleFileEntity);//저장
 	 	     }//for
 	 	    
@@ -152,7 +172,7 @@ public class StyleServiceImpl implements StyleService {
 		List<StyleEntity> styleEntityList = styleDAO.findAllByOrderBySeqDesc();
 		List<StyleDTO> styleDTOList = new ArrayList<>();
 		for (StyleEntity styleEntity: styleEntityList) {
-			styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
+			styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));			
 		}
 		return styleDTOList; 
 		
@@ -183,53 +203,29 @@ public class StyleServiceImpl implements StyleService {
 	    }
 
 
-
-	 
-	 
-	//좋아요 했는지 찾기
-		 @Override
-		    public int findLikes(String id, int style_seq) {
-		        
-			 // 저장된 좋아요가 없다면 0, 있다면 1 //게시물 seq와 로그인아이디를 같이 가져가서 조회
-		        Optional<StyleLikesEntity> findLikes = styleLikesDAO.findByMemberDto_idAndStyleEntity_seq(id, style_seq);
-		        if (findLikes.isEmpty()){
-		            return 0;
-		        }else {
-		            return 1;
-		        }
-		    }
-
-
-	//좋아요 저장하기
-	//참고 : https://velog.io/@hellocdpa/220220-SpringBoot%EC%A2%8B%EC%95%84%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0
-			@Transactional
-		    @Override
-		    public int saveLikes(String id,int style_seq) {
-		       // Optional<StyleLikesEntity> findLikes = likesDAO.findByStyleEntity_IdAndMemberDto_Id(boardId, id);
-
-		        //System.out.println(findLike.isEmpty());
-
-		       // if (findLike.isEmpty()){
-		     //       MemberDto memberDto = memberDAO.findById(id).get();
-		            StyleEntity styleEntity = styleDAO.findBySeq(style_seq).get();
-		            //System.out.println("서비스임플의 memberDto "+ memberDto);
-		            //System.out.println("서비스임플의 styleEntity" + styleEntity);
-
-		 //           StyleLikesEntity styleLikesEntity = StyleLikesEntity.toLikesEntity(memberDto, styleEntity);
-		//            styleLikesDAO.save(styleLikesEntity);
-		            //styleDAO.plusLike(boardId);
-		            return 1;
-//		        }else {
-//		        	likesDAO.deleteByStyleEntity_IdAndMemberDto_Id(boardId, id);
-//		            //styleDAO.minusLike(boardId);
-//		            return 0;
-//
-//		        }
-
-		    }
-		
+	 //상품검색
+	@Override
+	public List<ProductDTO> search(String keyword) {	
+		return shopDAO.search(keyword);
+	}
 	
+	@Override
+	public Optional<ProductDTO> styleProductSearch(int seq) {
+		return shopDAO.findById(seq);
+	}
 
+
+	@Override
+	public List<StyleDTO> styleOneProduct(int productSeq) {		
+//		System.out.println("================================="+productSeq);
+		List<StyleEntity> styleEntityList = styleDAO.findByProductSeqOrderBySeqDesc(productSeq);
+	      List<StyleDTO> styleDTOList = new ArrayList<>();
+	      for (StyleEntity styleEntity: styleEntityList) {
+	         styleDTOList.add(StyleDTO.toStyleDTO(styleEntity));
+	      }
+	      return styleDTOList; 
+
+	}
 
 	
 }
