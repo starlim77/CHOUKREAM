@@ -16,8 +16,16 @@ const StyleComment = () => {
         axios.get(`http://localhost:8080/lookbook/findMyListDetail/${styleSeq}`)
             .then(res => console.log(res.data.seq) )
             .catch(error => console.log(error))
+       
     }, []) 
 
+     
+
+    const [form, setForm] = useState({
+        commentMember: id, //댓글입력아이디
+        commentContents: '',
+        styleSeq: styleSeq//게시글 번호
+    })
     
     const onInput = (e) =>{
         const { name, value } = e.target
@@ -27,11 +35,7 @@ const StyleComment = () => {
         })
     }
 
-    const [form, setForm] = useState({
-        commentMember: id, //댓글입력아이디
-        commentContents: '',
-        styleSeq: styleSeq//게시글 번호
-    })
+   
 
     const {commentMember, commentContents} = form
 

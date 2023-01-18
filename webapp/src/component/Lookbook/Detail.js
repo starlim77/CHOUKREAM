@@ -249,7 +249,7 @@ const Detail = () => {
                             <CardContent>       
                                 <div variant="body2" color="text.secondary" >
                                 <S.TrTypoDiv>
-                                 <StyleCommentList styleSeq={item.seq}  onCommentDelete={ onCommentDelete }  />                                
+                                 <StyleCommentList styleSeq={item.seq}  onCommentDelete={ onCommentDelete } id={id}  />                                
                                 
                                 </S.TrTypoDiv>                      
                                 </div>     
