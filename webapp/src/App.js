@@ -48,6 +48,7 @@ import MyPageApp from './component/myPage/MyPageApp';
 import NewUpdate from './component/Shop/manager/NewUpdate';
 import UsedItemList from './component/Shop/manager/UsedItemList';
 import jwt_decode from 'jwt-decode';
+import Following from './component/Lookbook/Following';
 import NewProductPage from './component/Shop/newProduct/NewProductPage';
 import ReList from './component/Shop/resell/ReList';
 import ReUpdate from './component/Shop/resell/ReUpdate';

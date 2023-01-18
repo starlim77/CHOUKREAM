@@ -61,4 +61,6 @@ public class MemberDto {
         this.emailOption = emailOption;
     }
 	
+	
+	
 }

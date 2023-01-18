@@ -10,6 +10,7 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import StyleCommentList from './StyleCommentList';
 import StyleProduct from './StyleProduct';
 
+
 const Detail = () => {    
    
     //게시물 뿌리기
@@ -19,6 +20,7 @@ const Detail = () => {
     const id = useLocation().state.id;   //trending에서 로그인 후 넘어오는 id값 
     const [currentId,setCurrentId] = useState();
 
+    const [followeeList, setFolloweeList]= useState([]);
     
     
     // const [id,setId] = useState()   //아이디값 로그인한걸로 가져오는거로 변경해야됨
@@ -43,6 +45,11 @@ const Detail = () => {
                  .then( 
                     res => setList(res.data)  )
                     // res => console.log(res.data)  )
+                 .catch(error => console.log(error))
+            //팔로이 리스트 가져오기
+            axios.get(`http://localhost:8080/lookbook/getMyFollowee/${id}`)
+                 .then( res => setFolloweeList(res.data))
+                 //(res => console.log(res.data))
                  .catch(error => console.log(error))
         }
 
@@ -97,10 +104,35 @@ const Detail = () => {
        }
     }
         
-    //팔로우
-    const onFollow = (id) => {
-        //id //followee id
-        axios.get('http://localhost:8080/lookbook/saveFollow')
+ 
+     //팔로우
+     const onFollow = (followeeId,num) => {
+        //console.log(tokenId+"+"+followeeId)
+        axios.post(`http://localhost:8080/lookbook/saveFollow/${id}/${followeeId}`) 
+             .then(alert("팔로우 성공"))
+             .then()
+             .catch(error => console.log(error))
+
+        window.location.reload()     
+        // setFolloweeList(followeeList,followeeId)
+        
+    } 
+
+    //언팔로우
+    const onUnFollow = (followeeId,num) => {
+        //console.log(tokenId+"+"+followeeId)
+        axios.delete(`http://localhost:8080/lookbook/unFollow/${id}/${followeeId}`) 
+             .then(alert("언팔로우 성공"))
+             .catch(error => console.log(error))
+
+             
+
+             window.location.reload()
+
+        //  const followeeListFilter = followeeList.filter((item,index) => index != num)
+        //  setFolloweeList(followeeListFilter)
+        //  console.log(followeeListFilter)
+             
     }
     
     const photoShop1 = (storedImg) => {
@@ -128,6 +160,15 @@ const Detail = () => {
         return img[4]
     }
 
+    const IsFollow = (itemId) => {
+        if(followeeList.filter(item => item === itemId)?.length){
+            return true;
+        }else{
+            return false;
+        }
+
+
+    }
 
     return (
         <div>     
@@ -137,20 +178,35 @@ const Detail = () => {
             <Container fixed>
                 <S.DeTopDiv> 
                 {
-                    list.map((item,index) => 
-                          
-                        <S.DeDiv key={index}>  
-                            <Card >
+                    list.map((item,index) => {
+                        return (
+                            <div>
+                               
+                            <Card key={item.seq} >
+                                <S.DeProfile>
+                                <S.DEChkprofile>    
                                 <CardHeader
                                     avatar={ <Avatar> 프로필</Avatar> }
                                     // title={item.id}
                                     title={item.email}
                                     subheader={item.logtime}
+                                   
                                 />
+                                </S.DEChkprofile>
+                                <S.DeFollowChk>
+                               {
+                                    !id ? <Button variant="contained" style={{backgroundColor: 'black'}} onClick={ alert('먼저 로그인 하세요')}>팔로우</Button> :
+                                    /* 팔로우체크?*/
+                                 
+                                    IsFollow(item.id) ? 
+                                    <Button variant="outlined"  style={{color: 'black', borderColor:'#e2e2e2' ,backgroundColor: '#e2e2e2' }} onClick={() => onUnFollow (item.id,index)}>팔로잉</Button>
+                                    :
+                                    <Button variant="contained" style={{backgroundColor: 'black'}} onClick={() => onFollow (item.id,index)} >팔로우</Button>
+                                        
 
-                                <Button variant="contained" style={{backgroundColor: 'black'}} onClick={() => onFollow (item.id)} >팔로우</Button>
-                                <Button variant="outlined"  style={{color: 'black'}}>언팔로우</Button>
-                               
+                                }
+                                </S.DeFollowChk>
+                                </S.DeProfile>                
                                 <S.MyStdiv>
                                     <img src={`/storage/${photoShop1(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />
                                     {photoShop2(item.stored_file_name) && <img src={`/storage/${photoShop2(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}

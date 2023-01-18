@@ -10,6 +10,8 @@ import * as M from '../Products/style';
 
 const Mystyle = () => {
 
+
+
     const [form, setForm] = useState({
         id: '',    //멤버id = long type....
         content: '',
@@ -17,6 +19,8 @@ const Mystyle = () => {
         productTitle:'',
         productImg:''
     })
+
+
     const {id, content, productSeq, productTitle, productImg} = form  
     const navigate = useNavigate()
     const imgRef = useRef();
@@ -54,6 +58,8 @@ const Mystyle = () => {
 
     const[follower,setFollowerNum] = useState()
     const[followee,setFolloweeNum] = useState()
+
+    
 
     useEffect( ()=> {
 

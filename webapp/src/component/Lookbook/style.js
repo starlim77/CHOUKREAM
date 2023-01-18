@@ -78,6 +78,17 @@ export const DeDiv = styled.div`
     display: inline-block;
     padding-bottom: 50px;
 `
+export const DeFollowChk =styled.span`
+    float: right; 
+    padding-top: 18px;  
+    margin-right: 10px; 
+`
+export const DEChkprofile= styled.div`
+    float:left;
+`
+export const DeProfile = styled.div`
+    display: inline;    
+`
 
 //MyStyleDetail.js
 export const MyDeContainer = styled.div`
