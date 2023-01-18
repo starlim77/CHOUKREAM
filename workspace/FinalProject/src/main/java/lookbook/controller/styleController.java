@@ -252,9 +252,9 @@ public class styleController {
 	}
 	
 	//팔로잉 페이지 팔로우 목록 불러오기
-	@GetMapping(path="getFollowing/{sub}")
-	public List<StyleDTO> getFollowing(@PathVariable int sub){
-		int id= sub;
+	@GetMapping(path="getFollowing/{id}")
+	public List<StyleDTO> getFollowing(@PathVariable int id){
+		//int id= sub;
 		System.out.println("-----------id" + id);
 		return styleFollowingService.getFollowing(id);
 	}
