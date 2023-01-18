@@ -22,7 +22,7 @@ const Header = ({auth}) => {
                         {auth==='ROLE_ADMIN'?<S.TopLi>관리자페이지</S.TopLi>:<S.TopLi>관리자페이지</S.TopLi>}
                         {/*나중에 뒷 부분 NULL처리 할 것! */}
                         </Link>
-                        <Link to="/cs/CsNotice">
+                        <Link to="/cs/csNotice">
                             <S.TopLi>고객센터</S.TopLi>
                         </Link>
                         <S.TopLi>관심상품</S.TopLi>
