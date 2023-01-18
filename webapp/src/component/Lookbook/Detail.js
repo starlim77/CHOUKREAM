@@ -18,7 +18,7 @@ const Detail = () => {
     const [isLike, setIsLike] = useState(0);
     const navigate = useNavigate();
     const id = useLocation().state.id;   //trending에서 로그인 후 넘어오는 id값 
-    const [currentId,setCurrentId] = useState();
+
 
     const [followeeList, setFolloweeList]= useState([]);
     
@@ -46,30 +46,23 @@ const Detail = () => {
                     res => setList(res.data)  )
                     // res => console.log(res.data)  )
                  .catch(error => console.log(error))
+                 axios.get(`http://localhost:8080/used/getId?seq=${id}`)
+                      .then(
+                        //  res => console.log(res.data))
+                         res=>{setCurrentId(res.data)})
+                      .catch(err=>console.log(err))
             //팔로이 리스트 가져오기
             axios.get(`http://localhost:8080/lookbook/getMyFollowee/${id}`)
                  .then( res => setFolloweeList(res.data))
                  //(res => console.log(res.data))
                  .catch(error => console.log(error))
         }
-
-        //member_id 숫자 보내서 이메일 가져오기
-        // axios.get(`http://localhost:8080/used/getId?seq=${id}`)
-        //      .then(
-        //         res => console.log(res.data))
-        //         // res=>{setCurrentId(res.data)})
-        //      .catch(err=>console.log(err))
     }, [])   
 
-        // const currentId2 = (currentId) => {        
-        //     const currentId2 = currentId.split('@');        
-        //     return currentId2
-        //     console.log("currentId2" +currentId2)
-        //     console.log("currentId"+currentId)
-
-        // }
-
-        // const currentId2 = currentId.split('@')
+    //아이디 이메일 앞자리로 변환
+    const [currentId,setCurrentId] = useState();
+    var currentId2 = (currentId||'').split('@');
+    var currentId3 = currentId2[0];
 
     
     //댓글삭제
@@ -96,11 +89,11 @@ const Detail = () => {
         }
     }
 
-    const onComment = (seq, id) => {
+    const onComment = (seq, id,currentId3) => {
         if( (!id) === true){
             alert('먼저 로그인 하세요')
         }else{
-            navigate(`/lookbook/StyleComment/${seq}/${id}`)
+            navigate(`/lookbook/StyleComment/${seq}/${id}/${currentId3}`)
        }
     }
         
@@ -233,7 +226,7 @@ const Detail = () => {
                                 </div>
     
                                 <div>
-                                <IconButton onClick={ () => onComment(item.seq, id)}>
+                                <IconButton onClick={ () => onComment(item.seq, id,currentId3)}>
                                     {/* <Link to ={`/lookbook/StyleComment/${item.seq}`} > */}
                                     <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
                                     {/* </Link> */}
