@@ -156,5 +156,17 @@ public class MyServiceImpl implements MyService{
 		String email = memberDAO.findById(memberSeq).get().getEmail();
 		return shopDAO.getBoughtUsed(email);
 	}
+	@Override
+	public List<SellBuyHistory> getSellRecent(long memberSeq) {
+		String email = memberDAO.findById(memberSeq).get().getEmail();
+		
+		return shopDAO.getSellRecent(email);
+	}
+	@Override
+	public List<SellBuyHistory> getBuyRecent(long memberSeq) {
+		String email = memberDAO.findById(memberSeq).get().getEmail();
+		
+		return shopDAO.getBuyRecent(email);
+	}
 	
 }

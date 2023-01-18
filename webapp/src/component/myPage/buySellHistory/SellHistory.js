@@ -3,6 +3,7 @@ import jwtDecode from 'jwt-decode';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './BuySellHistoryStyle';
+import SellHistoryProduct from './SellHistoryProduct';
 
 const SellHistory = () => {
     const memberSeq = jwtDecode(localStorage.getItem('accessToken')).sub;
@@ -44,6 +45,7 @@ const SellHistory = () => {
         navigate(`/Used/usedItem?seq=${seq}`);
     };
 
+
     return (
         <S.BuyHistory>
             <S.BuyHistoryTitle>판매내역</S.BuyHistoryTitle>
@@ -57,84 +59,52 @@ const SellHistory = () => {
                 <S.InnerTitle>리셀 판매 내역</S.InnerTitle>
                 {pageState === 'sell' &&
                     sellingList.map((item, index) => (
-                        <S.SellBox
-                            key={index}
-                            onClick={() => onBuyPage(item.seq)}
+                        <SellHistoryProduct
+                        item={item}
+                            key={item.seq}
+                            status={'판매중'}
+                            onBuyPage={onBuyPage}
                             done={false}
-                        >
-                            <S.Img
-                                src={`../newProduct/${item.imgName}`}
-                            ></S.Img>
-                            <S.ProductText>
-                                <S.ProductBrand>{item.brand}</S.ProductBrand>
-                                <S.ProductName>{item.subTitle}</S.ProductName>
-                                <S.Status status={'selling'} done={false}>
-                                    판매중
-                                </S.Status>
-                                <S.Size>
-                                    {item.size && `size : ${item.size}`}
-                                </S.Size>
-                                <S.Size>{item.shipAddress}</S.Size>
-                            </S.ProductText>
-                        </S.SellBox>
+                            isUsed={false}
+                        />
+                        
                     ))}
                 {pageState === 'sellDone' &&
                     soldList.map((item, index) => (
-                        <S.SellBox key={index} done={true}>
-                            <S.Img
-                                src={`..\newProduct\${item.imgName}`}
-                            ></S.Img>
-                            <S.ProductText>
-                                <S.ProductBrand>{item.brand}</S.ProductBrand>
-                                <S.ProductName>{item.subTitle}</S.ProductName>
-                                <S.Status status={'sold'} done={true}>
-                                    판매완료
-                                </S.Status>
-                            </S.ProductText>
-                        </S.SellBox>
+                        <SellHistoryProduct
+                        item={item}
+                        key={item.seq}
+                        status={'판매완료'}
+                        done={true}
+                        isUsed={false}
+                    />
+              
                     ))}
                 <S.InnerTitle style={{ marginTop: '20px' }}>
                     중고 판매 내역
                 </S.InnerTitle>
                 {pageState === 'sell' &&
                     sellingUsed.map((item, index) => (
-                        <S.SellBox
+                        <SellHistoryProduct
+                        item={item}
                             key={item.seq}
-                            onClick={() => onSellingUsedPage(item.seq)}
+                            status={'판매중'}
+                            onBuyPage={onSellingUsedPage}
                             done={false}
-                        >
-                            <S.Img
-                                src={`../newProduct/${item.imgName}`}
-                            ></S.Img>
-                            <S.ProductText>
-                                <S.ProductBrand>{item.brand}</S.ProductBrand>
-                                <S.ProductName>{item.subTitle}</S.ProductName>
-                                <S.Status status={'selling'} done={false}>
-                                    판매중
-                                </S.Status>
-                                <S.Size>
-                                    {item.size && `size : ${item.size}`}
-                                </S.Size>
-                            </S.ProductText>
-                        </S.SellBox>
+                            isUsed={true}
+                        />
+                       
                     ))}
                 {pageState === 'sellDone' &&
                     soldUsed.map((item, index) => (
-                        <S.SellBox key={index} done={true}>
-                            <S.Img
-                                src={`..\newProduct\${item.imgName}`}
-                            ></S.Img>
-                            <S.ProductText>
-                                <S.ProductBrand>{item.brand}</S.ProductBrand>
-                                <S.ProductName>{item.subTitle}</S.ProductName>
-                                <S.Status status={'sold'} done={true}>
-                                    입금완료
-                                </S.Status>
-                                {item.shipAddress}
-                                {item.shipName}
-                                {item.shipPhone}
-                            </S.ProductText>
-                        </S.SellBox>
+                        <SellHistoryProduct
+                        item={item}
+                        key={item.seq}
+                        status={'판매완료'}
+                        done={true}
+                        isUsed={true}
+                    />
+                       
                     ))}
             </S.BuyHistoryWrapper>
         </S.BuyHistory>

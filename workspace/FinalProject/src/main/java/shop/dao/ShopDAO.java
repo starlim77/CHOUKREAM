@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.annotations.Parent;
+import org.hibernate.type.TrueFalseConverter;
 import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -138,6 +139,22 @@ public interface ShopDAO extends JpaRepository<ProductDTO, Integer> {
 			+ "left outer join (select seq, count(*) AS order_count from completed_order_table group by seq) as e on a.seq = e.seq\n"
 			+ ") t where rn >= :start and rn<= :end")
 	List<SortListDTO> getPopularList(int start, int end);
+
+	@Query(nativeQuery = true, value = "select * from(\r\n"
+			+ "select b.seq, b.brand, b.img_name as imgName, b.sub_title as subTitle, a.size, a.type, a.ship_address as address, a.ship_name as shipName, a.ship_phone as shipPhone, a.pay_price as price, a.log_time from complete_payment a left join product_table b on a.product_num = b.seq  where type = 'resell' and a.id = :id \r\n"
+			+ "union all\r\n"
+			+ "select b.seq, b.brand, b.img_name as imgName, b.sub_title as subTitle, a.size, a.type, a.ship_address as address, a.ship_name as shipName, a.ship_phone as shipPhone, a.pay_price as price, a.log_time from complete_payment a left join new_product b on a.product_num = b.seq  where type = 'new' and a.id = :id \r\n"
+			+ "union all\r\n"
+			+ "select b.seq, b.product_name as brand, b.img_name as imgName, b.title as subTitle, a.size, a.type, a.ship_address as address, a.ship_name as shipName, a.ship_phone as shipPhone, a.pay_price as price, a.log_time  from complete_payment a left join used_item b on a.product_num = b.seq where type = 'used' and a.id = :id) t order by log_time desc limit 3;")
+	List<SellBuyHistory> getSellRecent(@Param("id") String email);
+
+	@Query(nativeQuery = true, value = "select * from(\r\n"
+			+ "select b.seq, b.brand, b.img_name as imgName, b.sub_title as subTitle, a.size,  a.ship_address as address, a.ship_name as shipName, a.ship_phone as shipPhone, a.price as price, trade_date from completed_order_table a left join product_table b on a.seq = b.seq  where a.buy_order_user = :id \r\n"
+			+ "union all\r\n"
+			+ "select b.seq, b.brand, b.img_name as imgName, b.sub_title as subTitle, a.size,  a.ship_address as address, a.ship_name as shipName, a.ship_phone as shipPhone, a.price as price, trade_date from completed_order_table a left join new_product b on a.seq = b.seq  where a.buy_order_user = :id \r\n"
+			+ "union all\r\n"
+			+ "select b.seq, b.product_name as brand, b.img_name as imgName, b.title as subTitle, a.size, a.ship_address as address, a.ship_name as shipName, a.ship_phone as shipPhone, a.price as price, trade_date  from completed_order_table a left join used_item b on a.seq = b.seq where a.buy_order_user = :id) t order by trade_date desc limit 3;")
+	List<SellBuyHistory> getBuyRecent(@Param("id") String email);
 	
 
 }

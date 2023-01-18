@@ -13,6 +13,8 @@ const MyPageMain = () => {
     const navigate = useNavigate();
     const [soldList, setSoldList] = useState([]);
     const [boughtList, setBoughtList] = useState([]);
+    const [sellRecent, setSellRecent] = useState([])
+    const [buyRecent, setBuyRecent] = useState([])
 
     //회원정보 불러옴 / 회원 등급 불러옴
     useEffect(() => {
@@ -29,11 +31,22 @@ const MyPageMain = () => {
                 `http://localhost:8080/my/getSoldHistory?memberSeq=${memberSeq}`,
             )
             .then(res => setSoldList(res.data));
-            axios
+        axios
             .get(
                 `http://localhost:8080/my/getBoughtHistory?memberSeq=${memberSeq}`,
             )
             .then(res => setBoughtList(res.data));
+        
+        axios
+            .get(
+                `http://localhost:8080/my/getBuyRecent?memberSeq=${memberSeq}`,
+            )
+            .then(res => setBuyRecent(res.data));
+        axios
+            .get(
+                `http://localhost:8080/my/getSellRecent?memberSeq=${memberSeq}`,
+            )
+            .then(res => setSellRecent(res.data));
     }, []);
 
     useEffect(() => {
@@ -46,7 +59,7 @@ const MyPageMain = () => {
     const onProfile = () => {
         navigate('profile');
     };
-    const onBuyHistory = () => {
+    const onBuyingHistory = () => {
         navigate('buyHistory');
     };
     const onSellingHistory = () => {
@@ -55,6 +68,7 @@ const MyPageMain = () => {
     const onStyle = () => {
         navigate('/lookbook/mystyle');
     };
+
     return (
         <S.MainWrapper>
             {/* 로그인 정보 */}
@@ -76,37 +90,34 @@ const MyPageMain = () => {
 
             {/* 구매 내역 */}
             <S.SectionTitle>구매내역</S.SectionTitle>
-            <S.SellSection>
-               
-                <S.History onClick={onSellingHistory}>
+            <S.BuySection>
+                <S.History onClick={onBuyingHistory}>
                     {boughtList.length === 0 ? (
                         <S.History>
                             <S.NoneHistory>거래 내역이 없습니다</S.NoneHistory>
                         </S.History>
                     ) : (
-                        boughtList.map((item) => (
+                        boughtList.map(item => (
                             <HistoryProduct key={item.seq} item={item} />
                         ))
                     )}
-                   
                 </S.History>
-            </S.SellSection>
+            </S.BuySection>
             {/* 판매 내역 */}
             <S.SectionTitle>판매내역</S.SectionTitle>
-            <S.BuySection>
-               
+            <S.SellSection>
                 {soldList.length === 0 ? (
                     <S.History>
                         <S.NoneHistory>거래 내역이 없습니다</S.NoneHistory>
                     </S.History>
                 ) : (
-                    <S.History onClick={onBuyHistory}>
-                        {soldList.map((item) => (
+                    <S.History onClick={onSellingHistory}>
+                        {soldList.map(item => (
                             <HistoryProduct key={item.seq} item={item} />
                         ))}
                     </S.History>
                 )}
-            </S.BuySection>
+            </S.SellSection>
         </S.MainWrapper>
     );
 };

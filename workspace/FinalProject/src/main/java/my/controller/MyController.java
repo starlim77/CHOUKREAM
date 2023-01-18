@@ -115,6 +115,14 @@ public class MyController {
 	public List<SellBuyHistory> getBoughtUsed(@RequestParam long memberSeq) {
 		return myService.getBoughtUsed(memberSeq);
 	}
+	@GetMapping(path = "getSellRecent")
+	public List<SellBuyHistory> getSellRecent(@RequestParam long memberSeq) {
+		return myService.getSellRecent(memberSeq);
+	}
+	@GetMapping(path = "getBuyRecent")
+	public List<SellBuyHistory> getBuyRecent(@RequestParam long memberSeq) {
+		return myService.getBuyRecent(memberSeq);
+	}
 	
 	
 }

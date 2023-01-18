@@ -176,7 +176,7 @@ const MyPageNav = () => {
                         </S.NavLi>
                         <S.NavLi onClick={onclick}>
                             <Link
-                                to="style"
+                                to="/lookbook/mystyle"
                                 id="STYLE"
                                 style={
                                     clickedContent === 'STYLE'
