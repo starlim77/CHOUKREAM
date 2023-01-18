@@ -127,6 +127,7 @@ export const SCLdeletebutton= styled.div`
 
 export const SCLcomment = styled.div`
     margin-bottom: 10px;
+    overflow: hidden;
 `
 
 //Mystyle.js 
