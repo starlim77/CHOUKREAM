@@ -22,6 +22,12 @@ const NewProducts = () => {
 
     const token = localStorage.getItem('accessToken');
     const [sub, setSub] = useState('');
+
+    const [brandListForm, setBrandListForm] = useState([{
+        seq: "", img_name: "", price: "", title: "", brand: ""
+    }])
+
+    const [form, setForm] = useState([{}])
         
 
     useEffect(() => {
@@ -88,6 +94,12 @@ const NewProducts = () => {
     }, [])
 
     useEffect(() => {
+        axios.get(`http://localhost:8080/getNewBrandList?seq=${seq}&brand=${form.brand}`)
+             .then(res => res.data.length !== 0 && setBrandListForm(res.data))
+             .catch(error => console.log(error))
+    }, [form])
+
+    useEffect(() => {
         axios.get('http://localhost:8080/used/itemLike?seq=' + seq + '&id=' + id + '&shopKind=' + shopKind)
              .then(res => res.data ? setLikeForm(res.data) : '')
              .catch(error => console.log(error))
@@ -103,8 +115,6 @@ const NewProducts = () => {
         {likeForm.userLike === false ? setCount(count+1) : setCount(count-1)}  
         }else { navigate(`/login`) }
     }
-
-    const [form, setForm] = useState([{}])
 
     const getOption = (productOption) => {
         setOption(productOption);
@@ -171,7 +181,22 @@ const NewProducts = () => {
         else if(id == 3) setMainImg(subImg3)
     }
 
+    const brandNavigate = (seq) => {
+        navigate(`/newProducts/${seq}`)
+        window.location.reload()
+    }
 
+    const photoshop = itemImg => {
+        // console.log(itemImg)
+        // console.log(typeof(itemImg))
+        if (itemImg !== null && itemImg !== undefined) {
+            //console.log(itemImg);
+            const img = itemImg.split(',');
+            // console.log(img[0])
+            // console.log(typeof(img[0]))
+            return img[0];
+        }
+    };
 
     return (
         <>
@@ -320,7 +345,6 @@ const NewProducts = () => {
                             <S.ProductDetailTab>
                                 <S.TabActive onClick={onMoveToElement}>상품 상세정보</S.TabActive>
                                 <S.Tab onClick={onMoveToElement2}>교환 및 반품 안내</S.Tab>
-                                <S.Tab onClick={onMoveToElement3}>스타일 리뷰</S.Tab>
                                 <S.Tab onClick={onMoveToElement4}>추천 상품</S.Tab>
                             </S.ProductDetailTab>
                         </S.ProductDetailTabWrap>
@@ -570,21 +594,6 @@ const NewProducts = () => {
                     </S.ProductDetailItemContent>
                 </S.Content>
                 <div>
-                    <div ref={element3} style={{paddingTop: "160px"}} />
-                    <S.FeedArea>
-                        <S.FeedTitle>
-                            <S.FeedTitleTitle>스타일</S.FeedTitleTitle>
-                            {/* 스타일 카운트 */}
-                            <S.FeedTitleNum>1234</S.FeedTitleNum> 
-                        </S.FeedTitle>
-                        <S.SocialFeeds>
-                            <S.MoreBtnBox>
-                                <S.ButtonOutlineGreyMedium>
-                                    더보기
-                                </S.ButtonOutlineGreyMedium>
-                            </S.MoreBtnBox>
-                        </S.SocialFeeds>
-                    </S.FeedArea>
                     <div ref={element4} style={{paddingTop: "160px"}} />
                     <S.BrandArea>
                         <S.BrandTitle>
@@ -597,34 +606,69 @@ const NewProducts = () => {
                         </S.BrandTitle>
                         <S.BrandProducts>
                             <S.BrandProductList>
-                            {/* {
-                                brandListForm.map((item, index) => (
-                                    <S.ProductItem key={index}>
-                                        <S.ItemInner onClick={() => brandNavigate(item.seq)}>
+                            {
+                                brandListForm.length > 10 ? 
+
+                                    [...Array(parseInt(10))].map((n, index) => {
+                                        return <S.ProductItem key={index}>
+                                        <S.ItemInner onClick={() => brandNavigate(brandListForm[index].seq)}>
                                             <div className='thumb_box'>
                                                 <S.Product>
                                                     <S.PictureBrandProductImg>
-                                                        <S.BrandProductImg src={item.img}/>
+                                                        <S.BrandProductImg src={`/newProductList/${photoshop(brandListForm[index].img_name)}`}/>
                                                     </S.PictureBrandProductImg>
                                                 </S.Product>
                                             </div>
                                             <S.ProductItemInfoBox>
                                             <div className='info_box'>
                                                 <div className='brand'>
-                                                    <S.BrandTextWithOutWish>{item.brand}</S.BrandTextWithOutWish>
+                                                    <S.BrandTextWithOutWish>{brandListForm[index].brand}</S.BrandTextWithOutWish>
                                                 </div>
-                                                <S.BrandProductInfoBoxName>{item.title}</S.BrandProductInfoBoxName>
+                                                <S.BrandProductInfoBoxName>{brandListForm[index].title}</S.BrandProductInfoBoxName>
                                                 <S.BrandProductInfoBoxPrice>
                                                     <S.BrandProductInfoBoxPriceAmount>
-                                                        <S.BrandProductInfoBoxPriceAmountNum>{item.price}</S.BrandProductInfoBoxPriceAmountNum>
+                                                        <S.BrandProductInfoBoxPriceAmountNum>{Number(brandListForm[index].price).toLocaleString('ko-KR') + "원"}</S.BrandProductInfoBoxPriceAmountNum>
                                                     </S.BrandProductInfoBoxPriceAmount>
                                                     <S.BrandProductInfoBoxPriceDesc>즉시 구매가</S.BrandProductInfoBoxPriceDesc>
                                                 </S.BrandProductInfoBoxPrice>
                                             </div>
                                         </S.ProductItemInfoBox>
                                         </S.ItemInner>
-                                    </S.ProductItem>))
-                            } */}
+                                    </S.ProductItem>
+                                    })
+
+                                    :
+
+                                    brandListForm[0].img_name !== '' &&
+
+                                    brandListForm.map((item, index) => (
+                                        <S.ProductItem key={index}>
+                                            <S.ItemInner onClick={() => brandNavigate(item.seq)}>
+                                                <div className='thumb_box'>
+                                                    <S.Product>
+                                                        <S.PictureBrandProductImg>
+                                                            <S.BrandProductImg src={`/newProductList/${photoshop(item.img_name)}`}/>
+                                                        </S.PictureBrandProductImg>
+                                                    </S.Product>
+                                                </div>
+                                                <S.ProductItemInfoBox>
+                                                <div className='info_box'>
+                                                    <div className='brand'>
+                                                        <S.BrandTextWithOutWish>{item.brand}</S.BrandTextWithOutWish>
+                                                    </div>
+                                                    <S.BrandProductInfoBoxName>{item.title}</S.BrandProductInfoBoxName>
+                                                    <S.BrandProductInfoBoxPrice>
+                                                        <S.BrandProductInfoBoxPriceAmount>
+                                                            <S.BrandProductInfoBoxPriceAmountNum>{Number(item.price).toLocaleString('ko-KR') + "원"}</S.BrandProductInfoBoxPriceAmountNum>
+                                                        </S.BrandProductInfoBoxPriceAmount>
+                                                        <S.BrandProductInfoBoxPriceDesc>즉시 구매가</S.BrandProductInfoBoxPriceDesc>
+                                                    </S.BrandProductInfoBoxPrice>
+                                                </div>
+                                            </S.ProductItemInfoBox>
+                                            </S.ItemInner>
+                                        </S.ProductItem>))
+                                    
+                            }
                             </S.BrandProductList>
                         </S.BrandProducts>
                     </S.BrandArea>

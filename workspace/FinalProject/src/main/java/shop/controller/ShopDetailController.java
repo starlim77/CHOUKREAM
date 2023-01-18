@@ -13,6 +13,7 @@ import lookbook.bean.StyleDTO;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
+import shop.bean.NewBrandListDTO;
 import shop.bean.NewProductDTO;
 import shop.bean.NewProductOptionDTO;
 import shop.bean.OrderDTO;
@@ -106,6 +107,34 @@ public class ShopDetailController {
 		shopDetailService.addNewProductOption(seq, option);
 	}
 	
+	@GetMapping(path="updateInventory")
+	public void updateInventory(@RequestParam int seq, @RequestParam String option, @RequestParam int inventory) {
+		shopDetailService.updateInventory(seq, option, inventory);
+	}
 	
+	@GetMapping(path="deleteNewProductOption")
+	public void deleteNewProductOption(@RequestParam int seq, @RequestParam String option) {
+		shopDetailService.deleteNewProductOption(seq, option);
+	}
+	
+	@GetMapping(path="getProductSizeTable")
+	public List<ProductSizeDTO> getProductSizeTable(@RequestParam int seq) {
+		return shopDetailService.getProductSizeTable(seq);
+	}
+	
+	@GetMapping(path="addResllProductOption")
+	public void addResllProductOption(@RequestParam int seq, @RequestParam String option) {
+		shopDetailService.addResllProductOption(seq, option);
+	}
+	
+	@GetMapping(path="deleteResllProductOption")
+	public void deleteResllProductOption(@RequestParam int seq, @RequestParam String option) {
+		shopDetailService.deleteResllProductOption(seq, option);
+	}
+	
+	@GetMapping(path="getNewBrandList")
+	public List<NewBrandListDTO> getNewBrandList(@RequestParam int seq,@RequestParam String brand) {
+		return shopDetailService.getNewBrandList(seq, brand);  
+	}
 	
 }
