@@ -21,15 +21,16 @@ const Social = () => {
     //  console.log(tokenId)
 
 
-    //const {sub} = useParams();  
+    // const {sub} = useParams();  
     const navigate = useNavigate()
     const onFoll =() => {
 
         if(!tokenId){           
             {alert("먼저 로그인하세요")}
-        }else(
-            navigate('/lookbook/following')
-        )
+        }else{
+            
+            navigate(`/lookbook/following/${tokenId}`)
+        }
        
     }
     return (

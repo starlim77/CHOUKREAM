@@ -1,13 +1,11 @@
 package lookbook.controller;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +24,7 @@ import jakarta.transaction.Transactional;
 import lookbook.bean.LikesDTO;
 import lookbook.bean.StyleCommentDTO;
 import lookbook.bean.StyleDTO;
-import lookbook.bean.StyleFollowingDTO;
 import lookbook.bean.StyleLikesDTO;
-import lookbook.dao.StyleFileDAO;
 import lookbook.service.StyleCommentService;
 import lookbook.service.StyleFollowingService;
 import lookbook.service.StyleLikesService;
@@ -256,10 +252,10 @@ public class styleController {
 	}
 	
 	//팔로잉 페이지 팔로우 목록 불러오기
-	@GetMapping(path="getFollowing/{id}")
-	public List<StyleDTO> getFollowing(@PathVariable int id){
-		System.out.println(id);
-		
+	@GetMapping(path="getFollowing/{sub}")
+	public List<StyleDTO> getFollowing(@PathVariable int sub){
+		int id= sub;
+		System.out.println("-----------id" + id);
 		return styleFollowingService.getFollowing(id);
 	}
 	

@@ -62,7 +62,7 @@ public class StyleFollowingServiceImpl implements StyleFollowingService {
 		for(StyleFollowingEntity styleFollowingEntity : followingEntityList) {
 			followeeDtoList.add(styleFollowingEntity.getFollowee());
 		}
-		System.out.println("11111111"+followeeDtoList);
+//		System.out.println("팔로잉서비스임플 followeeDtoList "+followeeDtoList);
 		
 		//스타일엔티티 팔로이 아이디로 찾아오기
 //		List<StyleEntity> fstyleEntityList = new ArrayList<>();
