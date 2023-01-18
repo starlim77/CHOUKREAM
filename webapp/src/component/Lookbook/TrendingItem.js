@@ -12,9 +12,15 @@ import { Link } from 'react-router-dom';
 import Detail from './Detail';
 
 
-const TrendingItem = ({item,index,itemLength,id}) => {
+const TrendingItem = ({item,index,itemLength,id,email}) => {
     
     const [isLike, setIsLike] = useState(0);
+
+        //아이디 이메일 앞자리로 변환
+       
+               
+        var email2 = (email||'').split('@');
+        var email3 = email2[0];
 
 
 
@@ -33,7 +39,7 @@ const TrendingItem = ({item,index,itemLength,id}) => {
                                 avatar={ <Avatar sx={{ bgcolor: grey }} mr={'3'}/>    } // 개인프로필사진 넣을곳
                                 />
                         <S.TrUsernameBox>
-                        {item.email}
+                        {email3}
                         {/* {item.name} */}
                         </S.TrUsernameBox>
 

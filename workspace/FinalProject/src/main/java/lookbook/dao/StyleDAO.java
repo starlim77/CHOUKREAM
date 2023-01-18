@@ -48,14 +48,12 @@ public interface StyleDAO extends JpaRepository<StyleEntity, String> {
 	public List<LikesDTO> listById(String id);
 
 
+	public List<StyleEntity> findAllByIdInOrderBySeqDesc(List<String> idList);
+	@Query(nativeQuery = true, value = "select * from style_table where product_seq = :seq limit 8")
+	public List<StyleEntity> getBrandStyleList(int seq);
 	public List<StyleEntity> findAllByIdIn(List<String> idList);
 	
 	public List<StyleEntity> findByProductSeqOrderBySeqDesc(int productSeq);
-	
-	public List<StyleEntity> findAllByIdInOrderBySeqDesc(List<String> idList);
-	
-	@Query(nativeQuery = true, value = "select * from style_table where product_seq = :seq limit 8")
-	public List<StyleEntity> getBrandStyleList(int seq);
 
 	
 }
