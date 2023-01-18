@@ -17,8 +17,8 @@ const Social = () => {
          }
      }, []);
      const [tokenId, settokenId] = useState('')
-     console.log(auth);
-     console.log(tokenId)
+    //  console.log(auth);
+    //  console.log(tokenId)
 
 
     //const {sub} = useParams();  

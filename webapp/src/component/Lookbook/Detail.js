@@ -177,7 +177,6 @@ const Detail = () => {
             <br/><br/><br/><br/><br/><br/>
             <Container fixed>
                 <S.DeTopDiv> 
-                    {console.log(id + "---------")}
                 {
                     list.map((item,index) =>  {
                         return (
@@ -234,7 +233,7 @@ const Detail = () => {
                                 </div>
     
                                 <div>
-                                <IconButton onClick={ (e) => onComment(item.seq, id,currentId3)}>
+                                <IconButton onClick={ (e) => onComment(e, item.seq, id,currentId3)}>
                                     {/* <Link to ={`/lookbook/StyleComment/${item.seq}`} > */}
                                     <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
                                     {/* </Link> */}

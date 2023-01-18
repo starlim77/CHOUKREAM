@@ -25,13 +25,6 @@ const StyleComment = () => {
         //     .catch(err=>console.log(err))
        
     }, []) 
-
-    
-    //  //아이디 이메일 앞자리로 변환
-    //  const [currentId,setCurrentId] = useState();
-    //  var currentId2 = (currentId||'').split('@');
-    //  var currentId3 = currentId2[0];
-
      
 
     const [form, setForm] = useState({
@@ -71,7 +64,10 @@ const StyleComment = () => {
         
     }
 
-
+    const onCancel = (e) => {
+        e.preventDefault()
+        navigate(-1)
+    }
 
     return (
          
@@ -93,7 +89,7 @@ const StyleComment = () => {
                     </DialogContent>
                      <DialogActions>                         
                         <Button onClick={onUpload}>등록</Button>
-                        <Button ><Link to ={'/lookbook/detail'}>취소</Link></Button> 
+                        <Button onClick={onCancel}>취소</Button> 
                     </DialogActions>  
                     
                 </S.DeComment>

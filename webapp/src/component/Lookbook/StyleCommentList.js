@@ -19,7 +19,7 @@ const StyleCommentList = (props) => {
     },[])
     
     const onCommentDelete = (id,styleSeq) => {
-        console.log(id, styleSeq)
+        // console.log(id, styleSeq)
         axios.delete(`http://localhost:8080/lookbook/deleteComment?id=${id}&styleSeq=${styleSeq}`)
              .then(
                 alert("삭제완료"),
@@ -41,10 +41,8 @@ const StyleCommentList = (props) => {
                     <S.SCLcomment key={index}>
                             <Chip
                             avatar={<Avatar alt="" src="" />}
-
                             label=  {item.commentMember}                             
-                        /> 
-                        {console.log(item.commentMember + "------------------------") }                              
+                        />                              
                         {item.commentContents}
                         
                         <S.SCLdeletebutton>
