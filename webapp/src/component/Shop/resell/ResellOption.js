@@ -43,7 +43,9 @@ const ResellOption = ({ setModalOpen, seq }) => {
                         <span>사이즈 / 재고 관리</span>
                     </S.LayerHeaderTitle>
                 </S.LayerHeader>
-                <input type="text" onChange={e => setResellProductOption(e.target.value)}></input><button onClick={(e) => addOption(e)}>사이즈 추가</button>
+                <div style={{paddingLeft: "80px"}}>
+                        <input type="text" onChange={e => setResellProductOption(e.target.value)}></input><button onClick={(e) => addOption(e)} style={{marginLeft: "30px"}}>사이즈 추가</button>
+                        </div>
                     <S.LayerContent>
                         <S.SelectArea>
                             <S.SelectList>
