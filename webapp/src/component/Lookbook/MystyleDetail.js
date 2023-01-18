@@ -28,9 +28,12 @@ const MystyleDetail = () => {
                 res => setLikeAll(res.data)  
             )
             .catch(error => console.log(error))
+
+        //member_id -> email 가져오기
+        axios.get(`http://localhost:8080/used/getId?seq=${id}`)
+                .then(res=>{setCurrentId(res.data)})
+                .catch(err=>console.log(err))
     }, []) 
-
-
 
  
     //좋아요 클릭

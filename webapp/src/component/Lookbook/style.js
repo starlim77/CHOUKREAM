@@ -149,7 +149,7 @@ export const MyPhotoMini = styled.div`
     width: 200px;
     height: 220px;
     display: inline-block;
-    padding: 20px 30px 50px 30px;
+    padding: 20px 30px 70px 30px;
 
 `
 

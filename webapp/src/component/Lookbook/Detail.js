@@ -42,7 +42,7 @@ const Detail = () => {
              axios.get(`http://localhost:8080/lookbook/listById?id=${id}`)
                  .then( 
                     res => setList(res.data)  )
-                    //res => console.log(res.data)  )
+                    // res => console.log(res.data)  )
                  .catch(error => console.log(error))
         }
 

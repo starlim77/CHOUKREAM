@@ -38,40 +38,41 @@ const StyleProduct = (props) => {
     return (
 
         <div>
+            {photoshop(productList.imgName) &&  
+                <S.ProductItem >                   
+                    
+                    <Link to={`/products/${productList.seq}`}>
+                    
+                        <M.ItemInner>
+                            <div className='thumb_box'>
+                                <M.Product>
+                                    
+                                    <M.PictureBrandProductImg>
+                                        <S.PictureBrandProductImg src={`/resellList/${photoshop(productList.imgName)}`} />
+                                    </M.PictureBrandProductImg>
 
-            {
-                        <S.ProductItem >
-                           
-                            <Link to={`/products/${productList.seq}`}>
-                            
-                                <M.ItemInner>
-                                    <div className='thumb_box'>
-                                        <M.Product>
-                                            <M.PictureBrandProductImg>
-                                                <S.PictureBrandProductImg src={`/resellList/${photoshop(productList.imgName)}`} />
-                                            </M.PictureBrandProductImg>
-                                        </M.Product>
-                                    </div>
-                                    <M.ProductItemInfoBox>
-                                    <div className='info_box'>
-                                        <div className='brand'>
-                                            <M.BrandTextWithOutWish>{productList.brand}</M.BrandTextWithOutWish>
-                                        </div>
-                                        <M.BrandProductInfoBoxName>{productList.title}</M.BrandProductInfoBoxName>
-                                        <M.BrandProductInfoBoxPrice>
-                                            <M.BrandProductInfoBoxPriceAmount>
-                                                <M.BrandProductInfoBoxPriceAmountNum>{productList.price}</M.BrandProductInfoBoxPriceAmountNum>
-                                            </M.BrandProductInfoBoxPriceAmount>
-                                            <M.BrandProductInfoBoxPriceDesc>즉시 구매가</M.BrandProductInfoBoxPriceDesc>
-                                        </M.BrandProductInfoBoxPrice>
-                                    </div>
-                                </M.ProductItemInfoBox>
-                                </M.ItemInner>
-                            </Link>
-                        </S.ProductItem>
-
+                                </M.Product>
+                            </div>
+                            <M.ProductItemInfoBox>
+                            <div className='info_box'>
+                                <div className='brand'>
+                                    <M.BrandTextWithOutWish>{productList.brand}</M.BrandTextWithOutWish>
+                                </div>
+                                <M.BrandProductInfoBoxName>{productList.title}</M.BrandProductInfoBoxName>
+                                <M.BrandProductInfoBoxPrice>
+                                    <M.BrandProductInfoBoxPriceAmount>
+                                        <M.BrandProductInfoBoxPriceAmountNum>{productList.price}</M.BrandProductInfoBoxPriceAmountNum>
+                                    </M.BrandProductInfoBoxPriceAmount>
+                                    <M.BrandProductInfoBoxPriceDesc>즉시 구매가</M.BrandProductInfoBoxPriceDesc>
+                                </M.BrandProductInfoBoxPrice>
+                            </div>
+                        </M.ProductItemInfoBox>
+                        </M.ItemInner>
+                    </Link>
+                    
+                </S.ProductItem>
             } 
-        
+
         </div>
     );
 };

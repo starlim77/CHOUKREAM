@@ -44,7 +44,7 @@ public interface StyleDAO extends JpaRepository<StyleEntity, String> {
 	
 	//detail페이지 좋아요포함 전체list 불러오기. 로그인 했을 때
 	@Query(nativeQuery = true,
-			value="select a.seq, a.comment_count, a.content, a.id, a.likes_count, a.logtime, a.product_seq, ifnull(b.member_id, 'false') as isLikes , c.stored_file_name from style_table as a left outer join (select member_id, style_seq from style_likes_table where member_id=:id) as b on b.style_seq = a.seq left outer join (select id, group_concat(stored_file_name) as stored_file_name, style_seq from style_file_table group by style_seq) as c on c.style_seq = a.seq Order By Seq Desc")
+			value="select a.seq, a.comment_count, a.content, a.id, a.likes_count, a.logtime, a.product_seq, ifnull(b.member_id, 'false') as isLikes , c.stored_file_name  , d.email as email from style_table as a left outer join (select member_id, style_seq from style_likes_table where member_id=:id) as b on b.style_seq = a.seq left outer join (select id, group_concat(stored_file_name) as stored_file_name, style_seq from style_file_table group by style_seq) as c on c.style_seq = a.seq left outer join (select member_id, SUBSTRING_INDEX(email, '@', 1) AS email FROM member ) as d on d.member_id = a.id Order By Seq Desc")
 	public List<LikesDTO> listById(String id);
 
 

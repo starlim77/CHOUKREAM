@@ -31,6 +31,12 @@ const Mystyle = () => {
 
     const [itemLength,setItemLength] = useState(12) // 처음에 가져올 아이템 갯수
 
+    //아이디 이메일 앞자리로 변환
+    const [currentId,setCurrentId] = useState();
+    var currentId2 = (currentId||'').split('@');
+    var currentId3 = currentId2[0];
+
+    //로그인
     const token = localStorage.getItem('accessToken');
     const [auth, setAuth] = useState('ROLE_GUEST');
     useEffect(() => {
@@ -72,6 +78,10 @@ const Mystyle = () => {
                 axios.get(`http://localhost:8080/lookbook/getFollowee/${tokenId}`)
                      .then(res => setFolloweeNum(res.data))
                      .catch(error => console.log(error))
+
+                axios.get(`http://localhost:8080/used/getId?seq=${tokenId}`)
+                    .then(res=>{setCurrentId(res.data)})
+                    .catch(err=>console.log(err))
         }
     }, [tokenId]) 
 
@@ -209,6 +219,7 @@ const Mystyle = () => {
         }
     };
 
+
     const productClick = (e, seq, img, title) => {
         
         console.log("선택한 상품seq"+seq)
@@ -226,12 +237,14 @@ const Mystyle = () => {
 
     return (
         <Container fixed>
+
             <S.MyDiv>
                 <div>
                     <img name='myProfile' width='130px' src='../image/myProfile.png' alt='마이프로필' 
                     style={{ borderRadius:"70%" }} />               
                 </div>
-                <div name='id' value='id'>{tokenId}</div>  
+                {/* <div name='id' value='id'>{tokenId}</div>   */}
+                <div name='id' value='id'>{currentId3}</div>  
                 <S.MyDivText>프로필 정보는 마이페이지에서 수정해주세요.</S.MyDivText>            
             </S.MyDiv>
             <S.MyDiv>
@@ -253,7 +266,8 @@ const Mystyle = () => {
                         <Card>
                             <CardHeader
                                 avatar={ <Avatar>프로필</Avatar> }
-                                title={tokenId}
+                                title={currentId3}
+                                // title={tokenId}
                                 value={tokenId}
                                 name='id'
                                 onChange={onInput}
@@ -265,7 +279,7 @@ const Mystyle = () => {
                                     onChange={readURL}
                             />
                             <S.Container>
-                            <S.showImgSrcDiv>  {/*  가로로정렬   */}
+                            <S.showImgSrcDiv>  
                                 {showImgSrc.map((item, index) => (
                                     <div key={index}>
                                         <ClearIcon onClick={() => onImgRemove(index)} style={{ position:'relative' , top:'0px', left:'470px'}}>삭제</ClearIcon>
@@ -291,7 +305,8 @@ const Mystyle = () => {
                                                             
                                                             <M.Product style={{position:'relative'}}>
                                                                 <M.PictureBrandProductImg>
-                                                                    <M.BrandProductImg src={`/resellList/${productImg}`} />
+                                                                    {/* <M.BrandProductImg src={`/resellList/${productImg}`} /> */}
+                                                                    <M.BrandProductImg src={`/resellList/${photoshop(productImg)}`} />
                                                                 </M.PictureBrandProductImg>
                                                                 <ClearIcon onClick={()=>onProductImgRemove()}  style={{width:'17px', position:'relative' , top:'-87px', left:'80px'}}> x </ClearIcon>
                                                             </M.Product>
@@ -328,7 +343,7 @@ const Mystyle = () => {
 
                                             productList.map((item, index) => (
                                                 <M.ProductItem key={index} >
-                                                    <M.ItemInner onClick={ (e) => {productClick(e, item.seq, item.img, item.title)}}>
+                                                    <M.ItemInner onClick={ (e) => {productClick(e, item.seq, item.imgName, item.title)}}>
                                                         <div className='thumb_box'>
                                                             <M.Product>
                                                                 <M.PictureBrandProductImg>
@@ -400,7 +415,8 @@ const Mystyle = () => {
                                 
                                 <CardHeader
                                     avatar={ <Avatar>프로필</Avatar> }
-                                    title={item.id}
+                                    // title={item.id}
+                                    title={currentId3}
                                     value={id}
                                     name='id'
                                 />
