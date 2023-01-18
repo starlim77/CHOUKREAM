@@ -2,8 +2,12 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as S from '../register/styleWrite';
+import ResellOption from './ResellOption';
 
 const ReUpdate = () => {
+
+    const [modalOpen, setModalOpen] = useState(false);
+
     const location = useLocation();
     const checkedId = location.state.checkedId;
     // const updateList = location.state.updateList;
@@ -379,7 +383,9 @@ const ReUpdate = () => {
                     {/* <S.Subject> 제품 설명</S.Subject>
                     <S.ItemContent name="contents" onChange={onInput} /> */}
 
+                    {modalOpen && <ResellOption setModalOpen={setModalOpen} seq={seq}></ResellOption>}
                     <S.WriteBtn onClick={onWrite}>새 상품 수정 완료</S.WriteBtn>
+                    <S.WriteBtn onClick={() => setModalOpen(true)}>사이즈 관리</S.WriteBtn>
                 </S.Information>
             </S.WriteBody>
         </>

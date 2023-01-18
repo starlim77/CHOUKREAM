@@ -336,8 +336,6 @@ const NewWrite = () => {
                     
                     <S.Subject> 카테고리 </S.Subject>
                     <S.SubTitle type="text"name="category"onChange={onInput}/>
-                    <S.Subject> 상세설명 이미지 </S.Subject>
-                    <S.SubTitle type="text" name="descriptionImg" onChange={onInput} />
                     <S.Subject> 상호명 </S.Subject>
                     <S.SubTitle type="text"name="businessName"onChange={onInput}/>
                     <S.Subject> 성별 </S.Subject>
@@ -356,8 +354,7 @@ const NewWrite = () => {
                     />
                     <S.Subject> 색상 </S.Subject>
                     <S.SubTitle type="text" name="color" onChange={onInput} />
-                    <S.Subject> size </S.Subject>
-                    <S.SubTitle type="text" name="size" onChange={onInput} />
+                
 
                     {/* <S.Necessary>* 필수</S.Necessary>
                     <S.Subject> 상품 정보</S.Subject> */}

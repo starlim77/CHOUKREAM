@@ -96,6 +96,7 @@ const NewContent2 = ({
     };
 
     const [isActive, setIsActive] = useState(true);
+    const [isActive2, setIsActive2] = useState(true);
 
     const changeDisplay = id => {
         // console.log('id 는 ? ' + id)
@@ -244,7 +245,11 @@ const NewContent2 = ({
             noGenderOption,
             noPriceOption,
         );
+        
         let temp = dummy2.filter(item => {
+            if (item.min_price === '-') {
+                item.min_price = 0
+            }
             console.log(item);
             if (!noCategoryOption && newMenuArray[item.category] === 0) {
                 // 무언가 체크를 했을때 noCategoryOption 가 false 인데 ! 써서 true 됨
@@ -254,15 +259,14 @@ const NewContent2 = ({
                 // item의 카테고리가 그 체크된 항목과 맞지 않는 경우
                 return false;
             } else if (
+                // console.log(item.price),
                 // noPriceOption 만약에 true면 거치질 않는다 조건이 없다
                 // true면 체크가 안되어있는거니까 확인할 필요가 없다 
                 !noPriceOption &&  
                 ((item.price <= 100000 && newMenuArray['10만원 이하'] === 0) ||
-                    (item.price <= 300000 &&
-                        newMenuArray['10만원 - 30만원 이하'] === 0) ||
-                    (item.price <= 500000 &&
-                        newMenuArray['30만원 - 50만원 이하'] === 0) ||
-                    newMenuArray['50만원 이상'] === 0)
+                    (item.price > 100000 && item.price <= 300000 && newMenuArray['10만원 - 30만원 이하'] === 0) ||
+                    (item.price > 300000 && item.price <= 500000 && newMenuArray['30만원 - 50만원 이하'] === 0) ||
+                    (item.price > 500000 && newMenuArray['50만원 이상'] === 0))
             ) {
                 // 가격 중 무엇인가가 체크가 되어있고, item의 가격이 그 체크된 범위와 맞지 않는 경우
                 return false;
@@ -270,6 +274,7 @@ const NewContent2 = ({
                 !noGenderOption &&
                 item.gender !== 2 &&
                 newMenuArray[item.gender === 0 ? '남자' : '여자'] === 0
+                
             ) {
                 // "무관"이 체크 되어있지 않고, 성별 중 무엇인가가 체크되어 있고, item의 성별이 그 체크된 성별과 맞지 않는 경우
                 return false;
@@ -342,24 +347,22 @@ const NewContent2 = ({
                     <Co.SearchOption>
                         <Co.FilterBtns>
                             <Co.FilterExpress
-                                style={{ display: isActive ? 'none' : '' }}
+                                style={{ display: !isActive2 ? 'none' : '' }}
                             >
-                                <Co.ExpressBtn
-                                    onClick={() => setIsActive(!isActive)}
+                                <Co.ExpressBtn3
+                                    onClick={() => setIsActive2(!isActive2)}
                                 >
-                                    <FontAwesomeIcon icon={faBoltLightning} />
-                                    <Co.Text>빠른배송</Co.Text>
-                                </Co.ExpressBtn>
+                                    <Co.Text>브랜드배송</Co.Text>
+                                </Co.ExpressBtn3>
                             </Co.FilterExpress>
                             <Co.FilterExpress
-                                style={{ display: isActive ? '' : 'none' }}
+                                style={{ display: !isActive2 ? '' : 'none' }}
                             >
-                                <Co.ExpressBtn2
-                                    onClick={() => setIsActive(!isActive)}
+                                <Co.ExpressBtn
+                                    onClick={() => setIsActive2(!isActive2)}
                                 >
-                                    <FontAwesomeIcon icon={faBoltLightning} />
-                                    <Co.Text>빠른배송</Co.Text>
-                                </Co.ExpressBtn2>
+                                    <Co.Text>브랜드배송</Co.Text>
+                                </Co.ExpressBtn>
                             </Co.FilterExpress>
                         </Co.FilterBtns>
                         <div>
@@ -392,6 +395,7 @@ const NewContent2 = ({
                         <Co.SearchResultList>
                             {/* {console.log('더미더미 ' + f)} */}
                             {/* {console.log('더미더미 ' + dummyFilter)} */}
+                            {console.log(dummy)}
                             {tagLive
                                 ? dummyFilter &&
                                   dummyFilter.map((item, index) => (
@@ -405,7 +409,8 @@ const NewContent2 = ({
                                           }}
                                           // 사진 8개씩 출력 idx는 0부터 시작
                                       >
-                                          <Link to={`/newProducts/${item.seq}`}>
+                                          <Link to={`/newProducts/${item.seq}`}
+                                          style={{ textDecoration: 'none' }}>
                                               <Co.ItemInner href="#">
                                                   <Co.Product>
                                                       <Co.ProductImg
@@ -415,8 +420,8 @@ const NewContent2 = ({
                                                               //item.imgName,
                                                           )}`}
                                                       >
-                                                          {/* picture 태그 사용시 밑에꺼 사용 */}
-                                                          {/* <Co.Source
+                                                        {/* picture 태그 사용시 밑에꺼 사용 */}
+                                                        {/* <Co.Source
                                                         type="image/webp"
                                                         srcSet={item.img_web}
                                                     ></Co.Source>
@@ -446,22 +451,19 @@ const NewContent2 = ({
                                                               </Co.TranslatedName>
                                                           </Co.ProductInfoName>
                                                       </Co.Title>
-                                                      <Co.ProductExpress>
-                                                          <FontAwesomeIcon
-                                                              icon={
-                                                                  faBoltLightning
-                                                              }
-                                                          />
-                                                          빠른배송
-                                                      </Co.ProductExpress>
+                                                      <Co.ProductExpress2>
+                                                          브랜드배송
+                                                      </Co.ProductExpress2>
                                                   </Co.ProductInfoArea>
                                                   <Co.PriceInfoArea>
                                                       <Co.Amount>
-                                                          {addComma(
-                                                              sortCheck
-                                                                  ? item.max_price
-                                                                  : item.min_price,
-                                                          )}
+                                                        {/* {console.log(item.price)} */}
+                                                        {addComma(
+                                                            // sortCheck
+                                                            //     ? item.max_price
+                                                            //     : item.min_price,
+                                                            item.price
+                                                        )}
                                                       </Co.Amount>
                                                       <Co.Desc>
                                                           즉시 구매가
@@ -502,14 +504,15 @@ const NewContent2 = ({
                                           }}
                                           // 사진 8개씩 출력 idx는 0부터 시작
                                       >
-                                          <Link to={`/newProducts/${item.seq}`}>
+                                          <Link to={`/newProducts/${item.seq}`}
+                                            style={{ textDecoration: 'none' }}>
                                               <Co.ItemInner href="#">
                                                   <Co.Product>
                                                       <Co.ProductImg
                                                           // src={item.imgName}
                                                           src={`/newProductList/${photoshop(
-                                                              //item.img_name,
-                                                              item.img_name,
+                                                            item.img_name,
+                                                            //item.img_name,
                                                           )}`}
                                                       >
                                                           {/* picture 태그 사용시 밑에꺼 사용 */}
@@ -543,21 +546,17 @@ const NewContent2 = ({
                                                               </Co.TranslatedName>
                                                           </Co.ProductInfoName>
                                                       </Co.Title>
-                                                      <Co.ProductExpress>
-                                                          <FontAwesomeIcon
-                                                              icon={
-                                                                  faBoltLightning
-                                                              }
-                                                          />
-                                                          빠른배송
-                                                      </Co.ProductExpress>
+                                                      <Co.ProductExpress2>
+                                                          브랜드배송
+                                                      </Co.ProductExpress2>
                                                   </Co.ProductInfoArea>
                                                   <Co.PriceInfoArea>
                                                       <Co.Amount>
-                                                          {addComma(
-                                                            sortCheck
-                                                                ? item.max_price
-                                                                : item.min_price,
+                                                        {addComma(
+                                                            // sortCheck
+                                                            //     ? item.max_price
+                                                            //     : item.min_price
+                                                            item.price
                                                           )}
                                                       </Co.Amount>
                                                       <Co.Desc>

@@ -400,13 +400,7 @@ const NewUpdate = () => {
                         onChange={onInput}
                         value={category}
                     />
-                    <S.Subject> 상세설명 이미지 </S.Subject>
-                    <S.SubTitle
-                        type="text"
-                        name="descriptionImg"
-                        onChange={onInput}
-                        value={descriptionImg}
-                    />
+                    
                     <S.Subject> 판매가 </S.Subject>
                     <S.SubTitle
                         type="text"
