@@ -15,15 +15,19 @@ import * as S from './style';
 import { grey } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 
-const FollowingItem = ({item,index,itemLength}) => {
+const FollowingItem = ({item,index,itemLength,email}) => {
 
     const [isLike, setIsLike] = useState(0);
+
+    var email2 = (email||'').split('@');
+    var email3 = email2[0];
+
 
     return (
         <S.TrGridBox style={{display : index < itemLength ? '':'none'}}>
             <Card sx={{ width: 250 }} >
                 <Link to={'/lookbook/following' + item.seq}>
-                    <S.TrGridBoxImg src={'../storage/' + item.storedFileName[0]}/>
+                    <S.TrGridBoxImg src={'/storage/' + item.storedFileName[0]}/>
                 </Link>
                 
                 <S.TrBox>
@@ -31,7 +35,7 @@ const FollowingItem = ({item,index,itemLength}) => {
                                 avatar={ <Avatar sx={{ bgcolor: grey }} />    } // 개인프로필사진 넣을곳
                                 />
                         <S.TrUsernameBox>
-                        {item.id}
+                        {email3}
                         </S.TrUsernameBox>
 
                     <S.TrlikeBox>

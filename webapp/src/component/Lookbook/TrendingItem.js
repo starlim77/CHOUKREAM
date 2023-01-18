@@ -32,7 +32,7 @@ const TrendingItem = ({item,index,itemLength,id,email}) => {
                 
                 <Link to={'/lookbook/detail'} state={{id:id}}>
 
-                    <S.TrGridBoxImg src={'../storage/' + item.storedFileName[0]}/>
+                    <S.TrGridBoxImg src={'/storage/' + item.storedFileName[0]}/>
 
                     <S.TrBox>
                         <CardHeader 

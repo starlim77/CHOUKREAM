@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Social from '../Lookbook/Social';
 import {
     CardActions,
@@ -17,20 +18,23 @@ import FollowingItem from './FollowingItem';
 
 const Following = () => {
 
+     const {tokenId} = useParams();
+    
+
      //아이디
-     const token = localStorage.getItem('accessToken');
-     const [auth, setAuth] = useState('ROLE_GUEST');
-     useEffect(() => {
-         if (token !== null) {
-             const tokenJson = jwt_decode(token);
-             setAuth(tokenJson['auth']);
-             //localStorage.setItem('userInfo', JSON.stringify(tokenJson));
-             settokenId(tokenJson['sub']);
-         }
-     }, []);
-     const [tokenId, settokenId] = useState('')
-     console.log(auth);
-     console.log(tokenId)
+    //  const token = localStorage.getItem('accessToken');
+    //  const [auth, setAuth] = useState('ROLE_GUEST');
+    //  useEffect(() => {
+    //      if (token !== null) {
+    //          const tokenJson = jwt_decode(token);
+    //          setAuth(tokenJson['auth']);
+    //          //localStorage.setItem('userInfo', JSON.stringify(tokenJson));
+    //          settokenId(tokenJson['sub']);
+    //      }
+    //  }, []);
+    //  const [tokenId, settokenId] = useState('')
+    // //  console.log(auth);
+    //  console.log(tokenId)
 
     const [list, setList] = useState([
         {
@@ -47,8 +51,9 @@ const Following = () => {
     useEffect(() => {
         axios
             .get(`http://localhost:8080/lookbook/getFollowing/${tokenId}`)
-            .then(res => setList(res.data))           
-                 //console.log(res.data))
+            .then(
+                res => setList(res.data))           
+                // res=> console.log(res.data))
             .catch(error => console.log(error));
     }, [tokenId]);
 
@@ -87,7 +92,7 @@ const Following = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 0 ? 
-                        <FollowingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        <FollowingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} email={item.email}/>
                         :
                         ''
                     )}
@@ -96,7 +101,7 @@ const Following = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 1 ? 
-                        <FollowingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        <FollowingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} email={item.email}/>
                         :
                         ''
                     )}
@@ -105,7 +110,7 @@ const Following = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 2 ? 
-                        <FollowingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        <FollowingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} email={item.email}/>
                         :
                         ''
                     )}
@@ -114,7 +119,7 @@ const Following = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 3 ? 
-                        <FollowingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength}/>
+                        <FollowingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} email={item.email}/>
                         :
                         ''
                     )}
