@@ -92,7 +92,7 @@ const Following = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 0 ? 
-                        <FollowingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} email={item.email}/>
+                        <FollowingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId} email={item.email}/>
                         :
                         ''
                     )}
@@ -101,7 +101,7 @@ const Following = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 1 ? 
-                        <FollowingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} email={item.email}/>
+                        <FollowingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId} email={item.email}/>
                         :
                         ''
                     )}
@@ -110,7 +110,7 @@ const Following = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 2 ? 
-                        <FollowingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} email={item.email}/>
+                        <FollowingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId} email={item.email}/>
                         :
                         ''
                     )}
@@ -119,7 +119,7 @@ const Following = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 3 ? 
-                        <FollowingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} email={item.email}/>
+                        <FollowingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId} email={item.email}/>
                         :
                         ''
                     )}

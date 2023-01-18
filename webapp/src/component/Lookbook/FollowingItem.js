@@ -15,7 +15,7 @@ import * as S from './style';
 import { grey } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 
-const FollowingItem = ({item,index,itemLength,email}) => {
+const FollowingItem = ({item,index,itemLength,email,id}) => {
 
     const [isLike, setIsLike] = useState(0);
 
@@ -26,9 +26,11 @@ const FollowingItem = ({item,index,itemLength,email}) => {
     return (
         <S.TrGridBox style={{display : index < itemLength ? '':'none'}}>
             <Card sx={{ width: 250 }} >
-                <Link to={'/lookbook/following' + item.seq}>
+
+                 <Link to={'/lookbook/detail'} state={{id:id}}>
+                
                     <S.TrGridBoxImg src={'/storage/' + item.storedFileName[0]}/>
-                </Link>
+                    
                 
                 <S.TrBox>
                         <CardHeader 
@@ -49,6 +51,8 @@ const FollowingItem = ({item,index,itemLength,email}) => {
                         </IconButton>
                     </S.TrlikeBox>
                 </S.TrBox>
+
+            </Link>
 
                 <CardContent>
                     <S.TrTypoDiv>
