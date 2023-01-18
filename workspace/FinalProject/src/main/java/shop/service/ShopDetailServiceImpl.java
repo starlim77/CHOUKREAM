@@ -1,10 +1,13 @@
 package shop.service;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Service;
 
 import lookbook.bean.StyleDTO;
@@ -13,6 +16,7 @@ import lookbook.entity.StyleEntity;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
+import shop.bean.NewBrandListDTO;
 import shop.bean.NewProductDTO;
 import shop.bean.NewProductOptionDTO;
 import shop.bean.OrderDTO;
@@ -127,6 +131,12 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	public Long likeCount(int seq, String shopKind) {
 		return useItemLikeDAO.likeCount(seq, shopKind);
 	}
+
+	@Override
+	public void addSellOrder(OrderDTO orderDTO) {
+		orderRepository.save(orderDTO);
+	}
+
 	
 	@Override
 	public List<StyleDTO> getBrandStyleList(int seq) {
@@ -144,4 +154,56 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	public List<NewProductOptionDTO> getNewProductOption(int seq) {
 		return newProductOptionRepository.findBySeq(seq);
 	}
+	
+	@Override
+	public void addNewProductOption(int seq, String option) {
+		NewProductOptionDTO newProductOptionDTO = new NewProductOptionDTO();
+		newProductOptionDTO.setInventory(0);
+		newProductOptionDTO.setSeq(seq);
+		newProductOptionDTO.setProductOption(option);
+		
+		newProductOptionRepository.save(newProductOptionDTO);
+		
+	}
+
+	@Override
+	public void addBuyOrder(OrderDTO orderDTO) {
+		orderRepository.save(orderDTO);
+	}
+	
+	@Override
+	public void updateInventory(int seq, String option, int inventory) {
+		newProductOptionRepository.updateInventory(seq, option, inventory);
+	}
+	
+	@Override
+	public void deleteNewProductOption(int seq, String option) {
+		newProductOptionRepository.deleteNewProductOption(seq, option);
+	}
+	
+	@Override
+	public List<ProductSizeDTO> getProductSizeTable(int seq) {
+		return productSizeRepository.findBySeq(seq);
+	}
+	
+	@Override
+	public void addResllProductOption(int seq, String option) {
+		ProductSizeDTO productSizeDTO = new ProductSizeDTO();
+		productSizeDTO.setSeq(seq);
+		productSizeDTO.setSize(option);
+		
+		productSizeRepository.save(productSizeDTO);
+	}
+	
+	@Override
+	public void deleteResllProductOption(int seq, String option) {
+		productSizeRepository.deleteResellProductOption(seq, option);
+	}
+	
+	@Override
+	public List<NewBrandListDTO> getNewBrandList(int seq, String brand) {
+		// TODO Auto-generated method stub
+		return newProductDAO.getNewBrandList(seq, brand);
+	}
+
 }

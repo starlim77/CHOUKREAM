@@ -62,7 +62,7 @@ public class NewProductDTO {
 	
 	// 0남자 1여자 2무관
    @Column(name="gender")
-   private String gender;
+   private int gender;
    
    @Column(name="releaseDate")
    private String releaseDate;
@@ -132,7 +132,6 @@ public class NewProductDTO {
 	@OneToMany(targetEntity = NewProductOptionDTO.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name ="seq", referencedColumnName = "seq")
 	private List<NewProductOptionDTO> NewProductOptionDTO;
-	
 }
 
 

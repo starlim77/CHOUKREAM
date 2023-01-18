@@ -3,11 +3,11 @@ import * as Ma from './ManagerStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import ReList from '../resell/ReList';
 
 const ManagerPage = () => {
-    
     // const [showBtn, setShowBtn] = useState(false)
-    
+
     return (
         <>
             <Ma.Menu>
@@ -21,14 +21,37 @@ const ManagerPage = () => {
                         {/* <Ma.MenuBtn style={{backgroundColor:'#fce205'}}>
                             <Link to={'/admin/newWrite'}style={{textDecoration: "none"}}>Create</Link>
                         </Ma.MenuBtn> */}
-                        <Ma.MenuBtn style={{backgroundColor:'#fce205'}}>
-                            <Link to={'/admin/reList'}style={{textDecoration: "none"}}>리셀 상품 관리</Link>
+                        <Ma.MenuBtn>
+                            <Link
+                                to={'/admin/reList'}
+                                style={{ textDecoration: 'none' }}
+                            >
+                                리셀 상품 관리
+                            </Link>
                         </Ma.MenuBtn>
-                        <Ma.MenuBtn style={{backgroundColor:'#fce205'}}>
-                            <Link to={'/admin/newList'}style={{textDecoration: "none"}}>새 상품 관리</Link>
+                        <Ma.MenuBtn>
+                            <Link
+                                to={'/admin/newList'}
+                                style={{ textDecoration: 'none' }}
+                            >
+                                새 상품 관리
+                            </Link>
                         </Ma.MenuBtn>
-                        <Ma.MenuBtn style={{backgroundColor:'#fce205'}}>
-                            <Link to={'/admin/UsedItemList'}style={{textDecoration: "none"}}>중고상품 관리</Link>
+                        <Ma.MenuBtn>
+                            <Link
+                                to={'/admin/UsedItemList'}
+                                style={{ textDecoration: 'none' }}
+                            >
+                                중고상품 관리
+                            </Link>
+                        </Ma.MenuBtn>
+                        <Ma.MenuBtn>
+                            <Link
+                                to={'/admin/salesList'}
+                                style={{ textDecoration: 'none' }}
+                            >
+                                매출 내역
+                            </Link>
                         </Ma.MenuBtn>
                         {/* <Ma.MenuBtn style={{ display: showBtn ? '' : 'none' }}>
                             <Link to={'/admin/newList'}>Update</Link>

@@ -21,6 +21,12 @@ export const InputBox = styled.div`
     padding-bottom: 14px;
 `;
 
+export const Logo = styled.img`
+    width: 380px;
+    height: 80px;
+    padding-bottom: 20px;
+`;
+
 export const InputTitle = styled.h3`
     width: 400px;
     height: 18px;

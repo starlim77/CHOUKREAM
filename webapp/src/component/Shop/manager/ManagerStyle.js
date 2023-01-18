@@ -11,30 +11,37 @@ export const MenuUl = styled.ul`
     height: 48px;
     width: 100%;
     // background-color: #30426e;
-    background-color: RGB(255, 246, 205);
+    //background-color: RGB(255, 246, 205);
     display: flex;
     box-sizing: border-box;
-    margin: 0;
+    margin-left: 45px;
     padding: 0;
-    margin-block-start: 1em;
+    /* margin-block-start: 1em;
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-    padding-inline-start: 40px;
+    padding-inline-start: 40px; */
 `;
 
 export const Logo = styled.li`
     color: black;
     font-size: 18px;
-    padding-left: 40px;
+    /* padding-left: 40px;
+    padding-right: 40px; */
     margin-right: auto;
     display: flex;
     height: 100%;
-    width: 110px;
+    width: 130px;
     align-items: center;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    padding-right: 20px;
+    a {
+        color: rgba(34, 34, 34, 0.8);
+        text-decoration: none;
+    }
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
 `;
 export const MenuLi = styled.li`
     list-style: none;
@@ -44,16 +51,23 @@ export const MenuLi = styled.li`
     display: flex;
     align-items: center;
     box-sizing: border-box;
-    margin: 0;
+    margin-left: 20px;
     padding: 0;
 `;
 export const MenuBtn = styled.button`
     color: lightgray;
     margin: 5px;
     //padding: 10px;
-    font-size: 20px;
+    font-size: 18px;
+    border: none;
     align-items: center;
     text-decoration: none;
+    background-color: white;
+    color: rgba(34, 34, 34, 0.8);
+    a {
+        color: rgba(34, 34, 34, 0.8);
+        text-decoration: none;
+    }
 `;
 export const Icon = styled.div`
     color: lightgray;
@@ -92,11 +106,11 @@ export const Text = styled.span`
     cursor: pointer;
 `;
 // export const = styled.div`
-    
+
 // `;
 // export const = styled.div`
-    
+
 // `;
 // export const = styled.div`
-    
+
 // `;

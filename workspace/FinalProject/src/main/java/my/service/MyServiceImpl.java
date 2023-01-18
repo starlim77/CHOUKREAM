@@ -1,16 +1,34 @@
 package my.service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import member.dao.MemberDAO;
 import my.bean.AddressDTO;
+import my.bean.GradeDTO;
 import my.bean.PointDTO;
+import my.bean.SellBuyHistory;
 import my.dao.AddressDAO;
+import my.dao.GradeDAO;
 import my.dao.PointDAO;
+import pay.bean.CompletePaymentDTO;
+import pay.dao.PayDAO;
+import shop.bean.CompletedOrderDTO;
+import shop.bean.OrderDTO;
+import shop.bean.ProductDTO;
+import shop.dao.CompletedOrderRepository;
+import shop.dao.OrderRepository;
+import shop.dao.ShopDAO;
+import shop.service.ShopServiceImpl;
 
 @Service
 public class MyServiceImpl implements MyService{
@@ -19,6 +37,12 @@ public class MyServiceImpl implements MyService{
 	private AddressDAO addressDAO;
 	@Autowired
 	private PointDAO pointDAO;
+	@Autowired
+	private GradeDAO gradeDAO;
+	@Autowired
+	private MemberDAO memberDAO;
+	@Autowired
+	private ShopDAO shopDAO;
 	
 	@Override
 	public void addAddress(AddressDTO addressDTO) {
@@ -51,7 +75,97 @@ public class MyServiceImpl implements MyService{
 	public void changePoint(PointDTO pointDTO) {
 		pointDAO.save(pointDTO);
 	}
-
+	@Override
+	public Optional<GradeDTO> getGrade(String id) {
+		return gradeDAO.findById(id);
+	}
+	@Override
+	public void saveGradeNewMember(String email) {
+		GradeDTO gradeDTO = new GradeDTO();
+		gradeDTO.setId(email);
+		gradeDTO.setGrade("일반회원");
+		gradeDAO.save(gradeDTO);
+		
+	}
+	public List<AddressDTO> deleteAddress(String id, long seq) {
+		addressDAO.deleteByIdAndSeq(id, seq);
+		
+		return addressDAO.findAddressDTOsByIdOrderByDefaultAddressDesc(id);
+	}
+	@Override
+	public Optional<AddressDTO> getAddressBySeq(long seq) {
+		return addressDAO.findById(seq);
+	}
 	
+	//주소 업데이트
+	@Override
+	public AddressDTO addressUpdate(AddressDTO addressDTO) {
+		AddressDTO oldAddressDTO = new AddressDTO();
+		
+		oldAddressDTO = addressDAO.findById(addressDTO.getSeq()).get();
+		oldAddressDTO.setAddr1(addressDTO.getAddr1());
+		oldAddressDTO.setAddr2(addressDTO.getAddr2());
+		oldAddressDTO.setDefaultAddress(addressDTO.getDefaultAddress());
+		oldAddressDTO.setName(addressDTO.getName());
+		oldAddressDTO.setPhone(addressDTO.getPhone());
+		oldAddressDTO.setZipcode(addressDTO.getZipcode());
+		
+		return addressDAO.save(oldAddressDTO);
+	}
+	@Override
+	public List<SellBuyHistory> getBoughtHistorie(long memberSeq) {
+		String email = memberDAO.findById(memberSeq).get().getEmail();
+		
+		return shopDAO.getBoughtHistorie(email);
+	}
+	@Override
+	public List<SellBuyHistory> getBuyingHistory(long memberSeq) {
+		String email = memberDAO.findById(memberSeq).get().getEmail();
+		return shopDAO.getBuyingHistory(email);
+	}
+	@Override
+	public List<SellBuyHistory> getSoldHistory(long memberSeq) {
+		String email = memberDAO.findById(memberSeq).get().getEmail();
+		
+		return shopDAO.getSoldHistory(email);
+	}
+	@Override
+	public List<SellBuyHistory> getSellingHistory(long memberSeq) {
+		String email = memberDAO.findById(memberSeq).get().getEmail();
+		return shopDAO.getSellingHistory(email);
+	}
+	@Override
+	public List<SellBuyHistory> getSellingUsed(long memberSeq) {
+		String email = memberDAO.findById(memberSeq).get().getEmail();
+		return shopDAO.getSellingUsed(email);
+	}
+	@Override
+	public List<SellBuyHistory> getSoldUsed(long memberSeq) {
+		String email = memberDAO.findById(memberSeq).get().getEmail();
+		
+		return shopDAO.getSoldUsed(email);
+	}
+	@Override
+	public List<SellBuyHistory> getBuyingUsed(long memberSeq) {
+		String email = memberDAO.findById(memberSeq).get().getEmail();
+		return shopDAO.getBuyingUsed(email);
+	}
+	@Override
+	public List<SellBuyHistory> getBoughtUsed(long memberSeq) {
+		String email = memberDAO.findById(memberSeq).get().getEmail();
+		return shopDAO.getBoughtUsed(email);
+	}
+	@Override
+	public List<SellBuyHistory> getSellRecent(long memberSeq) {
+		String email = memberDAO.findById(memberSeq).get().getEmail();
+		
+		return shopDAO.getSellRecent(email);
+	}
+	@Override
+	public List<SellBuyHistory> getBuyRecent(long memberSeq) {
+		String email = memberDAO.findById(memberSeq).get().getEmail();
+		
+		return shopDAO.getBuyRecent(email);
+	}
 	
 }

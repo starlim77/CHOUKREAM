@@ -1,10 +1,18 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from './styleFindInfo.js';
 
 const FindPasswordResult = () => {
+    const navigate = useNavigate()
+    
+    const onLoginPage = () => {
+        navigate('/login')
+    }
+
     return (
         <S.Container>
             <S.HelpAreaDiv>
+                
                 <S.HelpTitle hidden>이메일 아이디 찾기</S.HelpTitle>
 
                 <S.HelpNotice>
@@ -14,12 +22,12 @@ const FindPasswordResult = () => {
                     </S.NoticeTxt>
                 </S.HelpNotice>
 
-                <S.HelpBtnBox>
-                    <button>로그인</button>
-                </S.HelpBtnBox>
+                <S.LoginBtnBox>
+                    <S.LoginBtn onClick={onLoginPage}>로그인</S.LoginBtn>
+                </S.LoginBtnBox>
             </S.HelpAreaDiv>
         </S.Container>
-    );
+    )
 };
 
 export default FindPasswordResult;

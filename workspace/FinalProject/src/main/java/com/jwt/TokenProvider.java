@@ -16,13 +16,14 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import member.bean.MemberDto;
 import member.bean.TokenDto;
 
 @Component
 public class TokenProvider {
 	private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30분
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 5; //5분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
     
     private final Key key;
@@ -108,4 +109,5 @@ public class TokenProvider {
             return e.getClaims();
         }
     }
+   
 }
