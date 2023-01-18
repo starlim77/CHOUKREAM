@@ -1111,6 +1111,27 @@ export const LayerContainer = styled.div`
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 10%);
 `;
 
+export const LayerContainer2 = styled.div`
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    height: 60px;
+
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    background-color: #fff;
+    width: 448px;
+    border-radius: 16px;
+    -webkit-box-shadow: 0 4px 10px 0 rgb(0 0 0 / 10%);
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 10%);
+`;
+
 /* 모달창 내부 X버튼 */
 export const Close = styled.button`
     position: absolute;
@@ -1988,6 +2009,7 @@ export const LayerPriceTabContent = styled.div`
     flex: 1;
     height: auto;
 `;
+
 
 
 

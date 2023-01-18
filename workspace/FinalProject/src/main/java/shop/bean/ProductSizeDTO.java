@@ -12,16 +12,10 @@ import lombok.Data;
 @Data
 @Table(name="productSizeTable")
 @Entity
-@SequenceGenerator(
-         name="PRODUCT_SIZE_SEQ_GENERATOR"
-         , sequenceName="PRODUCT_SIZE_SEQ"
-         , initialValue = 1
-         , allocationSize = 1
-      )
 public class ProductSizeDTO {
 
 	   @Id // pk 설정
-	   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUCT_SIZE_SEQ_GENERATOR")
+	   @GeneratedValue(strategy = GenerationType.IDENTITY )
 	   @Column(name="sizeSeq", length = 30)
 	   private int sizeSeq;
 	

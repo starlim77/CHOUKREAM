@@ -155,4 +155,33 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 		newProductOptionRepository.save(newProductOptionDTO);
 		
 	}
+	
+	@Override
+	public void updateInventory(int seq, String option, int inventory) {
+		newProductOptionRepository.updateInventory(seq, option, inventory);
+	}
+	
+	@Override
+	public void deleteNewProductOption(int seq, String option) {
+		newProductOptionRepository.deleteNewProductOption(seq, option);
+	}
+	
+	@Override
+	public List<ProductSizeDTO> getProductSizeTable(int seq) {
+		return productSizeRepository.findBySeq(seq);
+	}
+	
+	@Override
+	public void addResllProductOption(int seq, String option) {
+		ProductSizeDTO productSizeDTO = new ProductSizeDTO();
+		productSizeDTO.setSeq(seq);
+		productSizeDTO.setSize(option);
+		
+		productSizeRepository.save(productSizeDTO);
+	}
+	
+	@Override
+	public void deleteResllProductOption(int seq, String option) {
+		productSizeRepository.deleteResellProductOption(seq, option);
+	}
 }

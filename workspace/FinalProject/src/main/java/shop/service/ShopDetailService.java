@@ -55,5 +55,15 @@ public interface ShopDetailService {
 
 	public void addNewProductOption(int seq, String option);
 
+	public void updateInventory(int seq, String option, int inventory);
+
+	public void deleteNewProductOption(int seq, String option);
+
+	public List<ProductSizeDTO> getProductSizeTable(int seq);
+
+	public void addResllProductOption(int seq, String option);
+
+	public void deleteResllProductOption(int seq, String option);
+
 //	public Optional<Integer> getProductSizeMin(int seq, String size);
 }
