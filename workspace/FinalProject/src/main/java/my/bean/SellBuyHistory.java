@@ -14,4 +14,5 @@ public interface SellBuyHistory {
 	String getShipName();
 	String getShipPhone();
 	String getPrice();
+	String getStatus();
 }
