@@ -11,18 +11,23 @@ const MainBannerBox = ({ item, setBannerCnt, bannerCnt }) => {
         bannerCnt === 8 ? setBannerCnt(0) : setBannerCnt(bannerCnt + 1);
     };
 
+    const [temp,setTemp] = useState([]);
+    
     const onClickDot = (index, e, id) => {
         e.preventDefault();
         setBannerCnt(index)
     
-        // console.log(e.target.id)
-        // if (e.target.id == 1)
-        // setIsActive(!isActive)
-        // console.log(isActive)
-
-        //acticList[index] = true
-        // acticList.map((item,num) => num !== index ? acticList[index] = false : true)
-        // setActiveList([...acticList])
+        setTemp([])
+       
+        for(let i=0; i<9; i++){
+            if(i === index){
+                 temp.push(true)
+            }else{
+                 temp.push(false);
+            }
+        }
+        
+        setActiveList(temp)
     }
 
     const [acticList,setActiveList] = useState([false,false,false,false,false,false,false,false,false])
@@ -45,6 +50,7 @@ const MainBannerBox = ({ item, setBannerCnt, bannerCnt }) => {
     });
 
     const [isActive, setIsActive] = useState(false)
+    const [isActive1, setIsActive1] = useState(false)
     var btn1 = []
 
     return (
@@ -76,12 +82,12 @@ const MainBannerBox = ({ item, setBannerCnt, bannerCnt }) => {
                                             
                                             <Ban.ContainerDots>
                                                 {Array.from({length: 9}).map((item, index) => (
-                                                    <Ban.Dot key={index} onClick={(e) => onClickDot(index,e)}
-                                                    id={index+1}
+                                                    // <Ban.Dot key={index} onClick={(e) => onClickDot(index,e)}
+                                                    // id={index}  
+                                                    // style={{backgroundColor : isActive ? "red" :  "blue"}}
+                                                    // ></Ban.Dot>))}
+                                                    <Ban.Dot key={index} onClick={(e) => onClickDot(index,e)} active={acticList[index]}
                                                     ></Ban.Dot>))}
-                                                    {/* <Ban.Dot key={index} onClick={(e) => onClickDot(index,e)} active={acticList[index]}
-                                                    id={index+1} style={{ backgroundColor : isActive ? "red" :  "blue"}}
-                                                    ></Ban.Dot>))} */}
                                                     {/* //  <Ban.Dot key={index} onClick={(e) => onClickDot(index,e)} active={true}></Ban.Dot>))}  */}
                                             </Ban.ContainerDots>
 

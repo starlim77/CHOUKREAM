@@ -146,5 +146,5 @@ export const Dot = styled.button`
     border-radius: 50%;
     border: 0;
     margin: 0 9px;
-    background-color: ${props => props.active === true ? "rgb(14, 14, 14)" : "rgb(230, 230, 230)"};
+    background-color: ${props => props.active === true ? "RGB(34, 34, 34)" : "RGB(135, 135, 135)"};
 `;
