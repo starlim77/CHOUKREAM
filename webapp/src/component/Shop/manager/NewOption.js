@@ -69,7 +69,7 @@ const NewOption = ({ setModalOpen, seq }) => {
                     <S.LayerContentTabArea>
                         <S.LayerContentTabList>
                             <S.TabAreaItem>
-                                <S.TabAreaItemLink onClick={ onOpen2 } open={ open1 } name='6'>사이즈 추가</S.TabAreaItemLink>
+                                <S.TabAreaItemLink onClick={ onOpen2 } open={ open1 } name='6'>재고 수정</S.TabAreaItemLink>
                             </S.TabAreaItem>
                             <S.TabAreaItem>
                                 <S.TabAreaItemLink onClick={ onOpen2 } open={ open2 } name='7'>사이즈 삭제</S.TabAreaItemLink>
@@ -94,7 +94,6 @@ const NewOption = ({ setModalOpen, seq }) => {
                                     </S.SelectList>
                                 </S.SelectArea>
                             </S.LayerContent>
-                        
                     </S.LayerContentTabArea>
                 </S.TabInfo>
             </S.LayerContainer>

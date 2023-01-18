@@ -34,7 +34,6 @@ const ResellOption = ({ setModalOpen, seq }) => {
 
     return (
         <S.Container>
-            {console.log(option)}
             <S.LayerContainer>
                 <S.Close onClick={ e => setModalOpen(false)}>
                     X
