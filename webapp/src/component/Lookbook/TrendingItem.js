@@ -33,7 +33,7 @@ const TrendingItem = ({item,index,itemLength,id}) => {
                                 avatar={ <Avatar sx={{ bgcolor: grey }} mr={'3'}/>    } // 개인프로필사진 넣을곳
                                 />
                         <S.TrUsernameBox>
-                        {item.id}
+                        {item.email}
                         {/* {item.name} */}
                         </S.TrUsernameBox>
 
