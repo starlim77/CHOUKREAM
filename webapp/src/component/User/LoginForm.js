@@ -56,7 +56,7 @@ const LoginForm = () => {
             setRefreshToken(res.data.refreshToken)
             
             alert('로그인 성공')
-            navigate('/')
+            navigate('/')    //lookbook
           })
           .catch(error => console.log(error))
     }
