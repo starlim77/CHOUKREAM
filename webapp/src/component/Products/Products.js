@@ -332,10 +332,10 @@ const Products = () => {
         setListOpen(false);
     };
 
-    const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장 
-    const [ScrollActive, setScrollActive] = useState(true); 
-    const handleScroll = () => { 
-        if(ScrollY < 850) {
+    const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
+    const [ScrollActive, setScrollActive] = useState(true);
+    const handleScroll = () => {
+        if (ScrollY < 850) {
             setScrollY(window.pageYOffset);
             if (!ScrollActive) setScrollActive(true);
         } else {
@@ -459,6 +459,7 @@ const Products = () => {
             <ScrollToTop />
             <GlobalStyle />
             <S.ProductsWrapper>
+                {console.log(id)}
                 <S.ContainerDetail>
                     <S.Content>
                         <h2 hidden={true}>상품상세</h2>
@@ -500,24 +501,6 @@ const Products = () => {
                                         )}
                                     </U.ImgBody2>
                                     {/* <div className="spread">
-        <ScrollToTop/>
-        <GlobalStyle/>
-        <S.ProductsWrapper>
-            {console.log(id)}
-            <S.ContainerDetail>
-                <S.Content>
-                    <h2 hidden={true}>상품상세</h2>
-                    <S.ColumnBind>
-                        <S.ColumnIsFixed>
-                            <S.ColumnBox ScrollActive={ ScrollActive }>
-                                <U.ImgBody2>
-                                    <U.MainImg src={`/resellList/${mainImg}`} alt={mainImg}></U.MainImg>
-                                    {subImg1&&<U.SmallImg2 src={`/resellList/${subImg0}`} id="0" onClick={e=>changImg(e)}></U.SmallImg2>}
-                                    {subImg1&&<U.SmallImg2 src={`/resellList/${subImg1}`} id="1" onClick={e=>changImg(e)}></U.SmallImg2>}
-                                    {subImg2&&<U.SmallImg2 src={`/resellList/${subImg2}`} id="2" onClick={e=>changImg(e)}></U.SmallImg2>}
-                                    {subImg3&&<U.SmallImg2 src={`/resellList/${subImg3}`} id="3" onClick={e=>changImg(e)}></U.SmallImg2>}
-                                </U.ImgBody2>
-                                {/* <div className="spread">
                                     <S.Image src={form.imgName} ></S.Image>
                                 </div> */}
                                     {/* <div className="column_box">
@@ -901,77 +884,7 @@ const Products = () => {
                                                     </S.FilterUnit>
                                                 </S.ProductSalesGraphSalesFilter>
                                             </S.ProductSalesGraphTitle>
-                                            <S.WrapSales>
-                                                <S.TabArea>
-                                                    <S.TabList>
-                                                        <S.TabAreaItem>
-                                                            <S.TabAreaItemLink
-                                                                onClick={onOpen}
-                                                                open={open1}
-                                                                name="1"
-                                                            >
-                                                                1개월
-                                                            </S.TabAreaItemLink>
-                                                        </S.TabAreaItem>
-                                                        <S.TabAreaItem>
-                                                            <S.TabAreaItemLink
-                                                                onClick={onOpen}
-                                                                open={open2}
-                                                                name="2"
-                                                            >
-                                                                3개월{' '}
-                                                            </S.TabAreaItemLink>
-                                                        </S.TabAreaItem>
-                                                        <S.TabAreaItem>
-                                                            <S.TabAreaItemLink
-                                                                onClick={onOpen}
-                                                                open={open3}
-                                                                name="3"
-                                                            >
-                                                                6개월
-                                                            </S.TabAreaItemLink>
-                                                        </S.TabAreaItem>
-                                                        <S.TabAreaItem>
-                                                            <S.TabAreaItemLink
-                                                                onClick={onOpen}
-                                                                open={open4}
-                                                                name="4"
-                                                            >
-                                                                1년
-                                                            </S.TabAreaItemLink>
-                                                        </S.TabAreaItem>
-                                                        <S.TabAreaItem>
-                                                            <S.TabAreaItemLink
-                                                                onClick={onOpen}
-                                                                open={open5}
-                                                                name="5"
-                                                            >
-                                                                전체
-                                                            </S.TabAreaItemLink>
-                                                        </S.TabAreaItem>
-                                                    </S.TabList>
-
-                                                    <div
-                                                        id="sales_panel1"
-                                                        role="tabpanel"
-                                                        className="tab_content show"
-                                                        span="1m"
-                                                    >
-                                                        <div className="graph">
-                                                            <Graph></Graph>
-                                                        </div>
-                                                    </div>
-                                                    {/* <div id="sales_panel2" role="tabpanel" className="tab_content" span="3m">
-                                                                        </S.SizeItem>))
-                                                                    }
-                                                                </S.SizeList>
-                                                            </S.LayerSizeListLayercontent>
-                                                        </S.LayerSizeListLayerContainer>
-                                                    </S.LayerSizeListLayer>
-                                                </S.FilterUnit>
-                                            </S.ProductSalesGraphSalesFilter>
-                                        </S.ProductSalesGraphTitle>
-                                        {/* <S.WrapSales>
+                                            {/* <S.WrapSales>
                                             <S.TabArea>
                                                 <S.TabList>
                                                     <S.TabAreaItem>
@@ -1018,196 +931,700 @@ const Products = () => {
                                                 </div>
                                             </S.TabArea>
                                         </S.WrapSales> */}
-                                        <S.WrapBids>
-                                            <S.TabArea>
-                                                <S.TabList>
-                                                    <S.TabAreaItem>
-                                                        <S.TabAreaItemLink onClick={ onOpen2 } open={ open6 } name='6'>체결 거래</S.TabAreaItemLink>
-                                                    </S.TabAreaItem>
-                                                    <S.TabAreaItem>
-                                                        <S.TabAreaItemLink onClick={ onOpen2 } open={ open7 } name='7'>판매 입찰</S.TabAreaItemLink>
-                                                    </S.TabAreaItem>
-                                                    <S.TabAreaItem>
-                                                        <S.TabAreaItemLink onClick={ onOpen2 } open={ open8 } name='8'>구매 입찰</S.TabAreaItemLink>
-                                                    </S.TabAreaItem>
-                                                </S.TabList>
-                                                <S.TabContent open={ open6 }>
-                                                    <S.TableWrap>
-                                                        {completedOrderForm[0].price !== '-' ? <CompletedOrderTable completedOrderForm={completedOrderForm}/> : <EmptyTable word={'체결된 거래'}/>}
-                                                    </S.TableWrap>
-                                                    {completedOrderForm[0].price !== '-' && <S.BtnOutLineGrey onClick={() => setModalOpen2(true)}>체결 내역 더보기</S.BtnOutLineGrey>}
-                                                </S.TabContent>
-                                                <S.TabContent open={ open7 }>
-                                                    <S.TableWrap>
-                                                        {sellBidsListForm[0].price !== '-' ? <SellBidsTable sellBidsListForm={sellBidsListForm}/> : <EmptyTable word={'판매 희망가'}/>}
-                                                    </S.TableWrap>
-                                                    {sellBidsListForm[0].price !== '-' && <S.BtnOutLineGrey onClick={() => setModalOpen2(true)}>입찰 내역 더보기</S.BtnOutLineGrey>}
-                                                </S.TabContent>
-                                                <S.TabContent open={ open8 }>
-                                                    <S.TableWrap>
-                                                        {buyBidsListForm[0].price !== '-' ? <BuyBidsTable buyBidsListForm={buyBidsListForm}/> : <EmptyTable word={'구매 희망가'}/>}   
-                                                    </S.TableWrap>
-                                                    {buyBidsListForm[0].price !== '-' && <S.BtnOutLineGrey onClick={() => setModalOpen2(true)}>입찰 내역 더보기</S.BtnOutLineGrey>}
-                                                </S.TabContent>
-                                            </S.TabArea>
-                                        </S.WrapBids>
-                                    </S.ProductSalesGraph>
-                                    {modalOpen2 && <ListModal setModalOpen={setModalOpen2} completedOrderForm={completedOrderForm} sellBidsListForm={sellBidsListForm} buyBidsListForm={buyBidsListForm} 
-                                                              form={form} mainImg={mainImg} sizeForm={sizeForm} onOpen2={onOpen2} open6={open6} open7={open7} open={open8}
-                                                              getSize={getSize} getAll={getAll} setListOpen={setListOpen} listOpen={listOpen} size={size} seq={seq}/> }
-                                    <div>
-                                        <S.ConfirmWrap>
-                                            <S.ConfirmWrapConfirmTitle>구매 전 꼭 확인해주세요</S.ConfirmWrapConfirmTitle>
-                                            <S.ConfirmWrapConfirmContemt>
-                                                <ul className="dropdown_list">
-                                                    <li>
-                                                        <div className="dropdown">
-                                                            <S.DropdownHead onClick={ OpenDrop }>
-                                                                <S.DropdownHeadTitle>배송 기간 안내</S.DropdownHeadTitle>
-                                                                {/* <svg>
+                                            <S.WrapBids>
+                                                <S.TabArea>
+                                                    <S.TabList>
+                                                        <S.TabAreaItem>
+                                                            <S.TabAreaItemLink
+                                                                onClick={
+                                                                    onOpen2
+                                                                }
+                                                                open={open6}
+                                                                name="6"
+                                                            >
+                                                                체결 거래
+                                                            </S.TabAreaItemLink>
+                                                        </S.TabAreaItem>
+                                                        <S.TabAreaItem>
+                                                            <S.TabAreaItemLink
+                                                                onClick={
+                                                                    onOpen2
+                                                                }
+                                                                open={open7}
+                                                                name="7"
+                                                            >
+                                                                판매 입찰
+                                                            </S.TabAreaItemLink>
+                                                        </S.TabAreaItem>
+                                                        <S.TabAreaItem>
+                                                            <S.TabAreaItemLink
+                                                                onClick={
+                                                                    onOpen2
+                                                                }
+                                                                open={open8}
+                                                                name="8"
+                                                            >
+                                                                구매 입찰
+                                                            </S.TabAreaItemLink>
+                                                        </S.TabAreaItem>
+                                                    </S.TabList>
+                                                    <S.TabContent open={open6}>
+                                                        <S.TableWrap>
+                                                            {completedOrderForm[0]
+                                                                .price !==
+                                                            '-' ? (
+                                                                <CompletedOrderTable
+                                                                    completedOrderForm={
+                                                                        completedOrderForm
+                                                                    }
+                                                                />
+                                                            ) : (
+                                                                <EmptyTable
+                                                                    word={
+                                                                        '체결된 거래'
+                                                                    }
+                                                                />
+                                                            )}
+                                                        </S.TableWrap>
+                                                        {completedOrderForm[0]
+                                                            .price !== '-' && (
+                                                            <S.BtnOutLineGrey
+                                                                onClick={() =>
+                                                                    setModalOpen2(
+                                                                        true,
+                                                                    )
+                                                                }
+                                                            >
+                                                                체결 내역 더보기
+                                                            </S.BtnOutLineGrey>
+                                                        )}
+                                                    </S.TabContent>
+                                                    <S.TabContent open={open7}>
+                                                        <S.TableWrap>
+                                                            {sellBidsListForm[0]
+                                                                .price !==
+                                                            '-' ? (
+                                                                <SellBidsTable
+                                                                    sellBidsListForm={
+                                                                        sellBidsListForm
+                                                                    }
+                                                                />
+                                                            ) : (
+                                                                <EmptyTable
+                                                                    word={
+                                                                        '판매 희망가'
+                                                                    }
+                                                                />
+                                                            )}
+                                                        </S.TableWrap>
+                                                        {sellBidsListForm[0]
+                                                            .price !== '-' && (
+                                                            <S.BtnOutLineGrey
+                                                                onClick={() =>
+                                                                    setModalOpen2(
+                                                                        true,
+                                                                    )
+                                                                }
+                                                            >
+                                                                입찰 내역 더보기
+                                                            </S.BtnOutLineGrey>
+                                                        )}
+                                                    </S.TabContent>
+                                                    <S.TabContent open={open8}>
+                                                        <S.TableWrap>
+                                                            {buyBidsListForm[0]
+                                                                .price !==
+                                                            '-' ? (
+                                                                <BuyBidsTable
+                                                                    buyBidsListForm={
+                                                                        buyBidsListForm
+                                                                    }
+                                                                />
+                                                            ) : (
+                                                                <EmptyTable
+                                                                    word={
+                                                                        '구매 희망가'
+                                                                    }
+                                                                />
+                                                            )}
+                                                        </S.TableWrap>
+                                                        {buyBidsListForm[0]
+                                                            .price !== '-' && (
+                                                            <S.BtnOutLineGrey
+                                                                onClick={() =>
+                                                                    setModalOpen2(
+                                                                        true,
+                                                                    )
+                                                                }
+                                                            >
+                                                                입찰 내역 더보기
+                                                            </S.BtnOutLineGrey>
+                                                        )}
+                                                    </S.TabContent>
+                                                </S.TabArea>
+                                            </S.WrapBids>
+                                        </S.ProductSalesGraph>
+                                        {modalOpen2 && (
+                                            <ListModal
+                                                setModalOpen={setModalOpen2}
+                                                completedOrderForm={
+                                                    completedOrderForm
+                                                }
+                                                sellBidsListForm={
+                                                    sellBidsListForm
+                                                }
+                                                buyBidsListForm={
+                                                    buyBidsListForm
+                                                }
+                                                form={form}
+                                                mainImg={mainImg}
+                                                sizeForm={sizeForm}
+                                                onOpen2={onOpen2}
+                                                open6={open6}
+                                                open7={open7}
+                                                open={open8}
+                                                getSize={getSize}
+                                                getAll={getAll}
+                                                setListOpen={setListOpen}
+                                                listOpen={listOpen}
+                                                size={size}
+                                                seq={seq}
+                                            />
+                                        )}
+                                        <div>
+                                            <S.ConfirmWrap>
+                                                <S.ConfirmWrapConfirmTitle>
+                                                    구매 전 꼭 확인해주세요
+                                                </S.ConfirmWrapConfirmTitle>
+                                                <S.ConfirmWrapConfirmContemt>
+                                                    <ul className="dropdown_list">
+                                                        <li>
+                                                            <div className="dropdown">
+                                                                <S.DropdownHead
+                                                                    onClick={
+                                                                        OpenDrop
+                                                                    }
+                                                                >
+                                                                    <S.DropdownHeadTitle>
+                                                                        배송
+                                                                        기간
+                                                                        안내
+                                                                    </S.DropdownHeadTitle>
+                                                                    {/* <svg>
                                                                     <use></use>
                                                                 </svg> */}
-                                                            </S.DropdownHead>
-                                                            <S.DropdownContent hidden={dropdown}>
-                                                                <S.DropdownContentContent>
-                                                                    <div className="content_box">
-                                                                        <div className="emphasis_box">
-                                                                            <S.Emphasis>
-                                                                                슈크림은 최대한 빠르게 모든 상품을 배송하기 위해 노력하고 있습니다. 배송 시간은 판매자가 검수를 위하여 상품을 검수센터로 보내는 속도에 따라 차이가 있습니다.
-                                                                            </S.Emphasis>
+                                                                </S.DropdownHead>
+                                                                <S.DropdownContent
+                                                                    hidden={
+                                                                        dropdown
+                                                                    }
+                                                                >
+                                                                    <S.DropdownContentContent>
+                                                                        <div className="content_box">
+                                                                            <div className="emphasis_box">
+                                                                                <S.Emphasis>
+                                                                                    슈크림은
+                                                                                    최대한
+                                                                                    빠르게
+                                                                                    모든
+                                                                                    상품을
+                                                                                    배송하기
+                                                                                    위해
+                                                                                    노력하고
+                                                                                    있습니다.
+                                                                                    배송
+                                                                                    시간은
+                                                                                    판매자가
+                                                                                    검수를
+                                                                                    위하여
+                                                                                    상품을
+                                                                                    검수센터로
+                                                                                    보내는
+                                                                                    속도에
+                                                                                    따라
+                                                                                    차이가
+                                                                                    있습니다.
+                                                                                </S.Emphasis>
+                                                                            </div>
+                                                                            <ul
+                                                                                className="content_list"
+                                                                                style={{
+                                                                                    marginTop:
+                                                                                        '20px',
+                                                                                }}
+                                                                            >
+                                                                                <li className="content_item">
+                                                                                    <p className="title_txt">
+                                                                                        {' '}
+                                                                                        [빠른배송
+                                                                                        구매]
+                                                                                    </p>
+                                                                                </li>
+                                                                                <li className="content_item">
+                                                                                    <p
+                                                                                        className="main_txt"
+                                                                                        style={{
+                                                                                            marginTop:
+                                                                                                '20px',
+                                                                                        }}
+                                                                                    >
+                                                                                        {' '}
+                                                                                        -
+                                                                                        판매자가
+                                                                                        보관
+                                                                                        신청한
+                                                                                        상품
+                                                                                        중
+                                                                                        검수에
+                                                                                        합격한
+                                                                                        상품을
+                                                                                        KREAM의
+                                                                                        전용
+                                                                                        창고에
+                                                                                        보관합니다.
+                                                                                        보관
+                                                                                        상품에
+                                                                                        한하여
+                                                                                        바로
+                                                                                        구매와
+                                                                                        95점
+                                                                                        구매가
+                                                                                        가능합니다.{' '}
+                                                                                    </p>
+                                                                                </li>
+                                                                                <li className="content_item">
+                                                                                    <p
+                                                                                        className="main_txt"
+                                                                                        style={{
+                                                                                            marginTop:
+                                                                                                '10px',
+                                                                                        }}
+                                                                                    >
+                                                                                        -
+                                                                                        오늘(오후
+                                                                                        11:59까지)
+                                                                                        결제하면
+                                                                                        내일
+                                                                                        바로
+                                                                                        출고되어
+                                                                                        빠른
+                                                                                        배송이
+                                                                                        가능합니다.
+                                                                                        (연휴
+                                                                                        및
+                                                                                        공휴일,
+                                                                                        천재지변,
+                                                                                        택배사
+                                                                                        사유
+                                                                                        등
+                                                                                        예외적으로
+                                                                                        출고일이
+                                                                                        변경될
+                                                                                        수
+                                                                                        있습니다.
+                                                                                    </p>
+                                                                                </li>
+                                                                            </ul>
                                                                         </div>
-                                                                        <ul className="content_list" style={{ marginTop: "20px" }}>
-                                                                            <li className="content_item">
-                                                                                <p className="title_txt"> [빠른배송 구매]</p>
-                                                                            </li>
-                                                                            <li className="content_item">
-                                                                                <p className="main_txt" style={{ marginTop: "20px" }}> - 판매자가 보관 신청한 상품 중 검수에 합격한 상품을 KREAM의 전용 창고에 보관합니다. 보관 상품에 한하여 바로 구매와 95점 구매가 가능합니다. </p>
-                                                                            </li>
-                                                                            <li className="content_item">
-                                                                                <p className="main_txt" style={{ marginTop: "10px" }}> 
-                                                                                - 오늘(오후 11:59까지) 결제하면 내일 바로 출고되어 빠른 배송이 가능합니다. (연휴 및 공휴일, 천재지변, 택배사 사유 등 예외적으로 출고일이 변경될 수 있습니다.
-                                                                                </p>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </S.DropdownContentContent>
-                                                            </S.DropdownContent>
+                                                                    </S.DropdownContentContent>
+                                                                </S.DropdownContent>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div className="dropdown">
+                                                                <S.DropdownHead
+                                                                    onClick={
+                                                                        OpenDrop1
+                                                                    }
+                                                                >
+                                                                    <S.DropdownHeadTitle>
+                                                                        검수
+                                                                        안내
+                                                                    </S.DropdownHeadTitle>
+                                                                    {/* <svg>
+                                                                    <use></use>
+                                                                </svg> */}
+                                                                </S.DropdownHead>
+                                                                <S.DropdownContent
+                                                                    hidden={
+                                                                        dropdown1
+                                                                    }
+                                                                >
+                                                                    <S.DropdownContentContent>
+                                                                        <div className="content_box">
+                                                                            <div className="emphasis_box">
+                                                                                <S.Emphasis>
+                                                                                    판매자의
+                                                                                    상품이
+                                                                                    검수센터에
+                                                                                    도착하면
+                                                                                    전담
+                                                                                    검수팀이
+                                                                                    철저한
+                                                                                    분석과
+                                                                                    검사로
+                                                                                    정가품
+                                                                                    확인을
+                                                                                    진행합니다.
+                                                                                </S.Emphasis>
+                                                                            </div>
+                                                                            <ul
+                                                                                className="content_list"
+                                                                                style={{
+                                                                                    marginTop:
+                                                                                        '20px',
+                                                                                }}
+                                                                            >
+                                                                                <li className="content_item">
+                                                                                    <p className="title_txt">
+                                                                                        {' '}
+                                                                                        -
+                                                                                        검수센터에서는
+                                                                                        정가품
+                                                                                        여부를
+                                                                                        확인하기
+                                                                                        위하여,
+                                                                                        지속적으로
+                                                                                        데이터를
+                                                                                        쌓고
+                                                                                        분석하여
+                                                                                        기록하고
+                                                                                        있습니다.{' '}
+                                                                                    </p>
+                                                                                </li>
+                                                                                <li className="content_item">
+                                                                                    <p
+                                                                                        className="main_txt"
+                                                                                        style={{
+                                                                                            marginTop:
+                                                                                                '10px',
+                                                                                        }}
+                                                                                    >
+                                                                                        {' '}
+                                                                                        -
+                                                                                        업계
+                                                                                        전문가로
+                                                                                        구성된
+                                                                                        검수팀은
+                                                                                        박스와
+                                                                                        상품의
+                                                                                        라벨에서
+                                                                                        바느질,
+                                                                                        접착,
+                                                                                        소재
+                                                                                        등
+                                                                                        모든
+                                                                                        것을
+                                                                                        검수합니다.{' '}
+                                                                                    </p>
+                                                                                </li>
+                                                                            </ul>
+
+                                                                            <div
+                                                                                className="emphasis_box"
+                                                                                style={{
+                                                                                    marginTop:
+                                                                                        '40px',
+                                                                                }}
+                                                                            >
+                                                                                <S.Emphasis>
+                                                                                    검수
+                                                                                    결과는
+                                                                                    불합격•검수
+                                                                                    보류•합격의
+                                                                                    세가지
+                                                                                    상태로
+                                                                                    결과가
+                                                                                    변경됩니다.
+                                                                                </S.Emphasis>
+                                                                            </div>
+                                                                            <ul
+                                                                                className="content_list"
+                                                                                style={{
+                                                                                    marginTop:
+                                                                                        '20px',
+                                                                                }}
+                                                                            >
+                                                                                <li className="content_item">
+                                                                                    <p className="title_txt">
+                                                                                        {' '}
+                                                                                        *
+                                                                                        검수
+                                                                                        합격:
+                                                                                        슈크림
+                                                                                        검수택(Tag)이
+                                                                                        부착되어
+                                                                                        배송을
+                                                                                        준비함{' '}
+                                                                                    </p>
+                                                                                </li>
+                                                                                <li className="content_item">
+                                                                                    <p className="main_txt">
+                                                                                        {' '}
+                                                                                        *
+                                                                                        검수
+                                                                                        보류:
+                                                                                        앱에서
+                                                                                        사진으로
+                                                                                        상품의
+                                                                                        상태
+                                                                                        확인
+                                                                                        및
+                                                                                        구매
+                                                                                        여부를
+                                                                                        선택.
+                                                                                        (24시간
+                                                                                        이후
+                                                                                        자동
+                                                                                        검수
+                                                                                        합격){' '}
+                                                                                    </p>
+                                                                                </li>
+                                                                                <li className="content_item">
+                                                                                    <p className="main_txt">
+                                                                                        {' '}
+                                                                                        *
+                                                                                        검수
+                                                                                        불합격:
+                                                                                        즉시
+                                                                                        거래가
+                                                                                        취소되고
+                                                                                        구매하신
+                                                                                        금액을
+                                                                                        환불
+                                                                                        처리함.(환불
+                                                                                        수단은
+                                                                                        결제
+                                                                                        수단과
+                                                                                        동일){' '}
+                                                                                    </p>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </S.DropdownContentContent>
+                                                                </S.DropdownContent>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div className="dropdown">
+                                                                <S.DropdownHead
+                                                                    onClick={
+                                                                        OpenDrop2
+                                                                    }
+                                                                >
+                                                                    <S.DropdownHeadTitle>
+                                                                        구매/환불/취소/교환
+                                                                        안내
+                                                                    </S.DropdownHeadTitle>
+                                                                    {/* <svg>
+                                                                    <use></use>
+                                                                </svg> */}
+                                                                </S.DropdownHead>
+                                                                <S.DropdownContent
+                                                                    hidden={
+                                                                        dropdown2
+                                                                    }
+                                                                >
+                                                                    <S.DropdownContentContent>
+                                                                        <div className="content_box">
+                                                                            <div className="emphasis_box">
+                                                                                <S.Emphasis>
+                                                                                    슈크림은
+                                                                                    익명
+                                                                                    거래를
+                                                                                    기반으로
+                                                                                    판매자가
+                                                                                    판매하는
+                                                                                    상품을
+                                                                                    구매자가
+                                                                                    실시간으로
+                                                                                    구매하여
+                                                                                    거래를
+                                                                                    체결합니다.
+                                                                                </S.Emphasis>
+                                                                            </div>
+                                                                            <ul
+                                                                                className="content_list"
+                                                                                style={{
+                                                                                    marginTop:
+                                                                                        '20px',
+                                                                                }}
+                                                                            >
+                                                                                <li className="content_item">
+                                                                                    <p className="title_txt">
+                                                                                        {' '}
+                                                                                        -
+                                                                                        단순
+                                                                                        변심이나
+                                                                                        실수에
+                                                                                        의한
+                                                                                        취소/교환/반품이
+                                                                                        불가능합니다.
+                                                                                        상품을
+                                                                                        원하지
+                                                                                        않으시는
+                                                                                        경우
+                                                                                        언제든지
+                                                                                        슈크림에서
+                                                                                        재판매를
+                                                                                        하실
+                                                                                        수
+                                                                                        있습니다.
+                                                                                    </p>
+                                                                                </li>
+                                                                                <li className="content_item">
+                                                                                    <p
+                                                                                        className="main_txt"
+                                                                                        style={{
+                                                                                            marginTop:
+                                                                                                '10px',
+                                                                                        }}
+                                                                                    >
+                                                                                        {' '}
+                                                                                        -
+                                                                                        상품
+                                                                                        수령
+                                                                                        후,
+                                                                                        이상이
+                                                                                        있는
+                                                                                        경우
+                                                                                        슈크림
+                                                                                        고객센터로
+                                                                                        문의해주시기
+                                                                                        바랍니다.{' '}
+                                                                                    </p>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </S.DropdownContentContent>
+                                                                </S.DropdownContent>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </S.ConfirmWrapConfirmContemt>
+                                            </S.ConfirmWrap>
+                                            <div
+                                                className="point_guide"
+                                                style={{ paddingTop: '40px' }}
+                                            >
+                                                <ul className="guide_list">
+                                                    <li
+                                                        className="guide_item"
+                                                        style={{
+                                                            overflow: 'hidden',
+                                                        }}
+                                                    >
+                                                        <S.ThumbArea>
+                                                            <S.ThumbAreaImg
+                                                                src={
+                                                                    '/image/product/100-percent.png'
+                                                                }
+                                                            >
+                                                                {/* <img src={'/image/product/211690_up_arrow_icon.png'} width="15px" heigh="15px"></img>  */}
+                                                            </S.ThumbAreaImg>
+                                                        </S.ThumbArea>
+                                                        <div
+                                                            className="text_area"
+                                                            style={{
+                                                                overflow:
+                                                                    'hidden',
+                                                            }}
+                                                        >
+                                                            <S.TextAreaTitle>
+                                                                100% 정품 보증
+                                                            </S.TextAreaTitle>
+                                                            <S.TextAreaDesc>
+                                                                슈크림사에서
+                                                                검수한 상품이
+                                                                정품 아니면 최대
+                                                                3배까지
+                                                                보상해드립니다
+                                                            </S.TextAreaDesc>
                                                         </div>
                                                     </li>
-                                                    <li>
-                                                        <div className="dropdown">
-                                                            <S.DropdownHead onClick={ OpenDrop1 }>
-                                                                <S.DropdownHeadTitle>검수 안내</S.DropdownHeadTitle>
-                                                                {/* <svg>
-                                                                    <use></use>
-                                                                </svg> */}
-                                                            </S.DropdownHead>
-                                                            <S.DropdownContent hidden={dropdown1}>
-                                                                <S.DropdownContentContent>
-                                                                    <div className="content_box">
-                                                                        <div className="emphasis_box">
-                                                                            <S.Emphasis>
-                                                                                판매자의 상품이 검수센터에 도착하면 전담 검수팀이 철저한 분석과 검사로 정가품 확인을 진행합니다.
-                                                                            </S.Emphasis>
-                                                                        </div>
-                                                                        <ul className="content_list" style={{ marginTop: "20px" }}>
-                                                                            <li className="content_item">
-                                                                                <p className="title_txt"> - 검수센터에서는 정가품 여부를 확인하기 위하여, 지속적으로 데이터를 쌓고 분석하여 기록하고 있습니다. </p>
-                                                                            </li>
-                                                                            <li className="content_item">
-                                                                                <p className="main_txt" style={{ marginTop: "10px" }}> - 업계 전문가로 구성된 검수팀은 박스와 상품의 라벨에서 바느질, 접착, 소재 등 모든 것을 검수합니다. </p>
-                                                                            </li>
-                                                                        </ul>
-
-                                                                        <div className="emphasis_box" style={{ marginTop: "40px" }}>
-                                                                            <S.Emphasis>
-                                                                                검수 결과는 불합격•검수 보류•합격의 세가지 상태로 결과가 변경됩니다.
-                                                                            </S.Emphasis>
-                                                                        </div>
-                                                                        <ul className="content_list" style={{ marginTop: "20px" }}>
-                                                                            <li className="content_item">
-                                                                                <p className="title_txt"> * 검수 합격: 슈크림 검수택(Tag)이 부착되어 배송을 준비함 </p>
-                                                                            </li>
-                                                                            <li className="content_item">
-                                                                                <p className="main_txt"> * 검수 보류: 앱에서 사진으로 상품의 상태 확인 및 구매 여부를 선택. (24시간 이후 자동 검수 합격) </p>
-                                                                            </li>
-                                                                            <li className="content_item">
-                                                                                <p className="main_txt"> * 검수 불합격: 즉시 거래가 취소되고 구매하신 금액을 환불 처리함.(환불 수단은 결제 수단과 동일) </p>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </S.DropdownContentContent>
-                                                            </S.DropdownContent>
+                                                    <li
+                                                        className="guide_item"
+                                                        style={{
+                                                            overflow: 'hidden',
+                                                            paddingTop: '5px',
+                                                        }}
+                                                    >
+                                                        <S.ThumbArea>
+                                                            <S.ThumbAreaImg
+                                                                src={
+                                                                    '/image/product/magnifying-glass-with-check-mark.png'
+                                                                }
+                                                            ></S.ThumbAreaImg>
+                                                        </S.ThumbArea>
+                                                        <div
+                                                            className="text_area"
+                                                            style={{
+                                                                overflow:
+                                                                    'hidden',
+                                                            }}
+                                                        >
+                                                            <S.TextAreaTitle>
+                                                                엄격한 다중검수
+                                                            </S.TextAreaTitle>
+                                                            <S.TextAreaDesc>
+                                                                모든 상품은
+                                                                검수센터에
+                                                                도착한 후,
+                                                                상품별 전문가
+                                                                그룹의 체계적인
+                                                                시스템을 거쳐
+                                                                검수를
+                                                                진행합니다.
+                                                            </S.TextAreaDesc>
                                                         </div>
-                                                    </li>                                                               
-                                                    <li>
-                                                        <div className="dropdown">
-                                                            <S.DropdownHead onClick={ OpenDrop2 }>
-                                                                <S.DropdownHeadTitle>구매/환불/취소/교환 안내</S.DropdownHeadTitle>
-                                                                {/* <svg>
-                                                                    <use></use>
-                                                                </svg> */}
-                                                            </S.DropdownHead>
-                                                            <S.DropdownContent hidden={dropdown2}>
-                                                                <S.DropdownContentContent>
-                                                                    <div className="content_box">
-                                                                        <div className="emphasis_box">
-                                                                            <S.Emphasis>
-                                                                                슈크림은 익명 거래를 기반으로 판매자가 판매하는 상품을 구매자가 실시간으로 구매하여 거래를 체결합니다.
-                                                                            </S.Emphasis>
-                                                                        </div>
-                                                                        <ul className="content_list" style={{ marginTop: "20px" }}>
-                                                                            <li className="content_item">
-                                                                                <p className="title_txt"> - 단순 변심이나 실수에 의한 취소/교환/반품이 불가능합니다. 상품을 원하지 않으시는 경우 언제든지 슈크림에서 재판매를 하실 수 있습니다.</p>
-                                                                            </li>
-                                                                            <li className="content_item">
-                                                                                <p className="main_txt" style={{ marginTop: "10px" }}> - 상품 수령 후, 이상이 있는 경우 슈크림 고객센터로 문의해주시기 바랍니다. </p>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </S.DropdownContentContent>
-                                                            </S.DropdownContent>
+                                                    </li>
+                                                    <li
+                                                        className="guide_item"
+                                                        style={{
+                                                            overflow: 'hidden',
+                                                            paddingTop: '5px',
+                                                        }}
+                                                    >
+                                                        <S.ThumbArea>
+                                                            <S.ThumbAreaImg
+                                                                src={
+                                                                    '/image/product/package-box.png'
+                                                                }
+                                                            ></S.ThumbAreaImg>
+                                                        </S.ThumbArea>
+                                                        <div
+                                                            className="text_area"
+                                                            style={{
+                                                                overflow:
+                                                                    'hidden',
+                                                            }}
+                                                        >
+                                                            <S.TextAreaTitle>
+                                                                정품 인증 패키지
+                                                            </S.TextAreaTitle>
+                                                            <S.TextAreaDesc>
+                                                                검수에 합격한
+                                                                경우에 한하여
+                                                                슈크림의 정품
+                                                                인증 패키지가
+                                                                포함된 상품이
+                                                                배송됩니다.
+                                                            </S.TextAreaDesc>
                                                         </div>
                                                     </li>
                                                 </ul>
-                                            </S.ConfirmWrapConfirmContemt>
-                                        </S.ConfirmWrap>
-                                        <div className="point_guide" style={{paddingTop: "40px"}}>
-                                            <ul className="guide_list">
-                                                <li className="guide_item" style={{overflow: "hidden"}}>
-                                                    <S.ThumbArea>
-                                                        <S.ThumbAreaImg src={'/image/product/100-percent.png'}>
-                                                            {/* <img src={'/image/product/211690_up_arrow_icon.png'} width="15px" heigh="15px"></img>  */}
-                                                        </S.ThumbAreaImg>
-                                                    </S.ThumbArea>
-                                                    <div className="text_area" style={{overflow: "hidden"}}>
-                                                        <S.TextAreaTitle>100% 정품 보증</S.TextAreaTitle>
-                                                        <S.TextAreaDesc>슈크림사에서 검수한 상품이 정품 아니면 최대 3배까지 보상해드립니다</S.TextAreaDesc>
-                                                    </div>
-                                                </li>
-                                                <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
-                                                    <S.ThumbArea>
-                                                        <S.ThumbAreaImg src={'/image/product/magnifying-glass-with-check-mark.png'}></S.ThumbAreaImg>
-                                                    </S.ThumbArea>
-                                                    <div className="text_area" style={{overflow: "hidden"}}>
-                                                        <S.TextAreaTitle>엄격한 다중검수</S.TextAreaTitle>
-                                                        <S.TextAreaDesc>모든 상품은 검수센터에 도착한 후, 상품별 전문가 그룹의 체계적인 시스템을 거쳐 검수를 진행합니다.</S.TextAreaDesc>
-                                                    </div>
-                                                </li>
-                                                <li className="guide_item" style={{overflow: "hidden", paddingTop: "5px"}}>
-                                                    <S.ThumbArea>
-                                                        <S.ThumbAreaImg src={'/image/product/package-box.png'}></S.ThumbAreaImg>
-                                                    </S.ThumbArea>
-                                                    <div className="text_area" style={{overflow: "hidden"}}>
-                                                        <S.TextAreaTitle>정품 인증 패키지</S.TextAreaTitle>
-                                                        <S.TextAreaDesc>검수에 합격한 경우에 한하여 슈크림의 정품 인증 패키지가 포함된 상품이 배송됩니다.</S.TextAreaDesc>
-                                                    </div>
-                                                </li>
-                                            </ul>
+                                            </div>
+                                            <S.MeditationNoticeProduct>
+                                                슈크림(주)는 통신판매 중개자로서
+                                                통신판매의 당사자가 아닙니다. 본
+                                                상품은 개별판매자가 등록한
+                                                상품으로 상품, 상품정보, 거래에
+                                                관한 의무와 책임은 각 판매자에게
+                                                있습니다. 단, 거래과정에서
+                                                검수하고 보증하는 내용에 대한
+                                                책임은 슈크림(주)에 있습니다.
+                                            </S.MeditationNoticeProduct>
                                         </div>
-                                        <S.MeditationNoticeProduct>
-                                        슈크림(주)는 통신판매 중개자로서 통신판매의 당사자가 아닙니다. 본 상품은 개별판매자가 등록한 상품으로 상품, 상품정보, 거래에 관한 의무와 책임은 각 판매자에게 있습니다. 단, 거래과정에서 검수하고 보증하는 내용에 대한 책임은 슈크림(주)에 있습니다.
-                                        </S.MeditationNoticeProduct>
                                     </div>
                                     <S.FloatingPrice
                                         ScrollActive2={ScrollActive2}
@@ -1389,79 +1806,157 @@ const Products = () => {
                                 </S.BrandTitleText>
                                 <S.BtnMore>
                                     <S.BtnText>더 보기</S.BtnText>
-                            </S.BtnMore>
-                        </S.BrandTitle>
-                        <S.BrandProducts>
-                            <S.BrandProductList>
-                            {
-                                brandListForm.length > 10 ? 
-
-                                    [...Array(parseInt(10))].map((n, index) => {
-                                        return <S.ProductItem key={index}>
-                                        <S.ItemInner onClick={() => brandNavigate(brandListForm[index].seq)}>
-                                            <div className='thumb_box'>
-                                                <S.Product>
-                                                    <S.PictureBrandProductImg>
-                                                        <S.BrandProductImg src={`/resellList/${photoshop(brandListForm[index].img_name)}`}/>
-                                                    </S.PictureBrandProductImg>
-                                                </S.Product>
-                                            </div>
-                                            <S.ProductItemInfoBox>
-                                            <div className='info_box'>
-                                                <div className='brand'>
-                                                    <S.BrandTextWithOutWish>{brandListForm[index].brand}</S.BrandTextWithOutWish>
-                                                </div>
-                                                <S.BrandProductInfoBoxName>{brandListForm[index].title}</S.BrandProductInfoBoxName>
-                                                <S.BrandProductInfoBoxPrice>
-                                                    <S.BrandProductInfoBoxPriceAmount>
-                                                        <S.BrandProductInfoBoxPriceAmountNum>{brandListForm[index].price !== '-' ? Number(brandListForm[index].price).toLocaleString('ko-KR') : brandListForm[index].price}</S.BrandProductInfoBoxPriceAmountNum>
-                                                    </S.BrandProductInfoBoxPriceAmount>
-                                                    <S.BrandProductInfoBoxPriceDesc>즉시 구매가</S.BrandProductInfoBoxPriceDesc>
-                                                </S.BrandProductInfoBoxPrice>
-                                            </div>
-                                        </S.ProductItemInfoBox>
-                                        </S.ItemInner>
-                                    </S.ProductItem>
-                                    })
-
-                                    :
-
-                                    brandListForm[0].img_name !== '' &&
-
-                                    brandListForm.map((item, index) => (
-                                        <S.ProductItem key={index}>
-                                            <S.ItemInner onClick={() => brandNavigate(item.seq)}>
-                                                <div className='thumb_box'>
-                                                    <S.Product>
-                                                        <S.PictureBrandProductImg>
-                                                            <S.BrandProductImg src={`/resellList/${photoshop(item.img_name)}`}/>
-                                                        </S.PictureBrandProductImg>
-                                                    </S.Product>
-                                                </div>
-                                                <S.ProductItemInfoBox>
-                                                <div className='info_box'>
-                                                    <div className='brand'>
-                                                        <S.BrandTextWithOutWish>{item.brand}</S.BrandTextWithOutWish>
-                                                    </div>
-                                                    <S.BrandProductInfoBoxName>{item.title}</S.BrandProductInfoBoxName>
-                                                    <S.BrandProductInfoBoxPrice>
-                                                        <S.BrandProductInfoBoxPriceAmount>
-                                                            <S.BrandProductInfoBoxPriceAmountNum>{item.price !== '-' ? Number(item.price).toLocaleString('ko-KR') + "원" : item.price}</S.BrandProductInfoBoxPriceAmountNum>
-                                                        </S.BrandProductInfoBoxPriceAmount>
-                                                        <S.BrandProductInfoBoxPriceDesc>즉시 구매가</S.BrandProductInfoBoxPriceDesc>
-                                                    </S.BrandProductInfoBoxPrice>
-                                                </div>
-                                            </S.ProductItemInfoBox>
-                                            </S.ItemInner>
-                                        </S.ProductItem>))
-                                    
-                            }
-                            </S.BrandProductList>
-                        </S.BrandProducts>
-                    </S.BrandArea>
-                </div>
-            </S.ContainerDetail>
-        </S.ProductsWrapper>
+                                </S.BtnMore>
+                            </S.BrandTitle>
+                            <S.BrandProducts>
+                                <S.BrandProductList>
+                                    {brandListForm.length > 10
+                                        ? [...Array(parseInt(10))].map(
+                                              (n, index) => {
+                                                  return (
+                                                      <S.ProductItem
+                                                          key={index}
+                                                      >
+                                                          <S.ItemInner
+                                                              onClick={() =>
+                                                                  brandNavigate(
+                                                                      brandListForm[
+                                                                          index
+                                                                      ].seq,
+                                                                  )
+                                                              }
+                                                          >
+                                                              <div className="thumb_box">
+                                                                  <S.Product>
+                                                                      <S.PictureBrandProductImg>
+                                                                          <S.BrandProductImg
+                                                                              src={`/resellList/${photoshop(
+                                                                                  brandListForm[
+                                                                                      index
+                                                                                  ]
+                                                                                      .img_name,
+                                                                              )}`}
+                                                                          />
+                                                                      </S.PictureBrandProductImg>
+                                                                  </S.Product>
+                                                              </div>
+                                                              <S.ProductItemInfoBox>
+                                                                  <div className="info_box">
+                                                                      <div className="brand">
+                                                                          <S.BrandTextWithOutWish>
+                                                                              {
+                                                                                  brandListForm[
+                                                                                      index
+                                                                                  ]
+                                                                                      .brand
+                                                                              }
+                                                                          </S.BrandTextWithOutWish>
+                                                                      </div>
+                                                                      <S.BrandProductInfoBoxName>
+                                                                          {
+                                                                              brandListForm[
+                                                                                  index
+                                                                              ]
+                                                                                  .title
+                                                                          }
+                                                                      </S.BrandProductInfoBoxName>
+                                                                      <S.BrandProductInfoBoxPrice>
+                                                                          <S.BrandProductInfoBoxPriceAmount>
+                                                                              <S.BrandProductInfoBoxPriceAmountNum>
+                                                                                  {brandListForm[
+                                                                                      index
+                                                                                  ]
+                                                                                      .price !==
+                                                                                  '-'
+                                                                                      ? Number(
+                                                                                            brandListForm[
+                                                                                                index
+                                                                                            ]
+                                                                                                .price,
+                                                                                        ).toLocaleString(
+                                                                                            'ko-KR',
+                                                                                        )
+                                                                                      : brandListForm[
+                                                                                            index
+                                                                                        ]
+                                                                                            .price}
+                                                                              </S.BrandProductInfoBoxPriceAmountNum>
+                                                                          </S.BrandProductInfoBoxPriceAmount>
+                                                                          <S.BrandProductInfoBoxPriceDesc>
+                                                                              즉시
+                                                                              구매가
+                                                                          </S.BrandProductInfoBoxPriceDesc>
+                                                                      </S.BrandProductInfoBoxPrice>
+                                                                  </div>
+                                                              </S.ProductItemInfoBox>
+                                                          </S.ItemInner>
+                                                      </S.ProductItem>
+                                                  );
+                                              },
+                                          )
+                                        : brandListForm[0].img_name !== '' &&
+                                          brandListForm.map((item, index) => (
+                                              <S.ProductItem key={index}>
+                                                  <S.ItemInner
+                                                      onClick={() =>
+                                                          brandNavigate(
+                                                              item.seq,
+                                                          )
+                                                      }
+                                                  >
+                                                      <div className="thumb_box">
+                                                          <S.Product>
+                                                              <S.PictureBrandProductImg>
+                                                                  <S.BrandProductImg
+                                                                      src={`/resellList/${photoshop(
+                                                                          item.img_name,
+                                                                      )}`}
+                                                                  />
+                                                              </S.PictureBrandProductImg>
+                                                          </S.Product>
+                                                      </div>
+                                                      <S.ProductItemInfoBox>
+                                                          <div className="info_box">
+                                                              <div className="brand">
+                                                                  <S.BrandTextWithOutWish>
+                                                                      {
+                                                                          item.brand
+                                                                      }
+                                                                  </S.BrandTextWithOutWish>
+                                                              </div>
+                                                              <S.BrandProductInfoBoxName>
+                                                                  {item.title}
+                                                              </S.BrandProductInfoBoxName>
+                                                              <S.BrandProductInfoBoxPrice>
+                                                                  <S.BrandProductInfoBoxPriceAmount>
+                                                                      <S.BrandProductInfoBoxPriceAmountNum>
+                                                                          {item.price !==
+                                                                          '-'
+                                                                              ? Number(
+                                                                                    item.price,
+                                                                                ).toLocaleString(
+                                                                                    'ko-KR',
+                                                                                ) +
+                                                                                '원'
+                                                                              : item.price}
+                                                                      </S.BrandProductInfoBoxPriceAmountNum>
+                                                                  </S.BrandProductInfoBoxPriceAmount>
+                                                                  <S.BrandProductInfoBoxPriceDesc>
+                                                                      즉시
+                                                                      구매가
+                                                                  </S.BrandProductInfoBoxPriceDesc>
+                                                              </S.BrandProductInfoBoxPrice>
+                                                          </div>
+                                                      </S.ProductItemInfoBox>
+                                                  </S.ItemInner>
+                                              </S.ProductItem>
+                                          ))}
+                                </S.BrandProductList>
+                            </S.BrandProducts>
+                        </S.BrandArea>
+                    </div>
+                </S.ContainerDetail>
+            </S.ProductsWrapper>
         </>
     );
 };
