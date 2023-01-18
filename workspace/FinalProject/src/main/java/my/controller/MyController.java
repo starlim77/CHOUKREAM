@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import member.dao.MemberDAO;
 import my.bean.AddressDTO;
+import my.bean.GradeDTO;
 import my.bean.PointDTO;
 import my.bean.SellBuyHistory;
 import my.service.MyService;
@@ -36,6 +38,8 @@ public class MyController {
 	private MyService myService;
 	@Autowired
 	private ShopServiceImpl shopServiceImpl;
+	@Autowired
+	private MemberDAO memberDAO;
 	
 	@RequestMapping(path =  "addAddress")
 	public void addAddress(@ModelAttribute AddressDTO addressDTO) {
@@ -122,6 +126,11 @@ public class MyController {
 	@GetMapping(path = "getBuyRecent")
 	public List<SellBuyHistory> getBuyRecent(@RequestParam long memberSeq) {
 		return myService.getBuyRecent(memberSeq);
+	}
+	@GetMapping(path = "getGrade")
+	public Optional<GradeDTO> getGrade(@RequestParam long memberSeq) {
+		String id = memberDAO.findById(memberSeq).get().getEmail();
+		return myService.getGrade(id);
 	}
 	
 	

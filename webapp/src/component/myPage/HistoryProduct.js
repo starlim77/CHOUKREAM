@@ -22,12 +22,10 @@ useEffect(() => {
     return (
         <S.Product>
             <S.ImgWrapper>
-                {item.type === "used" && <S.ProductImg src={`../storage/${str2 ? str2 : str}`} />}
-                {item.type === "resell" && <S.ProductImg src={`../resellList/${str2 ? str2 : str}`} />}
-                {item.type === "new" && <S.ProductImg src={`../newProductList/${str2 ? str2 : str}`}/>}
-                {/* <S.ProductImg src={item.type === "used"
-                        ? `../storage/${str2 ? str2 : str}`
-                        : `../resellList/${str2 ? str2 : str}`}></S.ProductImg> */}
+                {item.type === "used" && <S.ProductImg src={`../storage/${str2 ? str2 : str}`} style={{height: "100px"}}/>}
+                {item.type === "resell" && <S.ProductImg src={`../resellList/${str2 ? str2 : str}`} style={{height: "100px"}}/>}
+                {item.type === "new" && <S.ProductImg src={`../newProductList/${str2 ? str2 : str}`} style={{height: "100px"}}/>}
+               
             </S.ImgWrapper>
             <S.TextWrapper>
                 <S.ProductBrand>Brand: {item.brand}</S.ProductBrand>

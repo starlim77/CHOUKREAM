@@ -10,6 +10,7 @@ const MyPageMain = () => {
     const [member, setMember] = useState({});
     const [id, setId] = useState();
     const [point, setPoint] = useState();
+    const [grade, setGrage] = useState()
     const navigate = useNavigate();
     const [soldList, setSoldList] = useState([]);
     const [boughtList, setBoughtList] = useState([]);
@@ -21,6 +22,9 @@ const MyPageMain = () => {
         axios
             .get(`http://localhost:8080/getMember?id=${memberSeq}`)
             .then(res => setMember(res.data));
+        axios
+            .get(`http://localhost:8080/my/getGrade?memberSeq=${memberSeq}`)
+            .then(res => setGrage(res.data.grade));
         //회원 아이디 가져옴
         axios
             .get(`http://localhost:8080/getMemberId?memberSeq=${memberSeq}`)
@@ -79,7 +83,7 @@ const MyPageMain = () => {
                 <S.MiddleWrapper>
                     <S.IdDIv>ID : {id}</S.IdDIv>
                     <S.EmailDIv>email : {member.email}</S.EmailDIv>
-                    <S.MemberLevel>일반 회원</S.MemberLevel>
+                    <S.MemberLevel>{grade}</S.MemberLevel>
                     <S.ButtonWrapper>
                         <S.Button onClick={onProfile}>프로필 수정</S.Button>
                         <S.Button onClick={onStyle}>내 스타일</S.Button>
