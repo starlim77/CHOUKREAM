@@ -219,8 +219,8 @@ const onReset =(e)=>{
             
                 {searchVisible  ? <C.ResultNum><C.StrongNum>{listnumber}</C.StrongNum>개의 검색 결과가 있습니다.</C.ResultNum> : ''}
             
-                {list.length===0 && <C.NoResult>검색결과가 없습니다
-                                  <p>  <C.ChatButton>채팅하기</C.ChatButton></p>
+                {list.length===0 && <C.NoResult>검색하신 결과가 없습니다.
+                                  <C.ListButtonWrap>  <C.Button onClick={onClickCategory} value=''>목록으로</C.Button></C.ListButtonWrap>
                                     </C.NoResult>
                                     }
                 

@@ -186,7 +186,7 @@ const CsFaqUpdateForm = () => {
                                     <option value="buying">구매</option>
                                     <option value="selling">판매</option>
                                 </C.CategorySelect>
-                                {categoryValidateCheck ? <C.Validation>'카테고리를 선택해주세요'</C.Validation>:''}
+                                
                             
                                 <C.TitleInput
                                     type="text"
@@ -196,6 +196,7 @@ const CsFaqUpdateForm = () => {
                                     onChange={onInput}
                                     value={form.title}
                                 />
+                                 {categoryValidateCheck ? <C.Validation>'카테고리를 선택해주세요'</C.Validation>:''}
                                  {titleValidateCheck ? <C.Validation>'제목을 입력 해주세요'</C.Validation> : ''} 
                             
                         
