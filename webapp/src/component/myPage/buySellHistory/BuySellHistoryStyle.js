@@ -45,16 +45,16 @@ export const BuyBox = styled.div`
     flex-wrap: wrap;
     width: 100%;
     padding: 10px 15px;
-    border-bottom: 1px solid rgb(49, 180, 110);
+    border-bottom: 1px solid #ef6253;
     margin-bottom: 20px;
     cursor: ${props => (props.done || "pointer")};
-`;
+    `;
 export const SellBox = styled.div`
     display: flex;
     flex-wrap: wrap;
     width: 100%;
     padding: 10px 15px;
-    border-bottom: 1px solid #ef6253;
+    border-bottom: 1px solid rgb(49, 180, 110);
     margin-bottom: 20px;
     cursor: ${props => (props.done || "pointer")};
 `;
@@ -91,8 +91,8 @@ export const Status = styled.div`
     width: 20%;
     height: 30px;
     margin-bottom: 14px;
-    color: ${props => (props.status === "buying" ? " rgb(49, 180, 110)"
-                                       :"selling" && "#ef6253")}; 
+    color: ${props => (props.status === "buying" ? "#ef6253"
+                                       :"selling" && " rgb(49, 180, 110)")}; 
     color: ${props => (props.done && "black")};
     font-size: 18px;
 `;
@@ -110,5 +110,17 @@ export const InnerTitle = styled.div`
     padding-bottom: 15px;
     border-bottom: 2px solid black;
     margin-bottom: 15px;
+`;
+export const Address = styled.div`
+    display: flex;
+    width: 80%;
+`;
+export const BuyName = styled.div`
+    display: flex;
+    width: 80%;
+`;
+export const BuyPhone = styled.div`
+    display: flex;
+    width: 80%;
 `;
 

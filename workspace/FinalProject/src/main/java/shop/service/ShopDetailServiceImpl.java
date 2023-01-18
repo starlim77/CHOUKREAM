@@ -171,7 +171,6 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 		orderRepository.save(orderDTO);
 	}
 	
-	
 	@Override
 	public void updateInventory(int seq, String option, int inventory) {
 		newProductOptionRepository.updateInventory(seq, option, inventory);
@@ -206,4 +205,5 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 		// TODO Auto-generated method stub
 		return newProductDAO.getNewBrandList(seq, brand);
 	}
+
 }

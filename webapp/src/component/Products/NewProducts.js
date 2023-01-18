@@ -184,6 +184,8 @@ const NewProducts = () => {
     const brandNavigate = (seq) => {
         navigate(`/newProducts/${seq}`)
         window.location.reload()
+    const buyNavigate = () => {
+        navigate(`/newBuy?productNum=${seq}`)
     }
 
     const photoshop = itemImg => {
@@ -278,7 +280,7 @@ const NewProducts = () => {
                                     </div>
                                     <div className="btn-wrap">
                                         <S.DivisionBtnBox>
-                                            <S.NewProductBuyBtn>
+                                            <S.NewProductBuyBtn onClick={buyNavigate}>
                                                 구매하기
                                             </S.NewProductBuyBtn>
                                         </S.DivisionBtnBox>

@@ -51,6 +51,11 @@ public class ShopDetailController {
 		return shopDetailService.getProductSize(seq);
 	}
 	
+//	@GetMapping(path="getProductSizeNew")
+//	public List<SizeMinDTO> getProductSizeNew(@RequestParam int seq) {
+//		return shopDetailService.getProductSizeNew(seq);
+//	}
+//	
 	@GetMapping(path="getProductSizeSell")
 	public List<SizeMinDTO> getProductSizeSell(@RequestParam int seq) {
 		return shopDetailService.getProductSizeSell(seq);

@@ -2,6 +2,7 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BuyHistoryProduct from './BuyHistoryProduct';
 import * as S from './BuySellHistoryStyle';
 
 const BuyHistory = () => {
@@ -9,8 +10,8 @@ const BuyHistory = () => {
     const [pageState, setPageState] = useState('buy');
     const [buyingList, setBuyingList] = useState([]);
     const [boughtList, setBoughtList] = useState([]);
-    const [buyingUsed, setBuyingUsed] = useState([])
-    const [boughtUsed, setBoughtUsed] = useState([])
+    const [buyingUsed, setBuyingUsed] = useState([]);
+    const [boughtUsed, setBoughtUsed] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -32,7 +33,9 @@ const BuyHistory = () => {
             )
             .then(res => setBuyingUsed(res.data));
         axios
-            .get(`http://localhost:8080/my/getBoughtUsed?memberSeq=${memberSeq}`)
+            .get(
+                `http://localhost:8080/my/getBoughtUsed?memberSeq=${memberSeq}`,
+            )
             .then(res => setBoughtUsed(res.data));
     }, []);
 
@@ -60,85 +63,48 @@ const BuyHistory = () => {
                 <S.InnerTitle>리셀 구매 내역</S.InnerTitle>
                 {pageState === 'buy' &&
                     buyingList.map(item => (
-                        <S.BuyBox
+                        <BuyHistoryProduct
+                            item={item}
                             key={item.seq}
-                            onClick={() => onBuyPage(item.seq)}
+                            status={'구매중'}
+                            onBuyPage={onBuyPage}
                             done={false}
-                        >
-                            <S.Img
-                                src={`../newProduct/${item.imgName}`}
-                            ></S.Img>
-                            <S.ProductText>
-                                <S.ProductBrand>{item.brand}</S.ProductBrand>
-                                <S.ProductName>{item.subTitle}</S.ProductName>
-                                <S.Status status={'buying'} done={false}>
-                                    구매중
-                                </S.Status>
-                                <S.Size>
-                                    {item.size && `size : ${item.size}`}
-                                </S.Size>
-                                <S.Size>{item.shipAddress}</S.Size>
-                            </S.ProductText>
-                        </S.BuyBox>
+                            isUsed={false}
+                        />
                     ))}
                 {pageState === 'buyDone' &&
                     boughtList.map((item, index) => (
-                        <S.BuyBox key={index} done={true}>
-                            <S.Img
-                                src={`../newProduct/${item.imgName}`}
-                            ></S.Img>
-                            <S.ProductText>
-                                <S.ProductBrand>{item.brand}</S.ProductBrand>
-                                <S.ProductName>{item.subTitle}</S.ProductName>
-                                <S.Status status={'buying'} done={true}>
-                                    구매완료
-                                </S.Status>
-                                <S.Size>
-                                    {item.size && `size : ${item.size}`}
-                                </S.Size>
-                                <S.Size>{item.shipAddress}</S.Size>
-                            </S.ProductText>
-                        </S.BuyBox>
+                        <BuyHistoryProduct
+                            item={item}
+                            key={item.seq}
+                            status={'구매완료'}
+                            done={true}
+                            isUsed={false}
+                        />
                     ))}
                 <S.InnerTitle style={{ marginTop: '20px' }}>
                     중고 구매 내역
                 </S.InnerTitle>
-                {pageState === 'buy' &&
+                {/* {pageState === 'buy' &&
                     buyingUsed.map((item, index) => (
-                        <S.BuyBox
+                        <BuyHistoryProduct
+                            item={item}
                             key={item.seq}
-                            onClick={() => onSellingUsedPage(item.seq)}
+                            status={'구매중'}
+                            onBuyPage={onSellingUsedPage}
                             done={false}
-                        >
-                            <S.Img
-                                src={`../newProduct/${item.imgName}`}
-                            ></S.Img>
-                            <S.ProductText>
-                                <S.ProductBrand>{item.brand}</S.ProductBrand>
-                                <S.ProductName>{item.subTitle}</S.ProductName>
-                                <S.Status status={'buying'} done={false}>
-                                    구매중
-                                </S.Status>
-                                <S.Size>
-                                    {item.size && `size : ${item.size}`}
-                                </S.Size>
-                            </S.ProductText>
-                        </S.BuyBox>
-                    ))}
+                            isUsed={true}
+                        />
+                    ))} */}
                 {pageState === 'buyDone' &&
                     boughtUsed.map((item, index) => (
-                        <S.BuyBox key={index} done={true}>
-                            <S.Img
-                                src={`..\newProduct\${item.imgName}`}
-                            ></S.Img>
-                            <S.ProductText>
-                                <S.ProductBrand>{item.brand}</S.ProductBrand>
-                                <S.ProductName>{item.subTitle}</S.ProductName>
-                                <S.Status status={'sold'} done={true}>
-                                    구매완료
-                                </S.Status>
-                            </S.ProductText>
-                        </S.BuyBox>
+                        <BuyHistoryProduct
+                            item={item}
+                            key={item.seq}
+                            status={'구매완료'}
+                            done={true}
+                            isUsed={true}
+                        />
                     ))}
             </S.BuyHistoryWrapper>
         </S.BuyHistory>

@@ -50,4 +50,8 @@ public interface MyService {
 
 	public List<SellBuyHistory> getBoughtUsed(long memberSeq);
 
+	public List<SellBuyHistory> getSellRecent(long memberSeq);
+
+	public List<SellBuyHistory> getBuyRecent(long memberSeq);
+
 }

@@ -11,11 +11,10 @@ import {
     useSearchParams,
 } from 'react-router-dom';
 import axios from 'axios';
-import { faL } from '@fortawesome/free-solid-svg-icons';
+import PayHeaderNew from './PayHeaderNew';
 
-const SizePage = () => {
+const SizePageNew = () => {
     const [sizeList, setSizeList] = useState([]);
-    // const [size, setSize] = useState([]);
     const [isBtnClick, setIsBtnClick] = useState(false);
     const [selectedSize, setSelectedSize] = useState('');
     const navigate = useNavigate();
@@ -28,7 +27,7 @@ const SizePage = () => {
     //size 객체 DB에서 가져옴
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/getProductSize?seq=${productNum}`)
+            .get(`http://localhost:8080/getProductSizeNew?seq=${productNum}`)
             .then(res => setSizeList(res.data))
             .catch(error => console.log(error));
     }, []);
@@ -44,13 +43,9 @@ const SizePage = () => {
         );
     };
 
-    useEffect(() => {
-        // setSelectedSize(sizeList.filter(item => item.size === ))
-    }, []);
-
     return (
-        <S.Container>
-            <PayHeader />
+         <S.Container>
+            <PayHeaderNew />
             <S.Body>
                 <S.BtnWrapper>
                     {sizeList.map((item, index) => {
@@ -80,4 +75,4 @@ const SizePage = () => {
     );
 };
 
-export default SizePage;
+export default SizePageNew;

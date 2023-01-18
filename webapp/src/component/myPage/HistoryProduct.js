@@ -8,10 +8,20 @@ const HistoryProduct = (props) => {
         let str = String(num)
         return (str.replace(/\B(?=(\d{3})+(?!\d))/g, ','))
     };
+
+    
+    const arr = JSON.stringify(item.imgName).split(',')
+    
+    const str = arr[0].slice(1)
+
+    if(!arr[1]){
+        var str2 = str.slice(0,str.length-1)
+    }
+
     return (
         <S.Product>
             <S.ImgWrapper>
-                <S.ProductImg src={item.imgName}></S.ProductImg>
+                <S.ProductImg src={`../resellList/${str2 ? str2:str}`}></S.ProductImg>
             </S.ImgWrapper>
             <S.TextWrapper>
                 <S.ProductBrand>Brand: {item.brand}</S.ProductBrand>
