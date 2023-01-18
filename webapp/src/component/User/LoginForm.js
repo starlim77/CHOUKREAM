@@ -65,8 +65,7 @@ const LoginForm = () => {
     return (
         <S.Container>
             <S.LoginAreaDiv>
-                <h2 className='loginTitle'>KREAM</h2>
-
+                <S.Logo src='../image/loginPageLogo.jpg' alt='로고' />
                 <S.InputBox>
                     <S.InputTitle>이메일 주소 *</S.InputTitle>
                     <div className='inputItem'>

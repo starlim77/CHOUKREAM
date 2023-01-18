@@ -49,7 +49,7 @@ const FindPassword = () => {
                     console.log(res.data)
                     
                     const tempPassword = res.data
-                    const content = `[KREAM] 임시 비밀번호 ${tempPassword} 입니다.`
+                    const content = `[CHOUKREAM] 임시 비밀번호 ${tempPassword} 입니다.`
 
                     axios
                         .get(encodeURI(`http://localhost:8080/sendSms?phone=${phone}&content=${content}`))

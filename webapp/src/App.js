@@ -56,6 +56,7 @@ import ReWrite from './component/Shop/register/ReWrite';
 import Following from './component/Lookbook/Following';
 import RequireAuth from './component/Require/RequireAuth';
 import SellForm from './component/payment/SellForm';
+import MainBanner from './component/Main/MainBanner/MainBanner';
 
 function App() {
     const token = localStorage.getItem('accessToken');
@@ -81,7 +82,15 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route element={<Layout auth={auth} />}>
-                    <Route path="/" element={<Main />} />
+                    <Route 
+                        path="/"
+                        element={
+                            <>
+                                <MainBanner />
+                                <Main />
+                            </>
+                        } 
+                    />
 
                     {/* shop */}
                     <Route path="shop" element={<Shop />} />
