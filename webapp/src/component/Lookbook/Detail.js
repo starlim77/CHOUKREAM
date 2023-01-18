@@ -32,7 +32,7 @@ const Detail = () => {
         //      .catch(error => console.log(error))
         //      console.log("list",list) 
        
-        if((!id) === true) {
+        if( !id ) {
             //로인인 안했을 때. 좋아요 포함 전체 리스트 가져오기 : 테이블 조인 쿼리 사용       
             axios.get('http://localhost:8080/lookbook/list')
                 .then( 
@@ -78,7 +78,7 @@ const Detail = () => {
        
         checkLike = checkLike === 'false' ? false : true
 
-        if( (!id) === true){
+        if( !id ){
             alert('먼저 로그인 하세요')
         }else{
             e.preventDefault();
@@ -89,8 +89,9 @@ const Detail = () => {
         }
     }
 
-    const onComment = (seq, id,currentId3) => {
-        if( (!id) === true){
+    const onComment = (e,seq, id,currentId3) => {
+        e.preventDefault();
+        if( !id ){
             alert('먼저 로그인 하세요')
         }else{
             navigate(`/lookbook/StyleComment/${seq}/${id}/${currentId3}`)
@@ -103,7 +104,6 @@ const Detail = () => {
         //console.log(tokenId+"+"+followeeId)
         axios.post(`http://localhost:8080/lookbook/saveFollow/${id}/${followeeId}`) 
              .then(alert("팔로우 성공"))
-             .then()
              .catch(error => console.log(error))
 
         window.location.reload()     
@@ -163,6 +163,13 @@ const Detail = () => {
 
     }
 
+    const onLoginCheck = (id) => {
+        if( !id ){
+            alert('먼저 로그인 하세요')
+        }
+    }
+
+
     return (
         <div>     
       
@@ -170,6 +177,7 @@ const Detail = () => {
             <br/><br/><br/><br/><br/><br/>
             <Container fixed>
                 <S.DeTopDiv> 
+                    {console.log(id + "---------")}
                 {
                     list.map((item,index) =>  {
                         return (
@@ -186,7 +194,7 @@ const Detail = () => {
                             </S.DEChkprofile>
                             <S.DeFollowChk>
                            {
-                                !id ? <Button variant="contained" style={{backgroundColor: 'black'}} onClick={ alert('먼저 로그인 하세요')}>팔로우</Button> :
+                                !id ? <Button variant="contained" style={{backgroundColor: 'black'}} onClick={ () => onLoginCheck(id)}>팔로우</Button> :
                                 /* 팔로우체크?*/
                              
                                 IsFollow(item.id) ? 
@@ -226,7 +234,7 @@ const Detail = () => {
                                 </div>
     
                                 <div>
-                                <IconButton onClick={ () => onComment(item.seq, id,currentId3)}>
+                                <IconButton onClick={ (e) => onComment(item.seq, id,currentId3)}>
                                     {/* <Link to ={`/lookbook/StyleComment/${item.seq}`} > */}
                                     <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
                                     {/* </Link> */}
