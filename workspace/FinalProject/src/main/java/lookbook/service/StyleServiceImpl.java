@@ -99,9 +99,20 @@ public class StyleServiceImpl implements StyleService {
 		styleDTO.setStyleFile(list);			
 		//System.out.println("리스트 담겻나"+styleDTO);
 		
+		//아이디로 이메일 불러와서 스타일 디티오에 저장
+			String id = styleDTO.getId();
+			String email = memberDAO.findEmailById(id);
+			styleDTO.setEmail(email);
+		
 		if(styleDTO.getStyleFile() == null || styleDTO.getStyleFile().isEmpty()) {
 	    	//첨부파일 없음
+			
+			
+			
 			StyleEntity styleEntity = StyleEntity.toSaveEntity(styleDTO);
+			
+			
+			styleEntity.setEmail(null);
 	    	styleDAO.save(styleEntity);
 	    }else {
 	    	 //첨부파일 있음
@@ -118,6 +129,8 @@ public class StyleServiceImpl implements StyleService {
 //	 	     System.out.println(index);
 	 	     pathModified = pathModified.substring(0,index);
 //	 	     System.out.println("경로확인"+pathModified);
+	 	     
+	 	     
 	    	 
 	 	     StyleEntity styleEntity = StyleEntity.toSaveFileEntity(styleDTO);
 	 	     int savedSeq = styleDAO.save(styleEntity).getSeq();

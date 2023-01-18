@@ -84,11 +84,9 @@ public class StyleEntity {
 		styleEntity.setHit(0);
 		styleEntity.setFileAttached(0);
 		styleEntity.setProductSeq(styleDTO.getProductSeq());
-		MemberDto memberDto;
-		styleEntity.setEmail(
-					memberDto.getEmail(styleDTO.getId())
-					
-				);
+	
+		styleEntity.setEmail(styleDTO.getEmail());
+				
 		
 		System.out.println("여기"+styleEntity);
 		return styleEntity;
@@ -104,7 +102,7 @@ public class StyleEntity {
 		styleEntity.setFileAttached(1);  // 파일 있음
 		styleEntity.setSeq(styleDTO.getSeq());	
 		styleEntity.setProductSeq(styleDTO.getProductSeq());		
-		
+		styleEntity.setEmail(styleDTO.getEmail());
 		System.out.println("요기"+styleEntity);
 		return styleEntity;
 	}

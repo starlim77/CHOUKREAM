@@ -61,11 +61,6 @@ public class MemberDto {
         this.emailOption = emailOption;
     }
 	
-	public static String getEmail(String id) {
-		StyleEntity styleEntity = newStyleEntity();
-		
-		
-	}
 	
 	
 }
