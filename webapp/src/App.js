@@ -6,8 +6,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PaymentTerms from './component/payment/PaymentTerms';
 import PayHeader from './component/payment/PayHeader';
 import SizePage from './component/payment/SizePage';
+import SizePageNew from './component/payment/SizePageNew';
 import OrderType from './component/payment/OrderType';
-
+import Main from './component/Main/Main';
 import Shop from './component/Shop/Shop';
 import UserWrite from './component/Shop/register/NewWrite';
 import UsedMain from './component/Used/UsedMain';
@@ -46,6 +47,7 @@ import Logout from './component/User/Logout';
 import MyPageMain from './component/myPage/MyPageMain';
 import MyPageApp from './component/myPage/MyPageApp';
 import NewUpdate from './component/Shop/manager/NewUpdate';
+import SocialLoginRedirect from './component/User/SocialLoginRedirect';
 import UsedItemList from './component/Shop/manager/UsedItemList';
 import jwt_decode from 'jwt-decode';
 import NewProductPage from './component/Shop/newProduct/NewProductPage';
@@ -53,6 +55,10 @@ import ReList from './component/Shop/resell/ReList';
 import ReUpdate from './component/Shop/resell/ReUpdate';
 import ReWrite from './component/Shop/register/ReWrite';
 import Following from './component/Lookbook/Following';
+import RequireAuth from './component/Require/RequireAuth';
+import SellForm from './component/payment/SellForm';
+import SalesList from './component/Shop/manager/SalesList';
+import MainBanner from './component/Main/MainBanner/MainBanner';
 import StyleOneProduct from './component/Lookbook/StyleOneProduct';
 import SearchForm2 from './component/Search/SearchForm2';
 
@@ -70,26 +76,164 @@ function App() {
         }
     }, []);
 
+    // ROLE_GUEST, ROLE_USER, ROLE_ADMIN
+
+    // user or admin => //
+    // admin => //
+
     //console.log(auth);
 
     return (
         <BrowserRouter>
             <Routes>
                 <Route element={<Layout auth={auth} />}>
-                    <Route path="/" element="" />
+                    <Route
+                        path="/"
+                        element={
+                            <>
+                                <MainBanner />
+                                <Main />
+                            </>
+                        }
+                    />
 
                     {/* shop */}
                     <Route path="shop" element={<Shop />} />
-                    
-                    <Route path="shop/newProduct" element={<NewProductPage />} />
+
+                    <Route
+                        path="shop/newProduct"
+                        element={<NewProductPage />}
+                    />
+
                     <Route path="admin" element={<ManagerPage />} />
-                    <Route path="admin/newWrite"element={<><ManagerPage /><AdminWrite /></>}/>
-                    <Route path="admin/newList"element={<><ManagerPage /><NewList /></>}/>
-                    <Route path="admin/newUpdate"element={<><ManagerPage /><NewUpdate /></>}/>
-                    
-                    <Route path="admin/reWrite"element={<><ManagerPage /><ReWrite /></>}/>
-                    <Route path="admin/reList"element={<><ManagerPage /><ReList /></>}/>
-                    <Route path="admin/reUpdate"element={<><ManagerPage /><ReUpdate /></>}/>
+                    <Route
+                        path="admin/newWrite"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <AdminWrite />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newList"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewList />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newSearch"
+                        element={
+                            <>
+                                <ManagerPage />
+                                {/* <NewSearch /> */}
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newWrite"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <AdminWrite />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newList"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewList />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newSearch"
+                        element={
+                            <>
+                                <ManagerPage />
+                                {/* <NewSearch /> */}
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newUpdate"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewUpdate />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/salesList"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <SalesList />
+                            </>
+                        }
+                    />
+                    <Route path="admin" element={<ManagerPage />} />
+                    <Route
+                        path="admin/newWrite"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <AdminWrite />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newList"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewList />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/newUpdate"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <NewUpdate />
+                            </>
+                        }
+                    />
+
+                    <Route
+                        path="admin/reWrite"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <ReWrite />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/reList"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <ReList />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="admin/reUpdate"
+                        element={
+                            <>
+                                <ManagerPage />
+                                <ReUpdate />
+                            </>
+                        }
+                    />
 
                     <Route path="Used/usedMain" element={<UsedMain />} />
                     <Route path="Used/usedWrite" element={<UsedWrite />} />
@@ -104,6 +248,7 @@ function App() {
                     <Route path="products/:seq" element={<Products />} />
                     <Route path="/payTerms/*" element={<PaymentTerms />} />
                     <Route path="/orderType/*" element={<OrderType />} />
+                    <Route path="/newBuy" element={<SizePageNew />} />
                     <Route path="/buy" element={<SizePage />} />
                     <Route path="buy/payTerms" element={<PaymentTerms />} />
                     <Route path="buy/orderType" element={<OrderType />} />
@@ -118,9 +263,16 @@ function App() {
                     <Route path="products/:seq" element={<Products />} />
                     <Route
                         path="pay/payForm"
-                        element={<PayForm></PayForm>}
+                        element={
+                            <RequireAuth auth={auth}>
+                                <PayForm></PayForm>
+                            </RequireAuth>
+                        }
                     ></Route>
-                    <Route path="pay/payForm" element={<PayForm />}></Route>
+                    <Route
+                        path="sell/sellForm"
+                        element={<SellForm></SellForm>}
+                    ></Route>
                     <Route path="Used/usedMain" element={<UsedMain />} />
                     <Route path="Used/usedItem" element={<UsedItem />} />
                     <Route path="Used/usedWrite" element={<UsedWrite />} />
@@ -143,7 +295,10 @@ function App() {
                     />
                     <Route path="/join" element={<WriteForm />} />
                     {/* <Route path="/Search/SearchForm" element={<SearchForm />} /> */}
-                    <Route path="/Search/SearchForm" element={<SearchForm2 />} />
+                    <Route
+                        path="/Search/SearchForm"
+                        element={<SearchForm2 />}
+                    />
                     <Route
                         path="/login/find_email/result"
                         element={<FindEmailResult />}
@@ -157,6 +312,10 @@ function App() {
                         element={<FindPasswordResult />}
                     />
                     <Route path="/logout" element={<Logout />} />
+                    <Route
+                        path="/oauth2/redirect"
+                        element={<SocialLoginRedirect />}
+                    />
                     <Route path="/join" element={<WriteForm />} />
                     <Route path="/cs/*" element={<CsMain />} />
 
@@ -164,13 +323,19 @@ function App() {
                     <Route path="/my/*" element={<MyPageApp />} />
 
                     <Route path="/lookbook/trending" element={<Trending />} />
-                    <Route path="/styleOneProduct/:seq" element={<StyleOneProduct />} />
+                    <Route
+                        path="/styleOneProduct/:seq"
+                        element={<StyleOneProduct />}
+                    />
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
                     <Route path="/lookbook/detail" element={<Detail />} />
-                    <Route path="/lookbook/following" element={<Following />}/>                
                     <Route
-                        path="/lookbook/styleComment/:styleSeq/:id"
+                        path="/lookbook/following/:tokenId"
+                        element={<Following />}
+                    />
+                    <Route
+                        path="/lookbook/styleComment/:styleSeq/:id/:currentId3"
                         element={<StyleComment />}
                     />
                     <Route
@@ -187,15 +352,13 @@ function App() {
                         element={
                             <>
                                 <ManagerPage />
-                                <UsedItemList/>
+                                <UsedItemList />
                             </>
                         }
                     />
-                    
                 </Route>
 
-                <Route path="/Search/SearchForm" element={<SearchForm />} />
-                
+                <Route path="/searchForm" element={<SearchForm2 />} />
             </Routes>
         </BrowserRouter>
     );

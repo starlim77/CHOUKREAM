@@ -96,7 +96,7 @@ const UsedUpdate = () => {
                 ...form
             })
     
-            console.log("해쉬부르기"+form)
+            setCount(count-1)
         }
     
     
@@ -203,7 +203,7 @@ const UsedUpdate = () => {
                                 (form.hashTag).map((item,index) =>
                                 <S.HashTagDiv key={index}>
                                     <S.HasgTagSpan>{item}</S.HasgTagSpan>
-                                    <S.HasgTagX name={index} onClick={e => onHashX(e.currentTarget.getAttribute("name"))}>X</S.HasgTagX>
+                                    <S.HasgTagX name={index} onClick={e => onHashX(e.currentTarget.getAttribute("name"))}>x</S.HasgTagX>
                                 </S.HashTagDiv>
                                 
                                 )

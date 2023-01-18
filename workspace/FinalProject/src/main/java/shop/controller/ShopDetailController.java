@@ -1,11 +1,18 @@
 package shop.controller;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,6 +51,11 @@ public class ShopDetailController {
 		return shopDetailService.getProductSize(seq);
 	}
 	
+//	@GetMapping(path="getProductSizeNew")
+//	public List<SizeMinDTO> getProductSizeNew(@RequestParam int seq) {
+//		return shopDetailService.getProductSizeNew(seq);
+//	}
+//	
 	@GetMapping(path="getProductSizeSell")
 	public List<SizeMinDTO> getProductSizeSell(@RequestParam int seq) {
 		return shopDetailService.getProductSizeSell(seq);
@@ -90,6 +102,19 @@ public class ShopDetailController {
 		return shopDetailService.likeCount(seq, shopKind);  
 	}
 	
+	@RequestMapping(path = "addSellOrder")
+	public void addSellOrder(@ModelAttribute OrderDTO orderDTO) {
+		shopDetailService.addSellOrder(orderDTO);
+	}
+	
+	
+	
+//	@GetMapping(path="getProductSizeMin")
+//	public Optional<Integer> getProductSizeMin(@RequestParam int seq,@RequestParam String size) {
+//		System.out.println(shopDetailService.getProductSizeMin(seq, size));
+//		return shopDetailService.getProductSizeMin(seq, size);
+//	}
+
 	@GetMapping(path="getBrandStyleList")
 	public List<StyleDTO> getBrandStyleList(@RequestParam int seq) {
 		System.out.println(shopDetailService.getBrandStyleList(seq));
@@ -110,6 +135,11 @@ public class ShopDetailController {
 	@GetMapping(path="updateInventory")
 	public void updateInventory(@RequestParam int seq, @RequestParam String option, @RequestParam int inventory) {
 		shopDetailService.updateInventory(seq, option, inventory);
+	}
+	
+	@PostMapping(path = "addBuyOrder")
+	public void addBuyOrder(@ModelAttribute OrderDTO orderDTO) {
+		shopDetailService.addBuyOrder(orderDTO);
 	}
 	
 	@GetMapping(path="deleteNewProductOption")

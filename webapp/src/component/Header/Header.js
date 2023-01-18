@@ -7,45 +7,66 @@ import SearchForm from '../Search/SearchForm';
 import ShopModal from './ShopModal';
 import SearchForm2 from '../Search/SearchForm2';
 
-const Header = ({auth}) => {
-   
-    const[shopModalOpen,setShopModalOpen]=useState(false)
-    const onShopModal=()=>{
-        setShopModalOpen(!shopModalOpen)
-    }
+const Header = ({ auth }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const onOpen = () => {
+        setIsOpen(true);
+    };
+    const onClose = () => {
+        setIsOpen(false);
+    };
+
+    const [shopModalOpen, setShopModalOpen] = useState(false);
+    const onShopModal = () => {
+        setShopModalOpen(!shopModalOpen);
+    };
     return (
         <>
             <S.HeaderWrapper>
                 <S.Top>
                     <S.TopWrapper>
                         <Link to="/admin">
-                        {auth==='ROLE_ADMIN'?<S.TopLi>관리자페이지</S.TopLi>:<S.TopLi>관리자페이지</S.TopLi>}
-                        {/*나중에 뒷 부분 NULL처리 할 것! */}
+                            {auth === 'ROLE_ADMIN' ? (
+                                <S.TopLi>관리자페이지</S.TopLi>
+                            ) : null}
+                            {/*나중에 뒷 부분 NULL처리 할 것! */}
                         </Link>
-                        <Link to="/cs/CsNotice">
-                            x<S.TopLi>고객센터</S.TopLi>
+                        <Link to="/cs/csNotice">
+                            <S.TopLi>고객센터</S.TopLi>
                         </Link>
-                        <S.TopLi>관심상품</S.TopLi>
-                        <S.TopLi>마이페이지</S.TopLi>
                         <S.TopLi>
-                            <Link to="/login">로그인</Link>
-                            <Link to="/logout">로그아웃</Link>
+                            <Link to="/my/"> 마이페이지</Link>
+                        </S.TopLi>
+                        <S.TopLi>
+                            {auth === 'ROLE_GUEST' && (
+                                <Link to="/login">로그인</Link>
+                            )}
+                            {auth === 'ROLE_USER' || auth === 'ROLE_ADMIN' ? (
+                                <Link to="/logout">로그아웃</Link>
+                            ) : null}
                         </S.TopLi>
                     </S.TopWrapper>
                 </S.Top>
                 <S.Bottom>
                     <Link to="/">
-                        <S.BottomImg src="/image/logo.png" />
+                        <S.BottomImg src="/image/CHOUKREAM.png" />
                     </Link>
 
                     <S.BottomWrapper>
-                        <S.BottomLi active={true}>STYLE</S.BottomLi>
                         <S.BottomLi onClick={onShopModal}>
                             SHOP
-                            {shopModalOpen&&<ShopModal></ShopModal>}
+                            {shopModalOpen && <ShopModal></ShopModal>}
                         </S.BottomLi>
                         <S.BottomLi active={true}>
-                            <Link to="/lookbook/trending">STYLE</Link>
+                            <Link
+                                to="/lookbook/trending"
+                                style={{
+                                    textDecoration: 'none',
+                                    color: 'inherit',
+                                }}
+                            >
+                                STYLE
+                            </Link>
                         </S.BottomLi>
                         {/* <S.BottomLi active={true}><Link to="/lookbook/detail">STYLE</Link></S.BottomLi> */}
                         <S.BottomLi>ABOUT</S.BottomLi>

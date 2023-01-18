@@ -1,38 +1,41 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import * as O from './styles/OrderTypeStyle';
-import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom/dist';
+import {
+    Link,
+    useLocation,
+    useNavigate,
+    useSearchParams,
+} from 'react-router-dom/dist';
 
-const BuyBid = ({ clickedBtn, buyPrice, sellPrice, orderNum  }) => {
+const BuyBid = ({ clickedBtn, buyPrice, sellPrice, orderNum }) => {
     const [priceInput, setPriceInput] = useState(); //출력되는 price (,)있음
     const [priceNum, setPriceNum] = useState(); // 입력되는 price(,) 없음
     const navigate = useNavigate();
-    const location = useLocation()
+    const location = useLocation();
     const [searchParams, setSearchParams] = useSearchParams();
     const size = searchParams.get('size');
-    const productNum = searchParams.get("productNum")
-    const type = searchParams.get("type")
+    const productNum = searchParams.get('productNum');
+    const type = searchParams.get('type');
 
     // comma 삽입
     const addComma = num => {
-        let str = String(num)
-        return (str.replace(/\B(?=(\d{3})+(?!\d))/g, ','))
+        let str = String(num);
+        return str.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
-
     useEffect(() => {
-        clickedBtn === "즉시판매"
-            ? setPriceInput(sellPrice)
-            : clickedBtn === "판매입찰" 
-            ? setPriceInput()
-            : clickedBtn === "즉시구매"
+        clickedBtn === '즉시판매'
             ? setPriceInput(buyPrice)
-            : clickedBtn === "구매입찰"
-            && setPriceInput()
-    }, [clickedBtn])
+            : clickedBtn === '판매입찰'
+            ? setPriceInput()
+            : clickedBtn === '즉시구매'
+            ? setPriceInput(sellPrice)
+            : clickedBtn === '구매입찰' && setPriceInput();
+    }, [clickedBtn]);
 
     //숫자만 입력, 세자리 마다 콤마 추가
     const inputPriceFormat = str => {
-        setPriceNum(str.replace(/,/g, ""))
+        setPriceNum(str.replace(/,/g, ''));
         const comma = str => {
             str = String(str);
             return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
@@ -47,49 +50,73 @@ const BuyBid = ({ clickedBtn, buyPrice, sellPrice, orderNum  }) => {
 
     //payForm 페이지로 이동
     const onPayForm = () => {
-        navigate(`/pay/payForm?type=resell&productNum=${productNum}&size=${size}$orderNum=${orderNum}`)
+        if (clickedBtn === '즉시구매') {
+            navigate(
+                `/pay/payForm?type=resell&productNum=${productNum}&size=${size}&orderNum=${orderNum}`,
+            );
+        } else if (clickedBtn === '구매입찰') {
+            navigate(
+                `/pay/payForm?type=resell&productNum=${productNum}&size=${size}&orderNum=${orderNum}&bid=${priceInput}`,
+            );
+        } else if (clickedBtn === '판매입찰') {
+            navigate(
+                `/sell/sellForm?productNum=${productNum}&size=${size}&bid=${priceInput}`,
+            );
+        }
     };
 
     return (
         <O.Bid>
             <O.Text>
-                {clickedBtn === '구매입찰' 
+                {clickedBtn === '구매입찰'
                     ? '구매 희망가'
-                    : clickedBtn === "즉시구매"
+                    : clickedBtn === '즉시구매'
                     ? '즉시구매가'
-                    :clickedBtn === "판매입찰"
-                    ? "판매희망가"
-                    : clickedBtn === "즉시 판매"
-                    || "즉시판매가"
-                }
+                    : clickedBtn === '판매입찰'
+                    ? '판매희망가'
+                    : clickedBtn === '즉시 판매' || '즉시판매가'}
             </O.Text>
-            {
-                clickedBtn === "즉시구매"
-                    ?<O.PriceInput
+            {clickedBtn === '즉시구매' ? (
+                <O.PriceInput
                     type="text"
-                    value={addComma(priceInput) === "null" ? "" : addComma(priceInput)}
+                    value={
+                        addComma(priceInput) === 'null'
+                            ? ''
+                            : addComma(priceInput)
+                    }
                     readOnly
-                    />
-                    :clickedBtn === "즉시판매"
-                    ?<O.PriceInput
+                />
+            ) : clickedBtn === '즉시판매' ? (
+                <O.PriceInput
                     type="text"
-                    value={addComma(priceInput) === "null" ? "" : addComma(priceInput)}
+                    value={
+                        addComma(priceInput) === 'null'
+                            ? ''
+                            : addComma(priceInput)
+                    }
                     readOnly
-                    />
-                    :clickedBtn === "구매입찰"
-                    ?<O.PriceInput
+                />
+            ) : clickedBtn === '구매입찰' ? (
+                <O.PriceInput
                     type="text"
                     value={priceInput || ''}
-                    onChange={e => setPriceInput(inputPriceFormat(e.target.value))}
-                    placeholder="희망가 입력"/>
-                    :clickedBtn === "판매입찰"
-                    && <O.PriceInput
-                    type="text"
-                    value={priceInput || ''}
-                    onChange={e => setPriceInput(inputPriceFormat(e.target.value))}
-                    placeholder="희망가 입력"/>
-                    
-            }
+                    onChange={e =>
+                        setPriceInput(inputPriceFormat(e.target.value))
+                    }
+                    placeholder="희망가 입력"
+                />
+            ) : (
+                clickedBtn === '판매입찰' && (
+                    <O.PriceInput
+                        type="text"
+                        value={priceInput || ''}
+                        onChange={e =>
+                            setPriceInput(inputPriceFormat(e.target.value))
+                        }
+                        placeholder="희망가 입력"
+                    />
+                )
+            )}
             {/* <O.PriceInput
                 type="text"
                 value={priceInput || ''}

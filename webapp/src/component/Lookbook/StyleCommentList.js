@@ -15,10 +15,11 @@ const StyleCommentList = (props) => {
         axios.get(`http://localhost:8080/lookbook/getComment?styleSeq=${props.styleSeq}`)
              .then(res => setComment(res.data))
              .catch(error => console.log(error))
+            
     },[])
     
     const onCommentDelete = (id,styleSeq) => {
-        console.log(id, styleSeq)
+        // console.log(id, styleSeq)
         axios.delete(`http://localhost:8080/lookbook/deleteComment?id=${id}&styleSeq=${styleSeq}`)
              .then(
                 alert("삭제완료"),
@@ -26,6 +27,7 @@ const StyleCommentList = (props) => {
              )
              .catch(error => console.log(error))
     } 
+
 
    // props.setData(comment.length)
     
@@ -35,13 +37,12 @@ const StyleCommentList = (props) => {
             {             
             comment.map((item, index)=> {
                 return(
+                    
                     <S.SCLcomment key={index}>
                             <Chip
                             avatar={<Avatar alt="" src="" />}
-
                             label=  {item.commentMember}                             
-                        /> 
-                                                       
+                        />                              
                         {item.commentContents}
                         
                         <S.SCLdeletebutton>

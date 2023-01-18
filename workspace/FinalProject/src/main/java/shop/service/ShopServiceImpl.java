@@ -1,5 +1,7 @@
 package shop.service;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -7,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Service;
 
 import shop.dao.ProductSizeRepository;
@@ -90,6 +93,24 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
+	public List<SortListDTO> getRecentReleaseList(int rn) {
+		int start = 0;
+		int end = 0;
+		if(rn==0) {
+			start = 1;
+			end = 4;
+		}
+		else if(rn==1) {
+			start = 5;
+			end = 8;
+		}
+		else if(rn==2) {
+			start = 9;
+			end = 12;
+		}
+		
+		return shopDAO.getRecentReleaseList(start,end);
+	}
 	public List<SortListDTO> BuySort() {
 		return shopDAO.BuySort();
 	}
@@ -110,12 +131,24 @@ public class ShopServiceImpl implements ShopService {
 		return shopDAO.releaseDateSort();
 	}
 
-	
-
-	
-	
-
-	
+	@Override
+	public List<SortListDTO> getPopularList(int rn) {
+		int start = 0;
+		int end = 0;
+		if(rn==0) {
+			start = 1;
+			end = 4;
+		}
+		else if(rn==1) {
+			start = 5;
+			end = 8;
+		}
+		else if(rn==2) {
+			start = 9;
+			end = 12;
+		}
+		return shopDAO.getPopularList(start,end);
+	}
 }
 
 

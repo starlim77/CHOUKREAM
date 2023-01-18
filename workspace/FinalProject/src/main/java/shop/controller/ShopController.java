@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import org.aspectj.weaver.patterns.IScope;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,12 +26,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+//import apple.laf.JRSUIConstants.Size;
 import jakarta.servlet.http.HttpSession;
 import shop.bean.NewProductDTO;
 import shop.bean.NewProductOptionDTO;
 import shop.bean.NewSortListDTO;
+import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.UsedItemDTO;
+import shop.dao.ShopDAO;
 import shop.service.NewProductService;
 import shop.bean.ProductSizeDTO;
 import shop.bean.SortListDTO;
@@ -38,7 +42,8 @@ import shop.service.ShopDetailService;
 import shop.service.ShopService;
 
 
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RestController
 @RequestMapping(path="shop")
 public class ShopController {
@@ -296,6 +301,24 @@ public class ShopController {
 		newProductService.upload(newProductDTO);
 
 	 }
+	
+	@GetMapping(path = "getRecentReleaseList")
+	public List<SortListDTO> getRecentReleaseList(@RequestParam int rn){
+		//System.out.println("size == " + shopService.getRecentReleaseList(rn).size());
+		return shopService.getRecentReleaseList(rn);
+	}
+	@GetMapping(path = "getPopularList")
+	public List<SortListDTO> getPopularList(@RequestParam int rn){
+		return shopService.getPopularList(rn);
+	}
+	
+
+	@GetMapping(path = "getSellingItem")
+	public void getSellingItem(@RequestParam int seq) {
+		System.out.println(seq);
+	}
+
+	
 }
 
 

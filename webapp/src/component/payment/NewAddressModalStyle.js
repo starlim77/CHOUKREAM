@@ -1,5 +1,14 @@
 import styled from 'styled-components';
 
+export const ModalWrapper = styled.div`
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #000;
+    opacity: 0.6;
+`;
 export const NewAddress = styled.div`
     position: absolute;
     top: 50%;
@@ -10,8 +19,11 @@ export const NewAddress = styled.div`
     box-sizing: border-box;
     width: 520px;
     padding: 20px 30px;
-    z-index: 9999;
     transform: translate(-50%, -50%);
+    z-index: 999;
+    opacity: 1;
+    display: flex;
+    flex-wrap: wrap;
 `;
 
 export const NewAddressTitle = styled.div`
@@ -46,6 +58,8 @@ export const Input = styled.input`
 `;
 export const DefaltAddress = styled.div`
     display: flex;
+    align-items: center;
+    margin-top: 20px;
 `;
 export const DefaultCheckBox = styled.input``;
 export const DefaultSpan = styled.span``;

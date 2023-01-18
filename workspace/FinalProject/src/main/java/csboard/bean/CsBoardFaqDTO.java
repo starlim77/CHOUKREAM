@@ -30,7 +30,7 @@ public class CsBoardFaqDTO {
 	@Column(name="title")
 	private String title;
 	
-	@Column(name="content")
+	@Column(name="content" )
 	private String content;
 	
 	@Column(name="id")

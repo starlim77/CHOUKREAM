@@ -10,6 +10,7 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import StyleCommentList from './StyleCommentList';
 import StyleProduct from './StyleProduct';
 
+
 const Detail = () => {    
    
     //게시물 뿌리기
@@ -18,6 +19,8 @@ const Detail = () => {
     const navigate = useNavigate();
     const id = useLocation().state.id;   //trending에서 로그인 후 넘어오는 id값 
 
+
+    const [followeeList, setFolloweeList]= useState([]);
     
     
     // const [id,setId] = useState()   //아이디값 로그인한걸로 가져오는거로 변경해야됨
@@ -29,18 +32,38 @@ const Detail = () => {
         //      .catch(error => console.log(error))
         //      console.log("list",list) 
        
-        if((!id) === true) {
+        if( !id ) {
             //로인인 안했을 때. 좋아요 포함 전체 리스트 가져오기 : 테이블 조인 쿼리 사용       
             axios.get('http://localhost:8080/lookbook/list')
-                .then( res => setList(res.data)  )
+                .then( 
+                    res => setList(res.data)  )
+                    // res => console.log(res.data)  )
                 .catch(error => console.log(error))
         }else{
             //로인인 했을 때
              axios.get(`http://localhost:8080/lookbook/listById?id=${id}`)
-                 .then( res => setList(res.data)  )
+                 .then( 
+                    res => setList(res.data)  )
+                    // res => console.log(res.data)  )
+                 .catch(error => console.log(error))
+                 axios.get(`http://localhost:8080/used/getId?seq=${id}`)
+                      .then(
+                        //  res => console.log(res.data))
+                         res=>{setCurrentId(res.data)})
+                      .catch(err=>console.log(err))
+            //팔로이 리스트 가져오기
+            axios.get(`http://localhost:8080/lookbook/getMyFollowee/${id}`)
+                 .then( res => setFolloweeList(res.data))
+                 //(res => console.log(res.data))
                  .catch(error => console.log(error))
         }
     }, [])   
+
+    //아이디 이메일 앞자리로 변환
+    const [currentId,setCurrentId] = useState();
+    var currentId2 = (currentId||'').split('@');
+    var currentId3 = currentId2[0];
+
     
     //댓글삭제
     const onCommentDelete =(id) => {
@@ -55,7 +78,7 @@ const Detail = () => {
        
         checkLike = checkLike === 'false' ? false : true
 
-        if( (!id) === true){
+        if( !id ){
             alert('먼저 로그인 하세요')
         }else{
             e.preventDefault();
@@ -66,18 +89,43 @@ const Detail = () => {
         }
     }
 
-    const onComment = (seq, id) => {
-        if( (!id) === true){
+    const onComment = (e,seq, id,currentId3) => {
+        e.preventDefault();
+        if( !id ){
             alert('먼저 로그인 하세요')
         }else{
-            navigate(`/lookbook/StyleComment/${seq}/${id}`)
+            navigate(`/lookbook/StyleComment/${seq}/${id}/${currentId3}`)
        }
     }
         
-    //팔로우
-    const onFollow = (id) => {
-        //id //followee id
-        axios.get('http://localhost:8080/lookbook/saveFollow')
+ 
+     //팔로우
+     const onFollow = (followeeId,num) => {
+        //console.log(tokenId+"+"+followeeId)
+        axios.post(`http://localhost:8080/lookbook/saveFollow/${id}/${followeeId}`) 
+             .then(alert("팔로우 성공"))
+             .catch(error => console.log(error))
+
+        window.location.reload()     
+        // setFolloweeList(followeeList,followeeId)
+        
+    } 
+
+    //언팔로우
+    const onUnFollow = (followeeId,num) => {
+        //console.log(tokenId+"+"+followeeId)
+        axios.delete(`http://localhost:8080/lookbook/unFollow/${id}/${followeeId}`) 
+             .then(alert("언팔로우 성공"))
+             .catch(error => console.log(error))
+
+             
+
+             window.location.reload()
+
+        //  const followeeListFilter = followeeList.filter((item,index) => index != num)
+        //  setFolloweeList(followeeListFilter)
+        //  console.log(followeeListFilter)
+             
     }
     
     const photoShop1 = (storedImg) => {
@@ -105,6 +153,22 @@ const Detail = () => {
         return img[4]
     }
 
+    const IsFollow = (itemId) => {
+        if(followeeList.filter(item => item === itemId)?.length){
+            return true;
+        }else{
+            return false;
+        }
+
+
+    }
+
+    const onLoginCheck = (id) => {
+        if( !id ){
+            alert('먼저 로그인 하세요')
+        }
+    }
+
 
     return (
         <div>     
@@ -114,77 +178,89 @@ const Detail = () => {
             <Container fixed>
                 <S.DeTopDiv> 
                 {
-                    list.map((item,index) => {
+                    list.map((item,index) =>  {
                         return (
-                            
-                        <S.DeDiv key={index.seq}>  
-                            <Card >
-                                <CardHeader
-                                    avatar={ <Avatar> 프로필</Avatar> }
-                                    title={item.id}
-                                    // title={item.name}
-                                    subheader={item.logtime}
-                                />
-
-                                <Button variant="contained" style={{backgroundColor: 'black'}} onClick={() => onFollow (item.id)} >팔로우</Button>
-                                <Button variant="outlined"  style={{color: 'black'}}>언팔로우</Button>
+                            <Card key={item.seq} >
+                            <S.DeProfile>
+                            <S.DEChkprofile>    
+                            <CardHeader
+                                avatar={ <Avatar> 프로필</Avatar> }
+                                // title={item.id}
+                                title={item.email}
+                                subheader={item.logtime}
                                
-                                <S.MyStdiv>
-                                    <img src={`/storage/${photoShop1(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />
-                                    {photoShop2(item.stored_file_name) && <img src={`/storage/${photoShop2(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
-                                    {photoShop3(item.stored_file_name) && <img src={`/storage/${photoShop3(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
-                                    {photoShop4(item.stored_file_name) && <img src={`/storage/${photoShop4(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
-                                    {photoShop5(item.stored_file_name) && <img src={`/storage/${photoShop5(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
-                                 </S.MyStdiv>
-
-                                 <StyleProduct productSeq={item.product_seq}></StyleProduct>
-
-                                <CardContent>
-                                    {item.content}
-                                </CardContent>
-
-                               
-                                <CardActions >
-                                    <div>
-                                        <IconButton aria-label="add to favorites" onClick={(e) => onLikes(e, item.seq ,item.islikes,index)} >
-                                            <img src={
-                                                    (!id) ? '/image/style/unlikes.png' :
-                                                    item.islikes === "false"  ? '/image/style/unlikes.png' : '/image/style/likes.png' 
-                                                    } 
-                                                style={{ width:'28px'}} />
-                                        </IconButton>
-                                        <span>{item.likes_count}</span>
-                                    </div>
-
-                                    <div>
-                                    <IconButton onClick={ () => onComment(item.seq, id)}>
-                                        {/* <Link to ={`/lookbook/StyleComment/${item.seq}`} > */}
-                                        <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
-                                        {/* </Link> */}
-                                    </IconButton> 
-                                    <span>{item.comment_count}</span>  
+                            />
+                            </S.DEChkprofile>
+                            <S.DeFollowChk>
+                           {
+                                !id ? <Button variant="contained" style={{backgroundColor: 'black'}} onClick={ () => onLoginCheck(id)}>팔로우</Button> :
+                                /* 팔로우체크?*/
+                             
+                                IsFollow(item.id) ? 
+                                <Button variant="outlined"  style={{color: 'black', borderColor:'#e2e2e2' ,backgroundColor: '#e2e2e2' }} onClick={() => onUnFollow (item.id,index)}>팔로잉</Button>
+                                :
+                                <Button variant="contained" style={{backgroundColor: 'black'}} onClick={() => onFollow (item.id,index)} >팔로우</Button>
                                     
-                                    </div>                   
-                                </CardActions>
-
-
-
-
-                                <CardContent>       
-                                    <div variant="body2" color="text.secondary" >
-                                    <S.TrTypoDiv>
-                                     <StyleCommentList styleSeq={item.seq}  onCommentDelete={ onCommentDelete }  />                                
-                                    
-                                    </S.TrTypoDiv>                      
-                                    </div>     
-                                                
-                                </CardContent> 
+    
+                            }
+                            </S.DeFollowChk>
+                            </S.DeProfile>                
+                            <S.MyStdiv>
+                                <img src={`/storage/${photoShop1(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />
+                                {photoShop2(item.stored_file_name) && <img src={`/storage/${photoShop2(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                                {photoShop3(item.stored_file_name) && <img src={`/storage/${photoShop3(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                                {photoShop4(item.stored_file_name) && <img src={`/storage/${photoShop4(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                                {photoShop5(item.stored_file_name) && <img src={`/storage/${photoShop5(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                             </S.MyStdiv>
+    
+                             <StyleProduct productSeq={item.product_seq}></StyleProduct>
+    
+                            <CardContent>
+                                {item.content}
+                            </CardContent>
+    
                            
-
-                            </Card>
-                        </S.DeDiv>
+                            <CardActions >
+                                <div>
+                                    <IconButton aria-label="add to favorites" onClick={(e) => onLikes(e, item.seq ,item.islikes,index)} >
+                                        <img src={
+                                                (!id) ? '/image/style/unlikes.png' :
+                                                item.islikes === "false"  ? '/image/style/unlikes.png' : '/image/style/likes.png' 
+                                                } 
+                                            style={{ width:'28px'}} />
+                                    </IconButton>
+                                    <span>{item.likes_count}</span>
+                                </div>
+    
+                                <div>
+                                <IconButton onClick={ (e) => onComment(e, item.seq, id,currentId3)}>
+                                    {/* <Link to ={`/lookbook/StyleComment/${item.seq}`} > */}
+                                    <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
+                                    {/* </Link> */}
+                                </IconButton> 
+                                <span>{item.comment_count}</span>  
+                                
+                                </div>                   
+                            </CardActions>
+    
+    
+    
+    
+                            <CardContent>       
+                                <div variant="body2" color="text.secondary" >
+                                <S.TrTypoDiv>
+                                 <StyleCommentList styleSeq={item.seq}  onCommentDelete={ onCommentDelete } id={id}  />                                
+                                
+                                </S.TrTypoDiv>                      
+                                </div>     
+                                            
+                            </CardContent> 
                        
-                        )
+    
+                        </Card>
+
+                        )                  
+
                     })
                 }
                </S.DeTopDiv>

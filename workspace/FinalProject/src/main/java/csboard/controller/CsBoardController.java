@@ -2,13 +2,10 @@ package csboard.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
-import org.apache.tomcat.util.buf.StringUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,15 +16,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import csboard.bean.CsBoarNoticeDTO;
 import csboard.bean.CsBoardDTO;
 import csboard.service.CsBoardService;
 import jakarta.servlet.http.HttpSession;
-import lookbook.bean.StyleDTO;
+
 
 
 
@@ -37,21 +34,89 @@ import lookbook.bean.StyleDTO;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping(path="cs")
+@RequestMapping(path="csfaq")
 public class CsBoardController {
 	
 	@Autowired
 	private CsBoardService csBoardService;
 	
-	@PostMapping(path="write")	
-	public void write(@ModelAttribute CsBoardDTO csBoardDTO) {
-		System.out.println(csBoardDTO);
-		csBoardService.write(csBoardDTO);		
-	}
+//	@PostMapping(path="write")	
+//	public void write(@ModelAttribute CsBoardDTO csBoardDTO) {
+//		String path = System.getProperty("user.dir");
+//		 int index = path.lastIndexOf("\\");
+//		 System.out.println(index +"index" + "filepath"+csBoardDTO.getFilepath());
+//		 //	\FinalProject를 자르고 앞부분만 남김. ex)F:\project\finalProject\final\final1zo\workspace
+//		 String pathModified=path.substring(0, index);
+//		 System.out.println("pathModified"+ pathModified);
+//		System.out.println(csBoardDTO);
+//		csBoardService.write(csBoardDTO);		
+//	}
 	
-	@PostMapping(path = "writeTest")
-	public void writeTest(@ModelAttribute CsBoardDTO csBoardDTO) {
+	@PostMapping(path = "write" , produces="text/html; charset=UTF-8")
+	@ResponseBody
+	public void writeTest(@RequestBody List<MultipartFile> img, @ModelAttribute CsBoardDTO csBoardDTO, HttpSession session) {
+		System.out.println(img);
 		System.out.println(csBoardDTO);
+		if(img!=null) {
+			
+		String path = System.getProperty("user.dir");
+		 int index = path.lastIndexOf("\\");
+		 System.out.println(index +"index" + "filepath"+csBoardDTO.getFilepath());
+		 //	\FinalProject를 자르고 앞부분만 남김. ex)F:\project\finalProject\final\final1zo\workspace
+		 String pathModified=path.substring(0, index);
+		 
+		 System.out.println("pathModified"+ pathModified);
+	
+		//csBoardService.write(csBoardDTO);	
+		//반복
+		 index=pathModified.lastIndexOf("\\");
+		 pathModified = pathModified.substring(0,index);
+		 System.out.println("경로확인"+pathModified);
+		//실제 저장될 경로 지정
+		 //ex) pathModified	= F:\project\finalProject\final\final1zo 뒤에 webapp경로 지정
+		 String filePath=pathModified+"/webapp/public/storage";
+	 	 System.out.println("실제폴더 : " + filePath);
+	 	 
+		
+		 
+		 System.out.println(csBoardDTO);
+		 for(MultipartFile sendImg:img) {
+			 String fileName = csBoardDTO.getFilename()+".png";//폴더에 저장 될 때 - 확장자명 붙여서 ??
+			 File file = new File(filePath , fileName);
+			try {
+				sendImg.transferTo(file);
+				System.out.println(file +"file 드렁옴??");
+				//DTO에 사진명 수정 후 DTO에 세팅
+				//String imgName;
+				//imgName=fileName.substring(4, fileName.length()-1);				 
+				//System.out.println(imgName +"imgName");
+				
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 };
+		System.out.println();
+		// csBoardfile.transferTo(new File(filePath, csBoardDTO.getFilename()));
+		
+		csBoardDTO.setFilepath(filePath); 
+		csBoardService.write(csBoardDTO);
+		}else {
+		
+			csBoardService.write(csBoardDTO);
+		}
+	 	 
+	 	 	
+		 
+		 //원래는 img가 list형태라서 iterator를 사용하는 것이 더 올바른 방법이긴 함.
+		// for(MultipartFile sendImg:list) {
+		// String fileName=csBoardDTO.getFilename();
+			//사진을 webapp쪽에 실제로 등록할 때 사용할 이름을 위한 변수
+		//	String sendName=null;
+		
 	}
 	
 	@GetMapping(path = "getNotices")
@@ -161,7 +226,11 @@ public class CsBoardController {
 	//카테고리 버튼 클릭 시 클릭한 카테고리만 보이게 
 	@GetMapping(path="getCategoryList")	
 	public List<CsBoardDTO>  getCategoryList(@RequestParam String category) {
-		return csBoardService.getCategory(category);
+		if(category=="") {
+			List<CsBoardDTO> list = csBoardService.getList();
+			return list;
+		}else {
+		return csBoardService.getCategory(category);}
 	}
 	//content 검색 
 	@GetMapping(value="getKeywordSearchList")	
@@ -177,9 +246,61 @@ public class CsBoardController {
 	public void deleteBoard(@RequestParam int seq) {
 		csBoardService.delete(seq);		
 	}
-	@PutMapping(path="updateBoard")	
-	public void update(@ModelAttribute CsBoardDTO csBoardDTO) {
-		csBoardService.update(csBoardDTO);		
+	@PutMapping(path="update")	
+	@ResponseBody
+	public void update(@RequestBody List<MultipartFile> img, @ModelAttribute CsBoardDTO csBoardDTO) {
+		
+		if(img != null)  {
+			String path = System.getProperty("user.dir");
+			 int index = path.lastIndexOf("\\");
+			 System.out.println(index +"index" + "filepath"+csBoardDTO.getFilepath());
+			 //	\FinalProject를 자르고 앞부분만 남김. ex)F:\project\finalProject\final\final1zo\workspace
+			 String pathModified=path.substring(0, index);
+			 
+			 System.out.println("pathModified"+ pathModified);
+		
+			//csBoardService.write(csBoardDTO);	
+			//반복
+			 index=pathModified.lastIndexOf("\\");
+			 pathModified = pathModified.substring(0,index);
+			 System.out.println("경로확인"+pathModified);
+			//실제 저장될 경로 지정
+			 //ex) pathModified	= F:\project\finalProject\final\final1zo 뒤에 webapp경로 지정
+			 String filePath=pathModified+"/webapp/public/storage";
+		 	 System.out.println("실제폴더 : " + filePath);
+		 	 
+			
+			 
+			 System.out.println(csBoardDTO);
+			 for(MultipartFile sendImg:img) {
+				 String fileName = csBoardDTO.getFilename()+".png";//폴더에 저장 될 때 - 확장자명 붙여서 ??
+				 File file = new File(filePath , fileName);
+				try {
+					sendImg.transferTo(file);
+					System.out.println(file +"file 드렁옴??");
+					//DTO에 사진명 수정 후 DTO에 세팅
+					//String imgName;
+					//imgName=fileName.substring(4, fileName.length()-1);				 
+					//System.out.println(imgName +"imgName");
+					
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					// import 오류 날 수 있음.
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			 };
+			System.out.println();
+			// csBoardfile.transferTo(new File(filePath, csBoardDTO.getFilename()));
+			
+			csBoardDTO.setFilepath(filePath); 
+			csBoardService.update(csBoardDTO);	
+			
+		}else {
+			csBoardService.update(csBoardDTO);	
+		}
+		
 	}
-	
 }

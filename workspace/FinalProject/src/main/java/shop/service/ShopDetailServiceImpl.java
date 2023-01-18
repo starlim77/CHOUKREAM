@@ -1,10 +1,13 @@
 package shop.service;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Service;
 
 import lookbook.bean.StyleDTO;
@@ -128,6 +131,12 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	public Long likeCount(int seq, String shopKind) {
 		return useItemLikeDAO.likeCount(seq, shopKind);
 	}
+
+	@Override
+	public void addSellOrder(OrderDTO orderDTO) {
+		orderRepository.save(orderDTO);
+	}
+
 	
 	@Override
 	public List<StyleDTO> getBrandStyleList(int seq) {
@@ -155,6 +164,11 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 		
 		newProductOptionRepository.save(newProductOptionDTO);
 		
+	}
+
+	@Override
+	public void addBuyOrder(OrderDTO orderDTO) {
+		orderRepository.save(orderDTO);
 	}
 	
 	@Override
@@ -191,4 +205,5 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 		// TODO Auto-generated method stub
 		return newProductDAO.getNewBrandList(seq, brand);
 	}
+
 }

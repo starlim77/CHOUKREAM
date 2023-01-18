@@ -17,12 +17,18 @@ import member.bean.ChangePasswordRequestDto;
 import member.bean.MemberDto;
 import member.bean.MemberResponseDto;
 import member.service.MemberService;
+import sms.service.SmsService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 @RestController
 public class MemberController {
-	private final MemberService memberService;
+//	private final MemberService memberService;
+	
+	@Autowired
+	private MemberService memberService;
+	
+	private final SmsService smsService;
 	
 	@PostMapping(path="certifications")
 	public void certifications(@RequestBody String imp_uid) {
@@ -30,6 +36,15 @@ public class MemberController {
 		System.out.println("본인 인증 성공");
 	}
 	
+	@GetMapping(path="getMember")
+	public Optional<MemberDto> getMember(@RequestParam Long id) {
+		return memberService.getMember(id);
+	}
+	
+	@PostMapping(path="updateEmail")
+	public Optional<MemberDto> updateEmail(@RequestParam Long id, String email) {
+		return memberService.updateEmail(id, email);
+	}
 	@GetMapping(path="findEmail")
 	public Optional<MemberDto> findEmailByPhone(@RequestParam String phone) { 
 		return memberService.findEmailByPhone(phone);
@@ -40,10 +55,22 @@ public class MemberController {
 		return memberService.findPasswordByPhoneAndEmail(phone,email);
 	}
 	
-	@PostMapping(path="changePassword")
-    public ResponseEntity<MemberResponseDto> setMemberPassword(@RequestBody ChangePasswordRequestDto request) {
-        return ResponseEntity.ok(memberService.changeMemberPassword(request.getEmail() ,request.getExPassword(), request.getNewPassword()));
+	@GetMapping(path="my")
+    public ResponseEntity<MemberResponseDto> getMyMemberInfo() {
+        MemberResponseDto myInfoBySecurity = memberService.getMyInfoBySecurity();
+        System.out.println(myInfoBySecurity.getEmail());
+        return ResponseEntity.ok((myInfoBySecurity));
     }
+	
+	@GetMapping(path="sendSms")
+	public void sendSms(@RequestParam String phone, @RequestParam String content) {
+		smsService.sendSms(phone, content);
+	}
+	
+	@GetMapping(path="isExistEmail")
+	public String isExistEmail(@RequestParam String email) {
+		return memberService.findByEmailAndProviderIsNull(email);
+	}
 
 	@GetMapping(path = "getMemberInfo")
 	public Optional<MemberDto> getMemberInfo(@RequestParam long seq) {
@@ -51,4 +78,26 @@ public class MemberController {
 		return memberService.getMemberInfo(seq);
 	}
 	
+	@PostMapping(path = "updatePassword")
+	public Optional<MemberDto> updatePassword(@RequestParam String email, String password) {
+		
+		return memberService.updatePassword(email, password);
+	}
+	
+	@PostMapping(path = "updatePhone")
+	public Optional<MemberDto> updatePhone(@RequestParam String email, String phone) {
+		
+		return memberService.updatePhone(email, phone);
+	}
+	
+	@PostMapping(path = "updateMarketingOption")
+	public Optional<MemberDto> updateMarketingOption(@RequestParam String email, String smsOption, String emailOption) {
+		
+		return memberService.updateMarketingOption(email, smsOption, emailOption);
+	}
+	@GetMapping(path = "getMemberId")
+	public String getMemberId(@RequestParam Long memberSeq) {
+		
+		return memberService.getMemberId(memberSeq);
+	}
 }

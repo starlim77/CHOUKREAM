@@ -3,23 +3,25 @@ import { Link, useNavigate } from 'react-router-dom';
 import { removeCookieToken } from './storage/Cookie';
 
 const Logout = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const logout = () => {
         localStorage.removeItem('accessToken');
         removeCookieToken();
         return navigate('/login');
-    }
+    };
 
-    useEffect( () => {
+    useEffect(() => {
         logout();
-    }, [])
+        navigate('/');
+        window.location.reload();
+    }, []);
 
-    return (
-        <>
-          <Link to="/login" />  
-        </>
-    );
+    // return (
+    //     <>
+    //         <Link to="/" />
+    //     </>
+    // );
 };
 
 export default Logout;

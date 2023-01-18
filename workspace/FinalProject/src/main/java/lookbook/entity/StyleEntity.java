@@ -13,11 +13,14 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lookbook.bean.StyleDTO;
+import member.bean.MemberDto;
 
 
 //DB의 테이블 역할을 하는 클래스
@@ -57,6 +60,8 @@ public class StyleEntity {
 	@Column
 	private Integer productSeq;
 	
+	@Column
+	private String email;
 	
 	@OneToMany(mappedBy = "styleEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<StyleFileEntity> styleFileEntityList = new ArrayList<>();
@@ -79,6 +84,9 @@ public class StyleEntity {
 		styleEntity.setHit(0);
 		styleEntity.setFileAttached(0);
 		styleEntity.setProductSeq(styleDTO.getProductSeq());
+	
+		styleEntity.setEmail(styleDTO.getEmail());
+				
 		
 		System.out.println("여기"+styleEntity);
 		return styleEntity;
@@ -93,8 +101,8 @@ public class StyleEntity {
 		styleEntity.setHit(0);
 		styleEntity.setFileAttached(1);  // 파일 있음
 		styleEntity.setSeq(styleDTO.getSeq());	
-		styleEntity.setProductSeq(styleDTO.getProductSeq());
-		
+		styleEntity.setProductSeq(styleDTO.getProductSeq());		
+		styleEntity.setEmail(styleDTO.getEmail());
 		System.out.println("요기"+styleEntity);
 		return styleEntity;
 	}

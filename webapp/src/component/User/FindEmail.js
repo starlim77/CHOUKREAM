@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './styleFindInfo.js';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 const FindEmail = () => {
     const [phone, setPhone] = useState('')
@@ -27,12 +29,20 @@ const FindEmail = () => {
         axios
             .get(`http://localhost:8080/findEmail?phone=${phone}`)
             .then((res) => {
-                var email = res.data.email
-                var num = email.lastIndexOf("@")
-                var replace = email.substring(1, num)
-                var replacedEmail = email.replace(replace, "x".repeat(num-1))
+                if(res.data !== null) {
+                    var email = res.data.email
+                    var num = email.lastIndexOf("@")
+                    var replace = email.substring(1, num)
+                    var replacedEmail = email.replace(replace, "x".repeat(num-1))
 
-                navigate('/login/find_email/result', {state: { replacedEmail : replacedEmail }})
+                    navigate('/login/find_email/result', {state: { replacedEmail : replacedEmail }})
+                } else {
+                    alert('일치하는 사용자 정보를 찾을 수 없습니다.')
+                    // toast.error('일치하는 사용자 정보를 찾을 수 없습니다.', {
+                    //     position: toast.POSITION.TOP_CENTER,
+                    //     autoClose: 3000
+                    // })
+                }
             })
             .catch(error => console.log(error))
     }
@@ -40,6 +50,7 @@ const FindEmail = () => {
     return (
         <S.Container>
             <S.HelpAreaDiv>
+                {/* <ToastContainer hideProgressBar /> */}
                 <S.HelpTitle>이메일 아이디 찾기</S.HelpTitle>
 
                 <S.HelpNotice>

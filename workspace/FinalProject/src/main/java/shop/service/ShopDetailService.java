@@ -3,6 +3,8 @@ package shop.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
+
 import lookbook.bean.StyleDTO;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
@@ -50,12 +52,15 @@ public interface ShopDetailService {
 
 	public Long likeCount(int seq, String shopKind);
 
+	public void addSellOrder(OrderDTO orderDTO);
 	public List<StyleDTO> getBrandStyleList(int seq);
 
 	public List<NewProductOptionDTO> getNewProductOption(int seq);
 
 	public void addNewProductOption(int seq, String option);
 
+	public void addBuyOrder(OrderDTO orderDTO);
+	
 	public void updateInventory(int seq, String option, int inventory);
 
 	public void deleteNewProductOption(int seq, String option);

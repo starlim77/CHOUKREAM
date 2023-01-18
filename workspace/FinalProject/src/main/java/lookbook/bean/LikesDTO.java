@@ -11,8 +11,5 @@ public interface LikesDTO {
 	String getIslikes(); 
 	String getStored_file_name();
 	Integer getProduct_seq();
-
-
-	
-	
+	String getEmail();
 }

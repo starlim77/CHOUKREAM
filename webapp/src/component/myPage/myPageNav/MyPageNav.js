@@ -1,5 +1,5 @@
-import React, { useReducer } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useReducer, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import * as S from './MyPageNavStyle';
 
 const initialState = '';
@@ -23,6 +23,8 @@ const reducer = (state, action) => {
             return 'ADDRESS';
         case 'POINT':
             return 'POINT';
+        case 'STYLE':
+            return 'STYLE';
         default:
             return initialState;
     }
@@ -60,19 +62,30 @@ const fontReducer = (state, action) => {
                 fontWeight: '800',
                 textDecoration: 'none',
             };
+        case 'STYLE':
+            return {
+                color: 'black',
+                fontWeight: '800',
+                textDecoration: 'none',
+            };
         default:
             return fontInitialstate;
     }
 };
 const MyPageNav = () => {
+    const location = useLocation();
+    const [id, setId] = useState();
     const [clickedContent, dispatch] = useReducer(reducer, initialState);
     const [fontStyle, fontDispatch] = useReducer(fontReducer, fontInitialstate);
 
-    const onclick = e => {
-        const { id } = e.target;
+    useEffect(() => {
+        setId(location.pathname.split('/')[2].toUpperCase());
+    }, [location]);
+
+    useEffect(() => {
         dispatch({ type: id });
         fontDispatch({ type: id });
-    };
+    }, [id]);
 
     return (
         <>
@@ -80,6 +93,22 @@ const MyPageNav = () => {
                 <S.NavDiv>
                     <S.Title>마이 페이지</S.Title>
                     <S.NavUl>
+                        <S.NavLi onClick={onclick}>
+                            <Link
+                                to="profile"
+                                id="PROFILE"
+                                style={
+                                    clickedContent === 'PROFILE'
+                                        ? fontStyle
+                                        : {
+                                              textDecoration: 'none',
+                                              color: 'rgba(34,34,34,.5)',
+                                          }
+                                }
+                            >
+                                프로필 정보
+                            </Link>
+                        </S.NavLi>
                         <S.NavLi onClick={onclick}>
                             <Link
                                 id="BUYHISTORY"
@@ -112,7 +141,7 @@ const MyPageNav = () => {
                                 판매 내역
                             </Link>
                         </S.NavLi>
-                        <S.NavLi onClick={onclick}>
+                        {/* <S.NavLi onClick={onclick}>
                             <Link
                                 to="like"
                                 id="LIKE"
@@ -127,23 +156,8 @@ const MyPageNav = () => {
                             >
                                 관심상품
                             </Link>
-                        </S.NavLi>
-                        <S.NavLi onClick={onclick}>
-                            <Link
-                                to="profile"
-                                id="PROFILE"
-                                style={
-                                    clickedContent === 'PROFILE'
-                                        ? fontStyle
-                                        : {
-                                              textDecoration: 'none',
-                                              color: 'rgba(34,34,34,.5)',
-                                          }
-                                }
-                            >
-                                프로필 정보
-                            </Link>
-                        </S.NavLi>
+                        </S.NavLi> */}
+
                         <S.NavLi onClick={onclick}>
                             <Link
                                 to="address"
@@ -162,6 +176,22 @@ const MyPageNav = () => {
                         </S.NavLi>
                         <S.NavLi onClick={onclick}>
                             <Link
+                                to="/lookbook/mystyle"
+                                id="STYLE"
+                                style={
+                                    clickedContent === 'STYLE'
+                                        ? fontStyle
+                                        : {
+                                              textDecoration: 'none',
+                                              color: 'rgba(34,34,34,.5)',
+                                          }
+                                }
+                            >
+                                스타일
+                            </Link>
+                        </S.NavLi>
+                        {/* <S.NavLi onClick={onclick}>
+                            <Link
                                 to="point"
                                 id="POINT"
                                 style={
@@ -175,7 +205,7 @@ const MyPageNav = () => {
                             >
                                 포인트
                             </Link>
-                        </S.NavLi>
+                        </S.NavLi> */}
                     </S.NavUl>
                 </S.NavDiv>
             </S.NavWrapper>
