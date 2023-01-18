@@ -85,7 +85,6 @@ const UsedWrite = () => {
         })
 
         setCount(count-1)
-        console.log(form)
     }
 
 
