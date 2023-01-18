@@ -100,9 +100,12 @@ public class StyleServiceImpl implements StyleService {
 		//System.out.println("리스트 담겻나"+styleDTO);
 		
 		//아이디로 이메일 불러와서 스타일 디티오에 저장
-			String id = styleDTO.getId();
-			String email = memberDAO.findEmailById(id);
-			styleDTO.setEmail(email);
+			Long id = Long.parseLong(styleDTO.getId());
+					
+			memberDto emailDto = memberDAO.findEmailById(id);
+			
+			
+			//styleDTO.setEmail(email);
 		
 		if(styleDTO.getStyleFile() == null || styleDTO.getStyleFile().isEmpty()) {
 	    	//첨부파일 없음

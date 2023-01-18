@@ -179,8 +179,8 @@ const Detail = () => {
                 <S.DeTopDiv> 
                 {
                     list.map((item,index) => {
-                        return (
-                            <div>
+                        return(
+                         
                                
                             <Card key={item.seq} >
                                 <S.DeProfile>
@@ -260,9 +260,8 @@ const Detail = () => {
                            
 
                             </Card>
-                        </S.DeDiv>
-                       
-                        
+                        )
+                        }
                     )
                 }
                </S.DeTopDiv>
