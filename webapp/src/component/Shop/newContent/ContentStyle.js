@@ -245,6 +245,21 @@ export const ExpressBtn2 = styled.a`
     text-decoration: none;
     outline-offset: 1px;
 `;
+export const ExpressBtn3 = styled.a`
+    background-color: #8B83F0;
+    color: #fff;
+    border-color: #8B83F0;
+    cursor: pointer;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 28px;
+    padding: 0 9px;
+    border: 1px solid #ebebeb;
+    border-radius: 17px;
+    text-decoration: none;
+    outline-offset: 1px;
+`;
 export const Text = styled.span`
     line-height: 20px;
     margin-left: 3px;
@@ -521,6 +536,40 @@ export const ProductExpress = styled.div`
         background-size: 11px 13px;
     }
 `;
+export const ProductExpress2 = styled.div`
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    line-height: 11px;
+    padding: 5.5px 4.5px 17px;
+    color: #8B83F0;
+    background-color: #f2f9f6;
+    border-radius: 2px;
+    font-size: 11px;
+    letter-spacing: -0.33px;
+    height: 20px;
+    margin-top: 6px;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    font-size: 10px !important;
+    margin: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto,
+        AppleSDGothicNeo-Regular, NanumBarunGothic, NanumGothic, 나눔고딕,
+        Segoe UI, Helveica, Arial, Malgun Gothic, Dotum, sans-serif;
+    &::after {
+        content: '';
+        position: absolute;
+        left: 3.5px;
+        top: 3px;
+        width: 11px;
+        height: 13px;
+        background: url(/_nuxt/img/ico-express.8dac9dc.svg) 0 0 no-repeat;
+        background-size: 11px 13px;
+    }
+`;
+
 export const PriceInfoArea = styled.div`
     padding-left: 4px;
     padding-right: 4px;

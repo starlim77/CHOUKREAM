@@ -16,6 +16,7 @@ import lookbook.entity.StyleEntity;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
+import shop.bean.NewBrandListDTO;
 import shop.bean.NewProductDTO;
 import shop.bean.NewProductOptionDTO;
 import shop.bean.OrderDTO;
@@ -170,4 +171,39 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 		orderRepository.save(orderDTO);
 	}
 	
+	
+	@Override
+	public void updateInventory(int seq, String option, int inventory) {
+		newProductOptionRepository.updateInventory(seq, option, inventory);
+	}
+	
+	@Override
+	public void deleteNewProductOption(int seq, String option) {
+		newProductOptionRepository.deleteNewProductOption(seq, option);
+	}
+	
+	@Override
+	public List<ProductSizeDTO> getProductSizeTable(int seq) {
+		return productSizeRepository.findBySeq(seq);
+	}
+	
+	@Override
+	public void addResllProductOption(int seq, String option) {
+		ProductSizeDTO productSizeDTO = new ProductSizeDTO();
+		productSizeDTO.setSeq(seq);
+		productSizeDTO.setSize(option);
+		
+		productSizeRepository.save(productSizeDTO);
+	}
+	
+	@Override
+	public void deleteResllProductOption(int seq, String option) {
+		productSizeRepository.deleteResellProductOption(seq, option);
+	}
+	
+	@Override
+	public List<NewBrandListDTO> getNewBrandList(int seq, String brand) {
+		// TODO Auto-generated method stub
+		return newProductDAO.getNewBrandList(seq, brand);
+	}
 }

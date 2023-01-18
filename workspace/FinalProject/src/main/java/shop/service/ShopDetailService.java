@@ -9,6 +9,7 @@ import lookbook.bean.StyleDTO;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
+import shop.bean.NewBrandListDTO;
 import shop.bean.NewProductDTO;
 import shop.bean.NewProductOptionDTO;
 import shop.bean.OrderDTO;
@@ -59,6 +60,18 @@ public interface ShopDetailService {
 	public void addNewProductOption(int seq, String option);
 
 	public void addBuyOrder(OrderDTO orderDTO);
+	
+	public void updateInventory(int seq, String option, int inventory);
+
+	public void deleteNewProductOption(int seq, String option);
+
+	public List<ProductSizeDTO> getProductSizeTable(int seq);
+
+	public void addResllProductOption(int seq, String option);
+
+	public void deleteResllProductOption(int seq, String option);
+
+	public List<NewBrandListDTO> getNewBrandList(int seq, String brand);
 
 //	public Optional<Integer> getProductSizeMin(int seq, String size);
 }

@@ -142,19 +142,6 @@ const Content = ({
         }
     };
 
-    // const photoshop = itemImg => {
-
-    //     if (itemImg === undefined){
-    //         console.log('fuck')
-    //     }
-
-    //     console.log(itemImg);
-    //     console.log(typeof(itemImg));
-    //     const img = itemImg.split(',');
-    //     return img[0];
-    // };
-
-
     const [menuArray, setMenuArray] = useState({
         // 0 = 체크안된상태 1 = 체크 된 상태 
         '남자': 0,
@@ -222,8 +209,7 @@ const Content = ({
             newMenuArray['10만원 이하'] +
                 newMenuArray['10만원 - 30만원 이하'] +
                 newMenuArray['30만원 - 50만원 이하'] +
-                newMenuArray['50만원 이상'] !==
-            0
+                newMenuArray['50만원 이상'] !==0
         ) {
             noPriceOption = false;
         }
@@ -253,6 +239,9 @@ const Content = ({
             noPriceOption,
         );
         let temp = dummy2.filter(item => {
+            // if (item.min_price === '-') {
+            //     item.min_price = 0;
+            // }
             console.log(item);
             if (!noCategoryOption && newMenuArray[item.category] === 0) {
                 // 무언가 체크를 했을때 noCategoryOption 가 false 인데 ! 써서 true 됨
@@ -262,15 +251,14 @@ const Content = ({
                 // item의 카테고리가 그 체크된 항목과 맞지 않는 경우
                 return false;
             } else if (
+                console.log(item.min_price),
                 // noPriceOption 만약에 true면 거치질 않는다 조건이 없다
                 // true면 체크가 안되어있는거니까 확인할 필요가 없다 
                 !noPriceOption &&  
-                ((item.price <= 100000 && newMenuArray['10만원 이하'] === 0) ||
-                    (item.price <= 300000 &&
-                        newMenuArray['10만원 - 30만원 이하'] === 0) ||
-                    (item.price <= 500000 &&
-                        newMenuArray['30만원 - 50만원 이하'] === 0) ||
-                    newMenuArray['50만원 이상'] === 0)
+                ((item.min_price <= 100000 && newMenuArray['10만원 이하'] === 0) ||
+                    (item.min_price > 100000 && item.min_price <= 300000 && newMenuArray['10만원 - 30만원 이하'] === 0) ||
+                    (item.min_price > 300000 && item.min_price <= 500000 && newMenuArray['30만원 - 50만원 이하'] === 0) ||
+                    (item.min_price > 500000 && newMenuArray['50만원 이상'] === 0))
             ) {
                 // 가격 중 무엇인가가 체크가 되어있고, item의 가격이 그 체크된 범위와 맞지 않는 경우
                 return false;
@@ -296,8 +284,10 @@ const Content = ({
                 return true;
             }
         });
-
-        setDummy(temp);
+        
+        let temp2 = temp.filter(item => item.min_price !== '-')
+    
+        setDummy(temp2);
         setMenuArray(newMenuArray);
     };
     
@@ -409,7 +399,7 @@ const Content = ({
                             {/* {console.log('더미더미 ' + dummy)}
                             {console.log(dummy)}
                             {console.log(dummy.length)} */}
-                            {/* {console.log(dummyFilter)} */}
+                            {console.log(dummy)}
                             {tagLive
                                 ? dummyFilter &&
                                   dummyFilter.map((item, index) => (
@@ -423,7 +413,10 @@ const Content = ({
                                           }}
                                           // 사진 8개씩 출력 idx는 0부터 시작
                                       >
-                                          <Link to={`/products/${item.seq}`}>
+                                          <Link
+                                              to={`/products/${item.seq}`}
+                                              style={{ textDecoration: 'none' }}
+                                          >
                                               <Co.ItemInner href="#">
                                                   <Co.Product>
                                                       <Co.ProductImg
@@ -475,13 +468,16 @@ const Content = ({
                                                   <Co.PriceInfoArea>
                                                       <Co.Amount>
                                                           {addComma(
-                                                            sortCheck
+                                                              sortCheck
                                                                 ? item.max_price
                                                                 : item.min_price,
                                                           )}
                                                       </Co.Amount>
                                                       <Co.Desc>
-                                                          즉시 구매가
+                                                        {sortCheck 
+                                                            ? "즉시 판매가"
+                                                            : "즉시 구매가"
+                                                        }
                                                       </Co.Desc>
                                                   </Co.PriceInfoArea>
                                               </Co.ItemInner>
@@ -508,6 +504,7 @@ const Content = ({
                                           </Co.ActionWishReview>
                                       </Co.ProductCard>
                                   ))
+                                
                                 : // 평소에 setDummy를 하면 여기임
                                   dummy &&
                                   dummy.map((item, index) => (
@@ -521,7 +518,8 @@ const Content = ({
                                           }}
                                           // 사진 8개씩 출력 idx는 0부터 시작
                                       >
-                                          <Link to={`/products/${item.seq}`}>
+                                          <Link to={`/products/${item.seq}`}
+                                          style={{ textDecoration: 'none' }}>
                                               <Co.ItemInner href="#">
                                                   <Co.Product>
                                                       <Co.ProductImg
@@ -530,7 +528,7 @@ const Content = ({
                                                               // sortCheck
                                                               //     ? item.img_name
                                                               //     : item.imgName,
-                                                              item.img_name,
+                                                            item.img_name,
                                                           )}`}
                                                       >
                                                           {/* picture 태그 사용시 밑에꺼 사용 */}
@@ -587,7 +585,10 @@ const Content = ({
                                                           )}
                                                       </Co.Amount>
                                                       <Co.Desc>
-                                                          즉시 구매가
+                                                        {sortCheck 
+                                                            ? "즉시 판매가"
+                                                            : "즉시 구매가"
+                                                        }
                                                       </Co.Desc>
                                                   </Co.PriceInfoArea>
                                               </Co.ItemInner>
