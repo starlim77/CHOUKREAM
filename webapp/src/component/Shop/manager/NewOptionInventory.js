@@ -19,9 +19,11 @@ const NewOptionInventory = ({setInventoryOpen, seq, modalInventory, modalOption,
                 <S.Close onClick={ e => setInventoryOpen(false)}>
                     X
                 </S.Close>
-                {modalOption}
+                <div style={{paddingTop: "17px", paddingLeft: "20px"}}>
+                <span style={{fontWeight: "700"}}>{modalOption}</span> &nbsp;
                 <input type="text" onChange={e => setModalInventory(e.target.value)} value={modalInventory} width="10px"></input>
-                <button onClick={(e) => updateInventory(e)}>재고 수정</button>
+                <button onClick={(e) => updateInventory(e)} style={{marginLeft: "30px"}}>재고 수정</button>
+                </div>
             </S.LayerContainer2>
         </S.Container>
     );

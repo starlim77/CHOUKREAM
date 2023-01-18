@@ -75,8 +75,10 @@ const NewOption = ({ setModalOpen, seq }) => {
                                 <S.TabAreaItemLink onClick={ onOpen2 } open={ open2 } name='7'>사이즈 삭제</S.TabAreaItemLink>
                             </S.TabAreaItem>
                         </S.LayerContentTabList>
+                        <div style={{paddingLeft: "80px"}}>
+                        <input type="text" onChange={e => setNewProductOption(e.target.value)}></input><button onClick={(e) => addOption(e)} style={{marginLeft: "30px"}}>사이즈 추가</button>
+                        </div>
                         
-                        <input type="text" onChange={e => setNewProductOption(e.target.value)}></input><button onClick={(e) => addOption(e)}>사이즈 추가</button>
                             <S.LayerContent>
                                 <S.SelectArea>
                                     <S.SelectList>
