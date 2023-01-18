@@ -460,7 +460,7 @@ const NewProducts = () => {
                                                         </S.ProductDetailItemTitleUndefined>
                                                     </S.DetailLinkPreviewItemTitleDetailItemTitle>
                                                     <S.DetailLinkPreviewItemWrap>
-                                                        <S.DetailLinkPreviewItems>
+                                                        {form.material !== '' && <S.DetailLinkPreviewItems>
                                                             <S.DetailLinkPreviewItem>
                                                                 <S.ItemTitleWrap>
                                                                     <S.ItemTitle>
@@ -471,8 +471,8 @@ const NewProducts = () => {
                                                                     <li>{form.material}</li>
                                                                 </S.ItemDescription>
                                                             </S.DetailLinkPreviewItem>
-                                                        </S.DetailLinkPreviewItems>                                               
-                                                        <S.DetailLinkPreviewItems>
+                                                        </S.DetailLinkPreviewItems>}                                               
+                                                        {form.color !== '' && <S.DetailLinkPreviewItems>
                                                             <S.DetailLinkPreviewItem>
                                                                 <S.ItemTitleWrap>
                                                                     <S.ItemTitle>
@@ -483,8 +483,8 @@ const NewProducts = () => {
                                                                     <li>{form.color}</li>
                                                                 </S.ItemDescription>
                                                             </S.DetailLinkPreviewItem>
-                                                        </S.DetailLinkPreviewItems>                                                    
-                                                        <S.DetailLinkPreviewItems>
+                                                        </S.DetailLinkPreviewItems>}                                                    
+                                                        {form.manufacturer !== '' && <S.DetailLinkPreviewItems>
                                                             <S.DetailLinkPreviewItem>
                                                                 <S.ItemTitleWrap>
                                                                     <S.ItemTitle>
@@ -495,8 +495,8 @@ const NewProducts = () => {
                                                                     <li>{form.manufacturer}</li>
                                                                 </S.ItemDescription>
                                                             </S.DetailLinkPreviewItem>
-                                                        </S.DetailLinkPreviewItems>                                                  
-                                                        <S.DetailLinkPreviewItems>
+                                                        </S.DetailLinkPreviewItems>}                                                  
+                                                        {form.countryOfManufacturer !== '' && <S.DetailLinkPreviewItems>
                                                             <S.DetailLinkPreviewItem>
                                                                 <S.ItemTitleWrap>
                                                                     <S.ItemTitle>
@@ -507,8 +507,8 @@ const NewProducts = () => {
                                                                     <li>{form.countryOfManufacturer}</li>
                                                                 </S.ItemDescription>
                                                             </S.DetailLinkPreviewItem>
-                                                        </S.DetailLinkPreviewItems>                                                  
-                                                        <S.DetailLinkPreviewItems>
+                                                        </S.DetailLinkPreviewItems>}                                                  
+                                                        {form.dateOfManufacturer !== '' && <S.DetailLinkPreviewItems>
                                                             <S.DetailLinkPreviewItem>
                                                                 <S.ItemTitleWrap>
                                                                     <S.ItemTitle>
@@ -519,7 +519,7 @@ const NewProducts = () => {
                                                                     <li>{form.dateOfManufacturer}</li>
                                                                 </S.ItemDescription>
                                                             </S.DetailLinkPreviewItem>
-                                                        </S.DetailLinkPreviewItems>
+                                                        </S.DetailLinkPreviewItems>}
                                                     </S.DetailLinkPreviewItemWrap>
                                                 </div>
                                             </li>
