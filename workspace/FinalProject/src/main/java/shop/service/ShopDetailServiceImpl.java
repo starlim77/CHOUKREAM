@@ -13,6 +13,7 @@ import lookbook.entity.StyleEntity;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
+import shop.bean.NewBrandListDTO;
 import shop.bean.NewProductDTO;
 import shop.bean.NewProductOptionDTO;
 import shop.bean.OrderDTO;
@@ -183,5 +184,11 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 	@Override
 	public void deleteResllProductOption(int seq, String option) {
 		productSizeRepository.deleteResellProductOption(seq, option);
+	}
+	
+	@Override
+	public List<NewBrandListDTO> getNewBrandList(int seq, String brand) {
+		// TODO Auto-generated method stub
+		return newProductDAO.getNewBrandList(seq, brand);
 	}
 }

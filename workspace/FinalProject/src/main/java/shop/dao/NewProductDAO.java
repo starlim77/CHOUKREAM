@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import jakarta.transaction.Transactional;
+import shop.bean.NewBrandListDTO;
 import shop.bean.NewProductDTO;
 import shop.bean.NewSortListDTO;
 
@@ -76,6 +77,11 @@ public interface NewProductDAO extends JpaRepository<NewProductDTO, Integer> {
 			+ "left outer join (select seq, count(*) AS order_count from completed_order_table group by seq) as e on a.seq = e.seq\r\n"
 			+ "order by release_date desc")
 	public List<NewSortListDTO> newReleaseDateSort(); // 발매일순 
+
+	@Query(nativeQuery = true, value = "select seq, brand, price, title, sub_title, img_name from new_product where brand = :brand and seq not in(:seq) order by seq")
+	public List<NewBrandListDTO> getNewBrandList(int seq, String brand);
+	
+	
 	
 	
 	

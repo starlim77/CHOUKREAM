@@ -19,7 +19,6 @@ const NewOptionInventory = ({setInventoryOpen, seq, modalInventory, modalOption,
                 <S.Close onClick={ e => setInventoryOpen(false)}>
                     X
                 </S.Close>
-                {console.log(modalInventory)}
                 {modalOption}
                 <input type="text" onChange={e => setModalInventory(e.target.value)} value={modalInventory} width="10px"></input>
                 <button onClick={(e) => updateInventory(e)}>재고 수정</button>

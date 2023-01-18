@@ -13,6 +13,7 @@ import lookbook.bean.StyleDTO;
 import shop.bean.BidsListDTO;
 import shop.bean.BrandListDTO;
 import shop.bean.CompletedOrderDTO;
+import shop.bean.NewBrandListDTO;
 import shop.bean.NewProductDTO;
 import shop.bean.NewProductOptionDTO;
 import shop.bean.OrderDTO;
@@ -129,6 +130,11 @@ public class ShopDetailController {
 	@GetMapping(path="deleteResllProductOption")
 	public void deleteResllProductOption(@RequestParam int seq, @RequestParam String option) {
 		shopDetailService.deleteResllProductOption(seq, option);
+	}
+	
+	@GetMapping(path="getNewBrandList")
+	public List<NewBrandListDTO> getNewBrandList(@RequestParam int seq,@RequestParam String brand) {
+		return shopDetailService.getNewBrandList(seq, brand);  
 	}
 	
 }
