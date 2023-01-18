@@ -53,7 +53,6 @@ import NewProductPage from './component/Shop/newProduct/NewProductPage';
 import ReList from './component/Shop/resell/ReList';
 import ReUpdate from './component/Shop/resell/ReUpdate';
 import ReWrite from './component/Shop/register/ReWrite';
-import Following from './component/Lookbook/Following';
 import StyleOneProduct from './component/Lookbook/StyleOneProduct';
 import SearchForm2 from './component/Search/SearchForm2';
 

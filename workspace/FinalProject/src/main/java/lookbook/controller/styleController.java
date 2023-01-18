@@ -61,7 +61,7 @@ public class styleController {
 	public void upload(@RequestBody List<MultipartFile> list, @ModelAttribute StyleDTO styleDTO, HttpSession session) {
 		//System.out.println("list= " + list);	
 		//System.out.println("컨드롤러 dto="+ styleDTO);
-		System.out.println(styleDTO.getProductSeq()+" :  상품번호 ================");
+		System.out.println(styleDTO.getProductSeq()+" :  상품번호 ================");		
 		styleService.save(list, styleDTO);
 
 	}

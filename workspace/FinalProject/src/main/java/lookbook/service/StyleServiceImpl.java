@@ -18,6 +18,7 @@ import lookbook.dao.StyleFileDAO;
 import lookbook.dao.StyleLikesDAO;
 import lookbook.entity.StyleEntity;
 import lookbook.entity.StyleFileEntity;
+import member.bean.MemberDto;
 import member.dao.MemberDAO;
 import shop.bean.ProductDTO;
 import shop.dao.ShopDAO;
@@ -101,7 +102,10 @@ public class StyleServiceImpl implements StyleService {
 		
 		//아이디로 이메일 불러와서 스타일 디티오에 저장
 			String id = styleDTO.getId();
-			String email = memberDAO.findEmailById(id);
+			System.out.println(id + "id *******************************************");
+			MemberDto memberDTO = memberDAO.findEmailById(id);
+			String email = memberDTO.getEmail();
+			System.out.println(email + "email *****************************************");
 			styleDTO.setEmail(email);
 		
 		if(styleDTO.getStyleFile() == null || styleDTO.getStyleFile().isEmpty()) {
