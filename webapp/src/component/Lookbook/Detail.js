@@ -18,9 +18,9 @@ const Detail = () => {
     const [isLike, setIsLike] = useState(0);
     const navigate = useNavigate();
     const id = useLocation().state.id;   //trending에서 로그인 후 넘어오는 id값 
-    const [followeeList, setFolloweeList]= useState([]);
     const [currentId,setCurrentId] = useState();
 
+    const [followeeList, setFolloweeList]= useState([]);
     
     
     // const [id,setId] = useState()   //아이디값 로그인한걸로 가져오는거로 변경해야됨
@@ -178,91 +178,90 @@ const Detail = () => {
             <Container fixed>
                 <S.DeTopDiv> 
                 {
-                    list.map((item,index) => {
-                        return(
-                         
-                               
+                    list.map((item,index) =>  {
+                        return (
                             <Card key={item.seq} >
-                                <S.DeProfile>
-                                <S.DEChkprofile>    
-                                <CardHeader
-                                    avatar={ <Avatar> 프로필</Avatar> }
-                                    // title={item.id}
-                                    title={item.email}
-                                    subheader={item.logtime}
-                                   
-                                />
-                                </S.DEChkprofile>
-                                <S.DeFollowChk>
-                               {
-                                    !id ? <Button variant="contained" style={{backgroundColor: 'black'}} onClick={ alert('먼저 로그인 하세요')}>팔로우</Button> :
-                                    /* 팔로우체크?*/
-                                 
-                                    IsFollow(item.id) ? 
-                                    <Button variant="outlined"  style={{color: 'black', borderColor:'#e2e2e2' ,backgroundColor: '#e2e2e2' }} onClick={() => onUnFollow (item.id,index)}>팔로잉</Button>
-                                    :
-                                    <Button variant="contained" style={{backgroundColor: 'black'}} onClick={() => onFollow (item.id,index)} >팔로우</Button>
-                                        
-
-                                }
-                                </S.DeFollowChk>
-                                </S.DeProfile>                
-                                <S.MyStdiv>
-                                    <img src={`/storage/${photoShop1(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />
-                                    {photoShop2(item.stored_file_name) && <img src={`/storage/${photoShop2(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
-                                    {photoShop3(item.stored_file_name) && <img src={`/storage/${photoShop3(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
-                                    {photoShop4(item.stored_file_name) && <img src={`/storage/${photoShop4(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
-                                    {photoShop5(item.stored_file_name) && <img src={`/storage/${photoShop5(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
-                                 </S.MyStdiv>
-
-                                 <StyleProduct productSeq={item.product_seq}></StyleProduct>
-
-                                <CardContent>
-                                    {item.content}
-                                </CardContent>
-
+                            <S.DeProfile>
+                            <S.DEChkprofile>    
+                            <CardHeader
+                                avatar={ <Avatar> 프로필</Avatar> }
+                                // title={item.id}
+                                title={item.email}
+                                subheader={item.logtime}
                                
-                                <CardActions >
-                                    <div>
-                                        <IconButton aria-label="add to favorites" onClick={(e) => onLikes(e, item.seq ,item.islikes,index)} >
-                                            <img src={
-                                                    (!id) ? '/image/style/unlikes.png' :
-                                                    item.islikes === "false"  ? '/image/style/unlikes.png' : '/image/style/likes.png' 
-                                                    } 
-                                                style={{ width:'28px'}} />
-                                        </IconButton>
-                                        <span>{item.likes_count}</span>
-                                    </div>
-
-                                    <div>
-                                    <IconButton onClick={ () => onComment(item.seq, id)}>
-                                        {/* <Link to ={`/lookbook/StyleComment/${item.seq}`} > */}
-                                        <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
-                                        {/* </Link> */}
-                                    </IconButton> 
-                                    <span>{item.comment_count}</span>  
+                            />
+                            </S.DEChkprofile>
+                            <S.DeFollowChk>
+                           {
+                                !id ? <Button variant="contained" style={{backgroundColor: 'black'}} onClick={ alert('먼저 로그인 하세요')}>팔로우</Button> :
+                                /* 팔로우체크?*/
+                             
+                                IsFollow(item.id) ? 
+                                <Button variant="outlined"  style={{color: 'black', borderColor:'#e2e2e2' ,backgroundColor: '#e2e2e2' }} onClick={() => onUnFollow (item.id,index)}>팔로잉</Button>
+                                :
+                                <Button variant="contained" style={{backgroundColor: 'black'}} onClick={() => onFollow (item.id,index)} >팔로우</Button>
                                     
-                                    </div>                   
-                                </CardActions>
-
-
-
-
-                                <CardContent>       
-                                    <div variant="body2" color="text.secondary" >
-                                    <S.TrTypoDiv>
-                                     <StyleCommentList styleSeq={item.seq}  onCommentDelete={ onCommentDelete }  />                                
-                                    
-                                    </S.TrTypoDiv>                      
-                                    </div>     
-                                                
-                                </CardContent> 
+    
+                            }
+                            </S.DeFollowChk>
+                            </S.DeProfile>                
+                            <S.MyStdiv>
+                                <img src={`/storage/${photoShop1(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />
+                                {photoShop2(item.stored_file_name) && <img src={`/storage/${photoShop2(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                                {photoShop3(item.stored_file_name) && <img src={`/storage/${photoShop3(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                                {photoShop4(item.stored_file_name) && <img src={`/storage/${photoShop4(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                                {photoShop5(item.stored_file_name) && <img src={`/storage/${photoShop5(item.stored_file_name)}`} alt='list사진' style={{width:'100%'}} />}
+                             </S.MyStdiv>
+    
+                             <StyleProduct productSeq={item.product_seq}></StyleProduct>
+    
+                            <CardContent>
+                                {item.content}
+                            </CardContent>
+    
                            
+                            <CardActions >
+                                <div>
+                                    <IconButton aria-label="add to favorites" onClick={(e) => onLikes(e, item.seq ,item.islikes,index)} >
+                                        <img src={
+                                                (!id) ? '/image/style/unlikes.png' :
+                                                item.islikes === "false"  ? '/image/style/unlikes.png' : '/image/style/likes.png' 
+                                                } 
+                                            style={{ width:'28px'}} />
+                                    </IconButton>
+                                    <span>{item.likes_count}</span>
+                                </div>
+    
+                                <div>
+                                <IconButton onClick={ () => onComment(item.seq, id)}>
+                                    {/* <Link to ={`/lookbook/StyleComment/${item.seq}`} > */}
+                                    <ChatBubbleOutlineIcon  style={{color: '#616161', textDecoration:'none'}}/>    
+                                    {/* </Link> */}
+                                </IconButton> 
+                                <span>{item.comment_count}</span>  
+                                
+                                </div>                   
+                            </CardActions>
+    
+    
+    
+    
+                            <CardContent>       
+                                <div variant="body2" color="text.secondary" >
+                                <S.TrTypoDiv>
+                                 <StyleCommentList styleSeq={item.seq}  onCommentDelete={ onCommentDelete }  />                                
+                                
+                                </S.TrTypoDiv>                      
+                                </div>     
+                                            
+                            </CardContent> 
+                       
+    
+                        </Card>
 
-                            </Card>
-                        )
-                        }
-                    )
+                        )                  
+
+                    })
                 }
                </S.DeTopDiv>
             </Container>
