@@ -178,11 +178,6 @@ function App() {
                             </>
                         }
                     />
-
-                    <Route
-                        path="shop/newProduct"
-                        element={<NewProductPage />}
-                    />
                     <Route path="admin" element={<ManagerPage />} />
                     <Route
                         path="admin/newWrite"

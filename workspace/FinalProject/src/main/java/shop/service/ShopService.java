@@ -41,7 +41,7 @@ public interface ShopService {
 	public List<SortListDTO> SellSort();
 
 	public void reUpdate(ProductDTO productDTO);
-
+	
 	public List<SortListDTO> releaseDateSort();
 
 	public List<SortListDTO> getPopularList(int rn);
