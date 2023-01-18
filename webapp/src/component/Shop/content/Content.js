@@ -474,7 +474,10 @@ const Content = ({
                                                           )}
                                                       </Co.Amount>
                                                       <Co.Desc>
-                                                          즉시 구매가
+                                                        {sortCheck 
+                                                            ? "즉시 판매가"
+                                                            : "즉시 구매가"
+                                                        }
                                                       </Co.Desc>
                                                   </Co.PriceInfoArea>
                                               </Co.ItemInner>
@@ -582,7 +585,10 @@ const Content = ({
                                                           )}
                                                       </Co.Amount>
                                                       <Co.Desc>
-                                                          즉시 구매가
+                                                        {sortCheck 
+                                                            ? "즉시 판매가"
+                                                            : "즉시 구매가"
+                                                        }
                                                       </Co.Desc>
                                                   </Co.PriceInfoArea>
                                               </Co.ItemInner>

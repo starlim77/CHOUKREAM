@@ -530,7 +530,7 @@ const Products = () => {
                                                 </S.FilterUnit>
                                             </S.ProductSalesGraphSalesFilter>
                                         </S.ProductSalesGraphTitle>
-                                        <S.WrapSales>
+                                        {/* <S.WrapSales>
                                             <S.TabArea>
                                                 <S.TabList>
                                                     <S.TabAreaItem>
@@ -555,7 +555,7 @@ const Products = () => {
                                                         <Graph></Graph>
                                                     </div>
                                                 </div>
-                                                {/* <div id="sales_panel2" role="tabpanel" className="tab_content" span="3m">
+                                                <div id="sales_panel2" role="tabpanel" className="tab_content" span="3m">
                                                     <div className="graph">
                                                         <canvas></canvas>
                                                     </div>
@@ -574,9 +574,9 @@ const Products = () => {
                                                     <div className="graph">
                                                         <canvas></canvas>
                                                     </div>
-                                                </div> */}
+                                                </div>
                                             </S.TabArea>
-                                        </S.WrapSales>
+                                        </S.WrapSales> */}
                                         <S.WrapBids>
                                             <S.TabArea>
                                                 <S.TabList>
