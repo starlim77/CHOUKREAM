@@ -26,7 +26,7 @@ const Trending = () => {
         axios
             .get('http://localhost:8080/lookbook/getStyleList')
             .then(res => setList(res.data))
-            .catch(error => console.log(error));
+            .catch(error => console.log(error));      
     }, []);
 
     //아이디
@@ -68,6 +68,8 @@ const Trending = () => {
         }
     };
 
+   
+
     return (
         <>
             <Social />
@@ -75,11 +77,11 @@ const Trending = () => {
 
             
             <Container fixed>
-                <S.TrGridContainer>
+                <S.TrGridContainer >
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 0 ? 
-                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId}/>
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId} email={item.email}/>                     
                         :
                         ''
                     )}
@@ -88,7 +90,7 @@ const Trending = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 1 ? 
-                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId}/>
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId} email={item.email}/>
                         :
                         ''
                     )}
@@ -97,7 +99,7 @@ const Trending = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 2 ? 
-                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId}/>
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId} email={item.email}/>
                         :
                         ''
                     )}
@@ -106,7 +108,7 @@ const Trending = () => {
                     <S.TrGridContainerSub>
                     {list.map((item,index) => 
                         index % 4 === 3 ? 
-                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId}/>
+                        <TrendingItem key={item.seq} item = {item} index ={index} itemLength ={itemLength} id={tokenId} email={item.email}/>
                         :
                         ''
                     )}

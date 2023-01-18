@@ -3,6 +3,7 @@ package lookbook.service;
 import java.util.List;
 
 import lookbook.bean.StyleDTO;
+import lookbook.bean.StyleFollowingDTO;
 import member.bean.MemberDto;
 
 public interface StyleFollowingService {
@@ -15,6 +16,8 @@ public interface StyleFollowingService {
 
 	public Long followerCount(Long id);	
 	
-	public Long followeeCount(Long id);	
+	public Long followeeCount(Long id);
+
+	public List<String> getMyFollowee(Long id);	
 	
 }

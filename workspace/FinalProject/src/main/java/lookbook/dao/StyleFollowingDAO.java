@@ -20,5 +20,8 @@ public interface StyleFollowingDAO extends JpaRepository<StyleFollowingEntity, S
 	public Long countByFolloweeId(Long followeeId);
 
 	
-	public Long countByFollowerId(Long follower);
+	public Long countByFollowerId(Long follower);	
+
+
+	public List<StyleFollowingEntity> findAllIdByFollowerId(Long followerId);
 }

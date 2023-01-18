@@ -84,7 +84,7 @@ const CsNav = () => {
                         </S.NavLi>
                         <S.NavLi onClick={onclick}>
                             <Link
-                                to="CsFaq"
+                                to="csFaq"
                                 id="FAQ"
                                 style={
                                     clickedContent === 'FAQ'

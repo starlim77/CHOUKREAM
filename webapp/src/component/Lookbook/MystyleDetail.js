@@ -18,7 +18,8 @@ const MystyleDetail = () => {
     
     //게시물 뿌리기
     const [list, setList] = useState([]);
- 
+    const [currentId, setCurrentId] = useState();
+
 
     useEffect( ()=> {     
         axios.get(`http://localhost:8080/lookbook/findLikes?id=${id}`)
@@ -28,6 +29,10 @@ const MystyleDetail = () => {
             )
             .catch(error => console.log(error))
 
+        //member_id -> email 가져오기
+        axios.get(`http://localhost:8080/used/getId?seq=${id}`)
+                .then(res=>{setCurrentId(res.data)})
+                .catch(err=>console.log(err))
     }, []) 
 
  
@@ -98,7 +103,8 @@ const MystyleDetail = () => {
                                         <S.MyDeprofile>
                                             <CardHeader
                                                 avatar={ <Avatar> 프로필</Avatar> }
-                                                title={item.id}
+                                                // title={item.id}
+                                                title={item.email}
                                                 subheader={item.logTime}
                                             /> 
                                         </S.MyDeprofile>

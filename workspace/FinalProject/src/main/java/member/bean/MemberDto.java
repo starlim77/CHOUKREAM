@@ -76,4 +76,6 @@ public class MemberDto {
         this.provider = provider;
     }
 
+	
+	
 }

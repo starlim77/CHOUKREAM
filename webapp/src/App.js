@@ -49,6 +49,7 @@ import NewUpdate from './component/Shop/manager/NewUpdate';
 import SocialLoginRedirect from './component/User/SocialLoginRedirect';
 import UsedItemList from './component/Shop/manager/UsedItemList';
 import jwt_decode from 'jwt-decode';
+import Following from './component/Lookbook/Following';
 import NewProductPage from './component/Shop/newProduct/NewProductPage';
 import ReList from './component/Shop/resell/ReList';
 import ReUpdate from './component/Shop/resell/ReUpdate';
@@ -60,6 +61,8 @@ import StyleOneProduct from './component/Lookbook/StyleOneProduct';
 import SearchForm2 from './component/Search/SearchForm2';
 import SalesList from './component/Shop/manager/SalesList';
 import MainBanner from './component/Main/MainBanner/MainBanner';
+import StyleOneProduct from './component/Lookbook/StyleOneProduct';
+import SearchForm2 from './component/Search/SearchForm2';
 
 function App() {
     const token = localStorage.getItem('accessToken');
@@ -333,9 +336,12 @@ function App() {
                     <Route path="/lookbook/social" element={<Social />} />
                     <Route path="/lookbook/mystyle" element={<Mystyle />} />
                     <Route path="/lookbook/detail" element={<Detail />} />
-                    <Route path="/lookbook/following" element={<Following />} />
                     <Route
-                        path="/lookbook/styleComment/:styleSeq/:id"
+                        path="/lookbook/following/:tokenId"
+                        element={<Following />}
+                    />
+                    <Route
+                        path="/lookbook/styleComment/:styleSeq/:id/:currentId3"
                         element={<StyleComment />}
                     />
                     <Route

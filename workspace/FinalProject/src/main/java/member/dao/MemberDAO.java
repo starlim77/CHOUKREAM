@@ -29,6 +29,9 @@ public interface MemberDAO extends JpaRepository<MemberDto, Long> {
 
 	public MemberDto findById(int followerId);
 	
+	//아이디로 이메일 찾기
+	public MemberDto findEmailById(String id);
+	
 	
 	
 }
