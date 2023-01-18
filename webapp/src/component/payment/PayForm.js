@@ -92,11 +92,15 @@ const PayForm = () => {
     useEffect(() => {
         if (type === 'new') {
             axios
-                .get('http://localhost:8080')
+                .get(
+                    `http://localhost:8080/shop/getProductBySeqNew?seq=${productNum}`,
+                )
                 .then(res => {
-                    setModelNum(res.data.modelNum);
-                    setProductPrice(res.data.orderPrice);
-                    setPayPrice(res.data.orderPrice);
+                    setImgName('/newProductList/' + res.data.imgName);
+                    setProductName(res.data.title);
+                    setProductSubName(res.data.subTitle);
+                    setProductPrice(res.data.price);
+                    setPayPrice(res.data.price);
                 })
                 .catch(err => console.log(err));
         } else if (type === 'resell') {
@@ -239,7 +243,10 @@ const PayForm = () => {
                     orderTableSeq: orderNum,
                 },
             })
-            .then(alert('결제 완료'))
+            .then(() => {
+                alert('결제 완료');
+                navigate('/my/');
+            })
             .catch(err => console.log(err));
     };
 

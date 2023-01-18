@@ -23,4 +23,12 @@ public interface NewProductOptionRepository extends JpaRepository<NewProductOpti
 	@Modifying
 	@Query("delete NewProductOptionDTO n where n.seq=:seq and n.productOption=:option")
 	void deleteNewProductOption(int seq, String option);
+
+	@Query(nativeQuery = true, value = "select * from new_product_option where seq = :seq order by new_option_seq")
+	List<NewProductOptionDTO> getProductSizeNew(int seq);
+
+	@Transactional
+	@Modifying
+	@Query(nativeQuery = true, value = "update new_product_option set inventory = inventory - 1 where seq = :productNum and product_option = :size")
+	void subInventory(int productNum, String size);
 }

@@ -125,7 +125,7 @@ const SalesList = () => {
                                         ? `/newProductList/${photoshop(
                                               item.img_name,
                                           )}`
-                                        : `/storage/${photoshop(item.img_name)}`
+                                        : '/storage/' + photoshop(item.img_name)
                                 }
                             ></S.SalesImg>
                             <S.SalesInfo>

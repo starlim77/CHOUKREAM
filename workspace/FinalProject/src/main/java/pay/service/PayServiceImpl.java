@@ -40,10 +40,13 @@ import pay.bean.SalesDTO;
 import pay.dao.PayDAO;
 import shop.bean.BidsListDTO;
 import shop.bean.CompletedOrderDTO;
+import shop.bean.NewProductDTO;
 import shop.bean.OrderDTO;
 import shop.bean.ProductDTO;
 import shop.bean.UsedItemDTO;
 import shop.dao.CompletedOrderRepository;
+import shop.dao.NewProductDAO;
+import shop.dao.NewProductOptionRepository;
 import shop.dao.OrderRepository;
 import shop.dao.ShopDAO;
 import shop.service.UsedItemService;
@@ -70,6 +73,11 @@ public class PayServiceImpl implements PayService {
 	private CompletedOrderRepository completedOrderRepository;
 	@Autowired
 	private UsedItemService usedItemService;
+	@Autowired
+	private NewProductDAO newProductDAO;
+	@Autowired
+	private NewProductOptionRepository newProductOptionRepository;
+	
 	
 	@Override
 	public int getOrderNumber() {
@@ -133,8 +141,13 @@ public class PayServiceImpl implements PayService {
 		}
 		else if(type.equals("new")) {
 			//상품명 가져오기
+			Optional<NewProductDTO> newProductDTO = newProductDAO.findById(productNum);
+			productName = newProductDTO.get().getTitle();
 			
 			// 재고 1개 줄여주기
+			String size = completePaymentDTO.getSize();
+			newProductOptionRepository.subInventory(productNum, size);
+			
 			
 		}
 		else if(type.equals("used")) {

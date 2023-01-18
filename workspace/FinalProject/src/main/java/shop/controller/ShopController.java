@@ -318,6 +318,10 @@ public class ShopController {
 		System.out.println(seq);
 	}
 
+	@GetMapping(path = "getProductBySeqNew")
+	public Optional<NewProductDTO> getProductBySeqNew(@RequestParam int seq){
+		return newProductService.getProductBySeqNew(seq);
+	}
 	
 }
 
