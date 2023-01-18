@@ -131,7 +131,7 @@ const PayForm = () => {
             axios
                 .get('http://localhost:8080/used/viewItem?seq=' + productNum)
                 .then(res => {
-                    setImgName('/storage/' + res.data.imgName);
+                    setImgName('/storage/' + photoshop(res.data.imgName));
                     setProductName(res.data.productName);
                     setSize(res.data.size);
                     setFee(Math.floor(res.data.price * 0.05));

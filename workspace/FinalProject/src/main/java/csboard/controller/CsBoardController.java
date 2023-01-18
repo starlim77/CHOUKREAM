@@ -150,7 +150,7 @@ public class CsBoardController {
 		 index=pathModified.lastIndexOf("\\");
 		 pathModified = pathModified.substring(0,index);
 		 System.out.println("경로확인"+pathModified);
-		
+			
 		 //실제 저장될 경로 지정
 		 //ex) pathModified	= F:\project\finalProject\final\final1zo 뒤에 webapp경로 지정
 		 String filePath=pathModified+"/webapp/public/storage";
