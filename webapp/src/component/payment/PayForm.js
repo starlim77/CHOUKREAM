@@ -279,7 +279,7 @@ const PayForm = () => {
                 })
                 .then(() => {
                     alert('구매 입찰 완료');
-                    navigate('/shop');
+                    navigate('/products/' + productNum);
                 })
                 .catch();
         } else {
@@ -625,7 +625,7 @@ const PayForm = () => {
                         isShipInfoEmpty(shipInfo) || checkedList.length !== 4
                     }
                 >
-                    <span>결제하기</span>
+                    <span>{bidPrice ? '구매입찰' : '결제하기'}</span>
                 </S.PayBtn>
             </S.Agree>
         </S.PayForm>
