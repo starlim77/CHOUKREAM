@@ -97,7 +97,7 @@ const CsFaqWriteForm = props => {
     setImg1(split[3])
  //   const imageSrc =split[3]+'.png';
 
-   alert(url)
+
     file.push(img);
    
     callback(url); //callback 에  blob 를  넣으면 글 쓰는 페이지에 사진이 안뜸

@@ -31,6 +31,9 @@ public interface CsBoardDAO extends JpaRepository<CsBoardDTO, Integer> {
 	List<CsBoardDTO> findAllByOrderBySeqDesc();
 
 
+	List<CsBoardDTO> findAllByContentOrTitleContainingOrderBySeqDesc(String keyword ,String Keyword);
+
+
 
 	//완전 에러 --  keyword 하나로 내용 과 제목 둘다 한꺼번에 찾아서 하는것......ㅠㅠㅠㅠㅠ모르겠음 
 //	@Query("csBoardDTO from CsBoardDTO csBoardDTO where csBoardDTO.title like '%' || :keyword || '%' or csBoardDTO.content like '%' || :keyword || '%'")
