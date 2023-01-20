@@ -152,8 +152,8 @@ const NewUpdate = () => {
                 })
                 .catch(error => console.log(error))
         }
-        // navigate('/admin/newList');
-        // window.location.reload();
+        navigate('/admin/newList');
+        window.location.reload();
     };
     // ---------------
     

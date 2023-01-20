@@ -104,6 +104,11 @@ const NewProducts = () => {
             )
             .then(res => setCount(res.data))
             .catch(err => console.log(err));
+            
+            if (token !== null) {
+                const tokenJson = jwt_decode(token);
+                setSub(tokenJson['sub']);
+            }
     }, []);
 
     useEffect(() => {

@@ -317,8 +317,6 @@ const ReWrite = () => {
                         name="releasePrice"
                         onChange={onInput}
                     />
-                    <S.Subject> 태그 </S.Subject>
-                    <S.SubTitle type="text" name="tag" onChange={onInput} />
 
                     {/* <S.Necessary>* 필수</S.Necessary>
                     <S.Subject> 상품 정보</S.Subject> */}
