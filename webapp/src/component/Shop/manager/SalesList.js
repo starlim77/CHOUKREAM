@@ -1,10 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import Pagination from './Pagination';
 import * as S from './SalesListStyle';
 
 const SalesList = () => {
     const [sales, setSales] = useState([]);
     const [imgName, setImgName] = useState([]);
+
+    const [limit, setLimit] = useState(10);
+    const [page, setPage] = useState(1);
+    const offset = (page - 1) * limit;
 
     useEffect(() => {
         axios
@@ -100,7 +105,7 @@ const SalesList = () => {
             <S.Title>매출 내역</S.Title>
 
             <S.SalesList>
-                {sales.map(item => {
+                {sales.slice(offset, offset + limit).map(item => {
                     return (
                         <S.Sales key={item.orderNumber}>
                             <S.Type>
@@ -120,7 +125,7 @@ const SalesList = () => {
                                         ? `/newProductList/${photoshop(
                                               item.img_name,
                                           )}`
-                                        : `/storage/${photoshop(item.img_name)}`
+                                        : '/storage/' + photoshop(item.img_name)
                                 }
                             ></S.SalesImg>
                             <S.SalesInfo>
@@ -150,6 +155,12 @@ const SalesList = () => {
                     );
                 })}
             </S.SalesList>
+            <Pagination
+                total={sales.length}
+                limit={10}
+                page={page}
+                setPage={setPage}
+            />
         </S.SalesListWrapper>
     );
 };

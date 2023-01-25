@@ -125,7 +125,7 @@ const SellForm = () => {
             })
             .then(() => {
                 alert('판매 입찰 완료');
-                navigate('/shop');
+                navigate('/products/' + productNum);
             })
             .catch(err => console.log(err));
     };

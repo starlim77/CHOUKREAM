@@ -92,11 +92,15 @@ const PayForm = () => {
     useEffect(() => {
         if (type === 'new') {
             axios
-                .get('http://localhost:8080')
+                .get(
+                    `http://localhost:8080/shop/getProductBySeqNew?seq=${productNum}`,
+                )
                 .then(res => {
-                    setModelNum(res.data.modelNum);
-                    setProductPrice(res.data.orderPrice);
-                    setPayPrice(res.data.orderPrice);
+                    setImgName('/newProductList/' + res.data.imgName);
+                    setProductName(res.data.title);
+                    setProductSubName(res.data.subTitle);
+                    setProductPrice(res.data.price);
+                    setPayPrice(res.data.price);
                 })
                 .catch(err => console.log(err));
         } else if (type === 'resell') {
@@ -131,7 +135,7 @@ const PayForm = () => {
             axios
                 .get('http://localhost:8080/used/viewItem?seq=' + productNum)
                 .then(res => {
-                    setImgName('/storage/' + res.data.imgName);
+                    setImgName('/storage/' + photoshop(res.data.imgName));
                     setProductName(res.data.productName);
                     setSize(res.data.size);
                     setFee(Math.floor(res.data.price * 0.05));
@@ -239,7 +243,10 @@ const PayForm = () => {
                     orderTableSeq: orderNum,
                 },
             })
-            .then(alert('결제 완료'))
+            .then(() => {
+                alert('결제 완료');
+                navigate('/my/');
+            })
             .catch(err => console.log(err));
     };
 
@@ -272,7 +279,7 @@ const PayForm = () => {
                 })
                 .then(() => {
                     alert('구매 입찰 완료');
-                    navigate('/shop');
+                    navigate('/products/' + productNum);
                 })
                 .catch();
         } else {
@@ -618,7 +625,7 @@ const PayForm = () => {
                         isShipInfoEmpty(shipInfo) || checkedList.length !== 4
                     }
                 >
-                    <span>결제하기</span>
+                    <span>{bidPrice ? '구매입찰' : '결제하기'}</span>
                 </S.PayBtn>
             </S.Agree>
         </S.PayForm>

@@ -157,7 +157,7 @@ flex-wrap: wrap;
 align-content: flex-start;
 width: 100%;
 min-height: 200px;
-max-height: 370px;
+/* max-height: 370px; */
 overflow-y: hidden;
 margin-bottom: 40px;
 cursor: pointer;

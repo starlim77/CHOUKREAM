@@ -206,4 +206,9 @@ public class ShopDetailServiceImpl implements ShopDetailService {
 		return newProductDAO.getNewBrandList(seq, brand);
 	}
 
+	@Override
+	public List<NewProductOptionDTO> getProductSizeNew(int seq) {
+		return newProductOptionRepository.getProductSizeNew(seq);
+	}
+
 }

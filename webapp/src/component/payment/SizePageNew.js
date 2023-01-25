@@ -39,12 +39,12 @@ const SizePageNew = () => {
 
     const onNext = () => {
         navigate(
-            `${sellOrBuy}/payTerms?type=${type}&productNum=${productNum}&size=${selectedSize}`,
+            `/pay/payForm?type=new&productNum=${productNum}&size=${selectedSize}`,
         );
     };
 
     return (
-         <S.Container>
+        <S.Container>
             <PayHeaderNew />
             <S.Body>
                 <S.BtnWrapper>
@@ -52,9 +52,9 @@ const SizePageNew = () => {
                         return (
                             <SizeBtn
                                 key={index}
-                                size={item.size}
+                                size={item.productOption}
                                 location={location}
-                                price={item.price}
+                                price={item.inventory}
                                 onClick={onClick}
                                 selectedSize={selectedSize}
                             />
@@ -64,7 +64,7 @@ const SizePageNew = () => {
             </S.Body>
             {isBtnClick && (
                 <S.BuyBtnWrapper>
-                    {sellOrBuy === '/buy' ? (
+                    {sellOrBuy === '/newBuy' ? (
                         <B.BuyBtn onClick={onNext}>구매계속</B.BuyBtn>
                     ) : (
                         <B.BuyBtn onClick={onNext}>판매계속</B.BuyBtn>

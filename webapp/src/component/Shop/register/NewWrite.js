@@ -86,12 +86,12 @@ const NewWrite = () => {
                     params: form,
                 })
                 .then(() => {
-                    alert('글작성 완료');
+                    alert('새 상품 등록 완료');
                 })
                 .catch(error => console.log(error));
         }
-        // navigate('/admin/newList');
-        // window.location.reload();
+        navigate('/admin/newList');
+        window.location.reload();
     };
     // ---------------
     const [subImg, setSubImg] = useState([]);
@@ -251,66 +251,190 @@ const NewWrite = () => {
         <>
             <S.WriteBody>
                 <S.ImgBody2>
-                    메인 이미지<br/>
+                    메인 이미지
+                    <br />
                     {/* 이미지 소스 이용방법 2가지 사용해봄 */}
-                    <S.MainImgP setPosition={subImg[0]?true:false}>
-                        <S.MainImg name='mainImg' sizing={subImg[0]?true:false} src={subImg[0]?subImg[0].url:`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg} alt={subImg[0]?subImg[0].url:"nothing"}></S.MainImg>
-                        <S.DeleteMainImg setPosition={subImg[0]?true:false} id="0" onClick={e=>deleteImg(e)}></S.DeleteMainImg>
+                    <S.MainImgP setPosition={subImg[0] ? true : false}>
+                        <S.MainImg
+                            name="mainImg"
+                            sizing={subImg[0] ? true : false}
+                            src={
+                                subImg[0]
+                                    ? subImg[0].url
+                                    : `${process.env.PUBLIC_URL}/image/used/plusIcon.png`
+                            }
+                            onClick={onSubImg}
+                            alt={subImg[0] ? subImg[0].url : 'nothing'}
+                        ></S.MainImg>
+                        <S.DeleteMainImg
+                            setPosition={subImg[0] ? true : false}
+                            id="0"
+                            onClick={e => deleteImg(e)}
+                        ></S.DeleteMainImg>
                     </S.MainImgP>
-                    <S.SubImgBody >
-                        <S.SubImgP setPosition={subImg[1]?true:false}>
-                            <S.SubImg sizing={subImg[1]?true:false} name='subImg1' src={subImg[1]?subImg[1].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
-                            <S.DeleteImg setPosition={subImg[1]?true:false} id="1" onClick={e=>deleteImg(e)}></S.DeleteImg>
+                    <S.SubImgBody>
+                        <S.SubImgP setPosition={subImg[1] ? true : false}>
+                            <S.SubImg
+                                sizing={subImg[1] ? true : false}
+                                name="subImg1"
+                                src={
+                                    subImg[1]
+                                        ? subImg[1].url
+                                        : '/image/used/plusIcon.png'
+                                }
+                                onClick={onSubImg}
+                            />
+                            <S.DeleteImg
+                                setPosition={subImg[1] ? true : false}
+                                id="1"
+                                onClick={e => deleteImg(e)}
+                            ></S.DeleteImg>
                         </S.SubImgP>
-                        <S.SubImgP setPosition={subImg[2]?true:false}>
-                            <S.SubImg sizing={subImg[2]?true:false} name='subImg2' src={subImg[2]?subImg[2].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
-                            <S.DeleteImg setPosition={subImg[2]?true:false} id="2"  onClick={e=>deleteImg(e)}></S.DeleteImg>
+                        <S.SubImgP setPosition={subImg[2] ? true : false}>
+                            <S.SubImg
+                                sizing={subImg[2] ? true : false}
+                                name="subImg2"
+                                src={
+                                    subImg[2]
+                                        ? subImg[2].url
+                                        : '/image/used/plusIcon.png'
+                                }
+                                onClick={onSubImg}
+                            />
+                            <S.DeleteImg
+                                setPosition={subImg[2] ? true : false}
+                                id="2"
+                                onClick={e => deleteImg(e)}
+                            ></S.DeleteImg>
                         </S.SubImgP>
-                        <S.SubImgP setPosition={subImg[3]?true:false}>
-                            <S.SubImg sizing={subImg[3]?true:false} name='subImg3' src={subImg[3]?subImg[3].url:'/image/used/plusIcon.png'} onClick={onSubImg}/>
-                            <S.DeleteImg setPosition={subImg[3]?true:false} id="3"  onClick={e=>deleteImg(e)}></S.DeleteImg>
+                        <S.SubImgP setPosition={subImg[3] ? true : false}>
+                            <S.SubImg
+                                sizing={subImg[3] ? true : false}
+                                name="subImg3"
+                                src={
+                                    subImg[3]
+                                        ? subImg[3].url
+                                        : '/image/used/plusIcon.png'
+                                }
+                                onClick={onSubImg}
+                            />
+                            <S.DeleteImg
+                                setPosition={subImg[3] ? true : false}
+                                id="3"
+                                onClick={e => deleteImg(e)}
+                            ></S.DeleteImg>
                         </S.SubImgP>
                     </S.SubImgBody>
-                    
                     {/* https://blog.munilive.com/posts/input-file-type-accept-attribute.html
                     파일 형식 제한은 accept이용.
                     다만 업로드 하는 사람이 형식을 모든 파일로 받으면 다른 파일로 업로드가 가능해진다.
                     유효성 검사 필요 */}
-                    <input type='file' name="img" style={{display: 'none'}} accept=".jpg,.png, .jpeg, .gif" onChange={ e=>onImgRead(e) } ref={imgRef} multiple></input>
-                    *이미지는 1대 1비율이 아니면 잘려서 보일 수 있습니다.<br></br>
-                    *이미지 파일만 업로드 가능합니다.<br/><br/>
-
-                    <br/>상세 이미지<br/>
+                    <input
+                        type="file"
+                        name="img"
+                        style={{ display: 'none' }}
+                        accept=".jpg,.png, .jpeg, .gif"
+                        onChange={e => onImgRead(e)}
+                        ref={imgRef}
+                        multiple
+                    ></input>
+                    *이미지는 1대 1비율이 아니면 잘려서 보일 수 있습니다.
+                    <br></br>
+                    *이미지 파일만 업로드 가능합니다.
+                    <br />
+                    <br />
+                    <br />
+                    상세 이미지
+                    <br />
                     {/* 이미지 소스 이용방법 2가지 사용해봄 */}
-                    <S.MainImgP setPosition={subImg2[0]?true:false}>
-                        <S.MainImg name='mainImg' sizing={subImg2[0]?true:false} src={subImg2[0]?subImg2[0].url:`${process.env.PUBLIC_URL}/image/used/plusIcon.png`} onClick={onSubImg2} alt={subImg2[0]?subImg2[0].url:"nothing"}></S.MainImg>
-                        <S.DeleteMainImg setPosition={subImg2[0]?true:false} id="0" onClick={e=>deleteImg2(e)}></S.DeleteMainImg>
+                    <S.MainImgP setPosition={subImg2[0] ? true : false}>
+                        <S.MainImg
+                            name="mainImg"
+                            sizing={subImg2[0] ? true : false}
+                            src={
+                                subImg2[0]
+                                    ? subImg2[0].url
+                                    : `${process.env.PUBLIC_URL}/image/used/plusIcon.png`
+                            }
+                            onClick={onSubImg2}
+                            alt={subImg2[0] ? subImg2[0].url : 'nothing'}
+                        ></S.MainImg>
+                        <S.DeleteMainImg
+                            setPosition={subImg2[0] ? true : false}
+                            id="0"
+                            onClick={e => deleteImg2(e)}
+                        ></S.DeleteMainImg>
                     </S.MainImgP>
-                    <S.SubImgBody >
-                        <S.SubImgP setPosition={subImg2[1]?true:false}>
-                            <S.SubImg sizing={subImg2[1]?true:false} name='subImg1' src={subImg2[1]?subImg2[1].url:'/image/used/plusIcon.png'} onClick={onSubImg2}/>
-                            <S.DeleteImg setPosition={subImg2[1]?true:false} id="1" onClick={e=>deleteImg2(e)}></S.DeleteImg>
+                    <S.SubImgBody>
+                        <S.SubImgP setPosition={subImg2[1] ? true : false}>
+                            <S.SubImg
+                                sizing={subImg2[1] ? true : false}
+                                name="subImg1"
+                                src={
+                                    subImg2[1]
+                                        ? subImg2[1].url
+                                        : '/image/used/plusIcon.png'
+                                }
+                                onClick={onSubImg2}
+                            />
+                            <S.DeleteImg
+                                setPosition={subImg2[1] ? true : false}
+                                id="1"
+                                onClick={e => deleteImg2(e)}
+                            ></S.DeleteImg>
                         </S.SubImgP>
-                        <S.SubImgP setPosition={subImg2[2]?true:false}>
-                            <S.SubImg sizing={subImg2[2]?true:false} name='subImg2' src={subImg2[2]?subImg2[2].url:'/image/used/plusIcon.png'} onClick={onSubImg2}/>
-                            <S.DeleteImg setPosition={subImg2[2]?true:false} id="2"  onClick={e=>deleteImg2(e)}></S.DeleteImg>
+                        <S.SubImgP setPosition={subImg2[2] ? true : false}>
+                            <S.SubImg
+                                sizing={subImg2[2] ? true : false}
+                                name="subImg2"
+                                src={
+                                    subImg2[2]
+                                        ? subImg2[2].url
+                                        : '/image/used/plusIcon.png'
+                                }
+                                onClick={onSubImg2}
+                            />
+                            <S.DeleteImg
+                                setPosition={subImg2[2] ? true : false}
+                                id="2"
+                                onClick={e => deleteImg2(e)}
+                            ></S.DeleteImg>
                         </S.SubImgP>
-                        <S.SubImgP setPosition={subImg2[3]?true:false}>
-                            <S.SubImg sizing={subImg2[3]?true:false} name='subImg3' src={subImg2[3]?subImg2[3].url:'/image/used/plusIcon.png'} onClick={onSubImg2}/>
-                            <S.DeleteImg setPosition={subImg2[3]?true:false} id="3"  onClick={e=>deleteImg2(e)}></S.DeleteImg>
+                        <S.SubImgP setPosition={subImg2[3] ? true : false}>
+                            <S.SubImg
+                                sizing={subImg2[3] ? true : false}
+                                name="subImg3"
+                                src={
+                                    subImg2[3]
+                                        ? subImg2[3].url
+                                        : '/image/used/plusIcon.png'
+                                }
+                                onClick={onSubImg2}
+                            />
+                            <S.DeleteImg
+                                setPosition={subImg2[3] ? true : false}
+                                id="3"
+                                onClick={e => deleteImg2(e)}
+                            ></S.DeleteImg>
                         </S.SubImgP>
                     </S.SubImgBody>
-                    
                     {/* https://blog.munilive.com/posts/input-file-type-accept-attribute.html
                     파일 형식 제한은 accept이용.
                     다만 업로드 하는 사람이 형식을 모든 파일로 받으면 다른 파일로 업로드가 가능해진다.
                     유효성 검사 필요 */}
-                    <input type='file' name="img2" style={{display: 'none'}} accept=".jpg,.png, .jpeg, .gif" onChange={ e=>onImgRead2(e) } ref={imgRef2} multiple></input>
-                    *이미지는 1대 1비율이 아니면 잘려서 보일 수 있습니다.<br></br>
+                    <input
+                        type="file"
+                        name="img2"
+                        style={{ display: 'none' }}
+                        accept=".jpg,.png, .jpeg, .gif"
+                        onChange={e => onImgRead2(e)}
+                        ref={imgRef2}
+                        multiple
+                    ></input>
+                    *이미지는 1대 1비율이 아니면 잘려서 보일 수 있습니다.
+                    <br></br>
                     *이미지 파일만 업로드 가능합니다.
                 </S.ImgBody2>
-
-                
 
                 <S.Information>
                     <S.Necessary>* 필수 입력</S.Necessary>
@@ -318,43 +442,115 @@ const NewWrite = () => {
                     <S.Title type="text" name="title" onChange={onInput} /> */}
 
                     <S.Subject> 제품 영어 이름</S.Subject>
-                    <S.SubTitle type="text" name="title" onChange={onInput} />
+                    <S.SubTitle
+                        type="text"
+                        name="title"
+                        onChange={onInput}
+                        value={title}
+                    />
                     <S.Subject> 제품 한글 이름</S.Subject>
                     <S.SubTitle
                         type="text"
                         name="subTitle"
                         onChange={onInput}
+                        value={subTitle}
                     />
                     <S.Subject> 브랜드</S.Subject>
-                    <S.SubTitle type="text" name="brand" onChange={onInput} />
-                    <S.Subject> 성별</S.Subject>
-                    <S.SubTitle type="text" name="gender" onChange={onInput} />
-                    <S.Subject> 발매일</S.Subject>
-                    <S.SubTitle type="text" name="releaseDate" onChange={onInput} />
-                    <S.Subject> 태그</S.Subject>
-                    <S.SubTitle type="text" name="tag" onChange={onInput} />
-                    
-                    <S.Subject> 카테고리 </S.Subject>
-                    <S.SubTitle type="text"name="category"onChange={onInput}/>
-                    <S.Subject> 상호명 </S.Subject>
-                    <S.SubTitle type="text"name="businessName"onChange={onInput}/>
-                    <S.Subject> 성별 </S.Subject>
-                    <S.SubTitle type="text" name="gender" onChange={onInput} />
-                    <S.Subject> 제품 모델 번호 </S.Subject>
                     <S.SubTitle
                         type="text"
-                        name="modelNum"
+                        name="brand"
                         onChange={onInput}
+                        value={brand}
                     />
-                    <S.Subject> 발매일 </S.Subject>
+                    <S.Subject> 성별</S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="gender"
+                        onChange={onInput}
+                        value={gender}
+                    />
+                    <S.Subject> 발매일</S.Subject>
                     <S.SubTitle
                         type="text"
                         name="releaseDate"
                         onChange={onInput}
+                        value={releaseDate}
+                    />
+                    <S.Subject> 태그</S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="tag"
+                        onChange={onInput}
+                    />
+                    <S.Subject> 제품 카테고리 </S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="category"
+                        onChange={onInput}
+                        value={category}
+                    />
+
+                    <S.Subject> 상호명 </S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="businessName"
+                        onChange={onInput}
                     />
                     <S.Subject> 색상 </S.Subject>
-                    <S.SubTitle type="text" name="color" onChange={onInput} />
-                
+                    <S.SubTitle
+                        type="text"
+                        name="color"
+                        onChange={onInput}
+                        value={color}
+                    />
+                    <S.Subject> 사업자 번호 </S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="comRegNo"
+                        onChange={onInput}
+                    />
+                    <S.Subject> 대표자 </S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="representative"
+                        onChange={onInput}
+                    />
+                    <S.Subject> 사업장 소재지 </S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="businessLocation"
+                        onChange={onInput}
+                    />
+                    <S.Subject> 고객센터 </S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="serviceCall"
+                        onChange={onInput}
+                    />
+                    <S.Subject> 소재 </S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="material"
+                        onChange={onInput}
+                    />
+                    <S.Subject> 제조 회사 </S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="manufacturer"
+                        onChange={onInput}
+                    />
+                    <S.Subject> 제조국 </S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="countryOfManufacturer"
+                        onChange={onInput}
+                    />
+                    <S.Subject> 제조 날짜 </S.Subject>
+                    <S.SubTitle
+                        type="text"
+                        name="dateOfManufacturer"
+                        onChange={onInput}
+                    />
 
                     {/* <S.Necessary>* 필수</S.Necessary>
                     <S.Subject> 상품 정보</S.Subject> */}

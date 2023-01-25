@@ -167,4 +167,9 @@ public class ShopDetailController {
 		return shopDetailService.getNewBrandList(seq, brand);  
 	}
 	
+	@GetMapping(path = "getProductSizeNew")
+	public List<NewProductOptionDTO> getProductSizeNew(@RequestParam int seq){
+		return shopDetailService.getProductSizeNew(seq);
+	}
+	
 }

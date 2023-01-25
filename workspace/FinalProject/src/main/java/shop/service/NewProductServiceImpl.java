@@ -89,6 +89,11 @@ public class NewProductServiceImpl implements NewProductService {
 	public List<NewSortListDTO> newReleaseDateSort() {
 		return newProductDAO.newReleaseDateSort();
 	}
+
+	@Override
+	public Optional<NewProductDTO> getProductBySeqNew(int seq) {
+		return newProductDAO.findById(seq);
+	}
 	
 	
 }

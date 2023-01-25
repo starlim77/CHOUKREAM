@@ -61,6 +61,7 @@ import SalesList from './component/Shop/manager/SalesList';
 import MainBanner from './component/Main/MainBanner/MainBanner';
 import StyleOneProduct from './component/Lookbook/StyleOneProduct';
 import SearchForm2 from './component/Search/SearchForm2';
+import RequireAdmin from './component/Require/RequireAdmin';
 
 function App() {
     const token = localStorage.getItem('accessToken');
@@ -105,7 +106,14 @@ function App() {
                         element={<NewProductPage />}
                     />
 
-                    <Route path="admin" element={<ManagerPage />} />
+                    <Route
+                        path="admin"
+                        element={
+                            <RequireAdmin>
+                                <ManagerPage />
+                            </RequireAdmin>
+                        }
+                    />
                     <Route
                         path="admin/newWrite"
                         element={
@@ -320,7 +328,14 @@ function App() {
                     <Route path="/cs/*" element={<CsMain />} />
 
                     {/* 마이 페이지 */}
-                    <Route path="/my/*" element={<MyPageApp />} />
+                    <Route
+                        path="/my/*"
+                        element={
+                            <RequireAuth>
+                                <MyPageApp />
+                            </RequireAuth>
+                        }
+                    />
 
                     <Route path="/lookbook/trending" element={<Trending />} />
                     <Route

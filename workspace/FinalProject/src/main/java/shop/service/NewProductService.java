@@ -28,4 +28,6 @@ public interface NewProductService {
 	public List<NewSortListDTO> newSellSort();
 
 	public List<NewSortListDTO> newReleaseDateSort();
+
+	public Optional<NewProductDTO> getProductBySeqNew(int seq);
 }

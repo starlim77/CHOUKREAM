@@ -28,9 +28,9 @@ const SellHistoryProduct = props => {
                     {status}
                 </S.Status>
                 <S.Size>{item.size && `size : ${item.size}`}</S.Size>
-                <S.Address>{item.shipAddress}</S.Address>
+                {/* <S.Address>{item.shipAddress}</S.Address>
                 <S.BuyName>{item.shipName}</S.BuyName>
-                <S.BuyPhone>{item.shipPhone}</S.BuyPhone>
+                <S.BuyPhone>{item.shipPhone}</S.BuyPhone> */}
             </S.ProductText>
         </S.SellBox>
     );

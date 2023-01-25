@@ -10,6 +10,7 @@ const MyPageMain = () => {
     const [member, setMember] = useState({});
     const [id, setId] = useState();
     const [point, setPoint] = useState();
+    const [grade, setGrage] = useState()
     const navigate = useNavigate();
     const [soldList, setSoldList] = useState([]);
     const [boughtList, setBoughtList] = useState([]);
@@ -21,6 +22,9 @@ const MyPageMain = () => {
         axios
             .get(`http://localhost:8080/getMember?id=${memberSeq}`)
             .then(res => setMember(res.data));
+        axios
+            .get(`http://localhost:8080/my/getGrade?memberSeq=${memberSeq}`)
+            .then(res => setGrage(res.data.grade));
         //회원 아이디 가져옴
         axios
             .get(`http://localhost:8080/getMemberId?memberSeq=${memberSeq}`)
@@ -77,9 +81,9 @@ const MyPageMain = () => {
                     <S.Picture src="../image/myProfile.png" />
                 </S.PictureWrapper>
                 <S.MiddleWrapper>
-                    <S.IdDIv>id : {id}</S.IdDIv>
+                    <S.IdDIv>ID : {id}</S.IdDIv>
                     <S.EmailDIv>email : {member.email}</S.EmailDIv>
-                    <S.MemberLevel>일반 회원</S.MemberLevel>
+                    <S.MemberLevel>{grade}</S.MemberLevel>
                     <S.ButtonWrapper>
                         <S.Button onClick={onProfile}>프로필 수정</S.Button>
                         <S.Button onClick={onStyle}>내 스타일</S.Button>
@@ -89,35 +93,35 @@ const MyPageMain = () => {
             </S.Top>
 
             {/* 구매 내역 */}
-            <S.SectionTitle>구매내역</S.SectionTitle>
-            <S.BuySection>
+            <S.SectionTitle>리셀 구매내역</S.SectionTitle>
+            <S.SellSection>
                 <S.History onClick={onBuyingHistory}>
-                    {boughtList.length === 0 ? (
+                    {buyRecent.length === 0 ? (
                         <S.History>
                             <S.NoneHistory>거래 내역이 없습니다</S.NoneHistory>
                         </S.History>
                     ) : (
-                        boughtList.map(item => (
-                            <HistoryProduct key={item.seq} item={item} />
+                        buyRecent.map(item => (
+                            <HistoryProduct key={item.seq} item={item}/>
                         ))
                     )}
                 </S.History>
-            </S.BuySection>
+            </S.SellSection>
             {/* 판매 내역 */}
-            <S.SectionTitle>판매내역</S.SectionTitle>
-            <S.SellSection>
-                {soldList.length === 0 ? (
+            <S.SectionTitle>리셀 판매내역</S.SectionTitle>
+            <S.BuySection>
+                {sellRecent.length === 0 ? (
                     <S.History>
                         <S.NoneHistory>거래 내역이 없습니다</S.NoneHistory>
                     </S.History>
                 ) : (
                     <S.History onClick={onSellingHistory}>
-                        {soldList.map(item => (
+                        {sellRecent.map(item => (
                             <HistoryProduct key={item.seq} item={item} />
                         ))}
                     </S.History>
                 )}
-            </S.SellSection>
+            </S.BuySection>
         </S.MainWrapper>
     );
 };
