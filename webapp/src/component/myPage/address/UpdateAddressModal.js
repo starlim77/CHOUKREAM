@@ -42,7 +42,7 @@ const NewAddressModal = props => {
     };
 
     useEffect(() => {
-        console.log(address);
+        //console.log(address);
     }, [address]);
 
     return (

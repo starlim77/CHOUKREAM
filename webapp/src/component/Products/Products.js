@@ -145,7 +145,7 @@ const Products = () => {
     const [dropdown, setDropdown] = useState(true);
     const OpenDrop = () => {
         setDropdown(!dropdown);
-        console.log(brandListForm);
+        // console.log(brandListForm);
     };
     const [dropdown1, setDropdown1] = useState(true);
     const OpenDrop1 = () => {
@@ -459,7 +459,7 @@ const Products = () => {
             <ScrollToTop />
             <GlobalStyle />
             <S.ProductsWrapper>
-                {console.log(id)}
+                {/* {console.log(id)} */}
                 <S.ContainerDetail>
                     <S.Content>
                         <h2 hidden={true}>상품상세</h2>

@@ -13,7 +13,7 @@ const RequireAuth = ({ children }) => {
 
     if (!(auth === 'ROLE_USER' || auth === 'ROLE_ADMIN')) {
         // login user
-        console.log(auth);
+        // console.log(auth);
         return <Navigate to="/login" />;
     }
     return children;

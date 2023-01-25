@@ -34,7 +34,7 @@ export const TrTypoDiv = styled.pre`
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    /* overflow: hidden; */
+    overflow: hidden;
     height: auto;
 `
 export const TrBox = styled.div`
@@ -51,15 +51,21 @@ export const TrUsernameBox = styled.div`
     font-size: 15px;
     letter-spacing: -.15px;
     color: rgba(34,34,34,.8);
-
 `
 
 export const TrlikeBox = styled.div`
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
     float: right;
-    padding: 0 12px;
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
 `
+export const TrlikeSpan = styled.span`
+    text-decoration-line: none;
+    margin-bottom: 3px;
+    width: 15px;
+`;
 
 
 //Detail.js 

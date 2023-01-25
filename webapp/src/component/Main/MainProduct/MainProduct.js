@@ -37,7 +37,7 @@ const MainProduct = ({ title, subTitle }) => {
                 .catch(error => console.log(error));
         }
     }, [page]);
-    console.log('product', products);
+    // console.log('product', products);
     return (
         <S.MainProductWrap>
             <S.SectionTitle>{title}</S.SectionTitle>

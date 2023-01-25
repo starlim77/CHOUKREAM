@@ -74,12 +74,12 @@ const ReList = () => {
         if (isChecked) {
             checkedItems.add(id);
             setCheckedItems(checkedItems);
-            console.log('checkItems add ' + checkedItems);
+            // console.log('checkItems add ' + checkedItems);
             //체크됐을 경우, 요소를 Set에 추가되도록 setCheckedItems를 활용해 add시킴
         } else if (!isChecked && checkedItems.has(id)) {
             checkedItems.delete(id);
             setCheckedItems(checkedItems);
-            console.log('checkItems delete ' + checkedItems);
+            // console.log('checkItems delete ' + checkedItems);
         }
         // 체크되지 않았을 경우, 선택됐던 것이 해제된 것이라면 checkItems에서 delete함
     };
@@ -87,12 +87,12 @@ const ReList = () => {
     // 전체 체크
     const [isAllChecked, setIsAllChecked] = useState(false);
     const allCheckedHandler = isChecked => {
-        console.log('allCheckedHandler isChecked ' + isChecked);
+        // console.log('allCheckedHandler isChecked ' + isChecked);
         setIsAllChecked(!isAllChecked);
         // copy_newProductList.map 돌려서 isChecked 전부 바꾸기
         newProductList.map((item, index) => {
             copy_newProductList[index].isChecked = true;
-            console.log(copy_newProductList);
+            // console.log(copy_newProductList);
         });
         //javascript 객체 배열 속성 바꾸기 https://blogpack.tistory.com/655
 

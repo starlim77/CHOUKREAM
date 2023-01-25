@@ -44,7 +44,7 @@ const NewModal = props => {
                             item =>
                                 item.min_price !== '-' && sortCopy.push(item),
                         );
-                        console.log(sortCopy);
+                        // console.log(sortCopy);
                         setDummy(sortCopy);
                     },
                     // setDummy(dummy.filter(item => item.min_price !== '-')),
@@ -53,7 +53,7 @@ const NewModal = props => {
             setPictures(8);
             setSortCheck(false);
         } else if (sort === 'SellSort') {
-            console.log('ㅎㅇㄴㅇ');
+            // console.log('ㅎㅇㄴㅇ');
             axios
                 .get('http://localhost:8080/shop/newSellSort')
                 //.then(res => console.log(JSON.stringify(res.data)))
@@ -65,7 +65,7 @@ const NewModal = props => {
                             item =>
                                 item.max_price !== '-' && sortCopy.push(item),
                         );
-                        console.log(sortCopy);
+                        // console.log(sortCopy);
                         setDummy(sortCopy);
                     },
                     // setDummy(dummy.filter(item => item.min_price !== '-')),
@@ -74,7 +74,7 @@ const NewModal = props => {
             setPictures(8);
             setSortCheck(true);
         } else if (sort === 'newReleaseDateSort') {
-            console.log('발매일')
+            // console.log('발매일')
             axios
                 .get('http://localhost:8080/shop/newReleaseDateSort')
                 // .then(res => console.log(JSON.stringify(res.data)))

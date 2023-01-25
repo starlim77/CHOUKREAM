@@ -194,7 +194,7 @@ const NewContent2 = ({
         }
         // 아무것도 선택이 안되어있을때 (초기상태)
         // 각각의 옵션을 true로 둔다
-        console.log(newMenuArray);
+        // console.log(newMenuArray);
         let noCategoryOption = true;
         let noBrandOption = true;
         let noGenderOption = true;
@@ -239,18 +239,18 @@ const NewContent2 = ({
                 break;
             }
         }
-        console.log(
-            noCategoryOption,
-            noBrandOption,
-            noGenderOption,
-            noPriceOption,
-        );
+        // console.log(
+        //     noCategoryOption,
+        //     noBrandOption,
+        //     noGenderOption,
+        //     noPriceOption,
+        // );
         
         let temp = dummy2.filter(item => {
             if (item.min_price === '-') {
                 item.min_price = 0
             }
-            console.log(item);
+            // console.log(item);
             if (!noCategoryOption && newMenuArray[item.category] === 0) {
                 // 무언가 체크를 했을때 noCategoryOption 가 false 인데 ! 써서 true 됨
                 // true면 newMenuArray 안에 item.category 가 0(체크안됨)을 찾아서 뺴준다
@@ -395,7 +395,7 @@ const NewContent2 = ({
                         <Co.SearchResultList>
                             {/* {console.log('더미더미 ' + f)} */}
                             {/* {console.log('더미더미 ' + dummyFilter)} */}
-                            {console.log(dummy)}
+                            {/* {console.log(dummy)} */}
                             {tagLive
                                 ? dummyFilter &&
                                   dummyFilter.map((item, index) => (

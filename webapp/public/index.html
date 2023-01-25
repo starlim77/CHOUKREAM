@@ -135,17 +135,17 @@
                     return JSON.parse(jsonPayload);
                 }
                 var result = parseJwt(token);
-                console.log(result);
+                // console.log(result);
                 var sub = result.sub;
-                console.log(sub);
+                // console.log(sub);
                 $.ajax({
                     type: "get",
                     url: "http://localhost:8080/getMemberInfo?seq=" + sub,
                     success: function(data) {
                         user = data.email;
-                        console.log("성공");
-                        console.log(data.email);
-                        console.log("user=" + user);
+                        // console.log("성공");
+                        // console.log(data.email);
+                        // console.log("user=" + user);
                         ChannelIO("boot", {
                             pluginKey: "0b046a7c-2483-4e15-8cd6-c9f99ecb61fb",
                             memberId: data.email, //fill with user id
@@ -162,7 +162,7 @@
                     },
                 });
             } else {
-                console.log("user=" + user);
+                // console.log("user=" + user);
                 ChannelIO("boot", {
                     pluginKey: "0b046a7c-2483-4e15-8cd6-c9f99ecb61fb",
                     memberId: "", //fill with user id

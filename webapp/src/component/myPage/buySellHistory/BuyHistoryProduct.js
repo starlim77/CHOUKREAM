@@ -14,7 +14,7 @@ const BuyHistoryProduct = props => {
     }
 
     useEffect(() => {
-        console.log(item)
+        //console.log(item)
     }, [])
     return (
         <S.BuyBox onClick={() => onBuyPage(item.seq)} done={false}>

@@ -46,7 +46,7 @@ const FindPassword = () => {
             .get(`http://localhost:8080/tempPassword?phone=${phone}&email=${email}`)
             .then((res) => {
                 if(res.data !== 'non_exist'){
-                    console.log(res.data)
+                    // console.log(res.data)
                     
                     const tempPassword = res.data
                     const content = `[CHOUKREAM] 임시 비밀번호 ${tempPassword} 입니다.`

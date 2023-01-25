@@ -25,7 +25,7 @@ const ChangeAddressModal = ({ id, setShipInfo, setModals }) => {
         setModals([false, false]);
     };
 
-    console.log(addressList);
+    // console.log(addressList);
 
     return (
         <S.AddressList>

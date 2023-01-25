@@ -144,7 +144,7 @@ const PayForm = () => {
                     );
                     setProductPrice(res.data.price);
 
-                    console.log(JSON.stringify(res.data));
+                    // console.log(JSON.stringify(res.data));
                 })
                 .catch(err => console.log(err));
         }
@@ -164,7 +164,7 @@ const PayForm = () => {
                 params: { id },
             })
             .then(res => {
-                console.log(JSON.stringify(res.data));
+                // console.log(JSON.stringify(res.data));
                 if (res.data !== null) {
                     setShipInfo({
                         shipName: res.data.name,
@@ -207,7 +207,7 @@ const PayForm = () => {
     }, []);
 
     const changePoint = (id, point) => {
-        console.log(point);
+        // console.log(point);
         axios
             .post('http://localhost:8080/my/changePoint', null, {
                 params: {

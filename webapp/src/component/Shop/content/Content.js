@@ -188,7 +188,7 @@ const Content = ({
         }
         // 아무것도 선택이 안되어있을때 (초기상태)
         // 각각의 옵션을 true로 둔다
-        console.log(newMenuArray);
+        // console.log(newMenuArray);
         let noCategoryOption = true;
         let noBrandOption = true;
         let noGenderOption = true;
@@ -232,17 +232,17 @@ const Content = ({
                 break;
             }
         }
-        console.log(
-            noCategoryOption,
-            noBrandOption,
-            noGenderOption,
-            noPriceOption,
-        );
+        // console.log(
+        //     noCategoryOption,
+        //     noBrandOption,
+        //     noGenderOption,
+        //     noPriceOption,
+        // );
         let temp = dummy2.filter(item => {
             // if (item.min_price === '-') {
             //     item.min_price = 0;
             // }
-            console.log(item);
+            // console.log(item);
             if (!noCategoryOption && newMenuArray[item.category] === 0) {
                 // 무언가 체크를 했을때 noCategoryOption 가 false 인데 ! 써서 true 됨
                 // true면 newMenuArray 안에 item.category 가 0(체크안됨)을 찾아서 뺴준다
@@ -251,7 +251,7 @@ const Content = ({
                 // item의 카테고리가 그 체크된 항목과 맞지 않는 경우
                 return false;
             } else if (
-                console.log(item.min_price),
+                // console.log(item.min_price),
                 // noPriceOption 만약에 true면 거치질 않는다 조건이 없다
                 // true면 체크가 안되어있는거니까 확인할 필요가 없다 
                 !noPriceOption &&  
@@ -399,7 +399,7 @@ const Content = ({
                             {/* {console.log('더미더미 ' + dummy)}
                             {console.log(dummy)}
                             {console.log(dummy.length)} */}
-                            {console.log(dummy)}
+                            {/* {console.log(dummy)} */}
                             {tagLive
                                 ? dummyFilter &&
                                   dummyFilter.map((item, index) => (

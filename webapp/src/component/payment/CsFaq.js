@@ -39,7 +39,7 @@ const CsFaq = () => {
         });
     };
 
-    console.log('visible', visible);
+    // console.log('visible', visible);
     return (
         <>
             <p>자주묻는 질문</p>

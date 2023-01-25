@@ -32,7 +32,7 @@ const Shop = () => {
     
     useEffect(() => {
         if (tag !== '') {
-            console.log(dummy)
+            // console.log(dummy)
             setDummyFilter(dummy.filter(item => item.tag === tag));
             setTagLive(true);
             // console.log('tag 태그 ' + tag)
