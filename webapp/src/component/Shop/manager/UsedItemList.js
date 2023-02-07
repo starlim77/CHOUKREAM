@@ -15,7 +15,7 @@ const UsedItemList = () => {
             .get('http://localhost:8080/used/getItem')
             .then(res => setData(res.data))
             .catch(error => console.log(error));
-            console.log(data); 
+            // console.log(data); 
     },[])
     const [searchOption, setSearchOption] = useState('id');
     const[keyword, setKeyword]=useState('');

@@ -51,10 +51,10 @@ const NewWrite = () => {
 
     const onWrite = e => {
         e.preventDefault(); // 기본동작 막아주고
-        console.log('보내기' + form);
-        console.log(form);
+        // console.log('보내기' + form);
+        // console.log(form);
         var sw = 1;
-        console.log('file[0] ', file[0]);
+        // console.log('file[0] ', file[0]);
         // console.log(--sw);
         file[0] || (--sw && alert('이미지 파일을 등록해주세요'));
         // false ||
@@ -74,10 +74,10 @@ const NewWrite = () => {
         // 하지만 HTML이 아닌 자바스크립트 단 에서 form 전송 동작이 필요한 경우가 있는데, 이미지 같은 멀티미디어 파일을 페이지 전환 없이 폼 데이터를 비동기로 제출 하고 싶을 때나,
         //  자바스크립트로 좀더 타이트하게 폼 데이터를 관리하고 싶을때 formData 객체를 이용한다고 보면 된다.
         Object.keys(formData).forEach(key => {
-            console.log('키' + key);
-            console.log('formData[key]' + formData[key]);
+            // console.log('키' + key);
+            // console.log('formData[key]' + formData[key]);
         });
-        console.log('스위치 찍어라' + 1);
+        // console.log('스위치 찍어라' + 1);
         if (sw == 1) {
             // null로 하든 formData로 하든 상관없나 ?
             // axios.post('http://localhost:8080/used/writeItem',null,({params:{
@@ -105,17 +105,17 @@ const NewWrite = () => {
 
     const onSubImg = () => {
         imgRef.current.click();
-        console.log(imgRef); // { current : input}이 저장됨
+        // console.log(imgRef); // { current : input}이 저장됨
     };
     const onSubImg2 = () => {
         imgRef2.current.click();
-        console.log(imgRef2); // { current : input}이 저장됨
+        // console.log(imgRef2); // { current : input}이 저장됨
     };
     //const[forRendering,setForRendering]=useState('');
     const [random, setRandom] = useState();
 
     const onImgRead = e => {
-        console.log('하이루');
+        // console.log('하이루');
         //유효성 검사
         //https://velog.io/@fxoco/image-input-%EC%9C%A0%ED%9A%A8%EC%84%B1-%EA%B2%80%EC%82%AC
         let sw = 0;
@@ -141,7 +141,7 @@ const NewWrite = () => {
         e.target.value = '';
     };
     const onImgRead2 = e => {
-        console.log('하이루');
+        // console.log('하이루');
         //유효성 검사
         //https://velog.io/@fxoco/image-input-%EC%9C%A0%ED%9A%A8%EC%84%B1-%EA%B2%80%EC%82%AC
         let sw = 0;
@@ -172,9 +172,9 @@ const NewWrite = () => {
         //e.target.files는 배열의 형태처럼 보이긴 하나 실제 배열이 아니라서 배열형태로 만들어서 map을 돌리는 것이다.
         //https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/types%20%26%20grammar/ch2.md#array-likes
         Array.from(e.target.files).map((items, index) => {
-            console.log('ㅎㅇㅎㅇ items ' + items);
+            // console.log('ㅎㅇㅎㅇ items ' + items);
             var urlTemp = window.URL.createObjectURL(items);
-            console.log('ㅎㅇㅎㅇ urlTemp' + urlTemp);
+            // console.log('ㅎㅇㅎㅇ urlTemp' + urlTemp);
             //var urlTemp=reader.readAsDataURL(items);
             //var url=urlTemp.slice(5);
             subImg.push({ url: urlTemp });
@@ -188,9 +188,9 @@ const NewWrite = () => {
         //e.target.files는 배열의 형태처럼 보이긴 하나 실제 배열이 아니라서 배열형태로 만들어서 map을 돌리는 것이다.
         //https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/types%20%26%20grammar/ch2.md#array-likes
         Array.from(e.target.files).map((items, index) => {
-            console.log('ㅎㅇㅎㅇ items ' + items);
+            // console.log('ㅎㅇㅎㅇ items ' + items);
             var urlTemp = window.URL.createObjectURL(items);
-            console.log('ㅎㅇㅎㅇ urlTemp' + urlTemp);
+            // console.log('ㅎㅇㅎㅇ urlTemp' + urlTemp);
             //var urlTemp=reader.readAsDataURL(items);
             //var url=urlTemp.slice(5);
             subImg2.push({ url: urlTemp });
@@ -201,33 +201,33 @@ const NewWrite = () => {
     };
 
     const deleteImg = e => {
-        console.log(e.target.getAttribute('id'));
-        console.log(e.target);
-        console.log(e.target.id);
+        // console.log(e.target.getAttribute('id'));
+        // console.log(e.target);
+        // console.log(e.target.id);
         var id = e.target.getAttribute('id');
 
         //https://forum.freecodecamp.org/t/how-to-filter-using-array-index-in-react/403524
         //index값은 숫자인데 그냥 id값을 주면 id를 받아 문자열로 인식을 하기때문에 parseInt를 이용해 숫자로 바꿔준다.
         var imgTemp = subImg.filter((item, index) => index !== parseInt(id));
         var fileTemp = file.filter((item, index) => index !== parseInt(id));
-        console.log(imgTemp);
-        console.log(fileTemp); // 빈배열을 넣어줘서 삭제한다
+        // console.log(imgTemp);
+        // console.log(fileTemp); // 빈배열을 넣어줘서 삭제한다
         setSubImg([...imgTemp]);
         setFile([...fileTemp]);
         //console.log(file);
     };
     const deleteImg2 = e => {
-        console.log(e.target.getAttribute('id'));
-        console.log(e.target);
-        console.log(e.target.id);
+        // console.log(e.target.getAttribute('id'));
+        // console.log(e.target);
+        // console.log(e.target.id);
         var id = e.target.getAttribute('id');
 
         //https://forum.freecodecamp.org/t/how-to-filter-using-array-index-in-react/403524
         //index값은 숫자인데 그냥 id값을 주면 id를 받아 문자열로 인식을 하기때문에 parseInt를 이용해 숫자로 바꿔준다.
         var imgTemp = subImg2.filter((item, index) => index !== parseInt(id));
         var fileTemp = file2.filter((item, index) => index !== parseInt(id));
-        console.log(imgTemp);
-        console.log(fileTemp); // 빈배열을 넣어줘서 삭제한다
+        // console.log(imgTemp);
+        // console.log(fileTemp); // 빈배열을 넣어줘서 삭제한다
         setSubImg2([...imgTemp]);
         setFile2([...fileTemp]);
         //console.log(file);

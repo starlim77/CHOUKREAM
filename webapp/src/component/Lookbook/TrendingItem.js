@@ -48,7 +48,9 @@ const TrendingItem = ({item,index,itemLength,id,email}) => {
                                 <img src={ isLike === 1 ?  '/image/style/likes.png'  : '/image/style/unlikes.png'  }
                                     style={{ width:'28px'}} />
                             </IconButton>
-                            {item.likesCount}
+                            <S.TrlikeSpan>
+                                {item.likesCount}
+                            </S.TrlikeSpan>
                         </S.TrlikeBox>
                     </S.TrBox>
 

@@ -22,14 +22,14 @@ const UploadForm2 = () => {
     const readUrl=(e)=>{
         var reader = new FileReader();
         reader.readAsDataURL(e.target.files[0]);
-        console.log("e.target.files" + e.target.files);
+        // console.log("e.target.files" + e.target.files);
         
         //Array.from 사용 이유. 
         //e.target.files는 배열의 형태처럼 보이긴 하나 실제 배열이 아니라서 배열형태로 만들어서 map을 돌리는 것이다.
         //https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/types%20%26%20grammar/ch2.md#array-likes
         Array.from(e.target.files).map(items=>file.push(items));
     
-        console.log(file);
+        // console.log(file);
 
 
         reader.onload=()=>{
@@ -40,15 +40,15 @@ const UploadForm2 = () => {
     }
 
     const onUploadSubmit=(e)=>{
-        console.log(file);
+        // console.log(file);
         var formData=new FormData();
         file.map(files=>formData.append('img',files));
         //formData.append('img',file);
        
-        console.log(formData);
+        // console.log(formData);
         axios.post('http://localhost:8080/used/upload',formData,
         {headers:{'Content-Type':'multipart/form-data'},params:form})
-        .then(res=>console.log(res))
+        .then()
         .catch(error=>console.log(error));
     }
     return (

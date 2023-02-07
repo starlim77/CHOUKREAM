@@ -36,8 +36,8 @@ const SalesList = () => {
             .catch(err => console.log(err));
     }, []);
 
-    console.log(sales);
-    console.log(JSON.stringify(imgName));
+    // console.log(sales);
+    // console.log(JSON.stringify(imgName));
 
     const getImgName = (type, seq) => {
         var imgName;
@@ -51,7 +51,7 @@ const SalesList = () => {
                 })
                 .catch(err => console.log(err));
         }
-        console.log(imgName);
+        // console.log(imgName);
         return imgName;
     };
 

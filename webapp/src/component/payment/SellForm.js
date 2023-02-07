@@ -89,7 +89,7 @@ const SellForm = () => {
                 params: { id },
             })
             .then(res => {
-                console.log(JSON.stringify(res.data));
+                // console.log(JSON.stringify(res.data));
                 if (res.data !== null) {
                     setShipInfo({
                         shipName: res.data.name,

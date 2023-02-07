@@ -177,7 +177,7 @@ const UsedItem = () => {
 
     //이미지 순서 바꾸기
     const changImg = e => {
-        console.log(form.hashTag);
+        // console.log(form.hashTag);
         var id = e.target.getAttribute('id');
         //진영씨 방법
         //1. if로 아이디 값 걸러서 바꿔주기
@@ -241,6 +241,7 @@ const UsedItem = () => {
 
     return (
         <>
+
             <U.ModalDiv>
                 <UpdateBtnModal
                     currentId={currentId}
@@ -285,6 +286,7 @@ const UsedItem = () => {
                     </U.SmallImgBody>
                 </U.ImgBody>
                 &emsp;
+
                 <U.BaseDiv>
                     <U.TitleWrapper>
                         <U.TitleSpan>

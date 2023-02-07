@@ -8,7 +8,7 @@ const HistoryProduct = (props) => {
         return (str.replace(/\B(?=(\d{3})+(?!\d))/g, ','))
     };
 useEffect(() => {
-    console.log(item.type)
+    //console.log(item.type)
 }, [])
     
     const arr = JSON.stringify(item.imgName).split(',')

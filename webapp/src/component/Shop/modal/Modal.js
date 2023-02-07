@@ -35,7 +35,7 @@ const Modal = props => {
                         var resCopy = res.data
                         var sortCopy = []
                         resCopy.map(item => item.min_price !== '-' && sortCopy.push(item));
-                        console.log(sortCopy)
+                        // console.log(sortCopy)
                         setDummy(sortCopy)
                         }
                     // setDummy(dummy.filter(item => item.min_price !== '-')),
@@ -53,7 +53,7 @@ const Modal = props => {
                         var resCopy = res.data
                         var sortCopy = []
                         resCopy.map(item => item.max_price !== '-' && sortCopy.push(item));
-                        console.log(sortCopy)
+                        // console.log(sortCopy)
                         setDummy(sortCopy)
                         }
                     // setDummy(dummy.filter(item => item.min_price !== '-')),
